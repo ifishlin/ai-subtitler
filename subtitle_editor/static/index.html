@@ -196,6 +196,7 @@ main{display:flex;flex:1;min-height:0}
         <button id="btnPrevRisk" class="tiny">上一個待審</button>
         <button id="btnNextRisk" class="tiny">下一個待審</button>
         <button id="btnInsert" class="tiny">＋ 在播放位置插入字幕</button>
+        <button id="btnFixOverlap" class="tiny" style="display:none">修正重疊</button>
         <div style="flex:1"></div>
         <label style="font-size:12px;color:var(--dim);display:flex;gap:5px;align-items:center">
           <input type="checkbox" id="follow" checked>播放時跟隨
@@ -538,6 +539,7 @@ function renderStats() {
   const side = S.segments.filter(isSidecar).length;
   const todo = S.segments.filter(needsReview).length;
   const overlaps = S.segments.filter((s) => s.overlap).length;
+  $("btnFixOverlap").style.display = overlaps ? "" : "none";
   $("stats").innerHTML =
     (overlaps ? `<span>重疊 <b style="color:var(--danger)">${overlaps}</b></span>` : "") +
     `<span>字幕 <b>${total}</b></span>` +
@@ -854,6 +856,34 @@ $("filters").addEventListener("click", (event) => {
   renderList();
 });
 
+/**
+ * Resolve overlaps by trimming the earlier line's tail up to where the next one
+ * starts. When the earlier line has no room to give, push the later one's start
+ * instead. A pair too tight for either stays flagged rather than being fudged.
+ */
+function fixOverlaps() {
+  const ordered = [...S.segments].sort((a, b) => a.start - b.start || a.end - b.end);
+  let fixed = 0, stuck = 0;
+  for (let i = 1; i < ordered.length; i++) {
+    const previous = ordered[i - 1], current = ordered[i];
+    if (current.start >= previous.end - 0.001) continue;
+    if (current.start - previous.start >= MIN_SPAN) {
+      previous.end = Math.round(current.start * 100) / 100;
+      fixed++;
+    } else if (current.end - previous.end >= MIN_SPAN) {
+      current.start = Math.round(previous.end * 100) / 100;
+      fixed++;
+    } else {
+      stuck++;
+    }
+  }
+  if (!fixed && !stuck) return toast("沒有重疊的字幕");
+  markDirty(); renderList(); drawTimeline();
+  toast(stuck
+    ? `修好 ${fixed} 處，還有 ${stuck} 處兩句幾乎完全重疊，需要你自己刪掉或改時間`
+    : `修好 ${fixed} 處重疊`, Boolean(stuck));
+}
+
 function jumpReview(direction) {
   const n = S.segments.length;
   for (let step = 1; step <= n; step++) {
@@ -863,6 +893,7 @@ function jumpReview(direction) {
   toast("沒有待審的字幕了");
 }
 $("btnInsert").onclick = insertAtPlayhead;
+$("btnFixOverlap").onclick = fixOverlaps;
 $("btnNextRisk").onclick = () => jumpReview(1);
 $("btnPrevRisk").onclick = () => jumpReview(-1);
 
