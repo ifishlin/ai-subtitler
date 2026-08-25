@@ -183,6 +183,7 @@ main{display:flex;flex:1;min-height:0}
         </div>
         <button id="btnPrevRisk" class="tiny">上一個待審</button>
         <button id="btnNextRisk" class="tiny">下一個待審</button>
+        <button id="btnInsert" class="tiny">＋ 在播放位置插入字幕</button>
         <div style="flex:1"></div>
         <label style="font-size:12px;color:var(--dim);display:flex;gap:5px;align-items:center">
           <input type="checkbox" id="follow" checked>播放時跟隨
@@ -201,6 +202,7 @@ main{display:flex;flex:1;min-height:0}
     <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>上一段 / 下一段</td><td><kbd>Enter</kbd></td><td>編輯這一段</td></tr>
     <tr><td><kbd>P</kbd></td><td>只播這一段</td><td><kbd>D</kbd></td><td>標記已確認</td></tr>
     <tr><td><kbd>R</kbd></td><td>退回 Whisper 原文</td><td><kbd>⌘S</kbd></td><td>儲存</td></tr>
+    <tr><td><kbd>N</kbd></td><td>在播放位置插入字幕</td><td></td><td></td></tr>
   </table>
   <h3>在輸入框時</h3>
   <table>
@@ -528,15 +530,45 @@ function splitAt(index, caret) {
 }
 
 function insertSegment(start, end, text) {
-  S.segments.push({
+  const fresh = {
     id: 0, start, end, text: text || "",
     whisper: "", qwen: "", origin: "manual", risk: 0, confirmed: false,
-  });
+  };
+  S.segments.push(fresh);
   S.segments.sort((a, b) => a.start - b.start || a.end - b.end);
   markDirty();
-  const index = S.segments.findIndex((s) => s.start === start && s.text === (text || ""));
+  // A brand-new line matches neither the risky nor the sidecar filter, so fall
+  // back to showing everything rather than inserting into an invisible list.
+  if (!matches(fresh)) {
+    S.filter = "all";
+    document.querySelectorAll("#filters button").forEach((b) => b.classList.toggle("on", b.dataset.f === "all"));
+  }
   renderList();
-  setCursor(index >= 0 ? index : S.cursor, { focus: true });
+  setCursor(S.segments.indexOf(fresh), { focus: true });
+}
+
+const NEW_LENGTH = 2.5;   // default length of an inserted subtitle, in seconds
+const MIN_LENGTH = 0.4;
+
+/**
+ * Insert an empty subtitle at the playhead.
+ * The end is clipped to the next subtitle so inserting never creates an
+ * overlap; if the playhead sits inside a subtitle, start after that one.
+ */
+function insertAtPlayhead() {
+  let start = Math.round(video.currentTime * 100) / 100;
+  const inside = S.segments.find((s) => start >= s.start && start < s.end);
+  if (inside) start = inside.end;
+
+  const next = S.segments.find((s) => s.start >= start);
+  const limit = Math.min(next ? next.start : S.duration, S.duration);
+  const end = Math.min(start + NEW_LENGTH, limit);
+
+  if (end - start < MIN_LENGTH) {
+    return toast("這個位置沒有空檔可以插入。把播放頭移到字幕之間的空隙，或用「分割」把現有字幕切成兩段。", true);
+  }
+  insertSegment(start, Math.round(end * 100) / 100, "");
+  toast(`已在 ${fmt(start)} 插入空白字幕，直接打字即可`);
 }
 
 /* ============================== list events ============================== */
@@ -698,6 +730,7 @@ function jumpReview(direction) {
   }
   toast("沒有待審的字幕了");
 }
+$("btnInsert").onclick = insertAtPlayhead;
 $("btnNextRisk").onclick = () => jumpReview(1);
 $("btnPrevRisk").onclick = () => jumpReview(-1);
 
@@ -776,6 +809,7 @@ document.addEventListener("keydown", (event) => {
       if (s) { s.confirmed = !s.confirmed; markDirty(); renderList(); drawTimeline(); } break;
     case "r": event.preventDefault();
       if (s && s.whisper) { s.text = s.whisper; markDirty(); renderList(); } break;
+    case "n": event.preventDefault(); insertAtPlayhead(); break;
   }
 });
 
