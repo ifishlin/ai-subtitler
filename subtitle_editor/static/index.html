@@ -104,6 +104,18 @@ main{display:flex;flex:1;min-height:0}
 .ref .val{flex:1;word-break:break-all}
 .ref del{color:var(--danger);text-decoration:none;background:#38222355}
 .ref ins{color:var(--ok);text-decoration:none;background:#1d332955}
+.times{display:flex;gap:4px;align-items:center;margin-top:6px;flex-wrap:wrap;
+  font-size:11px;color:var(--faint)}
+.times .lbl{color:var(--dim);margin-left:4px}
+.times .lbl:first-child{margin-left:0}
+.times input.num{width:5.4em;font:12px var(--mono);text-align:right;color:var(--ink);
+  background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:2px 4px;
+  font-variant-numeric:tabular-nums}
+.times input.num:focus{outline:0;border-color:var(--accent)}
+.times input.num::-webkit-inner-spin-button{display:none}
+.times .len{margin-left:auto;font:11px var(--mono);color:var(--dim)}
+.times .len.bad{color:var(--danger)}
+.row.overlap{border-left-color:var(--danger)}
 .acts{display:flex;gap:5px;margin-top:6px;align-items:center}
 .acts .fill{flex:1}
 
@@ -209,10 +221,13 @@ main{display:flex;flex:1;min-height:0}
     <tr><td><kbd>Enter</kbd></td><td>確認並跳下一段</td><td><kbd>Esc</kbd></td><td>離開輸入框</td></tr>
     <tr><td><kbd>Tab</kbd></td><td>下一段</td><td><kbd>⌘Enter</kbd></td><td>在游標處分割字幕</td></tr>
   </table>
-  <h3>調整時間（隨時可用）</h3>
+  <h3>調整時間</h3>
+  <p style="margin:0 0 8px;font-size:12px;color:var(--dim)">
+    每一段字幕下方有「起」「終」兩組控制：按 <b>−</b> <b>＋</b> 每次動 0.1 秒，
+    數字可以直接點進去打，或按「設為現在」把時間設成影片目前播放的位置。</p>
   <table>
-    <tr><td><kbd>⌃←</kbd> <kbd>⌃→</kbd></td><td>開始時間 ∓0.1 秒</td></tr>
-    <tr><td><kbd>⌃⇧←</kbd> <kbd>⌃⇧→</kbd></td><td>結束時間 ∓0.1 秒</td></tr>
+    <tr><td><kbd>,</kbd> <kbd>.</kbd></td><td>開始時間 ∓0.1 秒</td></tr>
+    <tr><td><kbd>;</kbd> <kbd>'</kbd></td><td>結束時間 ∓0.1 秒</td></tr>
   </table>
   <div style="margin-top:16px;text-align:right"><button id="btnHelpClose">關閉</button></div>
 </div></div>
@@ -263,6 +278,17 @@ const RISK = 0.25;
 const isRisky = (s) => (s.risk || 0) >= RISK && s.whisper;
 const isSidecar = (s) => s.origin === "sidecar";
 const needsReview = (s) => !s.confirmed && (isRisky(s) || isSidecar(s));
+
+/** Mark lines that overlap their neighbour -- burned subtitles would stack. */
+function markOverlaps() {
+  const ordered = [...S.segments].sort((a, b) => a.start - b.start);
+  ordered.forEach((s) => (s.overlap = false));
+  for (let i = 1; i < ordered.length; i++) {
+    if (ordered[i].start < ordered[i - 1].end - 0.001) {
+      ordered[i].overlap = true; ordered[i - 1].overlap = true;
+    }
+  }
+}
 
 function matches(s) {
   if (S.filter === "risky") return isRisky(s);
@@ -373,6 +399,7 @@ function rowHTML(s, index) {
   if (s.confirmed) cls.push("confirmed");
   if (isRisky(s)) cls.push("risky");
   if (isSidecar(s)) cls.push("sidecar");
+  if (s.overlap) cls.push("overlap");
 
   const tags = [];
   if (isRisky(s)) tags.push(`<span class="tag risk">Qwen 改動 ${Math.round(s.risk * 100)}%</span>`);
@@ -393,6 +420,19 @@ function rowHTML(s, index) {
     </div>
     <textarea rows="1" data-text="${index}">${(s.text || "").replace(/</g, "&lt;")}</textarea>
     ${ref}
+    <div class="times">
+      <span class="lbl">起</span>
+      <button class="tiny" data-nudge="${index}:start:-0.1">−</button>
+      <input class="num" type="number" step="0.1" min="0" data-time="${index}:start" value="${s.start.toFixed(2)}">
+      <button class="tiny" data-nudge="${index}:start:0.1">＋</button>
+      <button class="tiny" data-now="${index}:start" title="把開始時間設成影片目前位置">設為現在</button>
+      <span class="lbl">終</span>
+      <button class="tiny" data-nudge="${index}:end:-0.1">−</button>
+      <input class="num" type="number" step="0.1" min="0" data-time="${index}:end" value="${s.end.toFixed(2)}">
+      <button class="tiny" data-nudge="${index}:end:0.1">＋</button>
+      <button class="tiny" data-now="${index}:end" title="把結束時間設成影片目前位置">設為現在</button>
+      <span class="len ${s.overlap ? "bad" : ""}">${(s.end - s.start).toFixed(2)}s${s.overlap ? " · 與鄰句重疊" : ""}</span>
+    </div>
     <div class="acts">
       <button class="tiny" data-play="${index}">試聽</button>
       <button class="tiny" data-rel="${index}">重聽</button>
@@ -421,6 +461,7 @@ function gapHTML(g, key) {
 }
 
 function renderList() {
+  markOverlaps();
   // Interleave gaps with segments so everything reads in time order.
   const items = [];
   S.segments.forEach((s, index) => { if (matches(s)) items.push({ kind: "s", t: s.start, s, index }); });
@@ -443,7 +484,9 @@ function renderStats() {
   const risky = S.segments.filter(isRisky).length;
   const side = S.segments.filter(isSidecar).length;
   const todo = S.segments.filter(needsReview).length;
+  const overlaps = S.segments.filter((s) => s.overlap).length;
   $("stats").innerHTML =
+    (overlaps ? `<span>重疊 <b style="color:var(--danger)">${overlaps}</b></span>` : "") +
     `<span>字幕 <b>${total}</b></span>` +
     `<span>Qwen 改動大 <b>${risky}</b></span>` +
     `<span>人工補句 <b>${side}</b></span>` +
@@ -506,14 +549,25 @@ video.addEventListener("play", () => ($("btnPlay").textContent = "暫停"));
 video.addEventListener("pause", () => ($("btnPlay").textContent = "播放"));
 
 /* ============================== edits ============================== */
+const MIN_SPAN = 0.1;
+
+/** Set one boundary, keeping the line at least MIN_SPAN long and inside the video. */
+function setTime(index, field, value) {
+  const s = S.segments[index];
+  if (!s || !Number.isFinite(value)) return;
+  value = Math.max(0, Math.min(S.duration, Math.round(value * 100) / 100));
+  if (field === "start") {
+    if (value > s.end - MIN_SPAN) { toast("開始時間不能超過結束時間", true); return; }
+  } else if (value < s.start + MIN_SPAN) {
+    toast("結束時間不能早於開始時間", true); return;
+  }
+  s[field] = value;
+  markDirty(); renderList(); drawTimeline();
+}
+
 function nudge(index, field, delta) {
   const s = S.segments[index];
-  if (!s) return;
-  const value = Math.round((s[field] + delta) * 100) / 100;
-  if (field === "start" && value >= s.end - 0.1) return;
-  if (field === "end" && value <= s.start + 0.1) return;
-  s[field] = Math.max(0, Math.min(S.duration, value));
-  markDirty(); renderList(); drawTimeline();
+  if (s) setTime(index, field, s[field] + delta);
 }
 
 function splitAt(index, caret) {
@@ -572,6 +626,13 @@ function insertAtPlayhead() {
 }
 
 /* ============================== list events ============================== */
+$("list").addEventListener("change", (event) => {
+  const field = event.target.closest("input[data-time]");
+  if (!field) return;
+  const [index, which] = field.dataset.time.split(":");
+  setTime(+index, which, parseFloat(field.value));
+});
+
 $("list").addEventListener("input", (event) => {
   const box = event.target.closest("textarea[data-text]");
   if (!box) return;
@@ -609,6 +670,18 @@ $("list").addEventListener("click", async (event) => {
 
   const play = pick("play");
   if (play !== undefined) { const s = S.segments[+play]; return playRange(s.start, s.end); }
+
+  const nudgeSpec = pick("nudge");
+  if (nudgeSpec !== undefined) {
+    const [index, field, delta] = nudgeSpec.split(":");
+    return nudge(+index, field, parseFloat(delta));
+  }
+
+  const nowSpec = pick("now");
+  if (nowSpec !== undefined) {
+    const [index, field] = nowSpec.split(":");
+    return setTime(+index, field, video.currentTime);
+  }
 
   const revert = pick("revert");
   if (revert !== undefined) {
@@ -786,7 +859,7 @@ document.addEventListener("keydown", (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
     event.preventDefault(); return save();
   }
-  // Time nudging works even while typing -- it never inserts characters.
+  // macOS binds Control+Arrow to Spaces, so those never reach the page.
   if (event.ctrlKey && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
     event.preventDefault();
     const delta = event.key === "ArrowRight" ? 0.1 : -0.1;
@@ -810,6 +883,10 @@ document.addEventListener("keydown", (event) => {
     case "r": event.preventDefault();
       if (s && s.whisper) { s.text = s.whisper; markDirty(); renderList(); } break;
     case "n": event.preventDefault(); insertAtPlayhead(); break;
+    case ",": event.preventDefault(); nudge(S.cursor, "start", -0.1); break;
+    case ".": event.preventDefault(); nudge(S.cursor, "start", 0.1); break;
+    case ";": event.preventDefault(); nudge(S.cursor, "end", -0.1); break;
+    case "'": event.preventDefault(); nudge(S.cursor, "end", 0.1); break;
   }
 });
 
