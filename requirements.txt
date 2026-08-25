@@ -1,0 +1,4 @@
+faster-whisper==1.2.1
+opencc-python-reimplemented==0.1.7
+Pillow==11.3.0
+yt-dlp==2026.8.19

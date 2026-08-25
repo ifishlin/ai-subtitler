@@ -1,0 +1,21 @@
+# Python environment
+.venv/
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# Pipeline artifacts (all regenerable by main.py)
+output/
+
+# Downloaded and intermediate media
+work/*.mp4
+work/*.wav
+work/*.webm
+work/*.m4a
+work/*.info.json
+
+# Reviewed sidecars are kept in version control on purpose:
+#   work/*.corrections.json
+#   work/*.extra_segments.json
