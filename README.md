@@ -55,6 +55,18 @@ output/
 
 Cards appear temporarily on the right side of the original picture. The original audio continues underneath. See `AI_SERVICE.md` for the remote model configuration.
 
+## Subtitle review UI
+
+A standalone local web page for proofreading the finished subtitles and
+re-burning the video, without re-running this pipeline:
+
+```bash
+.venv/bin/python subtitle_editor/server.py
+```
+
+It reads `output/` and `work/` and writes only `output/subtitles_zh.reviewed.srt`,
+`output/final_reviewed.mp4` and `editor_cache/`. See `subtitle_editor/README.md`.
+
 For publish-quality proper nouns, an optional sidecar named `VIDEO.corrections.json` can map transcript segment IDs to reviewed text. The included test video has such a review file under `work/`.
 
 If Whisper misses accented, Taiwanese, overlapping, or telephone speech, an optional

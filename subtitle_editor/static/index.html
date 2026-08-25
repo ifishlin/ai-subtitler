@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>字幕校對</title>
+<style>
+:root{
+  --bg:#14161a; --panel:#1c1f25; --panel2:#22262e; --line:#2e333d;
+  --ink:#e8eaee; --dim:#98a0ae; --faint:#6b7280;
+  --accent:#5aa9ff; --warn:#f5b544; --danger:#ef6b6b; --ok:#4ec98b; --sidecar:#a98bff;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  background:var(--bg); color:var(--ink); overflow:hidden;
+  font:14px/1.5 -apple-system,"PingFang TC","Helvetica Neue",sans-serif;
+}
+button{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line);
+  border-radius:6px;padding:5px 10px;cursor:pointer}
+button:hover:not(:disabled){background:#2c313b;border-color:#3d4450}
+button:disabled{opacity:.4;cursor:default}
+button.primary{background:var(--accent);border-color:var(--accent);color:#0b1017;font-weight:600}
+button.primary:hover:not(:disabled){background:#74b8ff}
+button.tiny{padding:2px 7px;font-size:12px}
+kbd{font:11px/1 var(--mono);background:#2b303a;border:1px solid var(--line);
+  border-bottom-width:2px;border-radius:4px;padding:2px 5px;color:var(--dim)}
+
+/* ---------- shell ---------- */
+#app{display:flex;flex-direction:column;height:100%}
+header{
+  display:flex;align-items:center;gap:14px;padding:9px 14px;
+  background:var(--panel);border-bottom:1px solid var(--line);flex:none
+}
+header h1{font-size:14px;font-weight:600;margin:0;letter-spacing:.02em}
+header .src{font:12px var(--mono);color:var(--faint)}
+header .spacer{flex:1}
+#stats{display:flex;gap:12px;font-size:12px;color:var(--dim)}
+#stats b{color:var(--ink);font-variant-numeric:tabular-nums}
+#saveState{font-size:12px;color:var(--faint);min-width:5.5em;text-align:right}
+#saveState.dirty{color:var(--warn)}
+
+main{display:flex;flex:1;min-height:0}
+#left{width:52%;min-width:420px;display:flex;flex-direction:column;
+  border-right:1px solid var(--line);min-height:0}
+#right{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
+
+/* ---------- video ---------- */
+#stage{position:relative;background:#000;flex:none}
+#video{display:block;width:100%;max-height:44vh;background:#000}
+#overlay{
+  position:absolute;left:0;right:0;bottom:6%;text-align:center;
+  pointer-events:none;padding:0 6%;
+}
+#overlay span{
+  font:600 clamp(15px,2.1vw,25px)/1.35 "PingFang TC",sans-serif;
+  color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;
+  text-shadow:0 2px 4px rgba(0,0,0,.6);white-space:pre-wrap;
+}
+#transport{display:flex;align-items:center;gap:10px;padding:7px 12px;
+  background:var(--panel);border-bottom:1px solid var(--line);flex:none}
+#clock{font:12px var(--mono);color:var(--dim);font-variant-numeric:tabular-nums}
+#transport .hint{margin-left:auto;font-size:12px;color:var(--faint)}
+
+/* ---------- timeline ---------- */
+#tlWrap{flex:1;min-height:0;overflow:auto;padding:10px 12px;background:var(--bg)}
+#tl{display:block;width:100%;height:150px;cursor:crosshair;
+  border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+#legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:var(--faint)}
+#legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;
+  vertical-align:-1px}
+
+/* ---------- list ---------- */
+#tools{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--panel);
+  border-bottom:1px solid var(--line);flex:none;flex-wrap:wrap}
+#tools .seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#tools .seg button{border:0;border-radius:0;background:transparent;padding:4px 9px;font-size:12px}
+#tools .seg button.on{background:var(--accent);color:#0b1017;font-weight:600}
+#list{flex:1;overflow:auto;padding:8px 10px 40vh}
+
+.row{border:1px solid var(--line);border-left:3px solid var(--line);border-radius:8px;
+  background:var(--panel);margin-bottom:6px;padding:7px 9px}
+.row.active{border-color:var(--accent);border-left-color:var(--accent);background:#1e2530}
+.row.confirmed{border-left-color:var(--ok)}
+.row.risky:not(.confirmed){border-left-color:var(--warn)}
+.row.sidecar:not(.confirmed){border-left-color:var(--sidecar)}
+.row .top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.row .id{font:11px var(--mono);color:var(--faint);min-width:2.2em}
+.row .time{font:11px var(--mono);color:var(--dim);font-variant-numeric:tabular-nums;cursor:pointer}
+.row .time:hover{color:var(--accent)}
+.row .tags{display:flex;gap:5px;margin-left:auto}
+.tag{font-size:10px;padding:1px 6px;border-radius:99px;border:1px solid}
+.tag.risk{color:var(--warn);border-color:#5b4a22;background:#2a2416}
+.tag.side{color:var(--sidecar);border-color:#463a68;background:#231d33}
+.row textarea{
+  width:100%;resize:vertical;min-height:2.3em;font:15px/1.45 "PingFang TC",sans-serif;
+  color:var(--ink);background:var(--panel2);border:1px solid var(--line);
+  border-radius:6px;padding:6px 8px
+}
+.row textarea:focus{outline:0;border-color:var(--accent);background:#20262f}
+.ref{display:flex;gap:7px;align-items:flex-start;margin-top:5px;font-size:12px;color:var(--dim)}
+.ref .lbl{color:var(--faint);flex:none;font:11px var(--mono);padding-top:2px}
+.ref .val{flex:1;word-break:break-all}
+.ref del{color:var(--danger);text-decoration:none;background:#38222355}
+.ref ins{color:var(--ok);text-decoration:none;background:#1d332955}
+.acts{display:flex;gap:5px;margin-top:6px;align-items:center}
+.acts .fill{flex:1}
+
+.gap{border:1px dashed #5a3b3b;border-radius:8px;background:#241a1a;
+  margin-bottom:6px;padding:7px 9px}
+.gap .top{display:flex;align-items:center;gap:8px;font-size:12px;color:#f0a5a5}
+.gap .top b{font:11px var(--mono)}
+.cand{border:1px solid var(--line);border-radius:6px;background:var(--panel2);
+  padding:6px 8px;margin-top:6px;display:flex;gap:8px;align-items:flex-start}
+.cand .t{flex:1}
+.cand .m{font:11px var(--mono);color:var(--faint)}
+
+#help{position:fixed;inset:0;background:#0009;display:none;align-items:center;
+  justify-content:center;z-index:20}
+#help.on{display:flex}
+#help .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:20px 24px;max-width:560px;box-shadow:0 20px 60px #000a}
+#help table{border-collapse:collapse;font-size:13px}
+#help td{padding:4px 12px 4px 0;vertical-align:top}
+#help h2{margin:0 0 12px;font-size:15px}
+#help h3{margin:16px 0 6px;font-size:12px;color:var(--faint);font-weight:600}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+  background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:9px 16px;font-size:13px;box-shadow:0 8px 24px #0008;opacity:0;
+  transition:opacity .2s;pointer-events:none;z-index:30;max-width:70vw}
+#toast.on{opacity:1}
+#toast.err{border-color:var(--danger);color:#ffbdbd}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>字幕校對</h1>
+    <span class="src" id="srcName">…</span>
+    <div class="spacer"></div>
+    <div id="stats"></div>
+    <span id="saveState"></span>
+    <button id="btnSave" class="primary">儲存 SRT</button>
+    <button id="btnBurn">重新燒錄</button>
+    <button id="btnHelp">?</button>
+  </header>
+
+  <main>
+    <div id="left">
+      <div id="stage">
+        <video id="video" src="/media/proxy.mp4" preload="auto" playsinline></video>
+        <div id="overlay"><span id="overlayText"></span></div>
+      </div>
+      <div id="transport">
+        <button id="btnBack" class="tiny">◀ 2s</button>
+        <button id="btnPlay" class="tiny">播放</button>
+        <button id="btnFwd" class="tiny">2s ▶</button>
+        <span id="clock">0:00.0 / 0:00.0</span>
+        <span class="hint">按 <kbd>?</kbd> 看快速鍵</span>
+      </div>
+      <div id="tlWrap">
+        <canvas id="tl"></canvas>
+        <div id="legend">
+          <span><i style="background:#3f4a5a"></i>波形</span>
+          <span><i style="background:var(--accent)"></i>字幕</span>
+          <span><i style="background:var(--warn)"></i>Qwen 改動大</span>
+          <span><i style="background:var(--sidecar)"></i>人工補的句子</span>
+          <span><i style="background:var(--ok)"></i>已確認</span>
+          <span><i style="background:var(--danger)"></i>字幕空白區</span>
+          <span><i style="background:#8a6d3b"></i>資訊圖卡</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="right">
+      <div id="tools">
+        <div class="seg" id="filters">
+          <button data-f="all" class="on">全部</button>
+          <button data-f="risky">Qwen 改動大</button>
+          <button data-f="sidecar">人工補句</button>
+          <button data-f="todo">未確認</button>
+        </div>
+        <button id="btnPrevRisk" class="tiny">上一個待審</button>
+        <button id="btnNextRisk" class="tiny">下一個待審</button>
+        <div style="flex:1"></div>
+        <label style="font-size:12px;color:var(--dim);display:flex;gap:5px;align-items:center">
+          <input type="checkbox" id="follow" checked>播放時跟隨
+        </label>
+      </div>
+      <div id="list"></div>
+    </div>
+  </main>
+</div>
+
+<div id="help"><div class="card">
+  <h2>快速鍵</h2>
+  <h3>不在輸入框時</h3>
+  <table>
+    <tr><td><kbd>空白</kbd></td><td>播放 / 暫停</td><td><kbd>J</kbd> <kbd>L</kbd></td><td>倒退 / 前進 2 秒</td></tr>
+    <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>上一段 / 下一段</td><td><kbd>Enter</kbd></td><td>編輯這一段</td></tr>
+    <tr><td><kbd>P</kbd></td><td>只播這一段</td><td><kbd>D</kbd></td><td>標記已確認</td></tr>
+    <tr><td><kbd>R</kbd></td><td>退回 Whisper 原文</td><td><kbd>⌘S</kbd></td><td>儲存</td></tr>
+  </table>
+  <h3>在輸入框時</h3>
+  <table>
+    <tr><td><kbd>Enter</kbd></td><td>確認並跳下一段</td><td><kbd>Esc</kbd></td><td>離開輸入框</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>下一段</td><td><kbd>⌘Enter</kbd></td><td>在游標處分割字幕</td></tr>
+  </table>
+  <h3>調整時間（隨時可用）</h3>
+  <table>
+    <tr><td><kbd>⌃←</kbd> <kbd>⌃→</kbd></td><td>開始時間 ∓0.1 秒</td></tr>
+    <tr><td><kbd>⌃⇧←</kbd> <kbd>⌃⇧→</kbd></td><td>結束時間 ∓0.1 秒</td></tr>
+  </table>
+  <div style="margin-top:16px;text-align:right"><button id="btnHelpClose">關閉</button></div>
+</div></div>
+<div id="toast"></div>
+<script>
+"use strict";
+
+/* ============================== state ============================== */
+const S = {
+  duration: 0, segments: [], gaps: [], visuals: [], peaks: [],
+  cursor: 0,            // index into S.segments
+  filter: "all",
+  dirty: false,
+  playUntil: null,      // for "play this segment only"
+};
+
+const $ = (id) => document.getElementById(id);
+const video = $("video");
+
+const fmt = (t) => {
+  t = Math.max(0, t || 0);
+  const m = Math.floor(t / 60), s = t - m * 60;
+  return `${m}:${s.toFixed(1).padStart(4, "0")}`;
+};
+
+let toastTimer = null;
+function toast(message, isError) {
+  const el = $("toast");
+  el.textContent = message;
+  el.className = "on" + (isError ? " err" : "");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => (el.className = ""), isError ? 6000 : 2600);
+}
+
+async function api(method, path, body) {
+  const response = await fetch(path, {
+    method,
+    headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.detail || `${method} ${path} 失敗`);
+  return data;
+}
+
+/* ============================== classify ============================== */
+const RISK = 0.25;
+const isRisky = (s) => (s.risk || 0) >= RISK && s.whisper;
+const isSidecar = (s) => s.origin === "sidecar";
+const needsReview = (s) => !s.confirmed && (isRisky(s) || isSidecar(s));
+
+function matches(s) {
+  if (S.filter === "risky") return isRisky(s);
+  if (S.filter === "sidecar") return isSidecar(s);
+  if (S.filter === "todo") return !s.confirmed;
+  return true;
+}
+
+/* ============================== diff ============================== */
+/** Character-level diff, rendered so Qwen's edits to Whisper are visible. */
+function diffHTML(before, after) {
+  const a = [...(before || "")], b = [...(after || "")];
+  // Longest common subsequence over short strings -- subtitle lines are tiny.
+  const n = a.length, m = b.length;
+  const dp = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+
+  const esc = (c) => c.replace(/[&<>]/g, (x) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[x]));
+  let out = "", i = 0, j = 0, mode = "", buf = "";
+  const flush = () => {
+    if (!buf) return;
+    out += mode === "-" ? `<del>${esc(buf)}</del>` : mode === "+" ? `<ins>${esc(buf)}</ins>` : esc(buf);
+    buf = "";
+  };
+  const push = (kind, ch) => { if (kind !== mode) { flush(); mode = kind; } buf += ch; };
+  while (i < n && j < m) {
+    if (a[i] === b[j]) push("=", a[i]), i++, j++;
+    else if (dp[i + 1][j] >= dp[i][j + 1]) push("-", a[i]), i++;
+    else push("+", b[j]), j++;
+  }
+  while (i < n) push("-", a[i++]);
+  while (j < m) push("+", b[j++]);
+  flush();
+  return out;
+}
+
+/* ============================== timeline ============================== */
+const tl = $("tl"), ctx = tl.getContext("2d");
+const LANE = { wave: [8, 74], subs: [86, 108], gaps: [110, 122], cards: [124, 138] };
+
+function tlLayout() {
+  const ratio = window.devicePixelRatio || 1;
+  const width = tl.clientWidth, height = 150;
+  tl.width = width * ratio; tl.height = height * ratio;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  return width;
+}
+
+function drawTimeline() {
+  const width = tlLayout();
+  const x = (t) => (S.duration ? (t / S.duration) * width : 0);
+  ctx.clearRect(0, 0, width, 150);
+
+  // waveform
+  const [wy, wy2] = LANE.wave, mid = (wy + wy2) / 2, half = (wy2 - wy) / 2;
+  ctx.fillStyle = "#3f4a5a";
+  const peaks = S.peaks;
+  if (peaks.length) {
+    for (let px = 0; px < width; px++) {
+      const from = Math.floor((px / width) * peaks.length);
+      const to = Math.max(from + 1, Math.floor(((px + 1) / width) * peaks.length));
+      let peak = 0;
+      for (let k = from; k < to && k < peaks.length; k++) peak = Math.max(peak, peaks[k]);
+      const h = Math.max(1, peak * half);
+      ctx.fillRect(px, mid - h, 1, h * 2);
+    }
+  }
+
+  // subtitle band
+  const [sy, sy2] = LANE.subs;
+  ctx.fillStyle = "#22262e"; ctx.fillRect(0, sy, width, sy2 - sy);
+  S.segments.forEach((s, index) => {
+    const left = x(s.start), w = Math.max(1.5, x(s.end) - left);
+    ctx.fillStyle = s.confirmed ? "#4ec98b" : isSidecar(s) ? "#a98bff" : isRisky(s) ? "#f5b544" : "#5aa9ff";
+    ctx.globalAlpha = index === S.cursor ? 1 : 0.62;
+    ctx.fillRect(left, sy, w, sy2 - sy);
+    ctx.globalAlpha = 1;
+  });
+
+  // gaps
+  const [gy, gy2] = LANE.gaps;
+  ctx.fillStyle = "#22262e"; ctx.fillRect(0, gy, width, gy2 - gy);
+  ctx.fillStyle = "#ef6b6b";
+  S.gaps.forEach((g) => ctx.fillRect(x(g.start), gy, Math.max(2, x(g.end) - x(g.start)), gy2 - gy));
+
+  // information cards
+  const [cy, cy2] = LANE.cards;
+  ctx.fillStyle = "#22262e"; ctx.fillRect(0, cy, width, cy2 - cy);
+  ctx.fillStyle = "#8a6d3b";
+  S.visuals.forEach((v) => ctx.fillRect(x(v.start), cy, Math.max(2, x(v.end) - x(v.start)), cy2 - cy));
+
+  // playhead
+  const px = x(video.currentTime);
+  ctx.fillStyle = "#fff"; ctx.fillRect(px - 0.5, 4, 1.5, 142);
+}
+
+tl.addEventListener("click", (event) => {
+  const rect = tl.getBoundingClientRect();
+  seek(((event.clientX - rect.left) / rect.width) * S.duration);
+});
+
+/* ============================== list ============================== */
+function rowHTML(s, index) {
+  const cls = ["row"];
+  if (index === S.cursor) cls.push("active");
+  if (s.confirmed) cls.push("confirmed");
+  if (isRisky(s)) cls.push("risky");
+  if (isSidecar(s)) cls.push("sidecar");
+
+  const tags = [];
+  if (isRisky(s)) tags.push(`<span class="tag risk">Qwen 改動 ${Math.round(s.risk * 100)}%</span>`);
+  if (isSidecar(s)) tags.push(`<span class="tag side">人工補句</span>`);
+
+  const showRef = s.whisper && s.whisper !== s.text;
+  const ref = showRef ? `
+    <div class="ref">
+      <span class="lbl">Whisper</span>
+      <span class="val">${diffHTML(s.whisper, s.text)}</span>
+    </div>` : "";
+
+  return `<div class="${cls.join(" ")}" data-i="${index}">
+    <div class="top">
+      <span class="id">#${s.id}</span>
+      <span class="time" data-seek="${s.start}">${fmt(s.start)} → ${fmt(s.end)}</span>
+      <div class="tags">${tags.join("")}</div>
+    </div>
+    <textarea rows="1" data-text="${index}">${(s.text || "").replace(/</g, "&lt;")}</textarea>
+    ${ref}
+    <div class="acts">
+      <button class="tiny" data-play="${index}">試聽</button>
+      <button class="tiny" data-rel="${index}">重聽</button>
+      ${showRef ? `<button class="tiny" data-revert="${index}">退回 Whisper</button>` : ""}
+      <button class="tiny" data-split="${index}">分割</button>
+      <button class="tiny" data-del="${index}">刪除</button>
+      <span class="fill"></span>
+      <button class="tiny" data-ok="${index}">${s.confirmed ? "✓ 已確認" : "標記確認"}</button>
+    </div>
+    <div class="cands" data-rcands="${index}"></div>
+  </div>`;
+}
+
+function gapHTML(g, key) {
+  return `<div class="gap" data-gap="${key}">
+    <div class="top">
+      <span>字幕空白區</span>
+      <b>${fmt(g.start)} → ${fmt(g.end)}（${(g.end - g.start).toFixed(1)}s）</b>
+      <span class="fill" style="flex:1"></span>
+      <button class="tiny" data-gplay="${key}">試聽</button>
+      <button class="tiny" data-relisten="${key}">重聽這段</button>
+      <button class="tiny" data-gadd="${key}">手動加字幕</button>
+    </div>
+    <div class="cands" data-cands="${key}"></div>
+  </div>`;
+}
+
+function renderList() {
+  // Interleave gaps with segments so everything reads in time order.
+  const items = [];
+  S.segments.forEach((s, index) => { if (matches(s)) items.push({ kind: "s", t: s.start, s, index }); });
+  if (S.filter === "all") S.gaps.forEach((g, k) => items.push({ kind: "g", t: g.start, g, k }));
+  items.sort((a, b) => a.t - b.t);
+
+  $("list").innerHTML = items.length
+    ? items.map((it) => (it.kind === "s" ? rowHTML(it.s, it.index) : gapHTML(it.g, it.k))).join("")
+    : `<div style="color:var(--faint);padding:20px;text-align:center">這個條件下沒有字幕</div>`;
+
+  document.querySelectorAll("#list textarea").forEach((box) => {
+    box.style.height = "auto";
+    box.style.height = box.scrollHeight + "px";
+  });
+  renderStats();
+}
+
+function renderStats() {
+  const total = S.segments.length;
+  const risky = S.segments.filter(isRisky).length;
+  const side = S.segments.filter(isSidecar).length;
+  const todo = S.segments.filter(needsReview).length;
+  $("stats").innerHTML =
+    `<span>字幕 <b>${total}</b></span>` +
+    `<span>Qwen 改動大 <b>${risky}</b></span>` +
+    `<span>人工補句 <b>${side}</b></span>` +
+    `<span>空白區 <b>${S.gaps.length}</b></span>` +
+    `<span>待審 <b style="color:${todo ? "var(--warn)" : "var(--ok)"}">${todo}</b></span>`;
+  $("saveState").textContent = S.dirty ? "未儲存" : "已儲存";
+  $("saveState").className = S.dirty ? "dirty" : "";
+}
+
+function markDirty() { S.dirty = true; renderStats(); }
+
+/* ============================== cursor & playback ============================== */
+function setCursor(index, opts = {}) {
+  if (index < 0 || index >= S.segments.length) return;
+  S.cursor = index;
+  renderList();
+  const row = document.querySelector(`.row[data-i="${index}"]`);
+  if (row) row.scrollIntoView({ block: "nearest", behavior: opts.smooth ? "smooth" : "auto" });
+  if (opts.seek) seek(S.segments[index].start);
+  if (opts.focus && row) {
+    const box = row.querySelector("textarea");
+    if (box) { box.focus(); box.setSelectionRange(box.value.length, box.value.length); }
+  }
+  drawTimeline();
+}
+
+function seek(t) {
+  video.currentTime = Math.max(0, Math.min(S.duration - 0.05, t));
+  S.playUntil = null;
+  syncOverlay();
+}
+
+function playRange(start, end) {
+  video.currentTime = Math.max(0, start);
+  S.playUntil = end;
+  video.play();
+}
+
+function activeIndex(t) {
+  return S.segments.findIndex((s) => t >= s.start && t < s.end);
+}
+
+function syncOverlay() {
+  const t = video.currentTime;
+  const index = activeIndex(t);
+  $("overlayText").textContent = index >= 0 ? S.segments[index].text || "" : "";
+  $("clock").textContent = `${fmt(t)} / ${fmt(S.duration)}`;
+  if (index >= 0 && index !== S.cursor && $("follow").checked && !video.paused) setCursor(index);
+  drawTimeline();
+}
+
+video.addEventListener("timeupdate", () => {
+  if (S.playUntil !== null && video.currentTime >= S.playUntil) {
+    video.pause(); S.playUntil = null;
+  }
+  syncOverlay();
+});
+video.addEventListener("seeked", syncOverlay);
+video.addEventListener("play", () => ($("btnPlay").textContent = "暫停"));
+video.addEventListener("pause", () => ($("btnPlay").textContent = "播放"));
+
+/* ============================== edits ============================== */
+function nudge(index, field, delta) {
+  const s = S.segments[index];
+  if (!s) return;
+  const value = Math.round((s[field] + delta) * 100) / 100;
+  if (field === "start" && value >= s.end - 0.1) return;
+  if (field === "end" && value <= s.start + 0.1) return;
+  s[field] = Math.max(0, Math.min(S.duration, value));
+  markDirty(); renderList(); drawTimeline();
+}
+
+function splitAt(index, caret) {
+  const s = S.segments[index];
+  const text = s.text || "";
+  const at = Math.max(1, Math.min(text.length - 1, caret));
+  if (text.length < 2) return toast("這一段太短，無法分割", true);
+  const ratio = at / text.length;
+  const cut = Math.round((s.start + (s.end - s.start) * ratio) * 100) / 100;
+  const second = { ...s, start: cut, text: text.slice(at).trim(), whisper: "", qwen: "", risk: 0, confirmed: false };
+  s.end = cut; s.text = text.slice(0, at).trim();
+  S.segments.splice(index + 1, 0, second);
+  markDirty(); setCursor(index + 1, { focus: true });
+}
+
+function insertSegment(start, end, text) {
+  S.segments.push({
+    id: 0, start, end, text: text || "",
+    whisper: "", qwen: "", origin: "manual", risk: 0, confirmed: false,
+  });
+  S.segments.sort((a, b) => a.start - b.start || a.end - b.end);
+  markDirty();
+  const index = S.segments.findIndex((s) => s.start === start && s.text === (text || ""));
+  renderList();
+  setCursor(index >= 0 ? index : S.cursor, { focus: true });
+}
+
+/* ============================== list events ============================== */
+$("list").addEventListener("input", (event) => {
+  const box = event.target.closest("textarea[data-text]");
+  if (!box) return;
+  const index = +box.dataset.text;
+  S.segments[index].text = box.value;
+  box.style.height = "auto"; box.style.height = box.scrollHeight + "px";
+  markDirty();
+  if (index === activeIndex(video.currentTime)) $("overlayText").textContent = box.value;
+});
+
+$("list").addEventListener("focusin", (event) => {
+  const box = event.target.closest("textarea[data-text]");
+  if (box) { S.cursor = +box.dataset.text; drawTimeline(); }
+});
+
+$("list").addEventListener("keydown", (event) => {
+  const box = event.target.closest("textarea[data-text]");
+  if (!box) return;
+  const index = +box.dataset.text;
+  if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+    event.preventDefault(); splitAt(index, box.selectionStart);
+  } else if (event.key === "Enter") {
+    event.preventDefault(); setCursor(index + 1, { focus: true, seek: true });
+  } else if (event.key === "Escape") {
+    event.preventDefault(); box.blur();
+  }
+});
+
+$("list").addEventListener("click", async (event) => {
+  const target = event.target;
+  const pick = (name) => target.closest(`[data-${name}]`)?.dataset[name];
+
+  const seekTo = pick("seek");
+  if (seekTo !== undefined) return seek(+seekTo);
+
+  const play = pick("play");
+  if (play !== undefined) { const s = S.segments[+play]; return playRange(s.start, s.end); }
+
+  const revert = pick("revert");
+  if (revert !== undefined) {
+    const s = S.segments[+revert];
+    s.text = s.whisper; markDirty(); renderList(); return;
+  }
+
+  const split = pick("split");
+  if (split !== undefined) {
+    const s = S.segments[+split];
+    return splitAt(+split, Math.floor((s.text || "").length / 2));
+  }
+
+  const del = pick("del");
+  if (del !== undefined) {
+    const s = S.segments[+del];
+    if (!confirm(`刪除 #${s.id}「${s.text}」？`)) return;
+    S.segments.splice(+del, 1); markDirty(); renderList(); drawTimeline(); return;
+  }
+
+  const ok = pick("ok");
+  if (ok !== undefined) {
+    S.segments[+ok].confirmed = !S.segments[+ok].confirmed;
+    markDirty(); renderList(); drawTimeline(); return;
+  }
+
+  const gplay = pick("gplay");
+  if (gplay !== undefined) { const g = S.gaps[+gplay]; return playRange(g.start, g.end); }
+
+  const gadd = pick("gadd");
+  if (gadd !== undefined) { const g = S.gaps[+gadd]; return insertSegment(g.start, g.end, ""); }
+
+  const relisten = pick("relisten");
+  if (relisten !== undefined) {
+    const g = S.gaps[+relisten];
+    return doRelisten(target, `[data-cands="${relisten}"]`, g.start, g.end, "insert");
+  }
+
+  const rel = pick("rel");
+  if (rel !== undefined) {
+    const s = S.segments[+rel];
+    // Pad the window slightly: Whisper needs context at the edges to segment well.
+    return doRelisten(target, `[data-rcands="${rel}"]`,
+      Math.max(0, s.start - 0.4), Math.min(S.duration, s.end + 0.4), "replace", +rel);
+  }
+
+  const replace = target.closest("[data-replace]");
+  if (replace) {
+    const { index, text } = JSON.parse(replace.dataset.replace);
+    S.segments[index].text = text;
+    markDirty(); renderList();
+    return toast("已取代文字，記得確認時間是否也要調整");
+  }
+
+  const adopt = target.closest("[data-adopt]");
+  if (adopt) {
+    const { start, end, text } = JSON.parse(adopt.dataset.adopt);
+    return insertSegment(start, end, text);
+  }
+});
+
+/**
+ * Re-transcribe one window in sensitive mode and offer the result.
+ * mode "insert" adds a new subtitle (used on gaps); mode "replace" overwrites
+ * the text of segment `index` (used to get a second opinion on a risky line).
+ */
+async function doRelisten(button, boxSelector, start, end, mode, index) {
+  const box = document.querySelector(boxSelector);
+  const label = button.textContent;
+  button.disabled = true; button.textContent = "辨識中…";
+  box.innerHTML = `<div class="cand"><span class="t" style="color:var(--dim)">
+    正在對這 ${(end - start).toFixed(1)} 秒跑 sensitive 模式，第一次載入模型約需 30 秒…</span></div>`;
+  try {
+    const data = await api("POST", "/api/relisten", { start, end, sensitive: true });
+    if (!data.segments.length) {
+      box.innerHTML = `<div class="cand"><span class="t" style="color:var(--faint)">這段沒有辨識到語音</span></div>`;
+      return;
+    }
+    const rows = data.segments.map((c) => {
+      const action = mode === "insert"
+        ? `<button class="tiny" data-adopt='${JSON.stringify(c).replace(/'/g, "&#39;")}'>採用</button>`
+        : `<button class="tiny" data-replace='${JSON.stringify({ index, text: c.text }).replace(/'/g, "&#39;")}'>取代</button>`;
+      return `<div class="cand">
+        <span class="m">${fmt(c.start)}→${fmt(c.end)}</span>
+        <span class="t">${c.text.replace(/</g, "&lt;")}</span>
+        <span class="m" title="平均對數機率，越接近 0 表示越有信心">${c.logprob}</span>
+        ${action}</div>`;
+    });
+    if (mode === "replace" && data.segments.length > 1) {
+      const joined = data.segments.map((c) => c.text).join("");
+      rows.push(`<div class="cand">
+        <span class="m">合併</span>
+        <span class="t" style="color:var(--dim)">${joined.replace(/</g, "&lt;")}</span>
+        <button class="tiny" data-replace='${JSON.stringify({ index, text: joined }).replace(/'/g, "&#39;")}'>取代</button>
+      </div>`);
+    }
+    box.innerHTML = rows.join("");
+  } catch (error) {
+    box.innerHTML = `<div class="cand"><span class="t" style="color:var(--danger)">${error.message}</span></div>`;
+  } finally {
+    button.disabled = false; button.textContent = label;
+  }
+}
+
+/* ============================== toolbar ============================== */
+$("filters").addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-f]");
+  if (!button) return;
+  S.filter = button.dataset.f;
+  document.querySelectorAll("#filters button").forEach((b) => b.classList.toggle("on", b === button));
+  renderList();
+});
+
+function jumpReview(direction) {
+  const n = S.segments.length;
+  for (let step = 1; step <= n; step++) {
+    const index = (S.cursor + direction * step + n * step) % n;
+    if (needsReview(S.segments[index])) return setCursor(index, { seek: true, smooth: true });
+  }
+  toast("沒有待審的字幕了");
+}
+$("btnNextRisk").onclick = () => jumpReview(1);
+$("btnPrevRisk").onclick = () => jumpReview(-1);
+
+$("btnPlay").onclick = () => (video.paused ? video.play() : video.pause());
+$("btnBack").onclick = () => seek(video.currentTime - 2);
+$("btnFwd").onclick = () => seek(video.currentTime + 2);
+$("btnHelp").onclick = () => $("help").classList.add("on");
+$("btnHelpClose").onclick = () => $("help").classList.remove("on");
+$("help").onclick = (event) => { if (event.target.id === "help") $("help").classList.remove("on"); };
+
+/* ============================== save & burn ============================== */
+async function save() {
+  $("btnSave").disabled = true;
+  try {
+    const data = await api("PUT", "/api/state", { segments: S.segments });
+    S.segments = data.segments; S.gaps = data.gaps; S.dirty = false;
+    renderList(); drawTimeline();
+    toast(`已寫入 ${data.written.split("/").pop()}（${data.lines} 行）`);
+  } catch (error) {
+    toast(error.message, true);
+  } finally {
+    $("btnSave").disabled = false;
+  }
+}
+$("btnSave").onclick = save;
+
+let burnTimer = null;
+$("btnBurn").onclick = async () => {
+  if (!confirm("用原片 + 目前字幕 + 既有圖卡，重新燒錄 output/final_reviewed.mp4？\n這會花幾分鐘，原有的 final.mp4 不會被覆蓋。")) return;
+  try {
+    await api("PUT", "/api/state", { segments: S.segments });
+    S.dirty = false; renderStats();
+    await api("POST", "/api/burn", { segments: S.segments });
+    $("btnBurn").disabled = true; $("btnBurn").textContent = "燒錄中…";
+    clearInterval(burnTimer);
+    burnTimer = setInterval(async () => {
+      const status = await api("GET", "/api/burn");
+      if (status.state === "running") return;
+      clearInterval(burnTimer);
+      $("btnBurn").disabled = false; $("btnBurn").textContent = "重新燒錄";
+      toast(status.message, status.state === "error");
+    }, 2000);
+  } catch (error) {
+    toast(error.message, true);
+    $("btnBurn").disabled = false; $("btnBurn").textContent = "重新燒錄";
+  }
+};
+
+/* ============================== global keys ============================== */
+document.addEventListener("keydown", (event) => {
+  const typing = /^(TEXTAREA|INPUT)$/.test(document.activeElement?.tagName || "");
+
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
+    event.preventDefault(); return save();
+  }
+  // Time nudging works even while typing -- it never inserts characters.
+  if (event.ctrlKey && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+    event.preventDefault();
+    const delta = event.key === "ArrowRight" ? 0.1 : -0.1;
+    return nudge(S.cursor, event.shiftKey ? "end" : "start", delta);
+  }
+  if (event.key === "?" ) { $("help").classList.toggle("on"); return; }
+  if (event.key === "Escape") { $("help").classList.remove("on"); return; }
+  if (typing || event.metaKey || event.ctrlKey || event.altKey) return;
+
+  const s = S.segments[S.cursor];
+  switch (event.key.toLowerCase()) {
+    case " ": event.preventDefault(); video.paused ? video.play() : video.pause(); break;
+    case "j": event.preventDefault(); seek(video.currentTime - 2); break;
+    case "l": event.preventDefault(); seek(video.currentTime + 2); break;
+    case "arrowup": event.preventDefault(); setCursor(S.cursor - 1, { seek: true }); break;
+    case "arrowdown": event.preventDefault(); setCursor(S.cursor + 1, { seek: true }); break;
+    case "enter": event.preventDefault(); setCursor(S.cursor, { focus: true }); break;
+    case "p": event.preventDefault(); if (s) playRange(s.start, s.end); break;
+    case "d": event.preventDefault();
+      if (s) { s.confirmed = !s.confirmed; markDirty(); renderList(); drawTimeline(); } break;
+    case "r": event.preventDefault();
+      if (s && s.whisper) { s.text = s.whisper; markDirty(); renderList(); } break;
+  }
+});
+
+window.addEventListener("beforeunload", (event) => {
+  if (S.dirty) { event.preventDefault(); event.returnValue = ""; }
+});
+window.addEventListener("resize", drawTimeline);
+
+/* ============================== boot ============================== */
+(async function boot() {
+  try {
+    const [state, wave] = await Promise.all([api("GET", "/api/state"), api("GET", "/api/waveform")]);
+    Object.assign(S, {
+      duration: state.duration, segments: state.segments,
+      gaps: state.gaps, visuals: state.visuals, peaks: wave.peaks,
+    });
+    $("srcName").textContent = state.source;
+    renderList(); drawTimeline(); syncOverlay();
+    if (state.hasReviewedSrt) toast(`接續上次的校對進度`);
+  } catch (error) {
+    toast("載入失敗：" + error.message, true);
+  }
+})();
+</script>
+</body>
+</html>

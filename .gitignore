@@ -19,3 +19,6 @@ work/*.info.json
 # Reviewed sidecars are kept in version control on purpose:
 #   work/*.corrections.json
 #   work/*.extra_segments.json
+
+# Subtitle editor cache (proxy video, waveform peaks, session state)
+editor_cache/
