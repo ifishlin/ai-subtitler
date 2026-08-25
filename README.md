@@ -30,7 +30,25 @@ Use the downloaded test video:
 ```
 
 The default transcription model is `medium`. Use `--whisper-model small` for a faster, less accurate draft.
-Use `--sensitive` to disable VAD and lower the silence threshold for street interviews.
+
+`--fill-gaps` transcribes normally, then revisits only the stretches with no
+caption at all in sensitive mode. Sensitive decoding recovers Taiwanese, telephone
+and overlapping speech, but applied to a whole video it also invents words, so
+confining it to the silences keeps the narration accurate. Recovered lines must
+pass three filters — Whisper's own silence probability, a confidence floor, and a
+similarity check against nearby captions that rejects text merely repeating
+narration from elsewhere. Every accepted and rejected line is written to
+`gap_report.json` with its reason.
+
+Proper nouns from `VIDEO.corrections.json` are passed to Whisper as hotwords in
+this mode, which fixes them wherever they occur; the id-keyed sidecars are skipped
+because filling gaps shifts every segment number after the first insertion.
+
+`--sensitive` still applies sensitive decoding to the whole video, which is
+measurably worse — see `PROGRESS.md`.
+
+`--output DIR` writes the results elsewhere, so a new run can be compared against
+an existing one instead of overwriting it.
 
 Or provide a URL or local file:
 

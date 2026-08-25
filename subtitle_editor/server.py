@@ -19,6 +19,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+import json                                                       # noqa: E402
+
 from fastapi import Body, FastAPI, HTTPException                      # noqa: E402
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse  # noqa: E402
 from opencc import OpenCC                                            # noqa: E402
@@ -33,7 +35,9 @@ STATIC = Path(__file__).resolve().parent / "static"
 
 PROXY = CACHE / "proxy.mp4"
 PEAKS = CACHE / "peaks.json"
-STATE = CACHE / "review.json"
+# Rebound by main() so a different pipeline run can be reviewed; the session
+# state is keyed by output directory so two runs never share progress.
+STATE = CACHE / "review_output.json"
 REVIEWED_SRT = OUTPUT / "subtitles_zh.reviewed.srt"
 REVIEWED_MP4 = OUTPUT / "final_reviewed.mp4"
 
@@ -45,9 +49,16 @@ _burn_lock = threading.Lock()
 
 
 def find_source() -> Path:
-    candidates = sorted(WORK.glob("source_*.mp4"), key=lambda p: p.stat().st_mtime, reverse=True)
+    """The video this pipeline run used, or the newest download as a fallback."""
+    recorded = OUTPUT / "run.json"
+    if recorded.is_file():
+        source = Path(json.loads(recorded.read_text(encoding="utf-8")).get("source", ""))
+        if source.is_file():
+            return source
+    candidates = sorted(WORK.glob("source_*.mp4"), key=lambda item: item.stat().st_mtime, reverse=True)
     if not candidates:
-        raise SystemExit(f"No source video found in {WORK}")
+        raise SystemExit(f"在 {WORK} 找不到來源影片，請用 server.py /path/to/video.mp4 指定")
+    print(f"提醒：{OUTPUT.name}/run.json 不存在，改用最新的下載檔 {candidates[0].name}")
     return candidates[0]
 
 
@@ -210,8 +221,18 @@ def prepare(source: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="字幕校對網頁（不改動 pipeline）")
     parser.add_argument("source", nargs="?", help="原始影片，預設抓 work/source_*.mp4 最新的一支")
+    parser.add_argument("--output", default="output", help="要校對的 pipeline 輸出目錄")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
+
+    global OUTPUT, STATE, REVIEWED_SRT, REVIEWED_MP4
+    OUTPUT = (ROOT / args.output).resolve()
+    if not (OUTPUT / "subtitles_zh.srt").is_file():
+        raise SystemExit(f"找不到 {OUTPUT / 'subtitles_zh.srt'}，請先跑 main.py")
+    STATE = CACHE / f"review_{OUTPUT.name}.json"
+    REVIEWED_SRT = OUTPUT / "subtitles_zh.reviewed.srt"
+    REVIEWED_MP4 = OUTPUT / "final_reviewed.mp4"
+    print(f"校對目錄：{OUTPUT.relative_to(ROOT)}")
 
     prepare(Path(args.source).resolve() if args.source else find_source())
 

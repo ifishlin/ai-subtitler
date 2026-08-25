@@ -49,6 +49,18 @@ def extract_audio(video: Path, audio: Path) -> None:
     ])
 
 
+def slice_audio(source: Path, start: float, end: float, audio: Path) -> Path:
+    """Extract one 16 kHz mono window for a second transcription pass."""
+    audio.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run([
+        "ffmpeg", "-y", "-v", "error",
+        "-ss", f"{max(0.0, start):.3f}", "-to", f"{end:.3f}",
+        "-i", str(source), "-vn",
+        "-ac", "1", "-ar", "16000", "-c:a", "pcm_s16le", str(audio),
+    ], check=True, capture_output=True, text=True)
+    return audio
+
+
 def duration(video: Path) -> float:
     result = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", str(video)],

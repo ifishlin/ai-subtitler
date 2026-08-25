@@ -14,6 +14,14 @@
 第一次啟動要轉一支瀏覽器可播的 proxy（約 45 秒），之後啟動只要幾秒。
 指定其他影片：`server.py /path/to/video.mp4`，換 port：`--port 8100`。
 
+校對別的 pipeline 輸出目錄用 `--output`：
+
+```bash
+.venv/bin/python subtitle_editor/server.py --output output_v2
+```
+
+校對進度按輸出目錄分開存（`editor_cache/review_<目錄名>.json`），兩個版本不會互相干擾。
+
 ## 讀什麼、寫什麼
 
 | | 檔案 | 用途 |

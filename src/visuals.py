@@ -42,9 +42,25 @@ def plan_visuals(client: OllamaClient, segments: list[dict[str, Any]], video_dur
             "source_text": source_text,
             "reason": str(item.get("reason", "")),
         })
-    if not validated:
-        raise RuntimeError("Qwen did not return any valid visual cards")
     return validated
+
+
+def plan_visuals_with_retry(
+    client: OllamaClient, segments: list[dict[str, Any]], video_duration: float, attempts: int = 3
+) -> list[dict[str, Any]]:
+    """Card planning is one non-deterministic call; a single empty reply is not
+    a reason to discard a finished transcript, so retry before giving up."""
+    for attempt in range(1, attempts + 1):
+        try:
+            plan = plan_visuals(client, segments, video_duration)
+        except Exception as error:                                # noqa: BLE001
+            print(f"      圖卡規劃第 {attempt} 次失敗：{error}")
+            continue
+        if plan:
+            return plan
+        print(f"      圖卡規劃第 {attempt} 次沒有回傳可用的圖卡")
+    print("      圖卡規劃全部失敗，這次不加圖卡（字幕與影片仍會產出）")
+    return []
 
 
 def _font(path: Path, size: int) -> ImageFont.FreeTypeFont:

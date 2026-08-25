@@ -74,13 +74,5 @@ def ensure_waveform(video: Path, peaks_path: Path) -> list[float]:
     return peaks
 
 
-def slice_audio(video: Path, start: float, end: float, audio: Path) -> Path:
-    """Extract one 16 kHz mono window for re-transcription."""
-    audio.parent.mkdir(parents=True, exist_ok=True)
-    _ffmpeg([
-        "ffmpeg", "-y", "-v", "error",
-        "-ss", f"{max(0.0, start):.3f}", "-to", f"{end:.3f}",
-        "-i", str(video), "-vn",
-        "-ac", "1", "-ar", "16000", "-c:a", "pcm_s16le", str(audio),
-    ])
-    return audio
+# The pipeline owns window extraction; re-export so both use one implementation.
+from src.media import slice_audio  # noqa: E402,F401
