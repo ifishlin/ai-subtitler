@@ -14,7 +14,11 @@
 第一次啟動要轉一支瀏覽器可播的 proxy（約 45 秒），之後啟動只要幾秒。
 指定其他影片：`server.py /path/to/video.mp4`，換 port：`--port 8100`。
 
-校對別的 pipeline 輸出目錄用 `--output`：
+啟動後可以直接在網頁左上角的選單切換要校對哪一次的輸出，
+不需要重開 server。切換時若有未儲存的修改會先提醒。
+每支影片的 proxy 和波形分開快取，所以切回去不用重新轉檔。
+
+也可以在啟動時就指定目錄：
 
 ```bash
 .venv/bin/python subtitle_editor/server.py --output output_v2

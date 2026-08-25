@@ -119,11 +119,16 @@ def main() -> None:
     # Persist costly local recognition before attempting any network service.
     write_json(output / "transcript_raw.json", {"language": language, "segments": segments})
     # The review UI reads this to find the source video for this run.
+    # A resumed run inherits the recognition of the run it reuses, so report
+    # how those segments were produced rather than which flags this call had.
+    recovered = sum(1 for item in segments if item.get("origin") == "gap")
     write_json(output / "run.json", {
         "source": str(video),
         "whisper_model": args.whisper_model,
         "sensitive": args.sensitive,
-        "fill_gaps": args.fill_gaps,
+        "fill_gaps": args.fill_gaps or recovered > 0,
+        "recovered_segments": recovered,
+        "reused": args.reuse_transcript or None,
         "terms": terms,
     })
 

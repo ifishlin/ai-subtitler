@@ -28,18 +28,23 @@ from opencc import OpenCC                                            # noqa: E40
 from subtitle_editor import media, review                            # noqa: E402
 from subtitle_editor.srt import write_srt                            # noqa: E402
 
-OUTPUT = ROOT / "output"
 WORK = ROOT / "work"
 CACHE = ROOT / "editor_cache"
 STATIC = Path(__file__).resolve().parent / "static"
 
-PROXY = CACHE / "proxy.mp4"
-PEAKS = CACHE / "peaks.json"
-# Rebound by main() so a different pipeline run can be reviewed; the session
-# state is keyed by output directory so two runs never share progress.
-STATE = CACHE / "review_output.json"
-REVIEWED_SRT = OUTPUT / "subtitles_zh.reviewed.srt"
-REVIEWED_MP4 = OUTPUT / "final_reviewed.mp4"
+# Everything that depends on which run is being reviewed lives in config, so
+# the browser can switch runs without restarting the server. Media derivatives
+# are keyed by video, so switching back to a run costs nothing the second time.
+def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
+    stem = source.stem if source else "none"
+    return {
+        "output": output,
+        "state": CACHE / f"review_{output.name}.json",
+        "reviewed_srt": output / "subtitles_zh.reviewed.srt",
+        "reviewed_mp4": output / "final_reviewed.mp4",
+        "proxy": CACHE / f"proxy_{stem}.mp4",
+        "peaks": CACHE / f"peaks_{stem}.json",
+    }
 
 app = FastAPI(title="Subtitle Review")
 config: dict[str, Any] = {}
@@ -48,9 +53,29 @@ _burn: dict[str, Any] = {"state": "idle", "message": "", "output": None}
 _burn_lock = threading.Lock()
 
 
-def find_source() -> Path:
+def list_projects() -> list[dict[str, Any]]:
+    """Every pipeline output directory that holds subtitles to review."""
+    found = []
+    for directory in sorted(ROOT.glob("output*")):
+        srt = directory / "subtitles_zh.srt"
+        if not (directory.is_dir() and srt.is_file()):
+            continue
+        run = directory / "run.json"
+        details = json.loads(run.read_text(encoding="utf-8")) if run.is_file() else {}
+        found.append({
+            "name": directory.name,
+            "lines": srt.read_text(encoding="utf-8").count("-->"),
+            "source": Path(details.get("source", "")).name,
+            "fillGaps": bool(details.get("fill_gaps")),
+            "reviewed": (directory / "subtitles_zh.reviewed.srt").is_file(),
+            "modified": int(srt.stat().st_mtime),
+        })
+    return found
+
+
+def find_source(output: Path) -> Path:
     """The video this pipeline run used, or the newest download as a fallback."""
-    recorded = OUTPUT / "run.json"
+    recorded = output / "run.json"
     if recorded.is_file():
         source = Path(json.loads(recorded.read_text(encoding="utf-8")).get("source", ""))
         if source.is_file():
@@ -58,7 +83,7 @@ def find_source() -> Path:
     candidates = sorted(WORK.glob("source_*.mp4"), key=lambda item: item.stat().st_mtime, reverse=True)
     if not candidates:
         raise SystemExit(f"在 {WORK} 找不到來源影片，請用 server.py /path/to/video.mp4 指定")
-    print(f"提醒：{OUTPUT.name}/run.json 不存在，改用最新的下載檔 {candidates[0].name}")
+    print(f"提醒：{output.name}/run.json 不存在，改用最新的下載檔 {candidates[0].name}")
     return candidates[0]
 
 
@@ -72,23 +97,41 @@ def index() -> str:
 @app.get("/media/proxy.mp4")
 def proxy() -> FileResponse:
     # FileResponse honours HTTP Range, which is what lets the browser seek.
-    return FileResponse(PROXY, media_type="video/mp4")
+    return FileResponse(config["paths"]["proxy"], media_type="video/mp4")
+
+
+@app.get("/api/projects")
+def projects() -> dict[str, Any]:
+    return {"projects": list_projects(), "active": config["paths"]["output"].name}
+
+
+@app.post("/api/project")
+def switch_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Review a different pipeline run without restarting the server."""
+    name = str(payload.get("name", ""))
+    if name not in {item["name"] for item in list_projects()}:
+        raise HTTPException(404, f"找不到 {name}")
+    activate(ROOT / name)
+    return get_state()
 
 
 # ---------------------------------------------------------------- state
 
 @app.get("/api/state")
 def get_state() -> dict[str, Any]:
-    segments = review.load_state(STATE, OUTPUT)
+    paths = config["paths"]
+    segments = review.load_state(paths["state"], paths["output"])
     total = config["duration"]
     return {
+        "project": paths["output"].name,
         "source": config["source"].name,
         "duration": total,
         "segments": segments,
         "gaps": review.find_gaps(segments, total),
         "visuals": config["visuals"],
-        "reviewedSrt": str(REVIEWED_SRT.relative_to(ROOT)),
-        "hasReviewedSrt": REVIEWED_SRT.is_file(),
+        "peaks": config["peaks"],
+        "reviewedSrt": str(paths["reviewed_srt"].relative_to(ROOT)),
+        "hasReviewedSrt": paths["reviewed_srt"].is_file(),
     }
 
 
@@ -97,7 +140,8 @@ def put_state(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     segments = payload.get("segments")
     if not isinstance(segments, list) or not segments:
         raise HTTPException(400, "segments must be a non-empty list")
-    result = review.save_state(STATE, REVIEWED_SRT, segments)
+    paths = config["paths"]
+    result = review.save_state(paths["state"], paths["reviewed_srt"], segments)
     total = config["duration"]
     return {
         "segments": result["segments"],
@@ -163,11 +207,14 @@ def relisten(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
 def _burn_worker(segments: list[dict[str, Any]]) -> None:
     from src.render import render
+    paths = config["paths"]
     try:
-        write_srt(REVIEWED_SRT, segments)
-        render(config["source"], REVIEWED_SRT, config["visuals"], REVIEWED_MP4)
+        write_srt(paths["reviewed_srt"], segments)
+        render(config["source"], paths["reviewed_srt"], config["visuals"], paths["reviewed_mp4"])
         with _burn_lock:
-            _burn.update(state="done", message=f"完成：{REVIEWED_MP4.name}", output=str(REVIEWED_MP4))
+            _burn.update(state="done",
+                         message=f'完成：{paths["output"].name}/{paths["reviewed_mp4"].name}',
+                         output=str(paths["reviewed_mp4"]))
     except Exception as error:                                    # noqa: BLE001
         traceback.print_exc()
         with _burn_lock:
@@ -180,7 +227,7 @@ def burn(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         if _burn["state"] == "running":
             return dict(_burn)
         _burn.update(state="running", message="重新燒錄中（原片 + 校對字幕 + 既有圖卡）", output=None)
-    segments = payload.get("segments") or review.load_state(STATE, OUTPUT)
+    segments = payload.get("segments") or review.load_state(config["paths"]["state"], config["paths"]["output"])
     threading.Thread(target=_burn_worker, args=(segments,), daemon=True).start()
     return dict(_burn)
 
@@ -199,23 +246,23 @@ def unhandled(request, error: Exception) -> JSONResponse:          # noqa: ANN00
 
 # ---------------------------------------------------------------- startup
 
-def prepare(source: Path) -> None:
-    import json
-
-    print(f"來源影片：{source.name}")
+def activate(output: Path, source: Path | None = None) -> None:
+    """Point the editor at one pipeline run, preparing its media if needed."""
+    source = source or find_source(output)
+    paths = paths_for(output, source)
+    config["paths"] = paths
     config["source"] = source
     config["duration"] = media.duration(source)
 
-    print("[1/2] 準備瀏覽器可播放的 proxy（僅第一次需要轉檔）")
-    media.ensure_proxy(source, PROXY)
-    print(f"      {PROXY.relative_to(ROOT)}  {PROXY.stat().st_size / 1e6:.1f} MB")
+    print(f"校對 {output.name}（{source.name}）")
+    if not paths["proxy"].is_file():
+        print("      準備瀏覽器可播放的 proxy（僅第一次需要轉檔，約 45 秒）")
+    media.ensure_proxy(source, paths["proxy"])
+    config["peaks"] = media.ensure_waveform(source, paths["peaks"])
 
-    print("[2/2] 計算波形")
-    config["peaks"] = media.ensure_waveform(source, PEAKS)
-
-    visuals_path = OUTPUT / "ai_visuals.json"
+    visuals_path = output / "ai_visuals.json"
     config["visuals"] = json.loads(visuals_path.read_text(encoding="utf-8")) if visuals_path.is_file() else []
-    print(f"      波形 {len(config['peaks'])} 點、圖卡 {len(config['visuals'])} 張")
+    print(f"      字幕就緒、波形 {len(config['peaks'])} 點、圖卡 {len(config['visuals'])} 張")
 
 
 def main() -> None:
@@ -225,16 +272,12 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
 
-    global OUTPUT, STATE, REVIEWED_SRT, REVIEWED_MP4
-    OUTPUT = (ROOT / args.output).resolve()
-    if not (OUTPUT / "subtitles_zh.srt").is_file():
-        raise SystemExit(f"找不到 {OUTPUT / 'subtitles_zh.srt'}，請先跑 main.py")
-    STATE = CACHE / f"review_{OUTPUT.name}.json"
-    REVIEWED_SRT = OUTPUT / "subtitles_zh.reviewed.srt"
-    REVIEWED_MP4 = OUTPUT / "final_reviewed.mp4"
-    print(f"校對目錄：{OUTPUT.relative_to(ROOT)}")
+    output = (ROOT / args.output).resolve()
+    if not (output / "subtitles_zh.srt").is_file():
+        available = ", ".join(item["name"] for item in list_projects()) or "（沒有）"
+        raise SystemExit(f"找不到 {output / 'subtitles_zh.srt'}\n可用的目錄：{available}")
 
-    prepare(Path(args.source).resolve() if args.source else find_source())
+    activate(output, Path(args.source).resolve() if args.source else None)
 
     import uvicorn
     print(f"\n開啟 http://127.0.0.1:{args.port}\n")

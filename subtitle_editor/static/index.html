@@ -35,6 +35,9 @@ header{
 }
 header h1{font-size:14px;font-weight:600;margin:0;letter-spacing:.02em}
 header .src{font:12px var(--mono);color:var(--faint)}
+header select{font:12px var(--mono);color:var(--ink);background:var(--panel2);
+  border:1px solid var(--line);border-radius:6px;padding:4px 8px;max-width:22em}
+header select:hover{border-color:#3d4450}
 header .spacer{flex:1}
 #stats{display:flex;gap:12px;font-size:12px;color:var(--dim)}
 #stats b{color:var(--ink);font-variant-numeric:tabular-nums}
@@ -149,6 +152,7 @@ main{display:flex;flex:1;min-height:0}
 <div id="app">
   <header>
     <h1>字幕校對</h1>
+    <select id="project" title="選擇要校對哪一次 pipeline 的輸出"></select>
     <span class="src" id="srcName">…</span>
     <div class="spacer"></div>
     <div id="stats"></div>
@@ -241,6 +245,7 @@ main{display:flex;flex:1;min-height:0}
 /* ============================== state ============================== */
 const S = {
   duration: 0, segments: [], gaps: [], visuals: [], peaks: [],
+  project: "",          // pipeline output directory being reviewed
   cursor: 0,            // index into S.segments
   filter: "all",
   dirty: false,
@@ -998,16 +1003,60 @@ window.addEventListener("beforeunload", (event) => {
 });
 window.addEventListener("resize", drawTimeline);
 
+/* ============================== projects ============================== */
+function applyState(state) {
+  Object.assign(S, {
+    duration: state.duration, segments: state.segments,
+    gaps: state.gaps, visuals: state.visuals, peaks: state.peaks,
+    cursor: 0, dirty: false, playUntil: null,
+  });
+  $("srcName").textContent = state.source;
+  renderList(); drawTimeline(); syncOverlay();
+}
+
+async function loadProjects(active) {
+  const { projects, active: current } = await api("GET", "/api/projects");
+  const select = $("project");
+  select.innerHTML = projects.map((p) => {
+    const bits = [`${p.lines} 句`];
+    if (p.fillGaps) bits.push("補過空隙");
+    if (p.reviewed) bits.push("校對中");
+    return `<option value="${p.name}">${p.name}　${bits.join(" · ")}</option>`;
+  }).join("");
+  select.value = active || current;
+}
+
+$("project").addEventListener("change", async (event) => {
+  const name = event.target.value;
+  if (S.dirty && !confirm("這一份有未儲存的修改，切換後會留在原本的目錄但不會寫成 SRT。要繼續嗎？")) {
+    event.target.value = S.project;
+    return;
+  }
+  const select = event.target;
+  select.disabled = true;
+  try {
+    video.pause();
+    const state = await api("POST", "/api/project", { name });
+    S.project = state.project;
+    // Same URL serves a different file now, so force the player to refetch.
+    video.src = `/media/proxy.mp4?p=${encodeURIComponent(name)}`;
+    applyState(state);
+    toast(`已切換到 ${name}`);
+  } catch (error) {
+    toast(error.message, true);
+    select.value = S.project;
+  } finally {
+    select.disabled = false;
+  }
+});
+
 /* ============================== boot ============================== */
 (async function boot() {
   try {
-    const [state, wave] = await Promise.all([api("GET", "/api/state"), api("GET", "/api/waveform")]);
-    Object.assign(S, {
-      duration: state.duration, segments: state.segments,
-      gaps: state.gaps, visuals: state.visuals, peaks: wave.peaks,
-    });
-    $("srcName").textContent = state.source;
-    renderList(); drawTimeline(); syncOverlay();
+    const state = await api("GET", "/api/state");
+    S.project = state.project;
+    applyState(state);
+    await loadProjects(state.project);
     if (state.hasReviewedSrt) toast(`接續上次的校對進度`);
   } catch (error) {
     toast("載入失敗：" + error.message, true);
