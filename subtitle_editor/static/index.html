@@ -113,7 +113,7 @@ main{display:flex;flex:1;min-height:0}
   font-variant-numeric:tabular-nums}
 .times input.num:focus{outline:0;border-color:var(--accent)}
 .times input.num::-webkit-inner-spin-button{display:none}
-.times .len{margin-left:auto;font:11px var(--mono);color:var(--dim)}
+.times .len{margin-left:auto;font:11px var(--mono);color:var(--dim);white-space:nowrap}
 .times .len.bad{color:var(--danger)}
 .row.overlap{border-left-color:var(--danger)}
 .acts{display:flex;gap:5px;margin-top:6px;align-items:center}
@@ -447,6 +447,17 @@ tl.addEventListener("pointerup", (event) => {
 });
 
 /* ============================== list ============================== */
+/**
+ * Fit a textarea to its content.
+ * scrollHeight excludes the border but box-sizing is border-box, so the border
+ * has to be added back -- otherwise each render leaves the box two pixels short
+ * and the next measurement grows it, drifting every row downwards.
+ */
+function autosize(box) {
+  box.style.height = "auto";
+  box.style.height = box.scrollHeight + (box.offsetHeight - box.clientHeight) + "px";
+}
+
 function rowHTML(s, index) {
   const cls = ["row"];
   if (index === S.cursor) cls.push("active");
@@ -515,6 +526,8 @@ function gapHTML(g, key) {
 }
 
 function renderList() {
+  const list = $("list");
+  const keepScroll = list.scrollTop;
   markOverlaps();
   // Interleave gaps with segments so everything reads in time order.
   const items = [];
@@ -522,14 +535,14 @@ function renderList() {
   if (S.filter === "all") S.gaps.forEach((g, k) => items.push({ kind: "g", t: g.start, g, k }));
   items.sort((a, b) => a.t - b.t);
 
-  $("list").innerHTML = items.length
+  list.innerHTML = items.length
     ? items.map((it) => (it.kind === "s" ? rowHTML(it.s, it.index) : gapHTML(it.g, it.k))).join("")
     : `<div style="color:var(--faint);padding:20px;text-align:center">這個條件下沒有字幕</div>`;
 
-  document.querySelectorAll("#list textarea").forEach((box) => {
-    box.style.height = "auto";
-    box.style.height = box.scrollHeight + "px";
-  });
+  document.querySelectorAll("#list textarea").forEach(autosize);
+  // Replacing innerHTML resets the scroll position, which would throw the
+  // reader back to the top of the list on every keystroke or time nudge.
+  list.scrollTop = keepScroll;
   renderStats();
 }
 
@@ -699,7 +712,7 @@ $("list").addEventListener("input", (event) => {
   if (!box) return;
   const index = +box.dataset.text;
   S.segments[index].text = box.value;
-  box.style.height = "auto"; box.style.height = box.scrollHeight + "px";
+  autosize(box);
   markDirty();
   if (index === activeIndex(video.currentTime)) $("overlayText").textContent = box.value;
 });
