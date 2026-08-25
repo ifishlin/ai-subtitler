@@ -115,6 +115,27 @@ def proxy() -> FileResponse:
     )
 
 
+def finished_videos() -> list[dict[str, Any]]:
+    """Burned videos in this run's directory, newest first."""
+    output = config["paths"]["output"]
+    found = [
+        {"name": item.name, "size": item.stat().st_size, "modified": int(item.stat().st_mtime)}
+        for item in sorted(output.glob("*.mp4"))
+    ]
+    return sorted(found, key=lambda item: -item["modified"])
+
+
+@app.get("/media/final/{name}")
+def final_video(name: str) -> FileResponse:
+    """Serve a burned video for playback. Names are matched against the
+    directory listing rather than joined, so no path can escape it."""
+    output = config["paths"]["output"]
+    if name not in {item["name"] for item in finished_videos()}:
+        raise HTTPException(404, f"找不到 {name}")
+    return FileResponse(output / name, media_type="video/mp4",
+                        headers={"Cache-Control": "no-store"})
+
+
 @app.get("/api/projects")
 def projects() -> dict[str, Any]:
     return {"projects": list_projects(), "active": config["paths"]["output"].name}
@@ -146,6 +167,7 @@ def get_state() -> dict[str, Any]:
         "gaps": review.find_gaps(segments, total),
         "visuals": config["visuals"],
         "peaks": config["peaks"],
+        "finished": finished_videos(),
         "reviewedSrt": str(paths["reviewed_srt"].relative_to(ROOT)),
         "hasReviewedSrt": paths["reviewed_srt"].is_file(),
     }

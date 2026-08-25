@@ -47,6 +47,15 @@ because filling gaps shifts every segment number after the first insertion.
 `--sensitive` still applies sensitive decoding to the whole video, which is
 measurably worse — see `PROGRESS.md`.
 
+Qwen proofreads by returning a list of fragments to replace, not corrected
+lines. Every edit must name text the caption already contains, must not merely
+reorder it, and must sound like what it replaces — 攤方 and 坍方 are both
+"tan fang", while 傳出淹水災情 and 無人路透 share no syllable. Asked for
+rewritten text instead, the model moved one caption's words onto another,
+swapped a correct road name for a different one, and pasted the video's
+description into an interviewee's mouth; as substitutions, none of those can be
+expressed. `--no-correct` skips the pass entirely.
+
 `--output DIR` writes the results elsewhere, so a new run can be compared against
 an existing one instead of overwriting it.
 

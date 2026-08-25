@@ -25,6 +25,28 @@ from src.visuals import plan_visuals_with_retry, render_cards
 ROOT = Path(__file__).resolve().parent
 DEFAULT_VIDEO = ROOT / "work" / "source_hlTBcnX3KZE.mp4"
 
+# Cards carry Chinese, so the font has to as well. The pipeline runs on both
+# macOS and Linux, and neither has the other's fonts.
+FONT_CANDIDATES = [
+    "/System/Library/Fonts/PingFang.ttc",
+    "/System/Library/Fonts/Hiragino Sans GB.ttc",
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    "/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc",
+    "/usr/share/fonts/truetype/arphic/uming.ttc",
+]
+
+
+def find_font(chosen: str | None) -> Path:
+    if chosen:
+        return Path(chosen)
+    for candidate in FONT_CANDIDATES:
+        if Path(candidate).is_file():
+            return Path(candidate)
+    raise SystemExit(
+        "找不到中文字型，請用 --font 指定一個 .ttc/.ttf 檔案。\n"
+        "已尋找：" + "、".join(FONT_CANDIDATES)
+    )
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create a subtitled video with AI-planned information cards.")
@@ -51,7 +73,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ollama-model", default="qwen2.5:7b")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11435")
     parser.add_argument("--ssh-target", default=os.environ.get("CUBA_SSH_TARGET", "yuyu@cuba001"))
-    parser.add_argument("--font", default="/System/Library/Fonts/PingFang.ttc")
+    parser.add_argument("--font", default=None,
+                        help="CJK font for the information cards; found automatically if omitted")
     parser.add_argument(
         "--subtitles", choices=["auto", "source", "zh", "bilingual"], default="auto",
         help="Which subtitles to burn in. auto keeps a Chinese video as spoken and "
@@ -212,7 +235,7 @@ def main() -> None:
 
     print("[5/7] Planning information cards")
     visual_plan = plan_visuals_with_retry(client, segments, duration(video))
-    render_cards(visual_plan, visuals_dir, Path(args.font))
+    render_cards(visual_plan, visuals_dir, find_font(args.font))
     write_json(output / "ai_visuals.json", visual_plan)
 
     print("[6/7] Rendering subtitles and cards")

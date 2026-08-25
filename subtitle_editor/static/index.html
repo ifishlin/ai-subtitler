@@ -37,6 +37,11 @@ header h1{font-size:14px;font-weight:600;margin:0;letter-spacing:.02em}
 header .src{font:12px var(--mono);color:var(--faint)}
 header select{font:12px var(--mono);color:var(--ink);background:var(--panel2);
   border:1px solid var(--line);border-radius:6px;padding:4px 8px;max-width:22em}
+#viewer{position:fixed;inset:0;background:#000d;display:none;align-items:center;
+  justify-content:center;z-index:40;flex-direction:column;gap:10px}
+#viewer.on{display:flex}
+#viewer video{max-width:92vw;max-height:82vh;background:#000;border-radius:8px}
+#viewer .bar{display:flex;gap:10px;align-items:center;color:var(--dim);font-size:13px}
 header select:hover{border-color:#3d4450}
 header .spacer{flex:1}
 #stats{display:flex;gap:12px;font-size:12px;color:var(--dim)}
@@ -161,6 +166,7 @@ main{display:flex;flex:1;min-height:0}
     <span id="saveState"></span>
     <button id="btnSave" class="primary">儲存 SRT</button>
     <button id="btnBurn">重新燒錄</button>
+    <select id="finished" title="播放已燒錄的成品"></select>
     <button id="btnHelp">?</button>
   </header>
 
@@ -243,6 +249,10 @@ main{display:flex;flex:1;min-height:0}
   </table>
   <div style="margin-top:16px;text-align:right"><button id="btnHelpClose">關閉</button></div>
 </div></div>
+<div id="viewer">
+  <video id="viewerVideo" controls playsinline></video>
+  <div class="bar"><span id="viewerName"></span><button id="viewerClose">關閉</button></div>
+</div>
 <div id="toast"></div>
 <script>
 "use strict";
@@ -998,7 +1008,11 @@ document.addEventListener("keydown", (event) => {
     return nudge(S.cursor, event.shiftKey ? "end" : "start", delta);
   }
   if (event.key === "?" ) { $("help").classList.toggle("on"); return; }
-  if (event.key === "Escape") { $("help").classList.remove("on"); return; }
+  if (event.key === "Escape") {
+    $("help").classList.remove("on");
+    if ($("viewer").classList.contains("on")) closeViewer();
+    return;
+  }
   if (typing || event.metaKey || event.ctrlKey || event.altKey) return;
 
   const s = S.segments[S.cursor];
@@ -1028,6 +1042,34 @@ window.addEventListener("beforeunload", (event) => {
 window.addEventListener("resize", drawTimeline);
 
 /* ============================== projects ============================== */
+function renderFinished(list) {
+  const select = $("finished");
+  if (!list || !list.length) { select.style.display = "none"; return; }
+  select.style.display = "";
+  select.innerHTML = `<option value="">看成品…</option>` + list.map((f) =>
+    `<option value="${f.name}">${f.name}　${(f.size / 1e6).toFixed(0)} MB</option>`).join("");
+  select.value = "";
+}
+
+$("finished").addEventListener("change", (event) => {
+  const name = event.target.value;
+  event.target.value = "";
+  if (!name) return;
+  video.pause();
+  $("viewerVideo").src = `/media/final/${encodeURIComponent(name)}`;
+  $("viewerName").textContent = name;
+  $("viewer").classList.add("on");
+});
+
+function closeViewer() {
+  $("viewer").classList.remove("on");
+  $("viewerVideo").pause();
+  $("viewerVideo").removeAttribute("src");
+  $("viewerVideo").load();
+}
+$("viewerClose").onclick = closeViewer;
+$("viewer").onclick = (event) => { if (event.target.id === "viewer") closeViewer(); };
+
 function applyState(state) {
   // The src carries the run name so a switch cannot reuse the cached video.
   const wanted = `/media/proxy.mp4?p=${encodeURIComponent(state.project)}`;
@@ -1041,6 +1083,7 @@ function applyState(state) {
   S.translated = Boolean(state.translated);
   $("bilingualBox").style.display = S.translated ? "flex" : "none";
   S.bilingual = S.translated && $("bilingual").checked;
+  renderFinished(state.finished);
   renderList(); drawTimeline(); syncOverlay();
 }
 

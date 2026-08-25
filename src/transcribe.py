@@ -224,22 +224,42 @@ def fill_gaps(
     return [{**item, "id": number} for number, item in enumerate(merged, start=1)], report
 
 
-CORRECTION_PROMPT = """你是繁體中文新聞字幕校對員。請校正語音辨識逐字稿中的同音錯字、地名、道路名、機構名與標點。
-只能根據原句和上下文校正，不得增加原本沒有說出的資訊。保留每一段的 id、start、end，不得合併、刪除或調整時間。
-只能修正「同音字」造成的錯誤。人名、職稱、機構名若已寫成一個真實存在的名字，一律保留原樣，
-絕對不可以換成你認為「應該是」的另一個名字——你的知識可能過時，而字幕必須忠實反映影片所說。
-只輸出 JSON：{"segments":[{"id":1,"start":0.0,"end":1.0,"text":"校正文字"}]}"""
+CORRECTION_PROMPT = """你是繁體中文新聞字幕校對員。請找出語音辨識逐字稿中的同音錯字與標點問題。
 
-CORRECTION_PROMPT_EN = """You are a news subtitle proofreader working in English. Fix mis-heard words,
-spelling, capitalisation and punctuation in this speech-recognition transcript.
-Correct only from the line itself and its context; never add information that was not spoken.
-Only repair words that were mis-heard. If a personal name, job title or organisation is already
-spelled as a real name, keep it exactly as written. Never replace one name with a different name
-you believe is more likely: your knowledge may be out of date, and the subtitle must reflect what
-the video actually said. Joining a mis-heard spelling back together is allowed ("dee day" -> "D-Day");
-swapping the person is not.
-Keep every id, start and end unchanged, and do not merge, drop or retime any line.
-Reply with JSON only: {"segments":[{"id":1,"start":0.0,"end":1.0,"text":"corrected text"}]}"""
+你不能重寫句子，只能列出「要把哪幾個字換成哪幾個字」。
+每一筆修改的 from 必須是該段文字中「原封不動出現過」的片段，否則會被丟棄。
+
+請仔細找出每一處錯誤，常見的有：
+- 同音或近音錯字：「攤方」→「坍方」、「水深即稀」→「水深及膝」、「喪亡」→「傷亡」
+- 地名路名聽錯：「阿聯」→「阿蓮」、「大人街」→「大仁街」、「入口閘道」→「入口匝道」
+- 數字與單位：「屏東三線」→「屏東3縣市」、「國一」→「國1」
+- 口吃或重複：「低氣 低壓帶」→「低壓帶」
+- 缺少標點：「臺南高雄及屏東」→「臺南、高雄及屏東」
+
+限制：
+- 不得搬動內容：某一段的文字絕對不可以換成另一段的內容。
+- 不得只是把同樣的字重新排列。
+- 替換前後的讀音必須相近；讀音差很多就表示你在改寫語意，不是校對。
+- 人名、地名、機構名若已是真實存在的名稱，保留原樣。你的知識可能過時，字幕必須忠實反映影片所說。
+- 這一批確實沒有錯才回傳空陣列。
+
+只輸出 JSON：{"edits":[{"id":1,"from":"錯的片段","to":"正確片段"}]}"""
+
+CORRECTION_PROMPT_EN = """You are a news subtitle proofreader working in English. Find mis-heard
+words, spelling and punctuation problems in this speech-recognition transcript.
+
+You may not rewrite a line. List only which fragments to replace.
+Every "from" must appear verbatim in that line's text, or the edit is discarded.
+
+Rules:
+- Repair only what was mis-heard, e.g. "dee day" -> "D-Day", "water shed" -> "watershed".
+- Punctuation and capitalisation may be fixed.
+- Never move content: one line's text must never become another line's content.
+- If a personal name, job title or organisation is already a real name, leave it. Your knowledge
+  may be out of date, and the subtitle must reflect what the video actually said.
+- Return an empty array when a batch is already correct. Do not invent work.
+
+Reply with JSON only: {"edits":[{"id":1,"from":"wrong fragment","to":"right fragment"}]}"""
 
 TRANSLATION_PROMPT = """你是新聞字幕翻譯員。請把每一段英文字幕翻成臺灣用語的繁體中文。
 一段對一段，不得合併或拆分，不得增加原文沒有的資訊。人名、地名、機構名使用臺灣新聞慣用譯名。
@@ -252,70 +272,100 @@ def prompt_for(language: str) -> str:
     return CORRECTION_PROMPT if language.startswith("zh") else CORRECTION_PROMPT_EN
 
 
-# A correction should be a respelling, not a replacement. Anything that drifts
-# this far from what was heard is the model writing its own line.
-REWRITE_RATIO = 0.34
-# ...and if it also matches the supplied context, it copied the news summary in.
-CONTEXT_RATIO = 0.55
+# An edit that names a fragment the line does not contain is not a correction of
+# that line -- it is the model writing something else -- so it is refused. This
+# makes the failures seen while building this pipeline structurally impossible:
+# text cannot migrate between segments, words cannot appear from nowhere, and a
+# line cannot be replaced wholesale, because every change must point at
+# characters already present.
+MAX_EDIT_GROWTH = 3.0      # an edit may not balloon a fragment beyond this
+MAX_EDITED_SHARE = 0.6     # nor rewrite more than this share of one line
+# Structure alone cannot tell a homophone repair from a same-length rewrite:
+# both replace a fragment that is really there. Sound can. A mis-heard word and
+# its repair are pronounced alike -- 攤方 and 坍方 are both "tan fang" -- while
+# 傳出淹水災情 becoming 無人路透 shares no syllable at all. Research on Chinese
+# ASR correction reaches the same conclusion: semantics alone makes it worse,
+# and pinyin is what separates the two.
+SOUND_RATIO = 0.55
 
 
-def _context_phrases(context: str) -> list[str]:
-    """Split the title and description into clause-sized pieces.
+def _sound(text: str) -> str:
+    """Mandarin pronunciation, with non-Han characters kept as themselves."""
+    try:
+        from pypinyin import Style, lazy_pinyin
+    except ImportError:
+        return ""
+    return " ".join(lazy_pinyin(text, style=Style.NORMAL))
 
-    A subtitle line is one clause, so comparing it against whole paragraphs
-    always scores low; the copied text has to be matched at the same grain.
+
+def _sounds_alike(before: str, after: str) -> bool:
+    """Whether a replacement could plausibly be what was actually said.
+
+    Punctuation-only edits are identical in sound and always pass. When pinyin
+    is unavailable the check abstains rather than blocking every edit.
     """
-    pieces = re.split(r"[，、。？！\n：]+", context)
-    return [piece.strip() for piece in pieces if len(piece.strip()) >= 3]
+    first, second = _sound(before), _sound(after)
+    if not first or not second:
+        return True
+    return difflib.SequenceMatcher(None, first, second).ratio() >= SOUND_RATIO
 
 
-NAME_TOKEN = re.compile(r"\b[A-Z][a-z]{2,}\b")
+def apply_edits(
+    segments: list[dict[str, Any]],
+    edits: list[dict[str, Any]],
+    converter: OpenCC,
+    chinese: bool,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Apply verified substitutions, reporting whatever was refused and why."""
+    by_id = {item["id"]: dict(item) for item in segments}
+    refused: list[str] = []
 
-
-def _heard_forms(text: str) -> set[str]:
-    """Every word in the line, plus each adjacent pair joined.
-
-    Whisper splits an unfamiliar name across words ("Bay Jing", "dee day"), so
-    the joined pair has to count as something that was heard.
-    """
-    words = [word.lower() for word in re.findall(r"[A-Za-z]{2,}", text)]
-    return set(words) | {a + b for a, b in zip(words, words[1:])}
-
-
-def _swapped_names(original: str, corrected: str) -> list[str]:
-    """Capitalised words introduced by the correction that were never heard.
-
-    Asked to fix names, the model will replace a correct one with whoever held
-    the post when it was trained. Respelling something mis-heard keeps letters
-    in common, so only wholly unrelated words are reported.
-    """
-    before = _heard_forms(original)
-    invented = []
-    for token in NAME_TOKEN.findall(corrected):
-        lowered = token.lower()
-        if lowered in before:
+    for edit in edits:
+        if not isinstance(edit, dict):
             continue
-        if any(difflib.SequenceMatcher(None, lowered, form).ratio() >= 0.6 for form in before):
+        try:
+            target = by_id[int(edit["id"])]
+        except (KeyError, TypeError, ValueError):
+            refused.append(f"未知的 id {edit.get('id')!r}")
             continue
-        invented.append(token)
-    return invented
 
+        source = str(edit.get("from", ""))
+        replacement = _normalise(str(edit.get("to", "")), converter, chinese)
+        if not source:
+            refused.append(f"#{target['id']} 沒有指出要改哪一段文字")
+            continue
+        if source not in target["text"]:
+            refused.append(f"#{target['id']} 原文沒有「{source}」，不套用")
+            continue
+        if len(replacement) > max(4, len(source) * MAX_EDIT_GROWTH):
+            refused.append(f"#{target['id']}「{source}」→「{replacement}」擴張過大")
+            continue
 
-def _fabricated(original: str, corrected: str, context_lines: list[str]) -> bool:
-    """True if a correction abandoned the audio and echoed the context instead.
+        if sorted(source) == sorted(replacement) and source != replacement:
+            # The same characters in a different order is a reordering, not a
+            # mis-hearing; it is how 中華一路跟華泰 became 華泰一路跟中華.
+            refused.append(f"#{target['id']}「{source}」→「{replacement}」只是字序對調")
+            continue
+        sound_checked = chinese and bool(_sound(source)) and bool(_sound(replacement))
+        if sound_checked and not _sounds_alike(source, replacement):
+            refused.append(
+                f"#{target['id']}「{source}」→「{replacement}」讀音不符，非同音錯字"
+            )
+            continue
 
-    Given unintelligible speech -- Taiwanese written as Mandarin homophones, say
-    -- the model will reach for the nearest usable text, which is the title and
-    description handed to it for proper nouns. On a news video that puts words
-    into an interviewee's mouth, so such a correction is refused.
-    """
-    if difflib.SequenceMatcher(None, original, corrected).ratio() >= REWRITE_RATIO:
-        return False
-    return any(
-        difflib.SequenceMatcher(None, corrected, line).ratio() >= CONTEXT_RATIO
-        or (len(corrected) >= 4 and corrected in line)
-        for line in context_lines
-    )
+        updated = target["text"].replace(source, replacement)
+        # A long repair that still sounds the same is a repair; only where the
+        # sound could not be compared does sheer size stand in for judgement.
+        if not sound_checked:
+            changed = abs(len(updated) - len(target["text"])) + len(source)
+            if changed > len(target["text"]) * MAX_EDITED_SHARE + 4:
+                refused.append(
+                    f"#{target['id']}「{source}」→「{replacement}」改動範圍過大，視為重寫"
+                )
+                continue
+        target["text"] = updated
+
+    return [by_id[item["id"]] for item in segments], refused
 
 
 def _normalise(text: str, converter: OpenCC, chinese: bool) -> str:
@@ -486,51 +536,59 @@ def correct_with_qwen(
     context: str = "",
     language: str = "zh",
 ) -> list[dict[str, Any]]:
+    """Proofread by applying verified substitutions rather than rewritten lines.
+
+    Asked to return corrected text, the model rewrote freely: it moved one
+    caption's words onto another, replaced a correct road name with a different
+    one, and pasted the video's own description into an interviewee's mouth.
+    Each needed its own detector. Asked instead for a list of fragments to
+    replace, every change has to point at characters the line already contains,
+    so that entire class of failure cannot be expressed.
+    """
     chinese = language.startswith("zh")
     converter = OpenCC("s2twp")
     system_prompt = prompt_for(language)
-    context_lines = _context_phrases(context)
     prefix = (
         "公開影片標題與說明可用來確認專有名詞，但不可用來增加旁白沒有說的內容：\n"
         + context
         + "\n逐字稿批次：\n"
     )
 
+    applied = 0
+    refusals: list[str] = []
+
     def correct_batch(batch: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        response = client.chat_json(
-            system_prompt,
-            prefix + json.dumps({"segments": batch}, ensure_ascii=False),
-        )
-        corrected = response.get("segments", [])
-        expected_ids = [item["id"] for item in batch]
-        returned_ids = [
-            int(item["id"])
-            for item in corrected
-            if isinstance(item, dict) and "id" in item
-        ]
-        if len(corrected) != len(batch) or sorted(returned_ids) != sorted(expected_ids):
-            if len(batch) > 1:
-                middle = len(batch) // 2
-                return correct_batch(batch[:middle]) + correct_batch(batch[middle:])
-            return [{**batch[0], "text": _normalise(batch[0]["text"], converter, chinese)}]
-        by_id = {int(item["id"]): item for item in corrected}
-        corrected_batch = []
-        for original in batch:
-            text = str(by_id[original["id"]].get("text", "")).strip() or original["text"]
-            text = _normalise(text, converter, chinese)
-            invented = [] if chinese else _swapped_names(original["text"], text)
-            if invented:
-                print(f"      拒絕換名 #{original['id']}：{'、'.join(invented)} 未出現在原句")
-                text = original["text"]
-            elif _fabricated(original["text"], text, context_lines):
-                print(f"      拒絕竄改 #{original['id']}：{original['text']!r} -> {text!r}")
-                text = original["text"]
-            corrected_batch.append({**original, "text": text})
-        return corrected_batch
+        nonlocal applied
+        payload = [{"id": item["id"], "text": item["text"]} for item in batch]
+        try:
+            response = client.chat_json(
+                system_prompt,
+                prefix + json.dumps({"segments": payload}, ensure_ascii=False),
+            )
+            edits = response.get("edits", [])
+            if not isinstance(edits, list):
+                edits = []
+        except Exception as error:                                # noqa: BLE001
+            print(f"      校正失敗（{len(batch)} 段）：{error}")
+            edits = []
+
+        corrected, refused = apply_edits(batch, edits, converter, chinese)
+        applied += sum(1 for before, after in zip(batch, corrected)
+                       if before["text"] != after["text"])
+        refusals.extend(refused)
+        # Traditional-character normalisation applies whether or not an edit landed.
+        return [{**item, "text": _normalise(item["text"], converter, chinese)}
+                for item in corrected]
 
     result = []
     for offset in range(0, len(segments), 8):
         result.extend(correct_batch(segments[offset:offset + 8]))
+
+    print(f"      套用 {applied} 段修改，退回 {len(refusals)} 筆無效修改")
+    for note in refusals[:12]:
+        print(f"        退回：{note}")
+    if len(refusals) > 12:
+        print(f"        （另有 {len(refusals) - 12} 筆）")
     return result
 
 

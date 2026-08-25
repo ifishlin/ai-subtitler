@@ -4,3 +4,4 @@ Pillow==11.3.0
 yt-dlp==2026.8.19
 fastapi==0.141.1
 uvicorn==0.52.4
+pypinyin==0.55.0
