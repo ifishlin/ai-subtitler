@@ -165,7 +165,7 @@ main{display:flex;flex:1;min-height:0}
           <span><i style="background:#3f4a5a"></i>波形</span>
           <span><i style="background:var(--accent)"></i>字幕</span>
           <span><i style="background:var(--warn)"></i>Qwen 改動大</span>
-          <span><i style="background:var(--sidecar)"></i>人工補的句子</span>
+          <span><i style="background:var(--sidecar)"></i>漏聽補句</span>
           <span><i style="background:var(--ok)"></i>已確認</span>
           <span><i style="background:var(--danger)"></i>字幕空白區</span>
           <span><i style="background:#8a6d3b"></i>資訊圖卡</span>
@@ -178,7 +178,7 @@ main{display:flex;flex:1;min-height:0}
         <div class="seg" id="filters">
           <button data-f="all" class="on">全部</button>
           <button data-f="risky">Qwen 改動大</button>
-          <button data-f="sidecar">人工補句</button>
+          <button data-f="sidecar">漏聽補句</button>
           <button data-f="todo">未確認</button>
         </div>
         <button id="btnPrevRisk" class="tiny">上一個待審</button>
@@ -374,7 +374,7 @@ function rowHTML(s, index) {
 
   const tags = [];
   if (isRisky(s)) tags.push(`<span class="tag risk">Qwen 改動 ${Math.round(s.risk * 100)}%</span>`);
-  if (isSidecar(s)) tags.push(`<span class="tag side">人工補句</span>`);
+  if (isSidecar(s)) tags.push(`<span class="tag side">漏聽補句 · 未驗證</span>`);
 
   const showRef = s.whisper && s.whisper !== s.text;
   const ref = showRef ? `

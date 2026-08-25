@@ -70,5 +70,7 @@ It reads `output/` and `work/` and writes only `output/subtitles_zh.reviewed.srt
 For publish-quality proper nouns, an optional sidecar named `VIDEO.corrections.json` can map transcript segment IDs to reviewed text. The included test video has such a review file under `work/`.
 
 If Whisper misses accented, Taiwanese, overlapping, or telephone speech, an optional
-`VIDEO.extra_segments.json` sidecar can add reviewed `{start, end, text}` captions.
+`VIDEO.extra_segments.json` sidecar can add `{start, end, text}` captions. The sidecar
+shipped for the test video was machine-transcribed from extracted audio windows and is
+not line-by-line human-verified; the subtitle review UI flags those lines as such.
 These are merged and renumbered automatically before cards and video rendering.
