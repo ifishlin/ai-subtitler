@@ -108,7 +108,7 @@ main{display:flex;flex:1;min-height:0}
   font-size:11px;color:var(--faint)}
 .times .lbl{color:var(--dim);margin-left:4px}
 .times .lbl:first-child{margin-left:0}
-.times input.num{width:5.4em;font:12px var(--mono);text-align:right;color:var(--ink);
+.times input.num{width:7.2em;font:12px var(--mono);text-align:right;color:var(--ink);
   background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:2px 4px;
   font-variant-numeric:tabular-nums}
 .times input.num:focus{outline:0;border-color:var(--accent)}
@@ -224,7 +224,9 @@ main{display:flex;flex:1;min-height:0}
   <h3>調整時間</h3>
   <p style="margin:0 0 8px;font-size:12px;color:var(--dim)">
     每一段字幕下方有「起」「終」兩組控制：按 <b>−</b> <b>＋</b> 每次動 0.1 秒，
-    數字可以直接點進去打，或按「設為現在」把時間設成影片目前播放的位置。</p>
+    或按「設為現在」把時間設成影片目前播放的位置。<br>
+    時間顯示為 <b>時:分:秒</b>（例如 <b>0:02:29.60</b>），可以直接點進去打；
+    也接受 <b>2:29.6</b> 或純秒數 <b>149.6</b>。</p>
   <table>
     <tr><td><kbd>,</kbd> <kbd>.</kbd></td><td>開始時間 ∓0.1 秒</td></tr>
     <tr><td><kbd>;</kbd> <kbd>'</kbd></td><td>結束時間 ∓0.1 秒</td></tr>
@@ -247,11 +249,24 @@ const S = {
 const $ = (id) => document.getElementById(id);
 const video = $("video");
 
-const fmt = (t) => {
+/** Seconds -> H:MM:SS.s (H:MM:SS.ss with decimals = 2). */
+function fmt(t, decimals = 1) {
   t = Math.max(0, t || 0);
-  const m = Math.floor(t / 60), s = t - m * 60;
-  return `${m}:${s.toFixed(1).padStart(4, "0")}`;
-};
+  const hours = Math.floor(t / 3600);
+  const minutes = Math.floor((t % 3600) / 60);
+  const seconds = t % 60;
+  return `${hours}:${String(minutes).padStart(2, "0")}:` +
+         seconds.toFixed(decimals).padStart(decimals + 3, "0");
+}
+
+/** Accepts H:MM:SS.ss, MM:SS.ss, bare seconds, and the SRT comma decimal. */
+function parseTime(text) {
+  const raw = String(text).trim().replace(",", ".");
+  if (!raw) return NaN;
+  const parts = raw.split(":");
+  if (parts.some((part) => part.trim() === "" || !Number.isFinite(Number(part)))) return NaN;
+  return parts.reduce((total, part) => total * 60 + Number(part), 0);
+}
 
 let toastTimer = null;
 function toast(message, isError) {
@@ -461,12 +476,12 @@ function rowHTML(s, index) {
     <div class="times">
       <span class="lbl">起</span>
       <button class="tiny" data-nudge="${index}:start:-0.1">−</button>
-      <input class="num" type="number" step="0.1" min="0" data-time="${index}:start" value="${s.start.toFixed(2)}">
+      <input class="num" type="text" inputmode="decimal" data-time="${index}:start" value="${fmt(s.start, 2)}">
       <button class="tiny" data-nudge="${index}:start:0.1">＋</button>
       <button class="tiny" data-now="${index}:start" title="把開始時間設成影片目前位置">設為現在</button>
       <span class="lbl">終</span>
       <button class="tiny" data-nudge="${index}:end:-0.1">−</button>
-      <input class="num" type="number" step="0.1" min="0" data-time="${index}:end" value="${s.end.toFixed(2)}">
+      <input class="num" type="text" inputmode="decimal" data-time="${index}:end" value="${fmt(s.end, 2)}">
       <button class="tiny" data-nudge="${index}:end:0.1">＋</button>
       <button class="tiny" data-now="${index}:end" title="把結束時間設成影片目前位置">設為現在</button>
       <span class="len ${s.overlap ? "bad" : ""}">${(s.end - s.start).toFixed(2)}s${s.overlap ? " · 與鄰句重疊" : ""}</span>
@@ -668,7 +683,13 @@ $("list").addEventListener("change", (event) => {
   const field = event.target.closest("input[data-time]");
   if (!field) return;
   const [index, which] = field.dataset.time.split(":");
-  setTime(+index, which, parseFloat(field.value));
+  const value = parseTime(field.value);
+  if (!Number.isFinite(value)) {
+    toast("時間格式看不懂。可以打 0:01:02.30、1:02.3 或 62.3", true);
+    renderList();
+    return;
+  }
+  setTime(+index, which, value);
 });
 
 $("list").addEventListener("input", (event) => {
