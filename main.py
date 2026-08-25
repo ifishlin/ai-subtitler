@@ -16,6 +16,7 @@ from src.transcribe import (
     merge_extra_segments,
     save_transcript,
     transcribe,
+    translate_with_qwen,
 )
 from src.utils import write_json
 from src.visuals import plan_visuals_with_retry, render_cards
@@ -51,6 +52,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11435")
     parser.add_argument("--ssh-target", default=os.environ.get("CUBA_SSH_TARGET", "yuyu@cuba001"))
     parser.add_argument("--font", default="/System/Library/Fonts/PingFang.ttc")
+    parser.add_argument(
+        "--subtitles", choices=["auto", "source", "zh", "bilingual"], default="auto",
+        help="Which subtitles to burn in. auto keeps a Chinese video as spoken and "
+             "gives any other language both languages on screen. source means the "
+             "spoken language only, and skips translation altogether.",
+    )
+    parser.add_argument(
+        "--no-correct", action="store_true",
+        help="Skip the Qwen proofreading pass. Worth using on English, where "
+             "recognition is already accurate and rewriting mostly adds risk.",
+    )
     return parser.parse_args()
 
 
@@ -74,6 +86,19 @@ def glossary(video: Path) -> str:
     return "、".join(terms)[:TERMS_MAX]
 
 
+def resumed_source(reuse: str) -> str | None:
+    """The video the reused run came from.
+
+    Without this a resumed run falls back to the hard-coded default video and
+    silently burns one run's subtitles onto another run's picture.
+    """
+    run = Path(reuse).resolve().parent / "run.json"
+    if not run.is_file():
+        return None
+    source = json.loads(run.read_text(encoding="utf-8")).get("source")
+    return source if source and Path(source).is_file() else None
+
+
 def main() -> None:
     args = parse_args()
     work = ROOT / "work"
@@ -81,8 +106,20 @@ def main() -> None:
     visuals_dir = output / "visuals"
     output.mkdir(parents=True, exist_ok=True)
 
+    source = args.source
+    if args.reuse_transcript:
+        inherited = resumed_source(args.reuse_transcript)
+        if inherited:
+            source = inherited
+            print(f"      沿用 {Path(args.reuse_transcript).parent.name} 的影片：{Path(source).name}")
+        elif source == str(DEFAULT_VIDEO):
+            raise SystemExit(
+                f"{args.reuse_transcript} 旁邊沒有 run.json，無法判斷影片來源。"
+                "請把影片路徑當第一個參數傳入，否則會用錯影片。"
+            )
+
     print("[1/7] Preparing video")
-    video, context = prepare_video(args.source, work)
+    video, context = prepare_video(source, work)
     audio = work / "audio.wav"
     extract_audio(video, audio)
 
@@ -96,7 +133,7 @@ def main() -> None:
         print(f"[2/7] Reusing {args.reuse_transcript} ({len(segments)} segments)")
     else:
         print("[2/7] Transcribing with faster-whisper")
-        segments, language = transcribe(audio, args.whisper_model, context, sensitive=args.sensitive)
+        segments, language = transcribe(audio, args.whisper_model, sensitive=args.sensitive)
     if not segments:
         raise RuntimeError("Whisper returned an empty transcript")
 
@@ -136,8 +173,20 @@ def main() -> None:
     client = OllamaClient(args.ollama_url, args.ollama_model, args.ssh_target)
     client.ensure_ready()
 
-    print("[4/7] Correcting transcript with Qwen")
-    segments = correct_with_qwen(client, segments, context)
+    if args.no_correct:
+        print(f"[4/7] Skipping Qwen proofreading（辨識語言：{language}）")
+    else:
+        print(f"[4/7] Correcting transcript with Qwen（辨識語言：{language}）")
+        segments = correct_with_qwen(client, segments, context, language=language)
+
+    # Translating is pointless when only the spoken language will be shown.
+    if language.startswith("zh"):
+        pass
+    elif args.subtitles == "source":
+        print("      --subtitles source：不翻譯，只保留原文")
+    else:
+        print("      翻譯成繁體中文")
+        segments = translate_with_qwen(client, segments, context)
 
     if not (args.fill_gaps or args.reuse_transcript):
         # The id-keyed sidecars only line up with the plain single-pass run.
@@ -153,7 +202,13 @@ def main() -> None:
             segments = [{**item, "text": corrections.get(item["id"], item["text"])} for item in segments]
         segments = merge_extra_segments(segments, video.with_suffix(".extra_segments.json"))
     write_json(output / "transcript.json", {"language": language, "segments": segments})
-    save_transcript(segments, output / "transcript.txt", output / "subtitles_zh.srt")
+    written = save_transcript(segments, output / "transcript.txt", output / "subtitles_zh.srt")
+
+    choice = args.subtitles
+    if choice == "auto":
+        choice = "bilingual" if "bilingual" in written else "zh"
+    burn_srt = written.get(choice) or written["zh"]
+    print(f"      字幕檔：{', '.join(sorted(p.name for p in written.values()))}（燒錄用 {burn_srt.name}）")
 
     print("[5/7] Planning information cards")
     visual_plan = plan_visuals_with_retry(client, segments, duration(video))
@@ -161,7 +216,7 @@ def main() -> None:
     write_json(output / "ai_visuals.json", visual_plan)
 
     print("[6/7] Rendering subtitles and cards")
-    render(video, output / "subtitles_zh.srt", visual_plan, output / "final.mp4")
+    render(video, burn_srt, visual_plan, output / "final.mp4")
 
     print(f"[7/7] Done: {output / 'final.mp4'}")
 

@@ -26,10 +26,28 @@ class OllamaClient:
             if not self.ssh_target:
                 raise RuntimeError("Ollama unavailable and no SSH target configured")
             port = self.base_url.rsplit(":", 1)[-1]
-            subprocess.run([
+            forward = [
                 "ssh", "-f", "-N", "-L", f"{port}:127.0.0.1:11434",
-                "-o", "ExitOnForwardFailure=yes", self.ssh_target,
-            ], check=True)
+                "-o", "ExitOnForwardFailure=yes",
+                "-o", "BatchMode=yes", "-o", "ConnectTimeout=10",
+                "-o", "ServerAliveInterval=15",
+                self.ssh_target,
+            ]
+            # A tunnel that died without releasing the port fails the health
+            # check and then blocks the replacement, so clear it and retry once
+            # rather than dropping a run that has already done the slow work.
+            attempt = subprocess.run(forward, capture_output=True, text=True)
+            if attempt.returncode:
+                subprocess.run(
+                    ["pkill", "-f", f"ssh.*{port}:127.0.0.1:11434"], capture_output=True
+                )
+                time.sleep(1)
+                attempt = subprocess.run(forward, capture_output=True, text=True)
+            if attempt.returncode:
+                raise RuntimeError(
+                    f"無法建立 SSH tunnel 到 {self.ssh_target}（exit {attempt.returncode}）："
+                    f"{attempt.stderr.strip() or '沒有錯誤訊息'}"
+                )
             for _ in range(10):
                 time.sleep(1)
                 try:

@@ -23,3 +23,7 @@ work/*.info.json
 
 # Subtitle editor cache (proxy video, waveform peaks, session state)
 editor_cache/
+
+# Run logs and downloaded B-roll
+*.log
+work/broll_*

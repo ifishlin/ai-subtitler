@@ -105,6 +105,8 @@ main{display:flex;flex:1;min-height:0}
 .ref{display:flex;gap:7px;align-items:flex-start;margin-top:5px;font-size:12px;color:var(--dim)}
 .ref .lbl{color:var(--faint);flex:none;font:11px var(--mono);padding-top:2px}
 .ref .val{flex:1;word-break:break-all}
+.ref.src-line{margin:0 0 5px;font-size:13px;color:#c9d2e0}
+.ref.src-line .lbl{color:var(--accent)}
 .ref del{color:var(--danger);text-decoration:none;background:#38222355}
 .ref ins{color:var(--ok);text-decoration:none;background:#1d332955}
 .times{display:flex;gap:4px;align-items:center;margin-top:6px;flex-wrap:wrap;
@@ -165,7 +167,7 @@ main{display:flex;flex:1;min-height:0}
   <main>
     <div id="left">
       <div id="stage">
-        <video id="video" src="/media/proxy.mp4" preload="auto" playsinline></video>
+        <video id="video" preload="auto" playsinline></video>
         <div id="overlay"><span id="overlayText"></span></div>
       </div>
       <div id="transport">
@@ -202,6 +204,9 @@ main{display:flex;flex:1;min-height:0}
         <button id="btnInsert" class="tiny">＋ 在播放位置插入字幕</button>
         <button id="btnFixOverlap" class="tiny" style="display:none">修正重疊</button>
         <div style="flex:1"></div>
+        <label id="bilingualBox" style="display:none;font-size:12px;color:var(--dim);gap:5px;align-items:center">
+          <input type="checkbox" id="bilingual" checked>雙語字幕
+        </label>
         <label style="font-size:12px;color:var(--dim);display:flex;gap:5px;align-items:center">
           <input type="checkbox" id="follow" checked>播放時跟隨
         </label>
@@ -246,6 +251,8 @@ main{display:flex;flex:1;min-height:0}
 const S = {
   duration: 0, segments: [], gaps: [], visuals: [], peaks: [],
   project: "",          // pipeline output directory being reviewed
+  translated: false,    // run carries a translation as well as the spoken text
+  bilingual: true,      // burn both languages
   cursor: 0,            // index into S.segments
   filter: "all",
   dirty: false,
@@ -475,11 +482,19 @@ function rowHTML(s, index) {
   if (isRisky(s)) tags.push(`<span class="tag risk">Qwen 改動 ${Math.round(s.risk * 100)}%</span>`);
   if (isSidecar(s)) tags.push(`<span class="tag side">漏聽補句 · 未驗證</span>`);
 
-  const showRef = s.whisper && s.whisper !== s.text;
+  // On a translated run the diff belongs to the spoken language: the editable
+  // text is the translation, and comparing it against Whisper is meaningless.
+  const spoken = s.source || s.text;
+  const showRef = s.whisper && s.whisper !== spoken;
+  const sourceRow = s.source ? `
+    <div class="ref src-line">
+      <span class="lbl">原文</span>
+      <span class="val">${s.source.replace(/</g, "&lt;")}</span>
+    </div>` : "";
   const ref = showRef ? `
     <div class="ref">
       <span class="lbl">Whisper</span>
-      <span class="val">${diffHTML(s.whisper, s.text)}</span>
+      <span class="val">${diffHTML(s.whisper, spoken)}</span>
     </div>` : "";
 
   return `<div class="${cls.join(" ")}" data-i="${index}">
@@ -488,6 +503,7 @@ function rowHTML(s, index) {
       <span class="time" data-seek="${s.start}">${fmt(s.start)} → ${fmt(s.end)}</span>
       <div class="tags">${tags.join("")}</div>
     </div>
+    ${sourceRow}
     <textarea rows="1" data-text="${index}">${(s.text || "").replace(/</g, "&lt;")}</textarea>
     ${ref}
     <div class="times">
@@ -506,7 +522,7 @@ function rowHTML(s, index) {
     <div class="acts">
       <button class="tiny" data-play="${index}">試聽</button>
       <button class="tiny" data-rel="${index}">重聽</button>
-      ${showRef ? `<button class="tiny" data-revert="${index}">退回 Whisper</button>` : ""}
+      ${showRef && !s.source ? `<button class="tiny" data-revert="${index}">退回 Whisper</button>` : ""}
       <button class="tiny" data-split="${index}">分割</button>
       <button class="tiny" data-del="${index}">刪除</button>
       <span class="fill"></span>
@@ -605,7 +621,10 @@ function activeIndex(t) {
 function syncOverlay() {
   const t = video.currentTime;
   const index = activeIndex(t);
-  $("overlayText").textContent = index >= 0 ? S.segments[index].text || "" : "";
+  const active = index >= 0 ? S.segments[index] : null;
+  $("overlayText").textContent = active
+    ? (S.bilingual && active.source ? `${active.text}\n${active.source}` : active.text || "")
+    : "";
   $("clock").textContent = `${fmt(t)} / ${fmt(S.duration)}`;
   if (index >= 0 && index !== S.cursor && $("follow").checked && !video.paused) setCursor(index);
   drawTimeline();
@@ -719,7 +738,7 @@ $("list").addEventListener("input", (event) => {
   S.segments[index].text = box.value;
   autosize(box);
   markDirty();
-  if (index === activeIndex(video.currentTime)) $("overlayText").textContent = box.value;
+  if (index === activeIndex(video.currentTime)) syncOverlay();
 });
 
 $("list").addEventListener("focusin", (event) => {
@@ -910,6 +929,10 @@ function jumpReview(direction) {
   }
   toast("沒有待審的字幕了");
 }
+$("bilingual").addEventListener("change", (event) => {
+  S.bilingual = S.translated && event.target.checked;
+  syncOverlay();
+});
 $("btnInsert").onclick = insertAtPlayhead;
 $("btnFixOverlap").onclick = fixOverlaps;
 $("btnNextRisk").onclick = () => jumpReview(1);
@@ -929,7 +952,7 @@ async function save() {
     const data = await api("PUT", "/api/state", { segments: S.segments });
     S.segments = data.segments; S.gaps = data.gaps; S.dirty = false;
     renderList(); drawTimeline();
-    toast(`已寫入 ${data.written.split("/").pop()}（${data.lines} 行）`);
+    toast(`已寫入 ${data.written.join("、")}（${data.lines} 行）`);
   } catch (error) {
     toast(error.message, true);
   } finally {
@@ -940,11 +963,12 @@ $("btnSave").onclick = save;
 
 let burnTimer = null;
 $("btnBurn").onclick = async () => {
-  if (!confirm("用原片 + 目前字幕 + 既有圖卡，重新燒錄 output/final_reviewed.mp4？\n這會花幾分鐘，原有的 final.mp4 不會被覆蓋。")) return;
+  const which = S.translated ? (S.bilingual ? "雙語" : "只有中文") : "";
+  if (!confirm(`用原片 + 目前字幕${which ? `（${which}）` : ""} + 既有圖卡，重新燒錄 final_reviewed.mp4？\n這會花幾分鐘，原有的 final.mp4 不會被覆蓋。`)) return;
   try {
     await api("PUT", "/api/state", { segments: S.segments });
     S.dirty = false; renderStats();
-    await api("POST", "/api/burn", { segments: S.segments });
+    await api("POST", "/api/burn", { segments: S.segments, bilingual: S.bilingual });
     $("btnBurn").disabled = true; $("btnBurn").textContent = "燒錄中…";
     clearInterval(burnTimer);
     burnTimer = setInterval(async () => {
@@ -1005,12 +1029,18 @@ window.addEventListener("resize", drawTimeline);
 
 /* ============================== projects ============================== */
 function applyState(state) {
+  // The src carries the run name so a switch cannot reuse the cached video.
+  const wanted = `/media/proxy.mp4?p=${encodeURIComponent(state.project)}`;
+  if (!video.src.endsWith(wanted)) video.src = wanted;
   Object.assign(S, {
     duration: state.duration, segments: state.segments,
     gaps: state.gaps, visuals: state.visuals, peaks: state.peaks,
     cursor: 0, dirty: false, playUntil: null,
   });
   $("srcName").textContent = state.source;
+  S.translated = Boolean(state.translated);
+  $("bilingualBox").style.display = S.translated ? "flex" : "none";
+  S.bilingual = S.translated && $("bilingual").checked;
   renderList(); drawTimeline(); syncOverlay();
 }
 
@@ -1038,8 +1068,6 @@ $("project").addEventListener("change", async (event) => {
     video.pause();
     const state = await api("POST", "/api/project", { name });
     S.project = state.project;
-    // Same URL serves a different file now, so force the player to refetch.
-    video.src = `/media/proxy.mp4?p=${encodeURIComponent(name)}`;
     applyState(state);
     toast(`已切換到 ${name}`);
   } catch (error) {

@@ -3,9 +3,25 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 from .utils import run
+
+
+def _tool(name: str) -> str:
+    """Prefer the copy installed beside the running interpreter.
+
+    Running .venv/bin/python directly does not put .venv/bin on PATH, so a
+    dependency installed into the virtualenv is invisible to a bare PATH lookup.
+    """
+    local = Path(sys.executable).parent / name
+    if local.is_file():
+        return str(local)
+    found = shutil.which(name)
+    if not found:
+        raise RuntimeError(f"找不到 {name}，請執行 .venv/bin/python -m pip install -r requirements.txt")
+    return found
 
 
 def _metadata_context(info_path: Path) -> str:
@@ -20,7 +36,7 @@ def prepare_video(source: str, work_dir: Path) -> tuple[Path, str]:
     if source.startswith(("https://", "http://")):
         template = str(work_dir / "source_%(id)s.%(ext)s")
         command = [
-            shutil.which("yt-dlp") or "yt-dlp",
+            _tool("yt-dlp"),
             "--no-check-certificates",
             "--no-playlist",
             "-f", "bv*+ba/b",

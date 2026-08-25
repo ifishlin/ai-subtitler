@@ -83,7 +83,17 @@ def find_source(output: Path) -> Path:
     candidates = sorted(WORK.glob("source_*.mp4"), key=lambda item: item.stat().st_mtime, reverse=True)
     if not candidates:
         raise SystemExit(f"在 {WORK} 找不到來源影片，請用 server.py /path/to/video.mp4 指定")
-    print(f"提醒：{output.name}/run.json 不存在，改用最新的下載檔 {candidates[0].name}")
+    if len(candidates) > 1:
+        # Guessing pairs one run's subtitles with another run's picture, which
+        # looks like corrupted output rather than a missing record.
+        names = "、".join(item.name for item in candidates)
+        raise HTTPException(
+            409,
+            f"{output.name} 沒有 run.json，無法判斷它用的是哪支影片。"
+            f"work/ 裡有 {names}。請重跑 main.py，或手動建立 "
+            f"{output.name}/run.json 寫入 {{\"source\": \"work/影片檔名.mp4\"}}。",
+        )
+    print(f"提醒：{output.name}/run.json 不存在，只有一支影片，使用 {candidates[0].name}")
     return candidates[0]
 
 
@@ -97,7 +107,12 @@ def index() -> str:
 @app.get("/media/proxy.mp4")
 def proxy() -> FileResponse:
     # FileResponse honours HTTP Range, which is what lets the browser seek.
-    return FileResponse(config["paths"]["proxy"], media_type="video/mp4")
+    # Every run answers on this one path, so without no-store the browser keeps
+    # serving whichever video it cached first.
+    return FileResponse(
+        config["paths"]["proxy"], media_type="video/mp4",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/api/projects")
@@ -125,6 +140,7 @@ def get_state() -> dict[str, Any]:
     return {
         "project": paths["output"].name,
         "source": config["source"].name,
+        "translated": any(item.get("source") for item in segments),
         "duration": total,
         "segments": segments,
         "gaps": review.find_gaps(segments, total),
@@ -146,7 +162,7 @@ def put_state(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     return {
         "segments": result["segments"],
         "gaps": review.find_gaps(result["segments"], total),
-        "written": result["written"],
+        "written": sorted(Path(p).name for p in result["written"].values()),
         "lines": result["lines"],
     }
 
@@ -205,12 +221,15 @@ def relisten(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
 # ---------------------------------------------------------------- burn
 
-def _burn_worker(segments: list[dict[str, Any]]) -> None:
+def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
     from src.render import render
     paths = config["paths"]
     try:
-        write_srt(paths["reviewed_srt"], segments)
-        render(config["source"], paths["reviewed_srt"], config["visuals"], paths["reviewed_mp4"])
+        written = review.save_state(paths["state"], paths["reviewed_srt"], segments)["paths"]
+        # render() picks its subtitle styling from the filename, so a bilingual
+        # burn has to be handed the bilingual file rather than a copy.
+        chosen = written.get(variant) or written["zh"]
+        render(config["source"], chosen, config["visuals"], paths["reviewed_mp4"])
         with _burn_lock:
             _burn.update(state="done",
                          message=f'完成：{paths["output"].name}/{paths["reviewed_mp4"].name}',
@@ -228,7 +247,8 @@ def burn(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             return dict(_burn)
         _burn.update(state="running", message="重新燒錄中（原片 + 校對字幕 + 既有圖卡）", output=None)
     segments = payload.get("segments") or review.load_state(config["paths"]["state"], config["paths"]["output"])
-    threading.Thread(target=_burn_worker, args=(segments,), daemon=True).start()
+    variant = "bilingual" if payload.get("bilingual") else "zh"
+    threading.Thread(target=_burn_worker, args=(segments, variant), daemon=True).start()
     return dict(_burn)
 
 
@@ -248,6 +268,7 @@ def unhandled(request, error: Exception) -> JSONResponse:          # noqa: ANN00
 
 def activate(output: Path, source: Path | None = None) -> None:
     """Point the editor at one pipeline run, preparing its media if needed."""
+    CACHE.mkdir(parents=True, exist_ok=True)
     source = source or find_source(output)
     paths = paths_for(output, source)
     config["paths"] = paths

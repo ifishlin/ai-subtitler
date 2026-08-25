@@ -18,7 +18,11 @@ SYSTEM_PROMPT = """你是嚴謹的繁體中文新聞影片編輯。分析逐字�
 
 
 def plan_visuals(client: OllamaClient, segments: list[dict[str, Any]], video_duration: float) -> list[dict[str, Any]]:
-    compact = json.dumps(segments, ensure_ascii=False)
+    # Cards are always written in Chinese for a Chinese-reading audience, so a
+    # translated run plans from the translation where one exists.
+    compact = json.dumps(
+        [{**item, "text": item.get("zh") or item["text"]} for item in segments], ensure_ascii=False
+    )
     response = client.chat_json(SYSTEM_PROMPT, f"影片長度：{video_duration:.1f}秒\n逐字稿：{compact}")
     by_id = {segment["id"]: segment for segment in segments}
     validated = []
