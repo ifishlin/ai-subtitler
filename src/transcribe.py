@@ -75,37 +75,6 @@ def transcribe(
     return segments, info.language
 
 
-def recut_segments(
-    segments: list[dict[str, Any]], words: list[dict[str, Any]]
-) -> list[dict[str, Any]]:
-    """Rebuild captions from word timings, keeping only speech Whisper kept.
-
-    Hallucination filtering works on captions, so the words behind a rejected
-    caption are dropped before re-cutting; otherwise the rebuilt line would
-    reinstate text the filter just removed.
-    """
-    from .segment import describe, resegment
-
-    keep = [(item["start"], item["end"]) for item in segments]
-    usable = [
-        word for word in words
-        if any(start - 0.05 <= word["start"] < end + 0.05 for start, end in keep)
-    ]
-    if not usable:
-        return segments
-
-    recut = resegment(usable)
-    if not recut:
-        return segments
-    # Carry each new caption's confidence over from the words it was built from.
-    for item in recut:
-        inside = [w["logprob"] for w in usable if item["start"] <= w["start"] < item["end"]]
-        item["logprob"] = round(sum(inside) / len(inside), 3) if inside else 0.0
-        item["origin"] = "whisper"
-    print(f"      重新斷句：{describe(segments)} → {describe(recut)}")
-    return recut
-
-
 # A subtitle for a Chinese or English video is built from printable ASCII, Han
 # characters and CJK punctuation. Anything else -- replacement characters,
 # Cyrillic, Hangul -- is a decode that came off the rails, so it is counted
@@ -125,7 +94,9 @@ def drop_hallucinations(segments: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Remove lines Whisper invented rather than heard.
 
     Two signatures, both seen in this project: characters from scripts the video
-    never used, and a line repeated as the model loops on its own output.
+    never used, and a line repeated as the model loops on its own output. A
+    fluent line about something else entirely passes all of this -- that needs
+    the content read, which is review_hallucinations().
     """
     kept: list[dict[str, Any]] = []
     dropped = 0
@@ -145,6 +116,36 @@ def drop_hallucinations(segments: list[dict[str, Any]]) -> list[dict[str, Any]]:
     if dropped:
         print(f"      過濾 {dropped} 段幻覺輸出")
     return [{**item, "id": index} for index, item in enumerate(kept, start=1)]
+
+
+def recut_segments(
+    segments: list[dict[str, Any]], words: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Tidy caption boundaries, keeping Whisper's segments as the unit.
+
+    Word timings say where a division falls in time; they do not replace the
+    text. Rebuilding from them was tried and made things worse, because a
+    segment boundary is how Whisper marks most of its pauses in Chinese and
+    flattening the transcript discards every one.
+    """
+    from .segment import describe, tidy
+
+    inside = [
+        word for word in words
+        if any(item["start"] - 0.05 <= word["start"] < item["end"] + 0.05
+               for item in segments)
+    ]
+    adjusted = tidy(segments, inside or None)
+    if not adjusted:
+        return segments
+    for item in adjusted:
+        spoken = [w["logprob"] for w in inside
+                  if item["start"] <= w["start"] < item["end"]]
+        if spoken:
+            item["logprob"] = round(sum(spoken) / len(spoken), 3)
+        item.setdefault("origin", "whisper")
+    print(f"      調整斷句：{describe(segments)} → {describe(adjusted)}")
+    return adjusted
 
 
 # Gap filling: sensitive decoding is only trustworthy over a short window.
@@ -269,6 +270,19 @@ def fill_gaps(
         key=lambda item: (item["start"], item["end"]),
     )
     return [{**item, "id": number} for number, item in enumerate(merged, start=1)], report
+
+
+HALLUCINATION_PROMPT = """你是新聞字幕的審查員。以下逐字稿由語音辨識產生，其中可能混入
+「模型憑空生成」的句子——它讀起來通順，但與影片主題完全無關，或屬於另一種語言／另一個節目。
+
+典型例子：一則臺灣水災新聞裡出現「多謝您收睇時局新聞，再會!」（粵語、且是別的節目的結語）。
+
+請只列出你確定是憑空生成的段落編號。判斷標準：
+- 與前後文的主題完全無關，不是話題轉換而是完全不相干
+- 屬於影片語言之外的語言，或是其他節目的固定用語
+- 不確定就不要列出。少刪一句無妨，誤刪真實內容才是嚴重問題
+
+只輸出 JSON：{"hallucinated":[{"id":34,"why":"粵語，且為其他節目結語"}]}"""
 
 
 CORRECTION_PROMPT = """你是繁體中文新聞字幕校對員。請找出語音辨識逐字稿中的同音錯字與標點問題。
@@ -413,6 +427,58 @@ def apply_edits(
         target["text"] = updated
 
     return [by_id[item["id"]] for item in segments], refused
+
+
+MAX_HALLUCINATION_SHARE = 0.1
+
+
+def review_hallucinations(
+    client: Any, segments: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Drop lines a model invented, as judged by reading them.
+
+    The mechanical filter catches broken characters and loops. What it cannot
+    see is a line that is fluent, correctly encoded and about something else
+    entirely -- this project's flood report acquired a Cantonese sign-off from
+    another programme. Judging that needs the content read.
+
+    The reviewer returns ids only, never text, and may not remove more than a
+    tenth of the transcript: a misfiring review should cost a caption, not the
+    whole run.
+    """
+    if not segments:
+        return segments
+    payload = [{"id": s["id"], "text": s["text"]} for s in segments]
+    try:
+        reply = client.chat_json(
+            HALLUCINATION_PROMPT,
+            json.dumps({"segments": payload}, ensure_ascii=False),
+        )
+        flagged = reply.get("hallucinated", [])
+    except Exception as error:                                    # noqa: BLE001
+        print(f"      幻覺審查失敗，保留全部段落：{error}")
+        return segments
+
+    known = {s["id"] for s in segments}
+    drop: dict[int, str] = {}
+    for item in flagged if isinstance(flagged, list) else []:
+        if not isinstance(item, dict):
+            continue
+        try:
+            number = int(item["id"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if number in known:
+            drop[number] = str(item.get("why", ""))
+
+    limit = max(1, int(len(segments) * MAX_HALLUCINATION_SHARE))
+    if len(drop) > limit:
+        print(f"      幻覺審查想刪 {len(drop)} 段，超過上限 {limit}，全部不採用")
+        return segments
+    for number, why in drop.items():
+        print(f"      刪除幻覺 #{number}：{why}")
+    kept = [s for s in segments if s["id"] not in drop]
+    return [{**s, "id": i} for i, s in enumerate(kept, start=1)]
 
 
 def _normalise(text: str, converter: OpenCC, chinese: bool) -> str:

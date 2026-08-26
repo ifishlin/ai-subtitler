@@ -16,11 +16,30 @@ from __future__ import annotations
 import re
 from typing import Any
 
-MAX_CHARS = 22         # characters on one line before it reads as a wall
+# A character carries far more meaning in Chinese than in English, so one limit
+# cannot serve both: 22 characters is a comfortable Chinese line but barely four
+# English words, which had every English caption judged too long and split until
+# a sentence spanned four one-second lines.
+LIMITS = {
+    "cjk": {"chars": 22, "cps": 9.0},
+    "latin": {"chars": 42, "cps": 17.0},
+}
 MAX_SECONDS = 6.0      # longer than this and the line outstays the speech
 MIN_SECONDS = 0.9      # shorter than this and it flashes past
-MAX_CPS = 9.0          # characters per second a viewer can follow
 JOIN_GAP = 0.5         # silence beyond this is a real pause, not a split word
+
+CJK = re.compile(r"[\u3400-\u9fff\uf900-\ufaff]")
+
+
+def limits_for(segments: list[dict[str, Any]]) -> dict[str, float]:
+    """Pick the character budget from the script the captions are written in."""
+    sample = "".join(str(s.get("text", "")) for s in segments[:40])
+    han = len(CJK.findall(sample))
+    return LIMITS["cjk"] if han >= max(4, len(sample) * 0.15) else LIMITS["latin"]
+
+
+MAX_CHARS = LIMITS["cjk"]["chars"]     # defaults, overridden per transcript
+MAX_CPS = LIMITS["cjk"]["cps"]
 
 SENTENCE_MARKS = "。！？.!?"
 CLAUSE_MARKS = "，、；：,;:"
@@ -46,8 +65,10 @@ def _joined(first: str, second: str) -> str:
     if not left:
         return right
     if left[-1] in ALL_MARKS:
-        return f"{left}{right}"
-    return f"{left}，{right}"
+        separator = " " if left[-1] in ",;:.!?" else ""
+        return f"{left}{separator}{right}"
+    # The boundary stood for a pause; mark it the way the script does.
+    return f"{left} {right}" if CJK.search(left[-1]) is None else f"{left}，{right}"
 
 
 def join_fragments(
@@ -149,11 +170,12 @@ def split_long(
     return out
 
 
-def pace(segments: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def pace(segments: list[dict[str, Any]], cps: float | None = None) -> list[dict[str, Any]]:
     """Give a caption enough time to be read, where the next one allows it."""
+    rate = cps or limits_for(segments)["cps"]
     paced = [dict(item) for item in segments]
     for index, segment in enumerate(paced):
-        needed = max(MIN_SECONDS, _visible(segment["text"]) / MAX_CPS)
+        needed = max(MIN_SECONDS, _visible(segment["text"]) / rate)
         latest = paced[index + 1]["start"] if index + 1 < len(paced) else None
         wanted = segment["start"] + needed
         segment["end"] = round(min(wanted, latest) if latest else wanted, 2) \
@@ -167,17 +189,23 @@ def tidy(
     segments: list[dict[str, Any]], words: list[dict[str, Any]] | None = None
 ) -> list[dict[str, Any]]:
     """Join fragments, divide over-long lines, then give each room to be read."""
-    result = pace(split_long(join_fragments(segments), words))
+    limits = limits_for(segments)
+    chars = int(limits["chars"])
+    result = pace(
+        split_long(join_fragments(segments, max_chars=chars), words, max_chars=chars),
+        limits["cps"],
+    )
     return [{**item, "id": index} for index, item in enumerate(result, start=1)]
 
 
 def describe(segments: list[dict[str, Any]]) -> str:
     if not segments:
         return "沒有字幕"
+    limits = limits_for(segments)
     spans = [s["end"] - s["start"] for s in segments]
     over = sum(1 for s in spans if s > MAX_SECONDS)
     fast = sum(1 for s in segments
-               if _visible(s["text"]) / max(0.1, s["end"] - s["start"]) > MAX_CPS)
-    wide = sum(1 for s in segments if _visible(s["text"]) > MAX_CHARS)
+               if _visible(s["text"]) / max(0.1, s["end"] - s["start"]) > limits["cps"])
+    wide = sum(1 for s in segments if _visible(s["text"]) > limits["chars"])
     return (f"{len(segments)} 段｜平均 {sum(spans)/len(spans):.1f}s"
             f"｜過長 {over}｜過快 {fast}｜字太多 {wide}")

@@ -6,3 +6,4 @@ fastapi==0.141.1
 uvicorn==0.52.4
 pypinyin==0.55.0
 jieba==0.42.1
+anthropic==1.0.0

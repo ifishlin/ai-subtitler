@@ -7,10 +7,11 @@ from pathlib import Path
 
 from src.audit import inspect, report, write as write_audit
 from src.media import duration, extract_audio, prepare_video
-from src.ollama import OllamaClient
+from src.claude import build as build_client
 from src.render import render
 from src.transcribe import (
     GAP_MIN,
+    review_hallucinations,
     TERMS_MAX,
     correct_with_qwen,
     fill_gaps,
@@ -71,6 +72,8 @@ def parse_args() -> argparse.Namespace:
              "Recognition is the slowest stage, so this re-runs correction, cards and "
              "rendering without repeating it. Implies --fill-gaps handling of sidecars.",
     )
+    parser.add_argument("--llm", choices=["qwen", "claude"], default="qwen",
+                        help="Which language model proofreads, translates and plans cards")
     parser.add_argument("--ollama-model", default="qwen2.5:7b")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11435")
     parser.add_argument("--ssh-target", default=os.environ.get("CUBA_SSH_TARGET", "yuyu@cuba001"))
@@ -204,19 +207,22 @@ def main() -> None:
     # Qwen only proofreads, translates and plans cards. Recognition is already
     # done and rendering needs nothing from it, so an unreachable model should
     # cost those three things -- not the whole run and the minutes already spent.
-    print("[3/7] Connecting to remote Qwen")
-    client = OllamaClient(args.ollama_url, args.ollama_model, args.ssh_target)
+    print(f"[3/7] Connecting to {args.llm}")
+    client = build_client(args.llm, args.ollama_url, args.ollama_model, args.ssh_target)
     try:
         client.ensure_ready()
     except Exception as error:                                    # noqa: BLE001
-        print(f"      Qwen 無法連線：{error}")
+        print(f"      {args.llm} 無法連線：{error}")
         print("      跳過校正、翻譯與圖卡；字幕與影片仍會產出")
         client = None
 
     if client is None or args.no_correct:
-        print(f"[4/7] Skipping Qwen proofreading（辨識語言：{language}）")
+        print(f"[4/7] Skipping proofreading（辨識語言：{language}）")
     else:
-        print(f"[4/7] Correcting transcript with Qwen（辨識語言：{language}）")
+        print(f"[4/7] Correcting transcript（辨識語言：{language}）")
+        # Reading the transcript catches invented lines the character filter
+        # cannot: fluent, correctly encoded, and about something else.
+        segments = review_hallucinations(client, segments)
         segments = correct_with_qwen(client, segments, context, language=language)
 
     # Translating is pointless when only the spoken language will be shown.
@@ -224,6 +230,11 @@ def main() -> None:
         pass
     elif args.subtitles == "source":
         print("      --subtitles source：不翻譯，只保留原文")
+    elif all(item.get("zh") for item in segments):
+        # A resumed run may already carry a translation -- reviewed by hand, or
+        # produced by a better model than the one configured here. Redoing it
+        # would silently discard that work.
+        print(f"      沿用既有的 {len(segments)} 段譯文，不重新翻譯")
     else:
         print("      翻譯成繁體中文")
         segments = translate_with_qwen(client, segments, context)

@@ -21,10 +21,19 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-MAX_CHARS = 22
+# The readable length of a line depends on the script it is written in, so the
+# limits come from the captions themselves -- checking English against a Chinese
+# budget flagged every line and put this project's score at 551.
+from .segment import limits_for
+
 MAX_SECONDS = 6.0
 MIN_SECONDS = 0.9
-MAX_CPS = 9.0
+# In an argument the speakers talk over each other, and a line that lasts half a
+# second is the interview, not a defect. Only a caption well past what a viewer
+# can follow is worth reporting, so the thresholds that flag pace carry margin
+# the hard faults do not.
+FLASH_SECONDS = 0.4
+CPS_MARGIN = 1.6
 LOW_CONFIDENCE = -0.9
 MIN_GAP = 1.5           # silence shorter than this needs no caption
 SPEECH_PEAK = 0.06      # below this a gap is genuinely quiet, not missed speech
@@ -72,6 +81,8 @@ def inspect(
     segments: list[dict[str, Any]], source: Path | None = None, duration: float | None = None
 ) -> dict[str, Any]:
     """Return {verdict, score, findings, summary} for one subtitle set."""
+    limits = limits_for(segments)
+    max_chars, max_cps = int(limits["chars"]), limits["cps"]
     findings: list[dict[str, Any]] = []
 
     def note(kind: str, at: float, detail: str) -> None:
@@ -85,15 +96,15 @@ def inspect(
         chars = _visible(text)
         if NON_SUBTITLE.search(text):
             note("garbled", segment["start"], f"含非字幕字元：{text[:24]}")
-        if chars > MAX_CHARS:
-            note("unreadable", segment["start"], f"{chars} 字，超過 {MAX_CHARS}：{text[:24]}")
+        if chars > max_chars:
+            note("unreadable", segment["start"], f"{chars} 字，超過 {max_chars}：{text[:24]}")
         if span > MAX_SECONDS:
             note("unreadable", segment["start"], f"停留 {span:.1f} 秒：{text[:24]}")
-        if span < MIN_SECONDS:
+        if span < FLASH_SECONDS:
             note("flash", segment["start"], f"只顯示 {span:.1f} 秒：{text[:24]}")
-        if span > 0 and chars / span > MAX_CPS:
+        if span > 0 and chars / span > max_cps * CPS_MARGIN:
             note("unreadable", segment["start"],
-                 f"每秒 {chars/span:.1f} 字，讀不完：{text[:24]}")
+                 f"每秒 {chars/span:.1f} 字，遠超 {max_cps:.0f}：{text[:24]}")
         if segment.get("logprob", 0.0) < LOW_CONFIDENCE:
             note("low-confidence", segment["start"],
                  f"信心 {segment['logprob']:.2f}：{text[:24]}")
@@ -134,6 +145,7 @@ def inspect(
     return {
         "verdict": "review" if score >= REVIEW_SCORE else "pass",
         "score": score,
+        "limits": f"每行上限 {max_chars} 字、每秒 {max_cps:.0f} 字",
         "segments": len(ordered),
         "coverage": round(covered / total, 3) if total else 0.0,
         "counts": counts,
@@ -145,7 +157,8 @@ def report(result: dict[str, Any], limit: int = 12) -> str:
     lines = [
         f"品質判定：{'需要人工檢查' if result['verdict'] == 'review' else '可發布'}"
         f"（分數 {result['score']}，門檻 {REVIEW_SCORE}）",
-        f"  {result['segments']} 段，字幕覆蓋 {result['coverage']:.0%}",
+        f"  {result['segments']} 段，字幕覆蓋 {result['coverage']:.0%}"
+        + (f"（{result['limits']}）" if result.get("limits") else ""),
     ]
     if result["counts"]:
         lines.append("  " + "、".join(f"{k} {v}" for k, v in result["counts"].items()))
