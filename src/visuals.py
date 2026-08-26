@@ -17,13 +17,51 @@ SYSTEM_PROMPT = """你是嚴謹的繁體中文新聞影片編輯。分析逐字�
 標題最多14個中文字，每個短句最多20個中文字。圖卡之間不可重疊。"""
 
 
+# Handed whole segment records -- logprob, origin and all -- a 7B model copies
+# one back instead of planning, having found imitating the input easier than
+# the task. Sending only what the decision needs keeps the request short and
+# leaves nothing to echo.
+PLAN_FIELDS = ("id", "start", "text")
+CHUNK_SEGMENTS = 60
+
+
+def _plan_input(segments: list[dict[str, Any]]) -> str:
+    """The transcript reduced to what a card planner actually reads.
+
+    Cards are written in Chinese for a Chinese-reading audience, so a
+    translated run is planned from the translation where one exists.
+    """
+    return json.dumps([
+        {
+            "id": item["id"],
+            "start": round(float(item["start"]), 1),
+            "text": item.get("zh") or item["text"],
+        }
+        for item in segments
+    ], ensure_ascii=False)
+
+
 def plan_visuals(client: OllamaClient, segments: list[dict[str, Any]], video_duration: float) -> list[dict[str, Any]]:
-    # Cards are always written in Chinese for a Chinese-reading audience, so a
-    # translated run plans from the translation where one exists.
-    compact = json.dumps(
-        [{**item, "text": item.get("zh") or item["text"]} for item in segments], ensure_ascii=False
-    )
-    response = client.chat_json(SYSTEM_PROMPT, f"影片長度：{video_duration:.1f}秒\n逐字稿：{compact}")
+    # A long transcript is planned in windows: one 60-segment stretch is short
+    # enough to reason over, and a card only ever draws on nearby lines anyway.
+    windows = [segments[i:i + CHUNK_SEGMENTS] for i in range(0, len(segments), CHUNK_SEGMENTS)]
+    proposals: list[dict[str, Any]] = []
+    for window in windows:
+        try:
+            reply = client.chat_json(
+                SYSTEM_PROMPT,
+                f"影片長度：{video_duration:.1f}秒\n逐字稿：{_plan_input(window)}",
+            )
+        except Exception as error:                                # noqa: BLE001
+            print(f"      圖卡規劃這一段失敗：{error}")
+            continue
+        found = reply.get("visuals")
+        if isinstance(found, list):
+            proposals.extend(item for item in found if isinstance(item, dict))
+        elif isinstance(reply, dict) and "text" in reply:
+            print("      Qwen 回傳的是逐字稿片段而非圖卡，忽略")
+
+    response = {"visuals": proposals}
     by_id = {segment["id"]: segment for segment in segments}
     validated = []
     for item in response.get("visuals", [])[:2]:
@@ -33,6 +71,9 @@ def plan_visuals(client: OllamaClient, segments: list[dict[str, Any]], video_dur
         start = float(item["start"])
         duration = min(5.0, max(3.0, float(item.get("duration", 4))))
         if start < 0 or start + duration > video_duration:
+            continue
+        if any(start < existing["end"] and existing["start"] < start + duration
+               for existing in validated):
             continue
         source_text = " ".join(by_id[value]["text"] for value in ids)
         validated.append({
