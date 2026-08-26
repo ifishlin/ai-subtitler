@@ -34,6 +34,7 @@ def transcribe(
     audio: Path,
     model_name: str,
     sensitive: bool = False,
+    recut: bool = True,
 ) -> tuple[list[dict[str, Any]], str]:
     raw_segments, info = _model(model_name).transcribe(
         str(audio),
@@ -42,9 +43,11 @@ def transcribe(
         condition_on_previous_text=not sensitive,
         no_speech_threshold=0.3 if sensitive else 0.6,
         log_prob_threshold=-1.5 if sensitive else -1.0,
+        word_timestamps=recut,
     )
     converter = OpenCC("s2twp")
     segments = []
+    words: list[dict[str, Any]] = []
     for index, segment in enumerate(raw_segments, start=1):
         text = converter.convert(segment.text.strip())
         if text:
@@ -56,7 +59,51 @@ def transcribe(
                 "logprob": round(segment.avg_logprob, 3),
                 "origin": "whisper",
             })
-    return drop_hallucinations(segments), info.language
+        for word in getattr(segment, "words", None) or []:
+            piece = converter.convert(str(word.word))
+            if piece.strip():
+                words.append({
+                    "word": piece,
+                    "start": float(word.start),
+                    "end": float(word.end),
+                    "logprob": round(segment.avg_logprob, 3),
+                })
+
+    segments = drop_hallucinations(segments)
+    if recut and words:
+        segments = recut_segments(segments, words)
+    return segments, info.language
+
+
+def recut_segments(
+    segments: list[dict[str, Any]], words: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Rebuild captions from word timings, keeping only speech Whisper kept.
+
+    Hallucination filtering works on captions, so the words behind a rejected
+    caption are dropped before re-cutting; otherwise the rebuilt line would
+    reinstate text the filter just removed.
+    """
+    from .segment import describe, resegment
+
+    keep = [(item["start"], item["end"]) for item in segments]
+    usable = [
+        word for word in words
+        if any(start - 0.05 <= word["start"] < end + 0.05 for start, end in keep)
+    ]
+    if not usable:
+        return segments
+
+    recut = resegment(usable)
+    if not recut:
+        return segments
+    # Carry each new caption's confidence over from the words it was built from.
+    for item in recut:
+        inside = [w["logprob"] for w in usable if item["start"] <= w["start"] < item["end"]]
+        item["logprob"] = round(sum(inside) / len(inside), 3) if inside else 0.0
+        item["origin"] = "whisper"
+    print(f"      重新斷句：{describe(segments)} → {describe(recut)}")
+    return recut
 
 
 # A subtitle for a Chinese or English video is built from printable ASCII, Han

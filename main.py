@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 
+from src.audit import inspect, report, write as write_audit
 from src.media import duration, extract_audio, prepare_video
 from src.ollama import OllamaClient
 from src.render import render
@@ -82,6 +83,12 @@ def parse_args() -> argparse.Namespace:
              "spoken language only, and skips translation altogether.",
     )
     parser.add_argument(
+        "--no-recut", action="store_true",
+        help="Keep Whisper's own caption boundaries. By default captions are "
+             "rebuilt from word timings, which stops a word being split across "
+             "two lines and caps how long and dense a line may be.",
+    )
+    parser.add_argument(
         "--no-correct", action="store_true",
         help="Skip the Qwen proofreading pass. Worth using on English, where "
              "recognition is already accurate and rewriting mostly adds risk.",
@@ -156,7 +163,9 @@ def main() -> None:
         print(f"[2/7] Reusing {args.reuse_transcript} ({len(segments)} segments)")
     else:
         print("[2/7] Transcribing with faster-whisper")
-        segments, language = transcribe(audio, args.whisper_model, sensitive=args.sensitive)
+        segments, language = transcribe(
+            audio, args.whisper_model, sensitive=args.sensitive, recut=not args.no_recut
+        )
     if not segments:
         raise RuntimeError("Whisper returned an empty transcript")
 
@@ -192,18 +201,26 @@ def main() -> None:
         "terms": terms,
     })
 
+    # Qwen only proofreads, translates and plans cards. Recognition is already
+    # done and rendering needs nothing from it, so an unreachable model should
+    # cost those three things -- not the whole run and the minutes already spent.
     print("[3/7] Connecting to remote Qwen")
     client = OllamaClient(args.ollama_url, args.ollama_model, args.ssh_target)
-    client.ensure_ready()
+    try:
+        client.ensure_ready()
+    except Exception as error:                                    # noqa: BLE001
+        print(f"      Qwen 無法連線：{error}")
+        print("      跳過校正、翻譯與圖卡；字幕與影片仍會產出")
+        client = None
 
-    if args.no_correct:
+    if client is None or args.no_correct:
         print(f"[4/7] Skipping Qwen proofreading（辨識語言：{language}）")
     else:
         print(f"[4/7] Correcting transcript with Qwen（辨識語言：{language}）")
         segments = correct_with_qwen(client, segments, context, language=language)
 
     # Translating is pointless when only the spoken language will be shown.
-    if language.startswith("zh"):
+    if language.startswith("zh") or client is None:
         pass
     elif args.subtitles == "source":
         print("      --subtitles source：不翻譯，只保留原文")
@@ -234,13 +251,23 @@ def main() -> None:
     print(f"      字幕檔：{', '.join(sorted(p.name for p in written.values()))}（燒錄用 {burn_srt.name}）")
 
     print("[5/7] Planning information cards")
-    visual_plan = plan_visuals_with_retry(client, segments, duration(video))
+    visual_plan = (
+        plan_visuals_with_retry(client, segments, duration(video)) if client else []
+    )
+    if client is None:
+        print("      沒有 Qwen 連線，這次不加圖卡")
     render_cards(visual_plan, visuals_dir, find_font(args.font))
     write_json(output / "ai_visuals.json", visual_plan)
 
     print("[6/7] Rendering subtitles and cards")
     render(video, burn_srt, visual_plan, output / "final.mp4")
 
+    # The run judges its own output, so a batch only needs eyes on what failed.
+    audit = inspect(segments, video, duration(video))
+    write_audit(output / "audit.json", audit)
+    print()
+    print(report(audit))
+    print()
     print(f"[7/7] Done: {output / 'final.mp4'}")
 
 

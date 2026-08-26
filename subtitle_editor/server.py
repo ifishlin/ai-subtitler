@@ -153,6 +153,19 @@ def switch_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
 # ---------------------------------------------------------------- state
 
+@app.get("/api/audit")
+def audit() -> dict[str, Any]:
+    """Judge the captions currently being reviewed, not the ones shipped.
+
+    Recomputing means the verdict follows your edits instead of describing the
+    state the pipeline left behind.
+    """
+    from src.audit import inspect
+    paths = config["paths"]
+    segments = review.load_state(paths["state"], paths["output"])
+    return inspect(segments, config["source"], config["duration"])
+
+
 @app.get("/api/state")
 def get_state() -> dict[str, Any]:
     paths = config["paths"]
