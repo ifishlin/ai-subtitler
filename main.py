@@ -8,6 +8,7 @@ from pathlib import Path
 from src.audit import inspect, report, write as write_audit
 from src.media import duration, extract_audio, prepare_video
 from src.claude import build as build_client
+from src.layout import render_inset
 from src.render import render
 from src.transcribe import (
     GAP_MIN,
@@ -84,6 +85,17 @@ def parse_args() -> argparse.Namespace:
         help="Which subtitles to burn in. auto keeps a Chinese video as spoken and "
              "gives any other language both languages on screen. source means the "
              "spoken language only, and skips translation altogether.",
+    )
+    parser.add_argument(
+        "--layout", choices=["full", "inset"], default="full",
+        help="full burns captions over the whole picture; inset places the video "
+             "in the upper left of a pale field, leaving room for explanation.",
+    )
+    parser.add_argument(
+        "--render", action="store_true",
+        help="Burn the video now. By default the run stops after subtitles and "
+             "cards, since the encode takes minutes and the result is superseded "
+             "by whatever the review changes. Render from the editor instead.",
     )
     parser.add_argument(
         "--no-recut", action="store_true",
@@ -270,8 +282,14 @@ def main() -> None:
     render_cards(visual_plan, visuals_dir, find_font(args.font))
     write_json(output / "ai_visuals.json", visual_plan)
 
-    print("[6/7] Rendering subtitles and cards")
-    render(video, burn_srt, visual_plan, output / "final.mp4")
+    if args.render:
+        print(f"[6/7] Rendering subtitles and cards（版面：{args.layout}）")
+        draw = render_inset if args.layout == "inset" else render
+        draw(video, burn_srt, visual_plan, output / "final.mp4")
+    else:
+        print("[6/7] 跳過燒錄（加 --render 可直接出片）")
+        print(f"      字幕與圖卡已就緒，在編輯器確認後再燒：")
+        print(f"      .venv/bin/python subtitle_editor/server.py --output {args.output}")
 
     # The run judges its own output, so a batch only needs eyes on what failed.
     audit = inspect(segments, video, duration(video))
@@ -279,7 +297,8 @@ def main() -> None:
     print()
     print(report(audit))
     print()
-    print(f"[7/7] Done: {output / 'final.mp4'}")
+    done = output / "final.mp4" if args.render else output / "subtitles_zh.srt"
+    print(f"[7/7] Done: {done}")
 
 
 if __name__ == "__main__":
