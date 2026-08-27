@@ -82,15 +82,18 @@ def add_badges(
 
 
 def add_cards(scene: dict[str, Any], visuals: list[dict[str, Any]]) -> dict[str, Any]:
-    """Information cards the run planned. They are drawn full-frame and take
-    the screen for their few seconds, which is what they were made to do."""
+    """Information cards the run planned, as ordinary image elements.
+
+    A card carries its own box when it has been trimmed to what it actually
+    draws; otherwise it covers the frame, which is how they were made before
+    there was a layout to place them in."""
     canvas = list(scene.get("canvas", CANVAS))
     for index, card in enumerate(visuals, start=1):
         scene["elements"].append({
             "id": f"card{index}",
             "type": "image",
             "file": str(card["file"]),
-            "box": [0, 0, *canvas],
+            "box": list(card.get("box") or [0, 0, *canvas]),
             "from": float(card["start"]),
             "to": float(card["end"]),
         })

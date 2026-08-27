@@ -10,6 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from . import cuts as cuts_module
 from . import scene as scene_module
 from .utils import run
 
@@ -42,6 +43,11 @@ def compose(
 
     With `progress`, ffmpeg writes its position to that file as it goes, which
     is how a burn that takes minutes can say how far it has got."""
+    # Cut stretches are dropped from the source and everything timed moves onto
+    # the shortened clock. Captions arrive already moved: they are pictures by
+    # the time they get here, and the caller drew them.
+    removed = cuts_module.tidy(scene.get("cuts") or [])
+    scene = cuts_module.apply_to_scene(scene, removed)
     canvas = tuple(scene.get("canvas", scene_module.CANVAS))
     background = _hex_to_ffmpeg(scene.get("background", scene_module.BACKGROUND))
     elements = scene.get("elements", [])
@@ -83,7 +89,8 @@ def compose(
         if kind == "video":
             width, height = scene_module.size_of(element)
             left, top = element["box"][0], element["box"][1]
-            filters.append(f"[0:v]scale={width}:{height},setsar=1[pic]")
+            keep = f"{cuts_module.filters(removed)[0]}," if removed else ""
+            filters.append(f"[0:v]{keep}scale={width}:{height},setsar=1[pic]")
             filters.append(f"[{previous}][pic]overlay={left}:{top}:shortest=1[{current}]")
 
         elif kind == "image":
@@ -121,9 +128,13 @@ def compose(
 
     if progress:
         command.extend(["-progress", str(progress), "-nostats"])
+    audio = "0:a:0"
+    if removed:
+        filters.append(f"[0:a]{cuts_module.filters(removed)[1]}[snd]")
+        audio = "[snd]"
     command.extend([
         "-filter_complex", ";".join(filters),
-        "-map", f"[{previous}]", "-map", "0:a:0",
+        "-map", f"[{previous}]", "-map", audio,
         "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
         "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart",
         "-shortest", str(output),
