@@ -31,7 +31,15 @@ from subtitle_editor import media, review                            # noqa: E40
 from subtitle_editor.srt import write_srt                            # noqa: E402
 
 WORK = ROOT / "work"
+# Everything here is regenerable, but it accumulates over months of runs, so
+# each kind of file gets its own drawer rather than one flat heap.
 CACHE = ROOT / "editor_cache"
+PROXY = CACHE / "proxy"              # browser-playable copies of the sources
+WAVEFORM = CACHE / "waveform"        # peak summaries for the timeline
+REVIEWS = CACHE / "review"           # a session's confirmations, per run
+CAPTIONS = CACHE / "captions"        # drawn captions, one directory per run
+PREVIEWS = CACHE / "preview"         # short test burns and burn progress
+SCRATCH = CACHE / "scratch"          # anything written by hand while working
 STATIC = Path(__file__).resolve().parent / "static"
 
 # Everything that depends on which run is being reviewed lives in config, so
@@ -44,13 +52,16 @@ def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
     stem = source.stem if source else "none"
     return {
         "output": output,
-        "state": CACHE / f"review_{output.name}.json",
+        "state": REVIEWS / f"{output.name}.json",
         "reviewed_srt": output / "subtitles_zh.reviewed.srt",
         "reviewed_mp4": output / "final_reviewed.mp4",
-        "proxy": CACHE / f"proxy_{stem}.mp4",
-        "peaks": CACHE / f"peaks_{stem}.json",
+        "proxy": PROXY / f"{stem}.mp4",
+        "peaks": WAVEFORM / f"{stem}.json",
         "scene": output / "scene.json",
-        "burn_progress": CACHE / f"burn_{output.name}.progress",
+        "burn_progress": PREVIEWS / f"{output.name}.progress",
+        "captions": CAPTIONS / output.name,
+        "preview": PREVIEWS / f"{output.name}.mp4",
+        "preview_clip": PREVIEWS / f"{output.name}_clip.mp4",
     }
 
 app = FastAPI(title="Subtitle Review")
@@ -330,7 +341,7 @@ def relisten(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     sensitive = bool(payload.get("sensitive", True))
     model_name = str(payload.get("model", "medium"))
 
-    clip = media.slice_audio(config["source"], start, end, CACHE / "relisten.wav")
+    clip = media.slice_audio(config["source"], start, end, SCRATCH / "relisten.wav")
     raw_segments, _ = _whisper(model_name).transcribe(
         str(clip),
         beam_size=5,
@@ -376,6 +387,50 @@ def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
             _burn.update(state="error", message=str(error), output=None)
 
 
+def _caption_srt(scene: dict[str, Any]) -> tuple[dict[str, Any] | None, Path | None]:
+    """The subtitle element and the file it should be drawn from -- whatever
+    the editor last saved, falling back to what the pipeline produced."""
+    from src import scene as scene_module
+    element = scene_module.one(scene, "subtitle")
+    if not element:
+        return None, None
+    output = config["paths"]["output"]
+    name = element.get("srt", "subtitles_zh.srt")
+    reviewed = output / name.replace(".srt", ".reviewed.srt")
+    return element, (reviewed if reviewed.is_file() else output / name)
+
+
+def _draw_captions() -> dict[str, Any]:
+    """Draw every caption as a picture. Cheap after the first time: the file
+    name is a hash of the text and the styling, so only what changed is drawn."""
+    from src import caption as caption_module
+    from src import scene as scene_module
+
+    scene = get_scene()
+    element, srt = _caption_srt(scene)
+    if not element or not srt or not srt.is_file():
+        raise HTTPException(400, "這個版面沒有字幕元件，或找不到字幕檔")
+    built = caption_module.build(
+        caption_module.read_srt(srt), element,
+        tuple(scene.get("canvas", scene_module.CANVAS)), config["paths"]["captions"],
+    )
+    built["source"] = srt.name
+    return built
+
+
+@app.post("/api/captions")
+def captions() -> dict[str, Any]:
+    return _draw_captions()
+
+
+@app.get("/media/caption/{name}")
+def caption_file(name: str) -> FileResponse:
+    path = config["paths"]["captions"] / name
+    if not path.is_file() or not name.startswith("cap_") or not name.endswith(".png"):
+        raise HTTPException(404, f"找不到 {name}")
+    return FileResponse(path, media_type="image/png")
+
+
 PREVIEW_SECONDS = 10.0
 
 
@@ -392,72 +447,38 @@ def preview(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         get_scene()
     scene = scene_module.load(paths["scene"])
 
-    # Prefer the SRT the editor has been saving; fall back to the pipeline's.
-    caption = scene_module.one(scene, "subtitle")
-    if caption:
-        name = caption.get("srt", "subtitles_zh.srt")
-        reviewed = paths["output"] / name.replace(".srt", ".reviewed.srt")
-        if reviewed.is_file():
-            caption["srt"] = reviewed.name
-
     start = max(0.0, float(payload.get("start") or 0.0))
     seconds = float(payload.get("seconds") or PREVIEW_SECONDS)
-    clip = CACHE / f"preview_clip_{config['paths']['output'].name}.mp4"
+    clip = paths["preview_clip"]
     subprocess.run(
         ["ffmpeg", "-y", "-v", "error", "-ss", f"{start:.3f}", "-i", str(config["source"]),
          "-t", f"{seconds:.3f}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
          "-c:a", "aac", "-b:a", "128k", str(clip)],
         check=True,
     )
-    # Subtitle times are absolute, so the trimmed clip needs them shifted back.
-    if caption:
-        shifted = CACHE / f"preview_{Path(caption['srt']).stem}.srt"
-        _shift_srt(paths["output"] / caption["srt"], shifted, -start, seconds)
-        caption["srt"] = shifted.name
-        srt_dir = CACHE
-    else:
-        srt_dir = paths["output"]
+    # Captions are pictures, and the clip starts at `start`, so the playlist is
+    # written against the clip's own clock.
+    from src import caption as caption_module
+    listing = None
+    element = scene_module.one(scene, "subtitle")
+    if element:
+        built = _draw_captions()
+        scene["caption_band"] = built["band"]
+        listing = caption_module.playlist(
+            built["captions"], seconds, built["band"],
+            paths["captions"], offset=start,
+        )
 
-    out = CACHE / f"preview_{paths['output'].name}.mp4"
-    compose_module.compose(clip, scene, out, srt_dir=srt_dir, image_root=ROOT)
+    out = paths["preview"]
+    compose_module.compose(clip, scene, out, srt_dir=paths["output"],
+                           image_root=ROOT, captions=listing)
     return {"file": out.name, "start": start, "seconds": seconds}
-
-
-def _shift_srt(source: Path, target: Path, offset: float, span: float) -> None:
-    """Copy the cues inside the preview window onto its clock. Blocks are moved
-    whole rather than re-parsed, so a bilingual cue keeps its two lines."""
-    import re
-    from subtitle_editor.srt import timestamp
-
-    time_line = re.compile(
-        r"(\d+):(\d\d):(\d\d)[,.](\d{1,3})\s*-->\s*(\d+):(\d\d):(\d\d)[,.](\d{1,3})"
-    )
-
-    def seconds(hours: str, minutes: str, secs: str, millis: str) -> float:
-        return int(hours) * 3600 + int(minutes) * 60 + int(secs) + int(millis.ljust(3, "0")) / 1000
-
-    kept: list[str] = []
-    for block in re.split(r"\n\s*\n", source.read_text(encoding="utf-8").strip()):
-        lines = [line for line in block.splitlines() if line.strip()]
-        found = next(((i, time_line.search(l)) for i, l in enumerate(lines) if time_line.search(l)), None)
-        if not found:
-            continue
-        index, match = found
-        start = seconds(*match.groups()[:4]) + offset
-        end = seconds(*match.groups()[4:]) + offset
-        if end <= 0 or start >= span:
-            continue
-        start, end = max(0.0, start), min(span, end)
-        body = "\n".join(lines[index + 1:])
-        kept.append(f"{len(kept) + 1}\n{timestamp(start, True)} --> {timestamp(end, True)}\n{body}")
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text("\n\n".join(kept) + "\n", encoding="utf-8")
 
 
 @app.get("/media/preview/{name}")
 def preview_file(name: str) -> FileResponse:
-    path = CACHE / name
-    if not path.is_file() or not name.startswith("preview_"):
+    path = PREVIEWS / name
+    if not path.is_file() or "/" in name or not name.endswith(".mp4"):
         raise HTTPException(404, f"找不到 {name}")
     return FileResponse(path, media_type="video/mp4", headers={"Cache-Control": "no-store"})
 
@@ -523,7 +544,8 @@ def unhandled(request, error: Exception) -> JSONResponse:          # noqa: ANN00
 
 def activate(output: Path, source: Path | None = None) -> None:
     """Point the editor at one pipeline run, preparing its media if needed."""
-    CACHE.mkdir(parents=True, exist_ok=True)
+    for drawer in (PROXY, WAVEFORM, REVIEWS, CAPTIONS, PREVIEWS, SCRATCH):
+        drawer.mkdir(parents=True, exist_ok=True)
     source = source or find_source(output)
     paths = paths_for(output, source)
     config["paths"] = paths

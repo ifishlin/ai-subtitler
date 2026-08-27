@@ -118,6 +118,10 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
   background:var(--panel2);border:1px solid var(--line);border-radius:5px;
   padding:3px 5px}
 #propName{font-weight:600;color:var(--ink);min-width:7em}
+#pngBox{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--dim)}
+/* The caption picture sits exactly where ffmpeg will lay it down. */
+#capImage{position:absolute;display:none;pointer-events:none;image-rendering:auto}
+#stage.scene #capImage.on{display:block}
 #sceneActions{display:flex;align-items:center;gap:7px;margin-top:6px;
   padding-top:6px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
 
@@ -287,6 +291,7 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
     <div id="left">
       <div id="stage">
         <video id="video" preload="auto" playsinline></video>
+        <img id="capImage" alt="">
         <div id="overlay"><span id="overlayText"></span></div>
       </div>
       <div id="transport">
@@ -319,6 +324,9 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
           <button id="btnSaveScene" class="tiny">儲存版面</button>
           <button id="btnPreviewScene" class="tiny">壓 10 秒看成品</button>
           <button id="btnShowJson" class="tiny">看 JSON</button>
+          <label id="pngBox" title="用壓片會用的那張字幕圖，而不是瀏覽器畫的字">
+            <input type="checkbox" id="pngCaptions">成品字幕
+          </label>
           <div style="flex:1"></div>
           <span id="sceneState" class="hint"></span>
         </div>
@@ -431,7 +439,8 @@ const video = $("video");
 
 /* The layout being edited. Declared up here because applyInsetView() runs
    while the page is still being set up, long before the scene block below. */
-const SCENE = { data: null, images: [], sel: null, dirty: false, nodes: [] };
+const SCENE = { data: null, images: [], sel: null, dirty: false, nodes: [],
+                captions: null };   // the drawn caption pictures, once asked for
 const escapeHTML = (text) => String(text).replace(
   /[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const SPAN = 5;               // seconds a freshly dropped image lasts
@@ -1175,6 +1184,8 @@ async function save() {
     S.segments = data.segments; S.gaps = data.gaps; S.dirty = false;
     renderList(); drawTimeline();
     toast(`已寫入 ${data.written.join("、")}（${data.lines} 行）`);
+    // New text means new artwork; only the changed lines are redrawn.
+    refreshCaptions();
   } catch (error) {
     toast(error.message, true);
   } finally {
@@ -1481,6 +1492,8 @@ function paintScene() {
     });
   }
   scene.elements.forEach((element, index) => place(index));
+  placeCapImage();
+  syncCapImage();
   syncSceneTime();
   showProps();
 }
@@ -1528,6 +1541,63 @@ function place(index) {
     stage.style.setProperty("--capWeight", element.bold ? "700" : "400");
   }
 }
+
+/* ---------- captions as pictures ----------
+   Text in a browser and text in libass are two typesetters laying out the same
+   string, and they disagree. Drawing each caption once and showing that
+   picture in both places ends the argument: what is approved here is the
+   artwork that ships. Editing stays on text -- redrawing 156 pictures per
+   keystroke would be absurd -- so this is something you switch on to check. */
+async function loadCaptions() {
+  const built = await api("POST", "/api/captions");
+  SCENE.captions = built;
+  placeCapImage();
+  syncCapImage();
+  return built;
+}
+
+function placeCapImage() {
+  const image = $("capImage");
+  if (!SCENE.captions || !SCENE.data) return;
+  const [cw, ch] = SCENE.data.canvas;
+  const [left, top, right, bottom] = SCENE.captions.band;
+  Object.assign(image.style, {
+    left: `${(left / cw) * 100}%`, top: `${(top / ch) * 100}%`,
+    width: `${((right - left) / cw) * 100}%`,
+    height: `${((bottom - top) / ch) * 100}%`,
+  });
+}
+
+/** The picture for whatever is being said now, or none. */
+function syncCapImage() {
+  const image = $("capImage");
+  const on = $("pngCaptions").checked && SCENE.captions;
+  image.classList.toggle("on", Boolean(on));
+  $("overlay").style.visibility = on ? "hidden" : "";
+  if (!on) return;
+  const now = video.currentTime;
+  const cue = SCENE.captions.captions.find((item) => now >= item.start && now <= item.end);
+  const wanted = cue ? `/media/caption/${cue.file}` : "";
+  if (!wanted) { image.removeAttribute("src"); return; }
+  if (!image.src.endsWith(wanted)) image.src = wanted;
+}
+video.addEventListener("timeupdate", syncCapImage);
+video.addEventListener("seeked", syncCapImage);
+
+$("pngCaptions").addEventListener("change", async (event) => {
+  if (!event.target.checked) { syncCapImage(); return; }
+  const box = $("pngBox");
+  box.style.opacity = ".5";
+  try {
+    const built = await loadCaptions();
+    toast(`字幕已畫成 ${built.captions.length} 張圖，畫面上是壓片會用的那一張`);
+  } catch (error) {
+    event.target.checked = false;
+    toast(error.message, true);
+  } finally {
+    box.style.opacity = "";
+  }
+});
 
 /* Which elements the playhead is inside. Called on every seek, so it only
    touches classes -- no layout work. */
@@ -1788,6 +1858,11 @@ $("btnSaveScene").onclick = async () => {
     toast(error.message, true);
   }
 };
+
+async function refreshCaptions() {
+  if (!$("pngCaptions").checked) { SCENE.captions = null; return; }
+  try { await loadCaptions(); } catch (error) { toast(error.message, true); }
+}
 
 $("btnPreviewScene").onclick = async () => {
   const button = $("btnPreviewScene");
