@@ -8,7 +8,7 @@ from pathlib import Path
 from src.audit import inspect, report, write as write_audit
 from src.media import duration, extract_audio, prepare_video
 from src.claude import build as build_client
-from src.layout import render_inset
+from src.layout import BADGE_EVERY, badge_schedule, render_inset
 from src.render import render
 from src.transcribe import (
     GAP_MIN,
@@ -91,6 +91,13 @@ def parse_args() -> argparse.Namespace:
         help="full burns captions over the whole picture; inset places the video "
              "in the upper left of a pale field, leaving room for explanation.",
     )
+    parser.add_argument(
+        "--badges", metavar="DIR",
+        help="Directory of square images to show in the corner of an inset "
+             "layout, one at a time, cycling through them.",
+    )
+    parser.add_argument("--badge-every", type=float, default=BADGE_EVERY,
+                        help="Seconds each corner image stays before the next")
     parser.add_argument(
         "--render", action="store_true",
         help="Burn the video now. By default the run stops after subtitles and "
@@ -284,8 +291,14 @@ def main() -> None:
 
     if args.render:
         print(f"[6/7] Rendering subtitles and cards（版面：{args.layout}）")
-        draw = render_inset if args.layout == "inset" else render
-        draw(video, burn_srt, visual_plan, output / "final.mp4")
+        if args.layout == "inset":
+            images = sorted(Path(args.badges).glob("*.png")) if args.badges else []
+            marks = badge_schedule(images, duration(video), args.badge_every)
+            if marks:
+                print(f"      角落圖示 {len(images)} 張，每 {args.badge_every:.0f} 秒輪替")
+            render_inset(video, burn_srt, visual_plan, output / "final.mp4", badges=marks)
+        else:
+            render(video, burn_srt, visual_plan, output / "final.mp4")
     else:
         print("[6/7] 跳過燒錄（加 --render 可直接出片）")
         print(f"      字幕與圖卡已就緒，在編輯器確認後再燒：")

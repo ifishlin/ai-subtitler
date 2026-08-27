@@ -27,3 +27,6 @@ editor_cache/
 # Run logs and downloaded B-roll
 *.log
 work/broll_*
+
+# Cut-out icons are produced from img/ by src/cutout.py
+img_cut/
