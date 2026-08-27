@@ -25,8 +25,14 @@ def compose(
     output: Path,
     srt_dir: Path | None = None,
     image_root: Path | None = None,
+    captions: Path | None = None,
 ) -> Path:
-    """Render `video` into `scene` and burn the result to `output`."""
+    """Render `video` into `scene` and burn the result to `output`.
+
+    With `captions` -- a concat list from src/caption.py -- the subtitles are
+    overlaid as the pictures the editor previewed, rather than typeset again by
+    libass. That is the only way the preview and the burn can be the same:
+    otherwise two typesetters lay out the same string and disagree."""
     canvas = tuple(scene.get("canvas", scene_module.CANVAS))
     background = _hex_to_ffmpeg(scene.get("background", scene_module.BACKGROUND))
     elements = scene.get("elements", [])
@@ -39,6 +45,14 @@ def compose(
     command = ["ffmpeg", "-y", "-i", str(video)]
     image_inputs: dict[str, int] = {}
     index = 1
+    caption_stream = None
+    caption_band = list(scene.get("caption_band") or [0, 0, canvas[0], canvas[1]])
+    if captions and captions.is_file():
+        # One stream of stills with durations: a four-minute video has more
+        # captions than ffmpeg accepts as separate inputs.
+        command.extend(["-f", "concat", "-safe", "0", "-i", str(captions)])
+        caption_stream = index
+        index += 1
     for element in elements:
         if element.get("type") != "image":
             continue
@@ -73,14 +87,23 @@ def compose(
             filters.append(f"[{previous}][img{step}]overlay={left}:{top}{gate}[{current}]")
 
         elif kind == "subtitle":
-            srt = srt_dir / element["srt"]
-            if not srt.is_file():
-                continue
-            style = scene_module.subtitle_style(element, canvas)
-            filters.append(
-                f"[{previous}]subtitles=filename='{_filter_path(srt)}'"
-                f":force_style='{style}'[{current}]"
-            )
+            if caption_stream is not None:
+                # The strip carries its own position; it only has to be laid
+                # down where src/caption.py said it belongs.
+                filters.append(f"[{caption_stream}:v]fps=30,format=rgba[cap]")
+                filters.append(
+                    f"[{previous}][cap]overlay={caption_band[0]}:{caption_band[1]}"
+                    f":shortest=1[{current}]"
+                )
+            else:
+                srt = srt_dir / element["srt"]
+                if not srt.is_file():
+                    continue
+                style = scene_module.subtitle_style(element, canvas)
+                filters.append(
+                    f"[{previous}]subtitles=filename='{_filter_path(srt)}'"
+                    f":force_style='{style}'[{current}]"
+                )
         else:
             continue
 
