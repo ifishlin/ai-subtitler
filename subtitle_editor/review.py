@@ -2,7 +2,7 @@
 
 Three files are combined:
   subtitles_zh.srt      the subtitles as shipped   -> editable text
-  transcript.json       post-Qwen text             -> "qwen" reference
+  transcript.json       proofread text             -> "qwen" reference
   transcript_raw.json   raw Whisper text           -> "whisper" reference
 
 transcript_raw.json is matched by time overlap rather than segment id, because
@@ -18,7 +18,7 @@ from typing import Any
 from .srt import parse_srt, write_srt
 
 MIN_GAP = 1.2          # seconds of silence before a gap is worth reviewing
-RISK_THRESHOLD = 0.25  # how much Qwen rewrote Whisper before we flag it
+RISK_THRESHOLD = 0.25  # how much the LLM rewrote Whisper before we flag it
 
 
 def _load_segments(path: Path) -> list[dict[str, Any]]:

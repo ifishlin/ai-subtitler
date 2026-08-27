@@ -55,12 +55,93 @@ main{display:flex;flex:1;min-height:0}
 #right{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
 
 /* ---------- video ---------- */
-#stage{position:relative;background:#000;flex:none}
+/* Its own stacking context: the layout nodes stack against each other inside
+   the canvas, and cannot climb over the modals, help panel or toasts. */
+#stage{position:relative;z-index:0;isolation:isolate;background:#000;flex:none}
 #video{display:block;width:100%;max-height:44vh;background:#000}
 #overlay{
   position:absolute;left:0;right:0;bottom:6%;text-align:center;
   pointer-events:none;padding:0 6%;
 }
+/* ---------- layout mode: the stage becomes scene.json ----------
+   Every box comes from the scene as a percentage of its canvas, so this
+   preview and src/compose.py are laying out the same numbers. */
+#stage.scene{margin:0 auto;background:var(--paper,#DCE9F5)}
+#stage.scene #video{position:absolute;max-height:none;width:auto}
+#stage.scene #overlay{padding:0;display:flex;align-items:flex-end;
+  justify-content:center;bottom:auto;left:auto;right:auto}
+/* Weight, size and outline all come from the scene, so the browser draws the
+   caption at the proportions libass will. */
+#stage.scene #overlay span{font-size:var(--capPx);font-weight:var(--capWeight);
+  line-height:1.05;-webkit-text-stroke:var(--capStroke) #000;text-shadow:none}
+/* One draggable frame per scene element. Hidden outside layout mode so the
+   plain player stays plain. */
+.node{display:none}
+/* The canvas is meant to read as the finished frame, so the editing frames
+   stay invisible until you point at one. None of this is in the scene, and
+   none of it is burned. */
+#stage.scene .node{display:block;position:absolute;box-sizing:border-box;
+  border:1px dashed transparent;cursor:move;touch-action:none}
+#stage.scene .node:hover{border-color:#ffffff66}
+#stage.scene .node.sel{border:1.5px solid var(--accent);z-index:99!important}
+.node img{width:100%;height:100%;display:block;pointer-events:none}
+/* Out of its time range: the frame stays, so it can still be picked and
+   dragged, but the picture goes away instead of blocking the video. The one
+   you have selected keeps a faint image, since you are placing it. */
+/* Out of range there is nothing to see, so the frame has to stay drawn --
+   otherwise the element becomes invisible and impossible to pick up again. */
+#stage.scene .node.out{border-style:dotted;border-color:#ffffff40}
+#stage.scene .node.out img{display:none}
+#stage.scene .node.out.sel img{display:block;opacity:.4}
+.node .grip{position:absolute;right:-7px;bottom:-7px;width:13px;height:13px;
+  background:var(--accent);border:1px solid #000;border-radius:3px;
+  cursor:nwse-resize;display:none}
+.node.sel .grip{display:block}
+.node .name{position:absolute;left:-1px;top:-17px;font:10px var(--mono);
+  color:var(--ink);background:#000a;padding:0 4px;border-radius:3px;
+  white-space:nowrap;display:none}
+.node.sel .name{display:block}
+
+/* ---------- layout mode: material tray + property bar ---------- */
+#layoutBar{display:none}
+body.layout #layoutBar{display:block;flex:none;background:var(--panel);
+  border-bottom:1px solid var(--line);padding:7px 12px}
+#tray{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px}
+#tray figure{margin:0;flex:none;width:62px;text-align:center;cursor:grab}
+#tray img{width:60px;height:60px;object-fit:contain;background:#0f1319;
+  border:1px solid var(--line);border-radius:6px}
+#tray figcaption{font-size:9px;color:var(--faint);overflow:hidden;
+  white-space:nowrap;text-overflow:ellipsis}
+#props{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12px;
+  color:var(--dim);margin-top:5px}
+#props input{width:74px;font:12px var(--mono);color:var(--ink);
+  background:var(--panel2);border:1px solid var(--line);border-radius:5px;
+  padding:3px 5px}
+#propName{font-weight:600;color:var(--ink);min-width:7em}
+#sceneActions{display:flex;align-items:center;gap:7px;margin-top:6px;
+  padding-top:6px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+
+/* ---------- scene.json viewer ---------- */
+#json{display:none;position:fixed;inset:0;background:#000a;z-index:60;
+  align-items:center;justify-content:center;padding:30px}
+#json.on{display:flex}
+#json .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:18px 20px;max-width:760px;width:100%;max-height:82vh;
+  display:flex;flex-direction:column}
+#json h2{margin:0 0 4px;font-size:15px}
+#jsonWhere{margin:0 0 10px;font-size:12px;color:var(--dim)}
+#jsonText{flex:1;overflow:auto;margin:0;font:12px/1.5 var(--mono);color:var(--ink);
+  background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:12px 14px;white-space:pre}
+/* Anything the file does not have yet is marked, so you can see at a glance
+   what pressing 儲存版面 would write. */
+#jsonText .new{display:block;color:var(--warn);background:#2a241633;
+  border-left:2px solid var(--warn);margin-left:-14px;padding-left:12px}
+#jsonText .gone{display:block;color:var(--danger);text-decoration:line-through;
+  opacity:.75;border-left:2px solid var(--danger);margin-left:-14px;padding-left:12px}
+#jsonLegend{display:flex;gap:14px;margin:8px 0 0;font-size:11px;color:var(--faint)}
+#jsonLegend i{display:inline-block;width:9px;height:9px;border-radius:2px;
+  margin-right:5px;vertical-align:-1px}
 #overlay span{
   font:600 clamp(15px,2.1vw,25px)/1.35 "PingFang TC",sans-serif;
   color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;
@@ -69,6 +150,18 @@ main{display:flex;flex:1;min-height:0}
 #transport{display:flex;align-items:center;gap:10px;padding:7px 12px;
   background:var(--panel);border-bottom:1px solid var(--line);flex:none}
 #clock{font:12px var(--mono);color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- burn progress ----------
+   A full burn takes minutes. Without a bar there is nothing to tell you it is
+   alive, so this sits in the header for as long as ffmpeg is running. */
+#burnBar{display:none;position:relative;width:190px;height:20px;border-radius:10px;
+  background:var(--panel2);border:1px solid var(--line);overflow:hidden;flex:none}
+#burnBar.on{display:block}
+#burnBar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent);
+  transition:width .4s linear}
+#burnBar span{position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;font:11px var(--mono);color:var(--ink);
+  text-shadow:0 1px 2px #000a}
 #transport .hint{margin-left:auto;font-size:12px;color:var(--faint)}
 
 /* ---------- timeline ---------- */
@@ -185,6 +278,7 @@ main{display:flex;flex:1;min-height:0}
     <span id="saveState"></span>
     <button id="btnSave" class="primary">儲存 SRT</button>
     <button id="btnBurn">重新燒錄</button>
+    <div id="burnBar"><i></i><span></span></div>
     <select id="finished" title="播放已燒錄的成品"></select>
     <button id="btnHelp">?</button>
   </header>
@@ -197,21 +291,49 @@ main{display:flex;flex:1;min-height:0}
       </div>
       <div id="transport">
         <button id="btnBack" class="tiny">◀ 2s</button>
+        <button id="btnStepBack" class="tiny" title="上一格（←）">◁</button>
         <button id="btnPlay" class="tiny">播放</button>
+        <button id="btnStepFwd" class="tiny" title="下一格（→）">▷</button>
         <button id="btnFwd" class="tiny">2s ▶</button>
         <span id="clock">0:00.0 / 0:00.0</span>
-        <span class="hint">點或拖曳下面的波形可跳轉，右邊列表會跟著移動 · 按 <kbd>?</kbd> 看快速鍵</span>
+        <label style="font-size:12px;color:var(--dim);display:flex;gap:5px;align-items:center">
+          <input type="checkbox" id="insetView">版面模式
+        </label>
+        <span class="hint">點或拖曳波形可跳轉 · 按 <kbd>?</kbd> 看快速鍵</span>
+      </div>
+      <div id="layoutBar">
+        <div id="tray"></div>
+        <div id="props">
+          <span id="propName">拖曳下方素材到畫面上</span>
+          <label>出現 <input id="propFrom" placeholder="0:00.0"></label>
+          <label>到 <input id="propTo" placeholder="0:05.0"></label>
+          <button id="propNow" class="tiny">從現在起 5 秒</button>
+          <button id="propAlways" class="tiny">全片</button>
+          <button id="propFront" class="tiny">移到最上層</button>
+          <button id="propDel" class="tiny">刪除</button>
+        </div>
+        <!-- Second row: actions on the whole layout, not on the selection. -->
+        <div id="sceneActions">
+          <button id="btnRevertScene" class="tiny" title="丟掉還沒存的修改，回到 scene.json">復原到已存檔</button>
+          <button id="btnResetScene" class="tiny" title="回到影片＋字幕＋頻道 icon 的基本畫面">回預設版面</button>
+          <button id="btnSaveScene" class="tiny">儲存版面</button>
+          <button id="btnPreviewScene" class="tiny">壓 10 秒看成品</button>
+          <button id="btnShowJson" class="tiny">看 JSON</button>
+          <div style="flex:1"></div>
+          <span id="sceneState" class="hint"></span>
+        </div>
       </div>
       <div id="tlWrap">
         <canvas id="tl"></canvas>
         <div id="legend">
           <span><i style="background:#3f4a5a"></i>波形</span>
           <span><i style="background:var(--accent)"></i>字幕</span>
-          <span><i style="background:var(--warn)"></i>Qwen 改動大</span>
+          <span><i style="background:var(--warn)"></i>LLM 改動大</span>
           <span><i style="background:var(--sidecar)"></i>漏聽補句</span>
           <span><i style="background:var(--ok)"></i>已確認</span>
           <span><i style="background:var(--danger)"></i>字幕空白區</span>
           <span><i style="background:#8a6d3b"></i>資訊圖卡</span>
+          <span><i style="background:#3b6ea8"></i>版面上的圖</span>
         </div>
       </div>
     </div>
@@ -220,7 +342,7 @@ main{display:flex;flex:1;min-height:0}
       <div id="tools">
         <div class="seg" id="filters">
           <button data-f="all" class="on">全部</button>
-          <button data-f="risky">Qwen 改動大</button>
+          <button data-f="risky">LLM 改動大</button>
           <button data-f="sidecar">漏聽補句</button>
           <button data-f="todo">未確認</button>
         </div>
@@ -247,6 +369,7 @@ main{display:flex;flex:1;min-height:0}
   <table>
     <tr><td><kbd>空白</kbd></td><td>播放 / 暫停</td><td><kbd>J</kbd> <kbd>L</kbd></td><td>倒退 / 前進 2 秒</td></tr>
     <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>上一段 / 下一段</td><td><kbd>Enter</kbd></td><td>編輯這一段</td></tr>
+    <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>上一格 / 下一格</td><td></td><td></td></tr>
     <tr><td><kbd>P</kbd></td><td>只播這一段</td><td><kbd>D</kbd></td><td>標記已確認</td></tr>
     <tr><td><kbd>R</kbd></td><td>退回 Whisper 原文</td><td><kbd>⌘S</kbd></td><td>儲存</td></tr>
     <tr><td><kbd>N</kbd></td><td>在播放位置插入字幕</td><td></td><td></td></tr>
@@ -269,6 +392,19 @@ main{display:flex;flex:1;min-height:0}
   <div style="margin-top:16px;text-align:right"><button id="btnHelpClose">關閉</button></div>
 </div></div>
 <div id="audit"></div>
+<div id="json"><div class="card">
+  <h2>scene.json</h2>
+  <p id="jsonWhere"></p>
+  <pre id="jsonText"></pre>
+  <div id="jsonLegend">
+    <span><i style="background:var(--warn)"></i>還沒存進檔案的</span>
+    <span><i style="background:var(--danger)"></i>已刪除、檔案裡還有的</span>
+  </div>
+  <div style="margin-top:12px;text-align:right">
+    <button id="jsonCopy">複製</button>
+    <button id="jsonClose">關閉</button>
+  </div>
+</div></div>
 <div id="viewer">
   <video id="viewerVideo" controls playsinline></video>
   <div class="bar"><span id="viewerName"></span><button id="viewerClose">關閉</button></div>
@@ -281,6 +417,7 @@ main{display:flex;flex:1;min-height:0}
 const S = {
   duration: 0, segments: [], gaps: [], visuals: [], peaks: [],
   project: "",          // pipeline output directory being reviewed
+  fps: 30,              // of the source, for stepping a frame at a time
   translated: false,    // run carries a translation as well as the spoken text
   bilingual: true,      // burn both languages
   cursor: 0,            // index into S.segments
@@ -291,6 +428,21 @@ const S = {
 
 const $ = (id) => document.getElementById(id);
 const video = $("video");
+
+/* The layout being edited. Declared up here because applyInsetView() runs
+   while the page is still being set up, long before the scene block below. */
+const SCENE = { data: null, images: [], sel: null, dirty: false, nodes: [] };
+const escapeHTML = (text) => String(text).replace(
+  /[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const SPAN = 5;               // seconds a freshly dropped image lasts
+/* Two different script scales, both measured off a real burn (a 1920x1080
+   frame, SRT's default 384x288 script):
+     margins  -> frame height / 288, which the boxes already carry as percentages
+     font em  -> frame height / 384, libass's aspect correction for a 4:3
+                 script drawn on a 16:9 frame. A 20pt caption came out 56px.
+   Using 288 for the font made the preview wrap lines the burn keeps on one. */
+const CAP_SCRIPT = 384;
+
 
 /** Seconds -> H:MM:SS.s (H:MM:SS.ss with decimals = 2). */
 function fmt(t, decimals = 1) {
@@ -356,7 +508,7 @@ function matches(s) {
 }
 
 /* ============================== diff ============================== */
-/** Character-level diff, rendered so Qwen's edits to Whisper are visible. */
+/** Character-level diff, rendered so the LLM's edits to Whisper are visible. */
 function diffHTML(before, after) {
   const a = [...(before || "")], b = [...(after || "")];
   // Longest common subsequence over short strings -- subtitle lines are tiny.
@@ -439,6 +591,16 @@ function drawTimeline() {
   ctx.fillStyle = "#22262e"; ctx.fillRect(0, cy, width, cy2 - cy);
   ctx.fillStyle = "#8a6d3b";
   S.visuals.forEach((v) => ctx.fillRect(x(v.start), cy, Math.max(2, x(v.end) - x(v.start)), cy2 - cy));
+  // Placed images share the lane: on a four-minute video they are otherwise
+  // impossible to find again. The selected one is brighter.
+  if (SCENE.data) {
+    SCENE.data.elements.forEach((element, index) => {
+      if (element.type !== "image" || element.from === undefined) return;
+      const to = element.to ?? element.from + SPAN;
+      ctx.fillStyle = index === SCENE.sel ? "#5aa9ff" : "#3b6ea8";
+      ctx.fillRect(x(element.from), cy, Math.max(3, x(to) - x(element.from)), cy2 - cy);
+    });
+  }
 
   // playhead
   const px = x(video.currentTime);
@@ -509,7 +671,7 @@ function rowHTML(s, index) {
   if (s.overlap) cls.push("overlap");
 
   const tags = [];
-  if (isRisky(s)) tags.push(`<span class="tag risk">Qwen 改動 ${Math.round(s.risk * 100)}%</span>`);
+  if (isRisky(s)) tags.push(`<span class="tag risk">LLM 改動 ${Math.round(s.risk * 100)}%</span>`);
   if (isSidecar(s)) tags.push(`<span class="tag side">漏聽補句 · 未驗證</span>`);
 
   // On a translated run the diff belongs to the spoken language: the editable
@@ -607,7 +769,7 @@ function renderStats() {
   $("stats").innerHTML =
     (overlaps ? `<span>重疊 <b style="color:var(--danger)">${overlaps}</b></span>` : "") +
     `<span>字幕 <b>${total}</b></span>` +
-    `<span>Qwen 改動大 <b>${risky}</b></span>` +
+    `<span>LLM 改動大 <b>${risky}</b></span>` +
     `<span>人工補句 <b>${side}</b></span>` +
     `<span>空白區 <b>${S.gaps.length}</b></span>` +
     `<span>待審 <b style="color:${todo ? "var(--warn)" : "var(--ok)"}">${todo}</b></span>`;
@@ -959,6 +1121,26 @@ function jumpReview(direction) {
   }
   toast("沒有待審的字幕了");
 }
+// Remembered per browser: which layout you review in is a working preference,
+// not something the run should decide for you.
+try {
+  $("insetView").checked = localStorage.getItem("insetView") === "1";
+} catch (error) { /* private window, or storage blocked */ }
+// ?layout=1 opens straight into layout mode, for linking someone to a frame.
+if (new URLSearchParams(location.search).has("layout")) $("insetView").checked = true;
+
+function applyInsetView() {
+  const on = $("insetView").checked;
+  $("stage").classList.toggle("scene", on && Boolean(SCENE.data));
+  document.body.classList.toggle("layout", on && Boolean(SCENE.data));
+  try { localStorage.setItem("insetView", on ? "1" : "0"); } catch (error) { /* ignore */ }
+  if (!on) clearScene();
+  paintScene();
+  drawTimeline();
+}
+$("insetView").addEventListener("change", applyInsetView);
+applyInsetView();
+
 $("bilingual").addEventListener("change", (event) => {
   S.bilingual = S.translated && event.target.checked;
   syncOverlay();
@@ -967,6 +1149,16 @@ $("btnInsert").onclick = insertAtPlayhead;
 $("btnFixOverlap").onclick = fixOverlaps;
 $("btnNextRisk").onclick = () => jumpReview(1);
 $("btnPrevRisk").onclick = () => jumpReview(-1);
+
+// Stepping needs the real frame rate: a nominal 1/30 drifts on 29.97 footage
+// and lands the playhead on the wrong frame within a few seconds.
+function step(frames) {
+  video.pause();
+  const fps = S.fps || 30;
+  seek(Math.max(0, video.currentTime + frames / fps));
+}
+$("btnStepBack").onclick = () => step(-1);
+$("btnStepFwd").onclick = () => step(1);
 
 $("btnPlay").onclick = () => (video.paused ? video.play() : video.pause());
 $("btnBack").onclick = () => seek(video.currentTime - 2);
@@ -992,27 +1184,64 @@ async function save() {
 $("btnSave").onclick = save;
 
 let burnTimer = null;
+
+function showBurn(status) {
+  const bar = $("burnBar");
+  const running = status.state === "running";
+  bar.classList.toggle("on", running);
+  if (!running) return;
+  const percent = status.percent || 0;
+  bar.querySelector("i").style.width = `${percent}%`;
+  const left = status.remaining === undefined ? ""
+    : `　剩約 ${status.remaining >= 60
+        ? `${Math.round(status.remaining / 60)} 分`
+        : `${status.remaining} 秒`}`;
+  bar.querySelector("span").textContent = `燒錄 ${percent}%${left}`;
+}
+
+function endBurn(status) {
+  clearInterval(burnTimer);
+  $("burnBar").classList.remove("on");
+  $("btnBurn").disabled = false;
+  $("btnBurn").textContent = "重新燒錄";
+  toast(status.message, status.state === "error");
+}
+
+async function pollBurn() {
+  const status = await api("GET", "/api/burn");
+  if (status.state === "running") { showBurn(status); return; }
+  endBurn(status);
+  // The new file belongs in the finished list without needing a reload.
+  try { renderFinished((await api("GET", "/api/state")).finished); } catch (error) { /* ignore */ }
+}
+
 $("btnBurn").onclick = async () => {
   const which = S.translated ? (S.bilingual ? "雙語" : "只有中文") : "";
-  if (!confirm(`用原片 + 目前字幕${which ? `（${which}）` : ""} + 既有圖卡，重新燒錄 final_reviewed.mp4？\n這會花幾分鐘，原有的 final.mp4 不會被覆蓋。`)) return;
+  if (!confirm(`用原片 + 目前字幕${which ? `（${which}）` : ""} + 既有圖卡，重新燒錄 final_reviewed.mp4？\n整支要壓幾分鐘，進度會顯示在按鈕旁邊。原有的 final.mp4 不會被覆蓋。`)) return;
   try {
     await api("PUT", "/api/state", { segments: S.segments });
     S.dirty = false; renderStats();
-    await api("POST", "/api/burn", { segments: S.segments, bilingual: S.bilingual });
+    const started = await api("POST", "/api/burn", { segments: S.segments, bilingual: S.bilingual });
     $("btnBurn").disabled = true; $("btnBurn").textContent = "燒錄中…";
+    showBurn(started);
     clearInterval(burnTimer);
-    burnTimer = setInterval(async () => {
-      const status = await api("GET", "/api/burn");
-      if (status.state === "running") return;
-      clearInterval(burnTimer);
-      $("btnBurn").disabled = false; $("btnBurn").textContent = "重新燒錄";
-      toast(status.message, status.state === "error");
-    }, 2000);
+    burnTimer = setInterval(() => pollBurn().catch(() => {}), 1500);
   } catch (error) {
     toast(error.message, true);
     $("btnBurn").disabled = false; $("btnBurn").textContent = "重新燒錄";
   }
 };
+
+// A burn survives a page reload, so pick one up again if it is still running.
+(async function resumeBurn() {
+  try {
+    const status = await api("GET", "/api/burn");
+    if (status.state !== "running") return;
+    $("btnBurn").disabled = true; $("btnBurn").textContent = "燒錄中…";
+    showBurn(status);
+    burnTimer = setInterval(() => pollBurn().catch(() => {}), 1500);
+  } catch (error) { /* the boot sequence will report a dead server */ }
+})();
 
 /* ============================== global keys ============================== */
 document.addEventListener("keydown", (event) => {
@@ -1030,6 +1259,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "?" ) { $("help").classList.toggle("on"); return; }
   if (event.key === "Escape") {
     $("help").classList.remove("on");
+    $("json").classList.remove("on");
     if ($("viewer").classList.contains("on")) closeViewer();
     return;
   }
@@ -1042,6 +1272,8 @@ document.addEventListener("keydown", (event) => {
     case "l": event.preventDefault(); seek(video.currentTime + 2); break;
     case "arrowup": event.preventDefault(); setCursor(S.cursor - 1, { seek: true }); break;
     case "arrowdown": event.preventDefault(); setCursor(S.cursor + 1, { seek: true }); break;
+    case "arrowleft": event.preventDefault(); step(-1); break;
+    case "arrowright": event.preventDefault(); step(1); break;
     case "enter": event.preventDefault(); setCursor(S.cursor, { focus: true }); break;
     case "p": event.preventDefault(); if (s) playRange(s.start, s.end); break;
     case "d": event.preventDefault();
@@ -1133,6 +1365,7 @@ function applyState(state) {
     cursor: 0, dirty: false, playUntil: null,
   });
   $("srcName").textContent = state.source;
+  S.fps = state.fps || 30;
   S.translated = Boolean(state.translated);
   $("bilingualBox").style.display = S.translated ? "flex" : "none";
   S.bilingual = S.translated && $("bilingual").checked;
@@ -1174,6 +1407,485 @@ $("project").addEventListener("change", async (event) => {
   }
 });
 
+
+/* ======================= layout mode (scene.json) =======================
+   The scene is the single description of the frame: this canvas positions
+   every element from it, and src/compose.py burns from the same numbers.
+   Boxes are stored in canvas pixels ([left, top, right, bottom]) and drawn
+   here as percentages, so the preview holds at any window size. */
+function sceneBox(element) { return element.box.map(Number); }
+
+function clearScene() {
+  const stage = $("stage");
+  stage.querySelectorAll(".node").forEach((node) => node.remove());
+  stage.style.width = stage.style.height = "";
+  SCENE.nodes = [];
+  for (const target of [video, $("overlay")]) {
+    target.style.left = target.style.top = "";
+    target.style.width = target.style.height = "";
+  }
+}
+
+async function loadScene() {
+  try {
+    const [scene, listing] = await Promise.all([
+      api("GET", "/api/scene"), api("GET", "/api/images"),
+    ]);
+    SCENE.data = scene;
+    SCENE.images = listing.images;
+    SCENE.sel = null;
+    SCENE.dirty = false;
+  } catch (error) {
+    SCENE.data = null;
+    toast("版面讀取失敗：" + error.message, true);
+  }
+  renderTray();
+  applyInsetView();
+}
+
+function renderTray() {
+  $("tray").innerHTML = SCENE.images.map((image) => `
+    <figure draggable="true" data-path="${escapeHTML(image.path)}"
+            data-w="${image.width}" data-h="${image.height}" title="拖到畫面上">
+      <img src="/media/image/${image.path.split("/").map(encodeURIComponent).join("/")}" alt="">
+      <figcaption>${escapeHTML(image.name)}</figcaption>
+    </figure>`).join("");
+}
+
+/* ---------- drawing ---------- */
+
+function paintScene() {
+  const stage = $("stage");
+  if (!stage.classList.contains("scene") || !SCENE.data) return;
+  const scene = SCENE.data;
+  const [cw, ch] = scene.canvas;
+  stage.style.setProperty("--paper", scene.background || "#DCE9F5");
+  sizeStage(cw, ch);
+
+  if (SCENE.nodes.length !== scene.elements.length) {
+    // Sweep the stage, not the list: adding or removing an element empties
+    // SCENE.nodes, which would leave the old frames orphaned in the DOM.
+    stage.querySelectorAll(".node").forEach((node) => node.remove());
+    SCENE.nodes = scene.elements.map((element, index) => {
+      const node = document.createElement("div");
+      node.className = "node";
+      node.dataset.index = String(index);
+      node.innerHTML = `<span class="name"></span><span class="grip"></span>`;
+      if (element.type === "image") {
+        const img = document.createElement("img");
+        img.src = "/media/image/" + element.file.split("/").map(encodeURIComponent).join("/");
+        node.prepend(img);
+      }
+      stage.appendChild(node);
+      return node;
+    });
+  }
+  scene.elements.forEach((element, index) => place(index));
+  syncSceneTime();
+  showProps();
+}
+
+/* Everything inside the stage is absolutely positioned, so the stage has no
+   content to get its height from. Give it the canvas ratio explicitly, using
+   whichever of width or height runs out first. */
+function sizeStage(cw, ch) {
+  const stage = $("stage");
+  const room = stage.parentElement.clientWidth;
+  const tallest = window.innerHeight * 0.52;
+  let width = room, height = (room * ch) / cw;
+  if (height > tallest) { height = tallest; width = (tallest * cw) / ch; }
+  stage.style.width = `${Math.round(width)}px`;
+  stage.style.height = `${Math.round(height)}px`;
+}
+
+// Position one element: its frame, plus the real video or caption underneath.
+function place(index) {
+  const scene = SCENE.data;
+  const element = scene.elements[index];
+  const node = SCENE.nodes[index];
+  if (!element || !node) return;
+  const [cw, ch] = scene.canvas;
+  const [left, top, right, bottom] = sceneBox(element);
+  const css = {
+    left: `${(left / cw) * 100}%`, top: `${(top / ch) * 100}%`,
+    width: `${((right - left) / cw) * 100}%`, height: `${((bottom - top) / ch) * 100}%`,
+  };
+  Object.assign(node.style, css);
+  node.style.zIndex = String(index + 1);
+  node.classList.toggle("sel", SCENE.sel === index);
+  node.querySelector(".name").textContent = label(element);
+  if (element.type === "video") Object.assign(video.style, css);
+  if (element.type === "subtitle") {
+    Object.assign($("overlay").style, css);
+    // ASS point sizes are measured against the script height, not the frame.
+    // Height can still be 0 on the first pass, so fall back to the width and
+    // the canvas ratio; the ResizeObserver corrects it once laid out.
+    const stage = $("stage");
+    const stageHeight = stage.clientHeight || (stage.clientWidth * ch) / cw;
+    const unit = stageHeight / CAP_SCRIPT;      // one font script unit, on screen
+    stage.style.setProperty("--capPx", `${(unit * (element.size || 20)).toFixed(1)}px`);
+    stage.style.setProperty("--capStroke", `${(unit * (element.outline_width ?? 3)).toFixed(1)}px`);
+    stage.style.setProperty("--capWeight", element.bold ? "700" : "400");
+  }
+}
+
+/* Which elements the playhead is inside. Called on every seek, so it only
+   touches classes -- no layout work. */
+function syncSceneTime() {
+  if (!SCENE.data || !$("stage").classList.contains("scene")) return;
+  const now = video.currentTime;
+  SCENE.data.elements.forEach((element, index) => {
+    const node = SCENE.nodes[index];
+    if (!node) return;
+    const from = element.from, to = element.to ?? (from === undefined ? undefined : from + SPAN);
+    const out = from !== undefined && (now < from || now > to);
+    node.classList.toggle("out", out);
+  });
+}
+video.addEventListener("timeupdate", syncSceneTime);
+video.addEventListener("seeked", syncSceneTime);
+
+function label(element) {
+  const kind = { video: "影片", subtitle: "字幕", image: "圖" }[element.type] || element.type;
+  const span = element.from === undefined ? "全片"
+    : `${fmt(element.from)} – ${fmt(element.to ?? element.from + SPAN)}`;
+  return `${kind}　${span}`;
+}
+
+/* ---------- selecting, dragging, resizing ---------- */
+
+/* Pass null to select nothing: the frame, its handle and its time label all
+   belong to the selection, so they go away with it. */
+function select(index) {
+  SCENE.sel = index === null ? null : index;
+  drawTimeline();
+  SCENE.nodes.forEach((node, i) => node.classList.toggle("sel", i === index));
+  showProps();
+}
+
+$("stage").addEventListener("pointerdown", (event) => {
+  if (!$("stage").classList.contains("scene")) return;
+  const node = event.target.closest(".node");
+  // Empty field: nothing is being worked on any more.
+  if (!node) { select(null); return; }
+  const index = Number(node.dataset.index);
+  select(index);
+  const resizing = event.target.classList.contains("grip");
+  const scene = SCENE.data;
+  const start = sceneBox(scene.elements[index]);
+  const [cw, ch] = scene.canvas;
+  const rect = $("stage").getBoundingClientRect();
+  const scaleX = cw / rect.width, scaleY = ch / rect.height;
+  const from = { x: event.clientX, y: event.clientY };
+  let moved = false;
+  node.setPointerCapture(event.pointerId);
+  event.preventDefault();
+
+  const onMove = (move) => {
+    const dx = (move.clientX - from.x) * scaleX;
+    const dy = (move.clientY - from.y) * scaleY;
+    if (Math.abs(move.clientX - from.x) + Math.abs(move.clientY - from.y) > 3) moved = true;
+    if (!moved) return;
+    let box;
+    if (resizing) {
+      // Images keep the aspect they were dropped at unless Shift is held.
+      const keep = scene.elements[index].type === "image" && !move.shiftKey;
+      const width = Math.max(24, start[2] - start[0] + dx);
+      const ratio = (start[3] - start[1]) / (start[2] - start[0]);
+      const height = keep ? width * ratio : Math.max(24, start[3] - start[1] + dy);
+      box = [start[0], start[1], start[0] + width, start[1] + height];
+    } else {
+      box = [start[0] + dx, start[1] + dy, start[2] + dx, start[3] + dy];
+    }
+    scene.elements[index].box = clampBox(box, cw, ch);
+    place(index);
+    markSceneDirty();
+  };
+  const onUp = () => {
+    node.removeEventListener("pointermove", onMove);
+    node.removeEventListener("pointerup", onUp);
+    // A click that did not drag is still a click: use it to play or pause.
+    if (!moved && scene.elements[index].type === "video") {
+      video.paused ? video.play() : video.pause();
+    }
+  };
+  node.addEventListener("pointermove", onMove);
+  node.addEventListener("pointerup", onUp);
+});
+
+// Elements may hang off the canvas while being dragged, but never entirely:
+// a box nobody can see is a box nobody can get back.
+function clampBox(box, cw, ch) {
+  const width = box[2] - box[0], height = box[3] - box[1];
+  const left = Math.min(Math.max(box[0], -width / 2), cw - width / 2);
+  const top = Math.min(Math.max(box[1], -height / 2), ch - height / 2);
+  return [left, top, left + width, top + height].map((value) => Math.round(value));
+}
+
+/* ---------- dropping a new image ---------- */
+
+$("tray").addEventListener("dragstart", (event) => {
+  const figure = event.target.closest("figure");
+  if (!figure) return;
+  event.dataTransfer.setData("text/plain", JSON.stringify({
+    path: figure.dataset.path,
+    width: Number(figure.dataset.w), height: Number(figure.dataset.h),
+  }));
+  event.dataTransfer.effectAllowed = "copy";
+});
+
+$("stage").addEventListener("dragover", (event) => {
+  if (!$("stage").classList.contains("scene")) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "copy";
+});
+
+$("stage").addEventListener("drop", (event) => {
+  if (!$("stage").classList.contains("scene")) return;
+  event.preventDefault();
+  let payload;
+  try { payload = JSON.parse(event.dataTransfer.getData("text/plain")); } catch { return; }
+  if (!payload || !payload.path) return;
+  const scene = SCENE.data;
+  const [cw, ch] = scene.canvas;
+  const rect = $("stage").getBoundingClientRect();
+  const x = ((event.clientX - rect.left) / rect.width) * cw;
+  const y = ((event.clientY - rect.top) / rect.height) * ch;
+  // A quarter of the canvas height, keeping the file's own proportions.
+  const height = ch / 4;
+  const width = height * ((payload.width || 1) / (payload.height || 1));
+  const start = Math.round(video.currentTime * 10) / 10;
+  scene.elements.push({
+    id: `img${Date.now().toString(36)}`, type: "image", file: payload.path,
+    box: clampBox([x - width / 2, y - height / 2, x + width / 2, y + height / 2], cw, ch),
+    from: start, to: Math.round((start + SPAN) * 10) / 10,
+  });
+  SCENE.nodes = [];               // element count changed, rebuild the frames
+  SCENE.sel = scene.elements.length - 1;
+  markSceneDirty();
+  paintScene();
+  toast(`放上 ${payload.path.split("/").pop()}　${fmt(start)} 起 ${SPAN} 秒`);
+});
+
+/* ---------- property bar ---------- */
+
+function selected() {
+  return SCENE.data && SCENE.sel !== null ? SCENE.data.elements[SCENE.sel] : null;
+}
+
+function showProps() {
+  const element = selected();
+  $("propName").textContent = element
+    ? `${label(element)}　${element.file ? element.file.split("/").pop().slice(0, 24) : element.id}`
+    : "拖曳下方素材到畫面上";
+  const timed = element && element.type !== "video" && element.type !== "subtitle";
+  $("propFrom").value = element && element.from !== undefined ? fmt(element.from) : "";
+  $("propTo").value = element && element.to !== undefined ? fmt(element.to) : "";
+  for (const id of ["propFrom", "propTo", "propNow", "propAlways", "propFront", "propDel"]) {
+    $(id).disabled = !element;
+  }
+  $("btnRevertScene").disabled = false;
+  $("propFrom").disabled = $("propTo").disabled = !timed;
+  $("propNow").disabled = $("propAlways").disabled = !timed;
+  $("sceneState").textContent = SCENE.dirty ? "版面有未儲存的修改" : "";
+  $("btnSaveScene").classList.toggle("dirty", SCENE.dirty);
+}
+
+function markSceneDirty() {
+  SCENE.dirty = true;
+  syncSceneTime();
+  showProps();
+  drawTimeline();
+}
+
+function commitTime(field, key) {
+  const element = selected();
+  if (!element) return;
+  const value = parseTime(field.value);
+  if (!Number.isFinite(value)) { showProps(); return; }
+  element[key] = Math.round(value * 10) / 10;
+  if (element.to <= element.from) element.to = element.from + SPAN;
+  markSceneDirty();
+  place(SCENE.sel);
+}
+$("propFrom").addEventListener("change", (event) => commitTime(event.target, "from"));
+$("propTo").addEventListener("change", (event) => commitTime(event.target, "to"));
+
+$("propNow").onclick = () => {
+  const element = selected();
+  if (!element) return;
+  element.from = Math.round(video.currentTime * 10) / 10;
+  element.to = Math.round((element.from + SPAN) * 10) / 10;
+  markSceneDirty();
+  place(SCENE.sel);
+};
+$("propAlways").onclick = () => {
+  const element = selected();
+  if (!element) return;
+  delete element.from; delete element.to;
+  markSceneDirty();
+  place(SCENE.sel);
+};
+$("propFront").onclick = () => {
+  const element = selected();
+  if (!element) return;
+  SCENE.data.elements.splice(SCENE.sel, 1);
+  SCENE.data.elements.push(element);
+  SCENE.sel = SCENE.data.elements.length - 1;
+  SCENE.nodes = [];
+  markSceneDirty();
+  paintScene();
+};
+$("propDel").onclick = () => {
+  const element = selected();
+  if (!element) return;
+  if (element.type === "video" || element.type === "subtitle") {
+    toast("影片和字幕是基本畫面，不能刪除", true);
+    return;
+  }
+  SCENE.data.elements.splice(SCENE.sel, 1);
+  SCENE.sel = null;
+  SCENE.nodes = [];
+  markSceneDirty();
+  paintScene();
+};
+
+// Two kinds of undo, because "reset" means two different things: throw away
+// this session's dragging, or throw away the layout entirely.
+$("btnRevertScene").onclick = async () => {
+  if (SCENE.dirty && !confirm("丟掉還沒儲存的版面修改，回到 scene.json 存的樣子？")) return;
+  await loadScene();
+  toast("已回到存檔的版面");
+};
+
+$("btnResetScene").onclick = async () => {
+  if (!confirm("回到基本畫面：左上影片＋下方字幕＋右下 icon。\n" +
+               "放上去的圖全部移除，還沒儲存的修改一併放棄，並立刻寫進 scene.json。\n" +
+               "這一步無法復原。")) return;
+  try {
+    // A reset that leaves unsaved changes behind is not a reset, so this
+    // writes the default out and comes back clean.
+    const fresh = await api("GET", "/api/scene/default");
+    SCENE.data = await api("PUT", "/api/scene", fresh);
+    SCENE.sel = null;
+    SCENE.nodes = [];
+    SCENE.dirty = false;
+    paintScene();
+    drawTimeline();
+    toast("已回到預設版面並存檔");
+  } catch (error) {
+    toast(error.message, true);
+  }
+};
+
+$("btnSaveScene").onclick = async () => {
+  try {
+    await api("PUT", "/api/scene", SCENE.data);
+    SCENE.dirty = false;
+    showProps();
+    toast("版面已存進 scene.json");
+  } catch (error) {
+    toast(error.message, true);
+  }
+};
+
+$("btnPreviewScene").onclick = async () => {
+  const button = $("btnPreviewScene");
+  if (SCENE.dirty) {
+    try { await api("PUT", "/api/scene", SCENE.data); SCENE.dirty = false; showProps(); }
+    catch (error) { toast(error.message, true); return; }
+  }
+  button.disabled = true;
+  button.textContent = "壓製中…";
+  try {
+    const start = Math.max(0, video.currentTime - 1);
+    const result = await api("POST", "/api/preview", { start, seconds: 10 });
+    video.pause();
+    $("viewerVideo").src = `/media/preview/${result.file}?t=${Date.now()}`;
+    $("viewerName").textContent = `成品預覽　${fmt(result.start)} 起 ${result.seconds} 秒`;
+    $("viewer").classList.add("on");
+  } catch (error) {
+    toast(error.message, true);
+  } finally {
+    button.disabled = false;
+    button.textContent = "壓 10 秒看成品";
+  }
+};
+
+/* The scene as it stands, next to the scene on disk. Selection frames, name
+   labels and the dimming of out-of-range images are all editor chrome: they
+   never enter this file, so they can never reach the burn. */
+/* The scene, element by element, with each one compared against the copy on
+   disk. Comparing whole elements rather than diffing text keeps it honest:
+   a box that moved by one pixel is a changed element, not a changed line. */
+function jsonHTML(scene, saved) {
+  const savedById = new Map((saved?.elements || []).map((e) => [e.id, e]));
+  const indent = (value) => JSON.stringify(value, null, 2)
+    .split("\n").map((line) => "    " + line).join("\n");
+  const head = `{\n  "canvas": ${JSON.stringify(scene.canvas)},\n` +
+               `  "background": ${JSON.stringify(scene.background)},\n  "elements": [`;
+  const rows = scene.elements.map((element) => {
+    const before = savedById.get(element.id);
+    const fresh = !before || JSON.stringify(before) !== JSON.stringify(element);
+    const body = escapeHTML(indent(element));
+    return fresh ? `<span class="new">${body}</span>` : body;
+  });
+  // Elements the file still has but this session removed.
+  const removed = (saved?.elements || [])
+    .filter((element) => !scene.elements.some((kept) => kept.id === element.id))
+    .map((element) => `<span class="gone">${escapeHTML(indent(element))}</span>`);
+  return escapeHTML(head) + "\n" + rows.concat(removed).join(",\n") +
+         "\n  ]\n}";
+}
+
+$("btnShowJson").onclick = async () => {
+  if (!SCENE.data) return;
+  let saved = null;
+  try { saved = await api("GET", "/api/scene"); } catch (error) { /* offline */ }
+  const same = saved && JSON.stringify(saved) === JSON.stringify(SCENE.data);
+  $("jsonWhere").innerHTML = same
+    ? `和 <code>${escapeHTML(S.project)}/scene.json</code> 一致，已存檔。`
+    : `編輯中的版面。<b style="color:var(--warn)">黃色</b>的部分還沒寫進 ` +
+      `<code>${escapeHTML(S.project)}/scene.json</code>，按「儲存版面」才會存。`;
+  $("jsonText").innerHTML = jsonHTML(SCENE.data, saved);
+  $("jsonLegend").style.display = same ? "none" : "flex";
+  $("json").classList.add("on");
+};
+$("jsonCopy").onclick = async () => {
+  try {
+    await navigator.clipboard.writeText($("jsonText").textContent);
+    toast("已複製");
+  } catch (error) {
+    toast("瀏覽器不給複製，請自己選取", true);
+  }
+};
+$("jsonClose").onclick = () => $("json").classList.remove("on");
+$("json").onclick = (event) => {
+  if (event.target.id === "json") $("json").classList.remove("on");
+};
+
+// Working anywhere else -- the subtitle list, the timeline, the header -- also
+// means you are done with that element.
+document.addEventListener("pointerdown", (event) => {
+  if (SCENE.sel === null || !document.body.classList.contains("layout")) return;
+  if (event.target.closest("#stage, #layoutBar, #json")) return;
+  select(null);
+});
+
+// Backspace and Delete remove the selected element, but never while typing.
+document.addEventListener("keydown", (event) => {
+  if (!document.body.classList.contains("layout")) return;
+  if (SCENE.sel === null || /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName)) return;
+  if (event.key !== "Delete" && event.key !== "Backspace") return;
+  event.preventDefault();
+  $("propDel").click();
+});
+
+// Stage size and caption size both follow the window, so redraw when it moves.
+// The observer watches the container, not the stage: paintScene() resizes the
+// stage, which would otherwise retrigger it forever.
+new ResizeObserver(() => { if (SCENE.data) paintScene(); }).observe($("left"));
+
 /* ============================== boot ============================== */
 (async function boot() {
   try {
@@ -1181,6 +1893,7 @@ $("project").addEventListener("change", async (event) => {
     S.project = state.project;
     applyState(state);
     await loadProjects(state.project);
+    await loadScene();
     if (state.hasReviewedSrt) toast(`接續上次的校對進度`);
   } catch (error) {
     toast("載入失敗：" + error.message, true);

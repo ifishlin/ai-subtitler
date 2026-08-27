@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import sys
 import threading
+import time
 import traceback
 from pathlib import Path
 from typing import Any
@@ -24,6 +25,7 @@ import json                                                       # noqa: E402
 from fastapi import Body, FastAPI, HTTPException                      # noqa: E402
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse  # noqa: E402
 from opencc import OpenCC                                            # noqa: E402
+from PIL import Image                                               # noqa: E402
 
 from subtitle_editor import media, review                            # noqa: E402
 from subtitle_editor.srt import write_srt                            # noqa: E402
@@ -35,6 +37,9 @@ STATIC = Path(__file__).resolve().parent / "static"
 # Everything that depends on which run is being reviewed lives in config, so
 # the browser can switch runs without restarting the server. Media derivatives
 # are keyed by video, so switching back to a run costs nothing the second time.
+IMAGE_DIRS = ("img_cut", "img")     # searched in order; cut-outs preferred
+
+
 def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
     stem = source.stem if source else "none"
     return {
@@ -44,13 +49,31 @@ def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
         "reviewed_mp4": output / "final_reviewed.mp4",
         "proxy": CACHE / f"proxy_{stem}.mp4",
         "peaks": CACHE / f"peaks_{stem}.json",
+        "scene": output / "scene.json",
+        "burn_progress": CACHE / f"burn_{output.name}.progress",
     }
 
 app = FastAPI(title="Subtitle Review")
 config: dict[str, Any] = {}
 _whisper_models: dict[str, Any] = {}
-_burn: dict[str, Any] = {"state": "idle", "message": "", "output": None}
+_burn: dict[str, Any] = {"state": "idle", "message": "", "output": None,
+                         "percent": 0, "seconds": 0.0, "started": 0.0}
 _burn_lock = threading.Lock()
+
+
+def _frame_rate(video: Path) -> float:
+    """Frames per second, so the editor can step one frame at a time."""
+    import subprocess
+    result = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", str(video)],
+        check=False, capture_output=True, text=True,
+    )
+    numerator, _, denominator = result.stdout.strip().partition("/")
+    try:
+        return round(float(numerator) / float(denominator or 1), 3)
+    except ValueError:
+        return 30.0
 
 
 def list_projects() -> list[dict[str, Any]]:
@@ -166,6 +189,82 @@ def audit() -> dict[str, Any]:
     return inspect(segments, config["source"], config["duration"])
 
 
+def _images() -> list[dict[str, Any]]:
+    """Images available for placing, cut-outs before originals."""
+    found: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for folder in IMAGE_DIRS:
+        directory = ROOT / folder
+        if not directory.is_dir():
+            continue
+        for image in sorted(directory.glob("*.png")):
+            if image.name in seen:
+                continue
+            seen.add(image.name)
+            with Image.open(image) as opened:
+                width, height = opened.size
+            found.append({
+                "path": f"{folder}/{image.name}",
+                "name": image.stem[:40],
+                "width": width,
+                "height": height,
+            })
+    return found
+
+
+@app.get("/api/images")
+def images() -> dict[str, Any]:
+    return {"images": _images()}
+
+
+@app.get("/media/image/{folder}/{name}")
+def image_file(folder: str, name: str) -> FileResponse:
+    """Serve one placeable image. The request is matched against the listing
+    instead of being joined onto a path, so nothing else can be read."""
+    wanted = f"{folder}/{name}"
+    if wanted not in {item["path"] for item in _images()}:
+        raise HTTPException(404, f"找不到 {wanted}")
+    return FileResponse(ROOT / folder / name, media_type="image/png")
+
+
+def _default_scene() -> dict[str, Any]:
+    """The basic frame: picture upper left, captions under it, channel icon."""
+    from src import scene as scene_module
+    paths = config["paths"]
+    srt = "subtitles_bilingual.srt"
+    if not (paths["output"] / srt).is_file():
+        srt = "subtitles_zh.srt"
+    icons = _images()
+    return scene_module.default_scene(srt, icons[0]["path"] if icons else None)
+
+
+@app.get("/api/scene")
+def get_scene() -> dict[str, Any]:
+    """The layout being edited, built from defaults on first request."""
+    from src import scene as scene_module
+    paths = config["paths"]
+    if not paths["scene"].is_file():
+        scene_module.save(paths["scene"], _default_scene())
+    return scene_module.load(paths["scene"])
+
+
+@app.get("/api/scene/default")
+def scene_default() -> dict[str, Any]:
+    """The default layout, without touching what is on disk: the editor offers
+    it as a starting point and only writes it if you save."""
+    return _default_scene()
+
+
+@app.put("/api/scene")
+def put_scene(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Store the layout whole, so one drag is one atomic change."""
+    from src import scene as scene_module
+    if not isinstance(payload.get("elements"), list):
+        raise HTTPException(400, "scene 需要 elements 陣列")
+    scene_module.save(config["paths"]["scene"], payload)
+    return payload
+
+
 @app.get("/api/state")
 def get_state() -> dict[str, Any]:
     paths = config["paths"]
@@ -176,6 +275,7 @@ def get_state() -> dict[str, Any]:
         "source": config["source"].name,
         "translated": any(item.get("source") for item in segments),
         "duration": total,
+        "fps": config.get("fps", 30.0),
         "segments": segments,
         "gaps": review.find_gaps(segments, total),
         "visuals": config["visuals"],
@@ -264,7 +364,8 @@ def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
         # render() picks its subtitle styling from the filename, so a bilingual
         # burn has to be handed the bilingual file rather than a copy.
         chosen = written.get(variant) or written["zh"]
-        render(config["source"], chosen, config["visuals"], paths["reviewed_mp4"])
+        render(config["source"], chosen, config["visuals"], paths["reviewed_mp4"],
+               progress=paths["burn_progress"])
         with _burn_lock:
             _burn.update(state="done",
                          message=f'完成：{paths["output"].name}/{paths["reviewed_mp4"].name}',
@@ -275,22 +376,141 @@ def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
             _burn.update(state="error", message=str(error), output=None)
 
 
+PREVIEW_SECONDS = 10.0
+
+
+@app.post("/api/preview")
+def preview(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Burn a short clip through the same composer the final render uses, so
+    what the browser draws can be checked against what ffmpeg produces."""
+    import subprocess
+    from src import compose as compose_module
+    from src import scene as scene_module
+
+    paths = config["paths"]
+    if not paths["scene"].is_file():
+        get_scene()
+    scene = scene_module.load(paths["scene"])
+
+    # Prefer the SRT the editor has been saving; fall back to the pipeline's.
+    caption = scene_module.one(scene, "subtitle")
+    if caption:
+        name = caption.get("srt", "subtitles_zh.srt")
+        reviewed = paths["output"] / name.replace(".srt", ".reviewed.srt")
+        if reviewed.is_file():
+            caption["srt"] = reviewed.name
+
+    start = max(0.0, float(payload.get("start") or 0.0))
+    seconds = float(payload.get("seconds") or PREVIEW_SECONDS)
+    clip = CACHE / f"preview_clip_{config['paths']['output'].name}.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-ss", f"{start:.3f}", "-i", str(config["source"]),
+         "-t", f"{seconds:.3f}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+         "-c:a", "aac", "-b:a", "128k", str(clip)],
+        check=True,
+    )
+    # Subtitle times are absolute, so the trimmed clip needs them shifted back.
+    if caption:
+        shifted = CACHE / f"preview_{Path(caption['srt']).stem}.srt"
+        _shift_srt(paths["output"] / caption["srt"], shifted, -start, seconds)
+        caption["srt"] = shifted.name
+        srt_dir = CACHE
+    else:
+        srt_dir = paths["output"]
+
+    out = CACHE / f"preview_{paths['output'].name}.mp4"
+    compose_module.compose(clip, scene, out, srt_dir=srt_dir, image_root=ROOT)
+    return {"file": out.name, "start": start, "seconds": seconds}
+
+
+def _shift_srt(source: Path, target: Path, offset: float, span: float) -> None:
+    """Copy the cues inside the preview window onto its clock. Blocks are moved
+    whole rather than re-parsed, so a bilingual cue keeps its two lines."""
+    import re
+    from subtitle_editor.srt import timestamp
+
+    time_line = re.compile(
+        r"(\d+):(\d\d):(\d\d)[,.](\d{1,3})\s*-->\s*(\d+):(\d\d):(\d\d)[,.](\d{1,3})"
+    )
+
+    def seconds(hours: str, minutes: str, secs: str, millis: str) -> float:
+        return int(hours) * 3600 + int(minutes) * 60 + int(secs) + int(millis.ljust(3, "0")) / 1000
+
+    kept: list[str] = []
+    for block in re.split(r"\n\s*\n", source.read_text(encoding="utf-8").strip()):
+        lines = [line for line in block.splitlines() if line.strip()]
+        found = next(((i, time_line.search(l)) for i, l in enumerate(lines) if time_line.search(l)), None)
+        if not found:
+            continue
+        index, match = found
+        start = seconds(*match.groups()[:4]) + offset
+        end = seconds(*match.groups()[4:]) + offset
+        if end <= 0 or start >= span:
+            continue
+        start, end = max(0.0, start), min(span, end)
+        body = "\n".join(lines[index + 1:])
+        kept.append(f"{len(kept) + 1}\n{timestamp(start, True)} --> {timestamp(end, True)}\n{body}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text("\n\n".join(kept) + "\n", encoding="utf-8")
+
+
+@app.get("/media/preview/{name}")
+def preview_file(name: str) -> FileResponse:
+    path = CACHE / name
+    if not path.is_file() or not name.startswith("preview_"):
+        raise HTTPException(404, f"找不到 {name}")
+    return FileResponse(path, media_type="video/mp4", headers={"Cache-Control": "no-store"})
+
+
 @app.post("/api/burn")
 def burn(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     with _burn_lock:
         if _burn["state"] == "running":
             return dict(_burn)
-        _burn.update(state="running", message="重新燒錄中（原片 + 校對字幕 + 既有圖卡）", output=None)
+        _burn.update(state="running", message="重新燒錄中（原片 + 校對字幕 + 既有圖卡）",
+                     output=None, percent=0, seconds=0.0, started=time.time())
+        # A stale progress file would report the previous burn's position.
+        progress = config["paths"]["burn_progress"]
+        if progress.is_file():
+            progress.unlink()
     segments = payload.get("segments") or review.load_state(config["paths"]["state"], config["paths"]["output"])
     variant = "bilingual" if payload.get("bilingual") else "zh"
     threading.Thread(target=_burn_worker, args=(segments, variant), daemon=True).start()
     return dict(_burn)
 
 
+def _burn_position() -> float:
+    """Seconds of video ffmpeg has written, from the file it keeps updating."""
+    path = config["paths"].get("burn_progress")
+    if not path or not path.is_file():
+        return 0.0
+    try:
+        # The file is appended to, so the last out_time_us wins.
+        lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    except OSError:
+        return 0.0
+    for line in reversed(lines):
+        key, _, value = line.partition("=")
+        if key == "out_time_us" and value.strip().isdigit():
+            return int(value) / 1_000_000
+    return 0.0
+
+
 @app.get("/api/burn")
 def burn_status() -> dict[str, Any]:
     with _burn_lock:
-        return dict(_burn)
+        status = dict(_burn)
+    if status["state"] != "running":
+        return status
+    total = config.get("duration") or 0.0
+    done = _burn_position()
+    status["seconds"] = round(done, 1)
+    status["percent"] = round(min(99, done / total * 100)) if total else 0
+    elapsed = time.time() - (status.get("started") or time.time())
+    # Encoding runs at a steady rate, so elapsed-per-second extrapolates well.
+    if done > 2 and elapsed > 2:
+        status["remaining"] = round(max(0.0, (total - done) * (elapsed / done)))
+    return status
 
 
 @app.exception_handler(Exception)
@@ -309,6 +529,7 @@ def activate(output: Path, source: Path | None = None) -> None:
     config["paths"] = paths
     config["source"] = source
     config["duration"] = media.duration(source)
+    config["fps"] = _frame_rate(source)
 
     print(f"校對 {output.name}（{source.name}）")
     if not paths["proxy"].is_file():

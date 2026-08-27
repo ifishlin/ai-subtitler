@@ -23,7 +23,16 @@ def _style(srt: Path) -> str:
     )
 
 
-def render(video: Path, srt: Path, visuals: list[dict[str, Any]], output: Path) -> None:
+def render(
+    video: Path,
+    srt: Path,
+    visuals: list[dict[str, Any]],
+    output: Path,
+    progress: Path | None = None,
+) -> None:
+    """Burn `srt` and any visuals onto `video`. With `progress`, ffmpeg writes
+    its own position to that file, which callers can read to show how far a
+    long burn has got."""
     output.parent.mkdir(parents=True, exist_ok=True)
     command = ["ffmpeg", "-y", "-i", str(video)]
     for visual in visuals:
@@ -40,6 +49,8 @@ def render(video: Path, srt: Path, visuals: list[dict[str, Any]], output: Path) 
         )
         previous = current
 
+    if progress:
+        command.extend(["-progress", str(progress), "-nostats"])
     command.extend([
         "-filter_complex", ";".join(filters),
         "-map", f"[{previous}]", "-map", "0:a:0",
