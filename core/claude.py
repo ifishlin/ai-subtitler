@@ -40,8 +40,10 @@ class ClaudeClient:
     """Drop-in replacement for OllamaClient, backed by the Claude API."""
 
     def __init__(self, model: str = DEFAULT_MODEL, effort: str = DEFAULT_EFFORT):
+        from .llm import Usage
         self.model = model
         self.effort = effort
+        self.usage = Usage()          # what this run has spent, so far
         self._client: Any = None
 
     def ensure_ready(self) -> None:
@@ -84,6 +86,7 @@ class ClaudeClient:
             }
 
         response = self._client.with_options(timeout=float(timeout)).messages.create(**request)
+        self.usage.add(response)
         if response.stop_reason == "refusal":
             detail = getattr(response.stop_details, "explanation", "") or ""
             raise RuntimeError(f"Claude 拒絕這個請求：{detail}")
@@ -94,15 +97,3 @@ class ClaudeClient:
         if text.startswith("```"):
             text = text.split("\n", 1)[1].rsplit("```", 1)[0]
         return json.loads(text)
-
-
-def build(name: str, ollama_url: str, ollama_model: str, ssh_target: str) -> Any:
-    """The client for the requested provider.
-
-    Keeping the choice in one place means the pipeline stays able to run wholly
-    offline against the local model, which is the point of having both.
-    """
-    if name == "claude":
-        return ClaudeClient()
-    from .ollama import OllamaClient
-    return OllamaClient(ollama_url, ollama_model, ssh_target)

@@ -8,7 +8,7 @@ from pathlib import Path
 from core import caption, scene
 from core.audit import inspect, report, write as write_audit
 from core.media import duration, extract_audio, prepare_video
-from core.claude import build as build_client
+from core import llm
 from core.compose import compose
 from core.transcribe import (
     GAP_MIN,
@@ -73,8 +73,16 @@ def parse_args() -> argparse.Namespace:
              "Recognition is the slowest stage, so this re-runs correction, cards and "
              "rendering without repeating it. Implies --fill-gaps handling of sidecars.",
     )
-    parser.add_argument("--llm", choices=["qwen", "claude"], default="qwen",
-                        help="Which language model proofreads, translates and plans cards")
+    parser.add_argument("--llm", choices=llm.choices(), default="qwen",
+                        help=f"誰來校對、翻譯、審查、規劃圖卡。{llm.help_text()}")
+    parser.add_argument("--llm-model",
+                        help="Override the provider's model, e.g. a cheaper one for a batch")
+    parser.add_argument("--llm-effort", choices=["low", "medium", "high"],
+                        help="How hard the model should think, where the provider offers it")
+    parser.add_argument("--llm-log", metavar="FILE",
+                        help="Record every exchange, so the run can be replayed with --llm replay")
+    parser.add_argument("--replay-from", metavar="FILE",
+                        help="Answers for --llm replay; defaults to --llm-log's file")
     parser.add_argument("--ollama-model", default="qwen2.5:7b")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11435")
     parser.add_argument("--ssh-target", default=os.environ.get("CUBA_SSH_TARGET", "yuyu@cuba001"))
@@ -223,13 +231,23 @@ def main() -> None:
         "terms": terms,
     })
 
-    # Qwen only proofreads, translates and plans cards. Recognition is already
-    # done and rendering needs nothing from it, so an unreachable model should
-    # cost those three things -- not the whole run and the minutes already spent.
+    # The model only proofreads, translates, reviews and plans cards. Recognition
+    # is already done and rendering needs nothing from it, so an unreachable
+    # model should cost those four things -- not the whole run and the minutes
+    # already spent on it.
     print(f"[3/7] Connecting to {args.llm}")
-    client = build_client(args.llm, args.ollama_url, args.ollama_model, args.ssh_target)
+    client = llm.build(args.llm, {
+        "ollama_url": args.ollama_url,
+        "ollama_model": args.ollama_model,
+        "ssh_target": args.ssh_target,
+        "model": args.llm_model,
+        "effort": args.llm_effort,
+        "record_to": args.llm_log,
+        "replay_from": args.replay_from or args.llm_log,
+    })
     try:
-        client.ensure_ready()
+        if client is not None:
+            client.ensure_ready()
     except Exception as error:                                    # noqa: BLE001
         print(f"      {args.llm} 無法連線：{error}")
         print("      跳過校正、翻譯與圖卡；字幕與影片仍會產出")
@@ -327,6 +345,9 @@ def main() -> None:
     print(report(audit))
     print()
     done = output / "final.mp4" if args.render else output / "subtitles_zh.srt"
+    spent = getattr(client, "usage", None)
+    if spent is not None:
+        print(f"      {spent.line()}")
     print(f"[7/7] Done: {done}")
 
 
