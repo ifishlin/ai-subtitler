@@ -29,7 +29,7 @@ For this MVP, hard-code the test URL above in the configuration or code.
 Expected command:
 
 ```bash
-python main.py
+python produce.py
 ```
 
 ## Requirements
@@ -93,10 +93,10 @@ Example `ai_visuals.json`:
 
 ```text
 project/
-├── main.py
+├── produce.py
 ├── requirements.txt
 ├── README.md
-├── src/
+├── core/
 │   ├── download.py
 │   ├── transcribe.py
 │   ├── translate.py

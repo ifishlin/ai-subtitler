@@ -2,9 +2,9 @@
 
 Read-only with respect to the pipeline: it reads output/ and work/, and writes
 only output/subtitles_zh.reviewed.srt, output/final_reviewed.mp4 and
-editor_cache/. Nothing in main.py or src/ is modified or re-run.
+editor_cache/. Nothing in produce.py or core/ is modified or re-run.
 
-    .venv/bin/python subtitle_editor/server.py
+    .venv/bin/python studio/server.py
     open http://127.0.0.1:8000
 """
 from __future__ import annotations
@@ -27,8 +27,8 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse  # noqa: 
 from opencc import OpenCC                                            # noqa: E402
 from PIL import Image                                               # noqa: E402
 
-from subtitle_editor import media, review                            # noqa: E402
-from subtitle_editor.srt import write_srt                            # noqa: E402
+from studio import media, review                            # noqa: E402
+from studio.srt import write_srt                            # noqa: E402
 
 WORK = ROOT / "work"
 # Everything here is regenerable, but it accumulates over months of runs, so
@@ -125,7 +125,7 @@ def find_source(output: Path) -> Path:
         raise HTTPException(
             409,
             f"{output.name} 沒有 run.json，無法判斷它用的是哪支影片。"
-            f"work/ 裡有 {names}。請重跑 main.py，或手動建立 "
+            f"work/ 裡有 {names}。請重跑 produce.py，或手動建立 "
             f"{output.name}/run.json 寫入 {{\"source\": \"work/影片檔名.mp4\"}}。",
         )
     print(f"提醒：{output.name}/run.json 不存在，只有一支影片，使用 {candidates[0].name}")
@@ -195,7 +195,7 @@ def audit() -> dict[str, Any]:
     Recomputing means the verdict follows your edits instead of describing the
     state the pipeline left behind.
     """
-    from src.audit import inspect
+    from core.audit import inspect
     paths = config["paths"]
     segments = review.load_state(paths["state"], paths["output"])
     return inspect(segments, config["source"], config["duration"])
@@ -236,7 +236,7 @@ def image_file(path: str) -> FileResponse:
     than joined onto a directory, so nothing else on disk can be read."""
     allowed = {item["path"] for item in _images()}
     if config["paths"]["scene"].is_file():
-        from src import scene as scene_module
+        from core import scene as scene_module
         allowed |= {str(element.get("file"))
                     for element in scene_module.load(config["paths"]["scene"]).get("elements", [])
                     if element.get("file")}
@@ -286,7 +286,7 @@ def _cards() -> list[dict[str, Any]]:
 def _default_scene() -> dict[str, Any]:
     """The basic frame: picture upper left, captions under it, channel icon,
     plus whatever cards the run planned."""
-    from src import scene as scene_module
+    from core import scene as scene_module
     paths = config["paths"]
     srt = "subtitles_bilingual.srt"
     if not (paths["output"] / srt).is_file():
@@ -301,7 +301,7 @@ def _default_scene() -> dict[str, Any]:
 @app.get("/api/scene")
 def get_scene() -> dict[str, Any]:
     """The layout being edited, built from defaults on first request."""
-    from src import scene as scene_module
+    from core import scene as scene_module
     paths = config["paths"]
     if not paths["scene"].is_file():
         scene_module.save(paths["scene"], _default_scene())
@@ -335,7 +335,7 @@ def scene_default() -> dict[str, Any]:
 @app.put("/api/scene")
 def put_scene(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Store the layout whole, so one drag is one atomic change."""
-    from src import scene as scene_module
+    from core import scene as scene_module
     if not isinstance(payload.get("elements"), list):
         raise HTTPException(400, "scene 需要 elements 陣列")
     scene_module.save(config["paths"]["scene"], payload)
@@ -440,16 +440,16 @@ def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
     as the same pictures the canvas previews, the layout from scene.json, and
     any cards the pipeline planned. Before this, a full burn only knew about
     subtitles -- the layout you arranged simply was not in the finished file."""
-    from src import caption as caption_module
-    from src import compose as compose_module
-    from src import scene as scene_module
+    from core import caption as caption_module
+    from core import compose as compose_module
+    from core import scene as scene_module
 
     paths = config["paths"]
     try:
         written = review.save_state(paths["state"], paths["reviewed_srt"], segments)["paths"]
         chosen = written.get(variant) or written["zh"]
 
-        from src import cuts as cuts_module
+        from core import cuts as cuts_module
         scene = get_scene()
         removed = cuts_module.tidy(scene.get("cuts") or [])
         element = scene_module.one(scene, "subtitle")
@@ -482,7 +482,7 @@ def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
 def _caption_srt(scene: dict[str, Any]) -> tuple[dict[str, Any] | None, Path | None]:
     """The subtitle element and the file it should be drawn from -- whatever
     the editor last saved, falling back to what the pipeline produced."""
-    from src import scene as scene_module
+    from core import scene as scene_module
     element = scene_module.one(scene, "subtitle")
     if not element:
         return None, None
@@ -499,9 +499,9 @@ def _draw_captions(scene: dict[str, Any] | None = None) -> dict[str, Any]:
     The cues come back on the finished video's clock, with anything inside a
     cut dropped -- the pictures are what gets overlaid, so they have to agree
     with the frames that survive."""
-    from src import caption as caption_module
-    from src import cuts as cuts_module
-    from src import scene as scene_module
+    from core import caption as caption_module
+    from core import cuts as cuts_module
+    from core import scene as scene_module
 
     scene = scene if scene is not None else get_scene()
     element, srt = _caption_srt(scene)
@@ -539,8 +539,8 @@ def preview(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Burn a short clip through the same composer the final render uses, so
     what the browser draws can be checked against what ffmpeg produces."""
     import subprocess
-    from src import compose as compose_module
-    from src import scene as scene_module
+    from core import compose as compose_module
+    from core import scene as scene_module
 
     paths = config["paths"]
     if not paths["scene"].is_file():
@@ -560,8 +560,8 @@ def preview(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     # written against the clip's own clock.
     # The clip was cut out of the source, so the cuts have to move onto its
     # own clock before anything is composed against them.
-    from src import caption as caption_module
-    from src import cuts as cuts_module
+    from core import caption as caption_module
+    from core import cuts as cuts_module
     window = [[max(0.0, cut_start - start), min(seconds, cut_end - start)]
               for cut_start, cut_end in cuts_module.tidy(scene.get("cuts") or [])
               if cut_end > start and cut_start < start + seconds]

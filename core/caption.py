@@ -29,7 +29,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 # Measured off a burned frame: libass renders a 20pt caption at 56px on a
 # 1920x1080 picture, which is the frame height over 384 -- its correction for a
-# 4:3 script drawn on a 16:9 frame. See src/scene.py for the margin scale.
+# 4:3 script drawn on a 16:9 frame. See core/scene.py for the margin scale.
 FONT_SCRIPT = 384
 
 # Faces are looked up by name so a scene stays portable; the first file that

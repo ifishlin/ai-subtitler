@@ -36,7 +36,7 @@ def compose(
 ) -> Path:
     """Render `video` into `scene` and burn the result to `output`.
 
-    With `captions` -- a concat list from src/caption.py -- the subtitles are
+    With `captions` -- a concat list from core/caption.py -- the subtitles are
     overlaid as the pictures the editor previewed, rather than typeset again by
     libass. That is the only way the preview and the burn can be the same:
     otherwise two typesetters lay out the same string and disagree.
@@ -105,7 +105,7 @@ def compose(
         elif kind == "subtitle":
             if caption_stream is not None:
                 # The strip carries its own position; it only has to be laid
-                # down where src/caption.py said it belongs.
+                # down where core/caption.py said it belongs.
                 filters.append(f"[{caption_stream}:v]fps=30,format=rgba[cap]")
                 filters.append(
                     f"[{previous}][cap]overlay={caption_band[0]}:{caption_band[1]}"

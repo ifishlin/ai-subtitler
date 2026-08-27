@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from src.utils import timestamp
+from core.utils import timestamp
 
 TIME_LINE = re.compile(
     r"(\d{2}):(\d{2}):(\d{2})[,.](\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2})[,.](\d{3})"

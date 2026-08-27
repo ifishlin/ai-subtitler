@@ -1,12 +1,12 @@
 # 字幕校對網頁
 
 對 **已完成的成品** 做字幕校對，然後選擇性地重新燒錄。
-完全不改動 `main.py` 或 `src/`，也不重跑 pipeline。
+完全不改動 `produce.py` 或 `core/`，也不重跑 pipeline。
 
 ## 啟動
 
 ```bash
-.venv/bin/python subtitle_editor/server.py
+.venv/bin/python studio/server.py
 ```
 
 然後開 <http://127.0.0.1:8000>。關掉終端機就結束。
@@ -21,7 +21,7 @@
 也可以在啟動時就指定目錄：
 
 ```bash
-.venv/bin/python subtitle_editor/server.py --output output_v2
+.venv/bin/python studio/server.py --output output_v2
 ```
 
 校對進度按輸出目錄分開存（`editor_cache/review_<目錄名>.json`），兩個版本不會互相干擾。
@@ -133,7 +133,7 @@ Whisper 完全沒辨識到、時間軸上根本沒有那一段時，有三種方
 ## 重新燒錄
 
 按「重新燒錄」會用 **原片 + 目前字幕 + 既有圖卡** 產生 `output/final_reviewed.mp4`。
-呼叫的是 pipeline 現成的 `src/compose.py`，讀同一份 `scene.json`、貼同一批字幕圖，
+呼叫的是 pipeline 現成的 `core/compose.py`，讀同一份 `scene.json`、貼同一批字幕圖，
 所以版面、字幕樣式、圖卡疊法、編碼參數與 pipeline 自己燒的 `final.mp4` 完全一致。
 
 需要幾分鐘。`final.mp4` 不會被覆蓋。

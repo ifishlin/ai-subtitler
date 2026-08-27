@@ -65,7 +65,7 @@ main{display:flex;flex:1;min-height:0}
 }
 /* ---------- layout mode: the stage becomes scene.json ----------
    Every box comes from the scene as a percentage of its canvas, so this
-   preview and src/compose.py are laying out the same numbers. */
+   preview and core/compose.py are laying out the same numbers. */
 #stage.scene{margin:0 auto;background:var(--paper,#DCE9F5)}
 #stage.scene #video{position:absolute;max-height:none;width:auto}
 #stage.scene #overlay{padding:0;display:flex;align-items:flex-end;
@@ -1822,7 +1822,7 @@ $("cutList").addEventListener("click", (event) => {
    A cut removes a stretch of the source from the finished video. Nothing is
    deleted: the ranges live in the scene, so they are reversible and the
    subtitle numbering never moves. What does move is everything after a cut --
-   src/cuts.py does that arithmetic once, for the burn and the preview alike.
+   core/cuts.py does that arithmetic once, for the burn and the preview alike.
 
    Here the job is smaller: mark a stretch, draw it, and skip it on playback
    so what you watch is what the finished video will be. */
@@ -1947,7 +1947,7 @@ video.addEventListener("timeupdate", () => {
 
 /* ======================= layout mode (scene.json) =======================
    The scene is the single description of the frame: this canvas positions
-   every element from it, and src/compose.py burns from the same numbers.
+   every element from it, and core/compose.py burns from the same numbers.
    Boxes are stored in canvas pixels ([left, top, right, bottom]) and drawn
    here as percentages, so the preview holds at any window size. */
 function sceneBox(element) { return element.box.map(Number); }

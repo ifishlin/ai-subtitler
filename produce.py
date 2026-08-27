@@ -5,12 +5,12 @@ import json
 import os
 from pathlib import Path
 
-from src import caption, scene
-from src.audit import inspect, report, write as write_audit
-from src.media import duration, extract_audio, prepare_video
-from src.claude import build as build_client
-from src.compose import compose
-from src.transcribe import (
+from core import caption, scene
+from core.audit import inspect, report, write as write_audit
+from core.media import duration, extract_audio, prepare_video
+from core.claude import build as build_client
+from core.compose import compose
+from core.transcribe import (
     GAP_MIN,
     review_hallucinations,
     TERMS_MAX,
@@ -21,8 +21,8 @@ from src.transcribe import (
     transcribe,
     translate_with_qwen,
 )
-from src.utils import write_json
-from src.visuals import plan_visuals_with_retry, render_cards
+from core.utils import write_json
+from core.visuals import plan_visuals_with_retry, render_cards
 
 
 ROOT = Path(__file__).resolve().parent
@@ -318,7 +318,7 @@ def main() -> None:
     else:
         print("[6/7] 跳過燒錄（加 --render 可直接出片）")
         print(f"      字幕與圖卡已就緒，在編輯器確認後再燒：")
-        print(f"      .venv/bin/python subtitle_editor/server.py --output {args.output}")
+        print(f"      .venv/bin/python studio/server.py --output {args.output}")
 
     # The run judges its own output, so a batch only needs eyes on what failed.
     audit = inspect(segments, video, duration(video))

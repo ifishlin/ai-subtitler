@@ -75,4 +75,4 @@ def ensure_waveform(video: Path, peaks_path: Path) -> list[float]:
 
 
 # The pipeline owns window extraction; re-export so both use one implementation.
-from src.media import slice_audio  # noqa: E402,F401
+from core.media import slice_audio  # noqa: E402,F401

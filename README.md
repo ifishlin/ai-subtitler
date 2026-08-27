@@ -26,7 +26,7 @@ ssh -f -N -L 11435:127.0.0.1:11434 -o ExitOnForwardFailure=yes yuyu@cuba001
 Use the downloaded test video:
 
 ```bash
-.venv/bin/python main.py
+.venv/bin/python produce.py
 ```
 
 The default transcription model is `medium`. Use `--whisper-model small` for a faster, less accurate draft.
@@ -62,8 +62,8 @@ an existing one instead of overwriting it.
 Or provide a URL or local file:
 
 ```bash
-.venv/bin/python main.py "https://www.youtube.com/watch?v=VIDEO_ID"
-.venv/bin/python main.py "/path/to/video.mp4"
+.venv/bin/python produce.py "https://www.youtube.com/watch?v=VIDEO_ID"
+.venv/bin/python produce.py "/path/to/video.mp4"
 ```
 
 ## Output
@@ -88,11 +88,11 @@ A standalone local web page for proofreading the finished subtitles and
 re-burning the video, without re-running this pipeline:
 
 ```bash
-.venv/bin/python subtitle_editor/server.py
+.venv/bin/python studio/server.py
 ```
 
 It reads `output/` and `work/` and writes only `output/subtitles_zh.reviewed.srt`,
-`output/final_reviewed.mp4` and `editor_cache/`. See `subtitle_editor/README.md`.
+`output/final_reviewed.mp4` and `editor_cache/`. See `studio/README.md`.
 
 For publish-quality proper nouns, an optional sidecar named `VIDEO.corrections.json` can map transcript segment IDs to reviewed text. The included test video has such a review file under `work/`.
 

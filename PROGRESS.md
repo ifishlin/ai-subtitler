@@ -17,7 +17,7 @@
 - 加入漏句補充 sidecar，補回 Whisper 未辨識的街訪與電話訪問。
 - 加入 `--sensitive` 模式，關閉 VAD 並降低靜音判定門檻。
 - Whisper 結果會在連線 Qwen 前先存檔，避免網路失敗導致辨識結果遺失。
-- 新增字幕校對網頁 `subtitle_editor/`，對成品做校對與重新燒錄，不改動 pipeline。
+- 新增字幕校對網頁 `studio/`，對成品做校對與重新燒錄，不改動 pipeline。
 
 ## 目前輸出
 
@@ -48,13 +48,13 @@
 一般模式：
 
 ```bash
-.venv/bin/python main.py
+.venv/bin/python produce.py
 ```
 
 敏感模式：
 
 ```bash
-.venv/bin/python main.py --sensitive
+.venv/bin/python produce.py --sensitive
 ```
 
 ## 敏感模式結論
@@ -86,7 +86,7 @@
 - `corrections.json` 的鍵值最大為 54，但套用時只有 53 段，
   所以 `"54": "陳奐宇、許政俊 臺南高雄報導"` 從未生效，
   成品仍是 Whisper 原本聽到的「公視新聞 臺南高雄報導」。
-  `main.py` 用 `corrections.get(item["id"], item["text"])` 取值，找不到就沿用原文，不會報錯。
+  `produce.py` 用 `corrections.get(item["id"], item["text"])` 取值，找不到就沿用原文，不會報錯。
 - 19–23 與 27–30 的偏移是人工重新分行造成的，內容連貫，屬正常編輯。
 - **43–51 是真的壞了。** 校正落在前一段，導致同一句話在畫面上出現兩次，
   一次正確一次錯誤：
@@ -101,7 +101,7 @@
   即成品字幕在此處確實錯位。
 
 這個缺陷存在於 `output/final.mp4`（119–135 秒）。
-用 `subtitle_editor/` 校對後重新燒錄即可修正 —— 網頁上直接編輯字幕，
+用 `studio/` 校對後重新燒錄即可修正 —— 網頁上直接編輯字幕，
 不再經過 ID 對應，這類錯位無法再發生。
 
 ## 校正機制改為「修改清單」
