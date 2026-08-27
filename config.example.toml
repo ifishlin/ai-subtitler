@@ -1,0 +1,31 @@
+# Copy to ~/.config/video_pipeline/config.toml and edit.
+#
+# Everything here is optional: the defaults in core/settings.py are a working
+# configuration for the local model. A command-line flag beats this file, and
+# an environment variable beats an inline key, so one run can differ without
+# anything being edited.
+#
+# Never put a key in the copy that lives in a repository. Point key_file at a
+# file outside it -- chmod 600 -- or set the environment variable instead.
+
+[llm]
+# Who proofreads, translates, reviews and plans cards.
+#   qwen    Ollama, free, needs cuba001 or a local install
+#   claude  Anthropic API, needs a key
+#   none    no model at all; recognition and rendering still run
+#   replay  answers from a log recorded with --llm-log
+provider = "qwen"
+
+[llm.claude]
+model = "claude-opus-5"
+effort = "medium"                                  # low | medium | high
+key_file = "~/.config/video_pipeline/anthropic"
+key_env = "ANTHROPIC_API_KEY"                      # checked first, when set
+
+[llm.qwen]
+url = "http://127.0.0.1:11435"                     # SSH tunnel to cuba001
+model = "qwen2.5:7b"
+ssh_target = "yuyu@cuba001"                        # opens the tunnel if the url is dead
+
+[stock.pexels]
+key_file = "~/.config/video_pipeline/pexels"

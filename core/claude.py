@@ -11,12 +11,9 @@ never from the repository.
 from __future__ import annotations
 
 import json
-import os
-from pathlib import Path
 from typing import Any
 
 DEFAULT_MODEL = "claude-opus-5"
-KEY_FILE = Path.home() / ".config" / "video_pipeline" / "anthropic"
 MAX_TOKENS = 16000
 # Proofreading and translation are judgement over short text, not open-ended
 # reasoning, so medium effort is the sensible default; raise it per call for
@@ -24,25 +21,22 @@ MAX_TOKENS = 16000
 DEFAULT_EFFORT = "medium"
 
 
-def _key() -> str:
-    for name in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN"):
-        if os.environ.get(name):
-            return os.environ[name].strip()
-    if KEY_FILE.is_file():
-        return KEY_FILE.read_text(encoding="utf-8").strip()
-    raise RuntimeError(
-        "找不到 Anthropic API key。請設定環境變數 ANTHROPIC_API_KEY，"
-        f"或把 key 存進 {KEY_FILE}。申請網址：https://console.anthropic.com"
-    )
+def _key(spec: dict[str, Any] | None = None) -> str:
+    """Where the key lives is a setting like any other; see core/settings.py."""
+    from . import settings
+    spec = spec if spec is not None else settings.load()["llm"]["claude"]
+    return settings.secret(spec, "Anthropic")
 
 
 class ClaudeClient:
     """Drop-in replacement for OllamaClient, backed by the Claude API."""
 
-    def __init__(self, model: str = DEFAULT_MODEL, effort: str = DEFAULT_EFFORT):
+    def __init__(self, model: str = DEFAULT_MODEL, effort: str = DEFAULT_EFFORT,
+                 spec: dict[str, Any] | None = None):
         from .llm import Usage
         self.model = model
         self.effort = effort
+        self.spec = spec
         self.usage = Usage()          # what this run has spent, so far
         self._client: Any = None
 
@@ -50,7 +44,7 @@ class ClaudeClient:
         """Fail here, before the expensive stages, if the key is unusable."""
         import anthropic
 
-        self._client = anthropic.Anthropic(api_key=_key())
+        self._client = anthropic.Anthropic(api_key=_key(self.spec))
         # A single cheap call proves the key works and the model is reachable.
         self._client.messages.create(
             model=self.model,

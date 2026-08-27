@@ -37,7 +37,7 @@ def _qwen(settings: dict[str, Any]) -> Any:
 @provider("claude", "Anthropic API，要金鑰，校對與翻譯明顯較好")
 def _claude(settings: dict[str, Any]) -> Any:
     from .claude import ClaudeClient
-    kwargs: dict[str, Any] = {}
+    kwargs: dict[str, Any] = {"spec": settings.get("claude")}
     if settings.get("model"):
         kwargs["model"] = settings["model"]
     if settings.get("effort"):

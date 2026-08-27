@@ -14,7 +14,7 @@ import argparse
 import sys
 import time
 
-from core import llm
+from core import llm, settings
 
 SCHEMA = {
     "type": "object",
@@ -34,28 +34,22 @@ SYSTEM = (
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="檢查語言模型連得上、答得出 JSON")
-    parser.add_argument("--llm", choices=llm.choices(), default="claude")
+    parser.add_argument("--llm", choices=llm.choices())
     parser.add_argument("--llm-model")
     parser.add_argument("--llm-effort", choices=["low", "medium", "high"])
-    parser.add_argument("--ollama-url", default="http://127.0.0.1:11435")
-    parser.add_argument("--ollama-model", default="qwen2.5:7b")
-    parser.add_argument("--ssh-target", default="")
+    parser.add_argument("--ollama-url")
+    parser.add_argument("--ollama-model")
+    parser.add_argument("--ssh-target")
     parser.add_argument("--replay-from")
     args = parser.parse_args()
 
-    client = llm.build(args.llm, {
-        "ollama_url": args.ollama_url,
-        "ollama_model": args.ollama_model,
-        "ssh_target": args.ssh_target,
-        "model": args.llm_model,
-        "effort": args.llm_effort,
-        "replay_from": args.replay_from,
-    })
+    provider, options = settings.llm_options(args)
+    print(settings.describe())
+    print()
+    client = llm.build(provider, options)
     if client is None:
-        print(f"--llm {args.llm}：不呼叫模型，沒有東西要檢查")
+        print(f"{provider}：不呼叫模型，沒有東西要檢查")
         return 0
-
-    print(f"提供者　{args.llm}" + (f"（{args.llm_model}）" if args.llm_model else ""))
 
     started = time.time()
     try:

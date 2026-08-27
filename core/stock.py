@@ -66,18 +66,12 @@ class Clip:
 
 
 def _key(provider: str) -> str:
-    """The API key from the environment, or ~/.config/video_pipeline/<provider>."""
-    variable = f"{provider.upper()}_API_KEY"
-    if os.environ.get(variable):
-        return os.environ[variable].strip()
-    stored = KEY_DIR / provider
-    if stored.is_file():
-        return stored.read_text(encoding="utf-8").strip()
-    raise RuntimeError(
-        f"找不到 {provider} 的 API key。請設定環境變數 {variable}，"
-        f"或把 key 存進 {stored}。申請網址："
-        + ("https://www.pexels.com/api/" if provider == "pexels" else "https://pixabay.com/api/docs/")
-    )
+    """The API key, from wherever the settings say it lives."""
+    from . import settings
+    spec = settings.load().get("stock", {}).get(provider) or {}
+    spec = {"key_env": f"{provider.upper()}_API_KEY",
+            "key_file": str(KEY_DIR / provider), **spec}
+    return settings.secret(spec, provider)
 
 
 def _get_json(url: str, headers: dict[str, str] | None = None) -> dict[str, Any]:

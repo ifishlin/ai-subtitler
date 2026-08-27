@@ -8,7 +8,7 @@ from pathlib import Path
 from core import caption, scene
 from core.audit import inspect, report, write as write_audit
 from core.media import duration, extract_audio, prepare_video
-from core import llm
+from core import llm, settings
 from core.compose import compose
 from core.transcribe import (
     GAP_MIN,
@@ -73,7 +73,7 @@ def parse_args() -> argparse.Namespace:
              "Recognition is the slowest stage, so this re-runs correction, cards and "
              "rendering without repeating it. Implies --fill-gaps handling of sidecars.",
     )
-    parser.add_argument("--llm", choices=llm.choices(), default="qwen",
+    parser.add_argument("--llm", choices=llm.choices(),
                         help=f"誰來校對、翻譯、審查、規劃圖卡。{llm.help_text()}")
     parser.add_argument("--llm-model",
                         help="Override the provider's model, e.g. a cheaper one for a batch")
@@ -83,8 +83,8 @@ def parse_args() -> argparse.Namespace:
                         help="Record every exchange, so the run can be replayed with --llm replay")
     parser.add_argument("--replay-from", metavar="FILE",
                         help="Answers for --llm replay; defaults to --llm-log's file")
-    parser.add_argument("--ollama-model", default="qwen2.5:7b")
-    parser.add_argument("--ollama-url", default="http://127.0.0.1:11435")
+    parser.add_argument("--ollama-model")
+    parser.add_argument("--ollama-url")
     parser.add_argument("--ssh-target", default=os.environ.get("CUBA_SSH_TARGET", "yuyu@cuba001"))
     parser.add_argument("--font", default=None,
                         help="CJK font for the information cards; found automatically if omitted")
@@ -235,21 +235,15 @@ def main() -> None:
     # is already done and rendering needs nothing from it, so an unreachable
     # model should cost those four things -- not the whole run and the minutes
     # already spent on it.
-    print(f"[3/7] Connecting to {args.llm}")
-    client = llm.build(args.llm, {
-        "ollama_url": args.ollama_url,
-        "ollama_model": args.ollama_model,
-        "ssh_target": args.ssh_target,
-        "model": args.llm_model,
-        "effort": args.llm_effort,
-        "record_to": args.llm_log,
-        "replay_from": args.replay_from or args.llm_log,
-    })
+    provider = settings.llm_options(args)[0]
+    print(f"[3/7] Connecting to {provider}")
+    provider, options = settings.llm_options(args)
+    client = llm.build(provider, options)
     try:
         if client is not None:
             client.ensure_ready()
     except Exception as error:                                    # noqa: BLE001
-        print(f"      {args.llm} 無法連線：{error}")
+        print(f"      {provider} 無法連線：{error}")
         print("      跳過校正、翻譯與圖卡；字幕與影片仍會產出")
         client = None
 
