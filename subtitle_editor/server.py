@@ -46,6 +46,7 @@ STATIC = Path(__file__).resolve().parent / "static"
 # the browser can switch runs without restarting the server. Media derivatives
 # are keyed by video, so switching back to a run costs nothing the second time.
 IMAGE_DIRS = ("img_cut", "img")     # searched in order; cut-outs preferred
+CARDS_TRIMMED = 2                   # scenes carrying cards cropped to their art
 
 
 def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
@@ -228,25 +229,73 @@ def images() -> dict[str, Any]:
     return {"images": _images()}
 
 
-@app.get("/media/image/{folder}/{name}")
-def image_file(folder: str, name: str) -> FileResponse:
-    """Serve one placeable image. The request is matched against the listing
-    instead of being joined onto a path, so nothing else can be read."""
-    wanted = f"{folder}/{name}"
-    if wanted not in {item["path"] for item in _images()}:
-        raise HTTPException(404, f"找不到 {wanted}")
-    return FileResponse(ROOT / folder / name, media_type="image/png")
+@app.get("/media/image/{path:path}")
+def image_file(path: str) -> FileResponse:
+    """Serve a picture the canvas needs: one from the tray, or one the scene
+    already refers to. Requests are matched against those two lists rather
+    than joined onto a directory, so nothing else on disk can be read."""
+    allowed = {item["path"] for item in _images()}
+    if config["paths"]["scene"].is_file():
+        from src import scene as scene_module
+        allowed |= {str(element.get("file"))
+                    for element in scene_module.load(config["paths"]["scene"]).get("elements", [])
+                    if element.get("file")}
+    if path not in allowed:
+        raise HTTPException(404, f"找不到 {path}")
+    return FileResponse(ROOT / path, media_type="image/png")
+
+
+def _trim(card: Path) -> tuple[Path, list[int]] | None:
+    """A card cropped to what it actually draws, and where that sits.
+
+    Cards are painted on a full 1920x1080 sheet with the artwork off to one
+    side -- four fifths of the file is transparent. Trimmed, a card becomes an
+    ordinary picture: it can be dragged, resized and thought about, instead of
+    being a whole frame that happens to be mostly empty."""
+    trimmed = card.with_suffix(".trim.png")
+    with Image.open(card) as sheet:
+        if sheet.mode != "RGBA":
+            return None
+        box = sheet.getbbox()               # bounds of everything not transparent
+        if not box or box == (0, 0, *sheet.size):
+            return None
+        if not trimmed.is_file():
+            sheet.crop(box).save(trimmed)
+    return trimmed, [int(value) for value in box]
+
+
+def _cards() -> list[dict[str, Any]]:
+    """The information cards this run planned, trimmed, with paths relative to
+    the project so a scene can be moved or read anywhere."""
+    cards = []
+    for card in config.get("visuals") or []:
+        file = Path(card["file"])
+        box = None
+        if file.is_file():
+            cut = _trim(file)
+            if cut:
+                file, box = cut
+        try:
+            file = file.resolve().relative_to(ROOT)
+        except ValueError:
+            pass
+        cards.append({**card, "file": str(file), "box": box})
+    return cards
 
 
 def _default_scene() -> dict[str, Any]:
-    """The basic frame: picture upper left, captions under it, channel icon."""
+    """The basic frame: picture upper left, captions under it, channel icon,
+    plus whatever cards the run planned."""
     from src import scene as scene_module
     paths = config["paths"]
     srt = "subtitles_bilingual.srt"
     if not (paths["output"] / srt).is_file():
         srt = "subtitles_zh.srt"
     icons = _images()
-    return scene_module.default_scene(srt, icons[0]["path"] if icons else None)
+    scene = scene_module.default_scene(srt, icons[0]["path"] if icons else None)
+    scene_module.add_cards(scene, _cards())
+    scene["cards_merged"] = True
+    return scene
 
 
 @app.get("/api/scene")
@@ -256,7 +305,24 @@ def get_scene() -> dict[str, Any]:
     paths = config["paths"]
     if not paths["scene"].is_file():
         scene_module.save(paths["scene"], _default_scene())
-    return scene_module.load(paths["scene"])
+    scene = scene_module.load(paths["scene"])
+    # Cards used to be pasted on at burn time, so older scenes do not mention
+    # them; and the first merge kept them full-frame. Both are fixed once, and
+    # the marker means a card you then delete stays deleted.
+    merged = scene.get("cards_merged")
+    if merged is not CARDS_TRIMMED:
+        cards = _cards()
+        if not merged:
+            scene_module.add_cards(scene, cards)
+        else:
+            by_id = {f"card{index}": card for index, card in enumerate(cards, start=1)}
+            for element in scene["elements"]:
+                card = by_id.get(element.get("id"))
+                if card and card.get("box"):
+                    element["file"], element["box"] = card["file"], list(card["box"])
+        scene["cards_merged"] = CARDS_TRIMMED
+        scene_module.save(paths["scene"], scene)
+    return scene
 
 
 @app.get("/api/scene/default")
@@ -383,29 +449,20 @@ def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
         written = review.save_state(paths["state"], paths["reviewed_srt"], segments)["paths"]
         chosen = written.get(variant) or written["zh"]
 
+        from src import cuts as cuts_module
         scene = get_scene()
+        removed = cuts_module.tidy(scene.get("cuts") or [])
         element = scene_module.one(scene, "subtitle")
         listing = None
         if element:
             # The bilingual switch decides which of the saved files is drawn.
             element["srt"] = chosen.name
-            built = caption_module.build(
-                caption_module.read_srt(chosen), element,
-                tuple(scene.get("canvas", scene_module.CANVAS)), paths["captions"],
-            )
+            built = _draw_captions(scene)
             scene["caption_band"] = built["band"]
             listing = caption_module.playlist(
-                built["captions"], config["duration"], built["band"], paths["captions"],
+                built["captions"], cuts_module.duration_after(removed, config["duration"]),
+                built["band"], paths["captions"],
             )
-
-        # Cards the pipeline planned are full-frame and take the screen over
-        # for their few seconds, which is what they were drawn to do.
-        for index, card in enumerate(config["visuals"], start=1):
-            scene["elements"].append({
-                "id": f"card{index}", "type": "image", "file": card["file"],
-                "box": [0, 0, *scene.get("canvas", scene_module.CANVAS)],
-                "from": float(card["start"]), "to": float(card["end"]),
-            })
 
         compose_module.compose(
             config["source"], scene, paths["reviewed_mp4"],
@@ -435,21 +492,29 @@ def _caption_srt(scene: dict[str, Any]) -> tuple[dict[str, Any] | None, Path | N
     return element, (reviewed if reviewed.is_file() else output / name)
 
 
-def _draw_captions() -> dict[str, Any]:
+def _draw_captions(scene: dict[str, Any] | None = None) -> dict[str, Any]:
     """Draw every caption as a picture. Cheap after the first time: the file
-    name is a hash of the text and the styling, so only what changed is drawn."""
+    name is a hash of the text and the styling, so only what changed is drawn.
+
+    The cues come back on the finished video's clock, with anything inside a
+    cut dropped -- the pictures are what gets overlaid, so they have to agree
+    with the frames that survive."""
     from src import caption as caption_module
+    from src import cuts as cuts_module
     from src import scene as scene_module
 
-    scene = get_scene()
+    scene = scene if scene is not None else get_scene()
     element, srt = _caption_srt(scene)
     if not element or not srt or not srt.is_file():
         raise HTTPException(400, "這個版面沒有字幕元件，或找不到字幕檔")
+    removed = cuts_module.tidy(scene.get("cuts") or [])
+    cues = cuts_module.apply_to_cues(caption_module.read_srt(srt), removed)
     built = caption_module.build(
-        caption_module.read_srt(srt), element,
+        cues, element,
         tuple(scene.get("canvas", scene_module.CANVAS)), config["paths"]["captions"],
     )
     built["source"] = srt.name
+    built["cut"] = round(sum(end - start for start, end in removed), 2)
     return built
 
 
@@ -493,15 +558,51 @@ def preview(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     )
     # Captions are pictures, and the clip starts at `start`, so the playlist is
     # written against the clip's own clock.
+    # The clip was cut out of the source, so the cuts have to move onto its
+    # own clock before anything is composed against them.
     from src import caption as caption_module
+    from src import cuts as cuts_module
+    window = [[max(0.0, cut_start - start), min(seconds, cut_end - start)]
+              for cut_start, cut_end in cuts_module.tidy(scene.get("cuts") or [])
+              if cut_end > start and cut_start < start + seconds]
+    scene["cuts"] = window
+
+    # Timed elements are on the source's clock too. Without this a card at
+    # 0:13 keeps asking to appear thirteen seconds into a clip that begins
+    # there -- which is to say, never.
+    shifted = []
+    for element in scene["elements"]:
+        if element.get("from") is None:
+            shifted.append(element)
+            continue
+        from_at = float(element["from"]) - start
+        to_at = float(element.get("to", element["from"])) - start
+        if to_at <= 0 or from_at >= seconds:
+            continue
+        shifted.append({**element, "from": max(0.0, from_at), "to": min(seconds, to_at)})
+    scene["elements"] = shifted
+
     listing = None
     element = scene_module.one(scene, "subtitle")
     if element:
-        built = _draw_captions()
+        clipped = {**scene, "cuts": []}          # cues are shifted here, not twice
+        built = _draw_captions(clipped)
         scene["caption_band"] = built["band"]
+        # Only what falls inside the window, or a caption from elsewhere in the
+        # video would be shifted to a negative time, land on zero, and play
+        # over the opening of the preview.
+        inside = [cue for cue in built["captions"]
+                  if cue["end"] > start and cue["start"] < start + seconds]
+        moved = cuts_module.apply_to_cues(
+            [{**cue,
+              "start": max(0.0, cue["start"] - start),
+              "end": min(seconds, cue["end"] - start)}
+             for cue in inside],
+            cuts_module.tidy(window),
+        )
         listing = caption_module.playlist(
-            built["captions"], seconds, built["band"],
-            paths["captions"], offset=start,
+            moved, cuts_module.duration_after(cuts_module.tidy(window), seconds),
+            built["band"], paths["captions"],
         )
 
     out = paths["preview"]

@@ -102,18 +102,59 @@ main{display:flex;flex:1;min-height:0}
   white-space:nowrap;display:none}
 .node.sel .name{display:block}
 
-/* ---------- layout mode: material tray + property bar ---------- */
-#layoutBar{display:none}
-body.layout #layoutBar{display:block;flex:none;background:var(--panel);
-  border-bottom:1px solid var(--line);padding:7px 12px}
-#tray{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px}
+/* ---------- tabs ----------
+   The left pane is context and never changes; this side is the work. */
+#tabs{display:flex;align-items:center;gap:2px;padding:6px 10px 0;flex:none;
+  background:var(--panel);border-bottom:1px solid var(--line)}
+#tabs button{border:1px solid transparent;border-bottom:0;border-radius:7px 7px 0 0;
+  background:transparent;color:var(--dim);padding:6px 15px;font-size:13px}
+#tabs button:hover{color:var(--ink)}
+#tabs button{cursor:grab}
+#tabs button.dragging{opacity:.4}
+#tabs button.dragging{cursor:grabbing}
+#tabs button.on{background:var(--bg);border-color:var(--line);color:var(--ink);
+  font-weight:600;margin-bottom:-1px;padding-bottom:7px}
+#tabNote{margin-left:auto;font-size:11px;color:var(--faint);padding-right:4px}
+.tab{display:none;flex:1;min-height:0;flex-direction:column}
+.tab.on{display:flex}
+.paneHead{padding:8px 12px 6px;font-size:12px;color:var(--dim);flex:none}
+.paneHead .hint{color:var(--faint)}
+
+/* ---------- layout tab ---------- */
+#tray{display:flex;gap:7px;overflow-x:auto;padding:0 12px 10px;flex:none}
 #tray figure{margin:0;flex:none;width:62px;text-align:center;cursor:grab}
 #tray img{width:60px;height:60px;object-fit:contain;background:#0f1319;
   border:1px solid var(--line);border-radius:6px}
 #tray figcaption{font-size:9px;color:var(--faint);overflow:hidden;
   white-space:nowrap;text-overflow:ellipsis}
 #props{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12px;
-  color:var(--dim);margin-top:5px}
+  color:var(--dim);padding:8px 12px;flex:none}
+
+/* Layers: the list is the stacking order, first row on top of the picture. */
+#layers{flex:1;min-height:0;overflow:auto;padding:0 10px 10px}
+.layer{display:flex;align-items:center;gap:9px;padding:6px 8px;margin-bottom:4px;
+  border:1px solid var(--line);border-left:3px solid var(--line);border-radius:7px;
+  background:var(--panel);cursor:pointer}
+.layer:hover{background:var(--panel2)}
+.layer.on{border-color:var(--accent);border-left-color:var(--accent);background:#1e2530}
+.layer.out{opacity:.55}
+.layer .thumb{width:30px;height:30px;flex:none;border-radius:5px;object-fit:contain;
+  background:#0f1319;border:1px solid var(--line)}
+.layer .what{flex:1;min-width:0}
+.layer .name{font-size:12px;color:var(--ink);overflow:hidden;white-space:nowrap;
+  text-overflow:ellipsis}
+.layer .when{font:10px var(--mono);color:var(--faint)}
+.layer .lift{border:0;background:transparent;color:var(--faint);padding:2px 5px;
+  font-size:13px;line-height:1}
+.layer .lift:hover{color:var(--accent)}
+
+/* ---------- cuts tab ---------- */
+#cutList{flex:1;min-height:0;overflow:auto;padding:0 10px 10px}
+.cutRow{display:flex;align-items:center;gap:10px;padding:8px 10px;margin-bottom:5px;
+  border:1px solid var(--line);border-left:3px solid var(--danger);
+  border-radius:7px;background:var(--panel)}
+.cutRow .when{font:12px var(--mono);color:var(--ink)}
+.cutRow .len{font:11px var(--mono);color:var(--danger)}
 #props input{width:74px;font:12px var(--mono);color:var(--ink);
   background:var(--panel2);border:1px solid var(--line);border-radius:5px;
   padding:3px 5px}
@@ -122,8 +163,9 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
 /* The caption picture sits exactly where ffmpeg will lay it down. */
 #capImage{position:absolute;display:none;pointer-events:none;image-rendering:auto}
 #stage.scene #capImage.on{display:block}
-#sceneActions{display:flex;align-items:center;gap:7px;margin-top:6px;
-  padding-top:6px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+#sceneActions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  padding:8px 12px;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);font-size:12px;color:var(--dim);flex:none}
 
 /* ---------- scene.json viewer ---------- */
 #json{display:none;position:fixed;inset:0;background:#000a;z-index:60;
@@ -168,17 +210,30 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
   text-shadow:0 1px 2px #000a}
 #transport .hint{margin-left:auto;font-size:12px;color:var(--faint)}
 
+/* ---------- cutting ---------- */
+#transport{flex-wrap:wrap}
+#cutBar{display:none;align-items:center;gap:7px;font-size:12px;color:var(--dim);
+  padding-left:10px;border-left:1px solid var(--line)}
+#cutBar.on{display:flex}
+#cutMark{font:11px var(--mono);color:var(--danger)}
+#cutTools{display:flex;align-items:center;gap:8px;padding:0 12px 8px;flex:none;
+  font-size:12px;color:var(--dim)}
+#cutTotal{font:11px var(--mono);color:var(--danger)}
+
 /* ---------- timeline ---------- */
 #tlWrap{flex:1;min-height:0;overflow:auto;padding:10px 12px;background:var(--bg)}
-#tl{display:block;width:100%;height:150px;cursor:ew-resize;touch-action:none;
+#tl{display:block;width:100%;cursor:ew-resize;touch-action:none;
   border:1px solid var(--line);border-radius:8px;background:var(--panel)}
 #legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:var(--faint)}
 #legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;
   vertical-align:-1px}
 
 /* ---------- list ---------- */
+#subsHead{display:flex;align-items:center;gap:8px;padding:8px 12px;flex:none;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
 #tools{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--panel);
   border-bottom:1px solid var(--line);flex:none;flex-wrap:wrap}
+#list{flex:1;min-height:0}
 #tools .seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 #tools .seg button{border:0;border-radius:0;background:transparent;padding:4px 9px;font-size:12px}
 #tools .seg button.on{background:var(--accent);color:#0b1017;font-weight:600}
@@ -277,10 +332,6 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
     <select id="project" title="選擇要校對哪一次 pipeline 的輸出"></select>
     <span class="src" id="srcName">…</span>
     <div class="spacer"></div>
-    <div id="stats"></div>
-    <button id="btnAudit" class="tiny">品質檢查</button>
-    <span id="saveState"></span>
-    <button id="btnSave" class="primary">儲存 SRT</button>
     <button id="btnBurn">重新燒錄</button>
     <div id="burnBar"><i></i><span></span></div>
     <select id="finished" title="播放已燒錄的成品"></select>
@@ -304,49 +355,37 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
         <label style="font-size:12px;color:var(--dim);display:flex;gap:5px;align-items:center">
           <input type="checkbox" id="insetView">版面模式
         </label>
-        <span class="hint">點或拖曳波形可跳轉 · 按 <kbd>?</kbd> 看快速鍵</span>
-      </div>
-      <div id="layoutBar">
-        <div id="tray"></div>
-        <div id="props">
-          <span id="propName">拖曳下方素材到畫面上</span>
-          <label>出現 <input id="propFrom" placeholder="0:00.0"></label>
-          <label>到 <input id="propTo" placeholder="0:05.0"></label>
-          <button id="propNow" class="tiny">從現在起 5 秒</button>
-          <button id="propAlways" class="tiny">全片</button>
-          <button id="propFront" class="tiny">移到最上層</button>
-          <button id="propDel" class="tiny">刪除</button>
-        </div>
-        <!-- Second row: actions on the whole layout, not on the selection. -->
-        <div id="sceneActions">
-          <button id="btnRevertScene" class="tiny" title="丟掉還沒存的修改，回到 scene.json">復原到已存檔</button>
-          <button id="btnResetScene" class="tiny" title="回到影片＋字幕＋頻道 icon 的基本畫面">回預設版面</button>
-          <button id="btnSaveScene" class="tiny">儲存版面</button>
-          <button id="btnPreviewScene" class="tiny">壓 10 秒看成品</button>
-          <button id="btnShowJson" class="tiny">看 JSON</button>
-          <label id="pngBox" title="用壓片會用的那張字幕圖，而不是瀏覽器畫的字">
-            <input type="checkbox" id="pngCaptions">成品字幕
-          </label>
-          <div style="flex:1"></div>
-          <span id="sceneState" class="hint"></span>
-        </div>
+        <span id="cutBar">
+          <b id="cutMark"></b>
+          <button id="btnCut" class="tiny" disabled>剪掉這段</button>
+        </span>
+        <span class="hint">Shift + 拖曳時間軸可選一段 · <kbd>?</kbd> 快速鍵</span>
       </div>
       <div id="tlWrap">
         <canvas id="tl"></canvas>
-        <div id="legend">
-          <span><i style="background:#3f4a5a"></i>波形</span>
-          <span><i style="background:var(--accent)"></i>字幕</span>
-          <span><i style="background:var(--warn)"></i>LLM 改動大</span>
-          <span><i style="background:var(--sidecar)"></i>漏聽補句</span>
-          <span><i style="background:var(--ok)"></i>已確認</span>
-          <span><i style="background:var(--danger)"></i>字幕空白區</span>
-          <span><i style="background:#8a6d3b"></i>資訊圖卡</span>
-          <span><i style="background:#3b6ea8"></i>版面上的圖</span>
-        </div>
+        <div id="legend"></div>
       </div>
     </div>
 
     <div id="right">
+      <!-- One pane, three jobs. The canvas and the timeline on the left are
+           the shared context and stay put; this side is whatever is being
+           worked on now. -->
+      <div id="tabs">
+        <button data-tab="subs" draggable="true" class="on">字幕</button>
+        <button data-tab="layout" draggable="true">版面</button>
+        <button data-tab="cuts" draggable="true">剪接</button>
+        <span id="tabNote"></span>
+      </div>
+
+      <section id="tabSubs" class="tab on">
+      <div id="subsHead">
+        <div id="stats"></div>
+        <div style="flex:1"></div>
+        <button id="btnAudit" class="tiny">品質檢查</button>
+        <span id="saveState"></span>
+        <button id="btnSave" class="primary">儲存 SRT</button>
+      </div>
       <div id="tools">
         <div class="seg" id="filters">
           <button data-f="all" class="on">全部</button>
@@ -367,6 +406,47 @@ body.layout #layoutBar{display:block;flex:none;background:var(--panel);
         </label>
       </div>
       <div id="list"></div>
+      </section>
+
+      <section id="tabLayout" class="tab">
+        <div id="props">
+          <span id="propName">把下面的素材拖到畫面上</span>
+          <label>出現 <input id="propFrom" placeholder="0:00.0"></label>
+          <label>到 <input id="propTo" placeholder="0:05.0"></label>
+          <button id="propNow" class="tiny">從現在起 5 秒</button>
+          <button id="propAlways" class="tiny">全片</button>
+          <button id="propFront" class="tiny">移到最上層</button>
+          <button id="propDel" class="tiny">刪除</button>
+        </div>
+        <div id="sceneActions">
+          <button id="btnRevertScene" class="tiny" title="丟掉還沒存的修改，回到 scene.json">復原到已存檔</button>
+          <button id="btnResetScene" class="tiny" title="回到影片＋字幕＋頻道 icon 的基本畫面">回預設版面</button>
+          <button id="btnSaveScene" class="tiny">儲存版面</button>
+          <button id="btnPreviewScene" class="tiny">壓 10 秒看成品</button>
+          <button id="btnShowJson" class="tiny">看 JSON</button>
+          <label id="pngBox" title="用壓片會用的那張字幕圖，而不是瀏覽器畫的字">
+            <input type="checkbox" id="pngCaptions">成品字幕
+          </label>
+          <div style="flex:1"></div>
+          <span id="sceneState" class="hint"></span>
+        </div>
+        <!-- Stacking order, top of the list on top of the picture. Clicking a
+             row selects it, which is the only way to reach an element whose
+             time range has not come round yet. -->
+        <div id="layers"></div>
+        <div class="paneHead">素材　<span class="hint">拖到畫面上放置</span></div>
+        <div id="tray"></div>
+      </section>
+
+      <section id="tabCuts" class="tab">
+        <div class="paneHead" id="cutsHead">還沒有剪接</div>
+        <div id="cutTools">
+          <b id="cutTotal"></b>
+          <div style="flex:1"></div>
+          <button id="btnUncut" class="tiny" disabled>還原最後一段</button>
+        </div>
+        <div id="cutList"></div>
+      </section>
     </div>
   </main>
 </div>
@@ -428,8 +508,10 @@ const S = {
   fps: 30,              // of the source, for stepping a frame at a time
   translated: false,    // run carries a translation as well as the spoken text
   bilingual: true,      // burn both languages
+  mark: null,           // a stretch marked out on the timeline, before cutting
   cursor: 0,            // index into S.segments
   filter: "all",
+  tab: "subs",          // which pane is open; the timeline shows its tracks
   dirty: false,
   playUntil: null,      // for "play this segment only"
 };
@@ -548,37 +630,122 @@ function diffHTML(before, after) {
 
 /* ============================== timeline ============================== */
 const tl = $("tl"), ctx = tl.getContext("2d");
-const LANE = { wave: [8, 74], subs: [86, 108], gaps: [110, 122], cards: [124, 138] };
+/* The timeline carries one track per kind of thing, and only the tracks that
+   belong to the work in hand. The ruler and the waveform are always there --
+   they are the video itself -- and so are the seams, since a cut affects
+   everything. The rest comes and goes with the tab. */
+const RULER = [0, 18];
+const TRACKS = [
+  { key: "wave",  height: 66, tabs: null,       legend: [["#3f4a5a", "波形"]] },
+  { key: "subs",  height: 22, tabs: ["subs"],
+    legend: [["#5aa9ff", "字幕"], ["#f5b544", "LLM 改動大"],
+             ["#a98bff", "漏聽補句"], ["#4ec98b", "已確認"]] },
+  { key: "gaps",  height: 12, tabs: ["subs"],   legend: [["#ef6b6b", "字幕空白區"]] },
+  { key: "cards", height: 14, tabs: ["layout"],
+    legend: [["#8a6d3b", "資訊圖卡"], ["#3b6ea8", "版面上的圖"]] },
+];
+const TRACK_GAP = 10;
 
-function tlLayout() {
+/** Where each visible track sits, and how tall the canvas has to be. */
+function lanes() {
+  const at = {};
+  let y = RULER[1] + 6;
+  for (const track of TRACKS) {
+    if (track.tabs && !track.tabs.includes(S.tab)) continue;
+    at[track.key] = [y, y + track.height];
+    y += track.height + TRACK_GAP;
+  }
+  at.total = y - TRACK_GAP + 4;
+  at.body = [RULER[1] + 4, at.total - 2];
+  return at;
+}
+
+function renderLegend() {
+  const shown = TRACKS.filter((track) => !track.tabs || track.tabs.includes(S.tab));
+  $("legend").innerHTML = shown.flatMap((track) => track.legend).map(
+    ([colour, name]) => `<span><i style="background:${colour}"></i>${name}</span>`
+  ).join("") + (sceneCuts().length
+    ? `<span><i style="background:var(--danger)"></i>剪接點</span>` : "");
+}
+
+/** A tick spacing that gives roughly ten labels, in round numbers people read
+ *  clocks in -- never 7 or 13 seconds. */
+function tickStep(span, width) {
+  const wanted = span / Math.max(4, Math.min(12, Math.floor(width / 90)));
+  for (const step of [1, 2, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600]) {
+    if (step >= wanted) return step;
+  }
+  return 3600;
+}
+
+/** m:ss, or h:mm:ss once there is an hour to show. */
+function tickLabel(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.round(seconds % 60);
+  return hours
+    ? `${hours}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`
+    : `${minutes}:${String(secs).padStart(2, "0")}`;
+}
+
+function tlLayout(height) {
   const ratio = window.devicePixelRatio || 1;
-  const width = tl.clientWidth, height = 150;
+  const width = tl.clientWidth;
+  tl.style.height = `${height}px`;
   tl.width = width * ratio; tl.height = height * ratio;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   return width;
 }
 
 function drawTimeline() {
-  const width = tlLayout();
-  const x = (t) => (S.duration ? (t / S.duration) * width : 0);
-  ctx.clearRect(0, 0, width, 150);
+  const LANE = lanes();
+  const width = tlLayout(LANE.total);
+  const BODY = LANE.body;
+  // The bar is the finished video: a cut stretch is not drawn narrow, it is
+  // not there at all, and everything after it slides left. Source time only
+  // exists here to look things up in.
+  const span = outDuration();
+  const x = (t) => (span ? (outTime(t) / span) * width : 0);
+  ctx.clearRect(0, 0, width, LANE.total);
 
-  // waveform
+  // ruler: the finished video's clock, so a mark reads the same as the time
+  // the viewer will see it at
+  const [ry, ry2] = RULER;
+  const step = tickStep(span, width);
+  ctx.font = "10px ui-monospace, SFMono-Regular, Menlo, monospace";
+  ctx.textBaseline = "top";
+  for (let at = 0; at <= span + 0.001; at += step) {
+    const left = (at / span) * width;
+    ctx.fillStyle = "#3f4a5a";
+    ctx.fillRect(left, ry2 - 6, 1, 6);
+    ctx.fillStyle = "#6b7788";
+    ctx.textAlign = left < 20 ? "left" : (left > width - 26 ? "right" : "center");
+    ctx.fillText(tickLabel(at), Math.min(width, Math.max(0, left)), ry);
+    // a half-step tick, unlabelled, for reading between the numbers
+    const half = left + (step / 2 / span) * width;
+    if (half < width) { ctx.fillStyle = "#333c49"; ctx.fillRect(half, ry2 - 3, 1, 3); }
+  }
+
+  // waveform, sampled in output time so the cut audio simply is not shown
   const [wy, wy2] = LANE.wave, mid = (wy + wy2) / 2, half = (wy2 - wy) / 2;
   ctx.fillStyle = "#3f4a5a";
   const peaks = S.peaks;
-  if (peaks.length) {
+  if (peaks.length && span) {
+    const per = S.duration / peaks.length;      // seconds one peak covers
     for (let px = 0; px < width; px++) {
-      const from = Math.floor((px / width) * peaks.length);
-      const to = Math.max(from + 1, Math.floor(((px + 1) / width) * peaks.length));
+      const from = srcTime((px / width) * span);
+      const to = srcTime(((px + 1) / width) * span);
       let peak = 0;
-      for (let k = from; k < to && k < peaks.length; k++) peak = Math.max(peak, peaks[k]);
+      for (let k = Math.floor(from / per); k <= Math.floor(to / per) && k < peaks.length; k++) {
+        peak = Math.max(peak, peaks[k]);
+      }
       const h = Math.max(1, peak * half);
       ctx.fillRect(px, mid - h, 1, h * 2);
     }
   }
 
   // subtitle band
+  if (LANE.subs) {
   const [sy, sy2] = LANE.subs;
   ctx.fillStyle = "#22262e"; ctx.fillRect(0, sy, width, sy2 - sy);
   S.segments.forEach((s, index) => {
@@ -588,14 +755,18 @@ function drawTimeline() {
     ctx.fillRect(left, sy, w, sy2 - sy);
     ctx.globalAlpha = 1;
   });
+  }
 
   // gaps
+  if (LANE.gaps) {
   const [gy, gy2] = LANE.gaps;
   ctx.fillStyle = "#22262e"; ctx.fillRect(0, gy, width, gy2 - gy);
   ctx.fillStyle = "#ef6b6b";
   S.gaps.forEach((g) => ctx.fillRect(x(g.start), gy, Math.max(2, x(g.end) - x(g.start)), gy2 - gy));
+  }
 
-  // information cards
+  // information cards and placed images
+  if (LANE.cards) {
   const [cy, cy2] = LANE.cards;
   ctx.fillStyle = "#22262e"; ctx.fillRect(0, cy, width, cy2 - cy);
   ctx.fillStyle = "#8a6d3b";
@@ -610,17 +781,42 @@ function drawTimeline() {
       ctx.fillRect(x(element.from), cy, Math.max(3, x(to) - x(element.from)), cy2 - cy);
     });
   }
+  }
+
+  // Seams: a cut leaves no width behind, so it is marked by the join. Without
+  // this there would be no way to find one again, or to undo it.
+  ctx.fillStyle = "#ef6b6b";
+  for (const [from, to] of sceneCuts()) {
+    const seam = x(from);
+    ctx.fillRect(seam - 1, BODY[0], 2, BODY[1] - BODY[0]);
+    ctx.beginPath();                        // a small tag, easier to aim at
+    ctx.moveTo(seam - 5, BODY[0]); ctx.lineTo(seam + 5, BODY[0]);
+    ctx.lineTo(seam, BODY[0] + 7);
+    ctx.closePath(); ctx.fill();
+  }
+  // the stretch being marked out, before it is cut
+  if (S.mark) {
+    const [from, to] = S.mark;
+    const left = x(from), wide = Math.max(2, x(to) - left);
+    ctx.fillStyle = "#5aa9ff33";
+    ctx.fillRect(left, BODY[0], wide, BODY[1] - BODY[0]);
+    ctx.strokeStyle = "#5aa9ff";
+    ctx.strokeRect(left + 0.5, BODY[0] + 0.5, wide - 1, BODY[1] - BODY[0] - 1);
+  }
 
   // playhead
   const px = x(video.currentTime);
-  ctx.fillStyle = "#fff"; ctx.fillRect(px - 0.5, 4, 1.5, 142);
+  ctx.fillStyle = "#fff"; ctx.fillRect(px - 0.5, BODY[0], 1.5, BODY[1] - BODY[0]);
 }
 
-/** Time under the pointer, clamped to the video. */
+/** Source time under the pointer. The bar is in output time, so this converts
+ *  back: everything else in the editor -- the proxy, the SRT, the scene --
+ *  still speaks the source's clock. */
 function timeAt(clientX) {
   const rect = tl.getBoundingClientRect();
   const ratio = (clientX - rect.left) / rect.width;
-  return Math.max(0, Math.min(S.duration, ratio * S.duration));
+  const out = Math.max(0, Math.min(outDuration(), ratio * outDuration()));
+  return srcTime(out);
 }
 
 /** Select the subtitle at this time, or the nearest one if the time is silent. */
@@ -644,16 +840,48 @@ function selectAtTime(t) {
 }
 
 let scrubbing = false;
+let marking = null;              // Shift-drag: the start of a stretch to cut
 tl.addEventListener("pointerdown", (event) => {
-  scrubbing = true;
+  // A seam has no width, so it is offered as a target instead.
+  const seam = seamNear(event.clientX);
+  if (seam >= 0 && !event.shiftKey) {
+    const [from, to] = sceneCuts()[seam];
+    if (confirm(`還原剪掉的 ${fmt(from)} – ${fmt(to)}（${(to - from).toFixed(1)} 秒）？`)) {
+      restoreCut(seam);
+      return;
+    }
+  }
   tl.setPointerCapture(event.pointerId);
   const t = timeAt(event.clientX);
+  if (event.shiftKey) {
+    marking = t;
+    S.mark = [t, t];
+    showCut();
+    return;
+  }
+  scrubbing = true;
   seek(t); selectAtTime(t);
 });
 tl.addEventListener("pointermove", (event) => {
+  if (marking === null && !scrubbing) {
+    tl.style.cursor = seamNear(event.clientX) >= 0 ? "pointer" : "ew-resize";
+  }
+  if (marking !== null) {
+    const t = timeAt(event.clientX);
+    S.mark = [Math.min(marking, t), Math.max(marking, t)];
+    showCut(); drawTimeline();
+    return;
+  }
   if (scrubbing) seek(timeAt(event.clientX));
 });
 tl.addEventListener("pointerup", (event) => {
+  if (marking !== null) {
+    // A stray shift-click is not a selection.
+    if (S.mark && S.mark[1] - S.mark[0] < 0.2) S.mark = null;
+    marking = null;
+    showCut(); drawTimeline();
+    return;
+  }
   if (!scrubbing) return;
   scrubbing = false;
   selectAtTime(timeAt(event.clientX));
@@ -826,7 +1054,11 @@ function syncOverlay() {
   $("overlayText").textContent = active
     ? (S.bilingual && active.source ? `${active.text}\n${active.source}` : active.text || "")
     : "";
-  $("clock").textContent = `${fmt(t)} / ${fmt(S.duration)}`;
+  // With cuts, the clock counts the finished video: the source's timecode is
+  // no longer where anyone watching would be.
+  $("clock").textContent = cutTotal()
+    ? `${fmt(outTime(t))} / ${fmt(outDuration())}　原片 ${fmt(t)}`
+    : `${fmt(t)} / ${fmt(S.duration)}`;
   if (index >= 0 && index !== S.cursor && $("follow").checked && !video.paused) setCursor(index);
   drawTimeline();
 }
@@ -1419,6 +1651,300 @@ $("project").addEventListener("change", async (event) => {
 });
 
 
+/* ============================== tabs ==============================
+   Which pane is open decides nothing about the video -- it is only where the
+   attention is. Opening 版面 turns on layout mode, because arranging things
+   you cannot see would be silly. */
+function showTab(name) {
+  S.tab = name;
+  for (const button of document.querySelectorAll("#tabs button")) {
+    button.classList.toggle("on", button.dataset.tab === name);
+  }
+  for (const pane of document.querySelectorAll(".tab")) {
+    pane.classList.toggle("on", pane.id === "tab" + name[0].toUpperCase() + name.slice(1));
+  }
+  if (name === "layout" && !$("insetView").checked) {
+    $("insetView").checked = true;
+    applyInsetView();
+  }
+  if (name === "layout") renderLayers();
+  if (name === "cuts") renderCuts();
+  renderLegend();
+  drawTimeline();
+  try { localStorage.setItem("tab", name); } catch (error) { /* ignore */ }
+}
+$("tabs").addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (button) showTab(button.dataset.tab);
+});
+
+/* Which order the tabs sit in is a habit, not a decision the program should
+   make, so it is draggable and remembered per browser. */
+let dragTab = null;
+
+$("tabs").addEventListener("dragstart", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  dragTab = button;
+  button.classList.add("dragging");
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("text/plain", button.dataset.tab);
+});
+
+$("tabs").addEventListener("dragover", (event) => {
+  if (!dragTab) return;
+  event.preventDefault();
+  // Work out where the pointer belongs among the tabs, rather than reacting to
+  // whichever one it happens to be over. Reacting stalls: the moment the tab
+  // moves it is under the cursor itself, so the next event has nothing to
+  // compare against and the drag only ever advances one place.
+  const others = [...$("tabs").querySelectorAll("button")].filter((b) => b !== dragTab);
+  const before = others.find((button) => {
+    const box = button.getBoundingClientRect();
+    return event.clientX < box.left + box.width / 2;
+  });
+  const anchor = before || $("tabNote");
+  if (dragTab.nextSibling !== anchor) $("tabs").insertBefore(dragTab, anchor);
+});
+
+$("tabs").addEventListener("drop", (event) => event.preventDefault());
+
+$("tabs").addEventListener("dragend", () => {
+  if (dragTab) dragTab.classList.remove("dragging");
+  dragTab = null;
+  saveTabOrder();
+});
+
+function tabOrder() {
+  return [...$("tabs").querySelectorAll("button")].map((button) => button.dataset.tab);
+}
+
+function saveTabOrder() {
+  try { localStorage.setItem("tabOrder", tabOrder().join(",")); } catch (error) { /* ignore */ }
+}
+
+function loadTabOrder() {
+  let saved = [];
+  try { saved = (localStorage.getItem("tabOrder") || "").split(",").filter(Boolean); }
+  catch (error) { return; }
+  const bar = $("tabs");
+  for (const name of saved) {
+    const button = bar.querySelector(`button[data-tab="${name}"]`);
+    // Anything the saved order does not mention keeps its place at the end,
+    // so a tab added later still appears.
+    if (button) bar.insertBefore(button, $("tabNote"));
+  }
+}
+
+/* ---------- layers ----------
+   The scene draws in list order, so the panel shows it reversed: what is on
+   top of the picture is at the top of the list, the way anyone who has used a
+   drawing program expects. */
+function renderLayers() {
+  if (!SCENE.data) { $("layers").innerHTML = ""; return; }
+  const now = video.currentTime;
+  const rows = SCENE.data.elements.map((element, index) => {
+    const from = element.from;
+    const to = element.to ?? (from === undefined ? undefined : from + SPAN);
+    const out = from !== undefined && (now < from || now > to);
+    const kind = { video: "影片", subtitle: "字幕", image: "圖" }[element.type] || element.type;
+    const name = element.file ? element.file.split("/").pop()
+               : element.srt ? element.srt : element.id;
+    const thumb = element.type === "image"
+      ? `<img class="thumb" src="/media/image/${element.file.split("/").map(encodeURIComponent).join("/")}" alt="">`
+      : `<span class="thumb" style="display:grid;place-items:center;font-size:11px;color:var(--dim)">${kind}</span>`;
+    return `
+      <div class="layer ${index === SCENE.sel ? "on" : ""} ${out ? "out" : ""}" data-index="${index}">
+        ${thumb}
+        <span class="what">
+          <span class="name">${escapeHTML(name)}</span>
+          <span class="when">${from === undefined ? "全片" : `${fmt(from)} – ${fmt(to)}`}</span>
+        </span>
+        <button class="lift" data-lift="up" title="往上一層">▲</button>
+        <button class="lift" data-lift="down" title="往下一層">▼</button>
+      </div>`;
+  });
+  $("layers").innerHTML = rows.reverse().join("");
+}
+
+$("layers").addEventListener("click", (event) => {
+  const row = event.target.closest(".layer");
+  if (!row) return;
+  const index = Number(row.dataset.index);
+  const lift = event.target.dataset.lift;
+  if (!lift) {
+    select(index);
+    // Jump to where it lives, or you would be looking at an empty canvas.
+    const element = SCENE.data.elements[index];
+    if (element.from !== undefined && cutAt(video.currentTime) === null) {
+      const to = element.to ?? element.from + SPAN;
+      if (video.currentTime < element.from || video.currentTime > to) seek(element.from + 0.1);
+    }
+    renderLayers();
+    return;
+  }
+  const elements = SCENE.data.elements;
+  const swap = lift === "up" ? index + 1 : index - 1;
+  if (swap < 0 || swap >= elements.length) return;
+  [elements[index], elements[swap]] = [elements[swap], elements[index]];
+  SCENE.sel = swap;
+  SCENE.nodes = [];
+  markSceneDirty();
+  paintScene();
+  renderLayers();
+});
+
+/* ---------- the cut list ---------- */
+function renderCuts() {
+  const cuts = sceneCuts();
+  $("cutsHead").textContent = cuts.length
+    ? `剪掉 ${cuts.length} 段共 ${cutTotal().toFixed(1)} 秒，成品 ${fmt(outDuration())}`
+    : "還沒有剪接。在時間軸上 Shift + 拖曳選一段，再按「剪掉這段」。";
+  $("cutList").innerHTML = cuts.map(([from, to], index) => `
+    <div class="cutRow" data-index="${index}">
+      <span class="when">${fmt(from)} – ${fmt(to)}</span>
+      <span class="len">−${(to - from).toFixed(1)}s</span>
+      <span style="flex:1"></span>
+      <button class="tiny" data-go="1">跳到接縫</button>
+      <button class="tiny" data-restore="1">還原</button>
+    </div>`).join("");
+}
+
+$("cutList").addEventListener("click", (event) => {
+  const row = event.target.closest(".cutRow");
+  if (!row) return;
+  const index = Number(row.dataset.index);
+  if (event.target.dataset.restore) { restoreCut(index); return; }
+  if (event.target.dataset.go) seek(Math.max(0, sceneCuts()[index][0] - 1.5));
+});
+
+/* ============================== cutting ==============================
+   A cut removes a stretch of the source from the finished video. Nothing is
+   deleted: the ranges live in the scene, so they are reversible and the
+   subtitle numbering never moves. What does move is everything after a cut --
+   src/cuts.py does that arithmetic once, for the burn and the preview alike.
+
+   Here the job is smaller: mark a stretch, draw it, and skip it on playback
+   so what you watch is what the finished video will be. */
+function sceneCuts() {
+  return (SCENE.data && SCENE.data.cuts) ? SCENE.data.cuts : [];
+}
+
+function cutTotal() {
+  return sceneCuts().reduce((sum, [from, to]) => sum + (to - from), 0);
+}
+
+function cutAt(t) {
+  return sceneCuts().find(([from, to]) => t >= from && t < to - 0.05) || null;
+}
+
+/** Source time -> the time it happens in the finished video. */
+function outTime(t) {
+  let removed = 0;
+  for (const [from, to] of sceneCuts()) {
+    if (to <= t) removed += to - from;
+    else if (from < t) removed += t - from;      // inside a cut: sits on the seam
+  }
+  return Math.max(0, t - removed);
+}
+
+/** And back again: the finished video's clock to the source's. */
+function srcTime(out) {
+  let t = out;
+  for (const [from, to] of sceneCuts()) {
+    if (from <= t) t += to - from;               // cuts are sorted, so this walks
+  }
+  return Math.min(S.duration, t);
+}
+
+function outDuration() {
+  return Math.max(0.001, S.duration - cutTotal());
+}
+
+function showCut() {
+  const marked = S.mark;
+  // The button appears with the selection and leaves with it: nothing to cut,
+  // nothing to press.
+  $("cutBar").classList.toggle("on", Boolean(marked));
+  $("cutMark").textContent = marked
+    ? `${fmt(marked[0])} – ${fmt(marked[1])}　${(marked[1] - marked[0]).toFixed(1)}s`
+    : "";
+  $("btnCut").disabled = !marked || !SCENE.data;
+  $("btnUncut").disabled = !sceneCuts().length;
+  const removed = cutTotal();
+  $("cutTotal").textContent = removed
+    ? `原片 ${fmt(S.duration)} − 剪掉 ${removed.toFixed(1)}s = 成品 ${fmt(outDuration())}`
+    : "";
+  $("tabNote").textContent = removed ? `剪掉 ${sceneCuts().length} 段` : "";
+}
+
+/* Cuts are written out as soon as they are made. The button lives in the
+   transport, where 版面模式 may well be off and 儲存版面 out of reach, and a
+   cut that quietly failed to save would be found much later, in the burn. */
+async function keepCuts(what) {
+  drawTimeline();
+  showCut();
+  renderCuts();
+  try {
+    await api("PUT", "/api/scene", SCENE.data);
+    SCENE.dirty = false;
+    showProps();
+    toast(what);
+  } catch (error) {
+    toast(error.message, true);
+  }
+  refreshCaptions();
+}
+
+$("btnCut").onclick = () => {
+  if (!S.mark || !SCENE.data) return;
+  SCENE.data.cuts = [...sceneCuts(), [
+    Math.round(S.mark[0] * 100) / 100, Math.round(S.mark[1] * 100) / 100,
+  ]].sort((a, b) => a[0] - b[0]);
+  const [from, to] = S.mark;
+  S.mark = null;
+  keepCuts(`剪掉 ${fmt(from)} – ${fmt(to)}，成品少 ${cutTotal().toFixed(1)} 秒`);
+};
+
+function restoreCut(index) {
+  const cuts = sceneCuts();
+  if (index < 0 || index >= cuts.length) return;
+  const [from, to] = cuts[index];
+  SCENE.data.cuts = cuts.filter((_, at) => at !== index);
+  keepCuts(`還原 ${fmt(from)} – ${fmt(to)}`);
+}
+
+/** The seam nearest a point on the bar, if the pointer is close to one. */
+function seamNear(clientX) {
+  const rect = tl.getBoundingClientRect();
+  const span = outDuration();
+  let best = -1, distance = 7;                 // pixels
+  sceneCuts().forEach(([from], index) => {
+    const at = rect.left + (outTime(from) / span) * rect.width;
+    if (Math.abs(clientX - at) < distance) { distance = Math.abs(clientX - at); best = index; }
+  });
+  return best;
+}
+
+$("btnUncut").onclick = () => {
+  if (!SCENE.data) return;
+  // Whichever cut the playhead is in, or the last one made.
+  const here = cutAt(video.currentTime);
+  const cuts = sceneCuts();
+  const drop = here ? cuts.indexOf(here) : cuts.length - 1;
+  if (drop < 0) return;
+  const [from, to] = cuts[drop];
+  SCENE.data.cuts = cuts.filter((_, index) => index !== drop);
+  keepCuts(`還原 ${fmt(from)} – ${fmt(to)}`);
+};
+
+/* Playing over a cut jumps it, so the preview runs at the finished video's
+   pace. Seeking into one lands after it rather than fighting the click. */
+video.addEventListener("timeupdate", () => {
+  const here = cutAt(video.currentTime);
+  if (here && !video.seeking) video.currentTime = here[1] + 0.02;
+});
+
 /* ======================= layout mode (scene.json) =======================
    The scene is the single description of the frame: this canvas positions
    every element from it, and src/compose.py burns from the same numbers.
@@ -1452,6 +1978,11 @@ async function loadScene() {
   }
   renderTray();
   applyInsetView();
+  showCut();
+  renderLayers();
+  renderCuts();
+  drawTimeline();
+  syncOverlay();          // the clock counts the finished video once cuts exist
 }
 
 function renderTray() {
@@ -1492,6 +2023,7 @@ function paintScene() {
     });
   }
   scene.elements.forEach((element, index) => place(index));
+  showCut();
   placeCapImage();
   syncCapImage();
   syncSceneTime();
@@ -1629,6 +2161,7 @@ function label(element) {
 function select(index) {
   SCENE.sel = index === null ? null : index;
   drawTimeline();
+  renderLayers();
   SCENE.nodes.forEach((node, i) => node.classList.toggle("sel", i === index));
   showProps();
 }
@@ -1766,6 +2299,7 @@ function markSceneDirty() {
   syncSceneTime();
   showProps();
   drawTimeline();
+  renderLayers();
 }
 
 function commitTime(field, key) {
@@ -1943,7 +2477,7 @@ $("json").onclick = (event) => {
 // means you are done with that element.
 document.addEventListener("pointerdown", (event) => {
   if (SCENE.sel === null || !document.body.classList.contains("layout")) return;
-  if (event.target.closest("#stage, #layoutBar, #json")) return;
+  if (event.target.closest("#stage, #tabLayout, #json")) return;
   select(null);
 });
 
@@ -1969,6 +2503,11 @@ new ResizeObserver(() => { if (SCENE.data) paintScene(); }).observe($("left"));
     applyState(state);
     await loadProjects(state.project);
     await loadScene();
+    loadTabOrder();
+    let opening = "subs";
+    try { opening = localStorage.getItem("tab") || "subs"; } catch (error) { /* ignore */ }
+    if (new URLSearchParams(location.search).has("layout")) opening = "layout";
+    showTab(opening);
     if (state.hasReviewedSrt) toast(`接續上次的校對進度`);
   } catch (error) {
     toast("載入失敗：" + error.message, true);
