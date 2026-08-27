@@ -5,11 +5,11 @@ import json
 import os
 from pathlib import Path
 
+from src import caption, scene
 from src.audit import inspect, report, write as write_audit
 from src.media import duration, extract_audio, prepare_video
 from src.claude import build as build_client
-from src.layout import BADGE_EVERY, badge_schedule, render_inset
-from src.render import render
+from src.compose import compose
 from src.transcribe import (
     GAP_MIN,
     review_hallucinations,
@@ -96,7 +96,7 @@ def parse_args() -> argparse.Namespace:
         help="Directory of square images to show in the corner of an inset "
              "layout, one at a time, cycling through them.",
     )
-    parser.add_argument("--badge-every", type=float, default=BADGE_EVERY,
+    parser.add_argument("--badge-every", type=float, default=60.0,
                         help="Seconds each corner image stays before the next")
     parser.add_argument(
         "--render", action="store_true",
@@ -291,14 +291,30 @@ def main() -> None:
 
     if args.render:
         print(f"[6/7] Rendering subtitles and cards（版面：{args.layout}）")
-        if args.layout == "inset":
-            images = sorted(Path(args.badges).glob("*.png")) if args.badges else []
-            marks = badge_schedule(images, duration(video), args.badge_every)
-            if marks:
+        # One frame, one renderer. The layout is a scene either way, so the
+        # editor can open this run and see exactly what was burned.
+        stage = (scene.default_scene(burn_srt.name) if args.layout == "inset"
+                 else scene.full_scene(burn_srt.name))
+        if args.badges:
+            images = sorted(Path(args.badges).glob("*.png"))
+            scene.add_badges(stage, images, duration(video), args.badge_every)
+            if images:
                 print(f"      角落圖示 {len(images)} 張，每 {args.badge_every:.0f} 秒輪替")
-            render_inset(video, burn_srt, visual_plan, output / "final.mp4", badges=marks)
-        else:
-            render(video, burn_srt, visual_plan, output / "final.mp4")
+        scene.add_cards(stage, visual_plan)
+        scene.save(output / "scene.json", stage)
+
+        # Captions are drawn once and overlaid as pictures, which is what lets
+        # the editor show the real thing rather than an approximation of it.
+        element = scene.one(stage, "subtitle")
+        listing = None
+        if element:
+            built = caption.build(caption.read_srt(burn_srt), element,
+                                  tuple(stage["canvas"]), output / "captions")
+            stage["caption_band"] = built["band"]
+            listing = caption.playlist(built["captions"], duration(video),
+                                       built["band"], output / "captions")
+        compose(video, stage, output / "final.mp4", srt_dir=output,
+                image_root=Path.cwd(), captions=listing)
     else:
         print("[6/7] 跳過燒錄（加 --render 可直接出片）")
         print(f"      字幕與圖卡已就緒，在編輯器確認後再燒：")

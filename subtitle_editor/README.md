@@ -133,7 +133,8 @@ Whisper 完全沒辨識到、時間軸上根本沒有那一段時，有三種方
 ## 重新燒錄
 
 按「重新燒錄」會用 **原片 + 目前字幕 + 既有圖卡** 產生 `output/final_reviewed.mp4`。
-呼叫的是 pipeline 現成的 `src/render.py`，所以字幕樣式、圖卡疊法、編碼參數與 `final.mp4` 完全一致。
+呼叫的是 pipeline 現成的 `src/compose.py`，讀同一份 `scene.json`、貼同一批字幕圖，
+所以版面、字幕樣式、圖卡疊法、編碼參數與 pipeline 自己燒的 `final.mp4` 完全一致。
 
 需要幾分鐘。`final.mp4` 不會被覆蓋。
 

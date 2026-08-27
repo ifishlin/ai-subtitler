@@ -11,8 +11,13 @@ from pathlib import Path
 from typing import Any
 
 from . import scene as scene_module
-from .render import _filter_path
 from .utils import run
+
+
+def _filter_path(path: Path) -> str:
+    """A path as an ffmpeg filter argument: backslashes, quotes and the colon
+    that would otherwise start the next option all have to be escaped."""
+    return str(path.resolve()).replace("\\", "\\\\").replace("'", "\\'").replace(":", "\\:")
 
 
 def _hex_to_ffmpeg(value: str) -> str:
@@ -26,13 +31,17 @@ def compose(
     srt_dir: Path | None = None,
     image_root: Path | None = None,
     captions: Path | None = None,
+    progress: Path | None = None,
 ) -> Path:
     """Render `video` into `scene` and burn the result to `output`.
 
     With `captions` -- a concat list from src/caption.py -- the subtitles are
     overlaid as the pictures the editor previewed, rather than typeset again by
     libass. That is the only way the preview and the burn can be the same:
-    otherwise two typesetters lay out the same string and disagree."""
+    otherwise two typesetters lay out the same string and disagree.
+
+    With `progress`, ffmpeg writes its position to that file as it goes, which
+    is how a burn that takes minutes can say how far it has got."""
     canvas = tuple(scene.get("canvas", scene_module.CANVAS))
     background = _hex_to_ffmpeg(scene.get("background", scene_module.BACKGROUND))
     elements = scene.get("elements", [])
@@ -110,6 +119,8 @@ def compose(
         previous = current
         step += 1
 
+    if progress:
+        command.extend(["-progress", str(progress), "-nostats"])
     command.extend([
         "-filter_complex", ";".join(filters),
         "-map", f"[{previous}]", "-map", "0:a:0",

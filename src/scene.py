@@ -28,6 +28,75 @@ SCRIPT_X = CANVAS[0] / 384
 SCRIPT_Y = CANVAS[1] / 288
 
 
+def full_scene(srt_name: str = "subtitles_bilingual.srt") -> dict[str, Any]:
+    """Captions over the whole picture, no field beside it. The layout the
+    pipeline used before there was anything to put in the margin; kept as a
+    scene so there is one renderer rather than one per layout."""
+    return {
+        "canvas": list(CANVAS),
+        "background": "#000000",
+        "elements": [
+            {"id": "video", "type": "video", "box": [0, 0, *CANVAS]},
+            {
+                "id": "subtitle",
+                "type": "subtitle",
+                "srt": srt_name,
+                "box": [0, CANVAS[1] - 250, CANVAS[0], CANVAS[1] - 60],
+                "font": "PingFang TC",
+                "size": 20,
+                "colour": "#FFFFFF",
+                "outline": "#000000",
+                "outline_width": 3,
+            },
+        ],
+    }
+
+
+def add_badges(
+    scene: dict[str, Any],
+    images: list[Path],
+    duration: float,
+    every: float = 60.0,
+) -> dict[str, Any]:
+    """Show the images in the lower right, one at a time, cycling. A channel
+    with four marks gets variety without anyone scheduling anything."""
+    if not images or duration <= 0:
+        return scene
+    canvas = tuple(scene.get("canvas", CANVAS))
+    size, margin = 280, 56
+    box = [canvas[0] - margin - size, canvas[1] - margin - size,
+           canvas[0] - margin, canvas[1] - margin]
+    index, start = 0, 0.0
+    while start < duration:
+        scene["elements"].append({
+            "id": f"badge{index + 1}",
+            "type": "image",
+            "file": str(images[index % len(images)]),
+            "box": list(box),
+            "from": round(start, 2),
+            "to": round(min(start + every, duration), 2),
+        })
+        index += 1
+        start += every
+    return scene
+
+
+def add_cards(scene: dict[str, Any], visuals: list[dict[str, Any]]) -> dict[str, Any]:
+    """Information cards the run planned. They are drawn full-frame and take
+    the screen for their few seconds, which is what they were made to do."""
+    canvas = list(scene.get("canvas", CANVAS))
+    for index, card in enumerate(visuals, start=1):
+        scene["elements"].append({
+            "id": f"card{index}",
+            "type": "image",
+            "file": str(card["file"]),
+            "box": [0, 0, *canvas],
+            "from": float(card["start"]),
+            "to": float(card["end"]),
+        })
+    return scene
+
+
 def default_scene(
     srt_name: str = "subtitles_bilingual.srt",
     icon: str | None = None,

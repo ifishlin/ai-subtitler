@@ -368,15 +368,50 @@ def relisten(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 # ---------------------------------------------------------------- burn
 
 def _burn_worker(segments: list[dict[str, Any]], variant: str) -> None:
-    from src.render import render
+    """Burn the whole video the way the editor has been showing it.
+
+    Everything the run has produced lands here: the corrected subtitles, drawn
+    as the same pictures the canvas previews, the layout from scene.json, and
+    any cards the pipeline planned. Before this, a full burn only knew about
+    subtitles -- the layout you arranged simply was not in the finished file."""
+    from src import caption as caption_module
+    from src import compose as compose_module
+    from src import scene as scene_module
+
     paths = config["paths"]
     try:
         written = review.save_state(paths["state"], paths["reviewed_srt"], segments)["paths"]
-        # render() picks its subtitle styling from the filename, so a bilingual
-        # burn has to be handed the bilingual file rather than a copy.
         chosen = written.get(variant) or written["zh"]
-        render(config["source"], chosen, config["visuals"], paths["reviewed_mp4"],
-               progress=paths["burn_progress"])
+
+        scene = get_scene()
+        element = scene_module.one(scene, "subtitle")
+        listing = None
+        if element:
+            # The bilingual switch decides which of the saved files is drawn.
+            element["srt"] = chosen.name
+            built = caption_module.build(
+                caption_module.read_srt(chosen), element,
+                tuple(scene.get("canvas", scene_module.CANVAS)), paths["captions"],
+            )
+            scene["caption_band"] = built["band"]
+            listing = caption_module.playlist(
+                built["captions"], config["duration"], built["band"], paths["captions"],
+            )
+
+        # Cards the pipeline planned are full-frame and take the screen over
+        # for their few seconds, which is what they were drawn to do.
+        for index, card in enumerate(config["visuals"], start=1):
+            scene["elements"].append({
+                "id": f"card{index}", "type": "image", "file": card["file"],
+                "box": [0, 0, *scene.get("canvas", scene_module.CANVAS)],
+                "from": float(card["start"]), "to": float(card["end"]),
+            })
+
+        compose_module.compose(
+            config["source"], scene, paths["reviewed_mp4"],
+            srt_dir=paths["output"], image_root=ROOT,
+            captions=listing, progress=paths["burn_progress"],
+        )
         with _burn_lock:
             _burn.update(state="done",
                          message=f'完成：{paths["output"].name}/{paths["reviewed_mp4"].name}',
@@ -488,7 +523,7 @@ def burn(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     with _burn_lock:
         if _burn["state"] == "running":
             return dict(_burn)
-        _burn.update(state="running", message="重新燒錄中（原片 + 校對字幕 + 既有圖卡）",
+        _burn.update(state="running", message="重新燒錄中（版面 + 校對字幕 + 圖卡）",
                      output=None, percent=0, seconds=0.0, started=time.time())
         # A stale progress file would report the previous burn's position.
         progress = config["paths"]["burn_progress"]

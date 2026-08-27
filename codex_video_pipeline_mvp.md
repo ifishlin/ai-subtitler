@@ -101,7 +101,9 @@ project/
 │   ├── transcribe.py
 │   ├── translate.py
 │   ├── visuals.py
-│   ├── render.py
+│   ├── compose.py        # 唯一的繪製程式：讀 scene.json 燒成影片
+│   ├── scene.py          # 版面即資料
+│   ├── caption.py        # 字幕畫成圖
 │   └── utils.py
 ├── work/
 └── output/
