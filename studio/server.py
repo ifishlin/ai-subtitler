@@ -248,6 +248,14 @@ def source_play(path: str) -> FileResponse:
                         headers={"Cache-Control": "no-store"})
 
 
+def _variant(srt: Path, kind: str) -> Path:
+    """The same subtitles in another pairing. A run writes subtitles_zh.srt and
+    subtitles_bilingual.srt side by side; a source with only the one it named
+    keeps it."""
+    sibling = srt.with_name(f"subtitles_{kind}.srt")
+    return sibling if sibling.is_file() else srt
+
+
 def _assemble_worker(pieces: list[dict[str, Any]], name: str) -> None:
     from core import assemble as assemble_module
     try:
@@ -260,11 +268,15 @@ def _assemble_worker(pieces: list[dict[str, Any]], name: str) -> None:
              for piece in pieces],
             video, progress=PREVIEWS / f"{name}.progress",
         )
-        cues = assemble_module.merge_cues(
-            [{**piece, "srt": (ROOT / piece["srt"]) if piece.get("srt") else None}
-             for piece in pieces])
-        assemble_module.write_srt(cues, output / "subtitles_zh.srt")
-        assemble_module.write_srt(cues, output / "subtitles_bilingual.srt")
+        # A run keeps its subtitles in two pairings, and the editor expects both
+        # here too. They are merged separately: writing one file's cues under
+        # both names left the Chinese-only track holding bilingual captions.
+        for kind in ("zh", "bilingual"):
+            cues = assemble_module.merge_cues(
+                [{**piece, "srt": _variant(ROOT / piece["srt"], kind)
+                           if piece.get("srt") else None}
+                 for piece in pieces])
+            assemble_module.write_srt(cues, output / f"subtitles_{kind}.srt")
         # The pieces are kept so the assembly can be opened and adjusted rather
         # than rebuilt from memory.
         (output / "assembly.json").write_text(
