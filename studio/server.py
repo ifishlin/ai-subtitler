@@ -101,7 +101,9 @@ def list_projects() -> list[dict[str, Any]]:
             "name": directory.name,
             "lines": srt.read_text(encoding="utf-8").count("-->"),
             "source": Path(details.get("source", "")).name,
-            "fillGaps": bool(details.get("fill_gaps")),
+            # How many lines the second listening pass actually recovered.
+            # Whether it ran is not worth saying: it runs every time.
+            "recovered": int(details.get("recovered_segments") or 0),
             "reviewed": (directory / "subtitles_zh.reviewed.srt").is_file(),
             "modified": int(srt.stat().st_mtime),
         })

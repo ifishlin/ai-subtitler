@@ -30,3 +30,6 @@ work/broll_*
 
 # Cut-out icons are produced from img/ by src/cutout.py
 img_cut/
+
+# Speech windows, derived from the audio beside them
+work/.*.speech.json

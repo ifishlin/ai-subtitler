@@ -385,11 +385,18 @@ main{display:flex;flex:1;min-height:0}
 #help td{padding:4px 12px 4px 0;vertical-align:top}
 #help h2{margin:0 0 12px;font-size:15px}
 #help h3{margin:16px 0 6px;font-size:12px;color:var(--faint);font-weight:600}
-#audit{position:fixed;right:14px;top:52px;width:26em;max-height:70vh;overflow:auto;
+#audit{position:fixed;right:14px;top:52px;width:26em;height:70vh;overflow:auto;
+  min-width:18em;min-height:8em;resize:both;
   background:var(--panel);border:1px solid var(--line);border-radius:10px;
   padding:12px 14px;box-shadow:0 14px 40px #000a;display:none;z-index:35}
 #audit.on{display:block}
-#audit h3{margin:0 0 8px;font-size:13px;display:flex;align-items:center;gap:8px}
+/* Findings are read against the video and the captions, so the panel has to
+   be movable off whatever it is covering. */
+#audit h3{margin:0 0 8px;font-size:13px;display:flex;align-items:center;gap:8px;
+  cursor:move;user-select:none}
+#audit h3 button{order:9;margin-left:auto;border:0;background:transparent;
+  color:var(--faint);font-size:17px;line-height:1;padding:0 3px;cursor:pointer}
+#audit h3 button:hover{color:var(--ink)}
 #audit .verdict{font-size:11px;padding:2px 8px;border-radius:99px}
 #audit .verdict.pass{background:#1d3329;color:var(--ok);border:1px solid #2c5a45}
 #audit .verdict.review{background:#3a2418;color:var(--warn);border:1px solid #5b4a22}
@@ -1631,6 +1638,7 @@ document.addEventListener("keydown", (event) => {
     $("help").classList.remove("on");
     $("json").classList.remove("on");
     $("card").classList.remove("on");
+    $("audit").classList.remove("on");
     if ($("viewer").classList.contains("on")) closeViewer();
     return;
   }
@@ -1669,7 +1677,19 @@ async function runAudit() {
   const panel = $("audit");
   if (panel.classList.contains("on")) { panel.classList.remove("on"); return; }
   panel.classList.add("on");
-  panel.innerHTML = `<div class="meta">檢查中…</div>`;
+  let where = null;
+  try { where = JSON.parse(localStorage.getItem("auditPanel") || "null"); }
+  catch (error) { /* ignore */ }
+  if (where) {
+    // Clamped, in case the window is smaller than it was when this was saved.
+    panel.style.right = "auto";
+    panel.style.left = `${Math.min(where.left, window.innerWidth - 120)}px`;
+    panel.style.top = `${Math.min(where.top, window.innerHeight - 50)}px`;
+    panel.style.width = `${where.width}px`;
+    panel.style.height = `${where.height}px`;
+  }
+  panel.innerHTML = `<h3>品質檢查<button data-close="1" title="關閉（Esc）">×</button></h3>` +
+    `<div class="meta">檢查中…</div>`;
   try {
     const r = await api("GET", "/api/audit");
     const items = r.findings.map((f) => `
@@ -1680,17 +1700,56 @@ async function runAudit() {
       </div>`).join("");
     panel.innerHTML = `
       <h3>品質檢查
+          <button data-close="1" title="關閉（Esc）">×</button>
         <span class="verdict ${r.verdict}">${r.verdict === "pass" ? "可發布" : "需要檢查"}</span>
       </h3>
       <div class="meta">分數 ${r.score}　${r.segments} 段　字幕覆蓋 ${Math.round(r.coverage * 100)}%</div>
       ${items || `<div class="none">沒有發現問題</div>`}`;
   } catch (error) {
-    panel.innerHTML = `<div class="meta" style="color:var(--danger)">${error.message}</div>`;
+    panel.innerHTML = `<h3>品質檢查<button data-close="1" title="關閉（Esc）">×</button></h3>` +
+      `<div class="meta" style="color:var(--danger)">${error.message}</div>`;
   }
 }
 
 $("btnAudit").onclick = runAudit;
+/* The panel's contents are rebuilt on every run, so the drag is bound to the
+   panel and finds its own header, rather than to a header that gets replaced. */
+$("audit").addEventListener("pointerdown", (event) => {
+  // Capturing the pointer for a drag retargets the click that follows to the
+  // panel, so a button pressed in the header never sees its own click.
+  if (!event.target.closest("h3") || event.target.closest("button")) return;
+  const panel = $("audit");
+  const box = panel.getBoundingClientRect();
+  const grab = { x: event.clientX - box.left, y: event.clientY - box.top };
+  panel.setPointerCapture(event.pointerId);
+  panel.style.right = "auto";
+
+  const move = (at) => {
+    panel.style.left =
+      `${Math.min(Math.max(0, at.clientX - grab.x), window.innerWidth - 120)}px`;
+    panel.style.top =
+      `${Math.min(Math.max(0, at.clientY - grab.y), window.innerHeight - 50)}px`;
+  };
+  const drop = () => {
+    panel.removeEventListener("pointermove", move);
+    panel.removeEventListener("pointerup", drop);
+    const now = panel.getBoundingClientRect();
+    try {
+      localStorage.setItem("auditPanel", JSON.stringify({
+        left: Math.round(now.left), top: Math.round(now.top),
+        width: Math.round(now.width), height: Math.round(now.height),
+      }));
+    } catch (error) { /* ignore */ }
+  };
+  panel.addEventListener("pointermove", move);
+  panel.addEventListener("pointerup", drop);
+});
+
 $("audit").addEventListener("click", (event) => {
+  if (event.target.closest("[data-close]")) {
+    $("audit").classList.remove("on");
+    return;
+  }
   const at = event.target.closest("[data-goto]")?.dataset.goto;
   if (at === undefined) return;
   seek(+at);
@@ -1749,7 +1808,7 @@ async function loadProjects(active) {
   const select = $("project");
   select.innerHTML = projects.map((p) => {
     const bits = [`${p.lines} 句`];
-    if (p.fillGaps) bits.push("補過空隙");
+    if (p.recovered) bits.push(`補回 ${p.recovered} 句`);
     if (p.reviewed) bits.push("校對中");
     return `<option value="${p.name}">${p.name}　${bits.join(" · ")}</option>`;
   }).join("");

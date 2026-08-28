@@ -69,6 +69,17 @@ def speech_windows(source: Path) -> list[tuple[float, float]] | None:
         from faster_whisper.vad import VadOptions, get_speech_timestamps
     except ImportError:
         return None
+
+    # Where someone speaks does not change, and finding out costs four seconds
+    # of decoding and model time -- long enough that the editor's audit button
+    # felt broken. The answer is kept beside the video it describes.
+    cached = source.parent / f".{source.stem}.speech.json"
+    if cached.is_file() and cached.stat().st_mtime >= source.stat().st_mtime:
+        try:
+            return [(float(a), float(b)) for a, b in json.loads(
+                cached.read_text(encoding="utf-8"))]
+        except (ValueError, TypeError):
+            pass
     result = subprocess.run(
         ["ffmpeg", "-v", "error", "-i", str(source), "-vn",
          "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
@@ -89,7 +100,12 @@ def speech_windows(source: Path) -> list[tuple[float, float]] | None:
         )
     except Exception:                                             # noqa: BLE001
         return None
-    return [(span["start"] / 16000, span["end"] / 16000) for span in spans]
+    windows = [(span["start"] / 16000, span["end"] / 16000) for span in spans]
+    try:
+        cached.write_text(json.dumps(windows), encoding="utf-8")
+    except OSError:
+        pass                              # a read-only directory is not a failure
+    return windows
 
 
 def _spoken_within(windows: list[tuple[float, float]], start: float, end: float) -> float:
@@ -166,10 +182,12 @@ def inspect(
 
     # A gap only matters where something was being said.
     total = duration or (ordered[-1]["end"] if ordered else 0.0)
-    # Ask what was spoken before falling back to what was loud.
+    # Ask what was spoken before falling back to what was loud -- and when the
+    # answer comes back, do not also decode the whole track to measure volume
+    # nobody is going to consult.
     windows = speech_windows(source) if source else None
     peaks, measured = ([], 0.0)
-    if source and source.is_file():
+    if windows is None and source and source.is_file():
         peaks, measured = _peaks(source)
         total = duration or measured
     cursor = 0.0
