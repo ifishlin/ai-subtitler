@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>字幕校對</title>
+<title>AI-Desk　AI 導演台</title>
 <style>
 :root{
   --bg:#14161a; --panel:#1c1f25; --panel2:#22262e; --line:#2e333d;
@@ -446,14 +446,14 @@ main{display:flex;flex:1;min-height:0}
 <body>
 <div id="app">
   <header>
-    <h1>字幕校對</h1>
+    <h1>AI-Desk</h1>
     <select id="project" title="選擇要校對哪一次 pipeline 的輸出"></select>
     <span class="src" id="srcName">…</span>
     <div class="spacer"></div>
     <button id="btnBurn">重新燒錄</button>
     <div id="burnBar"><i></i><span></span></div>
     <select id="finished" title="播放已燒錄的成品"></select>
-    <button id="btnHelp">?</button>
+    <button id="btnHelp" title="使用指南與快速鍵（?）">說明</button>
   </header>
 
   <main>
@@ -477,7 +477,8 @@ main{display:flex;flex:1;min-height:0}
           <b id="cutMark"></b>
           <button id="btnCut" class="tiny" disabled>剪掉這段</button>
         </span>
-        <span class="hint">Shift + 拖曳時間軸可選一段 · <kbd>?</kbd> 快速鍵</span>
+        <span class="hint">Shift + 拖曳時間軸可選一段 ·
+          <button id="btnHelp2" class="tiny">說明</button></span>
       </div>
       <div id="tlWrap">
         <canvas id="tl"></canvas>
@@ -1651,6 +1652,7 @@ $("btnPlay").onclick = () => (video.paused ? video.play() : video.pause());
 $("btnBack").onclick = () => seek(video.currentTime - 2);
 $("btnFwd").onclick = () => seek(video.currentTime + 2);
 $("btnHelp").onclick = () => $("help").classList.add("on");
+$("btnHelp2").onclick = () => $("help").classList.add("on");
 $("btnHelpClose").onclick = () => $("help").classList.remove("on");
 document.querySelector(".guideTabs").addEventListener("click", (event) => {
   const button = event.target.closest("button");
@@ -3058,12 +3060,22 @@ function select(index) {
 
 $("stage").addEventListener("pointerdown", (event) => {
   if (!$("stage").classList.contains("scene")) return;
-  const node = event.target.closest(".node");
+
+  // Which element you meant, when several frames overlap: the one that is
+  // actually on screen at this moment. An element whose time has not come
+  // keeps its frame so it can still be reached, and that frame was catching
+  // clicks aimed at the card visible underneath it.
+  const grip = event.target.closest(".grip");
+  const stack = grip ? [grip.closest(".node")]
+    : document.elementsFromPoint(event.clientX, event.clientY)
+        .map((item) => item.closest && item.closest(".node"))
+        .filter((item) => item && item.parentElement === $("stage"));
+  const node = stack.find((item) => !item.classList.contains("out")) || stack[0];
   // Empty field: nothing is being worked on any more.
   if (!node) { select(null); return; }
   const index = Number(node.dataset.index);
   select(index);
-  const resizing = event.target.classList.contains("grip");
+  const resizing = Boolean(grip);
   const scene = SCENE.data;
   const start = sceneBox(scene.elements[index]);
   const [cw, ch] = scene.canvas;
