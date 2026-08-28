@@ -2507,7 +2507,8 @@ async function saveCard(render) {
   }
   const button = render ? $("cardSave") : $("cardStore");
   button.disabled = true;
-  $("cardNote").textContent = render ? "截圖中…" : "存檔中…";
+  $("cardNote").textContent = render
+    ? ($("cardMotion").checked ? "截圖並產生動畫中…" : "截圖中…") : "存檔中…";
   try {
     const made = await api("POST", "/api/card",
                            { name, html: $("cardHtml").value, render });
@@ -2518,7 +2519,9 @@ async function saveCard(render) {
     checkName();
     if (render) {
       $("cardNote").textContent =
-        `${made.path}　${made.width}×${made.height}，已加進素材匣`;
+        `${made.path}　${made.width}×${made.height}`
+        + (made.motion ? `，動畫 ${made.motion.seconds} 秒` : "")
+        + "，已加進素材匣";
       await loadScene();                     // the tray reads the images again
       toast(`${made.path} 做好了，在素材匣裡`);
     } else {
@@ -2727,7 +2730,9 @@ async function loadScene() {
 function renderTray() {
   $("tray").innerHTML = SCENE.images.map((image) => `
     <figure draggable="true" data-path="${escapeHTML(image.path)}"
-            data-w="${image.width}" data-h="${image.height}" title="拖到畫面上">
+            data-w="${image.width}" data-h="${image.height}"
+            ${image.motion ? `data-motion="${escapeHTML(image.motion)}"` : ""}
+            title="${image.motion ? "有進場動畫，" : ""}拖到畫面上">
       <img src="/media/image/${image.path.split("/").map(encodeURIComponent).join("/")}" alt="">
       <figcaption>${escapeHTML(image.name)}</figcaption>
     </figure>`).join("");
@@ -2972,6 +2977,7 @@ $("tray").addEventListener("dragstart", (event) => {
   event.dataTransfer.setData("text/plain", JSON.stringify({
     path: figure.dataset.path,
     width: Number(figure.dataset.w), height: Number(figure.dataset.h),
+    motion: figure.dataset.motion || null,
   }));
   event.dataTransfer.effectAllowed = "copy";
 });
@@ -2999,6 +3005,7 @@ $("stage").addEventListener("drop", (event) => {
   const start = Math.round(video.currentTime * 10) / 10;
   scene.elements.push({
     id: `img${Date.now().toString(36)}`, type: "image", file: payload.path,
+    ...(payload.motion ? { motion: payload.motion, motion_seconds: 0.9 } : {}),
     box: clampBox([x - width / 2, y - height / 2, x + width / 2, y + height / 2], cw, ch),
     from: start, to: Math.round((start + SPAN) * 10) / 10,
   });

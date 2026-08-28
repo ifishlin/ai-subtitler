@@ -81,13 +81,24 @@ def main() -> int:
     parser.add_argument("--out", default=str(IMAGES), help="輸出目錄，預設 img/")
     parser.add_argument("--width", type=int, default=1400)
     parser.add_argument("--height", type=int, default=1200)
+    parser.add_argument("--motion", action="store_true",
+                        help="Also write <name>.motion.mov: the card's entrance")
+    parser.add_argument("--motion-seconds", type=float, default=0.9)
     args = parser.parse_args()
 
     page = Path(args.page)
     if not page.is_file():
         raise SystemExit(f"找不到 {page}")
-    name = (args.name or page.stem) + ".png"
-    capture(page, Path(args.out) / name, args.width, args.height)
+    stem = args.name or page.stem
+    made = capture(page, Path(args.out) / f"{stem}.png", args.width, args.height)
+    if args.motion:
+        from core import motion
+        with Image.open(made) as card:
+            report = motion.render(page.read_text(encoding="utf-8"), card,
+                                   made.with_suffix(".motion.mov"),
+                                   seconds=args.motion_seconds)
+        print(f"{made.with_suffix('.motion.mov')}　{report['frames']} 格 "
+              f"{report['seconds']} 秒")
     return 0
 
 

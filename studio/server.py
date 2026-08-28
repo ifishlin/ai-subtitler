@@ -219,11 +219,15 @@ def _images() -> list[dict[str, Any]]:
             seen.add(image.name)
             with Image.open(image) as opened:
                 width, height = opened.size
+            # A card made with an entrance has a clip beside it. Offering it
+            # with the picture is what lets dropping one carry its motion.
+            clip = image.with_suffix(".motion.mov")
             found.append({
                 "path": f"{folder}/{image.name}",
                 "name": image.stem[:40],
                 "width": width,
                 "height": height,
+                "motion": f"{folder}/{clip.name}" if clip.is_file() else None,
             })
     return found
 
@@ -285,8 +289,17 @@ def make_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         raise HTTPException(500, str(error)) from error
     with Image.open(target) as made:
         size = made.size
+
+    made_motion = None
+    if payload.get("motion"):
+        from core import motion as motion_module
+        with Image.open(target) as card:
+            report = motion_module.render(html, card, target.with_suffix(".motion.mov"))
+        made_motion = {"path": f"img/{target.stem}.motion.mov",
+                       "seconds": report["seconds"]}
+
     return {"saved": f"cards/{page.name}", "path": f"img/{target.name}",
-            "width": size[0], "height": size[1]}
+            "width": size[0], "height": size[1], "motion": made_motion}
 
 
 @app.get("/media/image/{path:path}")

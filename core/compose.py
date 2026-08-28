@@ -59,6 +59,7 @@ def compose(
     # stream index can be derived from position rather than tracked separately.
     command = ["ffmpeg", "-y", "-i", str(video)]
     image_inputs: dict[str, int] = {}
+    motion_inputs: dict[str, int] = {}
     index = 1
     caption_stream = None
     caption_band = list(scene.get("caption_band") or [0, 0, canvas[0], canvas[1]])
@@ -77,6 +78,19 @@ def compose(
         command.extend(["-loop", "1", "-i", str(path)])
         image_inputs[element["id"]] = index
         index += 1
+
+        # An entrance, if one was made for this picture. It is a short clip
+        # with an alpha channel that ends on exactly the still, so the two are
+        # laid one after the other and the join is invisible.
+        entrance = element.get("motion")
+        if entrance:
+            clip = Path(entrance)
+            if not clip.is_absolute():
+                clip = image_root / clip
+            if clip.is_file():
+                command.extend(["-i", str(clip)])
+                motion_inputs[element["id"]] = index
+                index += 1
 
     filters = [f"color=c={background}:s={canvas[0]}x{canvas[1]}:r=30[bg]"]
     previous = "bg"
@@ -98,9 +112,33 @@ def compose(
             left, top = element["box"][0], element["box"][1]
             stream = image_inputs[element["id"]]
             window = scene_module.timed(element)
-            gate = f":enable='between(t,{window[0]},{window[1]})'" if window else ""
-            filters.append(f"[{stream}:v]format=rgba,scale={width}:{height}[img{step}]")
-            filters.append(f"[{previous}][img{step}]overlay={left}:{top}{gate}[{current}]")
+            motion = motion_inputs.get(element["id"])
+            span = float(element.get("motion_seconds") or 0.0) if motion else 0.0
+
+            if motion and window:
+                # The clip plays over the element's opening, and the still
+                # covers the rest. Splitting it this way keeps the still doing
+                # the work it already does -- a clip long enough to cover the
+                # whole appearance would be almost entirely identical frames.
+                start, end = window
+                turn = min(start + span, end)
+                filters.append(
+                    f"[{motion}:v]format=rgba,scale={width}:{height},"
+                    f"setpts=PTS-STARTPTS+{start}/TB[mov{step}]"
+                )
+                filters.append(
+                    f"[{previous}][mov{step}]overlay={left}:{top}"
+                    f":enable='between(t,{start},{turn})'[mv{step}]"
+                )
+                filters.append(f"[{stream}:v]format=rgba,scale={width}:{height}[img{step}]")
+                filters.append(
+                    f"[mv{step}][img{step}]overlay={left}:{top}"
+                    f":enable='between(t,{turn},{end})'[{current}]"
+                )
+            else:
+                gate = f":enable='between(t,{window[0]},{window[1]})'" if window else ""
+                filters.append(f"[{stream}:v]format=rgba,scale={width}:{height}[img{step}]")
+                filters.append(f"[{previous}][img{step}]overlay={left}:{top}{gate}[{current}]")
 
         elif kind == "subtitle":
             if caption_stream is not None:
