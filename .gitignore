@@ -33,3 +33,6 @@ img_cut/
 
 # Speech windows, derived from the audio beside them
 work/.*.speech.json
+
+# Stock footage: downloaded, credited, regenerable
+clips/

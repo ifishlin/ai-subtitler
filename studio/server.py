@@ -47,6 +47,7 @@ STATIC = Path(__file__).resolve().parent / "static"
 # the browser can switch runs without restarting the server. Media derivatives
 # are keyed by video, so switching back to a run costs nothing the second time.
 IMAGE_DIRS = ("img_cut", "img")     # searched in order; cut-outs preferred
+CLIP_DIR = "clips"                  # footage to lay over the frame
 CARDS_TRIMMED = 2                   # scenes carrying cards cropped to their art
 
 
@@ -232,9 +233,39 @@ def _images() -> list[dict[str, Any]]:
     return found
 
 
+def _clips() -> list[dict[str, Any]]:
+    """Footage available to place: stock, inserts, anything moving."""
+    directory = ROOT / CLIP_DIR
+    if not directory.is_dir():
+        return []
+    found = []
+    for clip in sorted(directory.glob("*.mp4")):
+        credit = clip.with_suffix(".credit.json")
+        details = json.loads(credit.read_text(encoding="utf-8")) if credit.is_file() else {}
+        found.append({
+            "path": f"{CLIP_DIR}/{clip.name}",
+            "name": clip.stem[:40],
+            "kind": "clip",
+            "seconds": float(details.get("duration") or 0.0),
+            "width": (details.get("size") or [1920, 1080])[0],
+            "height": (details.get("size") or [1920, 1080])[1],
+            "credit": details.get("author"),
+        })
+    return found
+
+
 @app.get("/api/images")
 def images() -> dict[str, Any]:
-    return {"images": _images()}
+    return {"images": _images(), "clips": _clips()}
+
+
+@app.get("/media/clip/{name}")
+def clip_file(name: str) -> FileResponse:
+    """Serve one placeable clip, matched against the listing rather than joined."""
+    wanted = f"{CLIP_DIR}/{name}"
+    if wanted not in {item["path"] for item in _clips()}:
+        raise HTTPException(404, f"找不到 {wanted}")
+    return FileResponse(ROOT / CLIP_DIR / name, media_type="video/mp4")
 
 
 CARD_DIR = ROOT / "cards"          # the HTML each made picture was made from
@@ -307,7 +338,7 @@ def image_file(path: str) -> FileResponse:
     """Serve a picture the canvas needs: one from the tray, or one the scene
     already refers to. Requests are matched against those two lists rather
     than joined onto a directory, so nothing else on disk can be read."""
-    allowed = {item["path"] for item in _images()}
+    allowed = {item["path"] for item in _images()} | {item["path"] for item in _clips()}
     if config["paths"]["scene"].is_file():
         from core import scene as scene_module
         allowed |= {str(element.get("file"))

@@ -60,7 +60,27 @@ def compose(
     command = ["ffmpeg", "-y", "-i", str(video)]
     image_inputs: dict[str, int] = {}
     motion_inputs: dict[str, int] = {}
+    clip_inputs: dict[str, int] = {}
     index = 1
+
+    # Footage laid over the frame: stock, an insert, anything that is a moving
+    # picture rather than a still. Seeking is done on the input rather than in
+    # the filter graph, so ffmpeg skips to the wanted second instead of
+    # decoding everything before it.
+    for element in elements:
+        if element.get("type") != "clip":
+            continue
+        path = Path(element["file"])
+        if not path.is_absolute():
+            path = image_root / path
+        window = scene_module.timed(element)
+        held = (window[1] - window[0]) if window else None
+        command.extend(["-ss", f"{float(element.get('at') or 0.0):.3f}"])
+        if held:
+            command.extend(["-t", f"{held:.3f}"])
+        command.extend(["-i", str(path)])
+        clip_inputs[element["id"]] = index
+        index += 1
     caption_stream = None
     caption_band = list(scene.get("caption_band") or [0, 0, canvas[0], canvas[1]])
     if captions and captions.is_file():
@@ -139,6 +159,23 @@ def compose(
                 gate = f":enable='between(t,{window[0]},{window[1]})'" if window else ""
                 filters.append(f"[{stream}:v]format=rgba,scale={width}:{height}[img{step}]")
                 filters.append(f"[{previous}][img{step}]overlay={left}:{top}{gate}[{current}]")
+
+        elif kind == "clip":
+            width, height = scene_module.size_of(element)
+            left, top = element["box"][0], element["box"][1]
+            stream = clip_inputs[element["id"]]
+            window = scene_module.timed(element)
+            # Cover the box rather than fit inside it: footage with the wrong
+            # shape should be cropped, not letterboxed into grey bars.
+            fit = (f"scale={width}:{height}:force_original_aspect_ratio=increase,"
+                   f"crop={width}:{height}")
+            if element.get("fit") == "contain":
+                fit = (f"scale={width}:{height}:force_original_aspect_ratio=decrease,"
+                       f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2:color=0x00000000")
+            shift = f",setpts=PTS-STARTPTS+{window[0]}/TB" if window else ""
+            gate = f":enable='between(t,{window[0]},{window[1]})'" if window else ""
+            filters.append(f"[{stream}:v]{fit},format=rgba{shift}[clip{step}]")
+            filters.append(f"[{previous}][clip{step}]overlay={left}:{top}{gate}[{current}]")
 
         elif kind == "subtitle":
             if caption_stream is not None:

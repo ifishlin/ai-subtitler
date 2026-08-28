@@ -84,15 +84,17 @@ main{display:flex;flex:1;min-height:0}
   border:1px dashed transparent;cursor:move;touch-action:none}
 #stage.scene .node:hover{border-color:#ffffff66}
 #stage.scene .node.sel{border:1.5px solid var(--accent);z-index:99!important}
-.node img{width:100%;height:100%;display:block;pointer-events:none}
+.node img, .node video{width:100%;height:100%;display:block;pointer-events:none}
+.node video{object-fit:cover;background:#000}
 /* Out of its time range: the frame stays, so it can still be picked and
    dragged, but the picture goes away instead of blocking the video. The one
    you have selected keeps a faint image, since you are placing it. */
 /* Out of range there is nothing to see, so the frame has to stay drawn --
    otherwise the element becomes invisible and impossible to pick up again. */
 #stage.scene .node.out{border-style:dotted;border-color:#ffffff40}
-#stage.scene .node.out img{display:none}
-#stage.scene .node.out.sel img{display:block;opacity:.4}
+#stage.scene .node.out img, #stage.scene .node.out video{display:none}
+#stage.scene .node.out.sel img,
+#stage.scene .node.out.sel video{display:block;opacity:.4}
 .node .grip{position:absolute;right:-7px;bottom:-7px;width:13px;height:13px;
   background:var(--accent);border:1px solid #000;border-radius:3px;
   cursor:nwse-resize;display:none}
@@ -123,8 +125,9 @@ main{display:flex;flex:1;min-height:0}
 /* ---------- layout tab ---------- */
 #tray{display:flex;gap:7px;overflow-x:auto;padding:0 12px 10px;flex:none}
 #tray figure{margin:0;flex:none;width:62px;text-align:center;cursor:grab}
-#tray img{width:60px;height:60px;object-fit:contain;background:#0f1319;
+#tray img, #tray video{width:60px;height:60px;object-fit:contain;background:#0f1319;
   border:1px solid var(--line);border-radius:6px}
+#tray video{object-fit:cover}
 #tray figcaption{font-size:9px;color:var(--faint);overflow:hidden;
   white-space:nowrap;text-overflow:ellipsis}
 #props{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12px;
@@ -956,7 +959,7 @@ function drawTimeline() {
   // impossible to find again. The selected one is brighter.
   if (SCENE.data) {
     SCENE.data.elements.forEach((element, index) => {
-      if (element.type !== "image" || element.from === undefined) return;
+      if (!["image", "clip"].includes(element.type) || element.from === undefined) return;
       const to = element.to ?? element.from + SPAN;
       ctx.fillStyle = index === SCENE.sel ? "#5aa9ff" : "#3b6ea8";
       ctx.fillRect(x(element.from), cy, Math.max(3, x(to) - x(element.from)), cy2 - cy);
@@ -1987,7 +1990,7 @@ function renderLayers() {
     const from = element.from;
     const to = element.to ?? (from === undefined ? undefined : from + SPAN);
     const out = from !== undefined && (now < from || now > to);
-    const kind = { video: "影片", subtitle: "字幕", image: "圖" }[element.type] || element.type;
+    const kind = { video: "影片", subtitle: "字幕", image: "圖", clip: "素材片" }[element.type] || element.type;
     const name = element.file ? element.file.split("/").pop()
                : element.srt ? element.srt : element.id;
     const thumb = element.type === "image"
@@ -2743,6 +2746,7 @@ async function loadScene() {
     ]);
     SCENE.data = scene;
     SCENE.images = listing.images;
+    SCENE.clips = listing.clips || [];
     SCENE.sel = null;
     SCENE.dirty = false;
   } catch (error) {
@@ -2759,7 +2763,15 @@ async function loadScene() {
 }
 
 function renderTray() {
-  $("tray").innerHTML = SCENE.images.map((image) => `
+  const clips = (SCENE.clips || []).map((clip) => `
+    <figure draggable="true" data-path="${escapeHTML(clip.path)}" data-kind="clip"
+            data-w="${clip.width}" data-h="${clip.height}" data-seconds="${clip.seconds}"
+            title="影片素材 ${clip.seconds}s${clip.credit ? "　" + escapeHTML(clip.credit) : ""}">
+      <video src="/media/clip/${encodeURIComponent(clip.path.split("/").pop())}"
+             preload="metadata" muted></video>
+      <figcaption>▶ ${escapeHTML(clip.name)}</figcaption>
+    </figure>`).join("");
+  $("tray").innerHTML = clips + SCENE.images.map((image) => `
     <figure draggable="true" data-path="${escapeHTML(image.path)}"
             data-w="${image.width}" data-h="${image.height}"
             ${image.motion ? `data-motion="${escapeHTML(image.motion)}"` : ""}
@@ -2792,6 +2804,16 @@ function paintScene() {
         const img = document.createElement("img");
         img.src = "/media/image/" + element.file.split("/").map(encodeURIComponent).join("/");
         node.prepend(img);
+      }
+      if (element.type === "clip") {
+        // Muted, and never played: it is scrubbed to whatever frame the
+        // playhead asks for, so the canvas shows the instant the burn will.
+        const inset = document.createElement("video");
+        inset.src = "/media/clip/" + encodeURIComponent(element.file.split("/").pop());
+        inset.muted = true;
+        inset.playsInline = true;
+        inset.preload = "auto";
+        node.prepend(inset);
       }
       stage.appendChild(node);
       return node;
@@ -2917,13 +2939,24 @@ function syncSceneTime() {
     const from = element.from, to = element.to ?? (from === undefined ? undefined : from + SPAN);
     const out = from !== undefined && (now < from || now > to);
     node.classList.toggle("out", out);
+
+    // Footage follows the playhead rather than running on its own clock:
+    // scrubbing has to show the frame that will actually be there, and two
+    // clocks would not agree for long.
+    const inset = element.type === "clip" ? node.querySelector("video") : null;
+    if (inset && !out) {
+      const wanted = (Number(element.at) || 0) + (now - from);
+      if (Number.isFinite(wanted) && Math.abs(inset.currentTime - wanted) > 0.12) {
+        try { inset.currentTime = Math.max(0, wanted); } catch (error) { /* not ready */ }
+      }
+    }
   });
 }
 video.addEventListener("timeupdate", syncSceneTime);
 video.addEventListener("seeked", syncSceneTime);
 
 function label(element) {
-  const kind = { video: "影片", subtitle: "字幕", image: "圖" }[element.type] || element.type;
+  const kind = { video: "影片", subtitle: "字幕", image: "圖", clip: "素材片" }[element.type] || element.type;
   const span = element.from === undefined ? "全片"
     : `${fmt(element.from)} – ${fmt(element.to ?? element.from + SPAN)}`;
   return `${kind}　${span}`;
@@ -3009,6 +3042,8 @@ $("tray").addEventListener("dragstart", (event) => {
     path: figure.dataset.path,
     width: Number(figure.dataset.w), height: Number(figure.dataset.h),
     motion: figure.dataset.motion || null,
+    kind: figure.dataset.kind || "image",
+    seconds: Number(figure.dataset.seconds || 0),
   }));
   event.dataTransfer.effectAllowed = "copy";
 });
@@ -3034,11 +3069,17 @@ $("stage").addEventListener("drop", (event) => {
   const height = ch / 4;
   const width = height * ((payload.width || 1) / (payload.height || 1));
   const start = Math.round(video.currentTime * 10) / 10;
+  const clip = payload.kind === "clip";
+  // Footage runs for as long as it has, up to a sensible default: a ten-second
+  // stock shot held for five is an insert, held for ten is a digression.
+  const span = clip ? Math.min(payload.seconds || SPAN, SPAN * 2) : SPAN;
   scene.elements.push({
-    id: `img${Date.now().toString(36)}`, type: "image", file: payload.path,
+    id: `${clip ? "clip" : "img"}${Date.now().toString(36)}`,
+    type: clip ? "clip" : "image", file: payload.path,
+    ...(clip ? { at: 0 } : {}),
     ...(payload.motion ? { motion: payload.motion, motion_seconds: 0.9 } : {}),
     box: clampBox([x - width / 2, y - height / 2, x + width / 2, y + height / 2], cw, ch),
-    from: start, to: Math.round((start + SPAN) * 10) / 10,
+    from: start, to: Math.round((start + span) * 10) / 10,
   });
   SCENE.nodes = [];               // element count changed, rebuild the frames
   SCENE.sel = scene.elements.length - 1;
@@ -3288,6 +3329,13 @@ new ResizeObserver(() => { if (SCENE.data) paintScene(); }).observe($("left"));
     // ?card=1 opens the card maker straight away, which is how it gets tested
     // without a person to press the button.
     if (new URLSearchParams(location.search).has("card")) openCards();
+    // ?t=25 opens at a moment, which is how a placed element gets looked at
+    // without someone dragging the playhead there.
+    const at = Number(new URLSearchParams(location.search).get("t"));
+    if (Number.isFinite(at) && at > 0) {
+      const go = () => { seek(at); syncSceneTime(); };
+      video.readyState >= 1 ? go() : video.addEventListener("loadedmetadata", go, { once: true });
+    }
     if (state.hasReviewedSrt) toast(`接續上次的校對進度`);
   } catch (error) {
     toast("載入失敗：" + error.message, true);
