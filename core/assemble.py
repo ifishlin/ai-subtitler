@@ -141,7 +141,12 @@ def assemble(pieces: list[dict[str, Any]], video_out: Path,
         "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
         "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(video_out),
     ])
-    subprocess.run(command, check=True)
+    done = subprocess.run(command, capture_output=True, text=True)
+    if done.returncode:
+        # The whole command line is not an error message. ffmpeg says what went
+        # wrong on its last line; that is what belongs on screen.
+        said = [line for line in (done.stderr or "").splitlines() if line.strip()]
+        raise RuntimeError(said[-1] if said else f"ffmpeg 失敗（{done.returncode}）")
 
     clock, laid = 0.0, []
     for piece in pieces:

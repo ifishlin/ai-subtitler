@@ -305,6 +305,13 @@ def start_assembly(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     pieces = payload.get("pieces") or []
     if not pieces:
         raise HTTPException(400, "至少要有一段")
+    # An assembly can be a片源 of the next one, so the name offered is often the
+    # name of something in the list. Writing over a file that is being read from
+    # would leave neither: refuse while both still exist.
+    target = (ROOT / name / "assembled.mp4").resolve()
+    if any((ROOT / piece.get("source", "")).resolve() == target for piece in pieces):
+        raise HTTPException(400, f"{name} 自己就在片源裡，不能存回同一個名字。"
+                                 "換個名字，舊的那支才不會被蓋掉")
     with _assembly_lock:
         if _assembly["state"] == "running":
             return dict(_assembly)
