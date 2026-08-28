@@ -749,10 +749,11 @@ function clipStrip(file) {
   return sheet.complete && sheet.naturalWidth ? sheet : null;
 }
 
-function loadFilmstrip(project, every) {
+function loadFilmstrip(project, every, stamp) {
   FILM.ready = false;
   FILM.every = every || 5;
-  FILM.sheet.src = `/media/filmstrip.png?p=${encodeURIComponent(project)}`;
+  FILM.sheet.src = `/media/filmstrip.png?p=${encodeURIComponent(project)}`
+    + `&v=${stamp || ""}`;
 }
 const escapeHTML = (text) => String(text).replace(
   /[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -1974,7 +1975,8 @@ $("viewer").onclick = (event) => { if (event.target.id === "viewer") closeViewer
 
 function applyState(state) {
   // The src carries the run name so a switch cannot reuse the cached video.
-  const wanted = `/media/proxy.mp4?p=${encodeURIComponent(state.project)}`;
+  const wanted = `/media/proxy.mp4?p=${encodeURIComponent(state.project)}`
+    + `&v=${state.stamp || ""}`;
   if (!video.src.endsWith(wanted)) video.src = wanted;
   Object.assign(S, {
     duration: state.duration, segments: state.segments,
@@ -1987,7 +1989,7 @@ function applyState(state) {
   $("bilingualBox").style.display = S.translated ? "flex" : "none";
   S.bilingual = S.translated && $("bilingual").checked;
   renderFinished(state.finished);
-  loadFilmstrip(state.project, state.film && state.film.every);
+  loadFilmstrip(state.project, state.film && state.film.every, state.stamp);
   renderList(); drawTimeline(); syncOverlay();
 }
 

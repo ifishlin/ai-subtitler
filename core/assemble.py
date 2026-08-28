@@ -90,6 +90,51 @@ def merge_cues(pieces: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return merged
 
 
+def merge_scene(pieces: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """The pieces' layouts, moved onto the finished video's clock.
+
+    Subtitles are not the only thing timed against the old clock: a card that
+    appeared at 3:10 of an interview appears eleven seconds later once eleven
+    seconds of footage are put in front of it. Carrying the layout over and
+    leaving the numbers alone puts every card in the wrong place, which is
+    worse than having no layout at all.
+
+    The first piece that has a layout supplies the frame -- canvas, video box,
+    subtitle style -- because those describe how the picture is arranged and
+    not when anything happens. Timed elements come from every piece, trimmed to
+    its edges the way captions are.
+    """
+    frame: dict[str, Any] | None = None
+    timed: list[dict[str, Any]] = []
+    clock = 0.0
+    for piece in pieces:
+        path = piece.get("scene")
+        scene = (json.loads(Path(path).read_text(encoding="utf-8"))
+                 if path and Path(path).is_file() else None)
+        start, end = float(piece["from"]), float(piece["to"])
+        if scene:
+            elements = scene.get("elements", [])
+            if frame is None:
+                frame = {key: value for key, value in scene.items()
+                         if key != "elements"}
+                frame["elements"] = [dict(element) for element in elements
+                                     if element.get("from") is None]
+            for element in elements:
+                if element.get("from") is None:
+                    continue
+                first, last = float(element["from"]), float(element.get("to", 0))
+                if last <= start or first >= end:
+                    continue
+                timed.append({**element,
+                              "from": round(max(first, start) - start + clock, 3),
+                              "to": round(min(last, end) - start + clock, 3)})
+        clock += end - start
+    if frame is None:
+        return None
+    frame["elements"] = frame["elements"] + timed
+    return frame
+
+
 def write_srt(cues: list[dict[str, Any]], path: Path) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     blocks = [

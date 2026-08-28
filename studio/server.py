@@ -353,6 +353,19 @@ def _assemble_worker(pieces: list[dict[str, Any]], name: str) -> None:
              for piece in pieces],
             video, progress=PREVIEWS / f"{name}.progress",
         )
+        # A layout is timed against the video it was made for, so it moves with
+        # the pieces exactly as the captions do.
+        # A run's video lives in work/, so the run directory is found through
+        # its subtitles rather than through the video path. A clip has neither.
+        laid_out = assemble_module.merge_scene(
+            [{**piece,
+              "scene": (ROOT / piece["srt"]).parent / "scene.json"
+                       if piece.get("srt") else None}
+             for piece in pieces])
+        if laid_out:
+            (output / "scene.json").write_text(
+                json.dumps(laid_out, ensure_ascii=False, indent=2), encoding="utf-8")
+
         # A run keeps its subtitles in two pairings, and the editor expects both
         # here too. They are merged separately: writing one file's cues under
         # both names left the Chinese-only track holding bilingual captions.
@@ -730,6 +743,11 @@ def get_state() -> dict[str, Any]:
         "visuals": config["visuals"],
         "peaks": config["peaks"],
         "film": {"every": media.FILM_EVERY, "height": media.FILM_HEIGHT},
+        # Changes whenever the video does, and the browser hangs it on the end
+        # of the proxy and filmstrip URLs. Without it, re-assembling under the
+        # same name kept the same URLs and the browser reused the pictures it
+        # already had -- a timeline drawn from a video that no longer exists.
+        "stamp": cache_key(config["source"]),
         "finished": finished_videos(),
         "reviewedSrt": str(paths["reviewed_srt"].relative_to(ROOT)),
         "hasReviewedSrt": paths["reviewed_srt"].is_file(),
