@@ -91,6 +91,8 @@
   #note{margin-top:10px;font-size:12px;color:var(--faint);min-height:1.4em}
   #note.bad{color:var(--danger)}
   #note.good{color:var(--ok)}
+  #srcNote{font-size:12px;color:var(--dim);margin-top:8px;line-height:1.5}
+  #srcNote.bad{color:var(--danger)}
 
   #peekBox{position:fixed;right:18px;bottom:18px;width:360px;display:none;
     background:var(--panel);border:1px solid var(--line);border-radius:10px;
@@ -113,6 +115,8 @@
     <div id="sources"></div>
     <p style="font-size:12px;color:var(--faint);margin:10px 0 0">
       點一下接到最後，或用拉的放到指定位置。<b>有字幕</b>的片源接進去時字幕會跟著走。</p>
+    <!-- Beside the ✕ it answers for. In the other panel it read as no reaction. -->
+    <div id="srcNote"></div>
   </section>
 
   <section class="card">
@@ -233,13 +237,13 @@ $("sources").addEventListener("click", async (event) => {
       STATE.pieces = STATE.pieces.filter((piece) => piece.name !== source.name);
       renderSources();
       renderPieces();
-      $("note").className = "";
-      $("note").textContent = `${source.name} 移到 ${gone.at}`
+      $("srcNote").className = "";
+      $("srcNote").textContent = `${source.name} 移到 ${gone.at}`
         + (before > STATE.pieces.length
            ? `，順序裡用到它的 ${before - STATE.pieces.length} 段也拿掉了` : "");
     } catch (error) {
-      $("note").className = "bad";
-      $("note").textContent = error.message;
+      $("srcNote").className = "bad";
+      $("srcNote").textContent = error.message;
     }
     return;
   }

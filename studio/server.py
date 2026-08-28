@@ -10,6 +10,7 @@ editor_cache/. Nothing in produce.py or core/ is modified or re-run.
 from __future__ import annotations
 
 import argparse
+import subprocess
 import sys
 import threading
 import time
@@ -78,7 +79,6 @@ _burn_lock = threading.Lock()
 
 def _frame_rate(video: Path) -> float:
     """Frames per second, so the editor can step one frame at a time."""
-    import subprocess
     result = subprocess.run(
         ["ffprobe", "-v", "error", "-select_streams", "v:0",
          "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", str(video)],
@@ -180,6 +180,19 @@ _assembly: dict[str, Any] = {"state": "idle", "message": "", "output": None}
 _assembly_lock = threading.Lock()
 
 
+def _opening_line(srt: Path | None) -> str:
+    """The first thing said. A directory name says when a run was made; this
+    says what is in it, which is what anyone is actually looking for."""
+    if not srt or not srt.is_file():
+        return ""
+    for block in srt.read_text(encoding="utf-8").split("\n\n")[:4]:
+        said = [line.strip() for line in block.splitlines()
+                if line.strip() and "-->" not in line and not line.strip().isdigit()]
+        if said:
+            return said[0][:40]
+    return ""
+
+
 @app.get("/api/sources")
 def sources() -> dict[str, Any]:
     """Everything that can become a piece: finished runs, and raw footage.
@@ -205,6 +218,7 @@ def sources() -> dict[str, Any]:
             "srt": str(srt.relative_to(ROOT)) if srt else None,
             "seconds": round(media.duration(source), 2),
             "lines": project["lines"],
+            "opens": _opening_line(srt),
         })
     for clip in _clips():
         found.append({
@@ -262,6 +276,28 @@ def source_strip(path: str) -> FileResponse:
     media.ensure_filmstrip(_playable(source), strip, seconds,
                            every=max(1.0, seconds / 60))
     return FileResponse(strip, media_type="image/png")
+
+
+@app.get("/media/sourceposter")
+def source_poster(path: str) -> FileResponse:
+    """One frame, so a片源 can be recognised without reading its name.
+
+    Taken a little way in rather than at zero: the first frame of a video is
+    often black, a slate, or a fade, and a black rectangle identifies nothing.
+    """
+    source = _allowed_source(path)
+    poster = FILMSTRIP / f"poster_{source.stem}.jpg"
+    if not poster.is_file():
+        poster.parent.mkdir(parents=True, exist_ok=True)
+        seconds = media.duration(source)
+        subprocess.run([
+            "ffmpeg", "-y", "-v", "error",
+            "-ss", f"{min(max(1.0, seconds * 0.1), max(0.0, seconds - 0.5)):.2f}",
+            "-i", str(_playable(source)), "-frames:v", "1",
+            "-vf", "scale=192:108:force_original_aspect_ratio=increase,crop=192:108",
+            "-q:v", "4", str(poster),
+        ], check=True)
+    return FileResponse(poster, media_type="image/jpeg")
 
 
 def _playable(source: Path) -> Path:
@@ -857,7 +893,6 @@ PREVIEW_SECONDS = 10.0
 def preview(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Burn a short clip through the same composer the final render uses, so
     what the browser draws can be checked against what ffmpeg produces."""
-    import subprocess
     from core import compose as compose_module
     from core import scene as scene_module
 
