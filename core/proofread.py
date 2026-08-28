@@ -167,8 +167,19 @@ def apply_edits(
         updated = target["text"].replace(source, replacement)
         # A long repair that still sounds the same is a repair; only where the
         # sound could not be compared does sheer size stand in for judgement.
+        #
+        # What counts as size is the difference between the two fragments, not
+        # the length of the one being quoted. Measuring the quote refused
+        # "listening to the silence" -> "listening to the science": three
+        # letters, in a fragment long enough to trip the cap. Quoting generously
+        # is what a careful proofreader does -- it is how an edit says which
+        # occurrence it means -- and the guard exists to catch rewriting, which
+        # shows up as difference.
         if not sound_checked:
-            changed = abs(len(updated) - len(target["text"])) + len(source)
+            blocks = difflib.SequenceMatcher(None, source, replacement).get_opcodes()
+            changed = sum(max(end - start, other_end - other_start)
+                          for tag, start, end, other_start, other_end in blocks
+                          if tag != "equal")
             if changed > len(target["text"]) * MAX_EDITED_SHARE + 4:
                 refused.append(
                     f"#{target['id']}「{source}」→「{replacement}」改動範圍過大，視為重寫"

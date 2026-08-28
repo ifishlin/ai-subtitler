@@ -38,6 +38,7 @@ MAX_GROUP = 5          # never merge more than this many captions
 CUT_SEARCH = 4         # characters either side of the ideal cut to look for punctuation
 
 
+CUT_BONUS = 4            # how far out of its way a division goes for punctuation
 CUT_MARKS = "，、。；：？！,;:"
 
 
@@ -54,28 +55,71 @@ def _group_sentences(segments: list[dict[str, Any]]) -> list[list[dict[str, Any]
     return groups
 
 
-def _splits_a_word(text: str, index: int) -> bool:
-    """True if cutting here would break a run of letters or digits.
+def _word_edges(text: str) -> set[int]:
+    """Offsets where a Chinese word begins, per jieba.
 
-    Chinese has no spaces, so a proportional cut lands mid-token as readily as
-    between tokens; a Latin word or number is the case where that is unreadable
-    (COVI / D), and the only case detectable without a word segmenter.
+    Chinese has no spaces, so a proportional cut lands mid-word as readily as
+    between words -- 疫情 divided into 疫 and 情 across two captions reads as a
+    typing error. The segmenter is the only thing that knows the difference,
+    and its answer is cached per sentence because a sentence is divided as many
+    times as it has captions.
     """
+    import jieba
+    # jieba is trained on Simplified Chinese and mis-segments Traditional --
+    # 或許能 comes back as 或 and 許能, which is exactly the kind of division
+    # this is meant to prevent. Converting for the segmenter's benefit only is
+    # safe while the conversion is character-for-character; where it is not,
+    # the original is used and a slightly worse boundary is accepted.
+    simplified = OpenCC("t2s").convert(text)
+    subject = simplified if len(simplified) == len(text) else text
+    edges, at = {0}, 0
+    for token in jieba.cut(subject):
+        at += len(token)
+        edges.add(at)
+    return edges
+
+
+def _splits_a_word(text: str, index: int, edges: set[int] | None = None) -> bool:
+    """True if cutting here would break a word -- Latin (COVI / D) or Chinese."""
     if index <= 0 or index >= len(text):
         return False
-    return text[index - 1].isalnum() and text[index].isalnum() \
-        and (text[index - 1].isascii() or text[index].isascii())
+    if text[index - 1].isalnum() and text[index].isalnum() \
+            and (text[index - 1].isascii() or text[index].isascii()):
+        return True
+    if edges is not None and index not in edges:
+        return True
+    return False
 
 
-def _cut_at(text: str, target: int) -> int | None:
+def _cut_at(text: str, target: int, after: int = 0) -> int | None:
     """A split point near target: punctuation first, then any spot that does not
-    break a word. None means this sentence should not be divided at all."""
-    target = max(1, min(len(text) - 1, target))
+    break a word. None means this sentence should not be divided at all.
+
+    `after` is where the previous cut fell. Divisions have to march forwards --
+    searching around a target can otherwise land back before the last one, and
+    a sentence divided out of order is not divided at all."""
+    if after + 1 >= len(text):
+        return None
+    target = max(after + 1, min(len(text) - 1, target))
+
+    # Every place the sentence could be divided, ranked by how close it is to
+    # where the captions say it should be. Searching a narrow window around the
+    # target instead meant that when nothing there was a word boundary -- which
+    # is most of the time in Chinese -- the cut fell wherever it landed, and
+    # 或許 came out as 或 and 許.
+    edges = sorted(index for index in _word_edges(text) if after < index < len(text))
+    if edges:
+        # Punctuation is preferred, but only nearby: taking a comma wherever it
+        # happens to be drags the first division far from where the captions
+        # want it and squeezes every division after it into what is left.
+        def cost(index: int) -> int:
+            return abs(index - target) - (CUT_BONUS if text[index - 1] in CUT_MARKS else 0)
+        return min(edges, key=cost)
+
+    # No word boundary left. A division that has to happen is better made
+    # somewhere than not made at all.
     for index in _nearby(target, len(text)):
-        if text[index - 1] in CUT_MARKS and not _splits_a_word(text, index):
-            return index
-    for index in _nearby(target, len(text)):
-        if not _splits_a_word(text, index):
+        if index > after and not _splits_a_word(text, index):
             return index
     return None
 
@@ -95,13 +139,14 @@ def _split_translation(chinese: str, members: list[dict[str, Any]]) -> list[str]
         return [chinese]
     weights = [max(1, len(item["text"])) for item in members]
     total = sum(weights)
-    cuts = []
+    cuts: list[int] = []
     used = 0
     for weight in weights[:-1]:
         used += weight
-        cut = _cut_at(chinese, round(len(chinese) * used / total))
-        if cut is None or (cuts and cut <= cuts[-1]):
-            # No readable division exists; show the sentence on its first
+        cut = _cut_at(chinese, round(len(chinese) * used / total),
+                      after=cuts[-1] if cuts else 0)
+        if cut is None:
+            # No readable division is left; show the sentence on its first
             # caption rather than breaking a word across two.
             return [chinese] + [""] * (len(members) - 1)
         cuts.append(cut)

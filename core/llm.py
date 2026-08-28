@@ -96,7 +96,7 @@ class ReplayClient:
 
     def __init__(self, log: Path):
         self.answers = json.loads(log.read_text(encoding="utf-8")) if log.is_file() else []
-        self.at = 0
+        self.unanswered = 0
 
     def ensure_ready(self) -> None:
         if not self.answers:
@@ -104,16 +104,19 @@ class ReplayClient:
 
     def chat_json(self, system: str, user: str, timeout: int = 300,
                   schema: dict[str, Any] | None = None) -> dict[str, Any]:
-        # Match on the question when the log records it, so reordering a
-        # pipeline does not silently hand a step the previous step's answer.
+        # Matched on the question itself. Answering by position would hand a
+        # step the previous step's answer the moment anything upstream changes
+        # what it asks -- and correcting a transcript changes what the
+        # translator is shown, which is exactly when this gets used.
         for entry in self.answers:
-            if entry.get("user") == user:
+            if entry.get("user") == user and entry.get("reply") is not None:
                 return entry["reply"]
-        if self.at < len(self.answers):
-            entry = self.answers[self.at]
-            self.at += 1
-            return entry["reply"]
-        raise RuntimeError("錄影檔沒有這一題的回覆")
+        # Unanswered is not an error: answering a run in rounds means the later
+        # rounds' questions do not exist yet. It has to be said out loud,
+        # though, or a half-finished log looks like a finished one.
+        self.unanswered += 1
+        print(f"      （這一題沒有錄到答案，當作沒有修改：{user[:40]}…）")
+        return AskClient._nothing(user)
 
 
 class AskClient:
@@ -142,7 +145,29 @@ class AskClient:
         self.entries.append({"system": system, "user": user, "reply": None})
         self.log.write_text(json.dumps(self.entries, ensure_ascii=False, indent=2),
                             encoding="utf-8")
-        return {}
+        return self._nothing(user)
+
+    @staticmethod
+    def _nothing(user: str) -> dict[str, Any]:
+        """A reply meaning "no change" in every shape the pipeline asks for.
+
+        A bare {} looked like a dropped batch to the translator, which splits
+        and retries down to single lines -- 19 questions became 159, most of
+        them duplicates of a question already recorded. Echoing the ids back
+        empty is what a model that had nothing to say would return, so the run
+        asks exactly what it would really ask.
+        """
+        reply: dict[str, Any] = {"edits": [], "hallucinated": [], "findings": [],
+                                 "visuals": []}
+        start = user.find('{"segments"')
+        if start >= 0:
+            try:
+                sent = json.loads(user[start:])
+                reply["segments"] = [{"id": item["id"], "text": ""}
+                                     for item in sent.get("segments", [])]
+            except (ValueError, KeyError, TypeError):
+                pass
+        return reply
 
 
 class Recorder:
