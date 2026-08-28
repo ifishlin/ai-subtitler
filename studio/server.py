@@ -229,6 +229,56 @@ def images() -> dict[str, Any]:
     return {"images": _images()}
 
 
+CARD_DIR = ROOT / "cards"          # the HTML each made picture was made from
+
+
+@app.get("/api/cards")
+def cards() -> dict[str, Any]:
+    """The starting points, and anything made from one before.
+
+    A card is designed in HTML because that is what setting type well takes --
+    rules, alignment, tabular figures. Keeping the source next to the picture
+    means a number can be changed later by editing the number, rather than by
+    building the whole card again.
+    """
+    templates = sorted((ROOT / "cards" / "templates").glob("*.html"))
+    made = sorted(CARD_DIR.glob("*.html"))
+    return {
+        "templates": [{"name": item.stem, "html": item.read_text(encoding="utf-8")}
+                      for item in templates],
+        "made": [{"name": item.stem, "html": item.read_text(encoding="utf-8")}
+                 for item in made],
+    }
+
+
+@app.post("/api/card")
+def make_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Render a card's HTML to a transparent PNG in img/, keeping the source."""
+    import re
+
+    from make_card import capture
+
+    # The name becomes a filename in two directories, so it is checked rather
+    # than joined: no separators, no dots, nothing that could climb out.
+    name = str(payload.get("name") or "card").strip()
+    if not re.fullmatch(r"[\w\u4e00-\u9fff -]{1,48}", name):
+        raise HTTPException(400, "名稱只能用中英文、數字、底線、減號和空格")
+    html = str(payload.get("html") or "")
+    if not html.strip():
+        raise HTTPException(400, "沒有內容")
+
+    CARD_DIR.mkdir(parents=True, exist_ok=True)
+    page = CARD_DIR / f"{name}.html"
+    page.write_text(html, encoding="utf-8")
+    try:
+        target = capture(page, ROOT / "img" / f"{name}.png")
+    except SystemExit as error:                                   # no browser
+        raise HTTPException(500, str(error)) from error
+    with Image.open(target) as made:
+        size = made.size
+    return {"path": f"img/{target.name}", "width": size[0], "height": size[1]}
+
+
 @app.get("/media/image/{path:path}")
 def image_file(path: str) -> FileResponse:
     """Serve a picture the canvas needs: one from the tray, or one the scene

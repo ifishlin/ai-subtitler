@@ -167,6 +167,29 @@ main{display:flex;flex:1;min-height:0}
   padding:8px 12px;border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);font-size:12px;color:var(--dim);flex:none}
 
+/* ---------- card maker ---------- */
+#card{display:none;position:fixed;inset:0;background:#000a;z-index:60;
+  align-items:center;justify-content:center;padding:24px}
+#card.on{display:flex}
+#card .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:14px 16px;width:100%;max-width:1180px;height:82vh;
+  display:flex;flex-direction:column;gap:10px}
+.cardTop{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim);
+  flex-wrap:wrap}
+.cardTop input{width:150px;font:12px var(--mono);color:var(--ink);
+  background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:4px 6px}
+#cardTemplates{display:flex;gap:4px}
+#cardTemplates button{font-size:12px;padding:4px 10px}
+.cardBody{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#cardHtml{width:100%;height:100%;resize:none;font:12px/1.5 var(--mono);
+  color:var(--ink);background:var(--panel2);border:1px solid var(--line);
+  border-radius:8px;padding:10px 12px}
+#cardHtml:focus{outline:0;border-color:var(--accent)}
+/* The pale field the canvas uses, so a card is judged against where it lands. */
+#cardPreview{width:100%;height:100%;border:1px solid var(--line);border-radius:8px;
+  background:#DCE9F5}
+.cardFoot{font-size:12px;color:var(--faint)}
+
 /* ---------- scene.json viewer ---------- */
 #json{display:none;position:fixed;inset:0;background:#000a;z-index:60;
   align-items:center;justify-content:center;padding:30px}
@@ -439,7 +462,10 @@ main{display:flex;flex:1;min-height:0}
              row selects it, which is the only way to reach an element whose
              time range has not come round yet. -->
         <div id="layers"></div>
-        <div class="paneHead">素材　<span class="hint">拖到畫面上放置</span></div>
+        <div class="paneHead">
+          素材　<span class="hint">拖到畫面上放置</span>
+          <button id="btnNewCard" class="tiny" style="float:right">新增卡片</button>
+        </div>
         <div id="tray"></div>
       </section>
 
@@ -485,6 +511,26 @@ main{display:flex;flex:1;min-height:0}
   <div style="margin-top:16px;text-align:right"><button id="btnHelpClose">關閉</button></div>
 </div></div>
 <div id="audit"></div>
+<!-- Designing a card in HTML, previewed by the thing that will draw it: the
+     browser sets the type here and sets it again for the capture, so what is
+     on the left is what lands in the frame. -->
+<div id="card"><div class="card">
+  <div class="cardTop">
+    <b>新增卡片</b>
+    <span id="cardTemplates"></span>
+    <div style="flex:1"></div>
+    <label>名稱 <input id="cardName" placeholder="table_vaccine"></label>
+    <button id="cardSave" class="primary">存成 PNG</button>
+    <button id="cardClose">關閉</button>
+  </div>
+  <div class="cardBody">
+    <textarea id="cardHtml" spellcheck="false"></textarea>
+    <iframe id="cardPreview" title="預覽"></iframe>
+  </div>
+  <div class="cardFoot">
+    <span id="cardNote" class="hint">改左邊的字，右邊會跟著變。滿意了取個名字存成 PNG，它會出現在素材匣裡。</span>
+  </div>
+</div></div>
 <div id="json"><div class="card">
   <h2>scene.json</h2>
   <p id="jsonWhere"></p>
@@ -1514,6 +1560,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     $("help").classList.remove("on");
     $("json").classList.remove("on");
+    $("card").classList.remove("on");
     if ($("viewer").classList.contains("on")) closeViewer();
     return;
   }
@@ -1804,6 +1851,81 @@ $("layers").addEventListener("click", (event) => {
   paintScene();
   renderLayers();
 });
+
+/* ---------- making a card ----------
+   The picture is authored as HTML because that is what setting a table well
+   takes -- rules, alignment, figures that line up. The preview is an iframe
+   rather than a drawing of one: the browser here and the browser that captures
+   the PNG are the same typesetter, so there is nothing to reconcile. */
+const CARD = { templates: [], name: "" };
+
+async function openCards() {
+  try {
+    const listing = await api("GET", "/api/cards");
+    CARD.templates = listing.templates;
+    $("cardTemplates").innerHTML = listing.templates.map((item, index) =>
+      `<button class="tiny" data-template="${index}">${escapeHTML(item.name)}</button>`
+    ).join("");
+    if (!$("cardHtml").value && listing.templates.length) {
+      useTemplate(0);
+    }
+  } catch (error) {
+    toast(error.message, true);
+  }
+  $("card").classList.add("on");
+  drawCard();
+}
+
+function useTemplate(index) {
+  const template = CARD.templates[index];
+  if (!template) return;
+  $("cardHtml").value = template.html;
+  if (!$("cardName").value) $("cardName").value = template.name;
+  drawCard();
+}
+
+$("cardTemplates").addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (button) useTemplate(Number(button.dataset.template));
+});
+
+/** Show the HTML as the capture will see it. srcdoc keeps it same-origin-ish
+ *  and sandboxed: a card is a picture, and pictures do not need scripts. */
+function drawCard() {
+  $("cardPreview").srcdoc = $("cardHtml").value;
+}
+let cardTimer = null;
+$("cardHtml").addEventListener("input", () => {
+  clearTimeout(cardTimer);
+  cardTimer = setTimeout(drawCard, 300);
+});
+
+$("btnNewCard").onclick = openCards;
+$("cardClose").onclick = () => $("card").classList.remove("on");
+$("card").onclick = (event) => {
+  if (event.target.id === "card") $("card").classList.remove("on");
+};
+
+$("cardSave").onclick = async () => {
+  const name = $("cardName").value.trim();
+  if (!name) { toast("先取個名字", true); return; }
+  const button = $("cardSave");
+  button.disabled = true;
+  $("cardNote").textContent = "截圖中…";
+  try {
+    const made = await api("POST", "/api/card",
+                           { name, html: $("cardHtml").value });
+    $("cardNote").textContent =
+      `${made.path}　${made.width}×${made.height}，已加進素材匣`;
+    await loadScene();                       // the tray reads the images again
+    toast(`${made.path} 做好了，在素材匣裡`);
+  } catch (error) {
+    $("cardNote").textContent = error.message;
+    toast(error.message, true);
+  } finally {
+    button.disabled = false;
+  }
+};
 
 /* ---------- the cut list ---------- */
 function renderCuts() {
@@ -2488,7 +2610,7 @@ $("json").onclick = (event) => {
 // means you are done with that element.
 document.addEventListener("pointerdown", (event) => {
   if (SCENE.sel === null || !document.body.classList.contains("layout")) return;
-  if (event.target.closest("#stage, #tabLayout, #json")) return;
+  if (event.target.closest("#stage, #tabLayout, #json, #card")) return;
   select(null);
 });
 
