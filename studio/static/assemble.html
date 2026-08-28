@@ -42,7 +42,14 @@
   .source .tag.srt{color:var(--ok);border-color:#2c5a45}
 
   /* ---------- the running order ---------- */
-  #pieces{min-height:80px}
+  #pieces{min-height:80px;position:relative}
+  #mark{position:absolute;left:0;right:0;height:3px;border-radius:2px;
+    background:var(--accent);box-shadow:0 0 8px var(--accent);display:none;
+    pointer-events:none}
+  #mark.on{display:block}
+  .source{cursor:grab}
+  .source.lifting{opacity:.4}
+  #pieces.taking{outline:1px dashed var(--accent);outline-offset:4px;border-radius:8px}
   .piece{padding:9px 10px;margin-bottom:8px;
     border:1px solid var(--line);border-left:3px solid var(--accent);
     border-radius:8px;background:var(--panel2)}
@@ -101,12 +108,12 @@
     <h2>可用的片源</h2>
     <div id="sources"></div>
     <p style="font-size:12px;color:var(--faint);margin:10px 0 0">
-      點一下加到右邊。<b>有字幕</b>的片源接進去時字幕會跟著走。</p>
+      點一下接到最後，或用拉的放到指定位置。<b>有字幕</b>的片源接進去時字幕會跟著走。</p>
   </section>
 
   <section class="card">
     <h2>順序</h2>
-    <div id="pieces"></div>
+    <div id="pieces"><div id="mark"></div></div>
     <div class="foot">
       <label style="font-size:12px;color:var(--dim)">存成
         <input id="name" value="output_合併" spellcheck="false"></label>
@@ -152,7 +159,7 @@ async function api(method, path, body) {
 
 function renderSources() {
   $("sources").innerHTML = STATE.sources.map((source, index) => `
-    <div class="source" data-source="${index}">
+    <div class="source" draggable="true" data-source="${index}">
       <span class="name">${escapeHTML(source.name)}</span>
       <span class="meta">${fmt(source.seconds)}</span>
       ${source.srt ? '<span class="tag srt">有字幕</span>'
@@ -161,8 +168,11 @@ function renderSources() {
 }
 
 function renderPieces() {
+  // The insertion line is a fixture of the list, not one of its rows: keep it
+  // across every redraw rather than rebuilding it.
+  const mark = $("mark");
   if (!STATE.pieces.length) {
-    $("pieces").innerHTML = '<div class="empty">左邊點一個片源加進來</div>';
+    $("pieces").innerHTML = '<div class="empty">左邊點一個片源，或直接拉過來</div>';
   } else {
     $("pieces").innerHTML = STATE.pieces.map((piece, index) => `
       <div class="piece ${piece.srt ? "" : "none"}" data-piece="${index}">
@@ -190,6 +200,7 @@ function renderPieces() {
         </div>
       </div>`).join("");
   }
+  $("pieces").appendChild(mark);
   const total = STATE.pieces.reduce((sum, piece) => sum + (piece.to - piece.from), 0);
   const noSubs = STATE.pieces.filter((piece) => !piece.srt).length;
   $("total").textContent = STATE.pieces.length
@@ -205,6 +216,87 @@ $("sources").addEventListener("click", (event) => {
   STATE.pieces.push({ ...source, from: 0, to: source.seconds });
   renderPieces();
 });
+
+/* ---------- dragging a source into the order ----------
+   Clicking appends; dragging says where. That matters because inserting a
+   clarification into the middle is the whole reason this page exists, and
+   "add it then press ▲ four times" is not how anyone thinks about it.
+
+   Native drag and drop rather than pointer events: it is what a browser
+   already does for dragging one thing onto another, and it does not fight
+   the pointer capture the filmstrip edges rely on. */
+let carried = null;
+
+$("sources").addEventListener("dragstart", (event) => {
+  const row = event.target.closest("[data-source]");
+  if (!row) return;
+  carried = STATE.sources[Number(row.dataset.source)];
+  row.classList.add("lifting");
+  event.dataTransfer.effectAllowed = "copy";
+  event.dataTransfer.setData("text/plain", carried.name);   // Firefox insists
+});
+
+$("sources").addEventListener("dragend", (event) => {
+  const row = event.target.closest("[data-source]");
+  if (row) row.classList.remove("lifting");
+  carried = null;
+  hideMark();
+});
+
+$("pieces").addEventListener("dragover", (event) => {
+  if (!carried) return;
+  event.preventDefault();                   // without this, no drop is allowed
+  event.dataTransfer.dropEffect = "copy";
+  $("pieces").classList.add("taking");
+  showMark(dropIndex(event.clientY));
+});
+
+$("pieces").addEventListener("dragleave", (event) => {
+  // Moving between a row and its filmstrip fires this too; only a pointer that
+  // has actually left the list counts.
+  if (event.relatedTarget && $("pieces").contains(event.relatedTarget)) return;
+  hideMark();
+});
+
+$("pieces").addEventListener("drop", (event) => {
+  if (!carried) return;
+  event.preventDefault();
+  STATE.pieces.splice(dropIndex(event.clientY), 0,
+                      { ...carried, from: 0, to: carried.seconds });
+  carried = null;
+  hideMark();
+  renderPieces();
+});
+
+/** Which slot the pointer is asking for: before the first row it is over the
+ *  top half of, otherwise the end. */
+function dropIndex(y) {
+  const rows = Array.from($("pieces").querySelectorAll("[data-piece]"));
+  for (const row of rows) {
+    const box = row.getBoundingClientRect();
+    if (y < box.top + box.height / 2) return Number(row.dataset.piece);
+  }
+  return rows.length;
+}
+
+function showMark(index) {
+  const list = $("pieces");
+  const rows = Array.from(list.querySelectorAll("[data-piece]"));
+  const box = list.getBoundingClientRect();
+  let y = 6;
+  if (rows.length) {
+    y = index >= rows.length
+      ? rows[rows.length - 1].getBoundingClientRect().bottom - box.top + 2
+      : rows[index].getBoundingClientRect().top - box.top - 4;
+  }
+  $("mark").style.top = `${y + list.scrollTop}px`;
+  $("mark").classList.add("on");
+}
+
+function hideMark() {
+  $("mark").classList.remove("on");
+  $("pieces").classList.remove("taking");
+}
 
 $("pieces").addEventListener("click", (event) => {
   const row = event.target.closest("[data-piece]");
