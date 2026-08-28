@@ -36,3 +36,6 @@ work/.*.speech.json
 
 # Stock footage: downloaded, credited, regenerable
 clips/
+
+# 從組裝頁移掉的片源，等著被真正刪掉
+trash/

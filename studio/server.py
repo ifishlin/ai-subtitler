@@ -214,6 +214,37 @@ def sources() -> dict[str, Any]:
     return {"sources": found}
 
 
+TRASH = ROOT / "trash"
+
+
+@app.post("/api/source/remove")
+def remove_source(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Take a source out of the list.
+
+    Moved into trash/ rather than deleted: a run is a night of transcribing and
+    a clip is a download, and the list is one careless click wide. Emptying
+    trash/ is a decision made deliberately, elsewhere.
+    """
+    import shutil
+    name = str(payload.get("name") or "")
+    offered = {item["name"]: item for item in sources()["sources"]}
+    if name not in offered:
+        raise HTTPException(404, f"找不到片源 {name}")
+    if name == config["paths"]["output"].name:
+        raise HTTPException(400, f"{name} 正在編輯器裡開著，先切到別的專案再刪")
+
+    kind = offered[name]["kind"]
+    going = (ROOT / name) if kind == "run" else (ROOT / offered[name]["source"])
+    if not going.exists():
+        raise HTTPException(404, f"{going.name} 已經不在了")
+
+    TRASH.mkdir(parents=True, exist_ok=True)
+    # Stamped, so removing two runs of the same name a week apart keeps both.
+    landed = TRASH / f"{time.strftime('%Y%m%d-%H%M%S')}-{going.name}"
+    shutil.move(str(going), str(landed))
+    return {"removed": name, "at": str(landed.relative_to(ROOT))}
+
+
 def _allowed_source(path: str) -> Path:
     """A source the assembly page offered, resolved. Checked against that list
     rather than joined, so the page cannot be talked into reading elsewhere."""

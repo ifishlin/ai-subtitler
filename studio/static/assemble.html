@@ -34,6 +34,10 @@
     border:1px solid var(--line);border-radius:7px;background:var(--panel2);
     cursor:pointer}
   .source:hover{border-color:var(--accent)}
+  .source .bin{border:0;background:transparent;color:var(--faint);padding:1px 3px;
+    opacity:.45;transition:opacity .12s;cursor:pointer;font-size:12px}
+  .source:hover .bin{opacity:1}
+  .source .bin:hover{color:var(--danger)}
   .source .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
     white-space:nowrap;font-size:13px}
   .source .meta{font:11px var(--mono);color:var(--faint)}
@@ -164,6 +168,8 @@ function renderSources() {
       <span class="meta">${fmt(source.seconds)}</span>
       ${source.srt ? '<span class="tag srt">有字幕</span>'
                    : '<span class="tag">無字幕</span>'}
+      <button class="bin" draggable="false" data-bin="${index}"
+              title="從清單移掉（移到 trash/，不是真的刪掉）">✕</button>
     </div>`).join("") || '<div class="empty">沒有可用的片源</div>';
 }
 
@@ -209,10 +215,35 @@ function renderPieces() {
   $("go").disabled = !STATE.pieces.length;
 }
 
-$("sources").addEventListener("click", (event) => {
+$("sources").addEventListener("click", async (event) => {
   const row = event.target.closest("[data-source]");
   if (!row) return;
   const source = STATE.sources[Number(row.dataset.source)];
+
+  if (event.target.dataset.bin !== undefined) {
+    const what = source.kind === "run" ? "整個 run（影片和字幕）" : "這支素材";
+    if (!confirm(`把 ${source.name} 移掉？\n\n${what}會搬到 trash/，`
+                 + "不會真的消失，要永久刪除得自己去清 trash/。")) return;
+    try {
+      const gone = await api("POST", "/api/source/remove", { name: source.name });
+      STATE.sources = STATE.sources.filter((item) => item.name !== source.name);
+      // Pieces already placed point at a file that has moved; drop them rather
+      // than let 組裝 fail on a path that is no longer there.
+      const before = STATE.pieces.length;
+      STATE.pieces = STATE.pieces.filter((piece) => piece.name !== source.name);
+      renderSources();
+      renderPieces();
+      $("note").className = "";
+      $("note").textContent = `${source.name} 移到 ${gone.at}`
+        + (before > STATE.pieces.length
+           ? `，順序裡用到它的 ${before - STATE.pieces.length} 段也拿掉了` : "");
+    } catch (error) {
+      $("note").className = "bad";
+      $("note").textContent = error.message;
+    }
+    return;
+  }
+
   STATE.pieces.push({ ...source, from: 0, to: source.seconds });
   renderPieces();
 });
