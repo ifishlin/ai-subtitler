@@ -141,6 +141,7 @@ main{display:flex;flex:1;min-height:0}
 .layer:hover{background:var(--panel2)}
 .layer.on{border-color:var(--accent);border-left-color:var(--accent);background:#1e2530}
 .layer.out{opacity:.55}
+.layer .onBar{flex:none;margin:0;accent-color:var(--accent)}
 .layer .thumb{width:30px;height:30px;flex:none;border-radius:5px;object-fit:contain;
   background:#0f1319;border:1px solid var(--line)}
 .layer .what{flex:1;min-width:0}
@@ -1043,7 +1044,7 @@ function drawTimeline() {
       .sort((a, b) => (a.element.from === undefined ? 0 : 1)
                     - (b.element.from === undefined ? 0 : 1));
     order.forEach(({ element, index }) => {
-      if (!["image", "clip"].includes(element.type)) return;
+      if (!["image", "clip"].includes(element.type) || element.bar === false) return;
       // An element set to 全片 has no times at all. It still occupies the whole
       // bar -- skipping it made a clip vanish from the timeline at the moment
       // it started covering the most of it.
@@ -2125,6 +2126,8 @@ function renderLayers() {
       : `<span class="thumb" style="display:grid;place-items:center;font-size:11px;color:var(--dim)">${kind}</span>`;
     return `
       <div class="layer ${index === SCENE.sel ? "on" : ""} ${out ? "out" : ""}" data-index="${index}">
+        <input type="checkbox" class="onBar" data-bar="${index}"
+               ${element.bar === false ? "" : "checked"} title="在時間軸上顯示">
         ${thumb}
         <span class="what">
           <span class="name">${escapeHTML(name)}</span>
@@ -2141,6 +2144,18 @@ $("layers").addEventListener("click", (event) => {
   const row = event.target.closest(".layer");
   if (!row) return;
   const index = Number(row.dataset.index);
+
+  // Whether an element earns a place on the timeline is a judgement about
+  // this run: a channel mark that is on the whole way through is noise there,
+  // an insert you might forget is not. Absent means shown, so a scene only
+  // carries the flag where someone decided otherwise.
+  if (event.target.dataset.bar !== undefined) {
+    const element = SCENE.data.elements[index];
+    if (event.target.checked) delete element.bar;
+    else element.bar = false;
+    markSceneDirty();
+    return;
+  }
   const lift = event.target.dataset.lift;
   if (!lift) {
     select(index);
