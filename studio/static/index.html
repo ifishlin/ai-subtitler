@@ -253,6 +253,10 @@ main{display:flex;flex:1;min-height:0}
 .tag{font-size:10px;padding:1px 6px;border-radius:99px;border:1px solid}
 .tag.risk{color:var(--warn);border-color:#5b4a22;background:#2a2416}
 .tag.side{color:var(--sidecar);border-color:#463a68;background:#231d33}
+/* What the final review could not settle by counting: the reason is on hover,
+   because it is an argument rather than a measurement. */
+.tag.judged{color:#ff9d5c;border-color:#5c3a22;background:#2b1d13;cursor:help}
+.row.judged:not(.confirmed){border-left-color:#ff9d5c}
 .row textarea{
   width:100%;resize:vertical;min-height:2.3em;font:15px/1.45 "PingFang TC",sans-serif;
   color:var(--ink);background:var(--panel2);border:1px solid var(--line);
@@ -391,6 +395,7 @@ main{display:flex;flex:1;min-height:0}
           <button data-f="all" class="on">全部</button>
           <button data-f="risky">LLM 改動大</button>
           <button data-f="sidecar">漏聽補句</button>
+          <button data-f="judged">審查標記</button>
           <button data-f="todo">未確認</button>
         </div>
         <button id="btnPrevRisk" class="tiny">上一個待審</button>
@@ -594,6 +599,7 @@ function markOverlaps() {
 function matches(s) {
   if (S.filter === "risky") return isRisky(s);
   if (S.filter === "sidecar") return isSidecar(s);
+  if (S.filter === "judged") return Boolean(s.review);
   if (S.filter === "todo") return !s.confirmed;
   return true;
 }
@@ -905,10 +911,15 @@ function rowHTML(s, index) {
   if (s.confirmed) cls.push("confirmed");
   if (isRisky(s)) cls.push("risky");
   if (isSidecar(s)) cls.push("sidecar");
+  if (s.review) cls.push("judged");
   if (s.overlap) cls.push("overlap");
 
   const tags = [];
   if (isRisky(s)) tags.push(`<span class="tag risk">LLM 改動 ${Math.round(s.risk * 100)}%</span>`);
+  if (s.review) {
+    tags.push(`<span class="tag judged" title="${escapeHTML(s.review.why || "")}">`
+      + `審查：${escapeHTML(s.review.kind)}</span>`);
+  }
   if (isSidecar(s)) tags.push(`<span class="tag side">漏聽補句 · 未驗證</span>`);
 
   // On a translated run the diff belongs to the spoken language: the editable

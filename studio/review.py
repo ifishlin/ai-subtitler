@@ -63,12 +63,18 @@ def build_state(output_dir: Path) -> list[dict[str, Any]]:
     raw_segments = _load_segments(output_dir / "transcript_raw.json")
     translated = any(item.get("zh") for item in qwen_segments)
 
+    # Pairing by position only holds while nothing has changed the count. The
+    # repair pass divides an over-long caption, so a run can finish with more
+    # captions than it recognised -- and then every line after the division is
+    # compared against its neighbour's original and scored as fully rewritten.
+    aligned = len(raw_segments) == len(subtitles) == len(qwen_segments)
+
     segments = []
     for index, segment in enumerate(subtitles):
-        qwen = qwen_segments[index] if index < len(qwen_segments) else _best_overlap(segment, qwen_segments)
-        whisper = _best_overlap(segment, raw_segments) if not translated else (
-            raw_segments[index] if index < len(raw_segments) else None
-        )
+        qwen = (qwen_segments[index] if aligned and index < len(qwen_segments)
+                else _best_overlap(segment, qwen_segments))
+        whisper = (raw_segments[index] if aligned and translated and index < len(raw_segments)
+                   else _best_overlap(segment, raw_segments))
         whisper_text = str(whisper["text"]).strip() if whisper else ""
         qwen_text = str(qwen["text"]).strip() if qwen else ""
         # On a translated run the SRT already holds the Chinese, and the spoken
@@ -87,6 +93,10 @@ def build_state(output_dir: Path) -> list[dict[str, Any]]:
             # reviewed extra-segments sidecar (street or telephone interview).
             "origin": "whisper" if whisper_text else "sidecar",
             "risk": _risk(whisper_text, compare_against),
+            # What the run's final review could not settle by counting. It is
+            # carried through rather than acted on: every kind it reports is a
+            # judgement, and this is the screen where judgements get made.
+            "review": (qwen or {}).get("review"),
             "confirmed": False,
         })
     return segments
