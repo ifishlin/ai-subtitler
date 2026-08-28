@@ -7,20 +7,15 @@ from pathlib import Path
 
 from core import caption, scene
 from core.audit import inspect, report, write as write_audit
+from core.repair import repair
+from core.review import review_output
 from core.media import duration, extract_audio, prepare_video
 from core import llm, settings
 from core.compose import compose
-from core.transcribe import (
-    GAP_MIN,
-    review_hallucinations,
-    TERMS_MAX,
-    correct_with_qwen,
-    fill_gaps,
-    merge_extra_segments,
-    save_transcript,
-    transcribe,
-    translate_with_qwen,
-)
+from core.proofread import correct_with_qwen, review_hallucinations
+from core.subtitles import merge_extra_segments, save_transcript
+from core.transcribe import GAP_MIN, TERMS_MAX, fill_gaps, transcribe
+from core.translate import translate_with_qwen
 from core.utils import write_json
 from core.visuals import plan_visuals_with_retry, render_cards
 
@@ -58,7 +53,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sensitive", action="store_true", help="Detect quieter or accented speech more aggressively")
     parser.add_argument(
         "--fill-gaps",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
+        default=True,
         help="Transcribe normally, then revisit only the silent stretches in sensitive mode. "
              "Recovers street and telephone interviews without the whole-video error rate of --sensitive. "
              "Skips the id-keyed corrections sidecar, whose ids no longer line up once gaps are filled; "
@@ -178,7 +174,7 @@ def main() -> None:
                 "請把影片路徑當第一個參數傳入，否則會用錯影片。"
             )
 
-    print("[1/7] Preparing video")
+    print("[1/8] Preparing video")
     video, context = prepare_video(source, work)
     audio = work / "audio.wav"
     extract_audio(video, audio)
@@ -190,9 +186,9 @@ def main() -> None:
     if args.reuse_transcript:
         stored = json.loads(Path(args.reuse_transcript).read_text(encoding="utf-8"))
         segments, language = stored["segments"], stored.get("language", "zh")
-        print(f"[2/7] Reusing {args.reuse_transcript} ({len(segments)} segments)")
+        print(f"[2/8] Reusing {args.reuse_transcript} ({len(segments)} segments)")
     else:
-        print("[2/7] Transcribing with faster-whisper")
+        print("[2/8] Transcribing with faster-whisper")
         segments, language = transcribe(
             audio, args.whisper_model, sensitive=args.sensitive, recut=not args.no_recut
         )
@@ -236,7 +232,7 @@ def main() -> None:
     # model should cost those four things -- not the whole run and the minutes
     # already spent on it.
     provider = settings.llm_options(args)[0]
-    print(f"[3/7] Connecting to {provider}")
+    print(f"[3/8] Connecting to {provider}")
     provider, options = settings.llm_options(args)
     client = llm.build(provider, options)
     try:
@@ -248,9 +244,9 @@ def main() -> None:
         client = None
 
     if client is None or args.no_correct:
-        print(f"[4/7] Skipping proofreading（辨識語言：{language}）")
+        print(f"[4/8] Skipping proofreading（辨識語言：{language}）")
     else:
-        print(f"[4/7] Correcting transcript（辨識語言：{language}）")
+        print(f"[4/8] Correcting transcript（辨識語言：{language}）")
         # Reading the transcript catches invented lines the character filter
         # cannot: fluent, correctly encoded, and about something else.
         segments = review_hallucinations(client, segments)
@@ -283,6 +279,44 @@ def main() -> None:
                 print(f"      warning: corrections for missing segment ids ignored: {missing}")
             segments = [{**item, "text": corrections.get(item["id"], item["text"])} for item in segments]
         segments = merge_extra_segments(segments, video.with_suffix(".extra_segments.json"))
+
+    # Check, mend, check again. The audit used to run last, where nothing could
+    # act on what it found; here its arithmetic findings are repaired before
+    # anyone is asked to read anything, and the second pass is what decides
+    # whether the repairs were an improvement at all.
+    print("[5/8] 檢查與自動修補")
+    total = duration(video)
+    before = inspect(segments, video, total)
+    print(f"      修補前 {before['score']} 分，{len(before['findings'])} 項")
+    mended, notes = repair(segments, duration=total)
+    if notes:
+        after = inspect(mended, video, total)
+        if after["score"] <= before["score"]:
+            for line in notes:
+                print(f"      {line}")
+            print(f"      修補後 {after['score']} 分，{len(after['findings'])} 項")
+            segments, verdict = mended, after
+        else:
+            # Mending made it worse, so none of it is kept. What the reviewer
+            # sees should be the original fault, not this pass's guess at it.
+            print(f"      修補後 {after['score']} 分，比修補前差，全部退回")
+            verdict = {**before, "needs_eyes": True}
+    else:
+        print("      沒有可以機械修補的問題")
+        verdict = before
+
+    # Review is last and reads the finished thing, because proofreading and
+    # translation are themselves edits that can go wrong -- a review that runs
+    # before them cannot see what they did.
+    if client is not None and not args.no_correct:
+        print("[6/8] LLM 審查成品")
+        segments, judged = review_output(client, segments, language=language)
+        if judged:
+            print(f"      {judged}")
+        verdict = inspect(segments, video, total)
+
+    write_audit(output / "audit.json", verdict)
+    print(report(verdict))
     write_json(output / "transcript.json", {"language": language, "segments": segments})
     written = save_transcript(segments, output / "transcript.txt", output / "subtitles_zh.srt")
 
@@ -292,17 +326,17 @@ def main() -> None:
     burn_srt = written.get(choice) or written["zh"]
     print(f"      字幕檔：{', '.join(sorted(p.name for p in written.values()))}（燒錄用 {burn_srt.name}）")
 
-    print("[5/7] Planning information cards")
+    print("[7/8] Planning information cards")
     visual_plan = (
         plan_visuals_with_retry(client, segments, duration(video)) if client else []
     )
     if client is None:
-        print("      沒有 Qwen 連線，這次不加圖卡")
+        print(f"      沒有 {provider} 可用，這次不加圖卡")
     render_cards(visual_plan, visuals_dir, find_font(args.font))
     write_json(output / "ai_visuals.json", visual_plan)
 
     if args.render:
-        print(f"[6/7] Rendering subtitles and cards（版面：{args.layout}）")
+        print(f"[8/8] Rendering subtitles and cards（版面：{args.layout}）")
         # One frame, one renderer. The layout is a scene either way, so the
         # editor can open this run and see exactly what was burned.
         stage = (scene.default_scene(burn_srt.name) if args.layout == "inset"
@@ -328,21 +362,15 @@ def main() -> None:
         compose(video, stage, output / "final.mp4", srt_dir=output,
                 image_root=Path.cwd(), captions=listing)
     else:
-        print("[6/7] 跳過燒錄（加 --render 可直接出片）")
+        print("[8/8] 跳過燒錄（加 --render 可直接出片）")
         print(f"      字幕與圖卡已就緒，在編輯器確認後再燒：")
         print(f"      .venv/bin/python studio/server.py --output {args.output}")
 
-    # The run judges its own output, so a batch only needs eyes on what failed.
-    audit = inspect(segments, video, duration(video))
-    write_audit(output / "audit.json", audit)
-    print()
-    print(report(audit))
-    print()
     done = output / "final.mp4" if args.render else output / "subtitles_zh.srt"
     spent = getattr(client, "usage", None)
     if spent is not None:
         print(f"      {spent.line()}")
-    print(f"[7/7] Done: {done}")
+    print(f"Done: {done}")
 
 
 if __name__ == "__main__":

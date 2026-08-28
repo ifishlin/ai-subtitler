@@ -36,7 +36,8 @@ FLASH_SECONDS = 0.4
 CPS_MARGIN = 1.6
 LOW_CONFIDENCE = -0.9
 MIN_GAP = 1.5           # silence shorter than this needs no caption
-SPEECH_PEAK = 0.06      # below this a gap is genuinely quiet, not missed speech
+SPEECH_PEAK = 0.06      # fallback: below this a gap is quiet, not missed speech
+MIN_SPOKEN = 0.8        # speech shorter than this inside a gap is a stray word
 ECHO_RATIO = 0.8        # near-identical neighbours mean a model looped
 NON_SUBTITLE = re.compile(r"[^\x20-\x7e\sÀ-ſ　-〿一-鿿＀-￯‐-⁞]")
 
@@ -51,8 +52,54 @@ def _visible(text: str) -> int:
     return len(re.sub(r"\s", "", text))
 
 
+def speech_windows(source: Path) -> list[tuple[float, float]] | None:
+    """Where someone is actually speaking, per Silero VAD.
+
+    Loudness cannot tell a voice from a title card's music or a burst of
+    applause, so measuring it reports missed captions where nothing was said.
+    The recogniser already carries a model that can tell the difference -- it
+    uses it to skip silence before transcribing -- and asking that model
+    directly is both more accurate and no more work.
+
+    None when the model or the audio is unavailable, so the caller falls back
+    to loudness rather than losing the check.
+    """
+    try:
+        import numpy
+        from faster_whisper.vad import VadOptions, get_speech_timestamps
+    except ImportError:
+        return None
+    result = subprocess.run(
+        ["ffmpeg", "-v", "error", "-i", str(source), "-vn",
+         "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
+        check=False, capture_output=True,
+    )
+    if not result.stdout:
+        return None
+    audio = numpy.frombuffer(
+        result.stdout[: len(result.stdout) // 2 * 2], dtype=numpy.int16
+    ).astype("float32") / 32768.0
+    if audio.size == 0:
+        return None
+    try:
+        spans = get_speech_timestamps(
+            audio,
+            VadOptions(min_speech_duration_ms=250, min_silence_duration_ms=400),
+            sampling_rate=16000,
+        )
+    except Exception:                                             # noqa: BLE001
+        return None
+    return [(span["start"] / 16000, span["end"] / 16000) for span in spans]
+
+
+def _spoken_within(windows: list[tuple[float, float]], start: float, end: float) -> float:
+    """Seconds of speech inside a stretch with no caption on it."""
+    return sum(max(0.0, min(end, finish) - max(start, begin))
+               for begin, finish in windows)
+
+
 def _peaks(source: Path, buckets: int = 2000) -> tuple[list[float], float]:
-    """Per-bucket loudness, used to tell a silent gap from a missed line."""
+    """Per-bucket loudness. The fallback when the VAD model is unavailable."""
     result = subprocess.run(
         ["ffmpeg", "-v", "error", "-i", str(source), "-vn",
          "-ac", "1", "-ar", "8000", "-f", "s16le", "-"],
@@ -119,6 +166,8 @@ def inspect(
 
     # A gap only matters where something was being said.
     total = duration or (ordered[-1]["end"] if ordered else 0.0)
+    # Ask what was spoken before falling back to what was loud.
+    windows = speech_windows(source) if source else None
     peaks, measured = ([], 0.0)
     if source and source.is_file():
         peaks, measured = _peaks(source)
@@ -127,13 +176,26 @@ def inspect(
     covered = 0.0
     for segment in ordered:
         if segment["start"] - cursor >= MIN_GAP:
+            if windows is not None:
+                spoken = _spoken_within(windows, cursor, segment["start"])
+                loud = spoken / max(0.01, segment["start"] - cursor)
+                if spoken >= MIN_SPOKEN:
+                    note("missing", cursor,
+                         f"{segment['start']-cursor:.1f} 秒沒有字幕，其中 {spoken:.1f} 秒有人在說話")
+                cursor = max(cursor, segment["end"])
+                continue
             loud = _loudest(peaks, measured, cursor, segment["start"]) if peaks else 1.0
             if loud >= SPEECH_PEAK:
                 note("missing", cursor,
                      f"{segment['start']-cursor:.1f} 秒沒有字幕，但有聲音（峰值 {loud:.2f}）")
         covered += max(0.0, segment["end"] - max(cursor, segment["start"]))
         cursor = max(cursor, segment["end"])
-    if total - cursor >= MIN_GAP and peaks:
+    if total - cursor >= MIN_GAP and windows is not None:
+        spoken = _spoken_within(windows, cursor, total)
+        if spoken >= MIN_SPOKEN:
+            note("missing", cursor,
+                 f"{total-cursor:.1f} 秒沒有字幕，其中 {spoken:.1f} 秒有人在說話")
+    elif total - cursor >= MIN_GAP and peaks:
         loud = _loudest(peaks, measured, cursor, total)
         if loud >= SPEECH_PEAK:
             note("missing", cursor, f"結尾 {total-cursor:.1f} 秒沒有字幕，但有聲音")

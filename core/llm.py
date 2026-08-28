@@ -55,6 +55,13 @@ def _replay(settings: dict[str, Any]) -> Any:
     return ReplayClient(Path(settings["replay_from"]))
 
 
+@provider("ask", "把每一題寫進 --llm-log 讓人回答，這次不做任何修改")
+def _ask(settings: dict[str, Any]) -> Any:
+    if not settings.get("record_to"):
+        raise SystemExit("--llm ask 需要 --llm-log 指定題目要寫到哪裡")
+    return AskClient(Path(settings["record_to"]))
+
+
 class Usage:
     """What the run spent. Kept per client so a step can be blamed for its own
     cost rather than the total appearing at the end as a surprise."""
@@ -107,6 +114,35 @@ class ReplayClient:
             self.at += 1
             return entry["reply"]
         raise RuntimeError("錄影檔沒有這一題的回覆")
+
+
+class AskClient:
+    """Writes down what would have been asked, and changes nothing.
+
+    Answering as the model yourself needs the questions first, and the
+    questions are built deep inside the pipeline -- batched, with the video's
+    description folded in. Rather than reconstruct them, this runs the real
+    thing and records each one, replying that there is nothing to change so
+    the run completes and asks everything it would have asked.
+
+    The empty reply is deliberately shaped as "no edits, no cuts, no cards":
+    every caller reads its own key with a default, so `{}` leaves the
+    transcript exactly as recognition produced it.
+    """
+
+    def __init__(self, log: Path):
+        self.log = log
+        self.entries: list[dict[str, Any]] = []
+
+    def ensure_ready(self) -> None:
+        self.log.parent.mkdir(parents=True, exist_ok=True)
+
+    def chat_json(self, system: str, user: str, timeout: int = 300,
+                  schema: dict[str, Any] | None = None) -> dict[str, Any]:
+        self.entries.append({"system": system, "user": user, "reply": None})
+        self.log.write_text(json.dumps(self.entries, ensure_ascii=False, indent=2),
+                            encoding="utf-8")
+        return {}
 
 
 class Recorder:
