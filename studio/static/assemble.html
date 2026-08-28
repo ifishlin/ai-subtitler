@@ -421,8 +421,26 @@ function watch(name) {
     clearInterval(timer);
     $("go").disabled = false;
     $("note").className = status.state === "error" ? "bad" : "good";
-    $("note").innerHTML = status.state === "error" ? escapeHTML(status.message)
-      : `${escapeHTML(status.message)}　<a href="/">在編輯器打開 ${escapeHTML(name)}</a>`;
+    if (status.state === "error") {
+      $("note").textContent = status.message;
+      return;
+    }
+    // The editor opens whichever run is active, so the link has to make this
+    // one active first -- otherwise it lands on whatever was open before and
+    // the video just made is nowhere to be seen.
+    $("note").innerHTML = `${escapeHTML(status.message)}　`
+      + `<a href="/" id="open">在編輯器打開 ${escapeHTML(name)}</a>`;
+    $("open").addEventListener("click", async (event) => {
+      event.preventDefault();
+      try {
+        await api("POST", "/api/project", { name });
+      } catch (error) {
+        $("note").className = "bad";
+        $("note").textContent = error.message;
+        return;
+      }
+      location.href = "/";
+    });
   }, 1500);
 }
 
