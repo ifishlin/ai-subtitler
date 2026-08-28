@@ -183,8 +183,12 @@ main{display:flex;flex:1;min-height:0}
   flex-wrap:wrap;cursor:move;user-select:none}
 .cardTop input, .cardTop button{cursor:auto}
 .cardTop button{cursor:pointer}
-.cardTop input{width:150px;font:12px var(--mono);color:var(--ink);
-  background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:4px 6px}
+/* The name field, not every input in the bar: the same rule was giving the
+   motion checkbox a width of 150px and standing it a long way from its label. */
+.cardTop input[type=text], #cardName{width:150px;font:12px var(--mono);
+  color:var(--ink);background:var(--panel2);border:1px solid var(--line);
+  border-radius:5px;padding:4px 6px}
+.cardTop input[type=checkbox]{width:auto;margin:0}
 #cardMotionBox{display:flex;align-items:center;gap:4px}
 #cardTemplates{font-size:12px;padding:4px 8px;background:var(--panel2);
   color:var(--ink);border:1px solid var(--line);border-radius:6px}
@@ -3281,6 +3285,9 @@ new ResizeObserver(() => { if (SCENE.data) paintScene(); }).observe($("left"));
     try { opening = localStorage.getItem("tab") || "subs"; } catch (error) { /* ignore */ }
     if (new URLSearchParams(location.search).has("layout")) opening = "layout";
     showTab(opening);
+    // ?card=1 opens the card maker straight away, which is how it gets tested
+    // without a person to press the button.
+    if (new URLSearchParams(location.search).has("card")) openCards();
     if (state.hasReviewedSrt) toast(`接續上次的校對進度`);
   } catch (error) {
     toast("載入失敗：" + error.message, true);
