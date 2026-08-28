@@ -176,6 +176,109 @@ def final_video(name: str) -> FileResponse:
                         headers={"Cache-Control": "no-store"})
 
 
+_assembly: dict[str, Any] = {"state": "idle", "message": "", "output": None}
+_assembly_lock = threading.Lock()
+
+
+@app.get("/api/sources")
+def sources() -> dict[str, Any]:
+    """Everything that can become a piece: finished runs, and raw footage.
+
+    A run brings its subtitles with it, which is what makes joining two
+    interviews possible without transcribing anything again.
+    """
+    found = []
+    for project in list_projects():
+        directory = ROOT / project["name"]
+        run = directory / "run.json"
+        details = json.loads(run.read_text(encoding="utf-8")) if run.is_file() else {}
+        source = Path(details.get("source") or "")
+        if not source.is_file():
+            continue
+        srt = next((directory / name for name in
+                    ("subtitles_bilingual.reviewed.srt", "subtitles_bilingual.srt",
+                     "subtitles_zh.reviewed.srt", "subtitles_zh.srt")
+                    if (directory / name).is_file()), None)
+        found.append({
+            "kind": "run", "name": project["name"],
+            "source": str(source.relative_to(ROOT)) if source.is_relative_to(ROOT) else str(source),
+            "srt": str(srt.relative_to(ROOT)) if srt else None,
+            "seconds": round(media.duration(source), 2),
+            "lines": project["lines"],
+        })
+    for clip in _clips():
+        found.append({
+            "kind": "clip", "name": clip["name"], "source": clip["path"],
+            "srt": None, "seconds": clip["seconds"], "lines": 0,
+        })
+    return {"sources": found}
+
+
+def _assemble_worker(pieces: list[dict[str, Any]], name: str) -> None:
+    from core import assemble as assemble_module
+    try:
+        output = ROOT / name
+        output.mkdir(parents=True, exist_ok=True)
+        video = output / "assembled.mp4"
+        laid = assemble_module.assemble(
+            [{**piece, "source": ROOT / piece["source"],
+              "srt": (ROOT / piece["srt"]) if piece.get("srt") else None}
+             for piece in pieces],
+            video, progress=PREVIEWS / f"{name}.progress",
+        )
+        cues = assemble_module.merge_cues(
+            [{**piece, "srt": (ROOT / piece["srt"]) if piece.get("srt") else None}
+             for piece in pieces])
+        assemble_module.write_srt(cues, output / "subtitles_zh.srt")
+        assemble_module.write_srt(cues, output / "subtitles_bilingual.srt")
+        # The pieces are kept so the assembly can be opened and adjusted rather
+        # than rebuilt from memory.
+        (output / "assembly.json").write_text(
+            json.dumps({"pieces": laid["pieces"]}, ensure_ascii=False, indent=2),
+            encoding="utf-8")
+        (output / "run.json").write_text(
+            json.dumps({"source": str(video), "assembled": True,
+                        "recovered_segments": 0}, ensure_ascii=False, indent=2),
+            encoding="utf-8")
+        with _assembly_lock:
+            _assembly.update(state="done", output=name,
+                             message=f"完成：{name}（{laid['duration']:.1f} 秒，"
+                                     f"{len(cues)} 句字幕）")
+    except Exception as error:                                    # noqa: BLE001
+        traceback.print_exc()
+        with _assembly_lock:
+            _assembly.update(state="error", message=str(error), output=None)
+
+
+@app.post("/api/assemble")
+def start_assembly(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    import re as _re
+    name = str(payload.get("name") or "").strip()
+    if not _re.fullmatch(r"output[\w\u4e00-\u9fff-]{0,48}", name):
+        raise HTTPException(400, "名稱要以 output 開頭，只能用中英文、數字、底線、減號")
+    pieces = payload.get("pieces") or []
+    if not pieces:
+        raise HTTPException(400, "至少要有一段")
+    with _assembly_lock:
+        if _assembly["state"] == "running":
+            return dict(_assembly)
+        _assembly.update(state="running", message=f"組裝 {len(pieces)} 段…", output=None)
+    threading.Thread(target=_assemble_worker, args=(pieces, name), daemon=True).start()
+    return dict(_assembly)
+
+
+@app.get("/api/assemble")
+def assembly_status() -> dict[str, Any]:
+    with _assembly_lock:
+        return dict(_assembly)
+
+
+@app.get("/assemble")
+def assemble_page() -> HTMLResponse:
+    return HTMLResponse((Path(__file__).parent / "static" / "assemble.html")
+                        .read_text(encoding="utf-8"))
+
+
 @app.get("/api/projects")
 def projects() -> dict[str, Any]:
     return {"projects": list_projects(), "active": config["paths"]["output"].name}

@@ -1,0 +1,242 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>組裝影片　AI-Desk</title>
+<style>
+  :root{
+    --bg:#0f1216; --panel:#161b22; --panel2:#1c222b; --line:#2a323d;
+    --ink:#e8eef6; --dim:#9fb0c3; --faint:#6b7788;
+    --accent:#5aa9ff; --warn:#f5b544; --ok:#4ec98b; --danger:#ef6b6b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:14px/1.5 "PingFang TC","Heiti TC",system-ui,sans-serif}
+  header{display:flex;align-items:center;gap:12px;padding:10px 16px;
+    background:var(--panel);border-bottom:1px solid var(--line)}
+  h1{font-size:14px;margin:0;font-weight:600}
+  header .where{font-size:12px;color:var(--faint)}
+  a{color:var(--accent)}
+  button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel2);
+    border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.primary{background:var(--accent);color:#0b1017;border-color:transparent;
+    font-weight:600}
+  button:disabled{opacity:.45;cursor:default}
+  main{display:grid;grid-template-columns:300px 1fr;gap:16px;padding:16px;
+    align-items:start}
+
+  h2{font-size:12px;color:var(--dim);margin:0 0 8px;font-weight:600}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px}
+
+  /* ---------- what can be used ---------- */
+  .source{display:flex;align-items:center;gap:8px;padding:7px 8px;margin-bottom:5px;
+    border:1px solid var(--line);border-radius:7px;background:var(--panel2);
+    cursor:pointer}
+  .source:hover{border-color:var(--accent)}
+  .source .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap;font-size:13px}
+  .source .meta{font:11px var(--mono);color:var(--faint)}
+  .source .tag{font-size:10px;padding:1px 6px;border-radius:99px;border:1px solid var(--line);
+    color:var(--dim)}
+  .source .tag.srt{color:var(--ok);border-color:#2c5a45}
+
+  /* ---------- the running order ---------- */
+  #pieces{min-height:80px}
+  .piece{display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:6px;
+    border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:8px;background:var(--panel2)}
+  .piece .no{font:12px var(--mono);color:var(--faint);min-width:1.4em}
+  .piece .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .piece input{width:88px;font:12px var(--mono);color:var(--ink);background:var(--panel);
+    border:1px solid var(--line);border-radius:5px;padding:4px 6px;text-align:center}
+  .piece .span{font:11px var(--mono);color:var(--faint);min-width:5em;text-align:right}
+  .piece .lift{border:0;background:transparent;color:var(--faint);padding:2px 5px}
+  .piece .lift:hover{color:var(--accent)}
+  .piece.none{border-left-color:var(--faint);opacity:.85}
+  .empty{color:var(--faint);font-size:13px;padding:18px;text-align:center;
+    border:1px dashed var(--line);border-radius:8px}
+
+  .foot{display:flex;align-items:center;gap:10px;margin-top:12px}
+  .foot input{width:230px;font:13px var(--mono);color:var(--ink);background:var(--panel2);
+    border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+  .total{margin-left:auto;font:12px var(--mono);color:var(--dim)}
+  #note{margin-top:10px;font-size:12px;color:var(--faint);min-height:1.4em}
+  #note.bad{color:var(--danger)}
+  #note.good{color:var(--ok)}
+</style>
+
+<header>
+  <h1>組裝影片</h1>
+  <span class="where">把幾段接成一支，字幕跟著接</span>
+  <div style="flex:1"></div>
+  <a href="/">← 回編輯器</a>
+</header>
+
+<main>
+  <section class="card">
+    <h2>可用的片源</h2>
+    <div id="sources"></div>
+    <p style="font-size:12px;color:var(--faint);margin:10px 0 0">
+      點一下加到右邊。<b>有字幕</b>的片源接進去時字幕會跟著走。</p>
+  </section>
+
+  <section class="card">
+    <h2>順序</h2>
+    <div id="pieces"></div>
+    <div class="foot">
+      <label style="font-size:12px;color:var(--dim)">存成
+        <input id="name" value="output_合併" spellcheck="false"></label>
+      <button id="go" class="primary">組裝</button>
+      <span class="total" id="total"></span>
+    </div>
+    <div id="note"></div>
+  </section>
+</main>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const escapeHTML = (text) => String(text).replace(/[&<>"]/g,
+  (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/** Seconds -> m:ss.s, and back. The same two forms the editor accepts. */
+function fmt(t) {
+  t = Math.max(0, t || 0);
+  return `${Math.floor(t / 60)}:${(t % 60).toFixed(1).padStart(4, "0")}`;
+}
+function parseTime(text) {
+  const parts = String(text).trim().replace(",", ".").split(":");
+  if (parts.some((part) => part.trim() === "" || !Number.isFinite(Number(part)))) return NaN;
+  return parts.reduce((total, part) => total * 60 + Number(part), 0);
+}
+
+const STATE = { sources: [], pieces: [] };
+
+async function api(method, path, body) {
+  const response = await fetch(path, {
+    method, headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.detail || `${method} ${path} 失敗`);
+  return data;
+}
+
+function renderSources() {
+  $("sources").innerHTML = STATE.sources.map((source, index) => `
+    <div class="source" data-source="${index}">
+      <span class="name">${escapeHTML(source.name)}</span>
+      <span class="meta">${fmt(source.seconds)}</span>
+      ${source.srt ? '<span class="tag srt">有字幕</span>'
+                   : '<span class="tag">無字幕</span>'}
+    </div>`).join("") || '<div class="empty">沒有可用的片源</div>';
+}
+
+function renderPieces() {
+  if (!STATE.pieces.length) {
+    $("pieces").innerHTML = '<div class="empty">左邊點一個片源加進來</div>';
+  } else {
+    $("pieces").innerHTML = STATE.pieces.map((piece, index) => `
+      <div class="piece ${piece.srt ? "" : "none"}" data-piece="${index}">
+        <span class="no">${index + 1}</span>
+        <span class="name">${escapeHTML(piece.name)}</span>
+        <input data-edge="from" value="${fmt(piece.from)}" title="從第幾秒開始">
+        <span style="color:var(--faint)">–</span>
+        <input data-edge="to" value="${fmt(piece.to)}" title="到第幾秒">
+        <span class="span">${fmt(piece.to - piece.from)}</span>
+        <button class="lift" data-move="-1" title="往前">▲</button>
+        <button class="lift" data-move="1" title="往後">▼</button>
+        <button class="lift" data-drop="1" title="移除">✕</button>
+      </div>`).join("");
+  }
+  const total = STATE.pieces.reduce((sum, piece) => sum + (piece.to - piece.from), 0);
+  const noSubs = STATE.pieces.filter((piece) => !piece.srt).length;
+  $("total").textContent = STATE.pieces.length
+    ? `${STATE.pieces.length} 段　共 ${fmt(total)}` + (noSubs ? `　${noSubs} 段沒有字幕` : "")
+    : "";
+  $("go").disabled = !STATE.pieces.length;
+}
+
+$("sources").addEventListener("click", (event) => {
+  const row = event.target.closest("[data-source]");
+  if (!row) return;
+  const source = STATE.sources[Number(row.dataset.source)];
+  STATE.pieces.push({ ...source, from: 0, to: source.seconds });
+  renderPieces();
+});
+
+$("pieces").addEventListener("click", (event) => {
+  const row = event.target.closest("[data-piece]");
+  if (!row) return;
+  const index = Number(row.dataset.piece);
+  if (event.target.dataset.drop) {
+    STATE.pieces.splice(index, 1);
+  } else if (event.target.dataset.move) {
+    const to = index + Number(event.target.dataset.move);
+    if (to < 0 || to >= STATE.pieces.length) return;
+    [STATE.pieces[index], STATE.pieces[to]] = [STATE.pieces[to], STATE.pieces[index]];
+  } else {
+    return;
+  }
+  renderPieces();
+});
+
+$("pieces").addEventListener("change", (event) => {
+  const row = event.target.closest("[data-piece]");
+  const edge = event.target.dataset.edge;
+  if (!row || !edge) return;
+  const piece = STATE.pieces[Number(row.dataset.piece)];
+  const value = parseTime(event.target.value);
+  if (!Number.isFinite(value)) { renderPieces(); return; }
+  piece[edge] = Math.min(Math.max(0, value), piece.seconds);
+  // A piece has to have something in it, and cannot end before it starts.
+  if (piece.to <= piece.from) piece.to = Math.min(piece.seconds, piece.from + 1);
+  renderPieces();
+});
+
+$("go").onclick = async () => {
+  const name = $("name").value.trim();
+  $("go").disabled = true;
+  $("note").className = "";
+  $("note").textContent = "組裝中…（整支重新編碼，大約和影片長度差不多）";
+  try {
+    await api("POST", "/api/assemble", {
+      name,
+      pieces: STATE.pieces.map((piece) => ({
+        source: piece.source, srt: piece.srt, from: piece.from, to: piece.to,
+      })),
+    });
+    watch(name);
+  } catch (error) {
+    $("note").className = "bad";
+    $("note").textContent = error.message;
+    $("go").disabled = false;
+  }
+};
+
+/** The assembly runs in the background; this asks how it is going. */
+function watch(name) {
+  const timer = setInterval(async () => {
+    let status;
+    try { status = await api("GET", "/api/assemble"); } catch (error) { return; }
+    if (status.state === "running") return;
+    clearInterval(timer);
+    $("go").disabled = false;
+    $("note").className = status.state === "error" ? "bad" : "good";
+    $("note").innerHTML = status.state === "error" ? escapeHTML(status.message)
+      : `${escapeHTML(status.message)}　<a href="/">在編輯器打開 ${escapeHTML(name)}</a>`;
+  }, 1500);
+}
+
+(async function boot() {
+  try {
+    STATE.sources = (await api("GET", "/api/sources")).sources;
+  } catch (error) {
+    $("note").className = "bad";
+    $("note").textContent = error.message;
+  }
+  renderSources();
+  renderPieces();
+})();
+</script>
