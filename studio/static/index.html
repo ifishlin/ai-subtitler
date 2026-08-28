@@ -388,7 +388,24 @@ main{display:flex;flex:1;min-height:0}
   justify-content:center;z-index:20}
 #help.on{display:flex}
 #help .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
-  padding:20px 24px;max-width:560px;box-shadow:0 20px 60px #000a}
+  padding:18px 24px 20px;max-width:640px;max-height:82vh;overflow:auto;
+  box-shadow:0 20px 60px #000a}
+.guideTabs{display:flex;gap:2px;margin-bottom:12px}
+.guideTabs button{border:1px solid transparent;border-radius:7px;background:transparent;
+  color:var(--dim);padding:5px 14px;font-size:13px}
+.guideTabs button.on{background:var(--bg);border-color:var(--line);color:var(--ink);
+  font-weight:600}
+.guide{display:none}
+.guide.on{display:block}
+#help h3{margin:16px 0 6px;font-size:13px;color:var(--accent)}
+#help h3:first-of-type{margin-top:4px}
+#help p{margin:0;font-size:13px;line-height:1.7;color:var(--dim)}
+#help p b{color:var(--ink)}
+#help code{font:12px var(--mono);color:var(--ink);background:var(--panel2);
+  padding:1px 5px;border-radius:4px}
+#help p.warn{margin-top:8px;padding:8px 10px;border-radius:7px;
+  background:#2a2416;border:1px solid #5b4a22;color:var(--warn)}
+#help p.warn b{color:var(--warn)}
 #help table{border-collapse:collapse;font-size:13px}
 #help td{padding:4px 12px 4px 0;vertical-align:top}
 #help h2{margin:0 0 12px;font-size:15px}
@@ -557,6 +574,45 @@ main{display:flex;flex:1;min-height:0}
 </div>
 
 <div id="help"><div class="card">
+  <div class="guideTabs">
+    <button data-guide="use" class="on">使用指南</button>
+    <button data-guide="keys">快速鍵</button>
+  </div>
+
+  <section id="guideUse" class="guide on">
+    <h3>三個頁籤，三種工作</h3>
+    <p><b>字幕</b>　改文字、調時間、確認。左邊時間軸會顯示每一句、空白區、待審的段落。<br>
+    <b>版面</b>　決定畫面長什麼樣：影片放哪、字幕放哪、加圖、加卡片、加素材片。<br>
+    <b>剪接</b>　把不要的段落剪掉。在時間軸上 <kbd>Shift</kbd> + 拖曳選一段，按「剪掉這段」。</p>
+
+    <h3>做一張資訊卡</h3>
+    <p>版面頁籤 →「新增卡片」→ 選一種（大數字／表格／長條圖／對比卡／時間軸／標題／引言）→
+    左邊改字，右邊即時預覽 → 取名 →「存成 PNG」。<br>
+    <b>存檔</b> 只留 HTML 不出圖，改到一半可以按。<b>配色</b> 一次換整組顏色。
+    <b>進場動畫</b> 會多產生一支動畫檔，卡片會逐行浮現。</p>
+
+    <h3>放到畫面上</h3>
+    <p>素材匣裡拖到左邊畫布。拖框移動、右下角小方塊縮放（圖會保持比例，按 <kbd>Shift</kbd> 可自由變形）。<br>
+    選取後可以改「出現／到」的時間、「全片」、「移到最上層」、「刪除」。<br>
+    區間外的元件只留虛線框，還是點得到、拖得動。</p>
+
+    <h3>素材片（第二支影片）</h3>
+    <p>放進 <code>clips/</code> 的 mp4 會出現在素材匣，前面有 ▶ 記號。拖上畫布即可。<br>
+    聲音不會進成品 —— 素材的環境音會蓋掉受訪者。</p>
+    <p class="warn"><b>建議同時最多三支。</b>網頁預覽每一支都要一個解碼器，這台機器沒有獨顯，
+    同時播三支以上會開始頓。燒錄沒有這個限制，只是會變慢。</p>
+
+    <h3>看成果</h3>
+    <p><b>壓 10 秒看成品</b>　從播放頭往前 1 秒起壓 10 秒，約 10 秒鐘，用來確認版面。<br>
+    <b>重新燒錄</b>　整支壓出來，四分半的片約 4 分鐘，進度顯示在按鈕旁。<br>
+    <b>看成品</b>　播放已經燒好的檔案。</p>
+
+    <h3>檔案放哪</h3>
+    <p><code>img/</code> 圖和卡片　<code>cards/</code> 卡片的 HTML　<code>clips/</code> 素材影片<br>
+    <code>output_xxx/</code> 字幕、scene.json、成品　<code>editor_cache/</code> 全部可重建</p>
+  </section>
+
+  <section id="guideKeys" class="guide">
   <h2>快速鍵</h2>
   <h3>不在輸入框時</h3>
   <table>
@@ -582,6 +638,7 @@ main{display:flex;flex:1;min-height:0}
     <tr><td><kbd>,</kbd> <kbd>.</kbd></td><td>開始時間 ∓0.1 秒</td></tr>
     <tr><td><kbd>;</kbd> <kbd>'</kbd></td><td>結束時間 ∓0.1 秒</td></tr>
   </table>
+  </section>
   <div style="margin-top:16px;text-align:right"><button id="btnHelpClose">關閉</button></div>
 </div></div>
 <div id="audit"></div>
@@ -1595,6 +1652,17 @@ $("btnBack").onclick = () => seek(video.currentTime - 2);
 $("btnFwd").onclick = () => seek(video.currentTime + 2);
 $("btnHelp").onclick = () => $("help").classList.add("on");
 $("btnHelpClose").onclick = () => $("help").classList.remove("on");
+document.querySelector(".guideTabs").addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  for (const tab of document.querySelectorAll(".guideTabs button")) {
+    tab.classList.toggle("on", tab === button);
+  }
+  for (const pane of document.querySelectorAll(".guide")) {
+    pane.classList.toggle("on", pane.id ===
+      "guide" + button.dataset.guide[0].toUpperCase() + button.dataset.guide.slice(1));
+  }
+});
 $("help").onclick = (event) => { if (event.target.id === "help") $("help").classList.remove("on"); };
 
 /* ============================== save & burn ============================== */
@@ -2940,20 +3008,34 @@ function syncSceneTime() {
     const out = from !== undefined && (now < from || now > to);
     node.classList.toggle("out", out);
 
-    // Footage follows the playhead rather than running on its own clock:
-    // scrubbing has to show the frame that will actually be there, and two
-    // clocks would not agree for long.
+    // Footage runs on its own while the video plays, and is only nudged when
+    // it drifts. Stepping it from timeupdate instead looked broken for a
+    // simple reason: that event arrives about four times a second, so the
+    // clip advanced four frames a second and stuttered.
     const inset = element.type === "clip" ? node.querySelector("video") : null;
-    if (inset && !out) {
-      const wanted = (Number(element.at) || 0) + (now - from);
-      if (Number.isFinite(wanted) && Math.abs(inset.currentTime - wanted) > 0.12) {
-        try { inset.currentTime = Math.max(0, wanted); } catch (error) { /* not ready */ }
+    if (inset) {
+      const wanted = Math.max(0, (Number(element.at) || 0) + (now - from));
+      if (out) {
+        if (!inset.paused) inset.pause();
+      } else if (video.paused) {
+        if (!inset.paused) inset.pause();
+        if (Number.isFinite(wanted) && Math.abs(inset.currentTime - wanted) > 0.05) {
+          try { inset.currentTime = wanted; } catch (error) { /* not ready yet */ }
+        }
+      } else {
+        // Playing: let it run, and correct only a drift a viewer could see.
+        if (Number.isFinite(wanted) && Math.abs(inset.currentTime - wanted) > 0.35) {
+          try { inset.currentTime = wanted; } catch (error) { /* not ready yet */ }
+        }
+        if (inset.paused) inset.play().catch(() => {});
       }
     }
   });
 }
 video.addEventListener("timeupdate", syncSceneTime);
 video.addEventListener("seeked", syncSceneTime);
+video.addEventListener("play", syncSceneTime);
+video.addEventListener("pause", syncSceneTime);
 
 function label(element) {
   const kind = { video: "影片", subtitle: "字幕", image: "圖", clip: "素材片" }[element.type] || element.type;
@@ -3329,6 +3411,7 @@ new ResizeObserver(() => { if (SCENE.data) paintScene(); }).observe($("left"));
     // ?card=1 opens the card maker straight away, which is how it gets tested
     // without a person to press the button.
     if (new URLSearchParams(location.search).has("card")) openCards();
+    if (new URLSearchParams(location.search).has("help")) $("help").classList.add("on");
     // ?t=25 opens at a moment, which is how a placed element gets looked at
     // without someone dragging the playhead there.
     const at = Number(new URLSearchParams(location.search).get("t"));
