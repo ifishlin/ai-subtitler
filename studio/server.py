@@ -10,6 +10,7 @@ editor_cache/. Nothing in produce.py or core/ is modified or re-run.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import subprocess
 import sys
 import threading
@@ -52,8 +53,25 @@ CLIP_DIR = "clips"                  # footage to lay over the frame
 CARDS_TRIMMED = 2                   # scenes carrying cards cropped to their art
 
 
+def cache_key(source: Path) -> str:
+    """A name unique to this file as it is right now.
+
+    Every assembly is called assembled.mp4, so the stem alone had two different
+    runs share one proxy, one waveform and one filmstrip -- and re-assembling
+    under the same name left the timeline drawn from the previous video, which
+    is what a broken preview looks like. Size and modification time make a
+    rebuilt file a different key, so nothing stale is ever reused.
+    """
+    try:
+        stat = source.stat()
+        mark = f"{source.resolve()}|{stat.st_size}|{int(stat.st_mtime)}"
+    except OSError:
+        mark = str(source)
+    return f"{source.stem}-{hashlib.sha1(mark.encode()).hexdigest()[:8]}"
+
+
 def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
-    stem = source.stem if source else "none"
+    stem = cache_key(source) if source else "none"
     return {
         "output": output,
         "state": REVIEWS / f"{output.name}.json",
@@ -271,7 +289,7 @@ def _allowed_source(path: str) -> Path:
 def source_strip(path: str) -> FileResponse:
     """Thumbnails across a whole source, for trimming a piece by eye."""
     source = _allowed_source(path)
-    strip = FILMSTRIP / f"src_{source.stem}.png"
+    strip = FILMSTRIP / f"src_{cache_key(source)}.png"
     seconds = media.duration(source)
     media.ensure_filmstrip(_playable(source), strip, seconds,
                            every=max(1.0, seconds / 60))
@@ -286,7 +304,7 @@ def source_poster(path: str) -> FileResponse:
     often black, a slate, or a fade, and a black rectangle identifies nothing.
     """
     source = _allowed_source(path)
-    poster = FILMSTRIP / f"poster_{source.stem}.jpg"
+    poster = FILMSTRIP / f"poster_{cache_key(source)}.jpg"
     if not poster.is_file():
         poster.parent.mkdir(parents=True, exist_ok=True)
         seconds = media.duration(source)
@@ -305,7 +323,7 @@ def _playable(source: Path) -> Path:
     cannot, and the proxy exists for exactly this reason."""
     if source.suffix.lower() == ".mp4" and source.parent.name == CLIP_DIR:
         return source
-    return media.ensure_proxy(source, PROXY / f"{source.stem}.mp4")
+    return media.ensure_proxy(source, PROXY / f"{cache_key(source)}.mp4")
 
 
 @app.get("/media/sourceplay")
