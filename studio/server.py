@@ -39,6 +39,7 @@ WAVEFORM = CACHE / "waveform"        # peak summaries for the timeline
 REVIEWS = CACHE / "review"           # a session's confirmations, per run
 CAPTIONS = CACHE / "captions"        # drawn captions, one directory per run
 PREVIEWS = CACHE / "preview"         # short test burns and burn progress
+FILMSTRIP = CACHE / "filmstrip"      # one tiled image of thumbnails per source
 SCRATCH = CACHE / "scratch"          # anything written by hand while working
 STATIC = Path(__file__).resolve().parent / "static"
 
@@ -58,6 +59,7 @@ def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
         "reviewed_mp4": output / "final_reviewed.mp4",
         "proxy": PROXY / f"{stem}.mp4",
         "peaks": WAVEFORM / f"{stem}.json",
+        "film": FILMSTRIP / f"{stem}.png",
         "scene": output / "scene.json",
         "burn_progress": PREVIEWS / f"{output.name}.progress",
         "captions": CAPTIONS / output.name,
@@ -400,6 +402,19 @@ def put_scene(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     return payload
 
 
+@app.get("/media/filmstrip.png")
+def filmstrip() -> FileResponse:
+    """The thumbnails, made on first request rather than at startup: three
+    seconds is worth waiting for once, but not before the editor opens."""
+    paths = config["paths"]
+    # Made from the proxy, not the source: the source is AV1, and decoding it
+    # to pull sixty frames took fifteen seconds where the H.264 copy takes
+    # three. The proxy exists by the time anything can ask for this.
+    config["film"] = media.ensure_filmstrip(paths["proxy"], paths["film"],
+                                            config["duration"])
+    return FileResponse(paths["film"], media_type="image/png")
+
+
 @app.get("/api/state")
 def get_state() -> dict[str, Any]:
     paths = config["paths"]
@@ -415,6 +430,7 @@ def get_state() -> dict[str, Any]:
         "gaps": review.find_gaps(segments, total),
         "visuals": config["visuals"],
         "peaks": config["peaks"],
+        "film": {"every": media.FILM_EVERY, "height": media.FILM_HEIGHT},
         "finished": finished_videos(),
         "reviewedSrt": str(paths["reviewed_srt"].relative_to(ROOT)),
         "hasReviewedSrt": paths["reviewed_srt"].is_file(),
@@ -738,7 +754,7 @@ def unhandled(request, error: Exception) -> JSONResponse:          # noqa: ANN00
 
 def activate(output: Path, source: Path | None = None) -> None:
     """Point the editor at one pipeline run, preparing its media if needed."""
-    for drawer in (PROXY, WAVEFORM, REVIEWS, CAPTIONS, PREVIEWS, SCRATCH):
+    for drawer in (PROXY, WAVEFORM, REVIEWS, CAPTIONS, PREVIEWS, SCRATCH, FILMSTRIP):
         drawer.mkdir(parents=True, exist_ok=True)
     source = source or find_source(output)
     paths = paths_for(output, source)

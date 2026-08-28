@@ -651,6 +651,18 @@ const video = $("video");
    while the page is still being set up, long before the scene block below. */
 const SCENE = { data: null, images: [], sel: null, dirty: false, nodes: [],
                 captions: null };   // the drawn caption pictures, once asked for
+
+/* A sheet of thumbnails, fetched once per run. Until it arrives the track is
+   an empty strip rather than a gap, so the timeline does not jump when it
+   lands. */
+const FILM = { sheet: new Image(), ready: false, every: 5 };
+FILM.sheet.addEventListener("load", () => { FILM.ready = true; drawTimeline(); });
+
+function loadFilmstrip(project, every) {
+  FILM.ready = false;
+  FILM.every = every || 5;
+  FILM.sheet.src = `/media/filmstrip.png?p=${encodeURIComponent(project)}`;
+}
 const escapeHTML = (text) => String(text).replace(
   /[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const SPAN = 5;               // seconds a freshly dropped image lasts
@@ -765,7 +777,8 @@ const tl = $("tl"), ctx = tl.getContext("2d");
    everything. The rest comes and goes with the tab. */
 const RULER = [0, 18];
 const TRACKS = [
-  { key: "wave",  height: 66, tabs: null,       legend: [["#3f4a5a", "波形"]] },
+  { key: "film",  height: 46, tabs: null,       legend: [] },
+  { key: "wave",  height: 54, tabs: null,       legend: [["#3f4a5a", "波形"]] },
   { key: "subs",  height: 22, tabs: ["subs"],
     legend: [["#5aa9ff", "字幕"], ["#f5b544", "LLM 改動大"],
              ["#a98bff", "漏聽補句"], ["#4ec98b", "已確認"]] },
@@ -853,6 +866,37 @@ function drawTimeline() {
     // a half-step tick, unlabelled, for reading between the numbers
     const half = left + (step / 2 / span) * width;
     if (half < width) { ctx.fillStyle = "#333c49"; ctx.fillRect(half, ry2 - 3, 1, 3); }
+  }
+
+  // thumbnails: one every few seconds of the source, each drawn across the
+  // width its own seconds occupy in the finished video, and skipped entirely
+  // where a cut removed it
+  if (LANE.film) {
+    const [fy, fy2] = LANE.film;
+    ctx.fillStyle = "#14171c";
+    ctx.fillRect(0, fy, width, fy2 - fy);
+    if (FILM.ready && S.duration && span) {
+      const tiles = Math.ceil(S.duration / FILM.every);
+      const slice = FILM.sheet.width / tiles;
+      // Thumbnails keep their shape and are laid side by side across the bar,
+      // rather than each being squeezed into the width its own seconds occupy
+      // -- five seconds of a four-minute video is fifteen pixels, and nothing
+      // is recognisable at fifteen pixels.
+      const tileW = Math.round((fy2 - fy) * (16 / 9));
+      ctx.save();
+      ctx.beginPath(); ctx.rect(0, fy, width, fy2 - fy); ctx.clip();
+      for (let left = 0; left < width; left += tileW) {
+        const at = srcTime((left / width) * span);
+        const index = Math.min(tiles - 1, Math.floor(at / FILM.every));
+        ctx.drawImage(FILM.sheet, index * slice, 0, slice, FILM.sheet.height,
+                      left, fy, tileW, fy2 - fy);
+        ctx.strokeStyle = "#0b0d10";
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(left + 0.5, fy); ctx.lineTo(left + 0.5, fy2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
   }
 
   // waveform, sampled in output time so the cut audio simply is not shown
@@ -1800,6 +1844,7 @@ function applyState(state) {
   $("bilingualBox").style.display = S.translated ? "flex" : "none";
   S.bilingual = S.translated && $("bilingual").checked;
   renderFinished(state.finished);
+  loadFilmstrip(state.project, state.film && state.film.every);
   renderList(); drawTimeline(); syncOverlay();
 }
 

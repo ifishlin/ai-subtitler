@@ -9,6 +9,9 @@ import array
 import json
 import subprocess
 from pathlib import Path
+from typing import Any
+
+from PIL import Image
 
 PROXY_HEIGHT = 640
 WAVEFORM_BUCKETS = 2400
@@ -46,6 +49,35 @@ def ensure_proxy(video: Path, proxy: Path) -> Path:
     ])
     partial.replace(proxy)
     return proxy
+
+
+FILM_EVERY = 5.0        # seconds between thumbnails
+FILM_HEIGHT = 56        # tall enough to recognise a shot, small enough to be cheap
+
+
+def ensure_filmstrip(video: Path, strip: Path, duration: float) -> dict[str, Any]:
+    """One wide image holding a thumbnail every few seconds.
+
+    A row of pictures answers "where am I" faster than a waveform does, and it
+    is the same question the timeline exists to answer. One ffmpeg pass tiles
+    them into a single file, so the browser fetches one image rather than sixty,
+    and it is kept like the proxy: derived, cached, regenerated when the video
+    changes.
+    """
+    tiles = max(1, int(duration // FILM_EVERY) + 1)
+    if not _is_fresh(strip, video):
+        strip.parent.mkdir(parents=True, exist_ok=True)
+        partial = strip.with_suffix(".partial.png")
+        _ffmpeg([
+            "ffmpeg", "-y", "-v", "error", "-i", str(video),
+            "-vf", f"fps=1/{FILM_EVERY},scale=-1:{FILM_HEIGHT},tile={tiles}x1",
+            "-frames:v", "1", str(partial),
+        ])
+        partial.replace(strip)
+    with Image.open(strip) as sheet:
+        width, height = sheet.size
+    return {"every": FILM_EVERY, "tiles": tiles,
+            "width": width // tiles, "height": height}
 
 
 def ensure_waveform(video: Path, peaks_path: Path) -> list[float]:
