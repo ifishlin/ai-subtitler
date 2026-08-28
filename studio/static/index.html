@@ -185,6 +185,7 @@ main{display:flex;flex:1;min-height:0}
 .cardTop button{cursor:pointer}
 .cardTop input{width:150px;font:12px var(--mono);color:var(--ink);
   background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:4px 6px}
+#cardMotionBox{display:flex;align-items:center;gap:4px}
 #cardTemplates{font-size:12px;padding:4px 8px;background:var(--panel2);
   color:var(--ink);border:1px solid var(--line);border-radius:6px}
 
@@ -590,6 +591,9 @@ main{display:flex;flex:1;min-height:0}
     <button id="cardRename" class="tiny" style="display:none"></button>
     <button id="cardFresh" class="tiny" title="丟掉這張卡片的草稿，回到模板原本的樣子">回到模板原版</button>
     <button id="cardRevert" class="tiny" title="回到這張卡片上次存成 PNG 時的內容">回到上次存檔</button>
+    <label id="cardMotionBox" title="存成 PNG 時一併產生進場動畫">
+      <input type="checkbox" id="cardMotion" checked>進場動畫
+    </label>
     <button id="cardStore" class="tiny">存檔</button>
     <button id="cardSave" class="primary">存成 PNG</button>
     <button id="cardClose">關閉</button>
@@ -2191,9 +2195,30 @@ $("cardTemplates").addEventListener("change", (event) => {
 
 /** Show the HTML as the capture will see it. srcdoc keeps it same-origin-ish
  *  and sandboxed: a card is a picture, and pictures do not need scripts. */
+/* The animation the capture will freeze frame by frame, here simply running.
+   Adding it in the preview rather than writing it into every template keeps
+   one description of the motion, and lets it be switched off without editing
+   the card. It mirrors MOTION_CSS in core/motion.py. */
+const MOTION_CSS = `
+  #card { animation: cardIn .28s both cubic-bezier(.2,.7,.3,1) }
+  @keyframes cardIn { from { opacity:0; transform:scale(.97) } to { opacity:1 } }
+  #card > * { animation: cardRise .45s both cubic-bezier(.2,.7,.3,1);
+              animation-delay: calc(.1s * var(--row, 0)) }
+  #card > *:nth-child(1){--row:0} #card > *:nth-child(2){--row:1}
+  #card > *:nth-child(3){--row:2} #card > *:nth-child(4){--row:3}
+  #card > *:nth-child(5){--row:4} #card > *:nth-child(6){--row:5}
+  #card > *:nth-child(7){--row:6} #card > *:nth-child(8){--row:7}
+  @keyframes cardRise { from { opacity:0; transform:translateY(16px) }
+                        to { opacity:1; transform:none } }`;
+
 function drawCard() {
-  $("cardPreview").srcdoc = $("cardHtml").value;
+  const html = $("cardHtml").value;
+  const shown = $("cardMotion").checked && html.includes("</style>")
+    ? html.replace("</style>", MOTION_CSS + "</style>")
+    : html;
+  $("cardPreview").srcdoc = shown;
 }
+$("cardMotion").addEventListener("change", drawCard);
 
 /** Draw the card at its real size, then scale the whole frame down to fit.
  *  A card is often wider than half a dialog, and letting the iframe clip it
@@ -2510,8 +2535,10 @@ async function saveCard(render) {
   $("cardNote").textContent = render
     ? ($("cardMotion").checked ? "截圖並產生動畫中…" : "截圖中…") : "存檔中…";
   try {
-    const made = await api("POST", "/api/card",
-                           { name, html: $("cardHtml").value, render });
+    const made = await api("POST", "/api/card", {
+      name, html: $("cardHtml").value, render,
+      motion: render && $("cardMotion").checked,
+    });
     CARD.made = (CARD.made || []).filter((item) => item.name !== name)
       .concat([{ name, html: $("cardHtml").value }]);
     CARD.key = name;
