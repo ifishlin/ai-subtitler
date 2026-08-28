@@ -55,7 +55,8 @@ FILM_EVERY = 5.0        # seconds between thumbnails
 FILM_HEIGHT = 56        # tall enough to recognise a shot, small enough to be cheap
 
 
-def ensure_filmstrip(video: Path, strip: Path, duration: float) -> dict[str, Any]:
+def ensure_filmstrip(video: Path, strip: Path, duration: float,
+                     every: float = FILM_EVERY) -> dict[str, Any]:
     """One wide image holding a thumbnail every few seconds.
 
     A row of pictures answers "where am I" faster than a waveform does, and it
@@ -64,19 +65,19 @@ def ensure_filmstrip(video: Path, strip: Path, duration: float) -> dict[str, Any
     and it is kept like the proxy: derived, cached, regenerated when the video
     changes.
     """
-    tiles = max(1, int(duration // FILM_EVERY) + 1)
+    tiles = max(1, int(duration // every) + 1)
     if not _is_fresh(strip, video):
         strip.parent.mkdir(parents=True, exist_ok=True)
         partial = strip.with_suffix(".partial.png")
         _ffmpeg([
             "ffmpeg", "-y", "-v", "error", "-i", str(video),
-            "-vf", f"fps=1/{FILM_EVERY},scale=-1:{FILM_HEIGHT},tile={tiles}x1",
+            "-vf", f"fps=1/{every},scale=-1:{FILM_HEIGHT},tile={tiles}x1",
             "-frames:v", "1", str(partial),
         ])
         partial.replace(strip)
     with Image.open(strip) as sheet:
         width, height = sheet.size
-    return {"every": FILM_EVERY, "tiles": tiles,
+    return {"every": every, "tiles": tiles,
             "width": width // tiles, "height": height}
 
 

@@ -259,6 +259,20 @@ def images() -> dict[str, Any]:
     return {"images": _images(), "clips": _clips()}
 
 
+@app.get("/media/clipstrip/{name}.png")
+def clip_strip(name: str) -> FileResponse:
+    """Thumbnails of one placed clip, for drawing inside its bar on the
+    timeline. Made on first request and cached like the main filmstrip."""
+    wanted = f"{CLIP_DIR}/{name}"
+    clip = next((item for item in _clips() if item["path"] == wanted), None)
+    if clip is None:
+        raise HTTPException(404, f"找不到 {wanted}")
+    strip = FILMSTRIP / f"clip_{Path(name).stem}.png"
+    media.ensure_filmstrip(ROOT / CLIP_DIR / name, strip,
+                           clip["seconds"] or 10.0, every=1.0)
+    return FileResponse(strip, media_type="image/png")
+
+
 @app.get("/media/clip/{name}")
 def clip_file(name: str) -> FileResponse:
     """Serve one placeable clip, matched against the listing rather than joined."""

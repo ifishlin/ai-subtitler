@@ -727,6 +727,23 @@ const SCENE = { data: null, images: [], sel: null, dirty: false, nodes: [],
 const FILM = { sheet: new Image(), ready: false, every: 5 };
 FILM.sheet.addEventListener("load", () => { FILM.ready = true; drawTimeline(); });
 
+/* A placed clip gets its own strip, drawn inside its bar on the timeline: the
+   bar then says what the footage is rather than only when it is. Fetched the
+   first time it is needed and kept, since a scene rarely holds many. */
+const CLIP_FILM = new Map();
+
+function clipStrip(file) {
+  const name = file.split("/").pop();
+  let sheet = CLIP_FILM.get(name);
+  if (!sheet) {
+    sheet = new Image();
+    sheet.addEventListener("load", () => drawTimeline());
+    sheet.src = `/media/clipstrip/${encodeURIComponent(name)}.png`;
+    CLIP_FILM.set(name, sheet);
+  }
+  return sheet.complete && sheet.naturalWidth ? sheet : null;
+}
+
 function loadFilmstrip(project, every) {
   FILM.ready = false;
   FILM.every = every || 5;
@@ -852,7 +869,9 @@ const TRACKS = [
     legend: [["#5aa9ff", "字幕"], ["#f5b544", "LLM 改動大"],
              ["#a98bff", "漏聽補句"], ["#4ec98b", "已確認"]] },
   { key: "gaps",  height: 12, tabs: ["subs"],   legend: [["#ef6b6b", "字幕空白區"]] },
-  { key: "cards", height: 14, tabs: ["layout"],
+  // Tall enough to show what a clip actually contains; a coloured sliver was
+  // enough when a bar only had to say "something is here".
+  { key: "cards", height: 34, tabs: ["layout"],
     legend: [["#8a6d3b", "資訊圖卡"], ["#3b6ea8", "版面上的圖"]] },
 ];
 const TRACK_GAP = 10;
@@ -1019,8 +1038,30 @@ function drawTimeline() {
     SCENE.data.elements.forEach((element, index) => {
       if (!["image", "clip"].includes(element.type) || element.from === undefined) return;
       const to = element.to ?? element.from + SPAN;
+      const left = x(element.from), wide = Math.max(3, x(to) - left);
+      const sheet = element.type === "clip" ? clipStrip(element.file) : null;
+      if (sheet) {
+        // The footage itself, inside its own bar: what is laid over the frame
+        // here, not just that something is.
+        const tiles = Math.max(1, Math.round(sheet.width / (sheet.height * 16 / 9)));
+        const slice = sheet.width / tiles;
+        const tileW = Math.max(6, (cy2 - cy) * (16 / 9));
+        ctx.save();
+        ctx.beginPath(); ctx.rect(left, cy, wide, cy2 - cy); ctx.clip();
+        for (let at = 0; at < wide; at += tileW) {
+          const into = (Number(element.at) || 0) + (at / wide) * (to - element.from);
+          const which = Math.min(tiles - 1, Math.max(0, Math.floor(into)));
+          ctx.drawImage(sheet, which * slice, 0, slice, sheet.height,
+                        left + at, cy, tileW, cy2 - cy);
+        }
+        ctx.restore();
+        ctx.strokeStyle = index === SCENE.sel ? "#5aa9ff" : "#3b6ea8";
+        ctx.lineWidth = index === SCENE.sel ? 2 : 1;
+        ctx.strokeRect(left + 0.5, cy + 0.5, wide - 1, cy2 - cy - 1);
+        return;
+      }
       ctx.fillStyle = index === SCENE.sel ? "#5aa9ff" : "#3b6ea8";
-      ctx.fillRect(x(element.from), cy, Math.max(3, x(to) - x(element.from)), cy2 - cy);
+      ctx.fillRect(left, cy, wide, cy2 - cy);
     });
   }
   }
@@ -2824,6 +2865,12 @@ async function loadScene() {
     toast("版面讀取失敗：" + error.message, true);
   }
   renderTray();
+  // Ask for each placed clip's strip now rather than when the timeline first
+  // tries to draw it: the bar would otherwise be blank until something else
+  // caused a redraw.
+  for (const element of (SCENE.data && SCENE.data.elements) || []) {
+    if (element.type === "clip") clipStrip(element.file);
+  }
   applyInsetView();
   showCut();
   renderLayers();
