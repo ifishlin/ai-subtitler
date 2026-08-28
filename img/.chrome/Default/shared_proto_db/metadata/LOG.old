@@ -1,2 +1,3 @@
-2026/08/28-09:24:47.708 36efac Creating DB /Volumes/Fish/Video_pipeline/img/.chrome/Default/shared_proto_db/metadata since it was missing.
-2026/08/28-09:24:48.438 36efac Reusing MANIFEST /Volumes/Fish/Video_pipeline/img/.chrome/Default/shared_proto_db/metadata/MANIFEST-000001
+2026/08/28-10:05:00.343 37a7de Reusing MANIFEST /Volumes/Fish/Video_pipeline/img/.chrome/Default/shared_proto_db/metadata/MANIFEST-000001
+2026/08/28-10:05:00.343 37a7de Recovering log #3
+2026/08/28-10:05:00.387 37a7de Reusing old log /Volumes/Fish/Video_pipeline/img/.chrome/Default/shared_proto_db/metadata/000003.log 

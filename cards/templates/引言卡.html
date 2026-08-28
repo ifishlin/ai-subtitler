@@ -1,20 +1,32 @@
 <meta charset="utf-8">
 <style>
+  :root {
+    --paper:  #091e30;   /* 卡片底色 */
+    --edge:   #40bee6;   /* 外框、重點 */
+    --title:  #ffeea5;   /* 標題 */
+    --ink:    #ffffff;   /* 內文 */
+    --muted:  #9fc4d8;   /* 次要文字 */
+    --warn:   #ff9d5c;   /* 強調、負面 */
+    --ok:     #7fd4a8;   /* 正面 */
+    --radius: 34px;      /* 圓角 */
+  }
   html, body { margin: 0; background: transparent; }
   #card {
     width: 640px; box-sizing: border-box; padding: 34px 38px;
-    border-radius: 34px; background: rgba(9, 30, 48, .92);
-    border-left: 10px solid #ffeea5;
-    font-family: "PingFang TC", "Heiti TC", sans-serif; color: #fff;
+    border-radius: var(--radius); background: color-mix(in srgb, var(--paper) 92%, transparent);
+    border-left: 10px solid var(--title);
+    font-family: "PingFang TC", "Heiti TC", sans-serif; color: var(--ink);
   }
-  .mark { font-size: 64px; line-height: .6; color: #ffeea5; }
+  .mark { font-size: 64px; line-height: .6; color: var(--title); }
   blockquote { margin: 6px 0 22px; font-size: 34px; line-height: 1.5; }
-  .who { font-size: 22px; color: #9fc4d8; }
-  .who b { color: #fff; font-weight: 600; font-size: 25px; }
+  blockquote .close { font-size: 44px; color: var(--title); vertical-align: -8px;
+                      margin-left: 2px; }
+  .who { font-size: 22px; color: var(--muted); }
+  .who b { color: var(--ink); font-weight: 600; font-size: 25px; }
 </style>
 
 <div id="card">
   <div class="mark">「</div>
-  <blockquote>把要引用的話放在這裡，<br>兩行以內最好讀。</blockquote>
+  <blockquote>把要引用的話放在這裡，<br>兩行以內最好讀。<span class="close">」</span></blockquote>
   <div class="who"><b>說話的人</b>　職稱或場合</div>
 </div>

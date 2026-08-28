@@ -168,26 +168,85 @@ main{display:flex;flex:1;min-height:0}
   border-bottom:1px solid var(--line);font-size:12px;color:var(--dim);flex:none}
 
 /* ---------- card maker ---------- */
-#card{display:none;position:fixed;inset:0;background:#000a;z-index:60;
-  align-items:center;justify-content:center;padding:24px}
-#card.on{display:flex}
-#card .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
-  padding:14px 16px;width:100%;max-width:1180px;height:82vh;
+/* A panel rather than a modal: making a card is something you do while
+   looking at the frame it is going onto, so it does not dim the page and it
+   can be dragged out of the way. Where you leave it is remembered. */
+#card{display:none;position:fixed;inset:0;z-index:60;pointer-events:none}
+#card.on{display:block}
+#card .card{pointer-events:auto;position:absolute;
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 20px 60px #000b;padding:14px 16px;
+  width:min(1100px, 92vw);height:min(760px, 80vh);
+  min-width:520px;min-height:340px;resize:both;overflow:hidden;
   display:flex;flex-direction:column;gap:10px}
 .cardTop{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim);
-  flex-wrap:wrap}
+  flex-wrap:wrap;cursor:move;user-select:none}
+.cardTop input, .cardTop button{cursor:auto}
+.cardTop button{cursor:pointer}
 .cardTop input{width:150px;font:12px var(--mono);color:var(--ink);
   background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:4px 6px}
-#cardTemplates{display:flex;gap:4px}
-#cardTemplates button{font-size:12px;padding:4px 10px}
-.cardBody{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-#cardHtml{width:100%;height:100%;resize:none;font:12px/1.5 var(--mono);
-  color:var(--ink);background:var(--panel2);border:1px solid var(--line);
-  border-radius:8px;padding:10px 12px}
-#cardHtml:focus{outline:0;border-color:var(--accent)}
-/* The pale field the canvas uses, so a card is judged against where it lands. */
-#cardPreview{width:100%;height:100%;border:1px solid var(--line);border-radius:8px;
-  background:#DCE9F5}
+#cardTemplates{font-size:12px;padding:4px 8px;background:var(--panel2);
+  color:var(--ink);border:1px solid var(--line);border-radius:6px}
+
+/* One row of swatches, editing the handful of variables every template is
+   written against -- not a CSS editor. What it changes is exactly the :root
+   block, so no layout can be broken from here. */
+#cardPalette{display:none;gap:14px;align-items:center;flex-wrap:wrap;flex:none;
+  padding:8px 4px 2px;font-size:11px;color:var(--dim)}
+#cardPalette.on{display:flex}
+#cardPalette label{display:flex;align-items:center;gap:5px}
+#cardPalette input[type=color]{width:26px;height:22px;padding:0;border:1px solid var(--line);
+  border-radius:5px;background:none;cursor:pointer}
+#cardPalette input[type=range]{width:90px}
+#cardPalette .schemes{margin-left:auto;display:flex;gap:5px}
+/* A name that is already taken is shown, not corrected: overwriting one card
+   with another is a real thing to want, and a free name is one click away. */
+#cardName.taken{border-color:var(--warn);color:var(--warn)}
+#cardRename{color:var(--warn);border-color:#5b4a22}
+/* Editing takes more room than looking: the card is a few hundred pixels and
+   the HTML behind it is a screenful. The divider is draggable because which
+   half matters changes with what you are doing. */
+.cardBody{flex:1;min-height:0;display:grid;gap:0;
+  grid-template-columns:var(--split, 1.5fr) 10px 1fr}
+#cardSplit{cursor:col-resize;position:relative}
+#cardSplit::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:2px;
+  background:var(--line);border-radius:1px}
+#cardSplit:hover::before{background:var(--accent)}
+/* The words you would change are the text between the tags, so they are lit
+   from behind: a mirror of the same text, laid under a transparent textarea,
+   with those runs highlighted. Both must wrap identically or the highlight
+   drifts off the words -- hence the shared font, padding and wrapping. */
+#cardEdit{position:relative;min-height:0;border:1px solid var(--line);
+  border-radius:8px;background:var(--panel2);overflow:hidden}
+#cardEdit:focus-within{border-color:var(--accent)}
+#cardHtml, #cardMirror{
+  position:absolute;inset:0;margin:0;width:100%;height:100%;
+  font:12px/1.5 var(--mono);padding:10px 12px;box-sizing:border-box;
+  white-space:pre-wrap;word-break:break-word;overflow:auto;border:0}
+#cardMirror{color:transparent;pointer-events:none}
+#cardMirror mark{background:rgba(255,190,80,.20);color:transparent;border-radius:3px;
+  box-shadow:0 0 0 1px rgba(255,190,80,.45)}
+#cardHtml{resize:none;color:var(--ink);background:transparent;caret-color:var(--accent)}
+#cardHtml:focus{outline:0}
+/* The pale field the canvas uses, so a card is judged against where it lands.
+   The card is drawn at its true size and the whole frame is then scaled to fit
+   -- shrinking the box instead would reflow the design and show you something
+   other than what gets captured. */
+/* No padding here: clientWidth counts padding as available room, so a padded
+   stage tells the scaling there is more space than there is, and the card
+   overhangs by exactly the padding. The margin is kept in the arithmetic. */
+#cardStage{border:1px solid var(--line);border-radius:8px;background:#DCE9F5;
+  overflow:hidden;display:grid;place-items:center;min-height:0}
+/* transform does not change how much room an element takes up: a frame scaled
+   to 80% still occupies its full size in the layout, so centring it centres
+   the wrong box and the card ends up flush against one edge. The holder is
+   given the scaled size, and the frame is scaled inside it from the corner. */
+#cardHolder{position:relative;overflow:hidden}
+#cardPreview{position:absolute;left:0;top:0;border:0;background:transparent;
+  transform-origin:top left;overflow:hidden}
+#cardScale{position:absolute;right:12px;bottom:10px;font:11px var(--mono);
+  color:var(--faint)}
+.cardFoot{position:relative}
 .cardFoot{font-size:12px;color:var(--faint)}
 
 /* ---------- scene.json viewer ---------- */
@@ -517,18 +576,29 @@ main{display:flex;flex:1;min-height:0}
 <div id="card"><div class="card">
   <div class="cardTop">
     <b>新增卡片</b>
-    <span id="cardTemplates"></span>
+    <select id="cardTemplates" title="換一種卡片"></select>
+    <button id="cardPaletteToggle" class="tiny">配色</button>
     <div style="flex:1"></div>
     <label>名稱 <input id="cardName" placeholder="table_vaccine"></label>
+    <button id="cardRename" class="tiny" style="display:none"></button>
+    <button id="cardFresh" class="tiny" title="丟掉這張卡片的草稿，回到模板原本的樣子">回到模板原版</button>
+    <button id="cardRevert" class="tiny" title="回到這張卡片上次存成 PNG 時的內容">回到上次存檔</button>
+    <button id="cardStore" class="tiny">存檔</button>
     <button id="cardSave" class="primary">存成 PNG</button>
     <button id="cardClose">關閉</button>
   </div>
+  <div id="cardPalette"></div>
   <div class="cardBody">
-    <textarea id="cardHtml" spellcheck="false"></textarea>
-    <iframe id="cardPreview" title="預覽"></iframe>
+    <div id="cardEdit"><pre id="cardMirror" aria-hidden="true"></pre><textarea
+      id="cardHtml" spellcheck="false"></textarea></div>
+    <div id="cardSplit" title="拖曳調整寬度"></div>
+    <div id="cardStage"><div id="cardHolder"><iframe id="cardPreview" title="預覽"
+      scrolling="no"></iframe></div></div>
   </div>
   <div class="cardFoot">
     <span id="cardNote" class="hint">改左邊的字，右邊會跟著變。滿意了取個名字存成 PNG，它會出現在素材匣裡。</span>
+    <span id="cardFamily" class="hint" style="margin-left:14px"></span>
+    <span id="cardScale"></span>
   </div>
 </div></div>
 <div id="json"><div class="card">
@@ -1857,15 +1927,96 @@ $("layers").addEventListener("click", (event) => {
    takes -- rules, alignment, figures that line up. The preview is an iframe
    rather than a drawing of one: the browser here and the browser that captures
    the PNG are the same typesetter, so there is nothing to reconcile. */
-const CARD = { templates: [], name: "" };
+/* What is in the box is remembered per card, so pressing a template button is
+   a change of subject rather than a loss: come back to 表格 and your table is
+   still there. Kept in the browser, because a draft is this person's working
+   state and not something the project should carry. */
+const CARD = { templates: [], made: [], drafts: {}, lastFor: {}, from: {}, key: "" };
+
+function loadDrafts() {
+  try {
+    CARD.drafts = JSON.parse(localStorage.getItem("cardDrafts") || "{}");
+    CARD.lastFor = JSON.parse(localStorage.getItem("cardLastFor") || "{}");
+    CARD.from = JSON.parse(localStorage.getItem("cardFrom") || "{}");
+  } catch (error) { CARD.drafts = {}; CARD.lastFor = {}; CARD.from = {}; }
+  // Clear out drafts left by earlier presses that changed nothing.
+  for (const key of Object.keys(CARD.drafts)) {
+    if (CARD.drafts[key] === originalFor(key)) delete CARD.drafts[key];
+  }
+}
+
+/** A name nothing else is using: 引言卡, then 引言卡2, 引言卡3.
+ *
+ *  The name is the filename, so two cards from the same template both called
+ *  引言卡 are one card -- the second save quietly replaced the first. */
+/** Every name in use, and why -- so a suggested number can be explained
+ *  rather than just appearing. An unsaved draft holds its name too: it is work
+ *  you can still go back to, and quietly reusing the name would lose it. */
+function namesInUse() {
+  const use = new Map();
+  for (const item of CARD.made) use.set(item.name, "存過");
+  for (const key of Object.keys(CARD.drafts)) {
+    if (!use.has(key)) use.set(key, "草稿");
+  }
+  return use;
+}
+
+function freshName(base) {
+  const taken = namesInUse();
+  if (!taken.has(base)) return base;
+  for (let n = 2; n < 999; n++) {
+    if (!taken.has(base + n)) return base + n;
+  }
+  return base + Date.now();
+}
+
+/** The template as it ships, for whichever card is open. */
+function originalFor(key) {
+  const name = CARD.from[key];
+  const template = CARD.templates.find((item) => item.name === name);
+  return template ? template.html : null;
+}
+
+function keepDraft() {
+  if (!CARD.key) return;
+  // A draft that matches what was saved is not a draft either; keeping one
+  // would hold a name for a card that already exists under it.
+  const saved = CARD.made.find((item) => item.name === CARD.key);
+  if (saved && saved.html === $("cardHtml").value) {
+    delete CARD.drafts[CARD.key];
+  }
+  // A card nobody has changed is not a card. Storing one anyway made every
+  // press of the rename button reserve another name, so the suggestion
+  // climbed -- 引言卡5 offered while only 引言卡2 existed.
+  const html = $("cardHtml").value;
+  if (html === originalFor(CARD.key)) {
+    delete CARD.drafts[CARD.key];
+    try {
+      localStorage.setItem("cardDrafts", JSON.stringify(CARD.drafts));
+      localStorage.setItem("cardLastFor", JSON.stringify(CARD.lastFor));
+      localStorage.setItem("cardFrom", JSON.stringify(CARD.from));
+    } catch (error) { /* ignore */ }
+    return;
+  }
+  CARD.drafts[CARD.key] = html;
+  try {
+    localStorage.setItem("cardDrafts", JSON.stringify(CARD.drafts));
+    localStorage.setItem("cardLastFor", JSON.stringify(CARD.lastFor));
+    localStorage.setItem("cardFrom", JSON.stringify(CARD.from));
+  } catch (error) { /* private window, or full */ }
+}
 
 async function openCards() {
   try {
     const listing = await api("GET", "/api/cards");
     CARD.templates = listing.templates;
-    $("cardTemplates").innerHTML = listing.templates.map((item, index) =>
-      `<button class="tiny" data-template="${index}">${escapeHTML(item.name)}</button>`
-    ).join("");
+    CARD.made = listing.made;
+    loadDrafts();
+    // A menu rather than a row of buttons: there are seven kinds now, and a
+    // row of seven competes with the buttons that do something irreversible.
+    $("cardTemplates").innerHTML = '<option value="">選一種卡片…</option>' +
+      listing.templates.map((item, index) =>
+        `<option value="${index}">${escapeHTML(item.name)}</option>`).join("");
     if (!$("cardHtml").value && listing.templates.length) {
       useTemplate(0);
     }
@@ -1873,20 +2024,65 @@ async function openCards() {
     toast(error.message, true);
   }
   $("card").classList.add("on");
+  placePanel();
+  markCardText();
   drawCard();
+}
+
+/** Replace what is in the box, without throwing away the ability to undo it.
+ *
+ *  Assigning to .value clears the browser's undo history, so pressing a
+ *  template button by mistake used to lose everything typed with no way back.
+ *  Selecting everything and inserting over it is the same edit as far as the
+ *  document is concerned -- one step, undone with the usual keys. */
+function replaceCardHtml(text) {
+  const box = $("cardHtml");
+  box.focus();
+  box.setSelectionRange(0, box.value.length);
+  if (!document.execCommand("insertText", false, text)) {
+    box.value = text;                       // older engines: at least it works
+  }
+  box.setSelectionRange(0, 0);
+  box.scrollTop = 0;
 }
 
 function useTemplate(index) {
   const template = CARD.templates[index];
   if (!template) return;
-  $("cardHtml").value = template.html;
-  if (!$("cardName").value) $("cardName").value = template.name;
+  keepDraft();                                   // whatever was open is kept
+  // Pressing a template resumes the card it last opened, and only starts a
+  // new one when there is nothing to resume -- so switching between templates
+  // stays a change of subject, while a genuinely new card gets its own name.
+  const previous = CARD.lastFor[template.name];
+  CARD.key = (previous && CARD.drafts[previous]) ? previous : freshName(template.name);
+  CARD.lastFor[template.name] = CARD.key;
+  CARD.from[CARD.key] = template.name;      // which original to reset to
+  replaceCardHtml(CARD.drafts[CARD.key] ?? template.html);
+  $("cardName").value = CARD.key;
+  $("cardTemplates").value = String(index);
+  checkName();
+  if ($("cardPalette").classList.contains("on")) showPalette();
+  markCardText();
   drawCard();
 }
 
-$("cardTemplates").addEventListener("click", (event) => {
-  const button = event.target.closest("button");
-  if (button) useTemplate(Number(button.dataset.template));
+/** Back to the template as it ships, throwing away this card's draft.
+ *  A card is called 引言卡2, not 引言卡, so which template it came from has to
+ *  be remembered rather than guessed from the name. */
+$("cardFresh").onclick = () => {
+  const origin = CARD.from[CARD.key] || CARD.key;
+  const template = CARD.templates.find((item) => item.name === origin);
+  if (!template) { toast("這不是從模板開始的，沒有原版可以回去", true); return; }
+  if (!confirm(`把「${CARD.key}」丟掉，回到「${template.name}」模板原本的樣子？`)) return;
+  replaceCardHtml(template.html);
+  markCardText();
+  drawCard();
+  keepDraft();
+};
+
+$("cardTemplates").addEventListener("change", (event) => {
+  if (event.target.value === "") return;
+  useTemplate(Number(event.target.value));
 });
 
 /** Show the HTML as the capture will see it. srcdoc keeps it same-origin-ish
@@ -1894,38 +2090,344 @@ $("cardTemplates").addEventListener("click", (event) => {
 function drawCard() {
   $("cardPreview").srcdoc = $("cardHtml").value;
 }
+
+/** Draw the card at its real size, then scale the whole frame down to fit.
+ *  A card is often wider than half a dialog, and letting the iframe clip it
+ *  hides exactly the part -- the right-hand column of a table -- that the
+ *  design is about. */
+function fitCard() {
+  const frame = $("cardPreview");
+  const stage = $("cardStage");
+  const page = frame.contentDocument;
+  if (!page || !page.body) return;
+  // Measure what the page drew, not the frame it was drawn in. body.scrollWidth
+  // is never less than the viewport, so it returns the frame's own width --
+  // and since the frame is then set to that plus a margin, every redraw grew it
+  // by a couple of pixels while the card stayed the same size. After a few
+  // drags of the divider the card was being scaled to fit a box far larger
+  // than itself, and looked tiny.
+  let drawn = { width: 0, height: 0 };
+  for (const child of page.body.children) {
+    const box = child.getBoundingClientRect();
+    drawn = { width: Math.max(drawn.width, box.right),
+              height: Math.max(drawn.height, box.bottom) };
+  }
+  // A pixel of slack each way, or the frame decides it has overflow and puts a
+  // scrollbar along the bottom.
+  const width = Math.max(Math.ceil(drawn.width), 40) + 2;
+  const height = Math.max(Math.ceil(drawn.height), 40) + 2;
+  frame.style.width = `${width}px`;
+  frame.style.height = `${height}px`;
+  const room = 48;          // the breathing space around the card, both axes
+  const scale = Math.min(1, (stage.clientWidth - room) / width,
+                            (stage.clientHeight - room) / height);
+  frame.style.transform = `scale(${scale})`;
+  const holder = $("cardHolder");
+  holder.style.width = `${Math.round(width * scale)}px`;
+  holder.style.height = `${Math.round(height * scale)}px`;
+  $("cardScale").textContent =
+    `${width - 2}×${height - 2}` + (scale < 0.999 ? `　顯示 ${Math.round(scale * 100)}%` : "");
+}
+$("cardPreview").addEventListener("load", fitCard);
+new ResizeObserver(() => fitCard()).observe($("cardStage"));
+/** Light up the text between tags -- the words a card is actually about. */
+function markCardText() {
+  const source = $("cardHtml").value;
+  const escaped = escapeHTML(source);
+  // &gt; and &lt; because the mirror is HTML: the tags are text here, not tags.
+  const lit = escaped.replace(/&gt;([^&]*?[^\s&][^&]*?)&lt;/g,
+                              (all, inner) => `&gt;<mark>${inner}</mark>&lt;`);
+  $("cardMirror").innerHTML = lit + "\n";
+}
+
 let cardTimer = null;
 $("cardHtml").addEventListener("input", () => {
+  markCardText();
   clearTimeout(cardTimer);
-  cardTimer = setTimeout(drawCard, 300);
+  cardTimer = setTimeout(() => { drawCard(); keepDraft(); }, 300);
+});
+function checkName() {
+  const name = $("cardName").value.trim();
+  const taken = namesInUse();
+  const clash = Boolean(name) && name !== CARD.key && taken.has(name);
+  $("cardName").classList.toggle("taken", clash);
+  const offer = $("cardRename");
+  offer.style.display = clash ? "" : "none";
+  if (clash) offer.textContent = `${taken.get(name)}了，改叫 ${freshName(name)}`;
+
+  // What else is using this stem, so a jump from 引言卡2 to 引言卡5 is a fact
+  // on screen rather than a mystery.
+  const stem = name.replace(/\d+$/, "");
+  const family = stem
+    ? [...taken].filter(([used]) => used.replace(/\d+$/, "") === stem)
+        .map(([used, how]) => `${used}（${how}）`)
+    : [];
+  $("cardFamily").textContent = family.length > 1 || (family.length === 1 && clash)
+    ? `同名的：${family.join("、")}` : "";
+}
+$("cardName").addEventListener("input", checkName);
+$("cardName").addEventListener("change", () => {
+  // Renaming makes it a different card, so the draft follows the new name --
+  // unless that name belongs to another card, in which case adopting it here
+  // would quietly take over that card's draft before anyone said to.
+  const typed = $("cardName").value.trim();
+  if (typed && !CARD.made.some((item) => item.name === typed)) {
+    CARD.key = typed;
+    keepDraft();
+  }
+  checkName();
+});
+// Keeping focus in the field: clicking normally blurs it first, the change
+// handler runs, the clash resolves, the button is hidden -- and a button
+// hidden between press and release never receives the click at all.
+$("cardRename").addEventListener("mousedown", (event) => event.preventDefault());
+$("cardRename").onclick = () => {
+  $("cardName").value = freshName($("cardName").value.trim());
+  CARD.key = $("cardName").value;
+  keepDraft();
+  checkName();
+  toast(`改叫 ${CARD.key}`);
+};
+// The mirror sits still while the textarea scrolls, so it is told to follow.
+$("cardHtml").addEventListener("scroll", () => {
+  $("cardMirror").scrollTop = $("cardHtml").scrollTop;
+  $("cardMirror").scrollLeft = $("cardHtml").scrollLeft;
+});
+
+/* ---------- palette ----------
+   Seven colours and a radius, held in :root by every template. Editing them
+   through swatches means a restyle cannot become a broken card: the only text
+   this writes is inside that block. */
+const PALETTE = [
+  ["--paper", "底色"], ["--edge", "外框"], ["--title", "標題"], ["--ink", "內文"],
+  ["--muted", "次要"], ["--warn", "強調"], ["--ok", "正面"],
+];
+
+const SCHEMES = {
+  "深藍": { "--paper": "#091e30", "--edge": "#40bee6", "--title": "#ffeea5",
+            "--ink": "#ffffff", "--muted": "#9fc4d8", "--warn": "#ff9d5c", "--ok": "#7fd4a8" },
+  "石墨": { "--paper": "#17191d", "--edge": "#8a949f", "--title": "#f2c14e",
+            "--ink": "#f4f6f8", "--muted": "#9aa3ad", "--warn": "#ef7a5a", "--ok": "#69c08a" },
+  "白底": { "--paper": "#f6f8fa", "--edge": "#1f6feb", "--title": "#0b3a67",
+            "--ink": "#12181f", "--muted": "#5b6b7c", "--warn": "#c2410c", "--ok": "#15803d" },
+  "暖橘": { "--paper": "#2a1608", "--edge": "#f0913a", "--title": "#ffd9a0",
+            "--ink": "#fff6ec", "--muted": "#d0a583", "--warn": "#ff6b57", "--ok": "#9bd17a" },
+};
+
+function readVariables() {
+  const found = {};
+  const block = $("cardHtml").value.match(/:root\s*\{([^}]*)\}/);
+  if (!block) return found;
+  for (const line of block[1].split(";")) {
+    const bit = line.match(/(--[\w-]+)\s*:\s*([^;/]+)/);
+    if (bit) found[bit[1]] = bit[2].trim();
+  }
+  return found;
+}
+
+function writeVariables(changes) {
+  const html = $("cardHtml").value;
+  const block = html.match(/:root\s*\{[^}]*\}/);
+  if (!block) { toast("這張卡片沒有 :root 區塊，配色改不了", true); return; }
+  let updated = block[0];
+  for (const [name, value] of Object.entries(changes)) {
+    const line = new RegExp(`(${name}\\s*:\\s*)([^;]*)`);
+    updated = line.test(updated) ? updated.replace(line, `$1${value}`)
+                                 : updated.replace(/\}$/, `  ${name}: ${value};\n  }`);
+  }
+  replaceCardHtml(html.replace(block[0], updated));
+  markCardText();
+  drawCard();
+  keepDraft();
+}
+
+function showPalette() {
+  const now = readVariables();
+  $("cardPalette").innerHTML =
+    PALETTE.map(([name, label]) =>
+      `<label>${label}<input type="color" data-var="${name}"
+        value="${(now[name] || "#000000").slice(0, 7)}"></label>`).join("") +
+    `<label>圓角<input type="range" id="cardRadius" min="0" max="60"
+       value="${parseInt(now["--radius"] || "34", 10)}"><b id="cardRadiusNote"
+       >${parseInt(now["--radius"] || "34", 10)}px</b></label>` +
+    `<span class="schemes">${Object.keys(SCHEMES).map((name) =>
+       `<button class="tiny" data-scheme="${name}">${name}</button>`).join("")}</span>`;
+}
+
+$("cardPaletteToggle").onclick = () => {
+  const strip = $("cardPalette");
+  strip.classList.toggle("on");
+  if (strip.classList.contains("on")) showPalette();
+  fitCard();
+};
+
+$("cardPalette").addEventListener("input", (event) => {
+  const target = event.target;
+  if (target.dataset.var) { writeVariables({ [target.dataset.var]: target.value }); }
+  if (target.id === "cardRadius") {
+    $("cardRadiusNote").textContent = `${target.value}px`;
+    writeVariables({ "--radius": `${target.value}px` });
+  }
+});
+
+$("cardPalette").addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-scheme]");
+  if (!button) return;
+  writeVariables(SCHEMES[button.dataset.scheme]);
+  showPalette();
+});
+
+/* ---------- the divider ---------- */
+try {
+  const saved = localStorage.getItem("cardSplit");
+  if (saved) document.querySelector(".cardBody").style.setProperty("--split", saved);
+} catch (error) { /* ignore */ }
+
+$("cardSplit").addEventListener("pointerdown", (event) => {
+  const body = document.querySelector(".cardBody");
+  const bar = event.currentTarget;
+  bar.setPointerCapture(event.pointerId);
+  const move = (at) => {
+    const box = body.getBoundingClientRect();
+    const left = Math.min(Math.max(at.clientX - box.left, 220), box.width - 200);
+    // A ratio, not a width: the panel itself is resizable, and a fixed number
+    // of pixels would stop meaning the same thing the moment it changed.
+    body.style.setProperty("--split", `${(left / (box.width - left)).toFixed(3)}fr`);
+    fitCard();
+  };
+  const drop = () => {
+    bar.removeEventListener("pointermove", move);
+    bar.removeEventListener("pointerup", drop);
+    try {
+      localStorage.setItem("cardSplit",
+                           body.style.getPropertyValue("--split") || "1.5fr");
+    } catch (error) { /* ignore */ }
+  };
+  bar.addEventListener("pointermove", move);
+  bar.addEventListener("pointerup", drop);
 });
 
 $("btnNewCard").onclick = openCards;
 $("cardClose").onclick = () => $("card").classList.remove("on");
-$("card").onclick = (event) => {
-  if (event.target.id === "card") $("card").classList.remove("on");
+
+/* ---------- moving the panel ---------- */
+function placePanel() {
+  const panel = $("card").firstElementChild;
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem("cardPanel") || "null"); }
+  catch (error) { /* ignore */ }
+  if (saved && saved.width) {
+    panel.style.width = `${saved.width}px`;
+    panel.style.height = `${saved.height}px`;
+  }
+  // Measured after any remembered size is applied, or the first placement
+  // centres the default size and then the panel changes under it.
+  const box = panel.getBoundingClientRect();
+  const left = saved ? saved.left : Math.max(12, (window.innerWidth - box.width) / 2);
+  const top = saved ? saved.top : Math.max(12, (window.innerHeight - box.height) / 2);
+  // Clamp on open: a panel remembered off the edge of a smaller window would
+  // be unreachable, and the only handle it has is its own title bar.
+  panel.style.left = `${Math.min(Math.max(0, left), window.innerWidth - 120)}px`;
+  panel.style.top = `${Math.min(Math.max(0, top), window.innerHeight - 60)}px`;
+}
+
+function rememberPanel() {
+  const panel = $("card").firstElementChild;
+  const box = panel.getBoundingClientRect();
+  // Closing the panel is a resize to nothing. Recording that would reopen it
+  // at zero by zero in the top left corner, which is not where it was left.
+  if (box.width < 40 || box.height < 40) return;
+  try {
+    localStorage.setItem("cardPanel", JSON.stringify({
+      left: Math.round(box.left), top: Math.round(box.top),
+      width: Math.round(box.width), height: Math.round(box.height),
+    }));
+  } catch (error) { /* ignore */ }
+}
+
+document.querySelector(".cardTop").addEventListener("pointerdown", (event) => {
+  if (event.target.closest("button, input, label")) return;
+  const panel = $("card").firstElementChild;
+  const box = panel.getBoundingClientRect();
+  const grab = { x: event.clientX - box.left, y: event.clientY - box.top };
+  const bar = event.currentTarget;
+  bar.setPointerCapture(event.pointerId);
+
+  const move = (at) => {
+    panel.style.left =
+      `${Math.min(Math.max(0, at.clientX - grab.x), window.innerWidth - 120)}px`;
+    panel.style.top =
+      `${Math.min(Math.max(0, at.clientY - grab.y), window.innerHeight - 60)}px`;
+  };
+  const drop = () => {
+    bar.removeEventListener("pointermove", move);
+    bar.removeEventListener("pointerup", drop);
+    rememberPanel();
+  };
+  bar.addEventListener("pointermove", move);
+  bar.addEventListener("pointerup", drop);
+});
+new ResizeObserver(() => rememberPanel()).observe($("card").firstElementChild);
+
+/** The HTML is written beside the picture every time one is made, so the last
+ *  version that produced something is always recoverable. */
+$("cardRevert").onclick = async () => {
+  const name = $("cardName").value.trim();
+  const saved = (CARD.made || []).find((item) => item.name === name);
+  if (!saved) {
+    toast(`${name || "這張卡片"} 還沒存過，沒有可以回去的版本`, true);
+    return;
+  }
+  if ($("cardHtml").value === saved.html) { toast("已經是存檔的內容"); return; }
+  if (!confirm(`回到「${name}」上次存成 PNG 時的內容？（可以按 ⌘Z 復原）`)) return;
+  replaceCardHtml(saved.html);
+  markCardText();
+  drawCard();
 };
 
-$("cardSave").onclick = async () => {
+/** Keep the HTML without making a picture, so work in progress survives a
+ *  closed tab without a half-finished card appearing in the tray. */
+$("cardStore").onclick = () => saveCard(false);
+
+$("cardSave").onclick = () => saveCard(true);
+
+async function saveCard(render) {
   const name = $("cardName").value.trim();
   if (!name) { toast("先取個名字", true); return; }
-  const button = $("cardSave");
+  // Saving under a name that already exists replaces that card. That is what
+  // editing one means, and what losing one looks like, so it is asked about
+  // exactly when the name was not the one being edited.
+  if (name !== CARD.key && CARD.made.some((item) => item.name === name)
+      && !confirm(`已經有一張叫「${name}」的卡片，要覆蓋它嗎？`)) {
+    return;
+  }
+  const button = render ? $("cardSave") : $("cardStore");
   button.disabled = true;
-  $("cardNote").textContent = "截圖中…";
+  $("cardNote").textContent = render ? "截圖中…" : "存檔中…";
   try {
     const made = await api("POST", "/api/card",
-                           { name, html: $("cardHtml").value });
-    $("cardNote").textContent =
-      `${made.path}　${made.width}×${made.height}，已加進素材匣`;
-    await loadScene();                       // the tray reads the images again
-    toast(`${made.path} 做好了，在素材匣裡`);
+                           { name, html: $("cardHtml").value, render });
+    CARD.made = (CARD.made || []).filter((item) => item.name !== name)
+      .concat([{ name, html: $("cardHtml").value }]);
+    CARD.key = name;
+    keepDraft();
+    checkName();
+    if (render) {
+      $("cardNote").textContent =
+        `${made.path}　${made.width}×${made.height}，已加進素材匣`;
+      await loadScene();                     // the tray reads the images again
+      toast(`${made.path} 做好了，在素材匣裡`);
+    } else {
+      $("cardNote").textContent = `已存檔　${made.saved}`;
+      toast(`${name} 已存檔`);
+    }
   } catch (error) {
     $("cardNote").textContent = error.message;
     toast(error.message, true);
   } finally {
     button.disabled = false;
   }
-};
+}
 
 /* ---------- the cut list ---------- */
 function renderCuts() {

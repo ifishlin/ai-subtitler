@@ -270,13 +270,19 @@ def make_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     CARD_DIR.mkdir(parents=True, exist_ok=True)
     page = CARD_DIR / f"{name}.html"
     page.write_text(html, encoding="utf-8")
+    # Keeping the source and making the picture are different acts: work is
+    # saved often and half-finished, a picture is made when it is ready.
+    if not payload.get("render", True):
+        return {"saved": f"cards/{page.name}"}
+
     try:
         target = capture(page, ROOT / "img" / f"{name}.png")
     except SystemExit as error:                                   # no browser
         raise HTTPException(500, str(error)) from error
     with Image.open(target) as made:
         size = made.size
-    return {"path": f"img/{target.name}", "width": size[0], "height": size[1]}
+    return {"saved": f"cards/{page.name}", "path": f"img/{target.name}",
+            "width": size[0], "height": size[1]}
 
 
 @app.get("/media/image/{path:path}")

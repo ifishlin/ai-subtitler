@@ -1,1 +1,3 @@
-2026/08/28-09:32:34.038 371149 Creating DB /Volumes/Fish/Video_pipeline/img/.chrome/Default/GCM Store/Encryption since it was missing.
+2026/08/28-10:05:11.250 37a95b Reusing MANIFEST /Volumes/Fish/Video_pipeline/img/.chrome/Default/GCM Store/Encryption/MANIFEST-000001
+2026/08/28-10:05:11.251 37a95b Recovering log #3
+2026/08/28-10:05:11.251 37a95b Reusing old log /Volumes/Fish/Video_pipeline/img/.chrome/Default/GCM Store/Encryption/000003.log 

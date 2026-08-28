@@ -1,2 +1,3 @@
-2026/08/28-09:24:49.864 36ef99 Creating DB /Volumes/Fish/Video_pipeline/img/.chrome/Default/GCM Store since it was missing.
-2026/08/28-09:24:50.378 36ef99 Reusing MANIFEST /Volumes/Fish/Video_pipeline/img/.chrome/Default/GCM Store/MANIFEST-000001
+2026/08/28-10:05:03.059 37a7cc Reusing MANIFEST /Volumes/Fish/Video_pipeline/img/.chrome/Default/GCM Store/MANIFEST-000001
+2026/08/28-10:05:03.059 37a7cc Recovering log #3
+2026/08/28-10:05:03.060 37a7cc Reusing old log /Volumes/Fish/Video_pipeline/img/.chrome/Default/GCM Store/000003.log 

@@ -1,5 +1,15 @@
 <meta charset="utf-8">
 <style>
+  :root {
+    --paper:  #091e30;   /* 卡片底色 */
+    --edge:   #40bee6;   /* 外框、重點 */
+    --title:  #ffeea5;   /* 標題 */
+    --ink:    #ffffff;   /* 內文 */
+    --muted:  #9fc4d8;   /* 次要文字 */
+    --warn:   #ff9d5c;   /* 強調、負面 */
+    --ok:     #7fd4a8;   /* 正面 */
+    --radius: 34px;      /* 圓角 */
+  }
   /* Transparent page: the capture keeps only the card, so it drops onto the
      canvas the way a cut-out icon does. */
   html, body { margin: 0; background: transparent; }
@@ -7,15 +17,15 @@
     width: 620px;
     box-sizing: border-box;
     padding: 26px 30px 30px;
-    border-radius: 34px;
+    border-radius: var(--radius);
     background: rgba(9, 30, 48, 0.92);
-    border: 4px solid #40bee6;
+    border: 4px solid var(--edge);
     font-family: "PingFang TC", "Heiti TC", sans-serif;
-    color: #fff;
+    color: var(--ink);
   }
   .badge {
     display: inline-block;
-    background: #1196be;
+    background: color-mix(in srgb, var(--edge) 70%, #000);
     border-radius: 18px;
     padding: 7px 18px;
     font-size: 22px;
@@ -25,25 +35,25 @@
     margin: 20px 0 4px;
     font-size: 42px;
     font-weight: 600;
-    color: #ffeea5;              /* the same yellow the info cards title in */
+    color: var(--title);              /* the same yellow the info cards title in */
   }
-  .note { margin: 0 0 20px; font-size: 19px; color: #9fc4d8; }
+  .note { margin: 0 0 20px; font-size: 19px; color: var(--muted); }
   table { width: 100%; border-collapse: collapse; }
   th, td { text-align: left; padding: 14px 6px; }
   thead th {
-    font-size: 19px; font-weight: 500; color: #9fc4d8;
-    border-bottom: 2px solid #2b5a76;
+    font-size: 19px; font-weight: 500; color: var(--muted);
+    border-bottom: 2px solid color-mix(in srgb, var(--edge) 45%, var(--paper));
   }
   thead th:last-child, td:last-child { text-align: right; }
-  tbody tr + tr td { border-top: 1px solid #1e4258; }
+  tbody tr + tr td { border-top: 1px solid color-mix(in srgb, var(--edge) 28%, var(--paper)); }
   td.label { font-size: 27px; }
   td.figure {
     font-size: 40px; font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
-  .lost { color: #ff9d5c; }      /* what was not saved reads as the warning */
-  .kept { color: #7fd4a8; }
-  .unit { font-size: 21px; font-weight: 400; color: #9fc4d8; margin-left: 6px; }
+  .lost { color: var(--warn); }      /* what was not saved reads as the warning */
+  .kept { color: var(--ok); }
+  .unit { font-size: 21px; font-weight: 400; color: var(--muted); margin-left: 6px; }
 </style>
 
 <div id="card">

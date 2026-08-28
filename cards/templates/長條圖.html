@@ -1,0 +1,51 @@
+<meta charset="utf-8">
+<style>
+  :root {
+    --paper:  #091e30;   /* 卡片底色 */
+    --edge:   #40bee6;   /* 外框、重點 */
+    --title:  #ffeea5;   /* 標題 */
+    --ink:    #ffffff;   /* 內文 */
+    --muted:  #9fc4d8;   /* 次要文字 */
+    --warn:   #ff9d5c;   /* 強調、負面 */
+    --ok:     #7fd4a8;   /* 正面 */
+    --radius: 34px;      /* 圓角 */
+  }
+  html, body { margin: 0; background: transparent; }
+  #card {
+    width: 640px; box-sizing: border-box; padding: 26px 30px 30px;
+    border-radius: var(--radius); background: color-mix(in srgb, var(--paper) 92%, transparent); border: 4px solid var(--edge);
+    font-family: "PingFang TC", "Heiti TC", sans-serif; color: var(--ink);
+  }
+  .badge { display: inline-block; background: color-mix(in srgb, var(--edge) 70%, #000); border-radius: 18px;
+           padding: 7px 18px; font-size: 22px; letter-spacing: .06em; }
+  h1 { margin: 20px 0 22px; font-size: 40px; font-weight: 600; color: var(--title); }
+  .row { margin-bottom: 20px; }
+  .row .top { display: flex; justify-content: space-between; align-items: baseline;
+              margin-bottom: 7px; }
+  .row .name { font-size: 25px; }
+  .row .value { font-size: 27px; font-weight: 600;
+                font-variant-numeric: tabular-nums; }
+  /* The bar is a width, so a number is edited by editing the number. */
+  .bar { height: 22px; border-radius: 11px; background: color-mix(in srgb, var(--edge) 22%, var(--paper)); overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 11px; background: var(--edge); }
+  .row.warn .value { color: var(--warn); }
+  .row.warn .bar i { background: var(--warn); }
+  .note { margin-top: 4px; font-size: 19px; color: var(--muted); }
+</style>
+
+<div id="card">
+  <span class="badge">新聞重點</span>
+  <h1>比較兩個數字</h1>
+
+  <div class="row warn">
+    <div class="top"><span class="name">原本可救回</span><span class="value">20 萬</span></div>
+    <div class="bar"><i style="width: 100%"></i></div>
+  </div>
+
+  <div class="row">
+    <div class="top"><span class="name">另一個項目</span><span class="value">8 萬</span></div>
+    <div class="bar"><i style="width: 40%"></i></div>
+  </div>
+
+  <div class="note">長條寬度直接改 width 的百分比</div>
+</div>
