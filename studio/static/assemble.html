@@ -43,9 +43,25 @@
 
   /* ---------- the running order ---------- */
   #pieces{min-height:80px}
-  .piece{display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:6px;
+  .piece{padding:9px 10px;margin-bottom:8px;
     border:1px solid var(--line);border-left:3px solid var(--accent);
     border-radius:8px;background:var(--panel2)}
+  .piece .top{display:flex;align-items:center;gap:10px}
+  /* The whole source, with the kept part lit and the rest dimmed. Trimming is
+     dragging the edges of the lit part -- the frames are right there, so there
+     is nothing to work out from a number. */
+  .strip{position:relative;height:46px;margin-top:8px;border-radius:6px;
+    overflow:hidden;background:#0d1014;cursor:default;user-select:none}
+  .strip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    pointer-events:none}
+  .strip .mask{position:absolute;top:0;bottom:0;background:#0b0e12cc;
+    pointer-events:none}
+  .strip .kept{position:absolute;top:0;bottom:0;border:2px solid var(--accent);
+    border-radius:4px;pointer-events:none}
+  .strip .edge{position:absolute;top:0;bottom:0;width:12px;cursor:ew-resize;
+    background:linear-gradient(var(--accent),var(--accent)) center/3px 100% no-repeat}
+  .strip .edge:hover{background:linear-gradient(var(--accent),var(--accent))
+    center/5px 100% no-repeat}
   .piece .no{font:12px var(--mono);color:var(--faint);min-width:1.4em}
   .piece .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .piece input{width:88px;font:12px var(--mono);color:var(--ink);background:var(--panel);
@@ -64,6 +80,13 @@
   #note{margin-top:10px;font-size:12px;color:var(--faint);min-height:1.4em}
   #note.bad{color:var(--danger)}
   #note.good{color:var(--ok)}
+
+  #peekBox{position:fixed;right:18px;bottom:18px;width:360px;display:none;
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:8px;box-shadow:0 18px 50px #000b;z-index:20}
+  #peekBox.on{display:block}
+  #peek{width:100%;display:block;border-radius:6px;background:#000}
+  #peekAt{font:11px var(--mono);color:var(--dim);margin-top:6px;text-align:center}
 </style>
 
 <header>
@@ -93,6 +116,10 @@
     <div id="note"></div>
   </section>
 </main>
+
+<!-- The frame an edge is landing on, while it is being dragged. -->
+<div id="peekBox"><video id="peek" muted playsinline preload="metadata"></video>
+  <div id="peekAt"></div></div>
 
 <script>
 "use strict";
@@ -139,15 +166,28 @@ function renderPieces() {
   } else {
     $("pieces").innerHTML = STATE.pieces.map((piece, index) => `
       <div class="piece ${piece.srt ? "" : "none"}" data-piece="${index}">
-        <span class="no">${index + 1}</span>
-        <span class="name">${escapeHTML(piece.name)}</span>
-        <input data-edge="from" value="${fmt(piece.from)}" title="從第幾秒開始">
-        <span style="color:var(--faint)">–</span>
-        <input data-edge="to" value="${fmt(piece.to)}" title="到第幾秒">
-        <span class="span">${fmt(piece.to - piece.from)}</span>
-        <button class="lift" data-move="-1" title="往前">▲</button>
-        <button class="lift" data-move="1" title="往後">▼</button>
-        <button class="lift" data-drop="1" title="移除">✕</button>
+        <div class="top">
+          <span class="no">${index + 1}</span>
+          <span class="name">${escapeHTML(piece.name)}</span>
+          <input data-edge="from" value="${fmt(piece.from)}" title="從第幾秒開始">
+          <span style="color:var(--faint)">–</span>
+          <input data-edge="to" value="${fmt(piece.to)}" title="到第幾秒">
+          <span class="span">${fmt(piece.to - piece.from)}</span>
+          <button class="lift" data-move="-1" title="往前">▲</button>
+          <button class="lift" data-move="1" title="往後">▼</button>
+          <button class="lift" data-drop="1" title="移除">✕</button>
+        </div>
+        <div class="strip" data-strip="${index}">
+          <img src="/media/sourcestrip?path=${encodeURIComponent(piece.source)}" alt="">
+          <div class="mask" style="left:0;width:${(piece.from / piece.seconds) * 100}%"></div>
+          <div class="mask" style="right:0;width:${(1 - piece.to / piece.seconds) * 100}%"></div>
+          <div class="kept" style="left:${(piece.from / piece.seconds) * 100}%;
+               width:${((piece.to - piece.from) / piece.seconds) * 100}%"></div>
+          <div class="edge" data-hold="from"
+               style="left:calc(${(piece.from / piece.seconds) * 100}% - 6px)"></div>
+          <div class="edge" data-hold="to"
+               style="left:calc(${(piece.to / piece.seconds) * 100}% - 6px)"></div>
+        </div>
       </div>`).join("");
   }
   const total = STATE.pieces.reduce((sum, piece) => sum + (piece.to - piece.from), 0);
@@ -181,6 +221,71 @@ $("pieces").addEventListener("click", (event) => {
   }
   renderPieces();
 });
+
+/* ---------- trimming by eye ----------
+   Dragging an edge moves that end of the piece and shows the frame it lands
+   on, so a cut is chosen by looking at it. The preview is a muted video seeked
+   to the moment, not a picture: seeking is instant and needs nothing built. */
+$("pieces").addEventListener("pointerdown", (event) => {
+  const hold = event.target.dataset && event.target.dataset.hold;
+  if (!hold) return;
+  const strip = event.target.closest(".strip");
+  const piece = STATE.pieces[Number(strip.dataset.strip)];
+  event.target.setPointerCapture(event.pointerId);
+  showPeek(piece, piece[hold]);
+
+  const move = (at) => {
+    const box = strip.getBoundingClientRect();
+    const where = ((at.clientX - box.left) / box.width) * piece.seconds;
+    const bounded = Math.min(Math.max(0, where), piece.seconds);
+    // Neither edge may cross the other, and a piece keeps at least a second.
+    piece[hold] = hold === "from"
+      ? Math.min(bounded, piece.to - 1)
+      : Math.max(bounded, piece.from + 1);
+    paintStrip(strip, piece);
+    showPeek(piece, piece[hold]);
+  };
+  const drop = () => {
+    event.target.removeEventListener("pointermove", move);
+    event.target.removeEventListener("pointerup", drop);
+    hidePeek();
+    renderPieces();
+  };
+  event.target.addEventListener("pointermove", move);
+  event.target.addEventListener("pointerup", drop);
+});
+
+/** Redraw one strip in place: rebuilding the list mid-drag would drop the
+ *  element the pointer is captured by. */
+function paintStrip(strip, piece) {
+  const left = (piece.from / piece.seconds) * 100;
+  const right = (piece.to / piece.seconds) * 100;
+  strip.querySelectorAll(".mask")[0].style.width = `${left}%`;
+  strip.querySelectorAll(".mask")[1].style.width = `${100 - right}%`;
+  const kept = strip.querySelector(".kept");
+  kept.style.left = `${left}%`;
+  kept.style.width = `${right - left}%`;
+  strip.querySelector('[data-hold="from"]').style.left = `calc(${left}% - 6px)`;
+  strip.querySelector('[data-hold="to"]').style.left = `calc(${right}% - 6px)`;
+  const row = strip.closest(".piece");
+  row.querySelector('[data-edge="from"]').value = fmt(piece.from);
+  row.querySelector('[data-edge="to"]').value = fmt(piece.to);
+  row.querySelector(".span").textContent = fmt(piece.to - piece.from);
+}
+
+function showPeek(piece, at) {
+  const peek = $("peek");
+  const wanted = `/media/sourceplay?path=${encodeURIComponent(piece.source)}`;
+  if (!peek.src.endsWith(wanted)) peek.src = wanted;
+  peek.parentElement.classList.add("on");
+  $("peekAt").textContent = `${escapeHTML(piece.name)}　${fmt(at)}`;
+  const go = () => { try { peek.currentTime = at; } catch (error) { /* not ready */ } };
+  peek.readyState >= 1 ? go() : peek.addEventListener("loadedmetadata", go, { once: true });
+}
+
+function hidePeek() {
+  setTimeout(() => $("peek").parentElement.classList.remove("on"), 900);
+}
 
 $("pieces").addEventListener("change", (event) => {
   const row = event.target.closest("[data-piece]");

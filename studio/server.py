@@ -214,6 +214,40 @@ def sources() -> dict[str, Any]:
     return {"sources": found}
 
 
+def _allowed_source(path: str) -> Path:
+    """A source the assembly page offered, resolved. Checked against that list
+    rather than joined, so the page cannot be talked into reading elsewhere."""
+    if path not in {item["source"] for item in sources()["sources"]}:
+        raise HTTPException(404, f"找不到片源 {path}")
+    return ROOT / path
+
+
+@app.get("/media/sourcestrip")
+def source_strip(path: str) -> FileResponse:
+    """Thumbnails across a whole source, for trimming a piece by eye."""
+    source = _allowed_source(path)
+    strip = FILMSTRIP / f"src_{source.stem}.png"
+    seconds = media.duration(source)
+    media.ensure_filmstrip(_playable(source), strip, seconds,
+                           every=max(1.0, seconds / 60))
+    return FileResponse(strip, media_type="image/png")
+
+
+def _playable(source: Path) -> Path:
+    """A copy a browser can decode. The originals are often AV1, which most
+    cannot, and the proxy exists for exactly this reason."""
+    if source.suffix.lower() == ".mp4" and source.parent.name == CLIP_DIR:
+        return source
+    return media.ensure_proxy(source, PROXY / f"{source.stem}.mp4")
+
+
+@app.get("/media/sourceplay")
+def source_play(path: str) -> FileResponse:
+    source = _allowed_source(path)
+    return FileResponse(_playable(source), media_type="video/mp4",
+                        headers={"Cache-Control": "no-store"})
+
+
 def _assemble_worker(pieces: list[dict[str, Any]], name: str) -> None:
     from core import assemble as assemble_module
     try:
