@@ -65,7 +65,11 @@ def ensure_filmstrip(video: Path, strip: Path, duration: float,
     and it is kept like the proxy: derived, cached, regenerated when the video
     changes.
     """
-    tiles = max(1, int(duration // every) + 1)
+    # As many frames as fps=1/every will actually produce. Adding one gave a
+    # trailing cell that ffmpeg fills with black, and anything asking for a
+    # moment past the end of the clip landed on it.
+    import math
+    tiles = max(1, math.ceil(duration / every))
     if not _is_fresh(strip, video):
         strip.parent.mkdir(parents=True, exist_ok=True)
         partial = strip.with_suffix(".partial.png")
