@@ -98,7 +98,307 @@
         ]
       }
     ],
-    "images": [],
+    "images": [
+      {
+        "id": "13785838",
+        "term": "electricity bill",
+        "file": "assets/photos/AI資料中心推高電費/13785838.jpg",
+        "caption": "Electrical meter and fuse box on a white wall in Cape Town, South Africa, for energy monitoring or billing.",
+        "outlet": "Pexels",
+        "author": "Akashni Weimers",
+        "page": "https://www.pexels.com/photo/electricity-box-on-white-wall-13785838/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "7680324",
+        "term": "electricity bill",
+        "file": "assets/photos/AI資料中心推高電費/7680324.jpg",
+        "caption": "A five dollar bill and receipts on a white surface, emphasizing finance and expenses.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "page": "https://www.pexels.com/photo/paper-money-and-bills-on-white-surface-7680324/",
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "7111490",
+        "term": "electricity bill",
+        "file": "assets/photos/AI資料中心推高電費/7111490.jpg",
+        "caption": "Top view of financial papers labeled 'Paid' and 'Due' beside a calculator and glasses.",
+        "outlet": "Pexels",
+        "author": "Tara Winstead",
+        "page": "https://www.pexels.com/photo/black-calculator-beside-white-papers-7111490/",
+        "size": [
+          5909,
+          3939
+        ]
+      },
+      {
+        "id": "5900070",
+        "term": "electricity bill",
+        "file": "assets/photos/AI資料中心推高電費/5900070.jpg",
+        "caption": "Businesswoman showing a receipt during a home office work session, highlighting technology integration.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "page": "https://www.pexels.com/photo/businesswoman-showing-receipt-5900070/",
+        "size": [
+          6527,
+          4351
+        ]
+      },
+      {
+        "id": "7680736",
+        "term": "electricity bill",
+        "file": "assets/photos/AI資料中心推高電費/7680736.jpg",
+        "caption": "A woman reviews receipts and calculates expenses at a desk with a pink calculator.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "page": "https://www.pexels.com/photo/person-holding-receipts-and-using-a-calculator-7680736/",
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "35501875",
+        "term": "electricity bill",
+        "file": "assets/photos/AI資料中心推高電費/35501875.jpg",
+        "caption": "Zloty banknotes and financial paperwork scattered on a desk, representing budgeting and finance.",
+        "outlet": "Pexels",
+        "author": "Jakub Zerdzicki",
+        "page": "https://www.pexels.com/photo/polish-currency-and-financial-documents-on-desk-35501875/",
+        "size": [
+          3000,
+          2001
+        ]
+      },
+      {
+        "id": "37730212",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/37730212.jpg",
+        "caption": "Close-up of server racks in a data center highlighting modern technology infrastructure.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/data-center-server-racks-with-active-equipment-37730212/",
+        "size": [
+          4108,
+          2734
+        ]
+      },
+      {
+        "id": "17489151",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/17489151.jpg",
+        "caption": "Close-up of tower servers in a data center with blue and red lighting.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/line-of-pc-towers-17489151/",
+        "size": [
+          3872,
+          2592
+        ]
+      },
+      {
+        "id": "17489160",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/17489160.jpg",
+        "caption": "Detailed image of illuminated server racks showcasing modern technology infrastructure.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/box-server-illuminated-on-blue-17489160/",
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "17489163",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/17489163.jpg",
+        "caption": "Close-up of a modern server unit in a blue-lit data center environment.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/computer-server-in-data-center-room-17489163/",
+        "size": [
+          4256,
+          2832
+        ]
+      },
+      {
+        "id": "5050305",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/5050305.jpg",
+        "caption": "From above contemporary server cable trays without wires located in modern data center",
+        "outlet": "Pexels",
+        "author": "Brett Sayles",
+        "page": "https://www.pexels.com/photo/high-angle-shot-of-network-switch-5050305/",
+        "size": [
+          4630,
+          3081
+        ]
+      },
+      {
+        "id": "37730211",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/37730211.jpg",
+        "caption": "Modern server rack with blue lighting in a secure data center environment.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/close-up-of-a-blue-server-rack-in-datacenter-37730211/",
+        "size": [
+          4040,
+          2688
+        ]
+      },
+      {
+        "id": "11166543",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/11166543.jpg",
+        "caption": "Photograph of an electric pole standing tall against a cloudy sky, capturing urban infrastructure.",
+        "outlet": "Pexels",
+        "author": "Matthias Schleiden",
+        "page": "https://www.pexels.com/photo/electric-pole-under-white-clouds-11166543/",
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "19686062",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/19686062.jpg",
+        "caption": "Low angle shot of a metal power transmission tower with cables against a clear sky.",
+        "outlet": "Pexels",
+        "author": "Budget Bizar",
+        "page": "https://www.pexels.com/photo/low-angle-shot-of-transmission-tower-19686062/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "13216331",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/13216331.jpg",
+        "caption": "Silhouetted transmission towers under a vibrant sunset in Baghdad, Iraq.",
+        "outlet": "Pexels",
+        "author": "Haitham Moussa",
+        "page": "https://www.pexels.com/photo/silhouette-of-transmission-towers-13216331/",
+        "size": [
+          6960,
+          4640
+        ]
+      },
+      {
+        "id": "214073",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/214073.jpg",
+        "caption": "A tall power line tower stands among misty trees in a dense forest, creating a dramatic contrast.",
+        "outlet": "Pexels",
+        "author": "Photo Collections",
+        "page": "https://www.pexels.com/photo/electricity-forest-power-line-trees-214073/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "9889066",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/9889066.jpg",
+        "caption": "Industrial electric power substation photographed at sunset with fence in the foreground.",
+        "outlet": "Pexels",
+        "author": "Kindel Media",
+        "page": "https://www.pexels.com/photo/power-plant-during-dusk-9889066/",
+        "size": [
+          5100,
+          3825
+        ]
+      },
+      {
+        "id": "27433337",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/27433337.jpg",
+        "caption": "Wooden power pole with transmission lines against a clear blue sky and clouds.",
+        "outlet": "Pexels",
+        "author": "Robert So",
+        "page": "https://www.pexels.com/photo/a-telephone-pole-with-a-blue-sky-and-clouds-27433337/",
+        "size": [
+          3582,
+          3558
+        ]
+      },
+      {
+        "id": "11924298",
+        "term": "electric meter",
+        "file": "assets/photos/AI資料中心推高電費/11924298.jpg",
+        "caption": "Close-up view of a row of industrial electricity meters for power monitoring and technology.",
+        "outlet": "Pexels",
+        "author": "Connor Scott McManus",
+        "page": "https://www.pexels.com/photo/row-of-electricity-meters-11924298/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "10065200",
+        "term": "electric meter",
+        "file": "assets/photos/AI資料中心推高電費/10065200.jpg",
+        "caption": "Electrical meters attached to a graffiti-covered wall showcasing utility infrastructure.",
+        "outlet": "Pexels",
+        "author": "AV",
+        "page": "https://www.pexels.com/photo/high-voltage-electricity-on-junction-boxes-10065200/",
+        "size": [
+          6488,
+          4328
+        ]
+      },
+      {
+        "id": "30144993",
+        "term": "electric meter",
+        "file": "assets/photos/AI資料中心推高電費/30144993.jpg",
+        "caption": "Electrical boxes and power meters mounted on a white brick wall.",
+        "outlet": "Pexels",
+        "author": "Anh-Bao Tran-Le",
+        "page": "https://www.pexels.com/photo/electrical-boxes-on-white-brick-wall-in-chattanooga-30144993/",
+        "size": [
+          7728,
+          5152
+        ]
+      },
+      {
+        "id": "34581644",
+        "term": "electric meter",
+        "file": "assets/photos/AI資料中心推高電費/34581644.jpg",
+        "caption": "Three vibrant utility meters on a brick wall showcasing urban industrial design in Texarkana, Texas.",
+        "outlet": "Pexels",
+        "author": "John Robertson",
+        "page": "https://www.pexels.com/photo/colorful-utility-meters-on-brick-wall-in-texarkana-34581644/",
+        "size": [
+          2992,
+          2000
+        ]
+      },
+      {
+        "id": "34581637",
+        "term": "electric meter",
+        "file": "assets/photos/AI資料中心推高電費/34581637.jpg",
+        "caption": "A quirky outdoor scene featuring painted utility meters and piping on a brick wall in Texarkana, Texas.",
+        "outlet": "Pexels",
+        "author": "John Robertson",
+        "page": "https://www.pexels.com/photo/quirky-painted-utility-meters-on-a-brick-wall-34581637/",
+        "size": [
+          2992,
+          2000
+        ]
+      }
+    ],
     "data": []
   },
   "facts": [

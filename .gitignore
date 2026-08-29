@@ -18,6 +18,7 @@ work/.*.speech.json
 
 # 素材：去背圖是從 images/ 產的，影片是下載的，都可以重做
 assets/cutouts/
+assets/photos/          # 圖庫抓的，可以重抓
 assets/clips/
 # 公版是設計出來的，跟程式一起走
 

@@ -90,7 +90,320 @@
         ]
       }
     ],
-    "images": [],
+    "images": [
+      {
+        "id": "8266747",
+        "term": "gas station prices",
+        "file": "assets/photos/美伊戰爭六個月/8266747.jpg",
+        "caption": "Close-up of a gas pump display showing price per liter and total volume during a transaction.",
+        "outlet": "Pexels",
+        "author": "Erik Mclean",
+        "page": "https://www.pexels.com/photo/display-screen-of-a-gasoline-pump-8266747/",
+        "size": [
+          5131,
+          3421
+        ]
+      },
+      {
+        "id": "13172854",
+        "term": "gas station prices",
+        "file": "assets/photos/美伊戰爭六個月/13172854.jpg",
+        "caption": "A petrol station illuminated at night with a person's silhouette in foreground, capturing urban ambiance.",
+        "outlet": "Pexels",
+        "author": "Andrés Ramírez",
+        "page": "https://www.pexels.com/photo/silhouette-of-person-against-gas-station-in-night-13172854/",
+        "size": [
+          5184,
+          2916
+        ]
+      },
+      {
+        "id": "4744707",
+        "term": "gas station prices",
+        "file": "assets/photos/美伊戰爭六個月/4744707.jpg",
+        "caption": "Close-up of a vintage gas pump station showing fuel prices and octane ratings in Los Angeles.",
+        "outlet": "Pexels",
+        "author": "Ekaterina Belinskaya",
+        "page": "https://www.pexels.com/photo/close-up-photo-gasoline-fuel-pump-4744707/",
+        "size": [
+          3000,
+          2000
+        ]
+      },
+      {
+        "id": "8266768",
+        "term": "gas station prices",
+        "file": "assets/photos/美伊戰爭六個月/8266768.jpg",
+        "caption": "Detailed view of a gas pump showing price and octane level 87.",
+        "outlet": "Pexels",
+        "author": "Erik Mclean",
+        "page": "https://www.pexels.com/photo/price-of-fuel-on-station-8266768/",
+        "size": [
+          4685,
+          3123
+        ]
+      },
+      {
+        "id": "17849728",
+        "term": "gas station prices",
+        "file": "assets/photos/美伊戰爭六個月/17849728.jpg",
+        "caption": "People walking near a Chevron gas station with prominent signage and parked vehicles on a sunny day.",
+        "outlet": "Pexels",
+        "author": "David Brown",
+        "page": "https://www.pexels.com/photo/chevron-gas-station-17849728/",
+        "size": [
+          3005,
+          2003
+        ]
+      },
+      {
+        "id": "4744710",
+        "term": "gas station prices",
+        "file": "assets/photos/美伊戰爭六個月/4744710.jpg",
+        "caption": "Close-up of a fuel pump showing gasoline and diesel options at a gas station in Los Angeles.",
+        "outlet": "Pexels",
+        "author": "Ekaterina Belinskaya",
+        "page": "https://www.pexels.com/photo/gasoline-pump-in-a-gas-station-4744710/",
+        "size": [
+          3000,
+          2000
+        ]
+      },
+      {
+        "id": "39012056",
+        "term": "oil tanker",
+        "file": "assets/photos/美伊戰爭六個月/39012056.jpg",
+        "caption": "A large red oil tanker named Bow Excellence docked at a harbor under clear blue skies.",
+        "outlet": "Pexels",
+        "author": "Oleksiy Yeshtokyn,🌻🇺🇦🌻",
+        "page": "https://www.pexels.com/photo/large-red-oil-tanker-docked-at-harbor-39012056/",
+        "size": [
+          8256,
+          5504
+        ]
+      },
+      {
+        "id": "33284879",
+        "term": "oil tanker",
+        "file": "assets/photos/美伊戰爭六個月/33284879.jpg",
+        "caption": "A fleet of cargo ships docked near oil storage tanks along a serene coastline with a clear blue sky above.",
+        "outlet": "Pexels",
+        "author": "Zifeng Xiong",
+        "page": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "27275198",
+        "term": "oil tanker",
+        "file": "assets/photos/美伊戰爭六個月/27275198.jpg",
+        "caption": "Aerial shot of an oil tanker sailing in the ocean near Vado Ligure, Italy.",
+        "outlet": "Pexels",
+        "author": "DeLuca G",
+        "page": "https://www.pexels.com/photo/default-27275198/",
+        "size": [
+          8064,
+          4536
+        ]
+      },
+      {
+        "id": "1036866",
+        "term": "oil tanker",
+        "file": "assets/photos/美伊戰爭六個月/1036866.jpg",
+        "caption": "Aerial shot of an oil tanker cruising through the ocean, emphasizing maritime transport.",
+        "outlet": "Pexels",
+        "author": "Alexander Bobrov",
+        "page": "https://www.pexels.com/photo/photo-of-ship-1036866/",
+        "size": [
+          3992,
+          2242
+        ]
+      },
+      {
+        "id": "36563588",
+        "term": "oil tanker",
+        "file": "assets/photos/美伊戰爭六個月/36563588.jpg",
+        "caption": "A large oil tanker sailing on the ocean with a sunset view.",
+        "outlet": "Pexels",
+        "author": "Punit Singh",
+        "page": "https://www.pexels.com/photo/oil-tanker-at-sea-during-sunset-36563588/",
+        "size": [
+          4032,
+          3024
+        ]
+      },
+      {
+        "id": "27629100",
+        "term": "oil tanker",
+        "file": "assets/photos/美伊戰爭六個月/27629100.jpg",
+        "caption": "Oil tanker anchored near a beach where people relax under an umbrella.",
+        "outlet": "Pexels",
+        "author": "Ricardo José",
+        "page": "https://www.pexels.com/photo/a-large-ship-is-in-the-water-27629100/",
+        "size": [
+          4608,
+          3072
+        ]
+      },
+      {
+        "id": "38485170",
+        "term": "aircraft carrier",
+        "file": "assets/photos/美伊戰爭六個月/38485170.jpg",
+        "caption": "A powerful aircraft carrier navigates through the open sea, showcasing its immense size and strength.",
+        "outlet": "Pexels",
+        "author": "Christian Palau",
+        "page": "https://www.pexels.com/photo/majestic-aircraft-carrier-on-open-sea-38485170/",
+        "size": [
+          4500,
+          3375
+        ]
+      },
+      {
+        "id": "37873923",
+        "term": "aircraft carrier",
+        "file": "assets/photos/美伊戰爭六個月/37873923.jpg",
+        "caption": "Impressive aircraft carrier docked at Portsmouth harbor with tugboats assisting.",
+        "outlet": "Pexels",
+        "author": "Samuel Phillips",
+        "page": "https://www.pexels.com/photo/aircraft-carrier-in-portsmouth-harbor-37873923/",
+        "size": [
+          4896,
+          3672
+        ]
+      },
+      {
+        "id": "19088210",
+        "term": "aircraft carrier",
+        "file": "assets/photos/美伊戰爭六個月/19088210.jpg",
+        "caption": "A large aircraft carrier docked in a serene harbor, surrounded by a clear blue sky and tranquil waters.",
+        "outlet": "Pexels",
+        "author": "Level 23 Media",
+        "page": "https://www.pexels.com/photo/ferry-swimming-in-a-sea-19088210/",
+        "size": [
+          4240,
+          2832
+        ]
+      },
+      {
+        "id": "36674255",
+        "term": "aircraft carrier",
+        "file": "assets/photos/美伊戰爭六個月/36674255.jpg",
+        "caption": "A US Navy helicopter is stationed on the deck of an aircraft carrier with radar equipment in the background.",
+        "outlet": "Pexels",
+        "author": "I Bautista",
+        "page": "https://www.pexels.com/photo/us-navy-helicopter-on-aircraft-carrier-deck-36674255/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "16170871",
+        "term": "aircraft carrier",
+        "file": "assets/photos/美伊戰爭六個月/16170871.jpg",
+        "caption": "USS Midway aircraft carrier docked in San Diego Harbor, showcasing naval history.",
+        "outlet": "Pexels",
+        "author": "Thiago Oliveira",
+        "page": "https://www.pexels.com/photo/clouds-over-battleships-16170871/",
+        "size": [
+          6264,
+          4180
+        ]
+      },
+      {
+        "id": "38485162",
+        "term": "aircraft carrier",
+        "file": "assets/photos/美伊戰爭六個月/38485162.jpg",
+        "caption": "A powerful aircraft carrier sailing on the open sea under a clear sky, showcasing naval strength.",
+        "outlet": "Pexels",
+        "author": "Christian Palau",
+        "page": "https://www.pexels.com/photo/majestic-aircraft-carrier-in-open-sea-38485162/",
+        "size": [
+          6000,
+          3375
+        ]
+      },
+      {
+        "id": "34358849",
+        "term": "strait shipping",
+        "file": "assets/photos/美伊戰爭六個月/34358849.jpg",
+        "caption": "Aerial view of ships anchored in the Singapore Strait under a clear sky, showcasing maritime activity.",
+        "outlet": "Pexels",
+        "author": "Saksham Vikram",
+        "page": "https://www.pexels.com/photo/ships-anchored-in-singapore-strait-aerial-view-34358849/",
+        "size": [
+          5659,
+          3763
+        ]
+      },
+      {
+        "id": "34358847",
+        "term": "strait shipping",
+        "file": "assets/photos/美伊戰爭六個月/34358847.jpg",
+        "caption": "Vast number of cargo ships navigating through Singapore's busy maritime strait.",
+        "outlet": "Pexels",
+        "author": "Saksham Vikram",
+        "page": "https://www.pexels.com/photo/aerial-view-of-cargo-ships-in-singapore-strait-34358847/",
+        "size": [
+          6016,
+          4000
+        ]
+      },
+      {
+        "id": "30012661",
+        "term": "strait shipping",
+        "file": "assets/photos/美伊戰爭六個月/30012661.jpg",
+        "caption": "Container ship navigating Hamburg harbor with stacked cargo under a cloudy sky.",
+        "outlet": "Pexels",
+        "author": "Wolfgang Weiser",
+        "page": "https://www.pexels.com/photo/container-ship-in-hamburg-harbor-under-cloudy-skies-30012661/",
+        "size": [
+          4039,
+          2272
+        ]
+      },
+      {
+        "id": "13102530",
+        "term": "strait shipping",
+        "file": "assets/photos/美伊戰爭六個月/13102530.jpg",
+        "caption": "A vibrant container ship navigating the Bosphorus Strait, Istanbul during sunset, enhancing the maritime scenery.",
+        "outlet": "Pexels",
+        "author": "Muhammed Zahid Bulut",
+        "page": "https://www.pexels.com/photo/sailing-container-ship-on-the-sea-13102530/",
+        "size": [
+          5074,
+          3383
+        ]
+      },
+      {
+        "id": "32237794",
+        "term": "strait shipping",
+        "file": "assets/photos/美伊戰爭六個月/32237794.jpg",
+        "caption": "Cargo ships and oil tankers on the Bosporus strait, capturing global trade and maritime logistics at sunset.",
+        "outlet": "Pexels",
+        "author": "İrfan Simsar",
+        "page": "https://www.pexels.com/photo/scenic-maritime-traffic-on-bosporus-at-sunset-32237794/",
+        "size": [
+          3961,
+          2641
+        ]
+      },
+      {
+        "id": "29792898",
+        "term": "strait shipping",
+        "file": "assets/photos/美伊戰爭六個月/29792898.jpg",
+        "caption": "Aerial view of a cargo ship navigating through the Bosphorus Strait in Istanbul, Turkey.",
+        "outlet": "Pexels",
+        "author": "Julien Goettelmann",
+        "page": "https://www.pexels.com/photo/aerial-view-of-cargo-ship-on-bosphorus-strait-29792898/",
+        "size": [
+          3840,
+          2160
+        ]
+      }
+    ],
     "data": []
   },
   "facts": [

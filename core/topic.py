@@ -25,7 +25,32 @@ TOPIC_DIR = ROOT / "topics"
 MEDIA = ROOT / "assets" / "sources" / "media.json"
 SAFE_NAME = re.compile(r"[\w一-鿿][\w一-鿿 -]{0,63}")
 
-WANT = {"videos": 5, "reports": 5}       # what a long video needs to be fair
+WANT = {"videos": 5, "reports": 5, "images": 10}
+# Ten pictures because a script wants more choice than it will use: the shot
+# that fits a line is rarely the one that looked best in the search.
+
+# Who a topic actually reaches. The audience is not always "everyone" -- for a
+# market story it is a shareholder, and his contact point is an account
+# balance, not the price of vegetables. Written down so the ending is aimed
+# rather than assumed.
+AUDIENCE = [
+    (("國債", "通膨", "電費", "物價", "稅"), "每個要付帳單的人"),
+    (("股市", "財報", "升息", "降息", "股價", "投資"), "股民、有退休金帳戶的人"),
+    (("戰爭", "外交", "軍事", "制裁", "石油"), "加油、繳稅、家裡有役齡孩子的人"),
+    (("醫療", "醫師", "醫生", "家醫", "看病", "長照", "健保", "藥", "診"),
+     "排隊看病的人、照顧家人的人"),
+    (("氣候", "洪災", "地震", "颱風", "天災"), "住在會淹的地方、保費會漲的人"),
+    (("AI", "科技", "資料中心", "自動化"), "工作可能被取代的人、電費在漲的人"),
+]
+
+
+def audience_for(name: str, angle: str = "") -> str:
+    """A first guess at who this topic reaches, from its name."""
+    hay = f"{name}{angle}"
+    for words, who in AUDIENCE:
+        if any(word in hay for word in words):
+            return who
+    return ""
 
 
 def media() -> dict[str, Any]:
@@ -80,12 +105,18 @@ def counts(pile: dict[str, Any]) -> dict[str, Any]:
             "short": {kind: max(0, WANT[kind] - got.get(kind, 0)) for kind in WANT}}
 
 
+def audience(pile: dict[str, Any]) -> str:
+    return pile.get("audience") or audience_for(pile.get("topic", ""),
+                                                pile.get("angle", ""))
+
+
 def ready(pile: dict[str, Any]) -> tuple[bool, str]:
     """Whether there is enough here to write from, and what is missing."""
     lacking = counts(pile)["short"]
     even = balance(pile)
     gaps = [f"還缺 {n} 支影片" for k, n in lacking.items() if n and k == "videos"]
     gaps += [f"還缺 {n} 篇報導" for k, n in lacking.items() if n and k == "reports"]
+    gaps += [f"還缺 {n} 張照片" for k, n in lacking.items() if n and k == "images"]
     gaps += ([f"沒有{'、'.join(even['missing'])}的說法"] if even["missing"] else [])
     return (not gaps), "；".join(gaps)
 
@@ -174,6 +205,7 @@ def listing() -> list[dict[str, Any]]:
             "scripts": pile.get("scripts") or [],
             "facts": len(pile.get("facts") or []),
             "leads": len(pile.get("leads") or []),
+            "audience": audience(pile),
             "voices": sum(len(v.get("comments") or []) for v in pile.get("voices") or []),
             "modified": int(path_for(name).stat().st_mtime),
         })

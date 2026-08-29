@@ -375,7 +375,8 @@ def get_topic(name: str) -> dict[str, Any]:
         raise HTTPException(404, str(error)) from error
     enough, why = topic_module.ready(pile)
     return {**pile, "counts": topic_module.counts(pile),
-            "balance": topic_module.balance(pile), "ready": enough, "why": why}
+            "balance": topic_module.balance(pile), "ready": enough, "why": why,
+            "audience": topic_module.audience(pile)}
 
 
 @app.post("/api/topic")
@@ -419,6 +420,64 @@ def gather_voices(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     topic_module.save(name, pile)
     return {"added": added,
             "total": sum(len(v["comments"]) for v in pile.get("voices") or [])}
+
+
+@app.post("/api/topic/images")
+def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Photographs for a topic, kept as a pile to choose from later."""
+    from core import stock as stock_module
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    terms = payload.get("terms") or []
+    if not terms:
+        raise HTTPException(400, "要給搜尋詞（英文，圖庫不吃中文）")
+
+    here = ROOT / "assets" / "photos" / name
+    seen = {item.get("id") for item in pile["sources"]["images"]}
+    added = 0
+    for term in terms[:6]:
+        try:
+            found = stock_module.search_photos(term, count=6)
+        except Exception as error:                                # noqa: BLE001
+            raise HTTPException(502, f"圖庫查詢失敗：{error}") from error
+        for picture in found:
+            if picture.id in seen:
+                continue
+            target = here / f"{picture.id}.jpg"
+            try:
+                stock_module.fetch(picture.url, target)
+            except Exception:                                     # noqa: BLE001
+                continue
+            pile["sources"]["images"].append({
+                "id": picture.id, "term": term,
+                "file": str(target.relative_to(ROOT)),
+                "caption": picture.about or term,
+                "outlet": "Pexels", "author": picture.author,
+                "page": picture.page,
+                "size": [picture.width, picture.height]})
+            seen.add(picture.id)
+            added += 1
+    topic_module.save(name, pile)
+    return {"added": added, "total": len(pile["sources"]["images"])}
+
+
+@app.get("/media/photo/{name}/{picture}")
+def topic_photo(name: str, picture: str) -> FileResponse:
+    """One gathered photograph, matched against the topic's own list."""
+    from core import topic as topic_module
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    wanted = f"assets/photos/{name}/{picture}"
+    if wanted not in {item.get("file") for item in pile["sources"]["images"]}:
+        raise HTTPException(404, "找不到這張照片")
+    return FileResponse(ROOT / wanted, media_type="image/jpeg")
 
 
 @app.post("/api/topic/script")

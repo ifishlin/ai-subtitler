@@ -95,7 +95,307 @@
         ]
       }
     ],
-    "images": [],
+    "images": [
+      {
+        "id": "28749430",
+        "term": "himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/28749430.jpg",
+        "caption": "Stunning view of the Himalayan mountains in Nepal, showcasing snow-capped peaks under a bright blue sky.",
+        "outlet": "Pexels",
+        "author": "Lisanne W",
+        "page": "https://www.pexels.com/photo/majestic-himalayan-peaks-under-clear-blue-sky-28749430/",
+        "size": [
+          3821,
+          2600
+        ]
+      },
+      {
+        "id": "25245176",
+        "term": "himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/25245176.jpg",
+        "caption": "Majestic Annapurna Base Camp landscape in Himalayas, perfect for trekking and adventure.",
+        "outlet": "Pexels",
+        "author": "Abdul Kayum",
+        "page": "https://www.pexels.com/photo/a-view-of-the-mountains-and-valleys-in-nepal-25245176/",
+        "size": [
+          5221,
+          3481
+        ]
+      },
+      {
+        "id": "10640752",
+        "term": "himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/10640752.jpg",
+        "caption": "Breathtaking view of a snow-covered mountain peak in Tibet, showcasing natural beauty and winter scenery.",
+        "outlet": "Pexels",
+        "author": "Lu Li",
+        "page": "https://www.pexels.com/photo/scenic-view-of-a-snow-covered-mountain-10640752/",
+        "size": [
+          5684,
+          3553
+        ]
+      },
+      {
+        "id": "15065902",
+        "term": "himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/15065902.jpg",
+        "caption": "Breathtaking view of snow-covered Himalayan peaks in Manang, Nepal, under a bright blue sky.",
+        "outlet": "Pexels",
+        "author": "Ashok J Kshetri",
+        "page": "https://www.pexels.com/photo/a-view-of-a-snowy-mountain-range-with-blue-sky-15065902/",
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "9596487",
+        "term": "himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/9596487.jpg",
+        "caption": "Captivating view of Mount Lhotse, showcasing its majestic snowy peaks under a clear blue sky in Nepal.",
+        "outlet": "Pexels",
+        "author": "discover altittude",
+        "page": "https://www.pexels.com/photo/mount-lhotse-of-nepal-9596487/",
+        "size": [
+          4000,
+          2672
+        ]
+      },
+      {
+        "id": "17937691",
+        "term": "himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/17937691.jpg",
+        "caption": "Breathtaking view of snow-capped mountains and clouds in North Sikkim, India.",
+        "outlet": "Pexels",
+        "author": "Anoop VS",
+        "page": "https://www.pexels.com/photo/mountain-landscape-with-cloudy-sky-17937691/",
+        "size": [
+          4608,
+          3456
+        ]
+      },
+      {
+        "id": "32782556",
+        "term": "flood village",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/32782556.jpg",
+        "caption": "A rural island with simple structures surrounded by rising floodwaters.",
+        "outlet": "Pexels",
+        "author": "Sabbir Bhuiyan",
+        "page": "https://www.pexels.com/photo/rural-island-settlement-amidst-flooded-waters-32782556/",
+        "size": [
+          5805,
+          3870
+        ]
+      },
+      {
+        "id": "34959182",
+        "term": "flood village",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/34959182.jpg",
+        "caption": "Dramatic flood scene with palm trees submerged in Phú Yên, Vietnam",
+        "outlet": "Pexels",
+        "author": "Long Bà Mùi",
+        "page": "https://www.pexels.com/photo/flooded-landscape-with-palm-trees-in-phu-yen-34959182/",
+        "size": [
+          5693,
+          3795
+        ]
+      },
+      {
+        "id": "14823608",
+        "term": "flood village",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14823608.jpg",
+        "caption": "Drone shot of a flooded village in Kijal, Terengganu, Malaysia surrounded by lush greenery.",
+        "outlet": "Pexels",
+        "author": "Pok Rie",
+        "page": "https://www.pexels.com/photo/aerial-photo-of-flooded-village-14823608/",
+        "size": [
+          4000,
+          2667
+        ]
+      },
+      {
+        "id": "39164204",
+        "term": "flood village",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/39164204.jpg",
+        "caption": "Aerial perspective of a village submerged in floodwaters, highlighting tin-roofed houses and boats.",
+        "outlet": "Pexels",
+        "author": "Muhammad Amdad Hossain",
+        "page": "https://www.pexels.com/photo/aerial-view-of-flooded-village-with-tin-roofs-39164204/",
+        "size": [
+          3818,
+          2863
+        ]
+      },
+      {
+        "id": "14823609",
+        "term": "flood village",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14823609.jpg",
+        "caption": "Aerial view of a flooded village in Kijal, Terengganu, Malaysia, showcasing submerged houses and streets.",
+        "outlet": "Pexels",
+        "author": "Pok Rie",
+        "page": "https://www.pexels.com/photo/aerial-view-of-flooded-house-14823609/",
+        "size": [
+          4000,
+          3000
+        ]
+      },
+      {
+        "id": "14823607",
+        "term": "flood village",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14823607.jpg",
+        "caption": "Aerial view of a flooding landscape in Kijal, Terengganu, Malaysia, illustrating the impact of natural disasters.",
+        "outlet": "Pexels",
+        "author": "Pok Rie",
+        "page": "https://www.pexels.com/photo/view-of-a-flooded-area-14823607/",
+        "size": [
+          4000,
+          2667
+        ]
+      },
+      {
+        "id": "33388308",
+        "term": "mountain river",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/33388308.jpg",
+        "caption": "Charcos de Quesa",
+        "outlet": "Pexels",
+        "author": "Rafael Minguet Delgado",
+        "page": "https://www.pexels.com/photo/33388308/",
+        "size": [
+          5973,
+          3560
+        ]
+      },
+      {
+        "id": "21952624",
+        "term": "mountain river",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/21952624.jpg",
+        "caption": "Fuente de Marzo",
+        "outlet": "Pexels",
+        "author": "Rafael Minguet Delgado",
+        "page": "https://www.pexels.com/photo/fuente-de-marzo-21952624/",
+        "size": [
+          5999,
+          3999
+        ]
+      },
+      {
+        "id": "21952389",
+        "term": "mountain river",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/21952389.jpg",
+        "caption": "Fuente de Marzo",
+        "outlet": "Pexels",
+        "author": "Rafael Minguet Delgado",
+        "page": "https://www.pexels.com/photo/fuente-de-marzo-21952389/",
+        "size": [
+          5999,
+          3999
+        ]
+      },
+      {
+        "id": "14138617",
+        "term": "mountain river",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14138617.jpg",
+        "caption": "A scenic view of a river surrounded by lush green mountains in Tunceli, Türkiye.",
+        "outlet": "Pexels",
+        "author": "Osman Koşar",
+        "page": "https://www.pexels.com/photo/a-view-of-river-and-mountain-14138617/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "25753453",
+        "term": "mountain river",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/25753453.jpg",
+        "caption": "Scenic view of snowcapped mountains and flowing river in Livigno, Italy under a vibrant blue sky.",
+        "outlet": "Pexels",
+        "author": "Michał Robak",
+        "page": "https://www.pexels.com/photo/view-of-a-stream-flowing-in-the-mountains-25753453/",
+        "size": [
+          5121,
+          3414
+        ]
+      },
+      {
+        "id": "15545136",
+        "term": "rescue workers",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/15545136.jpg",
+        "caption": "Rescue workers searching through rubble after an earthquake, showcasing teamwork and determination.",
+        "outlet": "Pexels",
+        "author": "samimibirfotografci",
+        "page": "https://www.pexels.com/photo/group-of-men-working-at-a-calamity-site-15545136/",
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "36072012",
+        "term": "rescue workers",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/36072012.jpg",
+        "caption": "Rescue workers in orange gear helping people during a flood, showcasing bravery and teamwork.",
+        "outlet": "Pexels",
+        "author": "Juan Moccagatta",
+        "page": "https://www.pexels.com/photo/rescue-team-assisting-flood-victims-in-action-36072012/",
+        "size": [
+          5152,
+          3435
+        ]
+      },
+      {
+        "id": "16105746",
+        "term": "rescue workers",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/16105746.jpg",
+        "caption": "Two rescue workers in helmets and safety gear discussing the emergency response plan.",
+        "outlet": "Pexels",
+        "author": "Faruk Tokluoğlu",
+        "page": "https://www.pexels.com/photo/rescuer-with-safety-helmet-and-goggles-16105746/",
+        "size": [
+          3408,
+          2272
+        ]
+      },
+      {
+        "id": "15804047",
+        "term": "rescue workers",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/15804047.jpg",
+        "caption": "Rescue workers in action during a crisis situation in Idlib, Syria.",
+        "outlet": "Pexels",
+        "author": "Ahmed akacha",
+        "page": "https://www.pexels.com/photo/firefighters-at-the-disaster-scene-15804047/",
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "25461692",
+        "term": "rescue workers",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/25461692.jpg",
+        "caption": "Emergency workers setting up temporary beds at an indoor facility wearing safety gear.",
+        "outlet": "Pexels",
+        "author": "Greece-China  News",
+        "page": "https://www.pexels.com/photo/paramedics-making-a-temporary-bed-25461692/",
+        "size": [
+          3500,
+          2469
+        ]
+      },
+      {
+        "id": "15822216",
+        "term": "rescue workers",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/15822216.jpg",
+        "caption": "Rescue workers and machinery at an earthquake site showing damaged buildings and debris.",
+        "outlet": "Pexels",
+        "author": "Emirhan Emiroğlu",
+        "page": "https://www.pexels.com/photo/people-standing-among-city-ruins-15822216/",
+        "size": [
+          6240,
+          3512
+        ]
+      }
+    ],
     "data": []
   },
   "facts": [

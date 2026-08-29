@@ -176,6 +176,53 @@ def search(query: str, providers: tuple[str, ...] = ("pexels", "pixabay"),
     return found
 
 
+@dataclass
+class Picture:
+    """One downloadable photograph."""
+    provider: str
+    id: str
+    url: str
+    width: int
+    height: int
+    author: str = ""
+    page: str = ""
+    about: str = ""
+
+
+def search_photos(query: str, count: int = 12, least_wide: int = 1200
+                  ) -> list[Picture]:
+    """Photographs, not footage. A script wants more of these than it will use:
+    the picture that suits a line is rarely the one that looked best in the
+    search, so the choosing happens later, from a pile."""
+    params = urllib.parse.urlencode(
+        {"query": query, "per_page": min(80, max(1, count)), "orientation": "landscape"})
+    data = _get_json(f"https://api.pexels.com/v1/search?{params}",
+                     {"Authorization": _key("pexels")})
+    found = []
+    for item in data.get("photos", []):
+        sources = item.get("src") or {}
+        best = sources.get("large2x") or sources.get("large") or sources.get("original")
+        if not best or int(item.get("width") or 0) < least_wide:
+            continue
+        found.append(Picture(
+            provider="pexels", id=str(item["id"]), url=best,
+            width=int(item.get("width") or 0), height=int(item.get("height") or 0),
+            author=item.get("photographer") or "", page=item.get("url") or "",
+            about=item.get("alt") or ""))
+        if len(found) >= count:
+            break
+    return found
+
+
+def fetch(url: str, destination: Path) -> Path:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=TIMEOUT,
+                                context=_ssl_context()) as reply:
+        destination.write_bytes(reply.read())
+    return destination
+
+
 def download(clip: Clip, destination: Path) -> Path:
     """Fetch one clip. The credit line is written alongside it."""
     destination.parent.mkdir(parents=True, exist_ok=True)

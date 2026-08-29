@@ -107,7 +107,320 @@
         ]
       }
     ],
-    "images": [],
+    "images": [
+      {
+        "id": "31403876",
+        "term": "oil refinery",
+        "file": "assets/photos/美委內瑞拉石油協議/31403876.jpg",
+        "caption": "Large industrial storage tanks with green railings against a clear blue sky.",
+        "outlet": "Pexels",
+        "author": "Jan van der Wolf",
+        "page": "https://www.pexels.com/photo/industrial-storage-tanks-against-blue-sky-31403876/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "4883682",
+        "term": "oil refinery",
+        "file": "assets/photos/美委內瑞拉石油協議/4883682.jpg",
+        "caption": "A large industrial refinery with pipes and towers under a clear blue sky during the day.",
+        "outlet": "Pexels",
+        "author": "Ali Mucci",
+        "page": "https://www.pexels.com/photo/a-photo-of-an-industrial-business-4883682/",
+        "size": [
+          5616,
+          3744
+        ]
+      },
+      {
+        "id": "11347815",
+        "term": "oil refinery",
+        "file": "assets/photos/美委內瑞拉石油協議/11347815.jpg",
+        "caption": "A large oil refinery complex next to the water with cloudy skies.",
+        "outlet": "Pexels",
+        "author": "Picas Joe",
+        "page": "https://www.pexels.com/photo/oil-refinery-near-water-11347815/",
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "15970032",
+        "term": "oil refinery",
+        "file": "assets/photos/美委內瑞拉石油協議/15970032.jpg",
+        "caption": "View of a large oil refinery plant with intricate pipelines in Trzebinia, Poland.",
+        "outlet": "Pexels",
+        "author": "Jakub Pabis",
+        "page": "https://www.pexels.com/photo/oil-refinery-plant-15970032/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "24560459",
+        "term": "oil refinery",
+        "file": "assets/photos/美委內瑞拉石油協議/24560459.jpg",
+        "caption": "Industrial factory near mountains by a river, showcasing chimneys and infrastructure.",
+        "outlet": "Pexels",
+        "author": "Nothing Ahead",
+        "page": "https://www.pexels.com/photo/factory-by-river-24560459/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "10752598",
+        "term": "oil refinery",
+        "file": "assets/photos/美委內瑞拉石油協議/10752598.jpg",
+        "caption": "Industrial buildings by the sea under a dramatic cloudy sky.",
+        "outlet": "Pexels",
+        "author": "Nothing Ahead",
+        "page": "https://www.pexels.com/photo/factory-on-sea-shore-10752598/",
+        "size": [
+          6000,
+          3368
+        ]
+      },
+      {
+        "id": "38150961",
+        "term": "oil barrels",
+        "file": "assets/photos/美委內瑞拉石油協議/38150961.jpg",
+        "caption": "Bright red industrial oil barrels stacked outdoors in daylight, showcasing vivid color and industrial theme.",
+        "outlet": "Pexels",
+        "author": "Александр Лич",
+        "page": "https://www.pexels.com/photo/stacked-red-industrial-oil-barrels-38150961/",
+        "size": [
+          7360,
+          4912
+        ]
+      },
+      {
+        "id": "3151717",
+        "term": "oil barrels",
+        "file": "assets/photos/美委內瑞拉石油協議/3151717.jpg",
+        "caption": "Pile of old, rusty oil barrels stacked outdoors with visible labels and numbers.",
+        "outlet": "Pexels",
+        "author": "Waldemar Brandt",
+        "page": "https://www.pexels.com/photo/rusty-oil-barrels-stacked-3151717/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "615670",
+        "term": "oil barrels",
+        "file": "assets/photos/美委內瑞拉石油協議/615670.jpg",
+        "caption": "Top view of stacked blue industrial drums forming a geometric pattern.",
+        "outlet": "Pexels",
+        "author": "Conrad Marshall",
+        "page": "https://www.pexels.com/photo/high-angle-photograph-of-blue-metal-barrels-615670/",
+        "size": [
+          4160,
+          2340
+        ]
+      },
+      {
+        "id": "6003968",
+        "term": "oil barrels",
+        "file": "assets/photos/美委內瑞拉石油協議/6003968.jpg",
+        "caption": "Close-up of colorful oil barrels stacked outdoors in Mandalay, Myanmar.",
+        "outlet": "Pexels",
+        "author": "Tony  Wu",
+        "page": "https://www.pexels.com/photo/colorful-gasoline-barrels-in-stack-6003968/",
+        "size": [
+          4032,
+          3024
+        ]
+      },
+      {
+        "id": "6546299",
+        "term": "oil barrels",
+        "file": "assets/photos/美委內瑞拉石油協議/6546299.jpg",
+        "caption": "Vibrant stack of colorful industrial barrels, ideal for environmental or industrial themed projects.",
+        "outlet": "Pexels",
+        "author": "Jack & Sue Drafahl",
+        "page": "https://www.pexels.com/photo/heap-of-barrels-6546299/",
+        "size": [
+          3072,
+          2048
+        ]
+      },
+      {
+        "id": "6003970",
+        "term": "oil barrels",
+        "file": "assets/photos/美委內瑞拉石油協議/6003970.jpg",
+        "caption": "Aerial view of stacked colorful barrels in Myanmar, showcasing industrial design.",
+        "outlet": "Pexels",
+        "author": "Tony  Wu",
+        "page": "https://www.pexels.com/photo/top-view-of-empty-gasoline-barrels-6003970/",
+        "size": [
+          4032,
+          3024
+        ]
+      },
+      {
+        "id": "16100273",
+        "term": "venezuela",
+        "file": "assets/photos/美委內瑞拉石油協議/16100273.jpg",
+        "caption": "A vibrant pedestrian bridge over quiet urban streets in Mérida, Venezuela.",
+        "outlet": "Pexels",
+        "author": "Arturo Añez.",
+        "page": "https://www.pexels.com/photo/stairs-and-street-16100273/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "13951485",
+        "term": "venezuela",
+        "file": "assets/photos/美委內瑞拉石油協議/13951485.jpg",
+        "caption": "Explore the intriguing urban decay of an old house in Mérida, Venezuela, capturing the essence of forgotten structures.",
+        "outlet": "Pexels",
+        "author": "Arturo Añez.",
+        "page": "https://www.pexels.com/photo/window-of-old-house-in-town-13951485/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "14131887",
+        "term": "venezuela",
+        "file": "assets/photos/美委內瑞拉石油協議/14131887.jpg",
+        "caption": "Quiet urban street in Mérida, Venezuela with trees lining the road.",
+        "outlet": "Pexels",
+        "author": "Arturo Añez.",
+        "page": "https://www.pexels.com/photo/residential-district-of-city-14131887/",
+        "size": [
+          3888,
+          2592
+        ]
+      },
+      {
+        "id": "14092767",
+        "term": "venezuela",
+        "file": "assets/photos/美委內瑞拉石油協議/14092767.jpg",
+        "caption": "View of La Parroquia tram stop and surrounding hills in Mérida, Venezuela.",
+        "outlet": "Pexels",
+        "author": "Arturo Añez.",
+        "page": "https://www.pexels.com/photo/street-and-tram-stop-in-the-venezuelan-city-of-merida-14092767/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "13820905",
+        "term": "venezuela",
+        "file": "assets/photos/美委內瑞拉石油協議/13820905.jpg",
+        "caption": "Detailed vintage map showing geographic regions in an old atlas book, highlighting Mérida, Venezuela.",
+        "outlet": "Pexels",
+        "author": "Arturo Añez.",
+        "page": "https://www.pexels.com/photo/map-printed-in-atlas-book-13820905/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "13652037",
+        "term": "venezuela",
+        "file": "assets/photos/美委內瑞拉石油協議/13652037.jpg",
+        "caption": "Open vintage atlas showing Spain and Portugal with a Venezuelan passport on top, symbolizing travel.",
+        "outlet": "Pexels",
+        "author": "Arturo Añez.",
+        "page": "https://www.pexels.com/photo/a-passport-on-a-book-with-a-map-of-spain-13652037/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "16852979",
+        "term": "crude oil pump",
+        "file": "assets/photos/美委內瑞拉石油協議/16852979.jpg",
+        "caption": "Oil pump jack and equipment at remote industrial site under cloudy sky.",
+        "outlet": "Pexels",
+        "author": "Tom Fournier",
+        "page": "https://www.pexels.com/photo/fossil-fuel-pump-in-usa-16852979/",
+        "size": [
+          4288,
+          2848
+        ]
+      },
+      {
+        "id": "14377364",
+        "term": "crude oil pump",
+        "file": "assets/photos/美委內瑞拉石油協議/14377364.jpg",
+        "caption": "Abandoned rusty oil pumpjack in a barren desert landscape under clear blue skies.",
+        "outlet": "Pexels",
+        "author": "Strange Happenings",
+        "page": "https://www.pexels.com/photo/rusty-abandoned-mining-machine-14377364/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "37967094",
+        "term": "crude oil pump",
+        "file": "assets/photos/美委內瑞拉石油協議/37967094.jpg",
+        "caption": "Close-up of a vintage Shell gas pump with classic retro design and German text.",
+        "outlet": "Pexels",
+        "author": "Müca 🇩🇪",
+        "page": "https://www.pexels.com/photo/vintage-shell-gas-pump-with-retro-design-37967094/",
+        "size": [
+          5790,
+          3860
+        ]
+      },
+      {
+        "id": "14377363",
+        "term": "crude oil pump",
+        "file": "assets/photos/美委內瑞拉石油協議/14377363.jpg",
+        "caption": "Rusted pumpjack in arid desert setting with sparse vegetation and clear sky.",
+        "outlet": "Pexels",
+        "author": "Strange Happenings",
+        "page": "https://www.pexels.com/photo/rusted-pumpjack-in-the-desert-14377363/",
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "16133914",
+        "term": "crude oil pump",
+        "file": "assets/photos/美委內瑞拉石油協議/16133914.jpg",
+        "caption": "Industrial oil pumpjack in a desert setting under a clear blue sky, illustrating oil extraction technology.",
+        "outlet": "Pexels",
+        "author": "jayjay13",
+        "page": "https://www.pexels.com/photo/a-pumpjack-extracting-oil-out-of-an-oil-well-16133914/",
+        "size": [
+          7000,
+          3938
+        ]
+      },
+      {
+        "id": "20014443",
+        "term": "crude oil pump",
+        "file": "assets/photos/美委內瑞拉石油協議/20014443.jpg",
+        "caption": "Oil pump jack in a dry landscape with shrubs and clear sky in Bakú, Azerbaijan.",
+        "outlet": "Pexels",
+        "author": "Miguel Cuenca",
+        "page": "https://www.pexels.com/photo/crane-bird-on-a-meadow-20014443/",
+        "size": [
+          8256,
+          5504
+        ]
+      }
+    ],
     "data": []
   },
   "facts": [

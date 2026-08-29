@@ -47,6 +47,21 @@
   .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
 
   /* ---- what has been gathered ---- */
+  /* A pile to choose from, so it is browsed rather than read: small, dense,
+     and every one says which search found it. */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+    gap:8px}
+  .shelf figure{margin:0;background:var(--panel);border:1px solid var(--line);
+    border-radius:8px;overflow:hidden}
+  .shelf img{width:100%;height:88px;object-fit:cover;display:block;
+    background:#0d1014}
+  .shelf figcaption{font:10px var(--mono);color:var(--faint);padding:4px 6px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .who-for{display:flex;align-items:baseline;gap:12px;padding:10px 15px;
+    margin-bottom:12px;background:#12212e;border:1px solid #244055;
+    border-radius:9px}
+  .who-for span{font-size:11px;color:var(--faint)}
+  .who-for b{font-size:15px;color:#7fd4ff}
   .gauge{display:flex;gap:16px;flex-wrap:wrap;padding:12px 15px;margin-bottom:8px;
     background:var(--panel);border:1px solid var(--line);border-radius:9px}
   .gauge div{font-size:12px;color:var(--dim)}
@@ -228,13 +243,20 @@ async function open(name) {
     <h2>${escapeHTML(pile.topic || name)}</h2>
     <div class="angle">角度：${escapeHTML(pile.angle || "")}${
       pile.note ? `　—　${escapeHTML(pile.note)}` : ""}</div>
+    <!-- Who the ending has to land on. Not always everyone: for a market
+         story it is a shareholder, and his contact point is a balance. -->
+    <div class="who-for">
+      <span>說給誰聽</span>
+      <b>${escapeHTML(pile.audience || "還沒判斷")}</b>
+    </div>
 
     <div class="gauge">
       <div>影片<b class="${got.videos >= want.videos ? "good" : "short"}">${
         got.videos} / ${want.videos}</b></div>
       <div>報導<b class="${got.reports >= want.reports ? "good" : "short"}">${
         got.reports} / ${want.reports}</b></div>
-      <div>圖表照片<b>${got.images}</b></div>
+      <div>照片<b class="${got.images >= want.images ? "good" : "short"}">${
+        got.images} / ${want.images}</b></div>
       <div>原始數據<b>${got.data}</b></div>
       <div>整理出的事實<b>${(pile.facts || []).length}</b></div>
       <div>鄉民留言<b>${voiceCount(pile)}</b></div>
@@ -281,6 +303,20 @@ async function open(name) {
     ${sourceRows(pile.sources.reports, "報導")}
     <h3>原始數據 <span class="count">${got.data}</span></h3>
     ${sourceRows(pile.sources.data, "數據")}
+    <h3>照片 <span class="count">${got.images} 張</span></h3>
+    ${(pile.sources.images || []).length ? `
+      <div class="shelf">
+        ${pile.sources.images.map((one) => `
+          <figure title="${escapeHTML(one.caption || "")}　${
+            escapeHTML(one.author || "")}">
+            <img src="/media/photo/${encodeURIComponent(name)}/${
+              encodeURIComponent((one.file || "").split("/").pop())}" alt="" loading="lazy">
+            <figcaption>${escapeHTML(one.term || "")}</figcaption>
+          </figure>`).join("")}
+      </div>
+      <div class="who" style="margin-top:6px">全部來自 Pexels，可商用免標示</div>`
+      : '<div class="empty">還沒有照片</div>'}
+
     <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
       <button id="btnVoices" class="tiny">抓留言</button></h3>
     ${voiceRows(pile.voices)}
