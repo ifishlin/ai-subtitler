@@ -287,7 +287,7 @@ main{display:flex;flex:1;min-height:0}
 #transport{display:flex;align-items:center;gap:10px;padding:7px 12px;
   background:var(--panel);border-bottom:1px solid var(--line);flex:none}
 #btnAssemble{font-size:12px;color:var(--ink);background:var(--panel2);
-  border:1px solid var(--line);border-radius:7px;padding:5px 10px;text-decoration:none}
+  border:1px solid var(--line);border-radius:7px;padding:5px 10px}
 #btnAssemble:hover{border-color:var(--accent)}
 #clock{font:12px var(--mono);color:var(--dim);font-variant-numeric:tabular-nums}
 
@@ -523,7 +523,7 @@ main{display:flex;flex:1;min-height:0}
     <button id="btnProjects" class="tiny" title="全部專案">管理</button>
     <span class="src" id="srcName">…</span>
     <div class="spacer"></div>
-    <a href="/assemble" class="tiny" id="btnAssemble">組裝影片</a>
+    <button class="tiny" id="btnAssemble">組裝影片</button>
     <button id="btnBurn">重新燒錄</button>
     <div id="burnBar"><i></i><span></span></div>
     <select id="finished" title="播放已燒錄的成品"></select>
@@ -1940,6 +1940,11 @@ $("newMake").onclick = async () => {
     $("projNote").textContent = error.message;
   }
 };
+
+// Buttons rather than links throughout: a link offers a menu of things nobody
+// wants here -- open in a new tab, copy address -- and looks different from
+// every other control that does something.
+$("btnAssemble").onclick = () => { location.href = "/assemble"; };
 
 $("btnProjects").onclick = openProjects;
 $("projClose").onclick = closeProjects;
