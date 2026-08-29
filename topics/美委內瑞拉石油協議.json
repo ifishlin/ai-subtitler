@@ -3,7 +3,43 @@
   "angle": "影響民眾生活",
   "made": 1788028068,
   "sources": {
-    "videos": [],
+    "videos": [
+      {
+        "title": "TRUMP'S VENEZUELA GAMBIT: Undercutting China with oil and minerals",
+        "url": "https://www.youtube.com/watch?v=BF5XKzypiic",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "seconds": 150.0
+      },
+      {
+        "title": "Why Trump Wants ConocoPhillips, ExxonMobil And Chevron To Rebuild Venezuela’s Oil Fields",
+        "url": "https://www.youtube.com/watch?v=w67-wxmkWeQ",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "seconds": 150.0
+      },
+      {
+        "title": "US-Venezuela oil deal: What does it mean for Washington?",
+        "url": "https://www.youtube.com/watch?v=rwcFQZ88-_8",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "seconds": 128.0
+      },
+      {
+        "title": "Venezuela latest, Trump on midterms and Yemen",
+        "url": "https://www.youtube.com/watch?v=kd60CQzG6gU",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "seconds": 641.0
+      },
+      {
+        "title": "Venezuela's gold diplomacy gamble - BBC News",
+        "url": "https://www.youtube.com/watch?v=IP4B-JuMgS0",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "seconds": 186.0
+      }
+    ],
     "reports": [],
     "images": [],
     "data": []
@@ -11,27 +47,5 @@
   "facts": [],
   "voices": [],
   "scripts": [],
-  "note": "牽動油價。右派當戰略勝利、非西方媒體當交易，落差大。",
-  "leads": [
-    {
-      "outlet": "Al Jazeera English",
-      "lean": "non-western",
-      "title": "US-Venezuela oil deal: What does it mean for Washington?"
-    },
-    {
-      "outlet": "Deutsche Welle",
-      "lean": "neutral",
-      "title": "What's behind Venezuela's controversial oil deal?"
-    },
-    {
-      "outlet": "Fox Business",
-      "lean": "right",
-      "title": "TRUMP'S VENEZUELA GAMBIT: Undercutting China"
-    },
-    {
-      "outlet": "CNBC",
-      "lean": "neutral",
-      "title": "CNBC Investigates A Venezuelan Oil Deal"
-    }
-  ]
+  "note": "牽動油價。右派當戰略勝利、非西方媒體當交易，落差大。"
 }

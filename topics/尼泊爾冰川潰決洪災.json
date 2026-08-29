@@ -3,7 +3,50 @@
   "angle": "影響民眾生活",
   "made": 1788028068,
   "sources": {
-    "videos": [],
+    "videos": [
+      {
+        "title": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal border",
+        "url": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "outlet": "Fox News",
+        "lean": "right",
+        "seconds": 483.0
+      },
+      {
+        "title": "Was climate change to blame for the Nepal floods?",
+        "url": "https://www.youtube.com/watch?v=54KcFHke3cw",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "seconds": 178.0
+      },
+      {
+        "title": "Return of tigers to Nepal brings both joy and fear - BBC News",
+        "url": "https://www.youtube.com/watch?v=La0MDQohgk0",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "seconds": 226.0
+      },
+      {
+        "title": "Nepal's deadly flood: causation, devastation, and preventive measures.",
+        "url": "https://www.youtube.com/watch?v=JU-oiX2J4s4",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "seconds": 193.0
+      },
+      {
+        "title": "LIVE: Aftermath of floods on Nepal-China border caused by glacier collapse",
+        "url": "https://www.youtube.com/watch?v=sW2potT5Erw",
+        "outlet": "AP News",
+        "lean": "neutral",
+        "seconds": 482.0
+      },
+      {
+        "title": "New barrier lakes heighten danger near Nepal flood zone",
+        "url": "https://www.youtube.com/watch?v=B06uPGK7Dpo",
+        "outlet": "CNN",
+        "lean": "left",
+        "seconds": 559.0
+      }
+    ],
     "reports": [],
     "images": [],
     "data": []
@@ -11,27 +54,5 @@
   "facts": [],
   "voices": [],
   "scripts": [],
-  "note": "六百多人罹難。爭點是「氣候變遷該不該負責」，各家說法明顯不同。",
-  "leads": [
-    {
-      "outlet": "Reuters",
-      "lean": "neutral",
-      "title": "Was climate change to blame for the Nepal floods?"
-    },
-    {
-      "outlet": "BBC News",
-      "lean": "neutral",
-      "title": "Did a glacier collapse trigger Nepal's deadly flood?"
-    },
-    {
-      "outlet": "Al Jazeera English",
-      "lean": "non-western",
-      "title": "Nepal's deadly flood: causation, devastation"
-    },
-    {
-      "outlet": "Fox News",
-      "lean": "right",
-      "title": "NEW DETAILS: Glacial collapse triggers CATASTROPHE"
-    }
-  ]
+  "note": "六百多人罹難。爭點是「氣候變遷該不該負責」，各家說法明顯不同。"
 }

@@ -3,7 +3,43 @@
   "angle": "影響民眾生活",
   "made": 1788028068,
   "sources": {
-    "videos": [],
+    "videos": [
+      {
+        "title": "Shortage of kids’ antibiotics, Dr. explains how to prepare",
+        "url": "https://www.youtube.com/watch?v=rsC4RJ4Jld4",
+        "outlet": "Fox News",
+        "lean": "right",
+        "seconds": 257.0
+      },
+      {
+        "title": "Is money the reason for a primary care doctor shortage?",
+        "url": "https://www.youtube.com/watch?v=ATa9QMISrvw",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "seconds": 124.0
+      },
+      {
+        "title": "Why Walmart Wants To Be Your Hospital Too",
+        "url": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "seconds": 754.0
+      },
+      {
+        "title": "General practitioner shortage",
+        "url": "https://www.youtube.com/watch?v=sY95WZm0vd8",
+        "outlet": "CNN",
+        "lean": "left",
+        "seconds": 225.0
+      },
+      {
+        "title": "The town so deprived of GPs that children seek medical help from youth workers - BBC Newsnight",
+        "url": "https://www.youtube.com/watch?v=ZGGyu4k3HGk",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "seconds": 777.0
+      }
+    ],
     "reports": [],
     "images": [],
     "data": []
@@ -11,27 +47,5 @@
   "facts": [],
   "voices": [],
   "scripts": [],
-  "note": "掛號等三個月。醫療是敏感題材，若用 AI 旁白不能營利——這題要留意。",
-  "leads": [
-    {
-      "outlet": "PBS NewsHour",
-      "lean": "centre-left",
-      "title": "Is money the reason for a primary care doctor shortage?"
-    },
-    {
-      "outlet": "CNBC",
-      "lean": "neutral",
-      "title": "Why Walmart Wants To Be Your Hospital Too"
-    },
-    {
-      "outlet": "Fox News",
-      "lean": "right",
-      "title": "Shortage of kids' antibiotics, Dr. explains"
-    },
-    {
-      "outlet": "CNN",
-      "lean": "left",
-      "title": "General practitioner shortage"
-    }
-  ]
+  "note": "掛號等三個月。醫療是敏感題材，若用 AI 旁白不能營利——這題要留意。"
 }

@@ -3,7 +3,50 @@
   "angle": "影響民眾生活",
   "made": 1788028068,
   "sources": {
-    "videos": [],
+    "videos": [
+      {
+        "title": "We solve the 'power problem' AI data centers are facing: Onsemi CEO",
+        "url": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "seconds": 466.0
+      },
+      {
+        "title": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "url": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "seconds": 225.0
+      },
+      {
+        "title": "Why communities are revolting against data centers",
+        "url": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "seconds": 1607.0
+      },
+      {
+        "title": "Lifelong TX Republicans pledge to vote Dem over data centers",
+        "url": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
+        "outlet": "CNN",
+        "lean": "left",
+        "seconds": 857.0
+      },
+      {
+        "title": "Inside ETFs: Is AI's power problem an opportunity?",
+        "url": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "seconds": 316.0
+      },
+      {
+        "title": "David Icke talks conspiracy theories - BBC News",
+        "url": "https://www.youtube.com/watch?v=GlAjeTunopo",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "seconds": 447.0
+      }
+    ],
     "reports": [],
     "images": [],
     "data": []
@@ -11,27 +54,5 @@
   "facts": [],
   "voices": [],
   "scripts": [],
-  "note": "電費帳單直接有感。左右都在報，但結論相反——右派說是成長，左派說是轉嫁。",
-  "leads": [
-    {
-      "outlet": "Fox Business",
-      "lean": "right",
-      "title": "'TO THE MOON': Elon Musk plan to blast AI data centres into space"
-    },
-    {
-      "outlet": "CNBC",
-      "lean": "neutral",
-      "title": "How The AI Boom Is Causing A Surge In Demand"
-    },
-    {
-      "outlet": "PBS NewsHour",
-      "lean": "centre-left",
-      "title": "How AI infrastructure is driving a sharp rise in electricity costs"
-    },
-    {
-      "outlet": "CNN",
-      "lean": "left",
-      "title": "How solar panels can help you fight rising energy bills"
-    }
-  ]
+  "note": "電費帳單直接有感。左右都在報，但結論相反——右派說是成長，左派說是轉嫁。"
 }
