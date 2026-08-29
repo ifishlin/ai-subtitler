@@ -500,7 +500,11 @@ def _clips() -> list[dict[str, Any]]:
             "path": f"{CLIP_DIR}/{clip.name}",
             "name": clip.stem[:40],
             "kind": "clip",
-            "seconds": float(details.get("duration") or 0.0),
+            # The file, not what the library said about it. Pexels rounds to
+            # whole seconds, so an 10.837s clip was offered as 11.0 -- and
+            # trimming "to the end" then asked for a sixth of a second that
+            # does not exist, which every later piece paid for.
+            "seconds": round(media.duration(clip), 3),
             "width": (details.get("size") or [1920, 1080])[0],
             "height": (details.get("size") or [1920, 1080])[1],
             "credit": details.get("author"),

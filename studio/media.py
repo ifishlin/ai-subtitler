@@ -22,12 +22,27 @@ def _ffmpeg(command: list[str]) -> None:
     subprocess.run(command, check=True, capture_output=True, text=True)
 
 
+_DURATIONS: dict[tuple, float] = {}
+
+
 def duration(video: Path) -> float:
+    """How long the file actually is. Remembered per version of the file, since
+    every listing asks about every clip and ffprobe is not free."""
+    try:
+        stat = video.stat()
+        seen = (str(video), stat.st_size, int(stat.st_mtime))
+    except OSError:
+        seen = None
+    if seen is not None and seen in _DURATIONS:
+        return _DURATIONS[seen]
     result = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", str(video)],
         check=True, text=True, capture_output=True,
     )
-    return float(json.loads(result.stdout)["format"]["duration"])
+    found = float(json.loads(result.stdout)["format"]["duration"])
+    if seen is not None:
+        _DURATIONS[seen] = found
+    return found
 
 
 def _is_fresh(target: Path, source: Path) -> bool:

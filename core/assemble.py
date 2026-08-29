@@ -147,6 +147,17 @@ def write_srt(cues: list[dict[str, Any]], path: Path) -> Path:
     return path
 
 
+def _length(source: Path) -> float:
+    """The file's real duration, asked of the file."""
+    said = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "csv=p=0", str(source)], capture_output=True, text=True).stdout
+    try:
+        return float(said.strip())
+    except ValueError:
+        return float("inf")
+
+
 def _graph(count: int) -> str:
     """Normalise every piece, then join. Sources differ in size, frame rate and
     sample rate; concat refuses to join streams that disagree, and a viewer
@@ -174,8 +185,12 @@ def assemble(pieces: list[dict[str, Any]], video_out: Path,
         source = Path(piece["source"])
         if not source.is_file():
             raise FileNotFoundError(f"找不到 {source}")
+        # Never ask for time the file does not have: ffmpeg simply stops at the
+        # end, so the piece comes out shorter than the model says and every
+        # caption after it sits early by the difference.
+        end = min(float(piece["to"]), _length(source))
         command.extend(["-ss", f"{float(piece['from']):.3f}",
-                        "-to", f"{float(piece['to']):.3f}", "-i", str(source)])
+                        "-to", f"{end:.3f}", "-i", str(source)])
 
     video_out.parent.mkdir(parents=True, exist_ok=True)
     if progress:
