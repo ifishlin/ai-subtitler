@@ -399,6 +399,14 @@ main{display:flex;flex:1;min-height:0}
   flex-direction:column;box-shadow:0 20px 60px #000a}
 #projHead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 #projHead .grow{flex:1}
+#projForm{display:none;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--bg);border:1px solid var(--line);border-radius:8px;
+  padding:10px 12px;margin-bottom:12px;font-size:12px}
+#projForm.on{display:flex}
+#projForm select,#projForm input{background:var(--panel);border:1px solid var(--line);
+  border-radius:6px;color:var(--ink);padding:4px 8px;font-size:12px}
+#projForm input{font-family:var(--mono);width:12em}
+#projForm select{max-width:22em}
 #projList{overflow:auto}
 .proj{display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:6px;
   background:var(--bg);border:1px solid var(--line);border-radius:8px}
@@ -647,7 +655,15 @@ main{display:flex;flex:1;min-height:0}
     <b>專案</b>
     <span class="hint">一次 pipeline 的輸出，或一支組裝出來的影片</span>
     <span class="grow"></span>
+    <button id="projNew" class="tiny">新增專案</button>
     <button id="projClose" class="tiny">關閉</button>
+  </div>
+  <!-- Folded away until asked for: the list is the point of this panel. -->
+  <div id="projForm">
+    <label>影片 <select id="newSource"></select></label>
+    <label>取名 <input id="newName" value="output_" spellcheck="false"></label>
+    <button id="newMake" class="tiny">建立</button>
+    <span id="newHint" class="hint"></span>
   </div>
   <div id="projList"></div>
   <div id="projNote"></div>
@@ -1868,6 +1884,60 @@ function closeProjects() {
   PROJ.open = false;
   $("projects").classList.remove("on");
 }
+
+/* Making one: a video and a name. What lands on disk is the pair of files the
+   editor needs -- where the video is, and a subtitle file that is empty when
+   nobody has listened to it yet. */
+async function fillSources() {
+  const select = $("newSource");
+  if (select.options.length) return;
+  const { videos } = await api("GET", "/api/videos");
+  select.innerHTML = videos.map((video) =>
+    `<option value="${escapeHTML(video.path)}" data-srt="${video.srt ? 1 : 0}">`
+    + `${escapeHTML(video.name)}　${fmt(video.seconds)}　${escapeHTML(video.where)}/`
+    + `${video.srt ? "　有現成字幕" : ""}</option>`).join("");
+  sayNewHint();
+}
+
+function sayNewHint() {
+  const chosen = $("newSource").selectedOptions[0];
+  $("newHint").textContent = chosen && chosen.dataset.srt === "1"
+    ? "旁邊有 .srt，會一起帶進來"
+    : "沒有字幕，之後可以跑 pipeline 或自己貼一份";
+}
+
+$("projNew").onclick = async () => {
+  const form = $("projForm");
+  form.classList.toggle("on");
+  if (!form.classList.contains("on")) return;
+  try { await fillSources(); } catch (error) {
+    $("projNote").className = "bad";
+    $("projNote").textContent = error.message;
+  }
+  $("newName").focus();
+};
+
+$("newSource").addEventListener("change", sayNewHint);
+
+$("newMake").onclick = async () => {
+  const name = $("newName").value.trim();
+  const source = $("newSource").value;
+  if (!source) return;
+  try {
+    const made = await api("POST", "/api/project/new", { name, source });
+    PROJ.list = made.projects.slice().sort((a, b) => b.modified - a.modified);
+    renderProjects();
+    await loadProjects(S.project);       // the dropdown gained an option
+    $("projForm").classList.remove("on");
+    $("newName").value = "output_";
+    $("projNote").className = "";
+    $("projNote").textContent = `建好 ${made.made}`
+      + (made.lines ? `，帶進 ${made.lines} 句字幕` : "，還沒有字幕");
+  } catch (error) {
+    $("projNote").className = "bad";
+    $("projNote").textContent = error.message;
+  }
+};
 
 $("btnProjects").onclick = openProjects;
 $("projClose").onclick = closeProjects;

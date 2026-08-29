@@ -108,11 +108,16 @@ def ensure_waveform(video: Path, peaks_path: Path) -> list[float]:
     result = subprocess.run(
         ["ffmpeg", "-v", "error", "-i", str(video), "-vn",
          "-ac", "1", "-ar", str(WAVEFORM_RATE), "-f", "s16le", "-"],
-        check=True, capture_output=True,
+        capture_output=True,
     )
     samples = array.array("h")
     samples.frombytes(result.stdout[: len(result.stdout) // 2 * 2])
     if not samples:
+        # Stock footage has no audio track at all, and ffmpeg calls that an
+        # error. It is not one: a silent video has a flat waveform, and the
+        # timeline should draw it rather than refuse to open the project.
+        peaks_path.parent.mkdir(parents=True, exist_ok=True)
+        peaks_path.write_text(json.dumps({"peaks": []}), encoding="utf-8")
         return []
 
     size = max(1, len(samples) // WAVEFORM_BUCKETS)

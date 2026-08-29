@@ -292,6 +292,64 @@ def _to_trash(going: Path) -> Path:
     return landed
 
 
+@app.get("/api/videos")
+def videos() -> dict[str, Any]:
+    """Footage on disk that could become a project: downloads and clips.
+
+    Anything already used by a run is still offered -- the same interview can
+    reasonably be worked on twice, and refusing would be guessing at why.
+    """
+    found = []
+    for directory in (WORK, ROOT / CLIP_DIR):
+        if not directory.is_dir():
+            continue
+        for video in sorted(directory.glob("*.mp4")):
+            beside = video.with_suffix(".srt")
+            found.append({
+                "path": str(video.relative_to(ROOT)),
+                "name": video.stem[:48],
+                "where": directory.name,
+                "seconds": round(media.duration(video), 2),
+                # A subtitle file already sitting next to it saves transcribing
+                # something that has been transcribed.
+                "srt": str(beside.relative_to(ROOT)) if beside.is_file() else None,
+            })
+    return {"videos": found}
+
+
+@app.post("/api/project/new")
+def new_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Make the smallest thing the editor will open: where the video is, and a
+    subtitle file. Empty subtitles mean no subtitles, which is a fair
+    description of a video nobody has listened to yet."""
+    import re as _re
+    name = str(payload.get("name") or "").strip()
+    if not _re.fullmatch(r"output[\w\u4e00-\u9fff-]{0,48}", name):
+        raise HTTPException(400, "名稱要以 output 開頭，只能用中英文、數字、底線、減號")
+    if (ROOT / name).exists():
+        raise HTTPException(400, f"{name} 已經存在了，換個名字")
+
+    source = str(payload.get("source") or "")
+    offered = {item["path"]: item for item in videos()["videos"]}
+    if source not in offered:
+        raise HTTPException(404, f"找不到影片 {source}")
+
+    output = ROOT / name
+    output.mkdir(parents=True)
+    (output / "run.json").write_text(
+        json.dumps({"source": str((ROOT / source).resolve()), "made_here": True,
+                    "recovered_segments": 0}, ensure_ascii=False, indent=2),
+        encoding="utf-8")
+    # A subtitle file beside the video is worth taking; otherwise an empty one,
+    # which is what marks the directory as a project.
+    beside = offered[source]["srt"]
+    text = (ROOT / beside).read_text(encoding="utf-8") if beside else ""
+    for kind in ("zh", "bilingual"):
+        (output / f"subtitles_{kind}.srt").write_text(text, encoding="utf-8")
+    return {"made": name, "lines": text.count("-->"),
+            "projects": list_projects()}
+
+
 @app.post("/api/project/remove")
 def remove_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Take a whole run out of the list: video, subtitles, layout and all."""
