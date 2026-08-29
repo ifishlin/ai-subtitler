@@ -352,6 +352,36 @@ def _sites() -> list[str]:
     return _sites.cached
 
 
+# ------------------------------------------------------------------ scripts
+
+@app.get("/api/scripts")
+def get_scripts() -> dict[str, Any]:
+    from core import script as script_module
+    return {"scripts": script_module.listing(), "limit": script_module.LIMIT,
+            "per_second": script_module.PER_SECOND}
+
+
+@app.get("/api/script")
+def get_script(name: str) -> dict[str, Any]:
+    """One script with its arithmetic already done: a length nobody has to
+    guess at, and every line that states something without saying where it
+    came from."""
+    from core import script as script_module
+    try:
+        found = script_module.load(name)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    except FileNotFoundError as error:
+        raise HTTPException(404, str(error)) from error
+    return {**found, "measured": script_module.measure(found)}
+
+
+@app.get("/scripts")
+def scripts_page() -> HTMLResponse:
+    return HTMLResponse((Path(__file__).parent / "static" / "scripts.html")
+                        .read_text(encoding="utf-8"))
+
+
 @app.get("/api/layouts")
 def get_layouts() -> dict[str, Any]:
     """The house styles a run can start from."""

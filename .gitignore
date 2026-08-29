@@ -27,6 +27,8 @@ editor_cache/
 # 刪掉但還沒真的丟的東西
 trash/
 
+# 文案是寫出來的，跟程式一起走 —— scripts/ 不忽略
+
 # 執行紀錄
 *.log
 

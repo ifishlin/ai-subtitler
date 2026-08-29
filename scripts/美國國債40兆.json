@@ -1,0 +1,112 @@
+{
+  "topic": "美國國債突破 40 兆",
+  "note": "示範用，用來看畫面。台詞是照 CNN 那支影片的事實改寫的。",
+  "sources": {
+    "video": [
+      {
+        "title": "US debt hits $40T — CNN, Matt Egan",
+        "url": "https://www.youtube.com/watch?v=dqKmjoKFiC0",
+        "use": [
+          [
+            46.9,
+            52.0
+          ]
+        ],
+        "note": "只取「每分鐘 480 萬」那五秒當佐證"
+      }
+    ],
+    "reports": [
+      {
+        "title": "The National Debt Has Now Surpassed $40 Trillion",
+        "url": "https://www.pgpf.org/article/the-national-debt-is-now-more-than-40-trillion-what-does-that-mean/",
+        "facts": [
+          "每人 $117,000",
+          "每戶 $297,000",
+          "每分鐘增加 $4.8M"
+        ]
+      },
+      {
+        "title": "Understand three-minute YouTube Shorts",
+        "url": "https://support.google.com/youtube/answer/15424877",
+        "facts": [
+          "Shorts 上限 3 分鐘"
+        ]
+      },
+      {
+        "title": "US Treasury — Debt to the Penny",
+        "url": "https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/",
+        "facts": [
+          "官方每日債務餘額"
+        ]
+      }
+    ],
+    "images": [
+      {
+        "caption": "每人／每戶分攤",
+        "source": "Peter G. Peterson Foundation",
+        "file": "charts/panel_person.png"
+      },
+      {
+        "caption": "每分鐘／每小時／每天",
+        "source": "Peter G. Peterson Foundation",
+        "file": "charts/panel_rate.png"
+      }
+    ]
+  },
+  "lines": [
+    {
+      "say": "美國國債剛剛突破四十兆美元。",
+      "show": "自製：大數字卡 40,000,000,000,000",
+      "from": "US Treasury"
+    },
+    {
+      "say": "這個數字大到沒有意義，所以換個說法。",
+      "show": "自製：標題卡"
+    },
+    {
+      "say": "平均分攤到每一個美國人身上，是十一萬七千美元。",
+      "show": "自製：對比卡（每人／每戶）",
+      "from": "PGPF"
+    },
+    {
+      "say": "以一個家庭來算，是二十九萬七千。",
+      "show": "同上，第二欄亮起",
+      "from": "PGPF"
+    },
+    {
+      "say": "而且它還在長。",
+      "show": "自製：時鐘動畫"
+    },
+    {
+      "say": "每分鐘四百八十萬，每天六十八億。",
+      "show": "CNN 原畫面 46.9–52.0（消音）",
+      "from": "CNN／PGPF"
+    },
+    {
+      "say": "但是先別急著恐慌。",
+      "show": "自製：標題卡，換底色"
+    },
+    {
+      "say": "沒有人會真的收到這張帳單，這只是總額除以人口。",
+      "show": "自製：把帳單劃掉的動畫"
+    },
+    {
+      "say": "真正該看的是另一個數字。",
+      "show": "自製：標題卡"
+    },
+    {
+      "say": "今年光是利息就花掉九千三百一十億，",
+      "show": "自製：長條圖，利息那條",
+      "from": "US Treasury"
+    },
+    {
+      "say": "已經超過國防預算的八千零四十億。",
+      "show": "同上，國防那條",
+      "from": "US Treasury"
+    },
+    {
+      "say": "當一個國家付利息比養軍隊還貴，那才是警訊。",
+      "show": "自製：結語卡"
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>文案　AI-Desk</title>
+<style>
+  :root{
+    --bg:#0b0e12; --panel:#141a21; --panel2:#1b232c; --line:#26313d;
+    --ink:#e6edf3; --dim:#9fb0c0; --faint:#6b7c8c;
+    --accent:#5aa9ff; --ok:#4ec98b; --warn:#f5b544; --danger:#ef6b6b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--ink);
+    font:14px/1.6 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;
+    display:flex;flex-direction:column;height:100vh}
+  button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel2);
+    border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.tiny{padding:3px 9px;font-size:12px}
+  a{color:var(--accent)}
+
+  header{display:flex;align-items:center;gap:12px;padding:11px 18px;flex:none;
+    background:var(--panel);border-bottom:1px solid var(--line)}
+  header h1{margin:0;font-size:15px}
+  header .where{color:var(--faint);font-size:12px}
+  header .grow{flex:1}
+
+  main{flex:1;display:flex;min-height:0}
+  #list{width:290px;flex:none;overflow:auto;padding:12px;
+    border-right:1px solid var(--line)}
+  #paper{flex:1;overflow:auto;padding:20px 26px 60px}
+
+  .item{padding:9px 10px;margin-bottom:6px;border-radius:8px;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line)}
+  .item:hover{border-color:var(--accent)}
+  .item.on{border-color:var(--accent);background:var(--panel2)}
+  .item b{display:block;font-weight:600}
+  .item .facts{font:11px var(--mono);color:var(--faint);margin-top:4px}
+  .item .bad{color:var(--danger)}
+
+  /* ---- the script itself ---- */
+  h2{margin:0 0 4px;font-size:19px}
+  .topic{color:var(--dim);font-size:13px;margin-bottom:14px}
+  .sums{display:flex;gap:18px;flex-wrap:wrap;padding:11px 14px;margin-bottom:18px;
+    background:var(--panel);border:1px solid var(--line);border-radius:9px}
+  .sums div{font-size:12px;color:var(--dim)}
+  .sums b{display:block;font:18px var(--mono);color:var(--ink);
+    font-variant-numeric:tabular-nums}
+  .sums b.over{color:var(--danger)}
+  .sums b.good{color:var(--ok)}
+
+  /* The bar is the point of the page: 90 seconds is a wall, and you should be
+     able to see how close the script is to it without reading a number. */
+  .ruler{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;
+    margin-bottom:20px;border:1px solid var(--line);display:flex}
+  .ruler i{display:block;height:100%;border-right:1px solid #0b0e12}
+  .ruler i:nth-child(odd){background:var(--accent)}
+  .ruler i:nth-child(even){background:#4a86cc}
+  .ruler i.spill{background:var(--danger)}
+
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:11px;color:var(--faint);font-weight:500;
+    padding:0 10px 7px;border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;vertical-align:top;border-bottom:1px solid var(--line)}
+  tr:hover td{background:#161d25}
+  td.at{font:11px var(--mono);color:var(--faint);white-space:nowrap;width:5.4em}
+  td.say{font-size:15px;line-height:1.55}
+  td.show{font-size:12px;color:var(--dim);width:30%}
+  td.from{font-size:11px;color:var(--faint);width:9em;white-space:nowrap}
+  td.from.none{color:var(--danger)}
+  .own{color:var(--ok)}
+  .theirs{color:var(--warn)}
+
+  h3{margin:26px 0 8px;font-size:13px;color:var(--dim)}
+  .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:10px 13px;margin-bottom:7px;font-size:13px}
+  .src .meta{font-size:11px;color:var(--faint);margin-top:3px}
+  .src .fact{font-size:12px;color:var(--dim);margin-top:5px}
+  #empty{color:var(--faint);padding:40px;text-align:center}
+</style>
+
+<header>
+  <h1>文案</h1>
+  <span class="where">先寫台詞，再配畫面</span>
+  <span class="grow"></span>
+  <button id="btnBack" class="tiny">← 回編輯器</button>
+</header>
+
+<main>
+  <div id="list"></div>
+  <div id="paper"><div id="empty">左邊選一份文案</div></div>
+</main>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const escapeHTML = (text) => String(text).replace(/[&<>"]/g,
+  (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const STATE = { list: [], limit: 90, chosen: null };
+
+async function api(path) {
+  const response = await fetch(path);
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.detail || `${path} 失敗`);
+  return data;
+}
+
+function clock(seconds) {
+  const whole = Math.max(0, seconds || 0);
+  return `${Math.floor(whole / 60)}:${(whole % 60).toFixed(1).padStart(4, "0")}`;
+}
+
+function renderList() {
+  $("list").innerHTML = STATE.list.map((item) => `
+    <div class="item ${item.name === STATE.chosen ? "on" : ""}"
+         data-name="${escapeHTML(item.name)}">
+      <b>${escapeHTML(item.name)}</b>
+      <span class="facts">${clock(item.seconds)}　${item.characters} 字　${
+        item.lines} 句　${item.sources} 個來源</span>
+      ${item.over ? `<span class="facts bad">超出 ${item.over} 秒</span>` : ""}
+      ${item.unsourced ? `<span class="facts bad">${item.unsourced} 句沒標來源</span>` : ""}
+    </div>`).join("") || '<div id="empty">還沒有文案</div>';
+}
+
+/** Whether a line leans on someone else's picture. The balance between these
+ *  is what decides whether the video counts as ours, so it is on every row. */
+function whose(show) {
+  const theirs = /CNN|原畫面|新聞畫面|素材/.test(show || "");
+  return theirs ? '<span class="theirs">引用</span>' : '<span class="own">自製</span>';
+}
+
+async function open(name) {
+  STATE.chosen = name;
+  renderList();
+  let script;
+  try { script = await api(`/api/script?name=${encodeURIComponent(name)}`); }
+  catch (error) { $("paper").innerHTML = `<div id="empty">${escapeHTML(error.message)}</div>`; return; }
+
+  const sums = script.measured;
+  const ours = sums.lines.filter((line) => !/CNN|原畫面|新聞畫面|素材/.test(line.show || ""));
+  const oursSeconds = ours.reduce((total, line) => total + line.seconds, 0);
+  const share = sums.seconds ? Math.round((oursSeconds / sums.seconds) * 100) : 0;
+
+  const ruler = sums.lines.map((line) => {
+    const width = (line.seconds / Math.max(STATE.limit, sums.seconds)) * 100;
+    const spill = line.at > STATE.limit ? " spill" : "";
+    return `<i class="${spill}" style="width:${width}%" title="${clock(line.at)}"></i>`;
+  }).join("");
+
+  const rows = sums.lines.map((line) => `
+    <tr>
+      <td class="at">${clock(line.at)}</td>
+      <td class="say">${escapeHTML(line.say || "")}</td>
+      <td class="show">${whose(line.show)}　${escapeHTML(line.show || "")}</td>
+      <td class="from ${line.from ? "" : "none"}">${
+        line.from ? escapeHTML(line.from) : (line.say ? "沒標來源" : "")}</td>
+    </tr>`).join("");
+
+  const kinds = [["video", "影片"], ["reports", "報告"], ["images", "圖表照片"]];
+  const sources = kinds.map(([key, label]) => {
+    const items = (script.sources || {})[key] || [];
+    if (!items.length) return "";
+    return `<h3>${label}（${items.length}）</h3>` + items.map((item) => `
+      <div class="src">
+        ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
+          escapeHTML(item.title || item.caption || item.url)}</a>`
+          : escapeHTML(item.title || item.caption || "")}
+        <div class="meta">${escapeHTML(item.source || item.note || "")}${
+          item.use ? `　用 ${item.use.map((w) => `${w[0]}–${w[1]}s`).join("、")}` : ""}</div>
+        ${(item.facts || []).length
+          ? `<div class="fact">${item.facts.map(escapeHTML).join("　·　")}</div>` : ""}
+      </div>`).join("");
+  }).join("");
+
+  $("paper").innerHTML = `
+    <h2>${escapeHTML(name)}</h2>
+    <div class="topic">${escapeHTML(script.topic || "")}${
+      script.note ? `　—　${escapeHTML(script.note)}` : ""}</div>
+    <div class="sums">
+      <div>長度<b class="${sums.over ? "over" : "good"}">${clock(sums.seconds)}</b></div>
+      <div>上限 ${STATE.limit} 秒<b>${sums.over ? `超出 ${sums.over}s` : "在裡面"}</b></div>
+      <div>字數<b>${sums.characters}</b></div>
+      <div>句數<b>${sums.lines.length}</b></div>
+      <div>自製畫面佔比<b class="${share >= 60 ? "good" : "over"}">${share}%</b></div>
+      <div>沒標來源<b class="${sums.unsourced.length ? "over" : "good"}">${
+        sums.unsourced.length}</b></div>
+    </div>
+    <div class="ruler">${ruler}</div>
+    <table>
+      <thead><tr><th>起</th><th>台詞</th><th>畫面</th><th>來源</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    ${sources}`;
+}
+
+$("list").addEventListener("click", (event) => {
+  const row = event.target.closest("[data-name]");
+  if (row) open(row.dataset.name);
+});
+$("btnBack").onclick = () => { location.href = "/"; };
+
+(async function boot() {
+  try {
+    const found = await api("/api/scripts");
+    STATE.list = found.scripts.sort((a, b) => b.modified - a.modified);
+    STATE.limit = found.limit;
+  } catch (error) { /* nothing yet */ }
+  renderList();
+  if (STATE.list.length) open(STATE.list[0].name);
+})();
+</script>
