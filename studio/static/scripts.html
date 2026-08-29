@@ -84,6 +84,10 @@
   /* A lead is something seen in a channel listing: known to exist, not yet
      fetched or read. Dashed, so it never reads as material already in hand. */
   .src.lead{border-style:dashed;background:transparent}
+  .src.written{cursor:pointer;border-color:#2c5a45;background:#12291f}
+  .src.written:hover{border-color:var(--ok)}
+  .src.written b{font-size:15px;pointer-events:none}
+  .src.written .who{pointer-events:none}
   .voice{font-size:12px;color:var(--dim);padding:6px 0;line-height:1.6;
     border-top:1px solid #1c242e}
   .voice .likes{font:11px var(--mono);color:var(--faint);margin-right:9px}
@@ -252,11 +256,16 @@ async function open(name) {
       <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
       ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">素材不齊也要寫</button>'}
       <span style="flex:1"></span>
-      ${(pile.scripts || []).map((one) =>
-        `<button class="tiny" data-script="${escapeHTML(one)}">${
-          escapeHTML(one)}</button>`).join(" ")}
     </div>
     <div id="note"></div>
+
+    ${(pile.scripts || []).length ? `
+      <h3>寫好的文案 <span class="count">${pile.scripts.length} 份</span></h3>
+      ${pile.scripts.map((one) => `
+        <div class="src written" data-script="${escapeHTML(one)}">
+          <b>${escapeHTML(one)}</b>
+          <div class="who">點開來看逐句台詞</div>
+        </div>`).join("")}` : ""}
 
     ${(pile.leads || []).length ? `
       <h3>線索 <span class="count">${pile.leads.length} 條，還沒抓回來</span></h3>
@@ -357,8 +366,8 @@ async function showScript(name) {
 }
 
 $("paper").addEventListener("click", (event) => {
-  const which = event.target.dataset && event.target.dataset.script;
-  if (which) showScript(which);
+  const card = event.target.closest("[data-script]");
+  if (card) showScript(card.dataset.script);
 });
 
 $("list").addEventListener("click", (event) => {
