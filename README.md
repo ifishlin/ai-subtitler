@@ -1,6 +1,32 @@
 # AI Video Pipeline
 
-This local Python pipeline downloads or reads a video, transcribes speech, creates Traditional Chinese subtitles, asks a remote Qwen model to plan one or two information cards, and renders the cards and subtitles into a final MP4 while preserving the original narration.
+Turns a foreign-language video into a Chinese-subtitled explainer. It is built
+in two stages, and the split matters more than any single feature.
+
+## 兩個階段
+
+**第一階段：自動產生影片。目標是不要人為介入。**
+
+`produce.py` 從一支影片走到一支成品：下載或讀檔、辨識語音、翻成繁體中文字幕、
+規劃資訊圖卡、排版、燒錄。理想狀況是你給它一個網址，回來就有一支可以發布的影片，
+中間一個按鍵都不用按。**做不到全自動的地方就是這個階段的缺口**，而不是「留給人去處理」
+——每一次需要有人插手，都應該當成第一階段的待辦。
+
+**第二階段：編輯器，用來修改第一階段的成品。**
+
+`studio/` 是一個本機網頁。它不重跑 pipeline，只修改已經產出的東西：改錯字、
+調字幕時間、排版面、放圖卡和素材影片、剪掉不要的片段、把幾支影片接起來，然後重新燒錄。
+
+第二階段存在，是因為第一階段還不夠好。理想上第一階段的成品可以直接用，第二階段就
+不需要打開；實務上完全不用改很難，除非是非常制式的影片。所以編輯器是有用的，但它
+**不是目標，是安全網**。
+
+```
+一支影片  ──[第一階段 produce.py]──▶  成品 + 字幕 + 版面
+                                          │
+                                          └──[第二階段 studio/]──▶  修過的成品
+                                              （不滿意時才打開）
+```
 
 ## Requirements
 
@@ -21,7 +47,7 @@ The pipeline opens this tunnel automatically when needed:
 ssh -f -N -L 11435:127.0.0.1:11434 -o ExitOnForwardFailure=yes yuyu@cuba001
 ```
 
-## Run
+## Run（第一階段）
 
 Use the downloaded test video:
 
@@ -124,10 +150,12 @@ projects/RFK訪談/
 
 Cards appear temporarily on the right side of the original picture. The original audio continues underneath. See `docs/AI_SERVICE.md` for the remote model configuration.
 
-## Subtitle review UI
+## 第二階段：AI-Desk
 
-A standalone local web page for proofreading the finished subtitles and
-re-burning the video, without re-running this pipeline:
+A local web page that edits what the first stage produced, without re-running
+any of it -- subtitles, layout, cards, footage, cuts, and joining videos
+together. Open it when the automatic result is not good enough; every reason
+you had to open it is a gap in the first stage:
 
 ```bash
 .venv/bin/python studio/server.py
