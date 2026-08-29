@@ -81,6 +81,9 @@
   .lean.left{color:#7fb4ff;border-color:#2d4a70}
   .lean.right{color:#ff9d7f;border-color:#6b3f2e}
   .lean.neutral{color:var(--ok);border-color:#2c5a45}
+  /* A lead is something seen in a channel listing: known to exist, not yet
+     fetched or read. Dashed, so it never reads as material already in hand. */
+  .src.lead{border-style:dashed;background:transparent}
   .voice{font-size:12px;color:var(--dim);padding:6px 0;line-height:1.6;
     border-top:1px solid #1c242e}
   .voice .likes{font:11px var(--mono);color:var(--faint);margin-right:9px}
@@ -138,6 +141,7 @@ function renderList() {
       + `報導 ${item.counts.reports}/${STATE.want.reports}　事實 ${item.facts} 條</span>
       ${item.ready ? '<span class="facts" style="color:var(--ok)">素材夠了</span>'
                    : `<span class="facts bad">${escapeHTML(item.why)}</span>`}
+      ${item.leads ? `<span class="facts">線索 ${item.leads} 條</span>` : ""}
       ${item.scripts.length
         ? `<span class="facts">文案 ${item.scripts.length} 份</span>` : ""}
     </div>`).join("") || '<div class="empty">還沒有題目</div>';
@@ -232,6 +236,14 @@ async function open(name) {
             pile.scripts.map(escapeHTML).join("、")}</span>` : ""}
     </div>
     <div id="note"></div>
+
+    ${(pile.leads || []).length ? `
+      <h3>線索 <span class="count">${pile.leads.length} 條，還沒抓回來</span></h3>
+      ${pile.leads.map((lead) => `
+        <div class="src lead">
+          ${escapeHTML(lead.title || "")}${leanTag(lead.lean || "")}
+          <div class="who">${escapeHTML(lead.outlet || "")}</div>
+        </div>`).join("")}` : ""}
 
     <h3>影片 <span class="count">${got.videos} / ${want.videos}</span></h3>
     ${sourceRows(pile.sources.videos, "影片")}

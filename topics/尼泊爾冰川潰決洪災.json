@@ -1,0 +1,37 @@
+{
+  "topic": "尼泊爾冰川潰決洪災",
+  "angle": "影響民眾生活",
+  "made": 1788028068,
+  "sources": {
+    "videos": [],
+    "reports": [],
+    "images": [],
+    "data": []
+  },
+  "facts": [],
+  "voices": [],
+  "scripts": [],
+  "note": "六百多人罹難。爭點是「氣候變遷該不該負責」，各家說法明顯不同。",
+  "leads": [
+    {
+      "outlet": "Reuters",
+      "lean": "neutral",
+      "title": "Was climate change to blame for the Nepal floods?"
+    },
+    {
+      "outlet": "BBC News",
+      "lean": "neutral",
+      "title": "Did a glacier collapse trigger Nepal's deadly flood?"
+    },
+    {
+      "outlet": "Al Jazeera English",
+      "lean": "non-western",
+      "title": "Nepal's deadly flood: causation, devastation"
+    },
+    {
+      "outlet": "Fox News",
+      "lean": "right",
+      "title": "NEW DETAILS: Glacial collapse triggers CATASTROPHE"
+    }
+  ]
+}

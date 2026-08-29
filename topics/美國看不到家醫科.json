@@ -1,0 +1,37 @@
+{
+  "topic": "美國看不到家醫科",
+  "angle": "影響民眾生活",
+  "made": 1788028068,
+  "sources": {
+    "videos": [],
+    "reports": [],
+    "images": [],
+    "data": []
+  },
+  "facts": [],
+  "voices": [],
+  "scripts": [],
+  "note": "掛號等三個月。醫療是敏感題材，若用 AI 旁白不能營利——這題要留意。",
+  "leads": [
+    {
+      "outlet": "PBS NewsHour",
+      "lean": "centre-left",
+      "title": "Is money the reason for a primary care doctor shortage?"
+    },
+    {
+      "outlet": "CNBC",
+      "lean": "neutral",
+      "title": "Why Walmart Wants To Be Your Hospital Too"
+    },
+    {
+      "outlet": "Fox News",
+      "lean": "right",
+      "title": "Shortage of kids' antibiotics, Dr. explains"
+    },
+    {
+      "outlet": "CNN",
+      "lean": "left",
+      "title": "General practitioner shortage"
+    }
+  ]
+}

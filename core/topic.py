@@ -173,6 +173,7 @@ def listing() -> list[dict[str, Any]]:
             "ready": enough, "why": why,
             "scripts": pile.get("scripts") or [],
             "facts": len(pile.get("facts") or []),
+            "leads": len(pile.get("leads") or []),
             "voices": sum(len(v.get("comments") or []) for v in pile.get("voices") or []),
             "modified": int(path_for(name).stat().st_mtime),
         })

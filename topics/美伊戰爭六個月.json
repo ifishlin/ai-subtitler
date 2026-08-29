@@ -1,0 +1,37 @@
+{
+  "topic": "美伊戰爭六個月",
+  "angle": "影響民眾生活",
+  "made": 1788028068,
+  "sources": {
+    "videos": [],
+    "reports": [],
+    "images": [],
+    "data": []
+  },
+  "facts": [],
+  "voices": [],
+  "scripts": [],
+  "note": "開戰半年，油價、通膨、兵役都碰得到。四家從完全不同角度報導，反方最好找。",
+  "leads": [
+    {
+      "outlet": "Fox News",
+      "lean": "right",
+      "title": "It's just a MATTER OF TIME before Iranian government falls"
+    },
+    {
+      "outlet": "BBC News",
+      "lean": "neutral",
+      "title": "Six months into the US-Israel war with Iran, can anyone win?"
+    },
+    {
+      "outlet": "Al Jazeera English",
+      "lean": "non-western",
+      "title": "Six months into the war on Iran, what counts as victory?"
+    },
+    {
+      "outlet": "Reuters",
+      "lean": "neutral",
+      "title": "Costly consequences after six months of Iran war"
+    }
+  ]
+}

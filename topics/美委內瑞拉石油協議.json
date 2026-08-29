@@ -1,0 +1,37 @@
+{
+  "topic": "美委內瑞拉石油協議",
+  "angle": "影響民眾生活",
+  "made": 1788028068,
+  "sources": {
+    "videos": [],
+    "reports": [],
+    "images": [],
+    "data": []
+  },
+  "facts": [],
+  "voices": [],
+  "scripts": [],
+  "note": "牽動油價。右派當戰略勝利、非西方媒體當交易，落差大。",
+  "leads": [
+    {
+      "outlet": "Al Jazeera English",
+      "lean": "non-western",
+      "title": "US-Venezuela oil deal: What does it mean for Washington?"
+    },
+    {
+      "outlet": "Deutsche Welle",
+      "lean": "neutral",
+      "title": "What's behind Venezuela's controversial oil deal?"
+    },
+    {
+      "outlet": "Fox Business",
+      "lean": "right",
+      "title": "TRUMP'S VENEZUELA GAMBIT: Undercutting China"
+    },
+    {
+      "outlet": "CNBC",
+      "lean": "neutral",
+      "title": "CNBC Investigates A Venezuelan Oil Deal"
+    }
+  ]
+}

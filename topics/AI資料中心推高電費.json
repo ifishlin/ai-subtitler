@@ -1,0 +1,37 @@
+{
+  "topic": "AI資料中心推高電費",
+  "angle": "影響民眾生活",
+  "made": 1788028068,
+  "sources": {
+    "videos": [],
+    "reports": [],
+    "images": [],
+    "data": []
+  },
+  "facts": [],
+  "voices": [],
+  "scripts": [],
+  "note": "電費帳單直接有感。左右都在報，但結論相反——右派說是成長，左派說是轉嫁。",
+  "leads": [
+    {
+      "outlet": "Fox Business",
+      "lean": "right",
+      "title": "'TO THE MOON': Elon Musk plan to blast AI data centres into space"
+    },
+    {
+      "outlet": "CNBC",
+      "lean": "neutral",
+      "title": "How The AI Boom Is Causing A Surge In Demand"
+    },
+    {
+      "outlet": "PBS NewsHour",
+      "lean": "centre-left",
+      "title": "How AI infrastructure is driving a sharp rise in electricity costs"
+    },
+    {
+      "outlet": "CNN",
+      "lean": "left",
+      "title": "How solar panels can help you fight rising energy bills"
+    }
+  ]
+}
