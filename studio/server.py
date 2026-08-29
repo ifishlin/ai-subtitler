@@ -53,8 +53,12 @@ STATIC = Path(__file__).resolve().parent / "static"
 # Everything that depends on which run is being reviewed lives in config, so
 # the browser can switch runs without restarting the server. Media derivatives
 # are keyed by video, so switching back to a run costs nothing the second time.
-IMAGE_DIRS = ("img_cut", "img")     # searched in order; cut-outs preferred
-CLIP_DIR = "clips"                  # footage to lay over the frame
+# Everything placeable, in one place. Four top-level directories for four
+# kinds of the same thing meant the shelf was scattered on disk even after the
+# library brought it together on screen.
+ASSETS = ROOT / "assets"
+IMAGE_DIRS = ("assets/cutouts", "assets/images")   # cut-outs preferred
+CLIP_DIR = "assets/clips"           # footage to lay over the frame
 CARDS_TRIMMED = 2                   # scenes carrying cards cropped to their art
 
 
@@ -434,7 +438,7 @@ def source_poster(path: str) -> FileResponse:
 def _playable(source: Path) -> Path:
     """A copy a browser can decode. The originals are often AV1, which most
     cannot, and the proxy exists for exactly this reason."""
-    if source.suffix.lower() == ".mp4" and source.parent.name == CLIP_DIR:
+    if source.suffix.lower() == ".mp4" and source.parent == ROOT / CLIP_DIR:
         return source
     return media.ensure_proxy(source, PROXY / f"{cache_key(source)}.mp4")
 
@@ -597,7 +601,7 @@ def _images() -> list[dict[str, Any]]:
                 # What sort of thing it is, so a shelf of sixteen can be looked
                 # through. A card is known by the page it was drawn from, which
                 # is the only honest way to tell one from a photograph.
-                "kind": ("cutout" if folder == "img_cut"
+                "kind": ("cutout" if folder.endswith("cutouts")
                          else "card" if (CARD_DIR / f"{image.stem}.html").is_file()
                          else "picture"),
                 "added": int(image.stat().st_mtime),
@@ -703,7 +707,7 @@ def clip_file(name: str) -> FileResponse:
     return FileResponse(ROOT / CLIP_DIR / name, media_type="video/mp4")
 
 
-CARD_DIR = ROOT / "cards"          # the HTML each made picture was made from
+CARD_DIR = ASSETS / "cards"        # the HTML each made picture was made from
 
 
 @app.get("/api/cards")
@@ -715,7 +719,7 @@ def cards() -> dict[str, Any]:
     means a number can be changed later by editing the number, rather than by
     building the whole card again.
     """
-    templates = sorted((ROOT / "cards" / "templates").glob("*.html"))
+    templates = sorted((CARD_DIR / "templates").glob("*.html"))
     made = sorted(CARD_DIR.glob("*.html"))
     return {
         "templates": [{"name": item.stem, "html": item.read_text(encoding="utf-8")}
@@ -727,9 +731,9 @@ def cards() -> dict[str, Any]:
 
 @app.post("/api/card")
 def make_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
-    """Render a card's HTML to a transparent PNG in img/, keeping the source."""
+    """Render a card's HTML to a transparent PNG in assets/images/, keeping the source."""
 
-    from make_card import capture
+    from tools.make_card import capture
 
     # The name becomes a filename in two directories, so it is checked rather
     # than joined: no separators, no dots, nothing that could climb out.
@@ -746,10 +750,10 @@ def make_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     # Keeping the source and making the picture are different acts: work is
     # saved often and half-finished, a picture is made when it is ready.
     if not payload.get("render", True):
-        return {"saved": f"cards/{page.name}"}
+        return {"saved": f"assets/cards/{page.name}"}
 
     try:
-        target = capture(page, ROOT / "img" / f"{name}.png")
+        target = capture(page, ASSETS / "images" / f"{name}.png")
     except SystemExit as error:                                   # no browser
         raise HTTPException(500, str(error)) from error
     with Image.open(target) as made:
@@ -760,10 +764,10 @@ def make_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         from core import motion as motion_module
         with Image.open(target) as card:
             report = motion_module.render(html, card, target.with_suffix(".motion.mov"))
-        made_motion = {"path": f"img/{target.stem}.motion.mov",
+        made_motion = {"path": f"assets/images/{target.stem}.motion.mov",
                        "seconds": report["seconds"]}
 
-    return {"saved": f"cards/{page.name}", "path": f"img/{target.name}",
+    return {"saved": f"assets/cards/{page.name}", "path": f"assets/images/{target.name}",
             "width": size[0], "height": size[1], "motion": made_motion}
 
 

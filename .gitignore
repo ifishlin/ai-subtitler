@@ -6,37 +6,25 @@ __pycache__/
 # macOS
 .DS_Store
 
-# Pipeline artifacts (all regenerable by main.py); --output can name any of these
+# 每一次 run 的成果。可以由 produce.py 重做，也可能很大
 projects/
-output/
-output_*/
 
-# Downloaded and intermediate media
+# 拿進來的原片。sidecar（corrections / extra_segments / terms）刻意留在版控裡
 work/*.mp4
-work/*.wav
 work/*.webm
 work/*.m4a
 work/*.info.json
-
-# Reviewed sidecars are kept in version control on purpose:
-#   work/*.corrections.json
-#   work/*.extra_segments.json
-
-# Subtitle editor cache (proxy video, waveform peaks, session state)
-editor_cache/
-
-# Run logs and downloaded B-roll
-*.log
-work/broll_*
-
-# Cut-out icons are produced from img/ by src/cutout.py
-img_cut/
-
-# Speech windows, derived from the audio beside them
 work/.*.speech.json
 
-# Stock footage: downloaded, credited, regenerable
-clips/
+# 素材：去背圖是從 images/ 產的，影片是下載的，都可以重做
+assets/cutouts/
+assets/clips/
 
-# 從組裝頁移掉的片源，等著被真正刪掉
+# 衍生檔：proxy、波形、縮圖、字幕圖、抽出來的音軌、Chrome 的 profile
+editor_cache/
+
+# 刪掉但還沒真的丟的東西
 trash/
+
+# 執行紀錄
+*.log

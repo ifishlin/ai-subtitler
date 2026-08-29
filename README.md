@@ -45,7 +45,7 @@ this mode, which fixes them wherever they occur; the id-keyed sidecars are skipp
 because filling gaps shifts every segment number after the first insertion.
 
 `--sensitive` still applies sensitive decoding to the whole video, which is
-measurably worse — see `PROGRESS.md`.
+measurably worse — see `docs/PROGRESS.md`.
 
 Qwen proofreads by returning a list of fragments to replace, not corrected
 lines. Every edit must name text the caption already contains, must not merely
@@ -68,6 +68,43 @@ Or provide a URL or local file:
 
 ## Output
 
+## 目錄結構
+
+Four roles, and nothing sits in two of them:
+
+```text
+produce.py            程式碼　pipeline 的進入點
+core/                         pipeline 的實作
+studio/                       編輯器：伺服器和兩張網頁
+tools/                        零星的小工具
+
+work/                 輸入　　拿進來的原片，和人工寫的 sidecar
+
+assets/               素材　　跨專案共用，可以拖到任何一支影片上
+├── images/                   圖片和畫好的資訊卡
+├── cutouts/                  去背版（從 images/ 產的）
+├── cards/                    資訊卡的 HTML 原稿和模板
+└── clips/                    素材影片
+
+projects/             輸出　　一次 run 一個資料夾
+└── 名字/
+    ├── run.json              ← 這是專案的記號：說明它是哪支影片
+    ├── transcript*.json      辨識和校正的文字
+    ├── subtitles_*.srt       字幕
+    ├── scene.json            版面
+    ├── visuals/              這一支影片自己的圖卡
+    └── final.mp4             成品
+
+editor_cache/         衍生　　proxy、波形、縮圖、字幕圖、抽出的音軌
+trash/                        刪掉但還沒真的丟的東西
+docs/                 文件
+```
+
+The rule is that anything under `editor_cache/` can be deleted at any time and
+will be made again on demand, and nothing else can. That is the whole reason
+for the split: when the disk fills up you should not have to work out which
+264 megabytes are safe to lose.
+
 Every run gets its own directory under `projects/`. What makes one a project
 is the `run.json` inside it, which says which video the run is about -- not
 what the directory is called, so a project can be named after its subject.
@@ -85,7 +122,7 @@ projects/RFK訪談/
 └── final.mp4
 ```
 
-Cards appear temporarily on the right side of the original picture. The original audio continues underneath. See `AI_SERVICE.md` for the remote model configuration.
+Cards appear temporarily on the right side of the original picture. The original audio continues underneath. See `docs/AI_SERVICE.md` for the remote model configuration.
 
 ## Subtitle review UI
 

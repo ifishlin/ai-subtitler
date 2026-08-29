@@ -116,13 +116,20 @@ def _sheet(html: str, frames: int, size: tuple[int, int]) -> str:
         f"<div id='sheet'>{''.join(cells)}</div>")
 
 
+def _scratch() -> Path:
+    """Where Chrome may keep its profile: derived, disposable, out of the way."""
+    here = Path(__file__).resolve().parent.parent / "editor_cache" / "scratch"
+    here.mkdir(parents=True, exist_ok=True)
+    return here
+
+
 def _capture(page: Path, shot: Path, width: int, height: int) -> None:
     process = subprocess.Popen([
         _chrome(), "--headless=new", "--disable-gpu", "--no-sandbox",
         "--default-background-color=00000000",
         f"--window-size={width},{height}",
         "--force-device-scale-factor=1", "--virtual-time-budget=6000",
-        f"--user-data-dir={shot.parent / '.chrome-motion'}",
+        f"--user-data-dir={_scratch() / 'chrome-motion'}",
         f"--screenshot={shot}", page.resolve().as_uri(),
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for _ in range(90):

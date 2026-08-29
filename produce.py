@@ -159,6 +159,11 @@ def resumed_source(reuse: str) -> str | None:
 def main() -> None:
     args = parse_args()
     work = ROOT / "work"
+    # Extracted audio and the windows cut from it are regenerable in seconds
+    # and weigh as much as the video. They live with the other derived things
+    # so that work/ holds only what was actually brought in.
+    scratch = ROOT / "editor_cache" / "audio"
+    scratch.mkdir(parents=True, exist_ok=True)
     # One directory per run, all of them in one place, named by what they are
     # rather than by a prefix a program looks for.
     output = (ROOT / "projects" / Path(args.project).name).resolve()
@@ -179,7 +184,7 @@ def main() -> None:
 
     print("[1/8] Preparing video")
     video, context = prepare_video(source, work)
-    audio = work / "audio.wav"
+    audio = scratch / f"{video.stem}.wav"
     extract_audio(video, audio)
 
     terms = glossary(video) if args.fill_gaps else ""
@@ -201,7 +206,8 @@ def main() -> None:
     if args.fill_gaps and not args.reuse_transcript:
         total = duration(video)
         segments, gap_report = fill_gaps(
-            video, work, args.whisper_model, segments, total, terms=terms, min_gap=args.gap_min
+            video, scratch, args.whisper_model, segments, total, terms=terms,
+            min_gap=args.gap_min
         )
         write_json(output / "gap_report.json", gap_report)
         for entry in gap_report:
@@ -357,17 +363,21 @@ def main() -> None:
         element = scene.one(stage, "subtitle")
         listing = None
         if element:
+            # Into the cache, where the editor also draws them: they are made
+            # from the SRT and the layout, so keeping a second copy inside the
+            # project only doubles fourteen megabytes of the same pictures.
+            drawn = ROOT / "editor_cache" / "captions" / output.name
             built = caption.build(caption.read_srt(burn_srt), element,
-                                  tuple(stage["canvas"]), output / "captions")
+                                  tuple(stage["canvas"]), drawn)
             stage["caption_band"] = built["band"]
             listing = caption.playlist(built["captions"], duration(video),
-                                       built["band"], output / "captions")
+                                       built["band"], drawn)
         compose(video, stage, output / "final.mp4", srt_dir=output,
                 image_root=Path.cwd(), captions=listing)
     else:
         print("[8/8] 跳過燒錄（加 --render 可直接出片）")
         print(f"      字幕與圖卡已就緒，在編輯器確認後再燒：")
-        print(f"      .venv/bin/python studio/server.py --output {args.output}")
+        print(f"      .venv/bin/python studio/server.py --project {output.name}")
 
     done = output / "final.mp4" if args.render else output / "subtitles_zh.srt"
     spent = getattr(client, "usage", None)
