@@ -45,14 +45,25 @@ def line_seconds(line: dict[str, Any]) -> float:
     return round(spoken_length(line.get("say", "")) / PER_SECOND, 2)
 
 
-BORROW_AIM = 0.25        # someone else's pictures, as a share of the running time
-BORROW_MOST = 0.30       # above this the video stops reading as ours
-BORROWED = ("CNN", "原畫面", "新聞畫面", "素材", "引用", "現場", "照片")
+REAL_AIM = 0.25          # photographs and footage, as a share of the running time
+REAL_MOST = 0.35         # above this the video starts reading as someone else's
+DRAWN = "自製"
 
 
-def is_borrowed(show: str | None) -> bool:
-    """Whether this shot is someone else's picture rather than one we drew."""
-    return any(mark in (show or "") for mark in BORROWED)
+def is_real(show: str | None) -> bool:
+    """Whether this shot is a photograph or footage rather than a card we drew.
+
+    Told apart by what the shot says it is, and everything that is not drawn
+    counts: a stock photograph, one from Commons, a frame lifted from the news.
+    All three do the job a card cannot -- they look like the world -- and a
+    video made only of cards is dull however good the cards are.
+
+    Named for what it measures. It was called is_borrowed while the vocabulary
+    was CNN and 原畫面; the vocabulary changed to 示意/真實/新聞畫格 and the
+    check went on looking for words nobody was writing, so it reported no
+    footage at all in a script full of it.
+    """
+    return bool(show) and not show.strip().startswith(DRAWN)
 
 
 def measure(script: dict[str, Any]) -> dict[str, Any]:
@@ -78,7 +89,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
     # has a shape as well as a size: 25% is fine spread across the running
     # time and looks like evidence; the same 25% in one lump looks like a clip
     # with commentary bolted on. So both are measured.
-    lifted = [item for item in laid if is_borrowed(item.get("show"))]
+    lifted = [item for item in laid if is_real(item.get("show"))]
     borrowed = sum(item["seconds"] for item in lifted)
     thirds = [0, 0, 0]
     for item in lifted:
@@ -90,7 +101,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "borrowed": round(borrowed, 2),
             "borrowed_share": round(borrowed / clock * 100) if clock else 0,
             "spread": thirds,
-            "even": all(thirds) and borrowed <= clock * BORROW_MOST}
+            "even": all(thirds) and borrowed <= clock * REAL_MOST}
 
 
 def path_for(name: str) -> Path:
