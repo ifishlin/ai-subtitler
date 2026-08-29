@@ -1,0 +1,172 @@
+{
+  "topic": "美國看不到家醫科",
+  "angle": "影響民眾生活",
+  "view": "缺的不是醫生，是願意做這一科的醫生——多蓋醫學院解決不了",
+  "tone": "克制",
+  "note": "觀點：缺的不是醫生，是願意做這一科的醫生——多蓋醫學院解決不了",
+  "sources": {
+    "video": [
+      {
+        "title": "Shortage of kids’ antibiotics, Dr. explains how to prepare",
+        "url": "https://www.youtube.com/watch?v=rsC4RJ4Jld4",
+        "outlet": "Fox News",
+        "lean": "right",
+        "seconds": 257.0
+      },
+      {
+        "title": "Is money the reason for a primary care doctor shortage?",
+        "url": "https://www.youtube.com/watch?v=ATa9QMISrvw",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "seconds": 124.0
+      },
+      {
+        "title": "Why Walmart Wants To Be Your Hospital Too",
+        "url": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "seconds": 754.0
+      }
+    ],
+    "reports": [
+      {
+        "title": "Impacts of the Primary Care Provider Shortage on Health Care",
+        "url": "https://swhr.org/impacts-of-the-primary-care-provider-shortage-on-health-care/",
+        "outlet": "Society for Women's Health Research",
+        "lean": "primary",
+        "facts": [
+          "等待看診時間拉長，看診時間變短"
+        ]
+      },
+      {
+        "title": "Reduce Family Physician Shortage",
+        "url": "https://acofp.org/practice-advocacy/advocacy/family-physician-shortage",
+        "outlet": "ACOFP",
+        "lean": "primary",
+        "facts": [
+          "2034 年前家醫科將短缺 1.8 萬到 4.8 萬人"
+        ]
+      },
+      {
+        "title": "The U.S. Physician Shortage Is Only Going to Get Worse",
+        "url": "https://time.com/6199666/physician-shortage-challenges-solutions/",
+        "outlet": "TIME",
+        "lean": "centre-left",
+        "facts": [
+          "2031 年前逾五分之二執業醫師將滿 65 歲"
+        ]
+      },
+      {
+        "title": "America's Least-Discussed Physician Shortage Is Getting Worse",
+        "url": "https://www.forbes.com/sites/johnsamuels/2026/08/04/americas-least-discussed-physician-shortage-is-getting-worse/",
+        "outlet": "Forbes",
+        "lean": "right",
+        "facts": [
+          "學貸把有志基層醫療的畢業生推向專科"
+        ]
+      },
+      {
+        "title": "Almost a third of America does not have a primary care doctor",
+        "url": "https://americanbazaaronline.com/2026/08/16/almost-a-third-of-america-lacks-primary-care-doctor-486471/",
+        "outlet": "American Bazaar",
+        "lean": "neutral",
+        "facts": [
+          "逾 8300 萬美國人住在基層醫療短缺區"
+        ]
+      }
+    ],
+    "images": []
+  },
+  "lines": [
+    {
+      "say": "在美國，看一次家醫科可能要等好幾個月。",
+      "show": "自製：日曆，好幾格被劃掉",
+      "from": "SWHR"
+    },
+    {
+      "say": "超過八千三百萬人住在聯邦認定的醫療短缺區。",
+      "show": "自製：大數字卡 8300 萬",
+      "from": "American Bazaar"
+    },
+    {
+      "say": "那是四個人裡面就有一個。",
+      "show": "自製：四個人像，一個亮起",
+      "from": "觀點"
+    },
+    {
+      "say": "到二〇三四年，家醫科會缺一萬八到四萬八千人。",
+      "show": "自製：長條圖，區間",
+      "from": "ACOFP"
+    },
+    {
+      "say": "聽到這裡，直覺的解法是多訓練醫生。",
+      "show": "自製：醫學院插畫",
+      "from": "觀點"
+    },
+    {
+      "say": "但美國的醫學院畢業生，其實一直在增加。",
+      "show": "自製：折線圖往上",
+      "from": "觀點"
+    },
+    {
+      "say": "問題不是人不夠。",
+      "show": "自製：標題卡，換底色",
+      "from": "觀點"
+    },
+    {
+      "say": "是他們不做這一科。",
+      "show": "自製：標題卡，黃字",
+      "from": "觀點"
+    },
+    {
+      "say": "同一批畢業生，兩條路。",
+      "show": "自製：分岔路口",
+      "from": "觀點"
+    },
+    {
+      "say": "一條是家醫科，一條是專科。",
+      "show": "自製：兩個路標",
+      "from": "觀點"
+    },
+    {
+      "say": "學貸壓在身上的時候，選哪一條？",
+      "show": "自製：學貸帳單特寫",
+      "from": "Forbes"
+    },
+    {
+      "say": "給付的差距把他們推走了。",
+      "show": "自製：兩根長條，高度差很多",
+      "from": "Forbes"
+    },
+    {
+      "say": "二〇二六年的給付表已經調高基層，但差距還在。",
+      "show": "自製：兩根長條，縮短一點點",
+      "from": "Forbes"
+    },
+    {
+      "say": "而且現有的醫生正在老。",
+      "show": "自製：標題卡",
+      "from": "觀點"
+    },
+    {
+      "say": "到二〇三一年，五分之二的執業醫師會滿六十五歲。",
+      "show": "自製：人像圖，兩成染色",
+      "from": "TIME"
+    },
+    {
+      "say": "所以蓋更多醫學院，救不了這件事。",
+      "show": "自製：醫學院插畫被劃掉",
+      "from": "觀點"
+    },
+    {
+      "say": "那不是招生問題，是誘因問題。",
+      "show": "自製：結語卡",
+      "from": "觀點"
+    },
+    {
+      "say": "而付不起會員制診所的人，只能去急診。",
+      "show": "自製：急診室插畫",
+      "from": "SWHR"
+    }
+  ]
+}

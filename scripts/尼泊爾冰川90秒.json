@@ -1,0 +1,173 @@
+{
+  "topic": "尼泊爾冰川潰決洪災",
+  "angle": "影響民眾生活",
+  "view": "爭論歸因，其實是在爭論一件已經沒人反對的事",
+  "tone": "克制",
+  "note": "觀點：爭論歸因，其實是在爭論一件已經沒人反對的事",
+  "sources": {
+    "video": [
+      {
+        "title": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal border",
+        "url": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "outlet": "Fox News",
+        "lean": "right",
+        "seconds": 483.0
+      },
+      {
+        "title": "Was climate change to blame for the Nepal floods?",
+        "url": "https://www.youtube.com/watch?v=54KcFHke3cw",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "seconds": 178.0
+      },
+      {
+        "title": "Return of tigers to Nepal brings both joy and fear - BBC News",
+        "url": "https://www.youtube.com/watch?v=La0MDQohgk0",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "seconds": 226.0
+      }
+    ],
+    "reports": [
+      {
+        "title": "Glacier collapse that caused Nepal floods was linked to climate change, scientists say",
+        "url": "https://www.nbcnews.com/science/climate-change/glacier-collapse-nepal-floods-climate-change-rcna594800",
+        "outlet": "NBC News",
+        "lean": "left",
+        "facts": [
+          "災害科學家認為人為暖化提高了崩塌的可能性"
+        ]
+      },
+      {
+        "title": "Glacier collapse caused Nepal's deadly flash flood — a sign of things to come?",
+        "url": "https://www.nature.com/articles/d41586-026-02716-w",
+        "outlet": "Nature",
+        "lean": "primary",
+        "facts": [
+          "永凍土是黏住岩石和冰的膠",
+          "喜馬拉雅冰川自 2000 年後融化加速"
+        ]
+      },
+      {
+        "title": "A melting glacier contributed to the deadly Nepal floods. We can expect more like this",
+        "url": "https://www.npr.org/2026/08/28/nx-s1-5945799/nepal-floods-climate-change-himalayas",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "facts": [
+          "這類災害的頻率會隨暖化增加"
+        ]
+      },
+      {
+        "title": "In Nepal, the search for survivors – and climate answers – continues",
+        "url": "https://www.csmonitor.com/World/Asia-South-Central/2026/0828/nepal-flood-glacier-climate-change",
+        "outlet": "Christian Science Monitor",
+        "lean": "neutral",
+        "facts": [
+          "部分氣候科學家對「直接歸因」持保留態度"
+        ]
+      },
+      {
+        "title": "Why scientists fear Nepal's disaster is just a glimpse of the carnage climate change could cause",
+        "url": "https://www.cbc.ca/news/climate/nepal-tibet-glacier-flood-climate-disaster-9.7323295",
+        "outlet": "CBC",
+        "lean": "neutral",
+        "facts": [
+          "近 600 人確認罹難"
+        ]
+      }
+    ],
+    "images": []
+  },
+  "lines": [
+    {
+      "say": "尼泊爾這場洪水，近六百人罹難。",
+      "show": "自製：數字卡 600，深色底",
+      "from": "CBC"
+    },
+    {
+      "say": "一大塊冰從冰川斷裂，墜落數千英尺。",
+      "show": "自製：剖面示意圖",
+      "from": "NBC News"
+    },
+    {
+      "say": "接著整個山谷被水沖過。",
+      "show": "自製：山谷剖面，水位線",
+      "from": "NBC News"
+    },
+    {
+      "say": "新聞上馬上開始吵一件事。",
+      "show": "自製：標題卡",
+      "from": "觀點"
+    },
+    {
+      "say": "這是不是氣候變遷造成的？",
+      "show": "自製：問號卡",
+      "from": "觀點"
+    },
+    {
+      "say": "災害科學家說，人為暖化讓崩塌更可能發生。",
+      "show": "自製：引述卡",
+      "from": "NBC News"
+    },
+    {
+      "say": "永凍土是黏住岩石和冰的膠，它在融化。",
+      "show": "自製：岩冰結構圖",
+      "from": "Nature"
+    },
+    {
+      "say": "但也有氣候科學家說，把單一事件直接歸因，太早了。",
+      "show": "自製：引述卡，另一種底色",
+      "from": "Christian Science Monitor"
+    },
+    {
+      "say": "兩邊聽起來像在對立。",
+      "show": "自製：兩個引號對望",
+      "from": "觀點"
+    },
+    {
+      "say": "其實不是。",
+      "show": "自製：標題卡",
+      "from": "觀點"
+    },
+    {
+      "say": "因為他們在回答不同的問題。",
+      "show": "自製：兩個問號，顏色不同",
+      "from": "觀點"
+    },
+    {
+      "say": "新聞問的是「這一次是不是」。",
+      "show": "自製：單一事件圖示",
+      "from": "觀點"
+    },
+    {
+      "say": "科學家回答的是「這一類會不會變多」。",
+      "show": "自製：一排事件圖示",
+      "from": "觀點"
+    },
+    {
+      "say": "而後面這題，沒有人有異議。",
+      "show": "自製：標題卡，黃字",
+      "from": "觀點"
+    },
+    {
+      "say": "喜馬拉雅冰川從兩千年後，融化開始加速。",
+      "show": "自製：折線圖往上彎",
+      "from": "Nature"
+    },
+    {
+      "say": "這類災害的頻率會增加。",
+      "show": "自製：長條圖遞增",
+      "from": "NPR"
+    },
+    {
+      "say": "所以吵「這一次算不算」的時候，",
+      "show": "自製：兩個引號對望，變灰",
+      "from": "觀點"
+    },
+    {
+      "say": "大家其實已經同意了下一次會來。",
+      "show": "自製：結語卡",
+      "from": "觀點"
+    }
+  ]
+}

@@ -89,6 +89,22 @@
   .voice .likes{font:11px var(--mono);color:var(--faint);margin-right:9px}
   .empty{color:var(--faint);font-size:13px;padding:14px;text-align:center;
     border:1px dashed var(--line);border-radius:9px}
+  /* ---- one script, laid out as it will be spoken ---- */
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th{text-align:left;font-size:11px;color:var(--faint);font-weight:500;
+    padding:0 10px 7px;border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;vertical-align:top;border-bottom:1px solid var(--line)}
+  tr:hover td{background:#161d25}
+  td.at{font:11px var(--mono);color:var(--faint);white-space:nowrap;width:5.4em}
+  td.say{font-size:15px;line-height:1.55}
+  td.show{font-size:12px;color:var(--dim);width:28%}
+  td.from{font-size:11px;color:var(--faint);width:11em}
+  td.from.ours{color:var(--accent)}
+  .ruler{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;
+    margin:14px 0 4px;border:1px solid var(--line);display:flex}
+  .ruler i{display:block;height:100%;border-right:1px solid #0b0e12}
+  .ruler i:nth-child(odd){background:var(--accent)}
+  .ruler i:nth-child(even){background:#4a86cc}
   #note{font-size:13px;margin-top:14px}
   #note.bad{color:var(--danger)}
   #note.warn{color:var(--warn)}
@@ -124,6 +140,11 @@ async function api(method, path, body) {
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.detail || `${path} 失敗`);
   return data;
+}
+
+function clock(seconds) {
+  seconds = Math.max(0, seconds || 0);
+  return `${Math.floor(seconds / 60)}:${(seconds % 60).toFixed(1).padStart(4, "0")}`;
 }
 
 function leanTag(lean) {
@@ -231,9 +252,9 @@ async function open(name) {
       <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
       ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">素材不齊也要寫</button>'}
       <span style="flex:1"></span>
-      ${(pile.scripts || []).length
-        ? `<span style="font-size:12px;color:var(--dim)">已有文案：${
-            pile.scripts.map(escapeHTML).join("、")}</span>` : ""}
+      ${(pile.scripts || []).map((one) =>
+        `<button class="tiny" data-script="${escapeHTML(one)}">${
+          escapeHTML(one)}</button>`).join(" ")}
     </div>
     <div id="note"></div>
 
@@ -290,6 +311,55 @@ async function open(name) {
   if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
   if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
 }
+
+/* ---------- one script ----------
+   The same page, because a script is only ever read next to the pile it came
+   from: every line names its source, and the source list is one click away. */
+async function showScript(name) {
+  let made;
+  try { made = await api("GET", `/api/script?name=${encodeURIComponent(name)}`); }
+  catch (error) { alert(error.message); return; }
+  const sums = made.measured;
+  const ours = sums.lines.filter((line) =>
+    !/CNN|原畫面|新聞畫面|素材/.test(line.show || ""));
+  const share = sums.seconds
+    ? Math.round(ours.reduce((sum, l) => sum + l.seconds, 0) / sums.seconds * 100) : 0;
+
+  $("paper").innerHTML = `
+    <h2>${escapeHTML(name)}　<button id="btnBackTopic" class="tiny">← 回題目</button></h2>
+    <div class="angle">觀點：${escapeHTML(made.view || "")}${
+      made.tone ? `　語氣：${escapeHTML(made.tone)}` : ""}</div>
+    <div class="gauge">
+      <div>長度<b class="${sums.over ? "short" : "good"}">${clock(sums.seconds)}</b></div>
+      <div>上限 90 秒<b>${sums.over ? `超出 ${sums.over}s` : "在裡面"}</b></div>
+      <div>字數<b>${sums.characters}</b></div>
+      <div>句數<b>${sums.lines.length}</b></div>
+      <div>觀點<b class="${sums.opinion >= 6 ? "good" : ""}">${sums.opinion} 句</b></div>
+      <div>自製畫面<b class="${share >= 60 ? "good" : "short"}">${share}%</b></div>
+      <div>沒標來源<b class="${sums.unsourced.length ? "short" : "good"}">${
+        sums.unsourced.length}</b></div>
+    </div>
+    <div class="ruler">${sums.lines.map((line) =>
+      `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
+          title="${clock(line.at)}"></i>`).join("")}</div>
+    <table>
+      <thead><tr><th>起</th><th>台詞</th><th>畫面</th><th>來源</th></tr></thead>
+      <tbody>${sums.lines.map((line) => `
+        <tr>
+          <td class="at">${clock(line.at)}</td>
+          <td class="say">${escapeHTML(line.say || "")}</td>
+          <td class="show">${escapeHTML(line.show || "")}</td>
+          <td class="from ${line.from === "觀點" ? "ours" : ""}">${
+            escapeHTML(line.from || "")}</td>
+        </tr>`).join("")}</tbody>
+    </table>`;
+  $("btnBackTopic").onclick = () => open(STATE.chosen);
+}
+
+$("paper").addEventListener("click", (event) => {
+  const which = event.target.dataset && event.target.dataset.script;
+  if (which) showScript(which);
+});
 
 $("list").addEventListener("click", (event) => {
   const row = event.target.closest("[data-name]");

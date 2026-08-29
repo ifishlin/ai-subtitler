@@ -1,0 +1,180 @@
+{
+  "topic": "美伊戰爭六個月",
+  "angle": "影響民眾生活",
+  "view": "戰爭的帳單有兩本：一本要國會通過，一本寫在加油站的看板上",
+  "tone": "詼諧",
+  "note": "觀點：戰爭的帳單有兩本：一本要國會通過，一本寫在加油站的看板上",
+  "sources": {
+    "video": [
+      {
+        "title": "It's just a MATTER OF TIME before Iranian government COLLAPSES: Ret. Air Force general",
+        "url": "https://www.youtube.com/watch?v=IdufvpqvhWg",
+        "outlet": "Fox News",
+        "lean": "right",
+        "seconds": 301.0
+      },
+      {
+        "title": "Six months into the war on Iran, what counts as victory for Trump?",
+        "url": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "seconds": 169.0
+      },
+      {
+        "title": "Costly consequences after six months of Iran war",
+        "url": "https://www.youtube.com/watch?v=r7KP6RIhcNc",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "seconds": 126.0
+      }
+    ],
+    "reports": [
+      {
+        "title": "After six months, the Iran war has reached its endgame - a costly stalemate",
+        "url": "https://www.investing.com/news/commodities-news/analysisafter-six-months-the-iran-war-has-reached-its-endgame--a-costly-stalemate-4878735",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "facts": [
+          "軍事上有戰術成果，但沒有達成宣稱的戰略勝利",
+          "美國持續封鎖荷姆茲海峽"
+        ]
+      },
+      {
+        "title": "Six months on, Iran is still standing, but survival is becoming more costly",
+        "url": "https://www.aljazeera.com/opinions/2026/8/28/six-months-on-iran-is-still-standing-but-survival-is-becoming-more-costly",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "facts": [
+          "伊朗政權仍在，認為時間站在自己這邊",
+          "經濟受圍困"
+        ]
+      },
+      {
+        "title": "At the 6-month mark: The Iran war by the numbers",
+        "url": "https://spectrumlocalnews.com/us/snplus/military/2026/08/27/iran-war-at-6-months-costs",
+        "outlet": "Spectrum News",
+        "lean": "neutral",
+        "facts": [
+          "截至七月底美方支出 375 億美元",
+          "汽油從每加侖 2.98 漲到 4.09 美元"
+        ]
+      },
+      {
+        "title": "Iran War Cost Tracker",
+        "url": "https://watson.brown.edu/costsofwar/",
+        "outlet": "Brown University Costs of War",
+        "lean": "primary",
+        "facts": [
+          "估計每天約 10 億美元"
+        ]
+      },
+      {
+        "title": "6 months into US-Iran war, experts question path forward as costs mount",
+        "url": "https://abc7chicago.com/post/6-months-us-iran-war-chicago-area-experts-question-path-forward-costs-mount/19753680/",
+        "outlet": "ABC7 Chicago",
+        "lean": "left",
+        "facts": [
+          "專家質疑：軍事優勢無法轉成政治解決"
+        ]
+      }
+    ],
+    "images": []
+  },
+  "lines": [
+    {
+      "say": "這場仗打了半年。",
+      "show": "自製：日曆翻頁",
+      "from": "觀點"
+    },
+    {
+      "say": "美國國防部說，花了三百七十五億美元。",
+      "show": "自製：大數字卡 $37.5B",
+      "from": "Spectrum News"
+    },
+    {
+      "say": "布朗大學算出來的數字不一樣：每天十億。",
+      "show": "自製：對比卡，兩個數字",
+      "from": "Costs of War"
+    },
+    {
+      "say": "半年就是一千八百億。",
+      "show": "自製：大數字卡 $180B",
+      "from": "觀點"
+    },
+    {
+      "say": "差了將近五倍。",
+      "show": "自製：兩根長條，長度懸殊",
+      "from": "觀點"
+    },
+    {
+      "say": "為什麼差這麼多？",
+      "show": "自製：問號卡",
+      "from": "觀點"
+    },
+    {
+      "say": "因為官方只算彈藥、部隊、維修。",
+      "show": "自製：三個圖示",
+      "from": "Spectrum News"
+    },
+    {
+      "say": "後面的醫療、利息、重建，都還沒進來。",
+      "show": "自製：三個灰色圖示排在後面",
+      "from": "Costs of War"
+    },
+    {
+      "say": "不過這兩本帳，你都不會收到。",
+      "show": "自製：兩張帳單被劃掉",
+      "from": "觀點"
+    },
+    {
+      "say": "你收到的是第三本。",
+      "show": "自製：標題卡，紅底",
+      "from": "觀點"
+    },
+    {
+      "say": "汽油從一加侖兩塊九八，變成四塊零九。",
+      "show": "自製：加油站看板，數字跳動",
+      "from": "Spectrum News"
+    },
+    {
+      "say": "每加侖多一塊一。",
+      "show": "自製：大數字卡 +$1.11",
+      "from": "觀點"
+    },
+    {
+      "say": "荷姆茲海峽被封鎖，全世界五分之一的石油走那裡。",
+      "show": "自製：地圖，海峽標紅",
+      "from": "Reuters"
+    },
+    {
+      "say": "而半年過去，伊朗政權還在。",
+      "show": "自製：標題卡",
+      "from": "Reuters"
+    },
+    {
+      "say": "戰術上有成果，戰略上沒有達成宣稱的目標。",
+      "show": "自製：勾勾和叉叉",
+      "from": "Reuters"
+    },
+    {
+      "say": "所以這半年，買到了什麼？",
+      "show": "自製：問號卡",
+      "from": "觀點"
+    },
+    {
+      "say": "國會通過的那本帳，會被審計。",
+      "show": "自製：文件蓋章",
+      "from": "觀點"
+    },
+    {
+      "say": "加油站那本不會。",
+      "show": "自製：加油站看板，沒有印章",
+      "from": "觀點"
+    },
+    {
+      "say": "而那一本，是你在付。",
+      "show": "自製：結語卡",
+      "from": "觀點"
+    }
+  ]
+}

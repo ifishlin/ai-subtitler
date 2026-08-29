@@ -1,0 +1,197 @@
+{
+  "topic": "美委內瑞拉石油協議",
+  "angle": "影響民眾生活",
+  "view": "制裁還在，油也在流，這兩件事同時是真的——沒有人在問帳",
+  "tone": "詼諧",
+  "note": "觀點：制裁還在，油也在流，這兩件事同時是真的——沒有人在問帳",
+  "sources": {
+    "video": [
+      {
+        "title": "TRUMP'S VENEZUELA GAMBIT: Undercutting China with oil and minerals",
+        "url": "https://www.youtube.com/watch?v=BF5XKzypiic",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "seconds": 150.0
+      },
+      {
+        "title": "Why Trump Wants ConocoPhillips, ExxonMobil And Chevron To Rebuild Venezuela’s Oil Fields",
+        "url": "https://www.youtube.com/watch?v=w67-wxmkWeQ",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "seconds": 150.0
+      },
+      {
+        "title": "US-Venezuela oil deal: What does it mean for Washington?",
+        "url": "https://www.youtube.com/watch?v=rwcFQZ88-_8",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "seconds": 128.0
+      }
+    ],
+    "reports": [
+      {
+        "title": "The U.S. Took Over Venezuela's Oil Industry. Where Has All the Money Gone?",
+        "url": "https://www.cfr.org/articles/the-u-s-took-over-venezuelas-oil-industry-where-has-all-the-money-gone",
+        "outlet": "Council on Foreign Relations",
+        "lean": "primary",
+        "facts": [
+          "四個月內近一億桶原油、估計 80 億美元流出",
+          "過程幾乎沒有透明度和監督"
+        ]
+      },
+      {
+        "title": "Q&A on US Actions in Venezuela: Impacts on Energy",
+        "url": "https://www.energypolicy.columbia.edu/qa-on-us-actions-in-venezuela/",
+        "outlet": "Columbia CGEP",
+        "lean": "primary",
+        "facts": [
+          "對能源市場的實際影響評估"
+        ]
+      },
+      {
+        "title": "Venezuela: Overview of U.S. Sanctions Policy",
+        "url": "https://www.congress.gov/crs-product/IF10715",
+        "outlet": "Congress.gov CRS",
+        "lean": "primary",
+        "facts": [
+          "所有制裁名義上仍在，包括 PdVSA 和石油天然氣部門"
+        ]
+      },
+      {
+        "title": "Venezuela Sanctions After Maduro's Removal | OFAC Update",
+        "url": "https://www.morganlewis.com/pubs/2026/01/compliance-landscape-in-venezuela-following-nicolas-maduros-removal-from-power",
+        "outlet": "Morgan Lewis",
+        "lean": "neutral",
+        "facts": [
+          "2026/1/3 美軍逮捕馬杜洛夫婦，押往紐約受審"
+        ]
+      },
+      {
+        "title": "US-Venezuela oil deal: What does it mean for Washington?",
+        "url": "https://www.aljazeera.com/economy/2022/10/6/us-plans-to-ease-venezuela-sanctions-for-chevron-operations-wsj",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "facts": [
+          "非西方視角：這是交易，不是解放"
+        ]
+      },
+      {
+        "title": "Progressives Condemn U.S.-Backed Regime Change in Venezuela",
+        "url": "https://progressive.international/wire/2026-01-27-a-doutrina-donroe-e-o-imperialismo-descarado-da-interveno-na-venezuela-1/en/",
+        "outlet": "Progressive International",
+        "lean": "left",
+        "facts": [
+          "十多位進步派眾議員（Khanna、AOC、Omar）譴責政權更迭",
+          "主張真正的目的是石油"
+        ]
+      },
+      {
+        "title": "Venezuela's Crisis Is No Accident: How Oil and Intervention Shaped a State",
+        "url": "https://www.theglobalist.com/venezuelas-crisis-is-no-accident-how-oil-and-intervention-shaped-a-state/",
+        "outlet": "The Globalist",
+        "lean": "centre-left",
+        "facts": [
+          "制裁與資產扣押是有計畫地切斷該國主要收入來源"
+        ]
+      }
+    ],
+    "images": []
+  },
+  "lines": [
+    {
+      "say": "今年一月三號，美軍逮捕了馬杜洛夫婦。",
+      "show": "自製：日期卡",
+      "from": "Morgan Lewis"
+    },
+    {
+      "say": "押到紐約受審。",
+      "show": "自製：法院插畫",
+      "from": "Morgan Lewis"
+    },
+    {
+      "say": "接下來的四個月，",
+      "show": "自製：日曆四格",
+      "from": "觀點"
+    },
+    {
+      "say": "將近一億桶原油從委內瑞拉流出。",
+      "show": "自製：大數字卡 1 億桶",
+      "from": "CFR"
+    },
+    {
+      "say": "價值大約八十億美元。",
+      "show": "自製：大數字卡 $8B",
+      "from": "CFR"
+    },
+    {
+      "say": "問題來了。",
+      "show": "自製：問號卡",
+      "from": "觀點"
+    },
+    {
+      "say": "對委內瑞拉的制裁，解除了嗎？",
+      "show": "自製：標題卡",
+      "from": "觀點"
+    },
+    {
+      "say": "沒有。",
+      "show": "自製：標題卡，紅字",
+      "from": "CRS"
+    },
+    {
+      "say": "所有制裁名義上都還在，包括石油天然氣部門。",
+      "show": "自製：條文卡",
+      "from": "CRS"
+    },
+    {
+      "say": "制裁還在，油也在流。",
+      "show": "自製：兩個圖示並排",
+      "from": "觀點"
+    },
+    {
+      "say": "這兩件事同時是真的。",
+      "show": "自製：標題卡，黃字",
+      "from": "觀點"
+    },
+    {
+      "say": "右邊說這是戰略勝利，把中國擠出後院。",
+      "show": "自製：引述卡，藍底",
+      "from": "Fox Business"
+    },
+    {
+      "say": "左邊說目的從頭到尾就是石油。",
+      "show": "自製：引述卡，紅底",
+      "from": "Progressive International"
+    },
+    {
+      "say": "十多位進步派眾議員譴責政權更迭「不可接受」。",
+      "show": "自製：引述卡",
+      "from": "Progressive International"
+    },
+    {
+      "say": "兩邊吵的都是動機。",
+      "show": "自製：兩個引號對望",
+      "from": "觀點"
+    },
+    {
+      "say": "但外交關係協會指出一件兩邊都沒吵的事。",
+      "show": "自製：標題卡，換底色",
+      "from": "觀點"
+    },
+    {
+      "say": "那八十億美元，幾乎沒有透明度，也沒有監督。",
+      "show": "自製：帳本，空白頁",
+      "from": "CFR"
+    },
+    {
+      "say": "動機可以各說各話。",
+      "show": "自製：兩個引號變灰",
+      "from": "觀點"
+    },
+    {
+      "say": "帳不行。",
+      "show": "自製：結語卡",
+      "from": "觀點"
+    }
+  ]
+}
