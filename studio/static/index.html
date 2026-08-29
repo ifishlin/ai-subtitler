@@ -458,9 +458,12 @@ main{display:flex;flex:1;min-height:0}
    be movable off whatever it is covering. */
 #audit h3{margin:0 0 8px;font-size:13px;display:flex;align-items:center;gap:8px;
   cursor:move;user-select:none}
-#audit h3 button{order:9;margin-left:auto;border:0;background:transparent;
-  color:var(--faint);font-size:17px;line-height:1;padding:0 3px;cursor:pointer}
-#audit h3 button:hover{color:var(--ink)}
+/* Worded like every other panel's, because a ✕ is a symbol you have to know
+   and 關閉 is a word you can read. */
+#audit h3 button{order:9;margin-left:auto;border:1px solid var(--line);
+  background:var(--bg);color:var(--dim);font-size:11px;line-height:1;
+  padding:4px 9px;border-radius:6px;cursor:pointer}
+#audit h3 button:hover{color:var(--ink);border-color:var(--accent)}
 #audit .verdict{font-size:11px;padding:2px 8px;border-radius:99px}
 #audit .verdict.pass{background:#1d3329;color:var(--ok);border:1px solid #2c5a45}
 #audit .verdict.review{background:#3a2418;color:var(--warn);border:1px solid #5b4a22}
@@ -1918,13 +1921,14 @@ document.addEventListener("keydown", (event) => {
     const delta = event.key === "ArrowRight" ? 0.1 : -0.1;
     return nudge(S.cursor, event.shiftKey ? "end" : "start", delta);
   }
-  if (event.key === "Escape" && LIB.open) { closeLibrary(); return; }
   if (event.key === "?" ) { $("help").classList.toggle("on"); return; }
+  // One place that closes windows, so every panel behaves the same: a 關閉
+  // button you can read, and Esc.
   if (event.key === "Escape") {
-    $("help").classList.remove("on");
-    $("json").classList.remove("on");
-    $("card").classList.remove("on");
-    $("audit").classList.remove("on");
+    closeLibrary();
+    for (const id of ["help", "json", "card", "audit"]) {
+      $(id).classList.remove("on");
+    }
     if ($("viewer").classList.contains("on")) closeViewer();
     return;
   }
@@ -1974,7 +1978,7 @@ async function runAudit() {
     panel.style.width = `${where.width}px`;
     panel.style.height = `${where.height}px`;
   }
-  panel.innerHTML = `<h3>品質檢查<button data-close="1" title="關閉（Esc）">×</button></h3>` +
+  panel.innerHTML = `<h3>品質檢查<button data-close="1" title="Esc 也可以">關閉</button></h3>` +
     `<div class="meta">檢查中…</div>`;
   try {
     const r = await api("GET", "/api/audit");
@@ -1986,13 +1990,13 @@ async function runAudit() {
       </div>`).join("");
     panel.innerHTML = `
       <h3>品質檢查
-          <button data-close="1" title="關閉（Esc）">×</button>
+          <button data-close="1" title="Esc 也可以">關閉</button>
         <span class="verdict ${r.verdict}">${r.verdict === "pass" ? "可發布" : "需要檢查"}</span>
       </h3>
       <div class="meta">分數 ${r.score}　${r.segments} 段　字幕覆蓋 ${Math.round(r.coverage * 100)}%</div>
       ${items || `<div class="none">沒有發現問題</div>`}`;
   } catch (error) {
-    panel.innerHTML = `<h3>品質檢查<button data-close="1" title="關閉（Esc）">×</button></h3>` +
+    panel.innerHTML = `<h3>品質檢查<button data-close="1" title="Esc 也可以">關閉</button></h3>` +
       `<div class="meta" style="color:var(--danger)">${error.message}</div>`;
   }
 }
