@@ -214,6 +214,26 @@ def search_photos(query: str, count: int = 12, least_wide: int = 1200
     return found
 
 
+def looks_like(path: Path) -> int:
+    """A perceptual fingerprint: shrink to 8x8 grey and record which pixels sit
+    above the average. Two pictures of the same thing differ in a few bits; two
+    pictures of different things differ in dozens."""
+    from PIL import Image
+    with Image.open(path) as opened:
+        small = opened.convert("L").resize((8, 8))
+    pixels = list(small.getdata())
+    average = sum(pixels) / len(pixels)
+    bits = 0
+    for index, value in enumerate(pixels):
+        if value > average:
+            bits |= 1 << index
+    return bits
+
+
+def alike(one: int, other: int, within: int = 12) -> bool:
+    return bin(one ^ other).count("1") <= within
+
+
 def fetch(url: str, destination: Path) -> Path:
     destination.parent.mkdir(parents=True, exist_ok=True)
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})

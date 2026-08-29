@@ -237,7 +237,7 @@ async function open(name) {
 
   const got = pile.counts.got, want = pile.counts.want, sides = pile.balance.sides;
   const columns = [["left", "左"], ["neutral", "中立"], ["right", "右"],
-                   ["business", "財經"], ["other", "其他"]];
+                   ["other", "其他"]];
 
   $("paper").innerHTML = `
     <h2>${escapeHTML(pile.topic || name)}</h2>

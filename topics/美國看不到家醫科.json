@@ -96,6 +96,7 @@
         "outlet": "Pexels",
         "author": "RDNE Stock project",
         "page": "https://www.pexels.com/photo/nurse-pushing-a-patient-on-a-wheelchair-6129107/",
+        "look": 508641810363432959,
         "size": [
           6438,
           4292
@@ -109,6 +110,7 @@
         "outlet": "Pexels",
         "author": "Cedric Fauntleroy",
         "page": "https://www.pexels.com/photo/a-doctor-talking-to-a-patient-while-holding-a-tablet-4266934/",
+        "look": 1737347964931472636,
         "size": [
           8142,
           5428
@@ -122,48 +124,10 @@
         "outlet": "Pexels",
         "author": "RDNE Stock project",
         "page": "https://www.pexels.com/photo/people-at-the-hospital-hallway-6129035/",
+        "look": 14540092158355963767,
         "size": [
           5704,
           3803
-        ]
-      },
-      {
-        "id": "6129454",
-        "term": "doctor waiting room",
-        "file": "assets/photos/美國看不到家醫科/6129454.jpg",
-        "caption": "A doctor provides support to a patient in a hospital corridor, highlighting compassion in healthcare.",
-        "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/male-doctor-comforting-a-patient-6129454/",
-        "size": [
-          5973,
-          3982
-        ]
-      },
-      {
-        "id": "8460124",
-        "term": "doctor waiting room",
-        "file": "assets/photos/美國看不到家醫科/8460124.jpg",
-        "caption": "Doctor and patient with masks in medical clinic, emphasizing healthcare safety.",
-        "outlet": "Pexels",
-        "author": "Los Muertos Crew",
-        "page": "https://www.pexels.com/photo/a-man-consulting-to-a-doctor-8460124/",
-        "size": [
-          6000,
-          4000
-        ]
-      },
-      {
-        "id": "8413203",
-        "term": "doctor waiting room",
-        "file": "assets/photos/美國看不到家醫科/8413203.jpg",
-        "caption": "Doctor and patient wearing masks during a consultation in a clinical setting.",
-        "outlet": "Pexels",
-        "author": "SHVETS production",
-        "page": "https://www.pexels.com/photo/a-man-talking-with-a-woman-in-the-clinic-8413203/",
-        "size": [
-          5698,
-          3932
         ]
       },
       {
@@ -174,6 +138,7 @@
         "outlet": "Pexels",
         "author": "Negative Space",
         "page": "https://www.pexels.com/photo/silver-iphone-6-near-blue-and-silver-stethoscope-48603/",
+        "look": 11061275949254508543,
         "size": [
           3888,
           2592
@@ -187,6 +152,7 @@
         "outlet": "Pexels",
         "author": "Paloma Gil",
         "page": "https://www.pexels.com/photo/close-up-of-a-stethoscope-lying-on-a-white-surface-16204178/",
+        "look": 9146475247026703902,
         "size": [
           5472,
           3648
@@ -200,204 +166,346 @@
         "outlet": "Pexels",
         "author": "Etatics Inc.",
         "page": "https://www.pexels.com/photo/a-stethoscope-on-a-yellow-surface-13105349/",
+        "look": 18446638037535787007,
         "size": [
           5326,
           3551
         ]
       },
       {
-        "id": "5234501",
-        "term": "stethoscope clinic",
-        "file": "assets/photos/美國看不到家醫科/5234501.jpg",
-        "caption": "Professional doctor with a stethoscope, focusing on healthcare and medical services.",
-        "outlet": "Pexels",
-        "author": "Polina Tankilevitch",
-        "page": "https://www.pexels.com/photo/person-holding-a-blue-and-silver-stethoscope-5234501/",
-        "size": [
-          3000,
-          2000
-        ]
-      },
-      {
-        "id": "12585206",
-        "term": "stethoscope clinic",
-        "file": "assets/photos/美國看不到家醫科/12585206.jpg",
-        "caption": "Close-up of a classic stethoscope on a blue background, symbolizing healthcare and medical profession.",
-        "outlet": "Pexels",
-        "author": "Etatics Inc.",
-        "page": "https://www.pexels.com/photo/close-up-shot-of-a-stethoscope-12585206/",
-        "size": [
-          5006,
-          3337
-        ]
-      },
-      {
-        "id": "12512669",
-        "term": "stethoscope clinic",
-        "file": "assets/photos/美國看不到家醫科/12512669.jpg",
-        "caption": "Medical stethoscope placed on a light blue surface, symbolizing healthcare and medical examination.",
-        "outlet": "Pexels",
-        "author": "Etatics Inc.",
-        "page": "https://www.pexels.com/photo/black-and-silver-stethoscope-on-light-blue-background-12512669/",
-        "size": [
-          5108,
-          3405
-        ]
-      },
-      {
         "id": "263402",
-        "term": "hospital emergency",
+        "term": "hospital emergency entrance",
         "file": "assets/photos/美國看不到家醫科/263402.jpg",
         "caption": "Close-up of a modern hospital emergency room entrance with prominent red letters.",
         "outlet": "Pexels",
         "author": "Pixabay",
         "page": "https://www.pexels.com/photo/emergency-signage-263402/",
+        "look": 76413736954329595,
         "size": [
           4928,
           3264
         ]
       },
       {
-        "id": "6129870",
-        "term": "hospital emergency",
-        "file": "assets/photos/美國看不到家醫科/6129870.jpg",
-        "caption": "A nurse helps a patient in a wheelchair down a hospital corridor, reflecting care and medical professionalism.",
+        "id": "20026899",
+        "term": "hospital emergency entrance",
+        "file": "assets/photos/美國看不到家醫科/20026899.jpg",
+        "caption": "Ambulance parking area on a quiet street near a modern building with road access.",
         "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/nurse-assisting-a-patient-on-a-wheelchair-6129870/",
-        "size": [
-          6348,
-          4232
-        ]
-      },
-      {
-        "id": "6129691",
-        "term": "hospital emergency",
-        "file": "assets/photos/美國看不到家醫科/6129691.jpg",
-        "caption": "Close-up image of an IV drip and hand in a hospital room, illustrating medical care.",
-        "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/person-monitoring-a-dextrose-6129691/",
-        "size": [
-          5995,
-          3997
-        ]
-      },
-      {
-        "id": "28123692",
-        "term": "hospital emergency",
-        "file": "assets/photos/美國看不到家醫科/28123692.jpg",
-        "caption": "Two paramedics prepare a stretcher inside an ambulance, ready for an emergency response.",
-        "outlet": "Pexels",
-        "author": "Mikhail Nilov",
-        "page": "https://www.pexels.com/photo/paramedics-preparing-a-stretcher-from-an-ambulance-28123692/",
+        "author": "Timothy Huliselan",
+        "page": "https://www.pexels.com/photo/hospital-by-the-street-20026899/",
+        "look": 18446742158200423106,
         "size": [
           4000,
-          2667
+          3000
         ]
       },
       {
-        "id": "6520067",
-        "term": "hospital emergency",
-        "file": "assets/photos/美國看不到家醫科/6520067.jpg",
-        "caption": "Paramedics assist a patient on a stretcher during an emergency response. Outdoors setting.",
+        "id": "8673896",
+        "term": "hospital emergency entrance",
+        "file": "assets/photos/美國看不到家醫科/8673896.jpg",
+        "caption": "A deserted hospital corridor with open doors and dim lighting, enhancing a mysterious ambiance.",
         "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/paramedic-pushing-man-on-a-stretcher-6520067/",
+        "author": "Даниил Зенцов",
+        "page": "https://www.pexels.com/photo/selective-focus-of-empty-hallway-8673896/",
+        "look": 3393360215555612,
         "size": [
-          6401,
-          4267
-        ]
-      },
-      {
-        "id": "8943282",
-        "term": "hospital emergency",
-        "file": "assets/photos/美國看不到家醫科/8943282.jpg",
-        "caption": "Close-up view of an orange stretcher inside an ambulance, emphasizing medical equipment.",
-        "outlet": "Pexels",
-        "author": "Mikhail Nilov",
-        "page": "https://www.pexels.com/photo/close-up-photo-of-a-stretcher-8943282/",
-        "size": [
-          4000,
-          2667
+          5616,
+          3744
         ]
       },
       {
         "id": "32213424",
-        "term": "medical student",
+        "term": "medical student books",
         "file": "assets/photos/美國看不到家醫科/32213424.jpg",
         "caption": "Group of diverse medical students wearing lab coats in university corridor, representing future healthcare professionals.",
         "outlet": "Pexels",
         "author": "Yusuf Çelik",
         "page": "https://www.pexels.com/photo/young-medical-students-in-university-hallway-32213424/",
+        "look": 4051093348390732033,
         "size": [
           6720,
           4480
         ]
       },
       {
-        "id": "32213307",
-        "term": "medical student",
-        "file": "assets/photos/美國看不到家醫科/32213307.jpg",
-        "caption": "Young nursing students engaging in lab study, showcasing medical education.",
+        "id": "15551426",
+        "term": "medical student books",
+        "file": "assets/photos/美國看不到家醫科/15551426.jpg",
+        "caption": "A veterinarian sits confidently at her desk surrounded by veterinary books and tools, embodying professionalism.",
         "outlet": "Pexels",
-        "author": "Yusuf Çelik",
-        "page": "https://www.pexels.com/photo/aspiring-nurse-students-in-laboratory-setting-32213307/",
+        "author": "Italo Crespi",
+        "page": "https://www.pexels.com/photo/veterinarian-doctor-sitting-at-desk-15551426/",
+        "look": 17933598667769969919,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "3985162",
+        "term": "medical student books",
+        "file": "assets/photos/美國看不到家醫科/3985162.jpg",
+        "caption": "A group of medical students in white coats studying together in a hospital hallway.",
+        "outlet": "Pexels",
+        "author": "Gustavo Fring",
+        "page": "https://www.pexels.com/photo/group-of-medical-students-at-the-hallway-3985162/",
+        "look": 18229489891457694972,
+        "size": [
+          4500,
+          3000
+        ]
+      },
+      {
+        "id": "29948395",
+        "term": "empty clinic corridor",
+        "file": "assets/photos/美國看不到家醫科/29948395.jpg",
+        "caption": "Wide corridor view in a modern hospital, Ankara, Türkiye. Well-lit and clean interior.",
+        "outlet": "Pexels",
+        "author": "Burçak Çubukçu",
+        "page": "https://www.pexels.com/photo/modern-hospital-corridor-in-ankara-turkiye-29948395/",
+        "look": 2251532679856721695,
+        "size": [
+          4000,
+          2250
+        ]
+      },
+      {
+        "id": "12344720",
+        "term": "empty clinic corridor",
+        "file": "assets/photos/美國看不到家醫科/12344720.jpg",
+        "caption": "Empty hospital corridor in black and white, emphasizing open doors and healthcare environment.",
+        "outlet": "Pexels",
+        "author": "Oleg PavLove",
+        "page": "https://www.pexels.com/photo/black-and-white-photo-of-doors-in-hospital-corridor-12344720/",
+        "look": 4638829657670434880,
+        "size": [
+          5166,
+          3462
+        ]
+      },
+      {
+        "id": "5203594",
+        "term": "empty clinic corridor",
+        "file": "assets/photos/美國看不到家醫科/5203594.jpg",
+        "caption": "White-walled hospital corridor with modern design and bright overhead lighting.",
+        "outlet": "Pexels",
+        "author": "Enrique Silva",
+        "page": "https://www.pexels.com/photo/a-corridor-of-a-hospital-5203594/",
+        "look": 11285632120340251648,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "24193871",
+        "term": "elderly patient",
+        "file": "assets/photos/美國看不到家醫科/24193871.jpg",
+        "caption": "A senior patient using crutches to walk down a hospital corridor, symbolizing recovery and mobility assistance.",
+        "outlet": "Pexels",
+        "author": "Stéf -b.",
+        "page": "https://www.pexels.com/photo/rear-view-of-a-patient-walking-with-crutches-on-a-hospital-corridor-24193871/",
+        "look": 9288434098112141720,
+        "size": [
+          3911,
+          3270
+        ]
+      },
+      {
+        "id": "39192358",
+        "term": "elderly patient",
+        "file": "assets/photos/美國看不到家醫科/39192358.jpg",
+        "caption": "Medical professional discusses health with senior man in modern office setting.",
+        "outlet": "Pexels",
+        "author": "Vitaly Gariev",
+        "page": "https://www.pexels.com/photo/doctor-consulting-with-older-patient-in-office-39192358/",
+        "look": 18374670474159915265,
+        "size": [
+          3840,
+          2160
+        ]
+      },
+      {
+        "id": "8413340",
+        "term": "elderly patient",
+        "file": "assets/photos/美國看不到家醫科/8413340.jpg",
+        "caption": "Elderly man in dental chair during appointment, receiving care from dentist.",
+        "outlet": "Pexels",
+        "author": "SHVETS production",
+        "page": "https://www.pexels.com/photo/close-up-photo-of-an-elderly-man-8413340/",
+        "look": 4484580564133212031,
+        "size": [
+          5788,
+          3859
+        ]
+      },
+      {
+        "id": "9810172",
+        "term": "appointment calendar",
+        "file": "assets/photos/美國看不到家醫科/9810172.jpg",
+        "caption": "Close-up of a calendar with red push pins marking important dates, emphasizing deadlines.",
+        "outlet": "Pexels",
+        "author": "Towfiqu barbhuiya",
+        "page": "https://www.pexels.com/photo/close-up-photo-of-red-pins-on-a-calendar-9810172/",
+        "look": 17357120147300499327,
+        "size": [
+          4501,
+          3003
+        ]
+      },
+      {
+        "id": "11773871",
+        "term": "appointment calendar",
+        "file": "assets/photos/美國看不到家醫科/11773871.jpg",
+        "caption": "Close-up shot of a hand marking a date on a calendar with a pen, emphasizing planning and scheduling.",
+        "outlet": "Pexels",
+        "author": "Towfiqu barbhuiya",
+        "page": "https://www.pexels.com/photo/a-person-holding-black-pen-pointing-on-calendar-11773871/",
+        "look": 63182606761066384,
+        "size": [
+          4592,
+          3064
+        ]
+      },
+      {
+        "id": "7580934",
+        "term": "appointment calendar",
+        "file": "assets/photos/美國看不到家醫科/7580934.jpg",
+        "caption": "A person marking a calendar in September with a purple pen on a wooden desk.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "page": "https://www.pexels.com/photo/person-marking-his-calendar-7580934/",
+        "look": 16204223033261748472,
+        "size": [
+          6546,
+          4364
+        ]
+      },
+      {
+        "id": "7111490",
+        "term": "medical bill paperwork",
+        "file": "assets/photos/美國看不到家醫科/7111490.jpg",
+        "caption": "Top view of financial papers labeled 'Paid' and 'Due' beside a calculator and glasses.",
+        "outlet": "Pexels",
+        "author": "Tara Winstead",
+        "page": "https://www.pexels.com/photo/black-calculator-beside-white-papers-7111490/",
+        "look": 18230007228433140177,
+        "size": [
+          5909,
+          3939
+        ]
+      },
+      {
+        "id": "35501875",
+        "term": "medical bill paperwork",
+        "file": "assets/photos/美國看不到家醫科/35501875.jpg",
+        "caption": "Zloty banknotes and financial paperwork scattered on a desk, representing budgeting and finance.",
+        "outlet": "Pexels",
+        "author": "Jakub Zerdzicki",
+        "page": "https://www.pexels.com/photo/polish-currency-and-financial-documents-on-desk-35501875/",
+        "look": 2269602158385037488,
+        "size": [
+          3000,
+          2001
+        ]
+      },
+      {
+        "id": "7735775",
+        "term": "medical bill paperwork",
+        "file": "assets/photos/美國看不到家醫科/7735775.jpg",
+        "caption": "Close-up of hands analyzing financial document with US dollar bills on table.",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "page": "https://www.pexels.com/photo/bank-notes-on-the-gray-table-7735775/",
+        "look": 11159031001326208736,
+        "size": [
+          3457,
+          2522
+        ]
+      },
+      {
+        "id": "5932062",
+        "term": "rural town america",
+        "file": "assets/photos/美國看不到家醫科/5932062.jpg",
+        "caption": "Idyllic small town nestled beneath dramatic Alaskan mountain range at sunset.",
+        "outlet": "Pexels",
+        "author": "Stephen Meyers",
+        "page": "https://www.pexels.com/photo/photo-of-a-town-with-a-mountain-range-in-the-background-5932062/",
+        "look": 577322769570594591,
+        "size": [
+          3600,
+          2405
+        ]
+      },
+      {
+        "id": "11152637",
+        "term": "rural town america",
+        "file": "assets/photos/美國看不到家醫科/11152637.jpg",
+        "caption": "Aerial view of Hancock, NH showcasing fall foliage, a church, and a tranquil lake.",
+        "outlet": "Pexels",
+        "author": "Eathan Hood",
+        "page": "https://www.pexels.com/photo/town-with-church-in-autumn-11152637/",
+        "look": 77137848804892927,
+        "size": [
+          4000,
+          3000
+        ]
+      },
+      {
+        "id": "5649560",
+        "term": "rural town america",
+        "file": "assets/photos/美國看不到家醫科/5649560.jpg",
+        "caption": "Picturesque scenery of peaceful coastal town located on verdant shore of tranquil blue river under blue sky",
+        "outlet": "Pexels",
+        "author": "K",
+        "page": "https://www.pexels.com/photo/scenery-of-remote-coastal-town-near-azure-river-5649560/",
+        "look": 8825375267418552575,
+        "size": [
+          5464,
+          3070
+        ]
+      },
+      {
+        "id": "6129194",
+        "term": "nurse working",
+        "file": "assets/photos/美國看不到家醫科/6129194.jpg",
+        "caption": "A nurse in blue scrubs reads a folder near an emergency room sign in a hospital.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "page": "https://www.pexels.com/photo/nurse-leaning-on-the-wall-while-reading-a-document-6129194/",
+        "look": 212102259146751,
+        "size": [
+          6603,
+          4402
+        ]
+      },
+      {
+        "id": "5206922",
+        "term": "nurse working",
+        "file": "assets/photos/美國看不到家醫科/5206922.jpg",
+        "caption": "Close-up of a nurse in green scrubs holding a tablet and stethoscope, symbolizing modern healthcare.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "page": "https://www.pexels.com/photo/a-doctor-holding-a-digital-tablet-5206922/",
+        "look": 16700440203493636079,
         "size": [
           6720,
           4480
         ]
       },
       {
-        "id": "29500566",
-        "term": "medical student",
-        "file": "assets/photos/美國看不到家醫科/29500566.jpg",
-        "caption": "Monochrome portrait of a smiling female doctor with a stethoscope, captured in Buenos Aires.",
-        "outlet": "Pexels",
-        "author": "Alex Dos Santos",
-        "page": "https://www.pexels.com/photo/black-and-white-portrait-of-a-female-doctor-29500566/",
-        "size": [
-          5606,
-          3737
-        ]
-      },
-      {
-        "id": "35645528",
-        "term": "medical student",
-        "file": "assets/photos/美國看不到家醫科/35645528.jpg",
-        "caption": "Nursing students engage in hands-on training with a medical dummy in a clinical setting.",
+        "id": "35645524",
+        "term": "nurse working",
+        "file": "assets/photos/美國看不到家醫科/35645524.jpg",
+        "caption": "Nurse performing blood draw with blue gloves in medical clinic setting.",
         "outlet": "Pexels",
         "author": "Sahil Singh",
-        "page": "https://www.pexels.com/photo/nursing-students-practicing-with-medical-dummy-35645528/",
+        "page": "https://www.pexels.com/photo/phlebotomy-procedure-in-medical-clinic-35645524/",
+        "look": 4499131276792373023,
         "size": [
-          3839,
-          2559
-        ]
-      },
-      {
-        "id": "32752500",
-        "term": "medical student",
-        "file": "assets/photos/美國看不到家醫科/32752500.jpg",
-        "caption": "Female doctor examining X-rays in a clinical setting, showcasing medical expertise.",
-        "outlet": "Pexels",
-        "author": "Fira  Fatul",
-        "page": "https://www.pexels.com/photo/medical-professional-analyzing-x-ray-films-32752500/",
-        "size": [
-          4354,
-          2903
-        ]
-      },
-      {
-        "id": "32213421",
-        "term": "medical student",
-        "file": "assets/photos/美國看不到家醫科/32213421.jpg",
-        "caption": "A female scientist in a laboratory setting, conducting research with microscopes and reference books.",
-        "outlet": "Pexels",
-        "author": "Yusuf Çelik",
-        "page": "https://www.pexels.com/photo/female-scientist-in-laboratory-conducting-research-32213421/",
-        "size": [
-          6152,
-          4101
+          3936,
+          2624
         ]
       }
     ],

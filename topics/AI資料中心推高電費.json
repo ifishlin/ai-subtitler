@@ -107,6 +107,7 @@
         "outlet": "Pexels",
         "author": "Akashni Weimers",
         "page": "https://www.pexels.com/photo/electricity-box-on-white-wall-13785838/",
+        "look": 18358023165395193855,
         "size": [
           6000,
           4000
@@ -120,6 +121,7 @@
         "outlet": "Pexels",
         "author": "https://kaboompics.com/",
         "page": "https://www.pexels.com/photo/paper-money-and-bills-on-white-surface-7680324/",
+        "look": 18446736346809293305,
         "size": [
           6720,
           4480
@@ -133,204 +135,10 @@
         "outlet": "Pexels",
         "author": "Tara Winstead",
         "page": "https://www.pexels.com/photo/black-calculator-beside-white-papers-7111490/",
+        "look": 18230007228433140177,
         "size": [
           5909,
           3939
-        ]
-      },
-      {
-        "id": "5900070",
-        "term": "electricity bill",
-        "file": "assets/photos/AI資料中心推高電費/5900070.jpg",
-        "caption": "Businesswoman showing a receipt during a home office work session, highlighting technology integration.",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "page": "https://www.pexels.com/photo/businesswoman-showing-receipt-5900070/",
-        "size": [
-          6527,
-          4351
-        ]
-      },
-      {
-        "id": "7680736",
-        "term": "electricity bill",
-        "file": "assets/photos/AI資料中心推高電費/7680736.jpg",
-        "caption": "A woman reviews receipts and calculates expenses at a desk with a pink calculator.",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "page": "https://www.pexels.com/photo/person-holding-receipts-and-using-a-calculator-7680736/",
-        "size": [
-          6720,
-          4480
-        ]
-      },
-      {
-        "id": "35501875",
-        "term": "electricity bill",
-        "file": "assets/photos/AI資料中心推高電費/35501875.jpg",
-        "caption": "Zloty banknotes and financial paperwork scattered on a desk, representing budgeting and finance.",
-        "outlet": "Pexels",
-        "author": "Jakub Zerdzicki",
-        "page": "https://www.pexels.com/photo/polish-currency-and-financial-documents-on-desk-35501875/",
-        "size": [
-          3000,
-          2001
-        ]
-      },
-      {
-        "id": "37730212",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/37730212.jpg",
-        "caption": "Close-up of server racks in a data center highlighting modern technology infrastructure.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/data-center-server-racks-with-active-equipment-37730212/",
-        "size": [
-          4108,
-          2734
-        ]
-      },
-      {
-        "id": "17489151",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/17489151.jpg",
-        "caption": "Close-up of tower servers in a data center with blue and red lighting.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/line-of-pc-towers-17489151/",
-        "size": [
-          3872,
-          2592
-        ]
-      },
-      {
-        "id": "17489160",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/17489160.jpg",
-        "caption": "Detailed image of illuminated server racks showcasing modern technology infrastructure.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/box-server-illuminated-on-blue-17489160/",
-        "size": [
-          6016,
-          4016
-        ]
-      },
-      {
-        "id": "17489163",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/17489163.jpg",
-        "caption": "Close-up of a modern server unit in a blue-lit data center environment.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/computer-server-in-data-center-room-17489163/",
-        "size": [
-          4256,
-          2832
-        ]
-      },
-      {
-        "id": "5050305",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/5050305.jpg",
-        "caption": "From above contemporary server cable trays without wires located in modern data center",
-        "outlet": "Pexels",
-        "author": "Brett Sayles",
-        "page": "https://www.pexels.com/photo/high-angle-shot-of-network-switch-5050305/",
-        "size": [
-          4630,
-          3081
-        ]
-      },
-      {
-        "id": "37730211",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/37730211.jpg",
-        "caption": "Modern server rack with blue lighting in a secure data center environment.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/close-up-of-a-blue-server-rack-in-datacenter-37730211/",
-        "size": [
-          4040,
-          2688
-        ]
-      },
-      {
-        "id": "11166543",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/11166543.jpg",
-        "caption": "Photograph of an electric pole standing tall against a cloudy sky, capturing urban infrastructure.",
-        "outlet": "Pexels",
-        "author": "Matthias Schleiden",
-        "page": "https://www.pexels.com/photo/electric-pole-under-white-clouds-11166543/",
-        "size": [
-          7952,
-          5304
-        ]
-      },
-      {
-        "id": "19686062",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/19686062.jpg",
-        "caption": "Low angle shot of a metal power transmission tower with cables against a clear sky.",
-        "outlet": "Pexels",
-        "author": "Budget Bizar",
-        "page": "https://www.pexels.com/photo/low-angle-shot-of-transmission-tower-19686062/",
-        "size": [
-          6000,
-          4000
-        ]
-      },
-      {
-        "id": "13216331",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/13216331.jpg",
-        "caption": "Silhouetted transmission towers under a vibrant sunset in Baghdad, Iraq.",
-        "outlet": "Pexels",
-        "author": "Haitham Moussa",
-        "page": "https://www.pexels.com/photo/silhouette-of-transmission-towers-13216331/",
-        "size": [
-          6960,
-          4640
-        ]
-      },
-      {
-        "id": "214073",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/214073.jpg",
-        "caption": "A tall power line tower stands among misty trees in a dense forest, creating a dramatic contrast.",
-        "outlet": "Pexels",
-        "author": "Photo Collections",
-        "page": "https://www.pexels.com/photo/electricity-forest-power-line-trees-214073/",
-        "size": [
-          6000,
-          4000
-        ]
-      },
-      {
-        "id": "9889066",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/9889066.jpg",
-        "caption": "Industrial electric power substation photographed at sunset with fence in the foreground.",
-        "outlet": "Pexels",
-        "author": "Kindel Media",
-        "page": "https://www.pexels.com/photo/power-plant-during-dusk-9889066/",
-        "size": [
-          5100,
-          3825
-        ]
-      },
-      {
-        "id": "27433337",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/27433337.jpg",
-        "caption": "Wooden power pole with transmission lines against a clear blue sky and clouds.",
-        "outlet": "Pexels",
-        "author": "Robert So",
-        "page": "https://www.pexels.com/photo/a-telephone-pole-with-a-blue-sky-and-clouds-27433337/",
-        "size": [
-          3582,
-          3558
         ]
       },
       {
@@ -341,6 +149,7 @@
         "outlet": "Pexels",
         "author": "Connor Scott McManus",
         "page": "https://www.pexels.com/photo/row-of-electricity-meters-11924298/",
+        "look": 6951356778474830016,
         "size": [
           6000,
           4000
@@ -354,6 +163,7 @@
         "outlet": "Pexels",
         "author": "AV",
         "page": "https://www.pexels.com/photo/high-voltage-electricity-on-junction-boxes-10065200/",
+        "look": 1081727234214969215,
         "size": [
           6488,
           4328
@@ -367,35 +177,346 @@
         "outlet": "Pexels",
         "author": "Anh-Bao Tran-Le",
         "page": "https://www.pexels.com/photo/electrical-boxes-on-white-brick-wall-in-chattanooga-30144993/",
+        "look": 18436471894145236990,
         "size": [
           7728,
           5152
         ]
       },
       {
-        "id": "34581644",
-        "term": "electric meter",
-        "file": "assets/photos/AI資料中心推高電費/34581644.jpg",
-        "caption": "Three vibrant utility meters on a brick wall showcasing urban industrial design in Texarkana, Texas.",
+        "id": "37730212",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/37730212.jpg",
+        "caption": "Close-up of server racks in a data center highlighting modern technology infrastructure.",
         "outlet": "Pexels",
-        "author": "John Robertson",
-        "page": "https://www.pexels.com/photo/colorful-utility-meters-on-brick-wall-in-texarkana-34581644/",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/data-center-server-racks-with-active-equipment-37730212/",
+        "look": 3474588892269132832,
         "size": [
-          2992,
+          4108,
+          2734
+        ]
+      },
+      {
+        "id": "17489151",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/17489151.jpg",
+        "caption": "Close-up of tower servers in a data center with blue and red lighting.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/line-of-pc-towers-17489151/",
+        "look": 8025529350858828623,
+        "size": [
+          3872,
+          2592
+        ]
+      },
+      {
+        "id": "17489160",
+        "term": "data center servers",
+        "file": "assets/photos/AI資料中心推高電費/17489160.jpg",
+        "caption": "Detailed image of illuminated server racks showcasing modern technology infrastructure.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/box-server-illuminated-on-blue-17489160/",
+        "look": 6664832799240756248,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "11166543",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/11166543.jpg",
+        "caption": "Photograph of an electric pole standing tall against a cloudy sky, capturing urban infrastructure.",
+        "outlet": "Pexels",
+        "author": "Matthias Schleiden",
+        "page": "https://www.pexels.com/photo/electric-pole-under-white-clouds-11166543/",
+        "look": 3343496316544036643,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "19686062",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/19686062.jpg",
+        "caption": "Low angle shot of a metal power transmission tower with cables against a clear sky.",
+        "outlet": "Pexels",
+        "author": "Budget Bizar",
+        "page": "https://www.pexels.com/photo/low-angle-shot-of-transmission-tower-19686062/",
+        "look": 14250167407902716405,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "13216331",
+        "term": "power grid",
+        "file": "assets/photos/AI資料中心推高電費/13216331.jpg",
+        "caption": "Silhouetted transmission towers under a vibrant sunset in Baghdad, Iraq.",
+        "outlet": "Pexels",
+        "author": "Haitham Moussa",
+        "page": "https://www.pexels.com/photo/silhouette-of-transmission-towers-13216331/",
+        "look": 26922952163327,
+        "size": [
+          6960,
+          4640
+        ]
+      },
+      {
+        "id": "12551266",
+        "term": "power lines suburb",
+        "file": "assets/photos/AI資料中心推高電費/12551266.jpg",
+        "caption": "A black SUV parked on a suburban street lined with trees and houses on a sunny day.",
+        "outlet": "Pexels",
+        "author": "Erik Mclean",
+        "page": "https://www.pexels.com/photo/black-suv-car-parked-in-front-of-a-white-wooden-house-12551266/",
+        "look": 8935705438517985279,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "27275324",
+        "term": "power lines suburb",
+        "file": "assets/photos/AI資料中心推高電費/27275324.jpg",
+        "caption": "A serene neighborhood view with a bus on a street in St. John's, NL, Canada.",
+        "outlet": "Pexels",
+        "author": "Jonathan Cooper",
+        "page": "https://www.pexels.com/photo/a-street-with-cars-parked-on-it-and-a-bus-27275324/",
+        "look": 8297319467564539455,
+        "size": [
+          5688,
+          3792
+        ]
+      },
+      {
+        "id": "38341668",
+        "term": "power lines suburb",
+        "file": "assets/photos/AI資料中心推高電費/38341668.jpg",
+        "caption": "A cityscape featuring a high-voltage power line tower against a clear blue sky, surrounded by modern buildings and greenery.",
+        "outlet": "Pexels",
+        "author": "Doğan Alpaslan  Demir",
+        "page": "https://www.pexels.com/photo/urban-landscape-with-power-lines-and-buildings-38341668/",
+        "look": 264973695384824,
+        "size": [
+          6129,
+          3992
+        ]
+      },
+      {
+        "id": "11368700",
+        "term": "family kitchen evening",
+        "file": "assets/photos/AI資料中心推高電費/11368700.jpg",
+        "caption": "A family gathered around a dinner table indoors, enjoying a meal together with wine and candles.",
+        "outlet": "Pexels",
+        "author": "Anna Shvets",
+        "page": "https://www.pexels.com/photo/a-family-having-dinner-at-a-table-11368700/",
+        "look": 18446672863960236032,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "3171295",
+        "term": "family kitchen evening",
+        "file": "assets/photos/AI資料中心推高電費/3171295.jpg",
+        "caption": "Two children decorating gingerbread cookies indoors by candlelight, creating a cozy holiday atmosphere.",
+        "outlet": "Pexels",
+        "author": "cottonbro studio",
+        "page": "https://www.pexels.com/photo/two-kids-holding-cream-bags-3171295/",
+        "look": 18226965005647937792,
+        "size": [
+          4069,
+          2718
+        ]
+      },
+      {
+        "id": "11369060",
+        "term": "family kitchen evening",
+        "file": "assets/photos/AI資料中心推高電費/11369060.jpg",
+        "caption": "A family shares dinner together, highlighting warmth and togetherness across generations.",
+        "outlet": "Pexels",
+        "author": "Anna Shvets",
+        "page": "https://www.pexels.com/photo/smiling-girl-between-two-grandmothers-at-table-11369060/",
+        "look": 16825446131659968560,
+        "size": [
+          6199,
+          4133
+        ]
+      },
+      {
+        "id": "17489157",
+        "term": "server room cooling",
+        "file": "assets/photos/AI資料中心推高電費/17489157.jpg",
+        "caption": "Detailed view of a server rack with a focus on technology and data storage.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/close-up-of-computer-hardware-17489157/",
+        "look": 2043647300835507200,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "5480781",
+        "term": "server room cooling",
+        "file": "assets/photos/AI資料中心推高電費/5480781.jpg",
+        "caption": "System with various wires managing access to centralized resource of server in data center",
+        "outlet": "Pexels",
+        "author": "Brett Sayles",
+        "page": "https://www.pexels.com/photo/server-racks-on-data-center-5480781/",
+        "look": 13889313185449702644,
+        "size": [
+          6048,
+          4024
+        ]
+      },
+      {
+        "id": "37605910",
+        "term": "server room cooling",
+        "file": "assets/photos/AI資料中心推高電費/37605910.jpg",
+        "caption": "Close-up of server equipment in a modern data center highlighting technology infrastructure.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "page": "https://www.pexels.com/photo/server-rack-in-modern-data-center-37605910/",
+        "look": 9087873296071393280,
+        "size": [
+          4256,
+          2832
+        ]
+      },
+      {
+        "id": "34610699",
+        "term": "utility worker",
+        "file": "assets/photos/AI資料中心推高電費/34610699.jpg",
+        "caption": "Workers managing tangled power lines by a street setup near a vehicle, highlighting infrastructure challenges.",
+        "outlet": "Pexels",
+        "author": "Denniz Futalan",
+        "page": "https://www.pexels.com/photo/electrical-workers-navigating-complex-power-lines-34610699/",
+        "look": 1089863348810416128,
+        "size": [
+          3000,
           2000
         ]
       },
       {
-        "id": "34581637",
-        "term": "electric meter",
-        "file": "assets/photos/AI資料中心推高電費/34581637.jpg",
-        "caption": "A quirky outdoor scene featuring painted utility meters and piping on a brick wall in Texarkana, Texas.",
+        "id": "33217702",
+        "term": "utility worker",
+        "file": "assets/photos/AI資料中心推高電費/33217702.jpg",
+        "caption": "Aerial view of a utility worker on a bucket truck fixing power lines by a road.",
         "outlet": "Pexels",
-        "author": "John Robertson",
-        "page": "https://www.pexels.com/photo/quirky-painted-utility-meters-on-a-brick-wall-34581637/",
+        "author": "K",
+        "page": "https://www.pexels.com/photo/utility-worker-on-bucket-truck-repairs-power-lines-33217702/",
+        "look": 18446475792872380287,
         "size": [
-          2992,
-          2000
+          4806,
+          2700
+        ]
+      },
+      {
+        "id": "17018102",
+        "term": "utility worker",
+        "file": "assets/photos/AI資料中心推高電費/17018102.jpg",
+        "caption": "Electricians wearing safety gear work on power lines using lifts against a clear blue sky.",
+        "outlet": "Pexels",
+        "author": "Thampapon Otavorn",
+        "page": "https://www.pexels.com/photo/electricians-working-with-power-lines-17018102/",
+        "look": 13772738803252863024,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "7616651",
+        "term": "thermostat home",
+        "file": "assets/photos/AI資料中心推高電費/7616651.jpg",
+        "caption": "Close-up of a modern digital thermostat mounted on a wall, displaying temperature settings in Celsius.",
+        "outlet": "Pexels",
+        "author": "Erik Mclean",
+        "page": "https://www.pexels.com/photo/white-thermostat-hanging-on-the-wall-7616651/",
+        "look": 9160056724449598492,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "36730582",
+        "term": "thermostat home",
+        "file": "assets/photos/AI資料中心推高電費/36730582.jpg",
+        "caption": "Woman adjusting the thermostat in a bright, contemporary room with large windows and a potted plant.",
+        "outlet": "Pexels",
+        "author": "Vitaly Gariev",
+        "page": "https://www.pexels.com/photo/woman-adjusting-thermostat-in-bright-indoor-setting-36730582/",
+        "look": 68330262569942011,
+        "size": [
+          3800,
+          2138
+        ]
+      },
+      {
+        "id": "271614",
+        "term": "thermostat home",
+        "file": "assets/photos/AI資料中心推高電費/271614.jpg",
+        "caption": "Comfortable hotel room with modern design and minimalistic decor.",
+        "outlet": "Pexels",
+        "author": "Pixabay",
+        "page": "https://www.pexels.com/photo/gray-and-brown-sectional-couch-271614/",
+        "look": 72349545501032447,
+        "size": [
+          5616,
+          3868
+        ]
+      },
+      {
+        "id": "5466795",
+        "term": "money calculator bills",
+        "file": "assets/photos/AI資料中心推高電費/5466795.jpg",
+        "caption": "Top view of a calculator showing $5200 surrounded by $100 bills on a tan background.",
+        "outlet": "Pexels",
+        "author": "olia danilevich",
+        "page": "https://www.pexels.com/photo/photo-of-calculator-near-dollar-bills-5466795/",
+        "look": 18442209429048262655,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "7735796",
+        "term": "money calculator bills",
+        "file": "assets/photos/AI資料中心推高電費/7735796.jpg",
+        "caption": "Close-up of hands using smartphone calculator next to dollar bills on table. Financial planning concept.",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "page": "https://www.pexels.com/photo/close-up-shot-of-a-person-holding-cellphone-7735796/",
+        "look": 17361924066368404479,
+        "size": [
+          3751,
+          2737
+        ]
+      },
+      {
+        "id": "5900233",
+        "term": "money calculator bills",
+        "file": "assets/photos/AI資料中心推高電費/5900233.jpg",
+        "caption": "Hands managing finances with calculator, cash, and receipts on a wooden table. Ideal for budgeting concepts.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "page": "https://www.pexels.com/photo/person-holding-paper-bills-while-using-a-calculator-5900233/",
+        "look": 9180384461061033771,
+        "size": [
+          6720,
+          4480
         ]
       }
     ],

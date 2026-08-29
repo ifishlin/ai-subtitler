@@ -437,15 +437,23 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     if not terms:
         raise HTTPException(400, "要給搜尋詞（英文，圖庫不吃中文）")
 
+    # Six pictures from one search are six pictures of the same thing. Variety
+    # comes from asking more questions, not from taking more of one answer, so
+    # the cap is per term and near-identical results are dropped on arrival.
+    PER_TERM = 3
     here = ROOT / "assets" / "photos" / name
     seen = {item.get("id") for item in pile["sources"]["images"]}
+    marks = [item["look"] for item in pile["sources"]["images"] if item.get("look")]
     added = 0
-    for term in terms[:6]:
+    for term in terms[:10]:
         try:
-            found = stock_module.search_photos(term, count=6)
+            found = stock_module.search_photos(term, count=PER_TERM * 3)
         except Exception as error:                                # noqa: BLE001
             raise HTTPException(502, f"圖庫查詢失敗：{error}") from error
+        kept_here = 0
         for picture in found:
+            if kept_here >= PER_TERM:
+                break
             if picture.id in seen:
                 continue
             target = here / f"{picture.id}.jpg"
@@ -453,12 +461,18 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 stock_module.fetch(picture.url, target)
             except Exception:                                     # noqa: BLE001
                 continue
+            look = stock_module.looks_like(target)
+            if any(stock_module.alike(look, other) for other in marks):
+                target.unlink(missing_ok=True)        # already have one like it
+                continue
+            marks.append(look)
+            kept_here += 1
             pile["sources"]["images"].append({
                 "id": picture.id, "term": term,
                 "file": str(target.relative_to(ROOT)),
                 "caption": picture.about or term,
                 "outlet": "Pexels", "author": picture.author,
-                "page": picture.page,
+                "page": picture.page, "look": look,
                 "size": [picture.width, picture.height]})
             seen.add(picture.id)
             added += 1

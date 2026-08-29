@@ -74,7 +74,7 @@ def balance(pile: dict[str, Any]) -> dict[str, Any]:
     both sides are present, not whether there are exactly two Reuters pieces.
     """
     outlets = media().get("outlets", [])
-    sides = {"left": 0, "right": 0, "neutral": 0, "business": 0, "other": 0}
+    sides = {"left": 0, "right": 0, "neutral": 0, "other": 0}
     for kind in ("videos", "reports"):
         for item in pile.get("sources", {}).get(kind) or []:
             lean = item.get("lean") or _lean_of(item.get("outlet", ""), outlets)
@@ -84,8 +84,6 @@ def balance(pile: dict[str, Any]) -> dict[str, Any]:
                 sides["right"] += 1
             elif lean in ("neutral",):
                 sides["neutral"] += 1
-            elif lean in ("market-liberal",):
-                sides["business"] += 1
             else:
                 sides["other"] += 1
     missing = []

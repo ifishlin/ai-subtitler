@@ -93,103 +93,55 @@
     "images": [
       {
         "id": "8266747",
-        "term": "gas station prices",
+        "term": "gas station price sign",
         "file": "assets/photos/美伊戰爭六個月/8266747.jpg",
         "caption": "Close-up of a gas pump display showing price per liter and total volume during a transaction.",
         "outlet": "Pexels",
         "author": "Erik Mclean",
         "page": "https://www.pexels.com/photo/display-screen-of-a-gasoline-pump-8266747/",
+        "look": 288256867522838527,
         "size": [
           5131,
           3421
         ]
       },
       {
-        "id": "13172854",
-        "term": "gas station prices",
-        "file": "assets/photos/美伊戰爭六個月/13172854.jpg",
-        "caption": "A petrol station illuminated at night with a person's silhouette in foreground, capturing urban ambiance.",
-        "outlet": "Pexels",
-        "author": "Andrés Ramírez",
-        "page": "https://www.pexels.com/photo/silhouette-of-person-against-gas-station-in-night-13172854/",
-        "size": [
-          5184,
-          2916
-        ]
-      },
-      {
-        "id": "4744707",
-        "term": "gas station prices",
-        "file": "assets/photos/美伊戰爭六個月/4744707.jpg",
-        "caption": "Close-up of a vintage gas pump station showing fuel prices and octane ratings in Los Angeles.",
-        "outlet": "Pexels",
-        "author": "Ekaterina Belinskaya",
-        "page": "https://www.pexels.com/photo/close-up-photo-gasoline-fuel-pump-4744707/",
-        "size": [
-          3000,
-          2000
-        ]
-      },
-      {
-        "id": "8266768",
-        "term": "gas station prices",
-        "file": "assets/photos/美伊戰爭六個月/8266768.jpg",
-        "caption": "Detailed view of a gas pump showing price and octane level 87.",
-        "outlet": "Pexels",
-        "author": "Erik Mclean",
-        "page": "https://www.pexels.com/photo/price-of-fuel-on-station-8266768/",
-        "size": [
-          4685,
-          3123
-        ]
-      },
-      {
         "id": "17849728",
-        "term": "gas station prices",
+        "term": "gas station price sign",
         "file": "assets/photos/美伊戰爭六個月/17849728.jpg",
         "caption": "People walking near a Chevron gas station with prominent signage and parked vehicles on a sunny day.",
         "outlet": "Pexels",
         "author": "David Brown",
         "page": "https://www.pexels.com/photo/chevron-gas-station-17849728/",
+        "look": 17367128035553575425,
         "size": [
           3005,
           2003
         ]
       },
       {
-        "id": "4744710",
-        "term": "gas station prices",
-        "file": "assets/photos/美伊戰爭六個月/4744710.jpg",
-        "caption": "Close-up of a fuel pump showing gasoline and diesel options at a gas station in Los Angeles.",
+        "id": "12973597",
+        "term": "gas station price sign",
+        "file": "assets/photos/美伊戰爭六個月/12973597.jpg",
+        "caption": "Night view of an illuminated Irving street sign and subway entrance in an urban area.",
         "outlet": "Pexels",
-        "author": "Ekaterina Belinskaya",
-        "page": "https://www.pexels.com/photo/gasoline-pump-in-a-gas-station-4744710/",
+        "author": "Erik Mclean",
+        "page": "https://www.pexels.com/photo/illuminated-text-signage-during-night-time-12973597/",
+        "look": 1157478087810555679,
         "size": [
-          3000,
-          2000
-        ]
-      },
-      {
-        "id": "39012056",
-        "term": "oil tanker",
-        "file": "assets/photos/美伊戰爭六個月/39012056.jpg",
-        "caption": "A large red oil tanker named Bow Excellence docked at a harbor under clear blue skies.",
-        "outlet": "Pexels",
-        "author": "Oleksiy Yeshtokyn,🌻🇺🇦🌻",
-        "page": "https://www.pexels.com/photo/large-red-oil-tanker-docked-at-harbor-39012056/",
-        "size": [
-          8256,
-          5504
+          5472,
+          3648
         ]
       },
       {
         "id": "33284879",
-        "term": "oil tanker",
+        "term": "oil tanker sea",
         "file": "assets/photos/美伊戰爭六個月/33284879.jpg",
         "caption": "A fleet of cargo ships docked near oil storage tanks along a serene coastline with a clear blue sky above.",
         "outlet": "Pexels",
         "author": "Zifeng Xiong",
         "page": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/",
+        "look": 824633720831,
         "size": [
           6000,
           4000
@@ -197,54 +149,30 @@
       },
       {
         "id": "27275198",
-        "term": "oil tanker",
+        "term": "oil tanker sea",
         "file": "assets/photos/美伊戰爭六個月/27275198.jpg",
         "caption": "Aerial shot of an oil tanker sailing in the ocean near Vado Ligure, Italy.",
         "outlet": "Pexels",
         "author": "DeLuca G",
         "page": "https://www.pexels.com/photo/default-27275198/",
+        "look": 1704364229025792,
         "size": [
           8064,
           4536
         ]
       },
       {
-        "id": "1036866",
-        "term": "oil tanker",
-        "file": "assets/photos/美伊戰爭六個月/1036866.jpg",
-        "caption": "Aerial shot of an oil tanker cruising through the ocean, emphasizing maritime transport.",
+        "id": "15647002",
+        "term": "oil tanker sea",
+        "file": "assets/photos/美伊戰爭六個月/15647002.jpg",
+        "caption": "Large oil tanker on the ocean near the coast, sailing under a vibrant sunset sky.",
         "outlet": "Pexels",
-        "author": "Alexander Bobrov",
-        "page": "https://www.pexels.com/photo/photo-of-ship-1036866/",
+        "author": "G.isle  px.",
+        "page": "https://www.pexels.com/photo/view-of-a-large-tanker-on-the-sea-near-a-shore-at-sunset-15647002/",
+        "look": 4396951321681919,
         "size": [
-          3992,
-          2242
-        ]
-      },
-      {
-        "id": "36563588",
-        "term": "oil tanker",
-        "file": "assets/photos/美伊戰爭六個月/36563588.jpg",
-        "caption": "A large oil tanker sailing on the ocean with a sunset view.",
-        "outlet": "Pexels",
-        "author": "Punit Singh",
-        "page": "https://www.pexels.com/photo/oil-tanker-at-sea-during-sunset-36563588/",
-        "size": [
-          4032,
-          3024
-        ]
-      },
-      {
-        "id": "27629100",
-        "term": "oil tanker",
-        "file": "assets/photos/美伊戰爭六個月/27629100.jpg",
-        "caption": "Oil tanker anchored near a beach where people relax under an umbrella.",
-        "outlet": "Pexels",
-        "author": "Ricardo José",
-        "page": "https://www.pexels.com/photo/a-large-ship-is-in-the-water-27629100/",
-        "size": [
-          4608,
-          3072
+          4658,
+          3494
         ]
       },
       {
@@ -255,152 +183,304 @@
         "outlet": "Pexels",
         "author": "Christian Palau",
         "page": "https://www.pexels.com/photo/majestic-aircraft-carrier-on-open-sea-38485170/",
+        "look": 250567921499135,
         "size": [
           4500,
           3375
         ]
       },
       {
-        "id": "37873923",
+        "id": "29243395",
         "term": "aircraft carrier",
-        "file": "assets/photos/美伊戰爭六個月/37873923.jpg",
-        "caption": "Impressive aircraft carrier docked at Portsmouth harbor with tugboats assisting.",
+        "file": "assets/photos/美伊戰爭六個月/29243395.jpg",
+        "caption": "The USS Yorktown aircraft carrier docked in Charleston Harbor, USA.",
         "outlet": "Pexels",
-        "author": "Samuel Phillips",
-        "page": "https://www.pexels.com/photo/aircraft-carrier-in-portsmouth-harbor-37873923/",
+        "author": "Karen F",
+        "page": "https://www.pexels.com/photo/uss-yorktown-aircraft-carrier-in-charleston-harbor-29243395/",
+        "look": 72089479875063808,
         "size": [
-          4896,
-          3672
+          5021,
+          2831
         ]
       },
       {
-        "id": "19088210",
+        "id": "5595742",
         "term": "aircraft carrier",
-        "file": "assets/photos/美伊戰爭六個月/19088210.jpg",
-        "caption": "A large aircraft carrier docked in a serene harbor, surrounded by a clear blue sky and tranquil waters.",
+        "file": "assets/photos/美伊戰爭六個月/5595742.jpg",
+        "caption": "Dramatic grayscale image of a military fighter jet on a wet tarmac under cloudy skies.",
         "outlet": "Pexels",
-        "author": "Level 23 Media",
-        "page": "https://www.pexels.com/photo/ferry-swimming-in-a-sea-19088210/",
+        "author": "Presto Reviews",
+        "page": "https://www.pexels.com/photo/grayscale-photo-of-fighter-plane-5595742/",
+        "look": 54289489370021887,
         "size": [
-          4240,
-          2832
+          3909,
+          2199
         ]
       },
       {
-        "id": "36674255",
-        "term": "aircraft carrier",
-        "file": "assets/photos/美伊戰爭六個月/36674255.jpg",
-        "caption": "A US Navy helicopter is stationed on the deck of an aircraft carrier with radar equipment in the background.",
+        "id": "14815921",
+        "term": "cargo ship strait",
+        "file": "assets/photos/美伊戰爭六個月/14815921.jpg",
+        "caption": "A cargo ship sails past the historic Dolmabahçe Palace with urban skyline in Istanbul.",
         "outlet": "Pexels",
-        "author": "I Bautista",
-        "page": "https://www.pexels.com/photo/us-navy-helicopter-on-aircraft-carrier-deck-36674255/",
+        "author": "Afitab",
+        "page": "https://www.pexels.com/photo/city-waterfront-and-an-industrial-ship-in-the-sea-14815921/",
+        "look": 9096710548111556607,
+        "size": [
+          4320,
+          3240
+        ]
+      },
+      {
+        "id": "11389636",
+        "term": "soldier silhouette",
+        "file": "assets/photos/美伊戰爭六個月/11389636.jpg",
+        "caption": "A silhouette of a soldier holding a rifle against a dramatic sunset sky.",
+        "outlet": "Pexels",
+        "author": "Gökhan Tahincioğlu",
+        "page": "https://www.pexels.com/photo/a-man-in-black-jacket-holding-a-rifle-11389636/",
+        "look": 1952663528767294,
+        "size": [
+          4232,
+          2699
+        ]
+      },
+      {
+        "id": "11042981",
+        "term": "soldier silhouette",
+        "file": "assets/photos/美伊戰爭六個月/11042981.jpg",
+        "caption": "Silhouette of a soldier holding a rifle, displayed against a wall with historical inscriptions in Ankara, Türkiye.",
+        "outlet": "Pexels",
+        "author": "Enes YOLDAŞ",
+        "page": "https://www.pexels.com/photo/shadow-on-the-wall-of-a-soldier-holding-a-rifle-11042981/",
+        "look": 630722479237549772,
         "size": [
           6000,
           4000
         ]
       },
       {
-        "id": "16170871",
-        "term": "aircraft carrier",
-        "file": "assets/photos/美伊戰爭六個月/16170871.jpg",
-        "caption": "USS Midway aircraft carrier docked in San Diego Harbor, showcasing naval history.",
+        "id": "17681813",
+        "term": "soldier silhouette",
+        "file": "assets/photos/美伊戰爭六個月/17681813.jpg",
+        "caption": "Dramatic silhouette of a soldier with a rifle against a sunrise backdrop.",
         "outlet": "Pexels",
-        "author": "Thiago Oliveira",
-        "page": "https://www.pexels.com/photo/clouds-over-battleships-16170871/",
+        "author": "Beyzanur K.",
+        "page": "https://www.pexels.com/photo/silhouette-of-man-with-gun-at-golden-hour-17681813/",
+        "look": 9861983533278293244,
         "size": [
-          6264,
-          4180
+          4257,
+          2838
         ]
       },
       {
-        "id": "38485162",
-        "term": "aircraft carrier",
-        "file": "assets/photos/美伊戰爭六個月/38485162.jpg",
-        "caption": "A powerful aircraft carrier sailing on the open sea under a clear sky, showcasing naval strength.",
+        "id": "12377481",
+        "term": "fuel pump hand",
+        "file": "assets/photos/美伊戰爭六個月/12377481.jpg",
+        "caption": "Close-up of a hand holding a green fuel nozzle at a gas pump station outdoors.",
         "outlet": "Pexels",
-        "author": "Christian Palau",
-        "page": "https://www.pexels.com/photo/majestic-aircraft-carrier-in-open-sea-38485162/",
+        "author": "Engin Akyurt",
+        "page": "https://www.pexels.com/photo/a-person-s-hand-holding-a-gas-pump-12377481/",
+        "look": 9911736270550828959,
+        "size": [
+          8944,
+          6708
+        ]
+      },
+      {
+        "id": "9796",
+        "term": "fuel pump hand",
+        "file": "assets/photos/美伊戰爭六個月/9796.jpg",
+        "caption": "Close-up of a person refueling a car at a gas pump during night.",
+        "outlet": "Pexels",
+        "author": "ClickerHappy",
+        "page": "https://www.pexels.com/photo/car-refill-transportation-gas-9796/",
+        "look": 16415479943621581625,
+        "size": [
+          4849,
+          3228
+        ]
+      },
+      {
+        "id": "29370541",
+        "term": "fuel pump hand",
+        "file": "assets/photos/美伊戰爭六個月/29370541.jpg",
+        "caption": "Close-up of a hand refilling a car's gas tank at a station with a green fuel nozzle.",
+        "outlet": "Pexels",
+        "author": "Fahad Puthawala",
+        "page": "https://www.pexels.com/photo/fuel-pumping-into-car-at-a-gas-station-29370541/",
+        "look": 1085093763073179647,
         "size": [
           6000,
-          3375
-        ]
-      },
-      {
-        "id": "34358849",
-        "term": "strait shipping",
-        "file": "assets/photos/美伊戰爭六個月/34358849.jpg",
-        "caption": "Aerial view of ships anchored in the Singapore Strait under a clear sky, showcasing maritime activity.",
-        "outlet": "Pexels",
-        "author": "Saksham Vikram",
-        "page": "https://www.pexels.com/photo/ships-anchored-in-singapore-strait-aerial-view-34358849/",
-        "size": [
-          5659,
-          3763
-        ]
-      },
-      {
-        "id": "34358847",
-        "term": "strait shipping",
-        "file": "assets/photos/美伊戰爭六個月/34358847.jpg",
-        "caption": "Vast number of cargo ships navigating through Singapore's busy maritime strait.",
-        "outlet": "Pexels",
-        "author": "Saksham Vikram",
-        "page": "https://www.pexels.com/photo/aerial-view-of-cargo-ships-in-singapore-strait-34358847/",
-        "size": [
-          6016,
           4000
         ]
       },
       {
-        "id": "30012661",
-        "term": "strait shipping",
-        "file": "assets/photos/美伊戰爭六個月/30012661.jpg",
-        "caption": "Container ship navigating Hamburg harbor with stacked cargo under a cloudy sky.",
+        "id": "34081589",
+        "term": "military aircraft",
+        "file": "assets/photos/美伊戰爭六個月/34081589.jpg",
+        "caption": "Impressive aerobatic display of jets in formation against a clear sky.",
         "outlet": "Pexels",
-        "author": "Wolfgang Weiser",
-        "page": "https://www.pexels.com/photo/container-ship-in-hamburg-harbor-under-cloudy-skies-30012661/",
+        "author": "Gibson G. Wairagu",
+        "page": "https://www.pexels.com/photo/aerobatic-jet-formation-in-clear-sky-34081589/",
+        "look": 18446602301251977216,
         "size": [
-          4039,
-          2272
+          6240,
+          4160
         ]
       },
       {
-        "id": "13102530",
-        "term": "strait shipping",
-        "file": "assets/photos/美伊戰爭六個月/13102530.jpg",
-        "caption": "A vibrant container ship navigating the Bosphorus Strait, Istanbul during sunset, enhancing the maritime scenery.",
+        "id": "1620390",
+        "term": "military aircraft",
+        "file": "assets/photos/美伊戰爭六個月/1620390.jpg",
+        "caption": "Fighter jets in a precise formation fly against a vibrant blue sky during an airshow.",
         "outlet": "Pexels",
-        "author": "Muhammed Zahid Bulut",
-        "page": "https://www.pexels.com/photo/sailing-container-ship-on-the-sea-13102530/",
+        "author": "Lio  Photography",
+        "page": "https://www.pexels.com/photo/green-and-white-show-planes-on-sky-1620390/",
+        "look": 16955011510304768,
         "size": [
-          5074,
-          3383
+          2232,
+          2231
         ]
       },
       {
-        "id": "32237794",
-        "term": "strait shipping",
-        "file": "assets/photos/美伊戰爭六個月/32237794.jpg",
-        "caption": "Cargo ships and oil tankers on the Bosporus strait, capturing global trade and maritime logistics at sunset.",
+        "id": "18205661",
+        "term": "military aircraft",
+        "file": "assets/photos/美伊戰爭六個月/18205661.jpg",
+        "caption": "Five Blue Angels jets in aerial formation with smoke trails against clear sky.",
         "outlet": "Pexels",
-        "author": "İrfan Simsar",
-        "page": "https://www.pexels.com/photo/scenic-maritime-traffic-on-bosporus-at-sunset-32237794/",
+        "author": "Jacob Moore",
+        "page": "https://www.pexels.com/photo/planes-blue-angels-air-show-air-plane-18205661/",
+        "look": 18446741807243460608,
         "size": [
-          3961,
-          2641
+          6960,
+          4640
         ]
       },
       {
-        "id": "29792898",
-        "term": "strait shipping",
-        "file": "assets/photos/美伊戰爭六個月/29792898.jpg",
-        "caption": "Aerial view of a cargo ship navigating through the Bosphorus Strait in Istanbul, Turkey.",
+        "id": "33716553",
+        "term": "tehran street",
+        "file": "assets/photos/美伊戰爭六個月/33716553.jpg",
+        "caption": "View of a serene Tehran street with a view of the Milad Tower in the distance.",
         "outlet": "Pexels",
-        "author": "Julien Goettelmann",
-        "page": "https://www.pexels.com/photo/aerial-view-of-cargo-ship-on-bosphorus-strait-29792898/",
+        "author": "Mehdi Khoshnejad",
+        "page": "https://www.pexels.com/photo/quiet-street-scene-in-tehran-with-milad-tower-33716553/",
+        "look": 18392164351002443388,
         "size": [
-          3840,
-          2160
+          5408,
+          3605
+        ]
+      },
+      {
+        "id": "11433700",
+        "term": "tehran street",
+        "file": "assets/photos/美伊戰爭六個月/11433700.jpg",
+        "caption": "Women wearing headscarves and vibrant scarves walk on a sunny street in Iran, showcasing cultural fashion.",
+        "outlet": "Pexels",
+        "author": "Beyza Nur Arı",
+        "page": "https://www.pexels.com/photo/women-in-headscarves-in-city-11433700/",
+        "look": 2537888226361151,
+        "size": [
+          5107,
+          4081
+        ]
+      },
+      {
+        "id": "29786929",
+        "term": "tehran street",
+        "file": "assets/photos/美伊戰爭六個月/29786929.jpg",
+        "caption": "Bustling Tehran street scene with cars, mosque minarets, and traditional architecture.",
+        "outlet": "Pexels",
+        "author": "Necati Ömer Karpuzoğlu",
+        "page": "https://www.pexels.com/photo/busy-tehran-street-with-mosque-and-traffic-29786929/",
+        "look": 2327320939013619518,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "39212596",
+        "term": "oil price chart",
+        "file": "assets/photos/美伊戰爭六個月/39212596.jpg",
+        "caption": "Hand pointing at a financial graph displaying cryptocurrency data analysis and trends.",
+        "outlet": "Pexels",
+        "author": "Rafael Minguet Delgado",
+        "page": "https://www.pexels.com/photo/analyzing-cryptocurrency-market-trends-39212596/",
+        "look": 9182945611549245825,
+        "size": [
+          6774,
+          4516
+        ]
+      },
+      {
+        "id": "38796151",
+        "term": "oil price chart",
+        "file": "assets/photos/美伊戰爭六個月/38796151.jpg",
+        "caption": "Close-up of a cryptocurrency market graph focusing on BNB price and volume trends over time.",
+        "outlet": "Pexels",
+        "author": "Rafael Minguet Delgado",
+        "page": "https://www.pexels.com/photo/cryptocurrency-market-graph-showing-bnb-trends-38796151/",
+        "look": 9511598289838080512,
+        "size": [
+          8640,
+          5760
+        ]
+      },
+      {
+        "id": "38782894",
+        "term": "oil price chart",
+        "file": "assets/photos/美伊戰爭六個月/38782894.jpg",
+        "caption": "Colorful financial stock market chart displayed on a digital screen with analysis tools.",
+        "outlet": "Pexels",
+        "author": "Rafael Minguet Delgado",
+        "page": "https://www.pexels.com/photo/financial-stock-market-chart-on-digital-screen-38782894/",
+        "look": 18407109084709912576,
+        "size": [
+          8640,
+          5760
+        ]
+      },
+      {
+        "id": "38474793",
+        "term": "family car road",
+        "file": "assets/photos/美伊戰爭六個月/38474793.jpg",
+        "caption": "Joyful family enjoying a sunset road trip with a vintage car, capturing happiness and togetherness.",
+        "outlet": "Pexels",
+        "author": "Breno Cardoso",
+        "page": "https://www.pexels.com/photo/happy-family-road-trip-with-vintage-car-38474793/",
+        "look": 5764722336519225343,
+        "size": [
+          5643,
+          3762
+        ]
+      },
+      {
+        "id": "9000153",
+        "term": "family car road",
+        "file": "assets/photos/美伊戰爭六個月/9000153.jpg",
+        "caption": "Classic beige sedan carrying luggage, driving on highway with city in background.",
+        "outlet": "Pexels",
+        "author": "needtofly",
+        "page": "https://www.pexels.com/photo/vintage-car-on-the-road-9000153/",
+        "look": 136881555520556,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "12932548",
+        "term": "family car road",
+        "file": "assets/photos/美伊戰爭六個月/12932548.jpg",
+        "caption": "A family sits in a car trunk, enjoying an outdoor adventure in a scenic countryside.",
+        "outlet": "Pexels",
+        "author": "Atlantic Ambience",
+        "page": "https://www.pexels.com/photo/family-sitting-on-car-back-12932548/",
+        "look": 16210980606999323009,
+        "size": [
+          6000,
+          4000
         ]
       }
     ],
