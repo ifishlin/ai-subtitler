@@ -45,6 +45,16 @@ def line_seconds(line: dict[str, Any]) -> float:
     return round(spoken_length(line.get("say", "")) / PER_SECOND, 2)
 
 
+BORROW_AIM = 0.25        # someone else's pictures, as a share of the running time
+BORROW_MOST = 0.30       # above this the video stops reading as ours
+BORROWED = ("CNN", "原畫面", "新聞畫面", "素材", "引用", "現場", "照片")
+
+
+def is_borrowed(show: str | None) -> bool:
+    """Whether this shot is someone else's picture rather than one we drew."""
+    return any(mark in (show or "") for mark in BORROWED)
+
+
 def measure(script: dict[str, Any]) -> dict[str, Any]:
     """The script's own arithmetic: length, and whether it fits."""
     lines = script.get("lines") or []
@@ -63,9 +73,24 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
     unsourced = [item["at"] for item in laid
                  if item.get("say") and not item.get("from")]
     opinion = sum(1 for item in laid if item.get("from") == "觀點")
+
+    # Borrowed footage is what decides whether the video reads as ours, and it
+    # has a shape as well as a size: 25% is fine spread across the running
+    # time and looks like evidence; the same 25% in one lump looks like a clip
+    # with commentary bolted on. So both are measured.
+    lifted = [item for item in laid if is_borrowed(item.get("show"))]
+    borrowed = sum(item["seconds"] for item in lifted)
+    thirds = [0, 0, 0]
+    for item in lifted:
+        where = min(2, int(item["at"] / max(clock, 1) * 3))
+        thirds[where] += 1
     return {"lines": laid, "seconds": round(clock, 2), "characters": said,
             "over": round(max(0.0, clock - LIMIT), 2), "unsourced": unsourced,
-            "opinion": opinion}
+            "opinion": opinion,
+            "borrowed": round(borrowed, 2),
+            "borrowed_share": round(borrowed / clock * 100) if clock else 0,
+            "spread": thirds,
+            "even": all(thirds) and borrowed <= clock * BORROW_MOST}
 
 
 def path_for(name: str) -> Path:
