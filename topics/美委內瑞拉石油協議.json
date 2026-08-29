@@ -40,12 +40,852 @@
         "seconds": 186.0
       }
     ],
-    "reports": [],
+    "reports": [
+      {
+        "title": "The U.S. Took Over Venezuela's Oil Industry. Where Has All the Money Gone?",
+        "url": "https://www.cfr.org/articles/the-u-s-took-over-venezuelas-oil-industry-where-has-all-the-money-gone",
+        "outlet": "Council on Foreign Relations",
+        "lean": "primary",
+        "facts": [
+          "四個月內近一億桶原油、估計 80 億美元流出",
+          "過程幾乎沒有透明度和監督"
+        ]
+      },
+      {
+        "title": "Q&A on US Actions in Venezuela: Impacts on Energy",
+        "url": "https://www.energypolicy.columbia.edu/qa-on-us-actions-in-venezuela/",
+        "outlet": "Columbia CGEP",
+        "lean": "primary",
+        "facts": [
+          "對能源市場的實際影響評估"
+        ]
+      },
+      {
+        "title": "Venezuela: Overview of U.S. Sanctions Policy",
+        "url": "https://www.congress.gov/crs-product/IF10715",
+        "outlet": "Congress.gov CRS",
+        "lean": "primary",
+        "facts": [
+          "所有制裁名義上仍在，包括 PdVSA 和石油天然氣部門"
+        ]
+      },
+      {
+        "title": "Venezuela Sanctions After Maduro's Removal | OFAC Update",
+        "url": "https://www.morganlewis.com/pubs/2026/01/compliance-landscape-in-venezuela-following-nicolas-maduros-removal-from-power",
+        "outlet": "Morgan Lewis",
+        "lean": "neutral",
+        "facts": [
+          "2026/1/3 美軍逮捕馬杜洛夫婦，押往紐約受審"
+        ]
+      },
+      {
+        "title": "US-Venezuela oil deal: What does it mean for Washington?",
+        "url": "https://www.aljazeera.com/economy/2022/10/6/us-plans-to-ease-venezuela-sanctions-for-chevron-operations-wsj",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "facts": [
+          "非西方視角：這是交易，不是解放"
+        ]
+      },
+      {
+        "title": "Progressives Condemn U.S.-Backed Regime Change in Venezuela",
+        "url": "https://progressive.international/wire/2026-01-27-a-doutrina-donroe-e-o-imperialismo-descarado-da-interveno-na-venezuela-1/en/",
+        "outlet": "Progressive International",
+        "lean": "left",
+        "facts": [
+          "十多位進步派眾議員（Khanna、AOC、Omar）譴責政權更迭",
+          "主張真正的目的是石油"
+        ]
+      },
+      {
+        "title": "Venezuela's Crisis Is No Accident: How Oil and Intervention Shaped a State",
+        "url": "https://www.theglobalist.com/venezuelas-crisis-is-no-accident-how-oil-and-intervention-shaped-a-state/",
+        "outlet": "The Globalist",
+        "lean": "centre-left",
+        "facts": [
+          "制裁與資產扣押是有計畫地切斷該國主要收入來源"
+        ]
+      }
+    ],
     "images": [],
     "data": []
   },
-  "facts": [],
-  "voices": [],
+  "facts": [
+    {
+      "say": "2026/1/3 美軍逮捕馬杜洛夫婦，押往紐約受審",
+      "from": "Morgan Lewis／OFAC"
+    },
+    {
+      "say": "川普稱委方將交出約 30 億美元的「受制裁石油」",
+      "from": "CRS"
+    },
+    {
+      "say": "四個月內近一億桶、估計 80 億美元原油流出",
+      "from": "CFR"
+    },
+    {
+      "say": "該過程幾乎沒有透明度和監督",
+      "from": "CFR"
+    },
+    {
+      "say": "所有制裁名義上仍在，包括 PdVSA 和石油天然氣部門",
+      "from": "CRS"
+    },
+    {
+      "say": "十多位進步派眾議員譴責政權更迭「不可接受」",
+      "from": "Progressive International"
+    },
+    {
+      "say": "左派主張：制裁與資產扣押的目的是奪取石油控制權",
+      "from": "The Globalist"
+    }
+  ],
+  "voices": [
+    {
+      "url": "https://www.youtube.com/watch?v=BF5XKzypiic",
+      "title": "TRUMP'S VENEZUELA GAMBIT: Undercutting China with oil and minerals",
+      "outlet": "Fox Business",
+      "lean": "right",
+      "comments": [
+        {
+          "say": "After watching the State of the Union, I will be voting Republican for now on. I can't support terrorists who Hate America.",
+          "likes": 27,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "The Democrats definitely showed who they care about and its NOT THE AMERICAN PEOPLE.",
+          "likes": 20,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Thank the Dems for Sleeper cells all over America thanks to Joe and Dems \"Open Borders\" and \"Sanctuary City\" Policies.",
+          "likes": 9,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Not that easy in the near future.\nVenezuelan oil industry is in ruins, destroyed. \nWill take time, financial and trained human resources to get the production to the level of the '90s.",
+          "likes": 4,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Can you be Great Again without invading any country or killing anyone!? 😳",
+          "likes": 4,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "I'm not surprised why the rich wanted Venezuela to make themselves more rich the greed Will be the end of them",
+          "likes": 3,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "March 17th is Maduro’s court dating coming up…",
+          "likes": 3,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "DOUG, DOUG, DOUG, 2026 !!!!!!!!!!!!!!!!!!!!",
+          "likes": 2,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Diplomatic relationship between Venezuela & U.S.A; in the sectors of Energy, green energy, bio-energy, medical science, infrastructural development, agro-engineering sectors, manufacturing technologies, semi conductor manufacturing, A.I. quantum Computing chip manufacturing sectors, nano technological sectors & electronic gadgets are very much profitable, productive & would generate millions of employment, to both the countries.",
+          "likes": 2,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Facts 💯",
+          "likes": 2,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "In my lifetime the democrat party has become a corrupt parasitic entity that feeds off the taxes that working people have to pay!",
+          "likes": 2,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "Why usa is always proud of this kind of robbery criminal behavior.:face-green-smiling:",
+          "likes": 2,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "American and Americans can no longer consider themselves the bastion of democracy, human rights, and fairness. The reality is, we are a tyrannical, and imperialistic state. We literally launched wars on false pretence to steal oil and resources. The days are coming with other countries are going to retaliate and we can’t play victim… America is no longer “the good guy”",
+          "likes": 1,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "You do know that oil belongs to Venezuela?",
+          "likes": 1,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Only care 10% for the Big Guy😢",
+          "likes": 1,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "If you want access to our drug addicts Venezuela you gotta sell us your oil cheap 😂😂😂",
+          "likes": 1,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Try as you might to justify the war crimes resulting in this visit, it is the stepping stone to American criminality in the rest of the world.",
+          "likes": 1,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "FREE VENEZUELA FROM USA  TYRANNICAL  OIL THIEVES",
+          "likes": 1,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "This comment doesn’t make sense. If you hated terrorist why weren’t you voting red before? You saw this and said “wow this is the final straw” we’ve had terrorist all along these past decades red was fighting, you was voting blue that whole time?! You hate America if anything . You can always tell when someone is lying. 😂",
+          "likes": 0,
+          "when": "5 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "You love the terrorists that run America,there is a difference",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "A StarWars részben \"jó Jakuza\".  vagyis így keverik...",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Got it, its Bidens fault.",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "Bds",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "Excellent news !",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "Why are we not pumping our own oil..",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "because we only have 39% left.",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "😂",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "yup and he'll stay inside prison walls, no more getting out 😂",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "no cap, lasha m. may is the only one actually helping people. i'm up $700k and finally bought my dream car.",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Make Venezuela great and rich again",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Daylight robbery 😢😢 I feel bad for Venezuela worth",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "They can ensure to ask for a deal where local manpower is used strongly, so they must ask to be shown the how to's. They can negotiate a good return in sales and used that money to really help lift their nation: schools, better public assistance, well equipped police to fight off narcos etc.",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "He better give Chinaman Xi his oil because it's because of him that the straits is close. Xi is not going to behave nice.😅😅😅😅😅😅",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "yeah give xi jinping his due gift, a snake oil 😂",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @joseiii3100 😅😅😅😅😅😅",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "But this would cause the EU, Japan and South Korea to collapse first",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "They are eating us... Both sides... Why are waiting for them to vote?? They are eating us... Why are we voting for more of them? They... Are... Eating us.....",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "are you a food? asking for a friend",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "Venezuela, Iran... All these wars aiming at China 😂😂😂 China is Trump's idol ❤",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        },
+        {
+          "say": "Yes Sir... Rare Earths SENT to CHINA for PROCESSING ... \nJust HILARIOUS... \nFOXHOLE #1 COMEDY Show ... \n🤯🌬️🤥🦜🦜🤣😂🤣😂🤣\nINCOMING Fox & all in 'BAGS... 😢😭☠️",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": false
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=w67-wxmkWeQ",
+      "title": "Why Trump Wants ConocoPhillips, ExxonMobil And Chevron To Rebuild Venezuela’s Oil Fields",
+      "outlet": "CNBC",
+      "lean": "neutral",
+      "comments": [
+        {
+          "say": "No plan for healthcare in 16 years.  But the GOP came up with this one overnight.",
+          "likes": 96,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "Chevron was already in Venezuela, they never left. They took the same deal every country has with oil companies beyond the US. 50/50 split margins with mandatory buyback of all petroleum products by state. They made 50% market value on all products they processed with their facilities in Venezuela.",
+          "likes": 31,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "I will personally guarantee to any big oil company that Senor Trump is bat s**t crazy! Trust me on this!",
+          "likes": 25,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "Yep, and after some years get kicked out again😂😂😂😂😂",
+          "likes": 25,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "Hitler, Stalin, and British empire rulers for example dictated infrastructure projects as well.  History repeats.",
+          "likes": 17,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "It was never about the drugs. What is this costing tax payers?  This is going to take years. Trump still hasn't released all the Epstein files, they have no idea about health insurance, other than they get it free.  Doesn't matter what it cost us.  Medicare went up so did insurance co pay. That little COL we got, was a joke. Where is the 2000.00 promised and congress approved? Its been one lie after another.",
+          "likes": 16,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "The commercial aspect is obvious but he forgot to talk about heavy crude significance. Thought he knew everything about this story",
+          "likes": 9,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "We need to figure out a way to lower car insurance rates and health insurance. Anything insurance related is insanely expensive and it's pure greed. There's no reason I should pay $750 a month for insurance. Something I'll likely never use for years.",
+          "likes": 9,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "@EkkenColors  based on your message here, i could say that you need to check your brain.",
+          "likes": 8,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "Geeze? 50% when it's your equipment and assets? That sounds like a terrible deal.",
+          "likes": 8,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​​ @EkkenColors \nYou're one ruptured appendix or one serious illness away from bankruptcy.  The ICU costs $20k day if you or a family member is in an accident.  Keep playing the roulette wheel though.",
+          "likes": 4,
+          "when": "7 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "​ @gerard4441  According to republicans it's a god awful, terrible plan that's marxism and communism and socialism all rolled into one. So if it is in fact so awful and they can \"easily\" do better than why don't they?",
+          "likes": 3,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @onomatopoeia162003 ACA was the fascist version of healthcare. Forced the public to buy insurance but did not require insurance companies to pay for healthcare. Biggest fraud ever.",
+          "likes": 3,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @holden5478 they get free land, free license to operate, don't have to find buyers or hire ships to transport it, and no taxes plus the state assists with associated costs of operations and maintains public support. \n\nThey're obligated to sell all petroleum products directly to the state and produce minimum levels of specific petroleum products such as gas to provide the state sufficient surplus for the whole country. \n\nWithout state support they'd have no local support since the infrastructure displaces a portion of the population. The oil isn't in the wastelands, it's often in villages whi",
+          "likes": 3,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "Venezuelan elites would likely not dare to do that if the US threatens them with another special operation in the next twenty years",
+          "likes": 3,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "i thought obama care fixed everything?",
+          "likes": 2,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "The only thing you said was true is the Chevron is still in Venezuela. Not every country does the same split, it costs more to process oil in some places, the Amazon rainforest for example",
+          "likes": 2,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @andrewprindiville119 most countries do the 50/50 split. Most oil isn't in the Amazon rainforest either, there's already roads and people above it. Refinement is different everywhere however methods are usually similar just with an addition of specific compounds to draw impurities out.",
+          "likes": 2,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @andrewprindiville119 then why is all the current infrastructure sitting directly by a town in what would be considered a temperate flat lands biome? If the oil is in the forest why pump it from the places people have lived for a millennia and displace them? \n\nVenezuela does have heavily forested areas but the whole land mass isn't just forest. Places where topography is different or that have been actively worked for a millennia are the most hospitable and also happen to be where oil has already been drilled for.",
+          "likes": 2,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "Let put it this way.  The ACA was to the right of what Eisenhower proposed in 1954.   So it was the old moderate/centrist position before they got chased out of own.",
+          "likes": 1,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "Healthcare 😂 how sick are you?\nMy whole family doesn't have healthcare because we are not sick people. We eat very healthy because we know food is what makes you sick.",
+          "likes": 1,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @OttoScott76  sure you're highlighting some \"stellar\" benefits that Chevron gets out of post-nationalization but I'm looking at the numbers here and it does not look like Chevron has made much of a profit since 2008. I haven't even checked how much money they've sunk into initial operations but I'd be shocked if they've even recouped their facilities costs at this point.\nI'm really shocked they didn't pull out like the other companies did when Chavez nationalized their oil. I don't know how they managed to keep Chevron there. The money just isn't there.",
+          "likes": 1,
+          "when": "7 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "​ @holden5478 they work on guaranteed minimal profit while shutting down after. Same idea as the USA when prices are too low except they're direct sale instead of taxed and shipped off.",
+          "likes": 1,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "Oh... that $2000, is going to be multiplied up to, $10,000 to $100,000. BUT it's to go to the Greenlanders. As a bribe to get them to convince Denmark to sell to the US. Then, Trump would fork over Billions of Dollars to Denmark",
+          "likes": 1,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "https://youtu.be/1cEjRKvUE44?si=-cp7_cWKBoQ7YL_u",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "Venezuela has universal health care too",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @daba69  Tembu healthcare",
+          "likes": 0,
+          "when": "4 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @leighthestitcher  america voted for a fascist and they aren't even getting healthcare for it.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "@leighthestitcher 😂😂😂😂. Ignorance is bliss.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @TheUnknownUniverse don't even warn that kind of bull crap responder, it's likely a botfarm troll anyway.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @EkkenColors the food sold in the US is guaranteed to send you to the hospital in no time at all no matter how healthy you try and eat. Everything is sprayed or embedded with chemicals banned in every other developed country but US.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @digitalsoultech you know you're supposed to wash your produce, right? You know the republicans allow basically anything to be sprayed on produce, right?",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @timreyes2179 thankfully I don't live in the crazy USA, so no I'm not aware because I live in a country that's not as crazy and actually bans unsafe and toxic things.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "@OttoScott76  the numbers still don't add up. Chevron is either getting an under the table deal or they're slowly bleeding themselves with Venezuela operations.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "@OttoScott76  you do realize most of the refineries on the Gulf Coast owned by ConocoPhillips are made for Venezuela crude?!  they planned to transport it initially, that’s why those refineries are there 😂.  You’re right, Chevron took the lesser of the deal, but you have to look at what infrastructure they didn’t have.  You’re not looking at the whole picture.",
+          "likes": 0,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @OttoScott76 well venezuelans oil is located there so everything else you say is moot. It's easier and cheaper to  drill oil in the desert then a tropical rainforest environment",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "A team of professional independent auditors are on standby to audit every Wall Street Bitcoin ETF for paper fraud.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "Very eloquently said sir.\nGood job.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": false
+        },
+        {
+          "say": "\"likely\" But, a chance exists where you need care for 40 years.",
+          "likes": 0,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "That have nothing to do with this.",
+          "likes": 0,
+          "when": "6 months ago",
+          "reply": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=rwcFQZ88-_8",
+      "title": "US-Venezuela oil deal: What does it mean for Washington?",
+      "outlet": "Al Jazeera English",
+      "lean": "non-western",
+      "comments": [
+        {
+          "say": "Long story short Venezuelan became US puppet.",
+          "likes": 16,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "This is potentially the greatest robbery in recent times has occurred in Venezuela with the transfer of 65 billion barrels of oil to US hands.  65 billion barrels is the equivalent of $5 trillion dollars at todays oil rates. That's the equivalent of the gdp of all of South America for one year or two years of GDP in Canada. That equals 12.5% of  US $40 trillion debt.",
+          "likes": 16,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Venezuela was taken to steal their resources and enslave their people. That's the way it was from the start. It's not news the US government is stealing their oil.",
+          "likes": 5,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "Oh they're calling it a \"deal\" now? 😂😂",
+          "likes": 4,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "6 years and over 5 billion dollars to upgrade all the infrastructure before they can even get enough oil to make it worth it 😂😂 all the American Oil companies said f*** that...",
+          "likes": 3,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "This deal is colonial venezuela can reap some benefits but the vast majority of the benefits will go to the USA trump really things he is king of the world and i am not saying Venezuela doesn't need cash to get the oil out as the oil under ground is worthless without refining and sales but no way countries should make deals such as this and trump is con man once you give him something he will rip it up somewhere down the line as you should not get anything really so idk if this deal should i get delcy has carefully worded the deal so it does not violate the constitution of  Venezuela  but it i",
+          "likes": 3,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Sounds like a great deal",
+          "likes": 2,
+          "when": "2 hours ago",
+          "reply": true
+        },
+        {
+          "say": "Thats alot of infrastructure jobs.  Should help economy.",
+          "likes": 2,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Day light robbery",
+          "likes": 2,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "You have the theft of foreign sovereign asset and corrupt officials entering into this agreement.  It's bound to face legal challenge, if not now, post Trump.",
+          "likes": 2,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Another fake deal 😂 😂",
+          "likes": 2,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "better than China puppet",
+          "likes": 1,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "US had paid the world atleast 100 Trillion dollars in the past 80 years. Its a peanut in return",
+          "likes": 1,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "None of it is going to the people of Venezuela.",
+          "likes": 1,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "I am laughing so hard now, cope!!",
+          "likes": 1,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "What la Malinche was to Hernán Cortés, in Mexico,  Delcy Rodriguez is to Trump in Venezuela",
+          "likes": 1,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Fact is that venezuelan oil is costly to refine. Because it is a heavy type of oil. Not suitable for diesel, gasoline or jet fuel !",
+          "likes": 1,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "It means nothing.  Can’t ship for years.",
+          "likes": 1,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "@remogatron1010 it’s a sucker concept of a deal like the other bogus deals  meant to influence MAGA supporters and manipulate the oil market.",
+          "likes": 1,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "Anybody who didn't see this coming wasn't paying attention. There's a reason the US govt. is heavily invested in a war with Iran and the seperatist movement in Alberta. There's an endgame here.",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "​ @JasonStar77  great deal for who?.",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "@tshegofatsoletlape8721  the only people in the world that matter? USA USA!",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "As always, Trump is just throwing random numbers around. They would need a hundred years to extract that amount of oil with the current infrastructure. And US companies don’t want to invest in new infrastructure because it would be exorbitant and they’re not sure they’ll have a return on interest cause US is politically unstable and what ever crazy deals made with trump, you might see a next Democratic administration roll it back",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "The USA won't see a dime...Trump will put in his Qatar bank account for \"safe keeping\".",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "Very good explanation: clear and concise",
+          "likes": 0,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Ed Conway Sky inspiration?? Anyways, good for the viewers 👍",
+          "likes": 0,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Isnt doing business good for both country ?",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "It's dirty crude, sulfur rich",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "Looks like kidnapping actually pays big...",
+          "likes": 0,
+          "when": "9 minutes ago",
+          "reply": false
+        },
+        {
+          "say": "Well it's a long term investment for the USA like the endless wars in the middle east and the Albertan separatist movement.",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "Well it's a long term investment",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        },
+        {
+          "say": "They are shipping Venezuelan oil and refining it in Pascagoula Mississippi today.. I worked in the oil industry for 13 years. It is mind blowing how fast that industry can get something done when there is money to be made. Look back to how fast they built the 800 mile trans Alaska pipeline over extreme arctic conditions and mountain passes in the 70’s. This will be much easier. Less regulations and put it on a ship to the gulf coast$$$",
+          "likes": 0,
+          "when": "31 minutes ago",
+          "reply": true
+        },
+        {
+          "say": "It means they got a lot of asphalt! No gas or jet fuel here,  almost solid,  sour crude! Wow!",
+          "likes": 0,
+          "when": "54 minutes ago",
+          "reply": false
+        },
+        {
+          "say": "They are making diesel and jet fuel out of Venezuelan oil in Pascagoula Mississippi today and there are over 130 refineries on the gulf coast.. The gold rush is on$$$$",
+          "likes": 0,
+          "when": "25 minutes ago",
+          "reply": true
+        },
+        {
+          "say": "This is going to make the American machine even richer..",
+          "likes": 0,
+          "when": "42 minutes ago",
+          "reply": false
+        },
+        {
+          "say": "Pirates ..of the US..",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "Long story short..200 billion and a decade to maybe make it viable.",
+          "likes": 0,
+          "when": "54 minutes ago",
+          "reply": false
+        },
+        {
+          "say": "Venezuelans are about to see massive investments in their infrastructure and many other industries thanks to the deal with the U.S. This could bring significant economic growth, new jobs, and opportunities for the country. Big win for both countries.",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "trying to rob Iran failed... which gulf state is next?",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "Why arent you reporting Usa troops on ground in Honduras and Colombia. You waiting for body bags to turn up before reporting.",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        }
+      ]
+    }
+  ],
   "scripts": [],
   "note": "牽動油價。右派當戰略勝利、非西方媒體當交易，落差大。"
 }

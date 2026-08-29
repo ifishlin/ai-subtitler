@@ -40,12 +40,580 @@
         "seconds": 777.0
       }
     ],
-    "reports": [],
+    "reports": [
+      {
+        "title": "Impacts of the Primary Care Provider Shortage on Health Care",
+        "url": "https://swhr.org/impacts-of-the-primary-care-provider-shortage-on-health-care/",
+        "outlet": "Society for Women's Health Research",
+        "lean": "primary",
+        "facts": [
+          "等待看診時間拉長，看診時間變短"
+        ]
+      },
+      {
+        "title": "Reduce Family Physician Shortage",
+        "url": "https://acofp.org/practice-advocacy/advocacy/family-physician-shortage",
+        "outlet": "ACOFP",
+        "lean": "primary",
+        "facts": [
+          "2034 年前家醫科將短缺 1.8 萬到 4.8 萬人"
+        ]
+      },
+      {
+        "title": "The U.S. Physician Shortage Is Only Going to Get Worse",
+        "url": "https://time.com/6199666/physician-shortage-challenges-solutions/",
+        "outlet": "TIME",
+        "lean": "centre-left",
+        "facts": [
+          "2031 年前逾五分之二執業醫師將滿 65 歲"
+        ]
+      },
+      {
+        "title": "America's Least-Discussed Physician Shortage Is Getting Worse",
+        "url": "https://www.forbes.com/sites/johnsamuels/2026/08/04/americas-least-discussed-physician-shortage-is-getting-worse/",
+        "outlet": "Forbes",
+        "lean": "right",
+        "facts": [
+          "學貸把有志基層醫療的畢業生推向專科"
+        ]
+      },
+      {
+        "title": "Almost a third of America does not have a primary care doctor",
+        "url": "https://americanbazaaronline.com/2026/08/16/almost-a-third-of-america-lacks-primary-care-doctor-486471/",
+        "outlet": "American Bazaar",
+        "lean": "neutral",
+        "facts": [
+          "逾 8300 萬美國人住在基層醫療短缺區"
+        ]
+      }
+    ],
     "images": [],
     "data": []
   },
-  "facts": [],
-  "voices": [],
+  "facts": [
+    {
+      "say": "逾 8300 萬美國人住在聯邦認定的基層醫療短缺區",
+      "from": "American Bazaar"
+    },
+    {
+      "say": "2034 年前家醫科短缺 1.8 萬到 4.8 萬人",
+      "from": "ACOFP"
+    },
+    {
+      "say": "2031 年前逾五分之二執業醫師將滿 65 歲",
+      "from": "TIME"
+    },
+    {
+      "say": "學貸與給付差距把畢業生推向專科",
+      "from": "Forbes"
+    },
+    {
+      "say": "2026 年 Medicare 費率表已調高基層給付，但差距仍在",
+      "from": "Forbes"
+    },
+    {
+      "say": "付不起會員制診所的人，可能等好幾個月，或改跑急診",
+      "from": "SWHR"
+    }
+  ],
+  "voices": [
+    {
+      "url": "https://www.youtube.com/watch?v=rsC4RJ4Jld4",
+      "title": "Shortage of kids’ antibiotics, Dr. explains how to prepare",
+      "outlet": "Fox News",
+      "lean": "right",
+      "comments": [
+        {
+          "say": "I thought that the inflation reduction act was supposed to fix everything from global warming to Joe’s incontinence?",
+          "likes": 26,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Shortage of antibiotics for children might be a blessing. It's that simple",
+          "likes": 20,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "If your kids not sleeping take away their phone TV and tablet I guarantee they will fall asleep. What the heck is wrong with people. Everyone wants children and take the cute little Instagram photos but no one wants to do the actual work of raising a human being",
+          "likes": 13,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Kids dont wear themselves out before bedtime anymore. We played outside in the fresh air, got a warm bath before bedtime and slept like rocks. To much time indoors, to much time infront of a screen of some sort. Healthy diet, sensible bedtime, take the electronics away. Routine routine routine!",
+          "likes": 11,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Kids get too many antibiotics too early. This is a good thing",
+          "likes": 9,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Melatonin and kids.... Electronics all day and up to just before bed.",
+          "likes": 9,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Learn about herbal antibiotics and herbal antivirals.  There are very good books out there.",
+          "likes": 9,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Yet they have plenty of Covid shots. \nIt’s all about priorities.",
+          "likes": 7,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Organic foods, vitamins, and washing hands. Especially when coming home. And no shoes in the house, either. I’d hate to see what’s on the soles of our shoes under a microscope.",
+          "likes": 6,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "Too bad it didn't fix Joe's incompetence.",
+          "likes": 6,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "If you wear your kids out then theyll sleep.",
+          "likes": 6,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "I miss the old days when we would lose 3 out of our 8 children.",
+          "likes": 5,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "@kairidon3363 \nKeep giving experimental jabs to pregnant women and we’ll be back to those numbers in no time…",
+          "likes": 5,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Maybe just maybe there Immune system will have to work for once",
+          "likes": 5,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "That's why as a parent start a schedule before school starts. Less crap shoved at our kids.",
+          "likes": 5,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "From experience: In many instances, antibiotics are being given in lieu of a Comprehensive Diagnosis and Complete Treatment Til Full Recovery ; especially since the Pandemic.  Been treated repeatedly with Amoxicillin since 2019, for a Dental problem, that could have been fully resolved, had it been caught early, fully diagnosed, and fully treated for a full recovery , sigh 😞 \n\n....😢 It's 2023 now.., and the problem has yet to be resolved. Thank you.",
+          "likes": 5,
+          "when": "2 years ago (edited)",
+          "reply": false
+        },
+        {
+          "say": "Read to your children ….esp at bedtime",
+          "likes": 3,
+          "when": "2 years ago",
+          "reply": false
+        },
+        {
+          "say": "@goldbud2287  What experimental jabs? We don't test on pregnant women. All shots pregnant women get have gone through all phases of testing.",
+          "likes": 2,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "​ @Cupid-Stunt \n🤣🤣🤣\nThat's a big ZERO \nFOR THE TROLL🤣🤣🤣",
+          "likes": 2,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "​ @kairidon3363 I like your sarcasm.",
+          "likes": 1,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "It's not the inflammation act!!!",
+          "likes": 1,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "It is what dropped the cost of Insulin from $400. per month to $35. dollars per month, and more.",
+          "likes": 1,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "​ @Cupid-Stunt 👈Troll Of Shame",
+          "likes": 1,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "And crystals.",
+          "likes": 1,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "Better also read the children's star charts and try to balance their humors.",
+          "likes": 1,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "Make sure to learn about the Placebo Effect as well",
+          "likes": 1,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "@goldbud2287  Yer Dad's yer Uncle! 😂😂😂",
+          "likes": 0,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "​ @kairidon3363 whose we?",
+          "likes": 0,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "I can see that being a good thing over time.. ya....",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "100% agree",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "A 2y old taking tetracycline & then when permanent teeth come in they are marred bc of antibiotic choice!",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "@Tom-ym7bm  they give too much too often",
+          "likes": 0,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@tenpoint243  Yer Dad's yer Uncle! 😂😂😂",
+          "likes": 0,
+          "when": "2 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "My thoughts exactly.",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "Some kids have ADHD. Their minds do not slow down. Any advice for that simpleton?",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "You thought?",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "You mean the ones that don't wory?",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "What about reflexology? Those pressure points are the key to everything!",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "Wisdom In Creator God ,Will Prevail !  An The Stupid devil Looses , in his own mess he created !!  Tank you for you're stand for truth.. ( only in a few instances should we use a good medical product, when emergency calls for it, But All Things don't call for it ) .",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        },
+        {
+          "say": "True😊",
+          "likes": 0,
+          "when": "2 years ago",
+          "reply": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
+      "title": "Why Walmart Wants To Be Your Hospital Too",
+      "outlet": "CNBC",
+      "lean": "neutral",
+      "comments": [
+        {
+          "say": "Walmart offering healthcare is the most american thing I've seen in a long time.",
+          "likes": 1000,
+          "when": "5 years ago",
+          "reply": false
+        },
+        {
+          "say": "Imagine it, \"Rollback on prostate exams\"",
+          "likes": 331,
+          "when": "5 years ago",
+          "reply": false
+        },
+        {
+          "say": "If it wasn't clear that health care is just a business in the US it should be now.",
+          "likes": 279,
+          "when": "5 years ago",
+          "reply": false
+        },
+        {
+          "say": "The system is so broken any disruption/competition is welcomed",
+          "likes": 207,
+          "when": "5 years ago",
+          "reply": false
+        },
+        {
+          "say": "trauma team from cyberpunk getting real",
+          "likes": 33,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Costco still would be better. Bulk discount on a jumbo 24-pack of prostate exams for the whole family.",
+          "likes": 29,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Seems like a skit on SNL! So surreal",
+          "likes": 19,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Walmart getting sued for its role in the opioid crisis is the most American thing",
+          "likes": 11,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "shop for lysol wipes & toilet paper while i wait for my covid test results",
+          "likes": 11,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "​ @MultiSUNFLOWER18  there is a difference between a business that is only aiming to create a surplus for greedy investors or businesses that serve a higher purpose. The Army is being paid by tax-money to protect the country and it's citizens. Why is it that everyone agrees on tax money being spend to protect you from foreign forces/terrorists , but not from cancer? The chances of getting cancer are on the same level or not even higher than the first case.",
+          "likes": 11,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@agisler87  why do I even need the military or police in some states? I am able to arm myself as much as I want (almost) and as soon as someone trespasses my grounds I am allowed to deal with her/ him myself. If I am clever enough I would never get prosecuted for shooting someone on my own ground!\n \nIn that case I could call the military/police a commodity also.",
+          "likes": 5,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "No, we don't want Walmart ubering health care",
+          "likes": 4,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Lmfao🤣🤣🤣🤣🤣",
+          "likes": 4,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "I’d be sus about getting healthcare at Walmart 😂",
+          "likes": 2,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "It would be welcome if Walmart Lobbyists weren't controlling everything.",
+          "likes": 2,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Just about everything is a business mindset when you think about it.",
+          "likes": 2,
+          "when": "5 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@Luflandebrigade31  I agree.  I think health care should be affordable.",
+          "likes": 2,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@HiberNAT  💀 💀💀💀",
+          "likes": 1,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@Cole S Wait for Hospital 7/11",
+          "likes": 1,
+          "when": "5 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Walmart called republicans and conservatives losers publicly",
+          "likes": 1,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Honey going to Walmart to get some bread, butter and snacks.  Oh also getting that hernia surgery while I am there.   See you in a few days.",
+          "likes": 1,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "As long as Walmart wasn’t trying to create a monopoly then fine",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "it's a free economy",
+          "likes": 1,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@381delirius  even with the government picking winners and losers?",
+          "likes": 1,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "kinda hot lol",
+          "likes": 1,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@stevenschultz8549  there not wrong",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "That’s capitalism for ya.",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "i was looking for this comment",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Monopoly 😂",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@Brian Cameron  I agree, healthcare should be state-run, but since most healthcare is private, your weak attack makes no sense.",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "Squeezing out small-middle retailers so to offer low quality products, low wages, lobbied for govt to subsidize their business (low income benefits for their staff), killing jobs, patented robotic bees & etc...  Walmart kills humanity, economies & equality.",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "So what? They’re helping",
+          "likes": 0,
+          "when": "3 years ago",
+          "reply": true
+        },
+        {
+          "say": "So what? They’re helping",
+          "likes": 0,
+          "when": "3 years ago",
+          "reply": true
+        },
+        {
+          "say": "@2drealms196  Given the current family size, probably one can donate/transfer some of them :)",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂🤣",
+          "likes": 0,
+          "when": "5 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "rofl",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂😂😂",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@Luflandebrigade31  Given enough time, cancer is definitely more probable.",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@Luflandebrigade31   The government running the military is a proper role of the government. It has a duty to defend citizens against foreign governments. And similar to why government runs police, only one body should have the power to use force. Healthcare is a service and commodity and should be left private.",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        },
+        {
+          "say": "@Luflandebrigade31  I assume you do step off your property.. Incidents do happen where the case is not clear. \nI know some libertarians l/anarchist believe you can have private police. The military most people do agree that should only be left to the government.",
+          "likes": 0,
+          "when": "5 years ago",
+          "reply": true
+        }
+      ]
+    }
+  ],
   "scripts": [],
   "note": "掛號等三個月。醫療是敏感題材，若用 AI 旁白不能營利——這題要留意。"
 }

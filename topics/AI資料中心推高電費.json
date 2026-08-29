@@ -47,12 +47,588 @@
         "seconds": 447.0
       }
     ],
-    "reports": [],
+    "reports": [
+      {
+        "title": "AI data center 'frenzy' is pushing up your electric bill — here's why",
+        "url": "https://www.cnbc.com/2025/11/26/ai-data-center-frenzy-is-pushing-up-your-electric-bill-heres-why.html",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "facts": [
+          "住宅電價 2025 年漲 7.1%，是通膨的兩倍多",
+          "部分州漲幅超過 20%"
+        ]
+      },
+      {
+        "title": "Who pays for AI's electricity? Data centers spark debate",
+        "url": "https://www.cnbc.com/2026/03/13/ai-data-centers-electricity-prices-backlash-ratepayer-protection.html",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "facts": [
+          "俄亥俄、維吉尼亞開始對大型資料中心另訂費率",
+          "「公平分攤」主張成本應直接算給資料中心"
+        ]
+      },
+      {
+        "title": "AI Data Centers Are Sending Power Bills Soaring",
+        "url": "https://www.bloomberg.com/graphics/2025-ai-data-centers-electricity-prices/",
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "facts": [
+          "資料中心密集區的電費，五個月費用比五年前高 267%"
+        ]
+      },
+      {
+        "title": "No, AI Data Centers Are Not Driving Up Electricity Costs",
+        "url": "https://reason.com/2025/12/23/the-data-center-price-myth/",
+        "outlet": "Reason",
+        "lean": "right",
+        "facts": [
+          "電網固定成本高，用電量增加反而攤薄單位成本",
+          "反方主張：漲價來自老化電網和天然氣價格"
+        ]
+      },
+      {
+        "title": "Have Data Centers Driven Up Electricity Prices? The State-Level Data Don't Support the Narrative",
+        "url": "https://www.instituteforenergyresearch.org/the-grid/have-data-centers-driven-up-electricity-prices-the-state-level-data-dont-support-the-narrative/",
+        "outlet": "Institute for Energy Research",
+        "lean": "right",
+        "facts": [
+          "州級資料顯示資料中心數量與電價無統計顯著相關",
+          "EPRI 研究：主因是電網汰換、天災重建、天然氣價格波動"
+        ]
+      }
+    ],
     "images": [],
     "data": []
   },
-  "facts": [],
-  "voices": [],
+  "facts": [
+    {
+      "say": "住宅電價 2025 年上漲 7.1%，是通膨的兩倍多",
+      "from": "CNBC"
+    },
+    {
+      "say": "部分州漲幅超過 20%",
+      "from": "CNBC"
+    },
+    {
+      "say": "資料中心密集區，單月電費比五年前高 267%",
+      "from": "Bloomberg／Warren 參議員"
+    },
+    {
+      "say": "已被轉嫁到消費者帳單的金額估計約 230 億美元",
+      "from": "Forbes"
+    },
+    {
+      "say": "反方：EPRI 研究認為主因是電網汰換、天災、天然氣價格",
+      "from": "Institute for Energy Research"
+    },
+    {
+      "say": "反方：州級資料顯示資料中心數量與電價無顯著相關",
+      "from": "Institute for Energy Research"
+    },
+    {
+      "say": "俄亥俄、維吉尼亞已對大型資料中心另訂費率",
+      "from": "CNBC"
+    }
+  ],
+  "voices": [
+    {
+      "url": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
+      "title": "We solve the 'power problem' AI data centers are facing: Onsemi CEO",
+      "outlet": "Fox Business",
+      "lean": "right",
+      "comments": [
+        {
+          "say": "No one NEEDS AI, but we do NEED water.",
+          "likes": 5,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "A.i. is gonna wreck civilization as we know it. Id rather have forests and fresh drinking water.",
+          "likes": 4,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "This whole idea that we need to keep \"throwing hardware\" at AI and build these monster data centers is a very old fashion way to deal with technology as AI. Someday soon either the AI chips and or Quantum computing will turn these data centers into empty warehouses because none of that room is actually needed anymore. This is how computing was done early on when datacenters where on every campus before we had the \"cloud\". Also I highly believe that distributed computing is the way to go for future AI compute, imagine using all the worlds server and computers that have plenty of idle CPU time j",
+          "likes": 3,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "Amazon jungle is good for u n u can go there now n start early",
+          "likes": 3,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "🧐What about insanely high GPU prices??? (5090)👉🏻Drop them now‼️🙈",
+          "likes": 3,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "Ticker $ET\n+6% dividend and they will be feeding AI with Energy.",
+          "likes": 2,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "There is an ai bubble, if you have no consumers you have no business. They continue to fire everyone, no one will buy their products",
+          "likes": 2,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "​​ @EasyChefsLife  the 50% of ai facilities canceled and the businesses that fired their people only to hire them back when their ai replacements that failed like IBM beg to differ 😅",
+          "likes": 1,
+          "when": "3 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "The cost of electronics has gone up because of AI data centers",
+          "likes": 1,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "I looked. Year to date they are not beating AMD. It’s close but AMD is beating ON by about 5%.",
+          "likes": 1,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "I'm a lifelong conservative and I'm going to fight these AI data center with everything I've got",
+          "likes": 1,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "This is exactly what i voted for. More AI Data Centre.",
+          "likes": 1,
+          "when": "2 months ago",
+          "reply": false
+        },
+        {
+          "say": "Communities all over the country are finding that AI data centers use more power than entire cities, regions and even states (Utah.) This cannot continue.",
+          "likes": 1,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "Yeah that has nothing to do with AI data center power issues.",
+          "likes": 1,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Need money 😶🔫",
+          "likes": 1,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "We need AI for consumer GPU and CPU. This is the most environmentally friendly.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "the problem is the elite doesn't need you in the future if there is ai and robots... the only reason the elite provide for you (human fodder) is because they needed productivity... if ai and robots are better than you why would they need to feed you or give you water.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Who do you think wants their computer and servers to used and shared.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Onsemi is a great option. It solves the power crunch through efficiency.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "There is no AI bubble, you are weak on facts but strong on opinion",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "The growth of the market, would be determined by the sophisticated, superficial, innovative, productive, sustainable & smart utilization & development of A.I. platforms, in association of intellectuals & employees, in the sectors of defence, energy, banking services, Healthcare service, supply chain & logistics, manufacturing sectors & their businesses.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "ALL BEFORE THE KRASHING =MARKETS DO NOT FEED THE PUBLIC",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "🤥🤥🤥",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "On a  side note tapping groundwater for cooling is not an unlimited resource. While it is a renewable resource, it is finite and often depleted much faster than it can be naturally replenished by rain and snowmelt, making it effectively non-renewable in many regions. Over-pumping causes serious issues like dried-up wells, reduced stream flows, and land sinking.",
+          "likes": 0,
+          "when": "3 months ago (edited)",
+          "reply": false
+        },
+        {
+          "say": "so you just randomly educate people about groundwater ? well thanks. i just randomly got educated. but just in case you think datacenters using a lot of water, they don't, they use closed-loop cooling systems.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "@matthew04101   Yes and No.    AI data centers extensively use fresh water—including municipal water and groundwater from local aquifers.  While many do use city water, some data centers, especially in remote/rural areas, operate private wells to draw directly from aquifers.  High-efficiency data centers often use closed-loop systems (recirculating coolant) to minimize usage, while many large, traditional, or AI-focused data centers still rely on evaporative (open-loop) cooling, consuming 1 to 5 million gallons of water daily.",
+          "likes": 0,
+          "when": "3 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Does anyone else think Lary fink (she said \"Lary kink\"😂) looks like baby Sinclair from the 1990s \"Dinosaurs\" TV show?",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "😂",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Whoa. Good stuff !!!",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "We clearly don't want AI or data centers! We need a national stand down week! No work! No travel! No purchases to show the elite that yes, we outnumber them!",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": false
+        },
+        {
+          "say": "AI uses too much compute, we need to compress token usage such that it uses less electricity.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "It's priced too scheap",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Grabbit says he was successful with his job on California  and Harris backs Bass for her great work against L.A.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "Good luck",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @juantamad18 yeah, we're going to need it",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Larry King 😂",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "Is this CEO in a hair race with Karp?",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "@birosone9453 so your comeback is if you don’t like us ruining our own country go to a better one. Thats rather fascinating.",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "We are close to the leverage point of AI. I am so HYPED. I hope my government in Quebec stand on the good side of history with the US",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": false
+        },
+        {
+          "say": "I'm 48 Catholic on the side of Uncle Sam being free 1% owning the running economy have no wife have no American Dream have no interest coming in just losing unconceivable to think one in here mentioned thinking it's not replaceable For the Love of... from today\nStill backed up by the Un forsaken\nIn 2000 more  years  a double up to the power of z number of precious metals will be in existence, we the public of people governing  the universe still being  the unforsaken.\n\nSucks.\n.",
+          "likes": 0,
+          "when": "3 months ago (edited)",
+          "reply": false
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+      "title": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+      "outlet": "CNBC",
+      "lean": "neutral",
+      "comments": [
+        {
+          "say": "\"sustainability\" and \"gas turbine\" should NOT be used in the same sentence.",
+          "likes": 280,
+          "when": "2 months ago",
+          "reply": false
+        },
+        {
+          "say": "For some context regarding what 2.7 Gigawatts represents, the power generation capacity of the Hoover Dam in only 2 Gigawatts.",
+          "likes": 228,
+          "when": "2 months ago",
+          "reply": false
+        },
+        {
+          "say": "Oh yeah? well my brain can run AGI on 15 watts",
+          "likes": 137,
+          "when": "2 months ago",
+          "reply": false
+        },
+        {
+          "say": "20yrs of all US media telling us the world is ending soon due to global warming; then $ comes along and the tune has changed to, LOOK AT THESE AWESOME GAS TURBINES!!!!",
+          "likes": 58,
+          "when": "1 month ago",
+          "reply": false
+        },
+        {
+          "say": "More context: The entire state of Utah’s demand is about 4GW \nthe Kevin O’Leary (Stratos) data center boondoggle is 9GW….",
+          "likes": 29,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "Nope, your brain runs only GI 😂😂😂",
+          "likes": 11,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "Also worth noting, a standard flux capacitor requires 1.21 gigawatts to operate efficiently",
+          "likes": 10,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "This is the cost of progress. If you don't want to participate,  it's simple,  opt out. Boycott these companies and their products,  aka don't use social media like this comments section or this YouTube platform. Opt out of the new medications and diagnostic tools developing new treatments for diseases,  opt out of using ai in your business and smart devices at home. Put up or shut up. I'm sick of all these virtue signaling comment warriors who do nothing but yap and type. Words mean nothing if you live like a hypocrit.",
+          "likes": 8,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "@TheBusinessMindset_  GTs are only 30-45% efficient on their own. Pair that with a Steam Turbine then they are ~65% efficient. That’s not close to 100%",
+          "likes": 6,
+          "when": "1 month ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@akdomun  Both human and AI emit 100% energy to waster heat.",
+          "likes": 5,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "@RN2040RN  I know, right?  That used to mean something.  Now we are just throwing that kind of power around like it's nothing.\n\nBut fun fact, I actually did the math once, and it would only take about 32 gallons of gasoline to generate the power equivalent of 1.21 gigawatts for a second.  So the gas tank of a large SUV carries as much power as the lightning bolt from Back to the Future.  The energy equivalent is only about half of a barrel of oil.",
+          "likes": 5,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "@shaunanderson8491  They absolutely do. CH4 + 2O2 -> 2H20 + CO2. Basic chemistry.",
+          "likes": 5,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "But you are not scalable, you can't replicate yourself million times but a real AGI can do.",
+          "likes": 4,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "@DARKORBITPYRO  My statement was positive rather than normative.  There was no implication of judgement in my statement.  The inference is entirely yours.",
+          "likes": 4,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "This is where the electricity comes from. They burn cleanly, btw.",
+          "likes": 4,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "US Media hardly ever mentioned global warming but its past the point of being obvious and a problem.",
+          "likes": 3,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "Aren’t these plane engines?",
+          "likes": 3,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "​​ @DARKORBITPYRO  Oh knock it off. There's always one of you that comes along and tells everybody they've got to give up everything they use in their entire life if they don't like it. No that's not progress. When something is wasteful or harmful to humans or the environment you change how you're doing it, you don't just keep polluting and keep killing people because it's progress according to you. Funny thing we had medicines, research and the internet before all this AI BS started coming about. These things are being built for greed and greed alone and you know it. None of these are being b",
+          "likes": 3,
+          "when": "2 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@ronald3836 they absolutely do not lol",
+          "likes": 3,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "@comforth3898  CO2 is totally clean. You exhale it all day. Plants need it to grow. It also protects the earth from turning into a snowball by retaining some of the sun's heat. Yes, it is possible to have too much of it.",
+          "likes": 3,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "Absolutely insane, thank you for the info, really puts the waste and expense into perspective.",
+          "likes": 2,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "@comforth3898  SO2, NOx, fine ash and dust causing chronic lung disease, mercury/lead/arsenic causing brain degradation, radioactive stuff (far, far more than nuclear power plants).",
+          "likes": 2,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "No, the turbine can be used to bridge the fluctuations of solar and wind.",
+          "likes": 2,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "How much waste heat do you emit?",
+          "likes": 1,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "@HouXiang  if 100% of the energy input was wasted as heat, as you assert, then what would be the point, lol? no actual work is being done if all the energy is being wasted as heat (which it's not). In terms of energy btw, the human brain consumes around 20 watts, at full power :) Our brains are basically like a dim light bulb (some more dim than others ;). A large data centre though, let's say drawing 100 megawatts uses the same amount of power as 5 million human brains, lol. Hyperscale AI data centers consume electricity in the hundreds of megawatts to gigawatts, more than enough to power an ",
+          "likes": 1,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "@Percy-k3f That is about right 1.1 kW is 27 kWh per day\nUtah uses about 30 kWh per per person per day.",
+          "likes": 1,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "Hoover Dam is 100 years old and running out of water behind it.  The Chinese are making real water work for them. \n 3 Gorges.  Massive electricity",
+          "likes": 1,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "The flux capacitor requires 1.21 Gigawatts",
+          "likes": 1,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "@ronald3836  Is C02 not a bad emmission?",
+          "likes": 1,
+          "when": "1 month ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "​ @ronald3836 so what are the harmful gases emitted by coal powered power plants?",
+          "likes": 1,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "Exactly that was very funny when he even attempted to answer the question, what a joke! 😂😂😂😂😂",
+          "likes": 1,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "Actually, they just came up with a way to pressurize it with ammonia instead of LNG. They are constantly looking long for better fuels.",
+          "likes": 1,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "talk about efficiency",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂stupid",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "​ @whatever77ism the A in AGI is not better than the N in GI.",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "To be fair, gas turbines are almost 100 percent efficient. They don't burn fuel like car engines, where cars only concert 35 percent into usable energy.",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "4GW make only 1.1 kW per person.",
+          "likes": 0,
+          "when": "2 months ago",
+          "reply": true
+        },
+        {
+          "say": "@hi-lx7wr  no these are heavy ones and they generate lot of electrical power output. jet engines in aircraft are much lighter and use better materials to produce maximum thrust-to-weight ratio",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "@derewreck  You are about 4 days late to make that comment.  Someone beat you to it.  😜",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": true
+        },
+        {
+          "say": "​ @DARKORBITPYRO I already cut AI off my life entirely, it was easier than expected",
+          "likes": 0,
+          "when": "1 month ago",
+          "reply": true
+        }
+      ]
+    }
+  ],
   "scripts": [],
   "note": "電費帳單直接有感。左右都在報，但結論相反——右派說是成長，左派說是轉嫁。"
 }

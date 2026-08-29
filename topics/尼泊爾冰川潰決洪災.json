@@ -47,12 +47,667 @@
         "seconds": 559.0
       }
     ],
-    "reports": [],
+    "reports": [
+      {
+        "title": "Glacier collapse that caused Nepal floods was linked to climate change, scientists say",
+        "url": "https://www.nbcnews.com/science/climate-change/glacier-collapse-nepal-floods-climate-change-rcna594800",
+        "outlet": "NBC News",
+        "lean": "left",
+        "facts": [
+          "災害科學家認為人為暖化提高了崩塌的可能性"
+        ]
+      },
+      {
+        "title": "Glacier collapse caused Nepal's deadly flash flood — a sign of things to come?",
+        "url": "https://www.nature.com/articles/d41586-026-02716-w",
+        "outlet": "Nature",
+        "lean": "primary",
+        "facts": [
+          "永凍土是黏住岩石和冰的膠",
+          "喜馬拉雅冰川自 2000 年後融化加速"
+        ]
+      },
+      {
+        "title": "A melting glacier contributed to the deadly Nepal floods. We can expect more like this",
+        "url": "https://www.npr.org/2026/08/28/nx-s1-5945799/nepal-floods-climate-change-himalayas",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "facts": [
+          "這類災害的頻率會隨暖化增加"
+        ]
+      },
+      {
+        "title": "In Nepal, the search for survivors – and climate answers – continues",
+        "url": "https://www.csmonitor.com/World/Asia-South-Central/2026/0828/nepal-flood-glacier-climate-change",
+        "outlet": "Christian Science Monitor",
+        "lean": "neutral",
+        "facts": [
+          "部分氣候科學家對「直接歸因」持保留態度"
+        ]
+      },
+      {
+        "title": "Why scientists fear Nepal's disaster is just a glimpse of the carnage climate change could cause",
+        "url": "https://www.cbc.ca/news/climate/nepal-tibet-glacier-flood-climate-disaster-9.7323295",
+        "outlet": "CBC",
+        "lean": "neutral",
+        "facts": [
+          "近 600 人確認罹難"
+        ]
+      }
+    ],
     "images": [],
     "data": []
   },
-  "facts": [],
-  "voices": [],
+  "facts": [
+    {
+      "say": "近 600 人確認罹難",
+      "from": "CBC"
+    },
+    {
+      "say": "一大塊冰從冰川斷裂，墜落數千英尺",
+      "from": "NBC News"
+    },
+    {
+      "say": "永凍土融化降低岩冰結合，提高崩塌機率",
+      "from": "Nature"
+    },
+    {
+      "say": "喜馬拉雅冰川自 2000 年起融化加速",
+      "from": "Nature"
+    },
+    {
+      "say": "哥倫比亞大學地球物理學家：融化很可能有貢獻",
+      "from": "Nature"
+    },
+    {
+      "say": "反方：部分氣候科學家對「直接歸因於氣候變遷」持保留態度",
+      "from": "Christian Science Monitor"
+    }
+  ],
+  "voices": [
+    {
+      "url": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+      "title": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal border",
+      "outlet": "Fox News",
+      "lean": "right",
+      "comments": [
+        {
+          "say": "Those people had no chance at all that’s frightening",
+          "likes": 332,
+          "when": "2 days ago",
+          "reply": false
+        },
+        {
+          "say": "Terrible,  my condolences to the families of the victims",
+          "likes": 272,
+          "when": "2 days ago",
+          "reply": false
+        },
+        {
+          "say": "That was unimaginable how fast the land an water was moving. Rip",
+          "likes": 162,
+          "when": "2 days ago (edited)",
+          "reply": false
+        },
+        {
+          "say": "This looks like a scene out of a movie…it so horrific! Praying for those who lost their lives and for those who still need to recover those who lost them their lives. Heartbreaking 💔🙏",
+          "likes": 144,
+          "when": "2 days ago",
+          "reply": false
+        },
+        {
+          "say": "So hard to watch. This is too hard for the mind to comprehend",
+          "likes": 74,
+          "when": "2 days ago",
+          "reply": false
+        },
+        {
+          "say": "@City-k1q  while that’s correct, the earth has been warming and cooling long before humans walked it.",
+          "likes": 14,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "@proudman-r7r  climate has been changing since the inception of time, with and without human involvement.",
+          "likes": 14,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "How will the glacier collapse without heat waves....those heavy industrial vehicles bought into the border to build a dam had already polluted and melted glaciers...had been warned 2 years ago when china started building a dam in Tibet border.... Same is happening in antartica, rising global temperature is very serious issue for humanity and innocent animals",
+          "likes": 10,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "@proudman-r7r  what you just said makes zero sense.",
+          "likes": 7,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "What’s unimaginable is the fact they have absolutely no warning system",
+          "likes": 6,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "@AboveAll604 I don't understand what you're saying. The dam is being built in Medog County, which is 1,500 kilometers away from the Gyirong Port in the video. There is no construction going on there. Are you an anti-China person?",
+          "likes": 6,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "All because of CLIMATE CHANGE and GLOBAL WARMING.",
+          "likes": 4,
+          "when": "2 days ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "CLIMATE CHANGE.",
+          "likes": 4,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "@microcontroller714    That grammar of yours is so poor, there is no making sense of your post. \nThe only thing we can be sure of is TDS is probably involved and it overrode your logic center.",
+          "likes": 3,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "@207clamhammer      That water was moving so fast I don’t know if any warning system could have prepared them. Very sad and Im sorry to see it happen to them .",
+          "likes": 2,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "@SaintShinobi  what evidence genius?  glacial collapse has been happening in this area way before humans.  glaciers collapse then build up over time, when it becomes top heavy it collapses again. rinse and repeat",
+          "likes": 2,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "GOD, PLEASE HELP THEM, AND HELP US LEARN HOW WE CAN HELP THEM AS WELL.",
+          "likes": 2,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "​ @207clamhammer the flood ran 200km within 7min, even airplanes couldn't survive from the havoc of mudslide",
+          "likes": 1,
+          "when": "3 hours ago",
+          "reply": true
+        },
+        {
+          "say": "bilibili Jet Li real face\r\n【震撼弹】中山忍首次揭露李连杰当年的真面目",
+          "likes": 1,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "They had chance if China warned Nepal early on knowing fully well about it",
+          "likes": 1,
+          "when": "2 days ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@overshottyler  I have looked at the data and the statistics. Humans play a role yes, but we’re talking 2-3 degrees Fahrenheit. By some estimates that’s a lot and for others in their professional opinions it’s not.",
+          "likes": 1,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "TRUMP NEEDS TO GO DOWN FOR MOTHER NATURE NOT GETTING ANGRY THAT MAY CREATE DEADLY WW3.",
+          "likes": 1,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "Thankfully there is $umone from Britain to make $ense of it all for us ?....What does Jarule think ?",
+          "likes": 1,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "you live in a bubble or something ?",
+          "likes": 1,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "TRUMP NEEDS TO GO DOWN FOR MOTHER NATURE NOT GETTING ANGRY THAT MAY CREATE DEADLY WW3.",
+          "likes": 0,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "AI... Artificial Intelligence",
+          "likes": 0,
+          "when": "14 hours ago",
+          "reply": true
+        },
+        {
+          "say": "​ @awdobsession717 not at this speed. Look at the data and you'll see how fast we are changing it.",
+          "likes": 0,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "​ @awdobsession717 SO YOU 💩 IN WATER AND YOU STILL DRINK IT BECAUSE CLIMATE CHANGE IS A HOAX?",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "@awdobsession717  Thats a vapid argument and does not imply that humans cannot be an enviromental factor in climate cycles, you just want to sound rational defending something with this staggering amount of evidence, is like you people are proudly and arrogantly ignorant.",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "​@awdobsession717 yes but we are speeding it up 🤦",
+          "likes": 0,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "@DIWArb  don’t worry you’re safe in moms basement. So long as you don’t live somewhere in a valley like that with glacier ice 🧊 mountains.",
+          "likes": 0,
+          "when": "20 hours ago",
+          "reply": true
+        },
+        {
+          "say": "TRUMP NEEDS TO GO DOWN FOR MOTHER NATURE NOT GETTING ANGRY THAT MAY CREATE DEADLY WW3.",
+          "likes": 0,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "AI",
+          "likes": 0,
+          "when": "14 hours ago",
+          "reply": true
+        },
+        {
+          "say": "​ @WarAgeTV whatever",
+          "likes": 0,
+          "when": "11 hours ago",
+          "reply": true
+        },
+        {
+          "say": "Epstein?",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @Drumless.Music.MP3 Brian, the Beatles manager? Isn't that what a certain president wants to rename Lake Ontario",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @martinepstein3332  Lake Beatles Manager? 😳",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @martinlazar83 yes better than Lake America. Will the Atlantic now be called Trump Ocean and the Pacific MAGA Ocean?",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "​​ @jafo766  maybe you are wrong yourself ?...unfortunately so many have been led astray here in 'The Covenant Lands' 🇬🇧",
+          "likes": 0,
+          "when": "2 days ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "It is no hard to comprehend. Floods have been going on since Noah's Ark. The end of the World is coming.",
+          "likes": 0,
+          "when": "1 day ago",
+          "reply": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=54KcFHke3cw",
+      "title": "Was climate change to blame for the Nepal floods?",
+      "outlet": "Reuters",
+      "lean": "neutral",
+      "comments": [
+        {
+          "say": "Source? Thought they dismissed that already. And it was the impact of the glacier itself breaking off, that was what they initially thought was an earthquake.",
+          "likes": 4,
+          "when": "3 hours ago",
+          "reply": true
+        },
+        {
+          "say": "Blaten Switzerland had a similar occurrence.",
+          "likes": 2,
+          "when": "3 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Was climate change to blame for the Doggerland event? 😉",
+          "likes": 1,
+          "when": "3 hours ago",
+          "reply": false
+        },
+        {
+          "say": "There was an earthquake just before this disaster.",
+          "likes": 1,
+          "when": "3 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Hey! Lets build a village in a narrow canyon thousands of feet below a HUGE, Centuries Old GLACIER! Climate Change YUP....gonna happen eventually. Record glacial melt, a matter of record now for 35 years+ depending on location. Move to My Ranier. Better, safer, more big box stores....whatever! Mentos and a carbonated drink.... chug-a-lug",
+          "likes": 1,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "It absolutely is; just not directly it’s a contributing factor for sure.",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "Study of glaciers has shown these receding and melting for decades…….due to warming temperatures.  Not uncomplicated at all.",
+          "likes": 0,
+          "when": "2 minutes ago",
+          "reply": false
+        },
+        {
+          "say": "God just letting humans know how ignorant we are.",
+          "likes": 0,
+          "when": "14 minutes ago",
+          "reply": false
+        },
+        {
+          "say": "Хайде пак глобалното затопляне!!! Необходимо е извършване на мониторинг.",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": false
+        },
+        {
+          "say": "We need God to fix this because it is out of our control.",
+          "likes": 0,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "If the USA and China don't wake up we're screwed",
+          "likes": 0,
+          "when": "24 minutes ago",
+          "reply": false
+        },
+        {
+          "say": "No!",
+          "likes": 0,
+          "when": "2 hours ago",
+          "reply": false
+        },
+        {
+          "say": "Some earthquakes are due to climate change …. I was youtubeed 😂",
+          "likes": 0,
+          "when": "1 hour ago",
+          "reply": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=La0MDQohgk0",
+      "title": "Return of tigers to Nepal brings both joy and fear - BBC News",
+      "outlet": "BBC News",
+      "lean": "neutral",
+      "comments": [
+        {
+          "say": "As a Nepali, I’m happy that this happened. Tigers are very beautiful animals that have to be protected, that said, too much tigers is also a problem for the villagers and locals",
+          "likes": 1600,
+          "when": "4 years ago",
+          "reply": false
+        },
+        {
+          "say": "I wanna say that I am extremely proud of our Nepalese Army, working hard day and night to protect these tigers. They deserve recognition",
+          "likes": 495,
+          "when": "4 years ago",
+          "reply": false
+        },
+        {
+          "say": "@blackout07blue  yeah cos that worked out ok lol",
+          "likes": 152,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "Build some huge fences… like Jurassic Park.",
+          "likes": 65,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "let's hope the tigers don't get their protection just because they look pretty or majestic but because they fulfill an important role in the ecosystem. they keep their prey in check, allow the forest to grow by reducing the damage done by deers. not sure if they attract tourists and bring money to these communities. there need to be good reasons to risk the life of humans.",
+          "likes": 33,
+          "when": "4 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "A rarely good report for all sides, supporters, opponents and mediators :)",
+          "likes": 16,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "Villagers and growing Nepalese population encroached on tiger land, not vice versa.",
+          "likes": 16,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@SVSXXVW  wtf u talking bout? Which time are you livin in",
+          "likes": 14,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "The people who care or love the most dangerous animals are the ones who doesn’t live in anywhere near it but visit 😂😂😂",
+          "likes": 12,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "Too much tigers are not a problem . The expansion of parks are not happening . Thats the issue \n Tigers have vast territories . And  the weaker , younger and old tigers are driven out of park by dominant males in search of new territory and hunting grounds . The small parks of Nepal are not enough to hold the tiger population . The parks should be expanded . Otherwise there will be more man tiger conflicts .",
+          "likes": 8,
+          "when": "4 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@SVSXXVW  1-2 people dies who venture deep in jungle not extreme case like shown in this clip. \nMajor issue of attacking inside village is done by leopard here not Tigers.",
+          "likes": 5,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@swasg427  Some seem to forget those who benefit from tourism, and even more importantly and far-reaching, from biodiversity that is as diverse as possible.\nWanna buy some tiger balm, t-shirt, or sunglases ?!? ;) :D :)",
+          "likes": 4,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "and the dead humans?",
+          "likes": 3,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@markusmuller6173  top comment literally said what everybody is thinking kinda smart way to get likes",
+          "likes": 2,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@markusmuller6173  not for people",
+          "likes": 2,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@embreis2257  What the hell is so important about humans? - their ego?",
+          "likes": 2,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@embreis2257  That is literally the only reason they are getting protection. Humans can easily control prey numbers, there are many places that have lost their natural predators, which now have their prey animal numbers controlled through limited hunting by hunters.",
+          "likes": 2,
+          "when": "4 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Are they really? Or just for bbc?",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@blackout07blue  🎀Aren’t tigers excellent climbers and swimmers?🎀",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@paulsawczyc5019  im gona go with thumbs, fire and tools. all pretty important things that humans are the best at",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@KK Yes, I agree. Poor people (it turns out) aren't as \"sexy\" a topic for the media these days. It's just another way of oppressing the less financially fortunate of our world. Thankyou for your thoughtful, honest comment. ✌️",
+          "likes": 1,
+          "when": "4 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "As a Nepalese, but not Nepali, I agree",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "Too much humans is the problem for the tigers",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "nah fuck that shit, more tigers please!!!",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "👍👍👍👍👍! Remember we are all God's creatures ! So world 🌎 do you want to mess with him? I don't ! Humans have Enough SPACE to exist !! So dont invade their space !!!",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "The locals are not happy to have a tiger as a neighbor but its ok to sound so honorable cuz u can feel proud from the safety of ur house lol",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "Tigers are beautiful animals until they start hunting your whole house down",
+          "likes": 1,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "Do you realise innocent people will be eaten??",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "Same Nepalese army that couldn't defend against the royal massacre? they are all servants of external forces.",
+          "likes": 0,
+          "when": "4 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@mr.crowgamer6250  Well, at least the headline of this BBC Report didn't pay too much credit to the real mediator at (3:22), who invests his work to mediate between supporters and opponents.",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@midnitekingdrama2558  Because we're not stupid enough to live near tiger's natural habitat 🤦‍♀️",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@lovelybitofbugle219  buhahhahahahahahaha",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@blackout07blue  Jurassic Park worked out brilliantly the first time !",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@blackout07blue  nope that's not possible cause  there are native communities that have been living in the forest for generations in small patches and there is a highway running right through the forest( there is a speed limit of 40 kmph) though there is an ongoing new highway plan  around the forest. \nAlso it is a nation",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "​ @blackout07blue  i guess its to expensive to build those big fences everywhere",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "​ @blackout07blue  .  Apart from conservation, they should also focus on carrying capacity.",
+          "likes": 0,
+          "when": "3 years ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@pissiole5654  Yeah - just like monkeys.",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@TRIFEC98  🤦😂😂\nperhaps you should go and live close to them and we see if you still think they are cute lol",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "@TechStuff365  If you disagree with nature - then you should live in the city.",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        },
+        {
+          "say": "I bet that having some dogs would help a lot - especially with a warning.",
+          "likes": 0,
+          "when": "4 years ago",
+          "reply": true
+        }
+      ]
+    }
+  ],
   "scripts": [],
   "note": "六百多人罹難。爭點是「氣候變遷該不該負責」，各家說法明顯不同。"
 }
