@@ -149,7 +149,24 @@ def crop_for(name: str | None) -> tuple[int, int, int, int] | None:
     return tuple(box) if box and len(box) == 4 else None
 
 
-def _graph(box: tuple[int, int, int, int] | None, subtitles: Path | None) -> str:
+def _credit_filter(credit: str) -> str:
+    """Whose footage this is, on screen for the whole short.
+
+    A crop that makes a graphic readable also cuts off the broadcaster's logo
+    and lower-third -- which is most of the frame's attribution. Taking someone
+    else's pictures, removing their name and adding your own commentary is
+    misappropriation whatever the intent, so the name goes back on, in our own
+    frame, where no crop can remove it. On the short throughout, not only on
+    the card at the end: most people never reach the end.
+    """
+    safe = credit.replace("\\", "\\\\").replace(":", "\\:").replace("'", "")
+    return (f",drawtext=text='{safe}':fontfile=/System/Library/Fonts/PingFang.ttc"
+            f":fontsize=34:fontcolor=white@0.92:box=1:boxcolor=black@0.45"
+            f":boxborderw=14:x=(w-text_w)/2:y={PICTURE_TOP - 62}")
+
+
+def _graph(box: tuple[int, int, int, int] | None, subtitles: Path | None,
+           credit: str = "") -> str:
     """Blurred enlargement behind, the kept picture in front."""
     background = (f"[0:v]scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,"
                   f"crop={WIDTH}:{HEIGHT},boxblur=44:3,eq=brightness=-0.14[bg]")
@@ -160,14 +177,22 @@ def _graph(box: tuple[int, int, int, int] | None, subtitles: Path | None) -> str
         front = f"[0:v]scale={WIDTH}:-2[fg]"
     burn = (f",subtitles='{subtitles}':fontsdir=/System/Library/Fonts"
             if subtitles else "")
+    mark = _credit_filter(credit) if credit else ""
     return (f"{background};{front};"
-            f"[bg][fg]overlay=(W-w)/2:{PICTURE_TOP}{burn},fps={FPS}[v]")
+            f"[bg][fg]overlay=(W-w)/2:{PICTURE_TOP}{mark}{burn},fps={FPS}[v]")
 
 
 def render(video: Path, passage: Passage, target: Path,
            subtitles: Path | None = None, box: tuple[int, int, int, int] | None = None,
-           card: Path | None = None, card_seconds: float = 10.0) -> dict[str, Any]:
-    """Cut the passage, stand it in a vertical frame, and add the comment."""
+           card: Path | None = None, card_seconds: float = 10.0,
+           credit: str = "") -> dict[str, Any]:
+    """Cut the passage, stand it in a vertical frame, and add the comment.
+
+    `credit` names whose footage this is and is not optional in practice: a
+    crop tight enough to be readable removes the broadcaster's own marks.
+    """
+    if box and not credit:
+        raise ValueError("裁切會把台標切掉，必須用 credit 指明畫面來源")
     target.parent.mkdir(parents=True, exist_ok=True)
     work = target.parent / ".shorts"
     work.mkdir(parents=True, exist_ok=True)
@@ -176,9 +201,10 @@ def render(video: Path, passage: Passage, target: Path,
     subprocess.run([
         "ffmpeg", "-v", "error",
         "-ss", f"{passage.start:.3f}", "-to", f"{passage.end:.3f}", "-i", str(video),
-        "-filter_complex", _graph(box, subtitles), "-map", "[v]", "-map", "0:a",
+        "-filter_complex", _graph(box, subtitles, credit),
+        "-map", "[v]", "-map", "0:a",
         "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2", str(body),
+        "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2", str(body), "-y",
     ], check=True)
 
     if not card:
@@ -192,7 +218,7 @@ def render(video: Path, passage: Passage, target: Path,
         "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
         "-t", f"{card_seconds:.2f}", "-vf", f"fps={FPS},fade=in:0:12",
         "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "160k", "-shortest", str(tail),
+        "-c:a", "aac", "-b:a", "160k", "-shortest", str(tail), "-y",
     ], check=True)
 
     listing = work / "join.txt"
