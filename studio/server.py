@@ -118,10 +118,15 @@ def list_projects() -> list[dict[str, Any]]:
             continue
         run = directory / "run.json"
         details = json.loads(run.read_text(encoding="utf-8")) if run.is_file() else {}
+        source = Path(details.get("source", ""))
         found.append({
             "name": directory.name,
             "lines": srt.read_text(encoding="utf-8").count("-->"),
-            "source": Path(details.get("source", "")).name,
+            "source": source.name,
+            "seconds": round(media.duration(source), 2) if source.is_file() else 0.0,
+            "assembled": bool(details.get("assembled")),
+            "size": sum(item.stat().st_size for item in directory.rglob("*")
+                        if item.is_file()),
             # How many lines the second listening pass actually recovered.
             # Whether it ran is not worth saying: it runs every time.
             "recovered": int(details.get("recovered_segments") or 0),
@@ -257,7 +262,6 @@ def remove_source(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     a clip is a download, and the list is one careless click wide. Emptying
     trash/ is a decision made deliberately, elsewhere.
     """
-    import shutil
     name = str(payload.get("name") or "")
     offered = {item["name"]: item for item in sources()["sources"]}
     if name not in offered:
@@ -270,11 +274,35 @@ def remove_source(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     if not going.exists():
         raise HTTPException(404, f"{going.name} 已經不在了")
 
+    return {"removed": name, "at": str(_to_trash(going).relative_to(ROOT))}
+
+
+def _to_trash(going: Path) -> Path:
+    """Move something out of the way rather than destroy it.
+
+    A run is a night of transcribing and a clip is a download; a mistaken click
+    should cost a move, not the work. Emptying trash/ is a separate decision,
+    made deliberately and elsewhere.
+    """
+    import shutil
     TRASH.mkdir(parents=True, exist_ok=True)
     # Stamped, so removing two runs of the same name a week apart keeps both.
     landed = TRASH / f"{time.strftime('%Y%m%d-%H%M%S')}-{going.name}"
     shutil.move(str(going), str(landed))
-    return {"removed": name, "at": str(landed.relative_to(ROOT))}
+    return landed
+
+
+@app.post("/api/project/remove")
+def remove_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Take a whole run out of the list: video, subtitles, layout and all."""
+    name = str(payload.get("name") or "")
+    if name not in {item["name"] for item in list_projects()}:
+        raise HTTPException(404, f"找不到專案 {name}")
+    if name == config["paths"]["output"].name:
+        raise HTTPException(400, f"{name} 正開著，先切到別的專案再刪")
+    landed = _to_trash(ROOT / name)
+    return {"removed": name, "at": str(landed.relative_to(ROOT)),
+            "projects": list_projects()}
 
 
 def _allowed_source(path: str) -> Path:

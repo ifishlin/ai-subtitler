@@ -390,6 +390,28 @@ main{display:flex;flex:1;min-height:0}
 
 /* The whole shelf at once. The tray along the bottom holds what gets used;
    this is for finding the one thing that does not. */
+/* The runs on disk, with what each one is and a way to be rid of it. */
+#projects{position:fixed;inset:0;background:#0009;display:none;align-items:center;
+  justify-content:center;z-index:30}
+#projects.on{display:flex}
+#projects .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:16px 20px 18px;width:min(760px,92vw);max-height:84vh;display:flex;
+  flex-direction:column;box-shadow:0 20px 60px #000a}
+#projHead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+#projHead .grow{flex:1}
+#projList{overflow:auto}
+.proj{display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:6px;
+  background:var(--bg);border:1px solid var(--line);border-radius:8px}
+.proj.here{border-color:var(--accent)}
+.proj .who{flex:1;min-width:0}
+.proj .who b{font-weight:600}
+.proj .facts{display:block;font:11px var(--mono);color:var(--faint);margin-top:3px}
+.proj .tag{font-size:10px;padding:1px 6px;border-radius:99px;border:1px solid var(--line);
+  color:var(--dim)}
+.proj .tag.made{color:var(--ok);border-color:#2c5a45}
+#projNote{font-size:12px;color:var(--dim);margin-top:10px;line-height:1.5}
+#projNote.bad{color:var(--danger)}
+
 #trayMore{cursor:pointer}
 #trayMore .more{height:74px;display:grid;place-items:center;font-size:17px;
   color:var(--dim);background:var(--bg);border:1px dashed var(--line);border-radius:5px}
@@ -490,6 +512,7 @@ main{display:flex;flex:1;min-height:0}
   <header>
     <h1>AI-Desk</h1>
     <select id="project" title="選擇要校對哪一次 pipeline 的輸出"></select>
+    <button id="btnProjects" class="tiny" title="全部專案">管理</button>
     <span class="src" id="srcName">…</span>
     <div class="spacer"></div>
     <a href="/assemble" class="tiny" id="btnAssemble">組裝影片</a>
@@ -618,6 +641,17 @@ main{display:flex;flex:1;min-height:0}
     </div>
   </main>
 </div>
+
+<div id="projects"><div class="card">
+  <div id="projHead">
+    <b>專案</b>
+    <span class="hint">一次 pipeline 的輸出，或一支組裝出來的影片</span>
+    <span class="grow"></span>
+    <button id="projClose" class="tiny">關閉</button>
+  </div>
+  <div id="projList"></div>
+  <div id="projNote"></div>
+</div></div>
 
 <div id="library"><div class="card">
   <div id="libBar">
@@ -1777,6 +1811,99 @@ $("btnStepFwd").onclick = () => step(1);
 $("btnPlay").onclick = () => (video.paused ? video.play() : video.pause());
 $("btnBack").onclick = () => seek(video.currentTime - 2);
 $("btnFwd").onclick = () => seek(video.currentTime + 2);
+/* ---------- projects ----------
+   The dropdown chooses one; this says what each of them is, and lets one go.
+   Going means moving to trash/, the same as a piece of material: a run is a
+   night of transcribing, and one click should not be able to spend it. */
+const PROJ = { open: false, list: [] };
+
+function fileSize(bytes) {
+  return bytes >= 1e9 ? `${(bytes / 1e9).toFixed(1)} GB`
+       : bytes >= 1e6 ? `${Math.round(bytes / 1e6)} MB`
+       : `${Math.round(bytes / 1e3)} KB`;
+}
+
+function renderProjects() {
+  const here = S.project;
+  $("projList").innerHTML = PROJ.list.map((project) => {
+    const when = new Date(project.modified * 1000)
+      .toLocaleString("zh-TW", { month: "numeric", day: "numeric",
+                                 hour: "2-digit", minute: "2-digit" });
+    const tags = [
+      project.assembled ? '<span class="tag made">組裝的</span>' : "",
+      project.reviewed ? '<span class="tag">校對中</span>' : "",
+      project.recovered ? `<span class="tag">補回 ${project.recovered} 句</span>` : "",
+    ].join("");
+    return `
+      <div class="proj ${project.name === here ? "here" : ""}" data-proj="${escapeHTML(project.name)}">
+        <div class="who">
+          <b>${escapeHTML(project.name)}</b> ${tags}
+          <span class="facts">${project.lines} 句　${fmt(project.seconds)}　${
+            fileSize(project.size)}　改於 ${when}　${escapeHTML(project.source)}</span>
+        </div>
+        ${project.name === here
+          ? '<span class="hint">開著</span>'
+          : '<button class="tiny" data-open="1">開啟</button>'
+            + '<button class="tiny" data-kill="1">刪除</button>'}
+      </div>`;
+  }).join("") || '<div class="hint">沒有專案</div>';
+}
+
+async function openProjects() {
+  PROJ.open = true;
+  $("projNote").className = "";
+  $("projNote").textContent = "刪除是移到 trash/，不是真的消失。正開著的專案不能刪。";
+  $("projects").classList.add("on");
+  try {
+    PROJ.list = (await api("GET", "/api/projects")).projects
+      .slice().sort((a, b) => b.modified - a.modified);
+  } catch (error) {
+    $("projNote").className = "bad";
+    $("projNote").textContent = error.message;
+  }
+  renderProjects();
+}
+
+function closeProjects() {
+  PROJ.open = false;
+  $("projects").classList.remove("on");
+}
+
+$("btnProjects").onclick = openProjects;
+$("projClose").onclick = closeProjects;
+$("projects").onclick = (event) => {
+  if (event.target.id === "projects") closeProjects();
+};
+
+$("projList").addEventListener("click", async (event) => {
+  const row = event.target.closest("[data-proj]");
+  if (!row) return;
+  const name = row.dataset.proj;
+
+  if (event.target.dataset.open) {
+    closeProjects();
+    $("project").value = name;
+    $("project").dispatchEvent(new Event("change", { bubbles: true }));
+    return;
+  }
+  if (!event.target.dataset.kill) return;
+
+  if (!confirm(`把專案 ${name} 移掉？\n\n`
+      + "整個目錄（影片、字幕、版面）會搬到 trash/，不會真的消失，"
+      + "要永久刪除得自己去清 trash/。")) return;
+  try {
+    const gone = await api("POST", "/api/project/remove", { name });
+    PROJ.list = gone.projects.slice().sort((a, b) => b.modified - a.modified);
+    renderProjects();
+    await loadProjects(S.project);      // the dropdown lost an option
+    $("projNote").className = "";
+    $("projNote").textContent = `${name} 移到 ${gone.at}`;
+  } catch (error) {
+    $("projNote").className = "bad";
+    $("projNote").textContent = error.message;
+  }
+});
+
 /* ---------- the library's own controls ---------- */
 function openLibrary() {
   LIB.open = true;
@@ -1926,6 +2053,7 @@ document.addEventListener("keydown", (event) => {
   // button you can read, and Esc.
   if (event.key === "Escape") {
     closeLibrary();
+    closeProjects();
     for (const id of ["help", "json", "card", "audit"]) {
       $(id).classList.remove("on");
     }
