@@ -359,6 +359,18 @@ def get_layouts() -> dict[str, Any]:
     return {"layouts": layouts_module.listing()}
 
 
+@app.get("/api/layout")
+def get_layout(name: str) -> dict[str, Any]:
+    """One layout in full, so it can be drawn rather than only named."""
+    from core import layouts as layouts_module
+    try:
+        return layouts_module.load(name)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    except FileNotFoundError as error:
+        raise HTTPException(404, str(error)) from error
+
+
 @app.post("/api/layout")
 def save_layout(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Keep the frame as it stands now as a house style.

@@ -25,6 +25,11 @@
   select{background:var(--bg);border:1px solid var(--line);border-radius:7px;
     color:var(--ink);padding:7px 10px;font-size:13px;min-width:16em}
 
+  #layoutView{width:248px;flex:none;border:1px solid var(--line);border-radius:8px;
+    overflow:hidden;background:var(--bg)}
+  #layoutView svg{display:block;width:100%;height:auto}
+  #layoutView .frameLabel{font:9px var(--mono);fill:#4a5866}
+
   header{display:flex;align-items:center;gap:12px;padding:12px 20px;
     background:var(--panel);border-bottom:1px solid var(--line)}
   header h1{margin:0;font-size:15px;letter-spacing:.02em}
@@ -93,8 +98,15 @@
     </div>
     <div class="field">
       <label for="layout">版面</label>
-      <select id="layout"></select>
-      <div class="say" id="layoutNote">畫面怎麼排。在編輯器裡排好一個，按「存成公版」就會出現在這裡。</div>
+      <div class="row" style="align-items:flex-start">
+        <div class="grow">
+          <select id="layout"></select>
+          <div class="say" id="layoutNote">畫面怎麼排。在編輯器裡排好一個，按「存成公版」就會出現在這裡。</div>
+        </div>
+        <!-- The boxes to scale. A layout is nothing but where things sit, so
+             this shows all of it -- no video needed, nothing to render. -->
+        <div id="layoutView" title="等比例示意圖"></div>
+      </div>
     </div>
     <div class="field">
       <label for="name">取名</label>
@@ -282,6 +294,51 @@ function sayLayout() {
   const chosen = $("layout").selectedOptions[0];
   $("layoutNote").textContent = (chosen && chosen.dataset.note)
     || "畫面怎麼排。在編輯器裡排好一個，按「存成公版」就會出現在這裡。";
+  drawLayout(chosen && chosen.value);
+}
+
+/* A layout is only where things sit, so the boxes to scale say everything it
+   knows. Drawing them beats rendering a frame: there is no video yet, and
+   there would be nothing in the picture that the boxes do not already show. */
+const PIECE = {
+  video:    { fill: "#2a3a4a", stroke: "#5aa9ff", label: "影片" },
+  subtitle: { fill: "#1d2732", stroke: "#7b8b9b", label: "字幕" },
+  image:    { fill: "#243040", stroke: "#4ec98b", label: "" },
+  clip:     { fill: "#243040", stroke: "#f5b544", label: "素材" },
+};
+
+async function drawLayout(name) {
+  if (!name) { $("layoutView").innerHTML = ""; return; }
+  let layout;
+  try { layout = await api("GET", `/api/layout?name=${encodeURIComponent(name)}`); }
+  catch (error) { $("layoutView").innerHTML = ""; return; }
+
+  const [cw, ch] = layout.canvas || [1920, 1080];
+  const boxes = (layout.elements || []).map((element) => {
+    const [x1, y1, x2, y2] = element.box || [0, 0, cw, ch];
+    const look = PIECE[element.type] || PIECE.image;
+    // An image with a file is worth showing as itself: a channel mark in the
+    // corner is recognised, where a green rectangle is not.
+    const picture = element.type === "image" && element.file
+      ? `<image href="/media/image/${element.file.split("/").map(encodeURIComponent).join("/")}"
+                x="${x1}" y="${y1}" width="${x2 - x1}" height="${y2 - y1}"
+                preserveAspectRatio="xMidYMid meet"/>`
+      : "";
+    const label = look.label
+      ? `<text class="frameLabel" x="${x1 + 14}" y="${y1 + 46}"
+               style="font-size:${Math.round(ch / 26)}px">${look.label}</text>`
+      : "";
+    return `<rect x="${x1}" y="${y1}" width="${Math.max(1, x2 - x1)}"
+                  height="${Math.max(1, y2 - y1)}" rx="6"
+                  fill="${picture ? "none" : look.fill}" stroke="${look.stroke}"
+                  stroke-width="4"/>${picture}${label}`;
+  }).join("");
+
+  $("layoutView").innerHTML = `
+    <svg viewBox="0 0 ${cw} ${ch}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="${cw}" height="${ch}" fill="${layout.background || "#DCE9F5"}"/>
+      ${boxes}
+    </svg>`;
 }
 
 $("layout").addEventListener("change", sayLayout);
