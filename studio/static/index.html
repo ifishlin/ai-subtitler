@@ -653,7 +653,7 @@ main{display:flex;flex:1;min-height:0}
 <div id="projects"><div class="card">
   <div id="projHead">
     <b>專案</b>
-    <span class="hint">一次 pipeline 的輸出，或一支組裝出來的影片</span>
+    <span class="hint">projects/ 底下每個資料夾一個，名字隨你取</span>
     <span class="grow"></span>
     <button id="projNew" class="tiny">新增專案</button>
     <button id="projClose" class="tiny">關閉</button>
@@ -661,7 +661,7 @@ main{display:flex;flex:1;min-height:0}
   <!-- Folded away until asked for: the list is the point of this panel. -->
   <div id="projForm">
     <label>影片 <select id="newSource"></select></label>
-    <label>取名 <input id="newName" value="output_" spellcheck="false"></label>
+    <label>取名 <input id="newName" placeholder="例如 RFK訪談" spellcheck="false"></label>
     <button id="newMake" class="tiny">建立</button>
     <span id="newHint" class="hint"></span>
   </div>
@@ -1929,7 +1929,7 @@ $("newMake").onclick = async () => {
     renderProjects();
     await loadProjects(S.project);       // the dropdown gained an option
     $("projForm").classList.remove("on");
-    $("newName").value = "output_";
+    $("newName").value = "";
     $("projNote").className = "";
     $("projNote").textContent = `建好 ${made.made}`
       + (made.lines ? `，帶進 ${made.lines} 句字幕` : "，還沒有字幕");

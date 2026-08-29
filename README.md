@@ -68,8 +68,13 @@ Or provide a URL or local file:
 
 ## Output
 
+Every run gets its own directory under `projects/`. What makes one a project
+is the `run.json` inside it, which says which video the run is about -- not
+what the directory is called, so a project can be named after its subject.
+
 ```text
-output/
+projects/RFK訪談/
+├── run.json            ← which video this run is about
 ├── transcript.txt
 ├── transcript.json
 ├── subtitles_zh.srt
@@ -91,8 +96,9 @@ re-burning the video, without re-running this pipeline:
 .venv/bin/python studio/server.py
 ```
 
-It reads `output/` and `work/` and writes only `output/subtitles_zh.reviewed.srt`,
-`output/final_reviewed.mp4` and `editor_cache/`. See `studio/README.md`.
+With no argument it opens the project worked on most recently;
+`--project NAME` opens a particular one. It reads `projects/` and `work/`, and
+writes inside the project directory and `editor_cache/`. See `studio/README.md`.
 
 For publish-quality proper nouns, an optional sidecar named `VIDEO.corrections.json` can map transcript segment IDs to reviewed text. The included test video has such a review file under `work/`.
 

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import subprocess
 import sys
 import threading
@@ -33,6 +34,10 @@ from studio import media, review                            # noqa: E402
 from studio.srt import write_srt                            # noqa: E402
 
 WORK = ROOT / "work"
+# Every run lives in here, one directory each. What makes a directory a project
+# is that it holds a run.json saying which video it is about -- not what it is
+# called. A name is for people; the marker is for the program.
+PROJECTS = ROOT / "projects"
 # Everything here is regenerable, but it accumulates over months of runs, so
 # each kind of file gets its own drawer rather than one flat heap.
 CACHE = ROOT / "editor_cache"
@@ -112,12 +117,16 @@ def _frame_rate(video: Path) -> float:
 def list_projects() -> list[dict[str, Any]]:
     """Every pipeline output directory that holds subtitles to review."""
     found = []
-    for directory in sorted(ROOT.glob("output*")):
-        srt = directory / "subtitles_zh.srt"
-        if not (directory.is_dir() and srt.is_file()):
-            continue
+    if not PROJECTS.is_dir():
+        return []
+    for directory in sorted(PROJECTS.iterdir()):
         run = directory / "run.json"
-        details = json.loads(run.read_text(encoding="utf-8")) if run.is_file() else {}
+        if not (directory.is_dir() and run.is_file()):
+            continue
+        srt = directory / "subtitles_zh.srt"
+        if not srt.is_file():                       # a run with nothing to show
+            srt.write_text("", encoding="utf-8")
+        details = json.loads(run.read_text(encoding="utf-8"))
         source = Path(details.get("source", ""))
         found.append({
             "name": directory.name,
@@ -143,6 +152,16 @@ def find_source(output: Path) -> Path:
         source = Path(json.loads(recorded.read_text(encoding="utf-8")).get("source", ""))
         if source.is_file():
             return source
+        # A project that moved carries its own video with it, so a recorded path
+        # that no longer exists is usually the same file one directory over.
+        beside = output / source.name
+        if source.name and beside.is_file():
+            return beside
+        if source.name:
+            raise HTTPException(
+                409,
+                f"{output.name}/run.json 說影片是 {source}，但那裡沒有檔案。"
+                f"請把 run.json 的 source 改成現在的位置。")
     candidates = sorted(WORK.glob("source_*.mp4"), key=lambda item: item.stat().st_mtime, reverse=True)
     if not candidates:
         raise SystemExit(f"在 {WORK} 找不到來源影片，請用 server.py /path/to/video.mp4 指定")
@@ -225,7 +244,7 @@ def sources() -> dict[str, Any]:
     """
     found = []
     for project in list_projects():
-        directory = ROOT / project["name"]
+        directory = PROJECTS / project["name"]
         run = directory / "run.json"
         details = json.loads(run.read_text(encoding="utf-8")) if run.is_file() else {}
         source = Path(details.get("source") or "")
@@ -270,11 +289,22 @@ def remove_source(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         raise HTTPException(400, f"{name} 正在編輯器裡開著，先切到別的專案再刪")
 
     kind = offered[name]["kind"]
-    going = (ROOT / name) if kind == "run" else (ROOT / offered[name]["source"])
+    going = project_dir(name) if kind == "run" else (ROOT / offered[name]["source"])
     if not going.exists():
         raise HTTPException(404, f"{going.name} 已經不在了")
 
     return {"removed": name, "at": str(_to_trash(going).relative_to(ROOT))}
+
+
+SAFE_NAME = re.compile(r"[\w\u4e00-\u9fff][\w\u4e00-\u9fff -]{0,63}")
+
+
+def project_dir(name: str) -> Path:
+    """Where a project of this name lives. The name is checked rather than
+    joined blindly: it becomes a directory, so it may not climb out of one."""
+    if not SAFE_NAME.fullmatch(name):
+        raise HTTPException(400, "名稱只能用中英文、數字、底線、減號、空白，不能開頭是符號")
+    return PROJECTS / name
 
 
 def _to_trash(going: Path) -> Path:
@@ -322,11 +352,9 @@ def new_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Make the smallest thing the editor will open: where the video is, and a
     subtitle file. Empty subtitles mean no subtitles, which is a fair
     description of a video nobody has listened to yet."""
-    import re as _re
     name = str(payload.get("name") or "").strip()
-    if not _re.fullmatch(r"output[\w\u4e00-\u9fff-]{0,48}", name):
-        raise HTTPException(400, "名稱要以 output 開頭，只能用中英文、數字、底線、減號")
-    if (ROOT / name).exists():
+    output = project_dir(name)
+    if output.exists():
         raise HTTPException(400, f"{name} 已經存在了，換個名字")
 
     source = str(payload.get("source") or "")
@@ -334,7 +362,6 @@ def new_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     if source not in offered:
         raise HTTPException(404, f"找不到影片 {source}")
 
-    output = ROOT / name
     output.mkdir(parents=True)
     (output / "run.json").write_text(
         json.dumps({"source": str((ROOT / source).resolve()), "made_here": True,
@@ -358,7 +385,7 @@ def remove_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         raise HTTPException(404, f"找不到專案 {name}")
     if name == config["paths"]["output"].name:
         raise HTTPException(400, f"{name} 正開著，先切到別的專案再刪")
-    landed = _to_trash(ROOT / name)
+    landed = _to_trash(project_dir(name))
     return {"removed": name, "at": str(landed.relative_to(ROOT)),
             "projects": list_projects()}
 
@@ -430,7 +457,7 @@ def _variant(srt: Path, kind: str) -> Path:
 def _assemble_worker(pieces: list[dict[str, Any]], name: str) -> None:
     from core import assemble as assemble_module
     try:
-        output = ROOT / name
+        output = project_dir(name)
         output.mkdir(parents=True, exist_ok=True)
         video = output / "assembled.mp4"
         laid = assemble_module.assemble(
@@ -482,17 +509,15 @@ def _assemble_worker(pieces: list[dict[str, Any]], name: str) -> None:
 
 @app.post("/api/assemble")
 def start_assembly(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
-    import re as _re
     name = str(payload.get("name") or "").strip()
-    if not _re.fullmatch(r"output[\w\u4e00-\u9fff-]{0,48}", name):
-        raise HTTPException(400, "名稱要以 output 開頭，只能用中英文、數字、底線、減號")
+    target_dir = project_dir(name)          # also checks the name is a name
     pieces = payload.get("pieces") or []
     if not pieces:
         raise HTTPException(400, "至少要有一段")
     # An assembly can be a片源 of the next one, so the name offered is often the
     # name of something in the list. Writing over a file that is being read from
     # would leave neither: refuse while both still exist.
-    target = (ROOT / name / "assembled.mp4").resolve()
+    target = (target_dir / "assembled.mp4").resolve()
     if any((ROOT / piece.get("source", "")).resolve() == target for piece in pieces):
         raise HTTPException(400, f"{name} 自己就在片源裡，不能存回同一個名字。"
                                  "換個名字，舊的那支才不會被蓋掉")
@@ -527,7 +552,7 @@ def switch_project(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     name = str(payload.get("name", ""))
     if name not in {item["name"] for item in list_projects()}:
         raise HTTPException(404, f"找不到 {name}")
-    activate(ROOT / name)
+    activate(project_dir(name))
     return get_state()
 
 
@@ -703,7 +728,6 @@ def cards() -> dict[str, Any]:
 @app.post("/api/card")
 def make_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Render a card's HTML to a transparent PNG in img/, keeping the source."""
-    import re
 
     from make_card import capture
 
@@ -1235,14 +1259,25 @@ def activate(output: Path, source: Path | None = None) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="字幕校對網頁（不改動 pipeline）")
     parser.add_argument("source", nargs="?", help="原始影片，預設抓 work/source_*.mp4 最新的一支")
-    parser.add_argument("--output", default="output", help="要校對的 pipeline 輸出目錄")
+    parser.add_argument("--project", "--output", dest="project", default=None,
+                        help="要打開哪個專案，預設最近改過的那個")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
 
-    output = (ROOT / args.output).resolve()
-    if not (output / "subtitles_zh.srt").is_file():
-        available = ", ".join(item["name"] for item in list_projects()) or "（沒有）"
-        raise SystemExit(f"找不到 {output / 'subtitles_zh.srt'}\n可用的目錄：{available}")
+    known = list_projects()
+    if not known:
+        raise SystemExit(f"{PROJECTS} 裡沒有專案。"
+                         "一個專案就是一個資料夾，裡面有 run.json 說明它是哪支影片。")
+    # No name given opens the one worked on last, which is nearly always the
+    # one meant. A name that is not there says which ones are.
+    if args.project is None:
+        chosen = max(known, key=lambda item: item["modified"])["name"]
+    else:
+        chosen = Path(args.project).name        # tolerate a pasted path
+        if chosen not in {item["name"] for item in known}:
+            raise SystemExit(f"找不到專案 {chosen}\n"
+                             f"有的是：{', '.join(item['name'] for item in known)}")
+    output = project_dir(chosen)
 
     activate(output, Path(args.source).resolve() if args.source else None)
 

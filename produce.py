@@ -62,7 +62,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--gap-min", type=float, default=GAP_MIN,
                         help="Shortest silence worth revisiting, in seconds")
-    parser.add_argument("--output", default="output", help="Directory for the results")
+    parser.add_argument("--project", "--output", dest="project", default="run",
+                        help="What to call this run. It becomes a directory under projects/")
     parser.add_argument(
         "--reuse-transcript", metavar="FILE",
         help="Skip both Whisper passes and start from an existing transcript_raw.json. "
@@ -158,7 +159,9 @@ def resumed_source(reuse: str) -> str | None:
 def main() -> None:
     args = parse_args()
     work = ROOT / "work"
-    output = (ROOT / args.output).resolve()
+    # One directory per run, all of them in one place, named by what they are
+    # rather than by a prefix a program looks for.
+    output = (ROOT / "projects" / Path(args.project).name).resolve()
     visuals_dir = output / "visuals"
     output.mkdir(parents=True, exist_ok=True)
 

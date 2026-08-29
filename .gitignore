@@ -7,6 +7,7 @@ __pycache__/
 .DS_Store
 
 # Pipeline artifacts (all regenerable by main.py); --output can name any of these
+projects/
 output/
 output_*/
 

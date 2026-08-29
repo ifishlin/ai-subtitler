@@ -18,26 +18,35 @@
 不需要重開 server。切換時若有未儲存的修改會先提醒。
 每支影片的 proxy 和波形分開快取，所以切回去不用重新轉檔。
 
-也可以在啟動時就指定目錄：
+不給參數就開最近改過的那個專案。要指定：
 
 ```bash
-.venv/bin/python studio/server.py --output output_v2
+.venv/bin/python studio/server.py --project RFK訪談
 ```
+
+名字打錯時它會列出有哪些專案。（`--output` 還能用，是同一個參數的舊名字。）
 
 校對進度按輸出目錄分開存（`editor_cache/review_<目錄名>.json`），兩個版本不會互相干擾。
 
 ## 讀什麼、寫什麼
 
+一個專案就是 `projects/` 底下的一個資料夾。認得它的是裡面的 `run.json`，
+不是資料夾叫什麼名字——所以專案可以照內容取名。下表的 `專案/` 指的就是
+`projects/那個名字/`。
+
 | | 檔案 | 用途 |
 |---|---|---|
+| 讀 | `專案/run.json` | **這個專案是哪支影片**。沒有它就不算專案 |
 | 讀 | `work/source_*.mp4` | 乾淨的原片（成品的字幕是燒進畫面的，不能當底片） |
-| 讀 | `output/subtitles_zh.srt` | 要校對的字幕 |
-| 讀 | `output/transcript_raw.json` | Whisper 原文，用來顯示 diff |
-| 讀 | `output/transcript.json` | Qwen 校正後的文字 |
-| 讀 | `output/ai_visuals.json` | 圖卡位置（時間軸顯示、重新燒錄時沿用） |
-| 寫 | `output/subtitles_zh.reviewed.srt` | 校對後的字幕 |
-| 寫 | `output/final_reviewed.mp4` | 按「重新燒錄」才產生 |
-| 寫 | `editor_cache/` | proxy、波形、校對進度（可安全刪除） |
+| 讀 | `專案/subtitles_zh.srt` | 要校對的字幕（可以是空的：還沒人聽過） |
+| 讀 | `專案/transcript_raw.json` | Whisper 原文，用來顯示 diff |
+| 讀 | `專案/transcript.json` | LLM 校正後的文字 |
+| 讀 | `專案/ai_visuals.json` | 圖卡位置（時間軸顯示、重新燒錄時沿用） |
+| 讀寫 | `專案/scene.json` | 版面：畫布上每個東西的位置和時間 |
+| 寫 | `專案/subtitles_zh.reviewed.srt` | 校對後的字幕 |
+| 寫 | `專案/final_reviewed.mp4` | 按「重新燒錄」才產生 |
+| 寫 | `trash/` | 刪掉的專案和素材搬到這裡，不會真的消失 |
+| 寫 | `editor_cache/` | proxy、波形、縮圖、校對進度（可安全刪除） |
 
 原始的 `subtitles_zh.srt` 和 `final.mp4` 永遠不會被覆寫。
 
