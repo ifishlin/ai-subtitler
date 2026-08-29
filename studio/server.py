@@ -393,6 +393,34 @@ def new_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     return {"made": name, "topics": topic_module.listing()}
 
 
+@app.post("/api/topic/voices")
+def gather_voices(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Fetch the comments under a topic's videos."""
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    heard = {item.get("url") for item in pile.get("voices") or []}
+    added = 0
+    for video in pile.get("sources", {}).get("videos") or []:
+        url = video.get("url")
+        if not url or url in heard:
+            continue
+        said = topic_module.read_comments(url)
+        if not said:
+            continue
+        pile.setdefault("voices", []).append({
+            "url": url, "title": video.get("title", ""),
+            "outlet": video.get("outlet", ""), "comments": said})
+        added += len(said)
+    topic_module.save(name, pile)
+    return {"added": added,
+            "total": sum(len(v["comments"]) for v in pile.get("voices") or [])}
+
+
 @app.post("/api/topic/script")
 def make_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Write a script from what has been gathered.

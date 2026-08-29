@@ -81,6 +81,9 @@
   .lean.left{color:#7fb4ff;border-color:#2d4a70}
   .lean.right{color:#ff9d7f;border-color:#6b3f2e}
   .lean.neutral{color:var(--ok);border-color:#2c5a45}
+  .voice{font-size:12px;color:var(--dim);padding:6px 0;line-height:1.6;
+    border-top:1px solid #1c242e}
+  .voice .likes{font:11px var(--mono);color:var(--faint);margin-right:9px}
   .empty{color:var(--faint);font-size:13px;padding:14px;text-align:center;
     border:1px dashed var(--line);border-radius:9px}
   #note{font-size:13px;margin-top:14px}
@@ -140,6 +143,28 @@ function renderList() {
     </div>`).join("") || '<div class="empty">還沒有題目</div>';
 }
 
+function voiceCount(pile) {
+  return (pile.voices || []).reduce((sum, one) => sum + (one.comments || []).length, 0);
+}
+
+/** What people said underneath, loudest first. No names: we want what was
+ *  said, not who said it. */
+function voiceRows(voices) {
+  if (!voices || !voices.length) {
+    return '<div class="empty">還沒抓留言</div>';
+  }
+  return voices.map((one) => `
+    <div class="src">
+      <div class="who">${escapeHTML(one.outlet || "")}　${
+        escapeHTML(one.title || "")}　${(one.comments || []).length} 則</div>
+      ${(one.comments || []).slice(0, 12).map((said) => `
+        <div class="voice"><span class="likes">▲${said.likes}</span>${
+          escapeHTML(said.say)}</div>`).join("")}
+      ${(one.comments || []).length > 12
+        ? `<div class="who">…另外 ${one.comments.length - 12} 則</div>` : ""}
+    </div>`).join("");
+}
+
 function sourceRows(items, kind) {
   if (!items || !items.length) {
     return `<div class="empty">還沒有${kind}</div>`;
@@ -183,6 +208,7 @@ async function open(name) {
       <div>圖表照片<b>${got.images}</b></div>
       <div>原始數據<b>${got.data}</b></div>
       <div>整理出的事實<b>${(pile.facts || []).length}</b></div>
+      <div>鄉民留言<b>${voiceCount(pile)}</b></div>
     </div>
 
     <div class="sides">
@@ -213,6 +239,10 @@ async function open(name) {
     ${sourceRows(pile.sources.reports, "報導")}
     <h3>原始數據 <span class="count">${got.data}</span></h3>
     ${sourceRows(pile.sources.data, "數據")}
+    <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
+      <button id="btnVoices" class="tiny">抓留言</button></h3>
+    ${voiceRows(pile.voices)}
+
     <h3>整理出的事實 <span class="count">${(pile.facts || []).length}</span></h3>
     ${(pile.facts || []).length
       ? (pile.facts || []).map((fact) => `
@@ -228,6 +258,20 @@ async function open(name) {
       $("note").textContent = `寫好了：${made.script}`;
     } catch (error) {
       $("note").className = "warn";
+      $("note").textContent = error.message;
+    }
+  };
+  if ($("btnVoices")) $("btnVoices").onclick = async () => {
+    $("btnVoices").disabled = true;
+    $("btnVoices").textContent = "抓取中…";
+    try {
+      const got = await api("POST", "/api/topic/voices", { name });
+      open(name);
+      $("note").textContent = `抓了 ${got.added} 則，共 ${got.total} 則`;
+    } catch (error) {
+      $("btnVoices").disabled = false;
+      $("btnVoices").textContent = "抓留言";
+      $("note").className = "bad";
       $("note").textContent = error.message;
     }
   };

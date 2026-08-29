@@ -90,6 +90,43 @@ def ready(pile: dict[str, Any]) -> tuple[bool, str]:
     return (not gaps), "；".join(gaps)
 
 
+def read_comments(video_url: str, most: int = 60) -> list[dict[str, Any]]:
+    """What people said underneath. Material, not decoration.
+
+    The comments tell you where an ordinary viewer got stuck, which is exactly
+    where an explanation belongs; they give you the words people actually use,
+    which are not the words a press release uses; and they often carry an angle
+    the report left out.
+
+    Names are dropped. We want what was said, not who said it -- their identity
+    is theirs, and nothing downstream needs it.
+    """
+    import subprocess, tempfile
+    with tempfile.TemporaryDirectory() as room:
+        subprocess.run(
+            [str(ROOT / ".venv/bin/yt-dlp"), video_url, "--skip-download",
+             "--write-comments", "--no-warnings",
+             "--extractor-args",
+             f"youtube:comment_sort=top;max_comments={most},all,{most}",
+             "-o", f"{room}/%(id)s"],
+            capture_output=True, text=True)
+        found = list(Path(room).glob("*.info.json"))
+        if not found:
+            return []
+        info = json.loads(found[0].read_text(encoding="utf-8"))
+    kept = []
+    for item in info.get("comments") or []:
+        text = (item.get("text") or "").strip()
+        if not text:
+            continue
+        kept.append({"say": text[:600],
+                     "likes": int(item.get("like_count") or 0),
+                     "when": item.get("_time_text") or "",
+                     "reply": bool(item.get("parent") and item["parent"] != "root")})
+    kept.sort(key=lambda one: -one["likes"])
+    return kept[:most]
+
+
 def path_for(name: str) -> Path:
     if not SAFE_NAME.fullmatch(name):
         raise ValueError("題目名稱只能用中英文、數字、底線、減號、空白")
@@ -119,7 +156,7 @@ def save(name: str, pile: dict[str, Any]) -> Path:
 def blank(name: str, angle: str = "影響民眾生活") -> dict[str, Any]:
     return {"topic": name, "angle": angle, "made": int(time.time()),
             "sources": {"videos": [], "reports": [], "images": [], "data": []},
-            "facts": [], "scripts": []}
+            "facts": [], "voices": [], "scripts": []}
 
 
 def listing() -> list[dict[str, Any]]:
@@ -136,6 +173,7 @@ def listing() -> list[dict[str, Any]]:
             "ready": enough, "why": why,
             "scripts": pile.get("scripts") or [],
             "facts": len(pile.get("facts") or []),
+            "voices": sum(len(v.get("comments") or []) for v in pile.get("voices") or []),
             "modified": int(path_for(name).stat().st_mtime),
         })
     return found
