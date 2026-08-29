@@ -388,6 +388,41 @@ main{display:flex;flex:1;min-height:0}
 .cand .t{flex:1}
 .cand .m{font:11px var(--mono);color:var(--faint)}
 
+/* The whole shelf at once. The tray along the bottom holds what gets used;
+   this is for finding the one thing that does not. */
+#trayMore{cursor:pointer}
+#trayMore .more{height:74px;display:grid;place-items:center;font-size:17px;
+  color:var(--dim);background:var(--bg);border:1px dashed var(--line);border-radius:5px}
+#trayMore:hover .more{border-color:var(--accent);color:var(--accent)}
+
+#library{position:fixed;inset:0;background:#0009;display:none;align-items:center;
+  justify-content:center;z-index:30}
+#library.on{display:flex}
+#library .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:16px 20px 18px;width:min(1080px,92vw);max-height:86vh;display:flex;
+  flex-direction:column;box-shadow:0 20px 60px #000a}
+#libBar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+#libBar .grow{flex:1}
+#libKinds{display:flex;gap:2px}
+#libKinds button{border:1px solid transparent;border-radius:7px;background:transparent;
+  color:var(--dim);padding:4px 12px;font-size:12px}
+#libKinds button.on{background:var(--bg);border-color:var(--line);color:var(--ink)}
+#libFind{width:11em;background:var(--bg);border:1px solid var(--line);border-radius:7px;
+  color:var(--ink);padding:4px 9px;font-size:12px}
+#libSort{background:var(--bg);border:1px solid var(--line);border-radius:7px;
+  color:var(--ink);padding:4px 8px;font-size:12px}
+#libGrid{overflow:auto;display:grid;gap:10px;
+  grid-template-columns:repeat(auto-fill,minmax(132px,1fr));align-content:start}
+#libGrid figure{margin:0;background:var(--bg);border:1px solid var(--line);
+  border-radius:8px;padding:6px;cursor:grab}
+#libGrid figure:hover{border-color:var(--accent)}
+#libGrid img,#libGrid video{width:100%;height:74px;object-fit:contain;display:block;
+  background:#0d1014;border-radius:5px}
+#libGrid figcaption{font-size:11px;color:var(--dim);margin-top:5px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+#libGrid .tally{font:10px var(--mono);color:var(--faint)}
+#libEmpty{color:var(--faint);font-size:13px;padding:26px;text-align:center}
+
 #help{position:fixed;inset:0;background:#0009;display:none;align-items:center;
   justify-content:center;z-index:20}
 #help.on{display:flex}
@@ -560,8 +595,10 @@ main{display:flex;flex:1;min-height:0}
              time range has not come round yet. -->
         <div id="layers"></div>
         <div class="paneHead">
-          素材　<span class="hint">拖到畫面上放置</span>
+          素材　<span class="hint">常用的在前面，拖到畫面上放置</span>
           <button id="btnNewCard" class="tiny" style="float:right">新增卡片</button>
+          <button id="btnLibrary" class="tiny" style="float:right;margin-right:6px"
+                  >全部素材</button>
         </div>
         <div id="tray"></div>
       </section>
@@ -578,6 +615,29 @@ main{display:flex;flex:1;min-height:0}
     </div>
   </main>
 </div>
+
+<div id="library"><div class="card">
+  <div id="libBar">
+    <b>素材庫</b>
+    <div id="libKinds">
+      <button class="on" data-kind="">全部</button>
+      <button data-kind="cutout">去背圖</button>
+      <button data-kind="card">資訊卡</button>
+      <button data-kind="picture">圖片</button>
+      <button data-kind="clip">影片</button>
+    </div>
+    <span class="grow"></span>
+    <input id="libFind" placeholder="找名字…">
+    <select id="libSort">
+      <option value="used">常用的在前</option>
+      <option value="last">最近用過的在前</option>
+      <option value="added">最新加入的在前</option>
+      <option value="name">依名稱</option>
+    </select>
+    <button id="libClose" class="tiny">關閉</button>
+  </div>
+  <div id="libGrid"></div>
+</div></div>
 
 <div id="help"><div class="card">
   <div class="guideTabs">
@@ -1714,6 +1774,43 @@ $("btnStepFwd").onclick = () => step(1);
 $("btnPlay").onclick = () => (video.paused ? video.play() : video.pause());
 $("btnBack").onclick = () => seek(video.currentTime - 2);
 $("btnFwd").onclick = () => seek(video.currentTime + 2);
+/* ---------- the library's own controls ---------- */
+function openLibrary() {
+  LIB.open = true;
+  renderLibrary();
+  $("library").classList.add("on");
+  $("libFind").focus();
+}
+function closeLibrary() {
+  LIB.open = false;
+  $("library").classList.remove("on");
+}
+$("btnLibrary").onclick = openLibrary;
+$("libClose").onclick = closeLibrary;
+$("library").onclick = (event) => {
+  if (event.target.id === "library") closeLibrary();
+};
+$("tray").addEventListener("click", (event) => {
+  if (event.target.closest("#trayMore")) openLibrary();
+});
+$("libKinds").addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  LIB.kind = button.dataset.kind;
+  for (const other of $("libKinds").querySelectorAll("button")) {
+    other.classList.toggle("on", other === button);
+  }
+  renderLibrary();
+});
+$("libSort").addEventListener("change", (event) => {
+  LIB.sort = event.target.value;
+  renderLibrary();
+});
+$("libFind").addEventListener("input", (event) => {
+  LIB.find = event.target.value;
+  renderLibrary();
+});
+
 $("btnHelp").onclick = () => $("help").classList.add("on");
 $("btnHelp2").onclick = () => $("help").classList.add("on");
 $("btnHelpClose").onclick = () => $("help").classList.remove("on");
@@ -1821,6 +1918,7 @@ document.addEventListener("keydown", (event) => {
     const delta = event.key === "ArrowRight" ? 0.1 : -0.1;
     return nudge(S.cursor, event.shiftKey ? "end" : "start", delta);
   }
+  if (event.key === "Escape" && LIB.open) { closeLibrary(); return; }
   if (event.key === "?" ) { $("help").classList.toggle("on"); return; }
   if (event.key === "Escape") {
     $("help").classList.remove("on");
@@ -2927,23 +3025,81 @@ async function loadScene() {
   syncOverlay();          // the clock counts the finished video once cuts exist
 }
 
+/* ---------- the shelf ----------
+   Sixteen things fit along the bottom; sixty do not. So the tray shows what
+   actually gets used, in the order it gets used, and everything else lives
+   behind 全部素材 where it can be looked through instead of scrolled past. */
+const LIB = { kind: "", sort: "used", find: "" };
+
+/** Everything placeable, as one list, newest habits first. */
+function shelf() {
+  return [...(SCENE.clips || []), ...(SCENE.images || [])];
+}
+
+function sortShelf(items, how) {
+  const by = {
+    // Never used sinks below used-once; among the unused, the newest first,
+    // since a thing just made is usually the thing about to be placed.
+    used: (a, b) => (b.used || 0) - (a.used || 0) || (b.last || 0) - (a.last || 0)
+                    || (b.added || 0) - (a.added || 0),
+    last: (a, b) => (b.last || 0) - (a.last || 0) || (b.used || 0) - (a.used || 0),
+    added: (a, b) => (b.added || 0) - (a.added || 0),
+    name: (a, b) => String(a.name).localeCompare(String(b.name), "zh-Hant"),
+  };
+  return items.slice().sort(by[how] || by.used);
+}
+
+function figureFor(item) {
+  const clip = item.kind === "clip";
+  const face = clip
+    // #t=1 so the tile shows a frame rather than a black rectangle: a clip
+    // that opens on a fade is otherwise indistinguishable from any other.
+    ? `<video src="/media/clip/${encodeURIComponent(item.path.split("/").pop())}#t=1"
+              preload="metadata" muted></video>`
+    : `<img src="/media/image/${item.path.split("/").map(encodeURIComponent).join("/")}"
+            alt="">`;
+  const tally = item.used ? `　用過 ${item.used} 次` : "";
+  return `
+    <figure draggable="true" data-path="${escapeHTML(item.path)}"
+            data-kind="${clip ? "clip" : "image"}"
+            data-w="${item.width}" data-h="${item.height}"
+            ${clip ? `data-seconds="${item.seconds}"` : ""}
+            ${item.motion ? `data-motion="${escapeHTML(item.motion)}"` : ""}
+            title="${escapeHTML(item.name)}${tally}${
+              item.motion ? "　有進場動畫" : ""}">
+      ${face}
+      <figcaption>${clip ? "▶ " : ""}${escapeHTML(item.name)}</figcaption>
+    </figure>`;
+}
+
+const KIND_NAMES = { cutout: "去背圖", card: "資訊卡", picture: "圖片", clip: "影片" };
+
+function renderLibrary() {
+  const wanted = LIB.find.trim().toLowerCase();
+  const items = sortShelf(shelf(), LIB.sort).filter((item) =>
+    (!LIB.kind || item.kind === LIB.kind)
+    && (!wanted || String(item.name).toLowerCase().includes(wanted)));
+  $("libGrid").innerHTML = items.length
+    ? items.map((item) => figureFor(item).replace("</figcaption>",
+        `</figcaption><div class="tally">${KIND_NAMES[item.kind] || ""}${
+          item.used ? `　${item.used} 次` : "　沒用過"}</div>`)).join("")
+    : '<div id="libEmpty">沒有符合的素材</div>';
+}
+
+const TRAY_SHOWN = 12;          // as many as fit without the bar becoming a corridor
+
 function renderTray() {
-  const clips = (SCENE.clips || []).map((clip) => `
-    <figure draggable="true" data-path="${escapeHTML(clip.path)}" data-kind="clip"
-            data-w="${clip.width}" data-h="${clip.height}" data-seconds="${clip.seconds}"
-            title="影片素材 ${clip.seconds}s${clip.credit ? "　" + escapeHTML(clip.credit) : ""}">
-      <video src="/media/clip/${encodeURIComponent(clip.path.split("/").pop())}"
-             preload="metadata" muted></video>
-      <figcaption>▶ ${escapeHTML(clip.name)}</figcaption>
-    </figure>`).join("");
-  $("tray").innerHTML = clips + SCENE.images.map((image) => `
-    <figure draggable="true" data-path="${escapeHTML(image.path)}"
-            data-w="${image.width}" data-h="${image.height}"
-            ${image.motion ? `data-motion="${escapeHTML(image.motion)}"` : ""}
-            title="${image.motion ? "有進場動畫，" : ""}拖到畫面上">
-      <img src="/media/image/${image.path.split("/").map(encodeURIComponent).join("/")}" alt="">
-      <figcaption>${escapeHTML(image.name)}</figcaption>
-    </figure>`).join("");
+  const ordered = sortShelf(shelf(), "used");
+  const shown = ordered.slice(0, TRAY_SHOWN);
+  const rest = ordered.length - shown.length;
+  $("tray").innerHTML = shown.map(figureFor).join("")
+    + (rest > 0
+       ? `<figure id="trayMore" title="開啟素材庫">
+            <div class="more">＋${rest}</div>
+            <figcaption>全部素材</figcaption>
+          </figure>`
+       : "");
+  if (LIB.open) renderLibrary();
 }
 
 /* ---------- drawing ---------- */
@@ -3224,9 +3380,9 @@ function clampBox(box, cw, ch) {
 
 /* ---------- dropping a new image ---------- */
 
-$("tray").addEventListener("dragstart", (event) => {
+function beginAssetDrag(event) {
   const figure = event.target.closest("figure");
-  if (!figure) return;
+  if (!figure || !figure.dataset.path) return;
   event.dataTransfer.setData("text/plain", JSON.stringify({
     path: figure.dataset.path,
     width: Number(figure.dataset.w), height: Number(figure.dataset.h),
@@ -3235,7 +3391,9 @@ $("tray").addEventListener("dragstart", (event) => {
     seconds: Number(figure.dataset.seconds || 0),
   }));
   event.dataTransfer.effectAllowed = "copy";
-});
+}
+$("tray").addEventListener("dragstart", beginAssetDrag);
+$("libGrid").addEventListener("dragstart", beginAssetDrag);
 
 $("stage").addEventListener("dragover", (event) => {
   if (!$("stage").classList.contains("scene")) return;
@@ -3275,7 +3433,20 @@ $("stage").addEventListener("drop", (event) => {
   markSceneDirty();
   paintScene();
   toast(`放上 ${payload.path.split("/").pop()}　${fmt(start)} 起 ${SPAN} 秒`);
+  noteAssetUsed(payload.path);
 });
+
+/** Landing on the canvas is what counts as use -- picking something up and
+ *  changing your mind is not. The tray reorders itself from this. */
+async function noteAssetUsed(path) {
+  try {
+    const seen = await api("POST", "/api/asset/used", { path });
+    for (const item of shelf()) {
+      if (item.path === path) { item.used = seen.used; item.last = seen.last; }
+    }
+    renderTray();
+  } catch (error) { /* an ordering, not the work */ }
+}
 
 /* ---------- property bar ---------- */
 

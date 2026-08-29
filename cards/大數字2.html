@@ -1,0 +1,33 @@
+<meta charset="utf-8">
+<style>
+  :root {
+    --paper:  #091e30;   /* 卡片底色 */
+    --edge:   #40bee6;   /* 外框、重點 */
+    --title:  #ffeea5;   /* 標題 */
+    --ink:    #ffffff;   /* 內文 */
+    --muted:  #9fc4d8;   /* 次要文字 */
+    --warn:   #ff9d5c;   /* 強調、負面 */
+    --ok:     #7fd4a8;   /* 正面 */
+    --radius: 34px;      /* 圓角 */
+  }
+  html, body { margin: 0; background: transparent; }
+  #card {
+    width: 560px; box-sizing: border-box; padding: 34px 38px 38px;
+    border-radius: var(--radius); background: color-mix(in srgb, var(--paper) 92%, transparent); border: 4px solid var(--edge);
+    font-family: "PingFang TC", "Heiti TC", sans-serif; color: var(--ink); text-align: center;
+  }
+  .badge { display: inline-block; background: color-mix(in srgb, var(--edge) 70%, #000); border-radius: 18px;
+           padding: 7px 18px; font-size: 22px; letter-spacing: .06em; }
+  .figure { margin: 26px 0 4px; font-size: 108px; line-height: 1;
+            font-weight: 700; color: var(--title); font-variant-numeric: tabular-nums; }
+  .figure .unit { font-size: 44px; font-weight: 500; margin-left: 8px; }
+  .what { font-size: 30px; line-height: 1.4; }
+  .note { margin-top: 16px; font-size: 20px; color: var(--muted); }
+</style>
+
+<div id="card">
+  <span class="badge">新聞重點</span>
+  <div class="figure">1500<span class="unit">萬</span></div>
+  <div class="what">全世界的第一線醫師</div>
+  <div class="note">受訪者引用的數字</div>
+</div>

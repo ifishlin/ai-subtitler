@@ -483,6 +483,13 @@ def _images() -> list[dict[str, Any]]:
                 "width": width,
                 "height": height,
                 "motion": f"{folder}/{clip.name}" if clip.is_file() else None,
+                # What sort of thing it is, so a shelf of sixteen can be looked
+                # through. A card is known by the page it was drawn from, which
+                # is the only honest way to tell one from a photograph.
+                "kind": ("cutout" if folder == "img_cut"
+                         else "card" if (CARD_DIR / f"{image.stem}.html").is_file()
+                         else "picture"),
+                "added": int(image.stat().st_mtime),
             })
     return found
 
@@ -500,6 +507,7 @@ def _clips() -> list[dict[str, Any]]:
             "path": f"{CLIP_DIR}/{clip.name}",
             "name": clip.stem[:40],
             "kind": "clip",
+            "added": int(clip.stat().st_mtime),
             # The file, not what the library said about it. Pexels rounds to
             # whole seconds, so an 10.837s clip was offered as 11.0 -- and
             # trimming "to the end" then asked for a sixth of a second that
@@ -512,9 +520,53 @@ def _clips() -> list[dict[str, Any]]:
     return found
 
 
+ASSET_USE = CACHE / "assets.json"     # how often each piece of material is used
+
+
+def _asset_use() -> dict[str, dict[str, int]]:
+    """How often each item has been placed, and when it last was.
+
+    Kept beside the other derived files rather than in the project, because it
+    describes working habits and not the video. Losing it costs an ordering,
+    not any work.
+    """
+    if ASSET_USE.is_file():
+        try:
+            return json.loads(ASSET_USE.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            pass
+    return {}
+
+
+@app.post("/api/asset/used")
+def asset_used(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Note that something was placed. Called when one lands on the canvas --
+    dragging it and changing your mind is not use."""
+    path = str(payload.get("path") or "")
+    known = {item["path"] for item in _images()} | {item["path"] for item in _clips()}
+    if path not in known:
+        raise HTTPException(404, f"找不到素材 {path}")
+    ledger = _asset_use()
+    entry = ledger.setdefault(path, {"used": 0, "last": 0})
+    entry["used"] = int(entry.get("used") or 0) + 1
+    entry["last"] = int(time.time())
+    ASSET_USE.parent.mkdir(parents=True, exist_ok=True)
+    ASSET_USE.write_text(json.dumps(ledger, ensure_ascii=False, indent=1),
+                         encoding="utf-8")
+    return entry
+
+
 @app.get("/api/images")
 def images() -> dict[str, Any]:
-    return {"images": _images(), "clips": _clips()}
+    ledger = _asset_use()
+
+    def stamped(item: dict[str, Any]) -> dict[str, Any]:
+        seen = ledger.get(item["path"]) or {}
+        return {**item, "used": int(seen.get("used") or 0),
+                "last": int(seen.get("last") or 0)}
+
+    return {"images": [stamped(item) for item in _images()],
+            "clips": [stamped(item) for item in _clips()]}
 
 
 @app.get("/media/clipstrip/{name}.png")
