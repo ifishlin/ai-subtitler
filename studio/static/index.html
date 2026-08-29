@@ -2011,6 +2011,13 @@ $("project").addEventListener("change", async (event) => {
     event.target.value = S.project;
     return;
   }
+  // Layout edits are lost the same way subtitle edits are, and were not asked
+  // about -- so they were carried into the next project instead and could be
+  // saved over its layout by mistake.
+  if (SCENE.dirty && !confirm("版面有未儲存的修改，切換專案會放棄它們。要繼續嗎？")) {
+    event.target.value = S.project;
+    return;
+  }
   const select = event.target;
   select.disabled = true;
   try {
@@ -2018,6 +2025,10 @@ $("project").addEventListener("change", async (event) => {
     const state = await api("POST", "/api/project", { name });
     S.project = state.project;
     applyState(state);
+    // The layout belongs to the project, so it is read again like everything
+    // else. Without this the previous project's elements stayed on screen,
+    // timed against a video that is no longer playing.
+    await loadScene();
     toast(`已切換到 ${name}`);
   } catch (error) {
     toast(error.message, true);
