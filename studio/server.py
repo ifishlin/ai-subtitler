@@ -338,7 +338,7 @@ _produce: dict[str, Any] = {"state": "idle", "step": 0, "steps": 8, "what": "",
                             "message": "", "warning": "", "project": None,
                             "started": 0.0, "log": []}
 _produce_lock = threading.Lock()
-_produce_process: dict[str, Any] = {"handle": None}
+_produce_process: dict[str, Any] = {"handle": None, "stopping": False}
 
 
 def _sites() -> list[str]:
@@ -418,6 +418,11 @@ def _produce_worker(source: str, name: str, extra: list[str]) -> None:
                 _produce.update(state="done", step=_produce["steps"],
                                 warning="；".join(line.strip() for line in gave_up),
                                 message=f"完成：{name}")
+            elif _produce_process["stopping"]:
+                # Asked to stop. A non-zero exit is what stopping looks like,
+                # not a failure, and reporting it as one is alarming for no
+                # reason.
+                _produce.update(state="idle", step=0, message="已停止")
             else:
                 last = next((line for line in reversed(_produce["log"])
                              if line.strip()), "")
@@ -429,6 +434,7 @@ def _produce_worker(source: str, name: str, extra: list[str]) -> None:
             _produce.update(state="error", message=str(error))
     finally:
         _produce_process["handle"] = None
+        _produce_process["stopping"] = False
 
 
 @app.post("/api/produce")
@@ -482,13 +488,15 @@ def stop_produce() -> dict[str, Any]:
     handle = _produce_process.get("handle")
     if handle is None:
         raise HTTPException(400, "現在沒有在跑")
+    _produce_process["stopping"] = True
     handle.terminate()
     try:
         handle.wait(timeout=10)
     except subprocess.TimeoutExpired:
         handle.kill()
+    # The worker sets the final state when it notices the process is gone;
+    # this only reports what was asked for.
     with _produce_lock:
-        _produce.update(state="idle", message="已停止", step=0)
         return dict(_produce)
 
 
