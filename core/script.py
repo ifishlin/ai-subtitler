@@ -56,12 +56,16 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
                      "characters": spoken_length(line.get("say", ""))})
         clock += span
     said = sum(item["characters"] for item in laid)
-    # A line that asserts something and names no source is the fault worth
-    # catching early: by the time it is spoken aloud nobody checks it again.
+    # A line that states a fact and names no source is the fault worth catching
+    # early: by the time it is spoken aloud nobody checks it again. A line
+    # marked 觀點 is ours and needs no source -- that is the difference between
+    # an unsupported claim and an opinion, and the page should not confuse them.
     unsourced = [item["at"] for item in laid
                  if item.get("say") and not item.get("from")]
+    opinion = sum(1 for item in laid if item.get("from") == "觀點")
     return {"lines": laid, "seconds": round(clock, 2), "characters": said,
-            "over": round(max(0.0, clock - LIMIT), 2), "unsourced": unsourced}
+            "over": round(max(0.0, clock - LIMIT), 2), "unsourced": unsourced,
+            "opinion": opinion}
 
 
 def path_for(name: str) -> Path:

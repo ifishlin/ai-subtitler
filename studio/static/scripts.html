@@ -68,6 +68,7 @@
   td.show{font-size:12px;color:var(--dim);width:30%}
   td.from{font-size:11px;color:var(--faint);width:9em;white-space:nowrap}
   td.from.none{color:var(--danger)}
+  td.from.ours{color:var(--accent)}
   .own{color:var(--ok)}
   .theirs{color:var(--warn)}
 
@@ -153,7 +154,7 @@ async function open(name) {
       <td class="at">${clock(line.at)}</td>
       <td class="say">${escapeHTML(line.say || "")}</td>
       <td class="show">${whose(line.show)}　${escapeHTML(line.show || "")}</td>
-      <td class="from ${line.from ? "" : "none"}">${
+      <td class="from ${line.from ? (line.from === "觀點" ? "ours" : "") : "none"}">${
         line.from ? escapeHTML(line.from) : (line.say ? "沒標來源" : "")}</td>
     </tr>`).join("");
 
@@ -183,6 +184,7 @@ async function open(name) {
       <div>字數<b>${sums.characters}</b></div>
       <div>句數<b>${sums.lines.length}</b></div>
       <div>自製畫面佔比<b class="${share >= 60 ? "good" : "over"}">${share}%</b></div>
+      <div>觀點<b class="${sums.opinion >= 4 ? "good" : ""}">${sums.opinion} 句</b></div>
       <div>沒標來源<b class="${sums.unsourced.length ? "over" : "good"}">${
         sums.unsourced.length}</b></div>
     </div>

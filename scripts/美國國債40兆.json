@@ -1,6 +1,7 @@
 {
   "topic": "美國國債突破 40 兆",
-  "note": "示範用，用來看畫面。台詞是照 CNN 那支影片的事實改寫的。",
+  "note": "角度：影響民眾生活。語氣：詼諧。觀點來自三篇報導合併——最嚇人的數字最不真實。",
+  "angle": "影響民眾生活",
   "sources": {
     "video": [
       {
@@ -12,101 +13,158 @@
             52.0
           ]
         ],
-        "note": "只取「每分鐘 480 萬」那五秒當佐證"
+        "note": "只取五秒當佐證，消音"
       }
     ],
     "reports": [
       {
-        "title": "The National Debt Has Now Surpassed $40 Trillion",
+        "title": "The National Debt Has Now Surpassed $40 Trillion — PGPF",
         "url": "https://www.pgpf.org/article/the-national-debt-is-now-more-than-40-trillion-what-does-that-mean/",
         "facts": [
           "每人 $117,000",
           "每戶 $297,000",
-          "每分鐘增加 $4.8M"
+          "每分鐘 $4.8M"
         ]
       },
       {
-        "title": "Understand three-minute YouTube Shorts",
-        "url": "https://support.google.com/youtube/answer/15424877",
+        "title": "US debt hits $40 trillion: Who does Washington owe? — Al Jazeera",
+        "url": "https://www.aljazeera.com/economy/2026/8/20/us-debt-hits-40-trillion-who-does-washington-owe-and-why-does-it-matter",
         "facts": [
-          "Shorts 上限 3 分鐘"
+          "政府欠自己 8 兆",
+          "國內債主 21 兆",
+          "國外 11 兆",
+          "日本 1.203 兆、英國 8890 億、中國 6830 億"
         ]
       },
       {
-        "title": "US Treasury — Debt to the Penny",
-        "url": "https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/",
+        "title": "Federal debt tops $40 trillion. What it means for your wallet — ABC News",
+        "url": "https://abcnews.com/Business/federal-debt-tops-40-trillion-means-wallet/story?id=135802393",
         "facts": [
-          "官方每日債務餘額"
+          "房貸、車貸、信用卡利率上升",
+          "Penn Wharton：三十年後平均薪資低 3.4%"
         ]
       }
     ],
     "images": [
       {
         "caption": "每人／每戶分攤",
-        "source": "Peter G. Peterson Foundation",
-        "file": "charts/panel_person.png"
+        "source": "Peter G. Peterson Foundation"
       },
       {
-        "caption": "每分鐘／每小時／每天",
-        "source": "Peter G. Peterson Foundation",
-        "file": "charts/panel_rate.png"
+        "caption": "債主結構圓餅圖",
+        "source": "Al Jazeera（依其數字自繪）"
+      },
+      {
+        "caption": "外國債主排名",
+        "source": "Al Jazeera（依其數字自繪）"
       }
     ]
   },
   "lines": [
     {
-      "say": "美國國債剛剛突破四十兆美元。",
-      "show": "自製：大數字卡 40,000,000,000,000",
+      "say": "四十兆美元。美國國債剛剛突破這個數字。",
+      "show": "自製：大數字卡 40,047,547,901,373",
       "from": "US Treasury"
     },
     {
-      "say": "這個數字大到沒有意義，所以換個說法。",
-      "show": "自製：標題卡"
-    },
-    {
-      "say": "平均分攤到每一個美國人身上，是十一萬七千美元。",
-      "show": "自製：對比卡（每人／每戶）",
+      "say": "新聞會告訴你，平均每個美國人分攤十一萬七千美元。",
+      "show": "自製：對比卡，每人那格亮起",
       "from": "PGPF"
     },
     {
       "say": "以一個家庭來算，是二十九萬七千。",
-      "show": "同上，第二欄亮起",
+      "show": "自製：同上，家庭那格亮起",
       "from": "PGPF"
     },
     {
-      "say": "而且它還在長。",
-      "show": "自製：時鐘動畫"
+      "say": "聽起來像明天就有人來按門鈴收錢。",
+      "show": "自製：門鈴插畫，帳單卡",
+      "from": "觀點"
     },
     {
-      "say": "每分鐘四百八十萬，每天六十八億。",
+      "say": "但這個最嚇人的數字，剛好是最不真實的那一個。",
+      "show": "自製：標題卡，換底色",
+      "from": "觀點"
+    },
+    {
+      "say": "因為那四十兆裡面，有八兆是政府欠自己的。",
+      "show": "自製：圓餅圖，政府欠自己那塊亮起",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "社會安全基金買了國債，於是財政部欠了它八兆。",
+      "show": "自製：兩個部門互相指的插畫",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "翻譯成你聽得懂的話：左口袋欠右口袋八萬塊，然後宣布自己破產。",
+      "show": "自製：褲子口袋插畫，兩邊箭頭",
+      "from": "觀點"
+    },
+    {
+      "say": "那剩下的呢？二十一兆是欠美國人自己的。",
+      "show": "自製：圓餅圖，國內那塊亮起",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "你的退休金、你家附近那間銀行，都是債主。",
+      "show": "自製：三個圖示排開",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "真正欠外國的只有十一兆，四分之一。",
+      "show": "自製：圓餅圖，國外那塊亮起",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "而且第一名是日本，第二名是英國，中國排第三。",
+      "show": "自製：長條圖，日本 1.2 兆、英國 8890 億、中國 6830 億",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "所以，你不會收到那張十一萬七千的帳單。",
+      "show": "自製：帳單被劃掉的動畫",
+      "from": "觀點"
+    },
+    {
+      "say": "你會收到的是分期版。",
+      "show": "自製：標題卡，紅底",
+      "from": "觀點"
+    },
+    {
+      "say": "政府借越多，公債利率越高。",
       "show": "CNN 原畫面 46.9–52.0（消音）",
       "from": "CNN／PGPF"
     },
     {
-      "say": "但是先別急著恐慌。",
-      "show": "自製：標題卡，換底色"
+      "say": "而公債利率是所有借錢的基準。",
+      "show": "自製：三個圖示——房貸、車貸、信用卡",
+      "from": "ABC News"
     },
     {
-      "say": "沒有人會真的收到這張帳單，這只是總額除以人口。",
-      "show": "自製：把帳單劃掉的動畫"
+      "say": "所以房貸貴一點、車貸貴一點、信用卡也貴一點。",
+      "show": "自製：三張帳單，數字往上跳",
+      "from": "ABC News"
     },
     {
-      "say": "真正該看的是另一個數字。",
-      "show": "自製：標題卡"
+      "say": "華頓商學院估計，三十年後平均薪資少百分之三點四。",
+      "show": "自製：折線圖往下彎",
+      "from": "Penn Wharton／ABC News"
     },
     {
-      "say": "今年光是利息就花掉九千三百一十億，",
-      "show": "自製：長條圖，利息那條",
-      "from": "US Treasury"
+      "say": "每個月扣一點點，扣到你退休。",
+      "show": "自製：薪資單，一小塊被切走",
+      "from": "觀點"
     },
     {
-      "say": "已經超過國防預算的八千零四十億。",
-      "show": "同上，國防那條",
-      "from": "US Treasury"
+      "say": "而且帳單上不會寫「國債」這四個字。",
+      "show": "自製：薪資單特寫，扣款欄位空白",
+      "from": "觀點"
     },
     {
-      "say": "當一個國家付利息比養軍隊還貴，那才是警訊。",
-      "show": "自製：結語卡"
+      "say": "不是你欠了多少，是你根本不會發現自己正在還。",
+      "show": "自製：結語卡",
+      "from": "觀點"
     }
   ]
 }
