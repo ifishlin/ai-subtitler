@@ -326,6 +326,178 @@ def _to_trash(going: Path) -> Path:
     return landed
 
 
+# ---------------------------------------------------------------- stage one
+#
+# Making the video, as opposed to mending it. The page this serves has one
+# field, one button and a progress line, and deliberately nothing else: the
+# moment it starts asking which card to use or where to put it, that is a
+# decision the pipeline failed to make, and the fix belongs in produce.py.
+
+STEP_LINE = re.compile(r"^\[(\d)/(\d)\]\s*(.*)")
+_produce: dict[str, Any] = {"state": "idle", "step": 0, "steps": 8, "what": "",
+                            "message": "", "warning": "", "project": None,
+                            "started": 0.0, "log": []}
+_produce_lock = threading.Lock()
+_produce_process: dict[str, Any] = {"handle": None}
+
+
+def _sites() -> list[str]:
+    """Every site yt-dlp can fetch from. Asked once -- it is a fixed list for a
+    given version, and enumerating it takes a second."""
+    if not hasattr(_sites, "cached"):
+        found = subprocess.run([str(ROOT / ".venv/bin/yt-dlp"), "--list-extractors"],
+                               capture_output=True, text=True)
+        _sites.cached = sorted({line.strip() for line in found.stdout.splitlines()
+                                if line.strip() and ":" not in line})
+    return _sites.cached
+
+
+@app.get("/api/sites")
+def sites(q: str = "") -> dict[str, Any]:
+    """Which sites work. A list of 1700 names is not an answer, so it is
+    searchable: type where the video is and see whether it is in there."""
+    everything = _sites()
+    wanted = q.strip().lower()
+    found = [name for name in everything if wanted in name.lower()] if wanted else []
+    return {"total": len(everything), "query": q,
+            "matches": found[:40], "more": max(0, len(found) - 40)}
+
+
+def _model_reachable() -> tuple[bool, str]:
+    """Whether the model that does the translating can be reached right now."""
+    from core import llm as llm_module
+    from core import settings as settings_module
+    try:
+        provider, options = settings_module.llm_options(argparse.Namespace())
+        client = llm_module.build(provider, options)
+        if client is None:                  # provider "none": nothing to reach
+            return True, ""
+        client.ensure_ready()
+        return True, ""
+    except Exception as error:                                    # noqa: BLE001
+        return False, f"連不上 {provider}：{error}"
+
+
+def _produce_worker(source: str, name: str, extra: list[str]) -> None:
+    """Run the pipeline and report which of its eight steps it is on.
+
+    produce.py already announces every step on stdout, so progress is read from
+    what it says rather than guessed at from a timer. Reading line by line also
+    means the log survives a failure: when it stops, the last thing it printed
+    is on screen.
+    """
+    command = [str(ROOT / ".venv/bin/python"), "-u", str(ROOT / "produce.py"),
+               source, "--project", name, *extra]
+    began = time.time()
+    with _produce_lock:
+        _produce.update(state="running", step=0, what="開始", message="",
+                        warning="", project=name, started=began, log=[])
+    try:
+        handle = subprocess.Popen(command, cwd=ROOT, stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT, text=True, bufsize=1)
+        _produce_process["handle"] = handle
+        for line in handle.stdout:
+            line = line.rstrip()
+            if not line:
+                continue
+            with _produce_lock:
+                _produce["log"] = (_produce["log"] + [line])[-200:]
+                found = STEP_LINE.match(line)
+                if found:
+                    _produce["step"] = int(found.group(1))
+                    _produce["steps"] = int(found.group(2))
+                    _produce["what"] = found.group(3)
+        code = handle.wait()
+        with _produce_lock:
+            if code == 0:
+                # produce.py says so when it has to carry on without the model.
+                # A run that finished without translating is not a success, and
+                # calling it one is how you end up publishing English subtitles.
+                gave_up = [line for line in _produce["log"]
+                           if "無法連線" in line or "Skipping proofreading" in line]
+                _produce.update(state="done", step=_produce["steps"],
+                                warning="；".join(line.strip() for line in gave_up),
+                                message=f"完成：{name}")
+            else:
+                last = next((line for line in reversed(_produce["log"])
+                             if line.strip()), "")
+                _produce.update(state="error",
+                                message=f"第 {_produce['step']} 步失敗　{last[:200]}")
+    except Exception as error:                                    # noqa: BLE001
+        traceback.print_exc()
+        with _produce_lock:
+            _produce.update(state="error", message=str(error))
+    finally:
+        _produce_process["handle"] = None
+
+
+@app.post("/api/produce")
+def start_produce(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    source = str(payload.get("source") or "").strip()
+    if not source:
+        raise HTTPException(400, "要有一個網址或一個檔案路徑")
+    if not source.startswith(("http://", "https://")):
+        # A local file is allowed, but it has to be a file that exists: the
+        # alternative is finding out eight minutes later.
+        if not Path(source).expanduser().is_file():
+            raise HTTPException(400, f"找不到檔案 {source}")
+    name = str(payload.get("name") or "").strip()
+    output = project_dir(name)                  # also checks the name is a name
+    if output.exists():
+        raise HTTPException(400, f"{name} 已經存在了，換個名字")
+
+    # Ask the model whether it is there before spending twelve minutes finding
+    # out. Without this the pipeline degrades quietly: it transcribes, cannot
+    # reach anyone to translate, and finishes "successfully" with English
+    # subtitles -- the worst outcome, because it looks like it worked.
+    reachable, why = _model_reachable()
+    if not reachable:
+        raise HTTPException(503, f"{why}　字幕翻譯、校正和圖卡都需要它，"
+                                 "所以現在跑只會得到一支英文字幕的影片。")
+
+    extra = ["--render"] if payload.get("render", True) else []
+    with _produce_lock:
+        if _produce["state"] == "running":
+            return dict(_produce)
+    threading.Thread(target=_produce_worker, args=(source, name, extra),
+                     daemon=True).start()
+    time.sleep(0.2)
+    with _produce_lock:
+        return dict(_produce)
+
+
+@app.get("/api/produce")
+def produce_status() -> dict[str, Any]:
+    with _produce_lock:
+        state = dict(_produce)
+    state["seconds"] = round(time.time() - state["started"], 1) if state["started"] else 0.0
+    state["log"] = state["log"][-12:]
+    return state
+
+
+@app.post("/api/produce/stop")
+def stop_produce() -> dict[str, Any]:
+    """Stop a run in progress. Killing the parent alone leaves its ffmpeg
+    child writing to the same file, so the whole process group goes."""
+    handle = _produce_process.get("handle")
+    if handle is None:
+        raise HTTPException(400, "現在沒有在跑")
+    handle.terminate()
+    try:
+        handle.wait(timeout=10)
+    except subprocess.TimeoutExpired:
+        handle.kill()
+    with _produce_lock:
+        _produce.update(state="idle", message="已停止", step=0)
+        return dict(_produce)
+
+
+@app.get("/produce")
+def produce_page() -> HTMLResponse:
+    return HTMLResponse((Path(__file__).parent / "static" / "produce.html")
+                        .read_text(encoding="utf-8"))
+
+
 @app.get("/api/videos")
 def videos() -> dict[str, Any]:
     """Footage on disk that could become a project: downloads and clips.
