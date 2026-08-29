@@ -182,6 +182,51 @@ def _graph(box: tuple[int, int, int, int] | None, subtitles: Path | None,
             f"[bg][fg]overlay=(W-w)/2:{PICTURE_TOP}{mark}{burn},fps={FPS}[v]")
 
 
+# A still that pushes in slowly reads as film rather than as a slide. The
+# push crops the edges away, so nothing may sit closer to them than this.
+PUSH = 1.085
+SAFE = round(HEIGHT * (1 - 1 / PUSH) / 2) + 24
+
+
+def _push_filter(seconds: float) -> str:
+    """Slowly enlarge a still, from its centre.
+
+    zoompan starts at the top left corner unless told otherwise, so a still
+    without x and y does not zoom -- it drifts down and to the right, and
+    whatever was near the bottom leaves the frame. Naming the centre is the
+    whole fix, and it is easy to forget because the first second looks fine.
+    """
+    frames = round(seconds * FPS)
+    return (f"fps={FPS},scale={WIDTH * 2}:{HEIGHT * 2},"
+            f"zoompan=z='min(1+{(PUSH - 1) / frames:.6f}*on,{PUSH})'"
+            f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
+            f":d={frames}:s={WIDTH}x{HEIGHT}:fps={FPS},fade=in:0:8")
+
+
+def interlude(cards: list[Path], target: Path, each: float = 5.0) -> Path:
+    """A silent break between passages: fetched charts, our words, our frame."""
+    target.parent.mkdir(parents=True, exist_ok=True)
+    work = target.parent / ".shorts"
+    work.mkdir(parents=True, exist_ok=True)
+    made = []
+    for index, card in enumerate(cards):
+        piece = work / f"beat{index}.mp4"
+        subprocess.run([
+            "ffmpeg", "-v", "error", "-loop", "1", "-i", str(card),
+            "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+            "-t", f"{each:.2f}", "-vf", _push_filter(each),
+            "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
+            "-shortest", str(piece), "-y",
+        ], check=True)
+        made.append(piece)
+    listing = work / "beats.txt"
+    listing.write_text("".join(f"file '{piece}'\n" for piece in made), encoding="utf-8")
+    subprocess.run(["ffmpeg", "-v", "error", "-f", "concat", "-safe", "0",
+                    "-i", str(listing), "-c", "copy", str(target), "-y"], check=True)
+    return target
+
+
 def render(video: Path, passage: Passage, target: Path,
            subtitles: Path | None = None, box: tuple[int, int, int, int] | None = None,
            card: Path | None = None, card_seconds: float = 10.0,
