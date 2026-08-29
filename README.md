@@ -3,62 +3,74 @@
 Turns a foreign-language video into a Chinese-subtitled explainer. It is built
 in two stages, and the split matters more than any single feature.
 
-## 兩個階段
+## Two stages
 
-**第一階段：自動產生影片。目標是不要人為介入。**
+**Stage one: make the video automatically. The goal is that nobody has to
+touch it.**
 
-給一個網址，回來就是一支可以直接發布的影片。中間一個按鍵都不用按。
+Give it a URL and get back a video that can be published as it is. Not one
+button pressed in between.
 
-`produce.py` 的八個步驟就是這個階段的骨幹。新的能力接在這根骨幹上，不另起爐灶：
+`produce.py`'s eight steps are the backbone of this stage. New capability
+attaches to that backbone rather than starting somewhere else:
 
 ```
-[1/8] 準備影片        yt-dlp 下載或直接讀檔，抽出音軌
-[2/8] 辨識            faster-whisper 聽一次，再只重聽安靜的段落補句
-[3/8] 連 LLM          決定這一次由誰回答（qwen / claude / none / replay / ask）
-[4/8] 校正            修辨識的錯字和專有名詞，然後翻成繁體中文
-[5/8] 檢查與自動修補   對音軌稽核字幕，機械式問題自己修；修完更差就整批退回
-[6/8] LLM 審查成品     讀最後要出去的那一份，不是草稿
-[7/8] 規劃圖卡        決定哪裡放卡、卡上寫什麼
-[8/8] 燒錄            字幕和圖卡畫成畫面，輸出 final.mp4
+[1/8] Prepare      yt-dlp downloads it, or read a local file; extract the audio
+[2/8] Transcribe   faster-whisper listens once, then revisits only the silences
+[3/8] Connect      decide who answers this run (qwen / claude / none / replay / ask)
+[4/8] Correct      mend misheard words and proper nouns, then translate to Chinese
+[5/8] Audit & mend audit the captions against the audio; mechanical faults are
+                   repaired, and the whole repair is rolled back if it scores worse
+[6/8] Review       the model reads what is actually going out, not the draft
+[7/8] Plan cards   decide where a card goes and what it says
+[8/8] Render       draw captions and cards into the picture; write final.mp4
 ```
 
-**做不到全自動的地方就是這個階段的缺口**，而不是「留給人去處理」——每一次需要有人插手，
-都應該當成第一階段的待辦。
+**Anything that cannot be done automatically is a gap in this stage**, not
+something "left for a person to handle".
 
-### 第 7 步是現在最大的缺口
+### Step 7 is the largest gap
 
-規劃圖卡目前只被允許整理逐字稿裡講過的事——`core/visuals.py` 的提示詞明文寫著
-「不得補充、推測或捏造」，而且從第一個 commit 起就是這樣。所以它做得出
-「他說了什麼」的卡片，做不出「他說的這個東西是什麼」的卡片。
+Planning cards is only allowed to arrange what the transcript already says --
+`core/visuals.py` states it outright, "no additions, no inference, no
+invention", and has since the first commit. So it can make a card saying what
+someone said, but not one saying what the thing they said *is*.
 
-最初的規劃書（`docs/codex_video_pipeline_mvp.md`）要的是後者：
+The original brief (`docs/codex_video_pipeline_mvp.md`) asked for the second:
 
 ```
 → use AI to identify 1–2 places where an explanatory image would help
 → generate an AI image for each selected point
 ```
 
-要補上這個，第 7 步得長出三件現在沒有的能力：**判斷觀眾在哪裡會卡住**、
-**去外面查**、**把查到的壓縮成一張看得懂的卡**——而且每一張都要說得出資料從哪來，
-不然新聞影片捏造事實比沒有卡片更糟。當初那句禁令正是為了擋這個風險。
+Closing that means step 7 growing three abilities it does not have: **judging
+where a viewer gets stuck**, **looking it up**, and **compressing the answer
+into a card** -- one that can say where its facts came from, because a news
+video that invents them is worse than one with no cards at all. That
+prohibition exists to hold exactly this risk shut.
 
-已經有的積木：`core/stock.py` 會查並下載影片素材（Pexels / Pixabay，功能完整但
-還沒接進 pipeline）、`core/llm.py` 是問模型的管道、`tools/make_card.py` 加七個模板
-負責把答案畫成卡。缺的是中間那顆決定「該解釋什麼、答案是什麼」的腦袋。
+What is already built: `core/stock.py` searches and downloads stock footage
+(Pexels and Pixabay, complete but not yet wired into the pipeline),
+`core/llm.py` is the channel to a model, and `tools/make_card.py` with seven
+templates draws an answer into a card. What is missing is the judgement in the
+middle -- what needs explaining, and what the explanation is.
 
-**第二階段：編輯器，用來修改第一階段的成品。**
+**Stage two: an editor, for mending what stage one produced.**
 
-`studio/` 是一個本機網頁。它不重跑 pipeline，只修改已經產出的東西：改錯字、
-調字幕時間、排版面、放圖卡和素材影片、剪掉不要的片段、把幾支影片接起來，然後重新燒錄。
+`studio/` is a local web page. It does not re-run the pipeline; it edits what
+came out of it -- fixing wording, retiming captions, arranging the frame,
+placing cards and footage, cutting passages out, joining videos together, and
+burning the result again.
 
-**如果第一階段的成品能直接交付，第二階段就不需要存在。** 它是安全網，不是目標。
-現階段完全不用改很難，所以編輯器有用；但每一次你打開它，都是第一階段的一張待辦單。
+**If stage one's output can be delivered as it stands, stage two does not need
+to exist.** It is a safety net, not the goal. Today a video rarely needs no
+changes at all, so the editor earns its place.
 
 ```
-一個網址  ──[第一階段 produce.py]──▶  可以直接發布的影片
+a URL  ──[stage one: produce.py]──▶  a publishable video
                                           │
-                                          └──[第二階段 AI-Desk]──▶  修過的成品
-                                              （第一階段不夠好時才打開）
+                                          └──[stage two: AI-Desk]──▶  a mended video
+                                              (opened when stage one fell short)
 ```
 
 ## Requirements
@@ -80,7 +92,7 @@ The pipeline opens this tunnel automatically when needed:
 ssh -f -N -L 11435:127.0.0.1:11434 -o ExitOnForwardFailure=yes yuyu@cuba001
 ```
 
-## Run（第一階段）
+## Run (stage one)
 
 Use the downloaded test video:
 
@@ -125,70 +137,56 @@ Or provide a URL or local file:
 .venv/bin/python produce.py "/path/to/video.mp4"
 ```
 
-## Output
-
-## 目錄結構
+## Layout
 
 Four roles, and nothing sits in two of them:
 
 ```text
-produce.py            程式碼　pipeline 的進入點
-core/                         pipeline 的實作
-studio/                       編輯器：伺服器和兩張網頁
-tools/                        零星的小工具
+produce.py            code      the pipeline's entry point
+core/                           the pipeline itself
+studio/                         the editor: a server and two web pages
+tools/                          odd small scripts
 
-work/                 輸入　　拿進來的原片，和人工寫的 sidecar
+work/                 input     footage brought in, and hand-written sidecars
 
-assets/               素材　　跨專案共用，可以拖到任何一支影片上
-├── images/                   圖片和畫好的資訊卡
-├── cutouts/                  去背版（從 images/ 產的）
-├── cards/                    資訊卡的 HTML 原稿和模板
-└── clips/                    素材影片
+assets/               material  shared across projects, placeable on any video
+├── images/                     pictures and finished information cards
+├── cutouts/                    cut-out versions, made from images/
+├── cards/                      the HTML each card was drawn from, and templates
+└── clips/                      stock footage
 
-projects/             輸出　　一次 run 一個資料夾
-└── 名字/
-    ├── run.json              ← 這是專案的記號：說明它是哪支影片
-    ├── transcript*.json      辨識和校正的文字
-    ├── subtitles_*.srt       字幕
-    ├── scene.json            版面
-    ├── visuals/              這一支影片自己的圖卡
-    └── final.mp4             成品
+projects/             output    one directory per run
+└── name/
+    ├── run.json                ← the marker: which video this run is about
+    ├── transcript*.json        what was heard, and what it was corrected to
+    ├── subtitles_*.srt         captions
+    ├── scene.json              the layout
+    ├── visuals/                this video's own cards
+    └── final.mp4               the result
 
-editor_cache/         衍生　　proxy、波形、縮圖、字幕圖、抽出的音軌
-trash/                        刪掉但還沒真的丟的東西
-docs/                 文件
+editor_cache/         derived   proxies, waveforms, filmstrips, caption
+                                pictures, extracted audio
+trash/                          removed but not yet thrown away
+docs/                 documents
 ```
 
 The rule is that anything under `editor_cache/` can be deleted at any time and
 will be made again on demand, and nothing else can. That is the whole reason
 for the split: when the disk fills up you should not have to work out which
-264 megabytes are safe to lose.
+hundred megabytes are safe to lose.
 
-Every run gets its own directory under `projects/`. What makes one a project
-is the `run.json` inside it, which says which video the run is about -- not
-what the directory is called, so a project can be named after its subject.
-
-```text
-projects/RFK訪談/
-├── run.json            ← which video this run is about
-├── transcript.txt
-├── transcript.json
-├── subtitles_zh.srt
-├── ai_visuals.json
-├── visuals/
-│   ├── visual_01.png
-│   └── visual_02.png
-└── final.mp4
-```
+What makes a directory under `projects/` a project is the `run.json` inside
+it, which says which video the run is about -- not what the directory is
+called. So a project can be named after its subject, and renaming or moving
+one does not hide it.
 
 Cards appear temporarily on the right side of the original picture. The original audio continues underneath. See `docs/AI_SERVICE.md` for the remote model configuration.
 
-## 第二階段：AI-Desk
+## Stage two: AI-Desk
 
 A local web page that edits what the first stage produced, without re-running
 any of it -- subtitles, layout, cards, footage, cuts, and joining videos
-together. Open it when the automatic result is not good enough; every reason
-you had to open it is a gap in the first stage:
+together. Open it when the automatic result is not good enough:
 
 ```bash
 .venv/bin/python studio/server.py
