@@ -26,20 +26,14 @@
         "url": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
         "outlet": "CNBC",
         "lean": "neutral",
-        "seconds": 754.0,
-        "file": "assets/footage/美國看不到家醫科/d-ZysrVnc-A.mp4",
-        "captions": "assets/footage/美國看不到家醫科/d-ZysrVnc-A.en-en.vtt",
-        "size": 179366218
+        "seconds": 754.0
       },
       {
         "title": "General practitioner shortage",
         "url": "https://www.youtube.com/watch?v=sY95WZm0vd8",
         "outlet": "CNN",
         "lean": "left",
-        "seconds": 225.0,
-        "file": "assets/footage/美國看不到家醫科/sY95WZm0vd8.mp4",
-        "captions": null,
-        "size": 9389338
+        "seconds": 225.0
       },
       {
         "title": "The town so deprived of GPs that children seek medical help from youth workers - BBC Newsnight",
