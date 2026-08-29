@@ -89,6 +89,12 @@
   h3 .count{font:11px var(--mono);color:var(--faint)}
   h3 .count.lacking{color:var(--warn)}
   h3 .hint{font-size:11px;color:var(--faint);font-weight:400;margin-left:auto}
+  .hunt{display:flex;gap:8px;margin-bottom:10px}
+  .hunt input{flex:1;font-size:13px}
+  /* Candidates, not material: clicking one is what keeps it. */
+  #caught .shelf figure{cursor:pointer}
+  #caught .shelf figure:hover{border-color:var(--ok)}
+  #caught .shelf figure.taken{opacity:.4;pointer-events:none}
   .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin-bottom:7px;font-size:13px}
   .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
@@ -314,6 +320,14 @@ async function open(name) {
     ${sourceRows(pile.sources.reports, "報導")}
     <h3>原始數據 <span class="count">${got.data}</span></h3>
     ${sourceRows(pile.sources.data, "數據")}
+    <h3>臨時要找一張
+      <span class="hint">寫文案時想到什麼就打什麼，英文</span></h3>
+    <div class="hunt">
+      <input id="want" placeholder="例如：Trump wearing a hat" spellcheck="false">
+      <button id="btnFind" class="tiny">找</button>
+    </div>
+    <div id="caught"></div>
+
     ${["stock", "real", "frame"].map((kind) => {
       const spec = pile.counts.pictures[kind];
       const shown = (pile.sources.images || []).filter(
@@ -356,6 +370,52 @@ async function open(name) {
       $("note").textContent = error.message;
     }
   };
+  /* Ask for one shot and look at what comes back. Nothing is kept until it is
+     clicked -- a specific request is usually specific about how it should look
+     as well as what is in it. */
+  const hunt = async () => {
+    const want = $("want").value.trim();
+    if (!want) return;
+    $("caught").innerHTML = '<div class="empty">找…</div>';
+    let got;
+    try { got = await api("POST", "/api/topic/find", { want }); }
+    catch (error) {
+      $("caught").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`;
+      return;
+    }
+    if (!got.found.length) {
+      $("caught").innerHTML = '<div class="empty">兩邊都沒有。換個說法試試</div>';
+      return;
+    }
+    $("caught").innerHTML = `
+      <div class="shelf">${got.found.map((one, index) => `
+        <figure data-catch="${index}" title="點一下收進來　${
+          escapeHTML(one.caption || "")}">
+          <img src="${escapeHTML(one.url)}" alt="" loading="lazy">
+          <figcaption>${one.kind === "real" ? "真實" : "示意"}　${
+            escapeHTML(one.author || one.outlet)}</figcaption>
+        </figure>`).join("")}</div>`;
+    $("caught").querySelectorAll("[data-catch]").forEach((card) => {
+      card.onclick = async () => {
+        card.classList.add("taken");
+        try {
+          await api("POST", "/api/topic/keep",
+                    { name, want, picture: got.found[Number(card.dataset.catch)] });
+          $("note").className = "";
+          $("note").textContent = "收下了。重新整理這一頁就會出現在下面";
+        } catch (error) {
+          card.classList.remove("taken");
+          $("note").className = "bad";
+          $("note").textContent = error.message;
+        }
+      };
+    });
+  };
+  if ($("btnFind")) $("btnFind").onclick = hunt;
+  if ($("want")) $("want").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") hunt();
+  });
+
   if ($("btnVoices")) $("btnVoices").onclick = async () => {
     $("btnVoices").disabled = true;
     $("btnVoices").textContent = "抓取中…";

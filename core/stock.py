@@ -227,17 +227,25 @@ def search_commons(query: str, count: int = 6, least_wide: int = 900
     and have to appear on screen. So the credit is carried in the record, not
     left to be looked up later.
     """
-    params = urllib.parse.urlencode({
-        "action": "query", "format": "json", "generator": "search",
-        "gsrnamespace": "6",
-        "gsrsearch": f'filetype:bitmap intitle:"{query}" OR incategory:"{query}"'
-                     if " " not in query.strip() else
-                     f'filetype:bitmap "{query}"',
-        "gsrlimit": max(1, count) * 3, "prop": "imageinfo",
-        "iiprop": "url|size|extmetadata", "iiurlwidth": "1600",
-    })
-    data = _get_json(f"https://commons.wikimedia.org/w/api.php?{params}",
-                     {"User-Agent": WIKI_AGENT})
+    # Tight first, loose second. A quoted phrase keeps "server rack" from
+    # matching a bicycle rack, but it also finds nothing for a description like
+    # "Trump wearing a hat" -- nobody titles a file that. So the phrase is
+    # tried, and if the archive has no such phrase the words are tried
+    # separately, which is the right order: precision when it is available,
+    # something when it is not.
+    data = {}
+    for attempt in (f'filetype:bitmap "{query}"', f"filetype:bitmap {query}"):
+        params = urllib.parse.urlencode({
+            "action": "query", "format": "json", "generator": "search",
+            "gsrnamespace": "6", "gsrsearch": attempt,
+            "gsrlimit": max(1, count) * 3, "prop": "imageinfo",
+            "iiprop": "url|size|extmetadata", "iiurlwidth": "1600",
+        })
+        data = _get_json(f"https://commons.wikimedia.org/w/api.php?{params}",
+                         {"User-Agent": WIKI_AGENT})
+        if (data.get("query", {}).get("pages") or {}):
+            break
+        time.sleep(WIKI_PAUSE)
     found = []
     for page in (data.get("query", {}).get("pages") or {}).values():
         info = (page.get("imageinfo") or [{}])[0]

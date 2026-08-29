@@ -495,6 +495,73 @@ def cut_frames(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                           if i.get("kind") == "frame")}
 
 
+@app.post("/api/topic/find")
+def find_pictures(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Look for one particular shot, right now, and show what came back.
+
+    Batch collection answers "what might this topic need"; this answers "I need
+    Trump wearing a hat for line twelve". Nothing is saved -- the point is to
+    look first, because a specific request is usually specific about how it
+    should look too.
+    """
+    from core import stock as stock_module
+    want = str(payload.get("want") or "").strip()
+    if not want:
+        raise HTTPException(400, "要說你想找什麼（英文，圖庫不吃中文）")
+
+    found = []
+    for where, look in (("stock", stock_module.search_photos),
+                        ("real", stock_module.search_commons)):
+        try:
+            for picture in look(want, count=6):
+                found.append({
+                    "kind": where, "id": picture.id, "url": picture.url,
+                    "outlet": "Wikimedia Commons" if where == "real" else "Pexels",
+                    "author": picture.author, "page": picture.page,
+                    "caption": picture.about or want,
+                    "credit": (f"{picture.author}／{picture.about.split('　')[-1]}"
+                               if where == "real" else ""),
+                    "size": [picture.width, picture.height]})
+        except Exception:                                         # noqa: BLE001
+            continue        # one library being unavailable is not a failure
+    return {"want": want, "found": found}
+
+
+@app.post("/api/topic/keep")
+def keep_picture(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Take one of the pictures that came back."""
+    from core import stock as stock_module
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    picture = payload.get("picture") or {}
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    if not picture.get("url"):
+        raise HTTPException(400, "沒有指定哪一張")
+
+    here = ROOT / "assets" / "photos" / name
+    target = here / f"{picture.get('id', 'kept')}.jpg"
+    try:
+        stock_module.fetch(picture["url"], target)
+    except Exception as error:                                    # noqa: BLE001
+        raise HTTPException(502, f"抓不下來：{error}") from error
+
+    look = stock_module.looks_like(target)
+    pile["sources"]["images"].append({
+        "id": str(picture.get("id")), "kind": picture.get("kind", "stock"),
+        "term": str(payload.get("want") or picture.get("caption", ""))[:60],
+        "file": str(target.relative_to(ROOT)),
+        "caption": picture.get("caption", ""), "outlet": picture.get("outlet", ""),
+        "author": picture.get("author", ""), "credit": picture.get("credit", ""),
+        "page": picture.get("page", ""), "look": look,
+        "size": picture.get("size") or [0, 0]})
+    topic_module.save(name, pile)
+    return {"kept": picture.get("id"),
+            "pictures": topic_module.picture_mix(pile)}
+
+
 @app.post("/api/topic/images")
 def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Photographs for a topic, kept as a pile to choose from later."""
