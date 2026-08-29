@@ -22,6 +22,8 @@
   input{background:var(--bg);border:1px solid var(--line);border-radius:7px;
     color:var(--ink);padding:8px 11px;font:13px var(--mono);width:100%}
   input:focus{outline:none;border-color:var(--accent)}
+  select{background:var(--bg);border:1px solid var(--line);border-radius:7px;
+    color:var(--ink);padding:7px 10px;font-size:13px;min-width:16em}
 
   header{display:flex;align-items:center;gap:12px;padding:12px 20px;
     background:var(--panel);border-bottom:1px solid var(--line)}
@@ -88,6 +90,11 @@
       <input id="source" placeholder="https://www.youtube.com/watch?v=…　或一個本機檔案路徑"
              spellcheck="false" autocomplete="off">
       <div class="say">貼網頁的網址，或直接給硬碟上的影片檔路徑。</div>
+    </div>
+    <div class="field">
+      <label for="layout">版面</label>
+      <select id="layout"></select>
+      <div class="say" id="layoutNote">畫面怎麼排。在編輯器裡排好一個，按「存成公版」就會出現在這裡。</div>
     </div>
     <div class="field">
       <label for="name">取名</label>
@@ -221,6 +228,7 @@ $("go").onclick = async () => {
     const state = await api("POST", "/api/produce", {
       source: $("source").value.trim(),
       name: $("name").value.trim(),
+      layout: $("layout").value,
     });
     $("go").disabled = true;
     paint({ ...state, seconds: 0 });
@@ -261,8 +269,26 @@ $("siteFind").addEventListener("input", (event) => {
   }, 250);
 });
 
+/** The house styles, with what each one is. */
+async function loadLayouts() {
+  const { layouts } = await api("GET", "/api/layouts");
+  $("layout").innerHTML = layouts.map((item) =>
+    `<option value="${escapeHTML(item.name)}" data-note="${escapeHTML(item.note)}">`
+    + `${escapeHTML(item.name)}</option>`).join("");
+  sayLayout();
+}
+
+function sayLayout() {
+  const chosen = $("layout").selectedOptions[0];
+  $("layoutNote").textContent = (chosen && chosen.dataset.note)
+    || "畫面怎麼排。在編輯器裡排好一個，按「存成公版」就會出現在這裡。";
+}
+
+$("layout").addEventListener("change", sayLayout);
+
 (async function boot() {
   renderSteps(0);
+  try { await loadLayouts(); } catch (error) { /* the default is used */ }
   try {
     const found = await api("GET", "/api/sites");
     $("siteTotal").textContent = found.total;

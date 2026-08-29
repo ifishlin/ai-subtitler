@@ -18,6 +18,7 @@ from core.transcribe import GAP_MIN, TERMS_MAX, fill_gaps, transcribe
 from core.translate import translate_with_qwen
 from core.utils import write_json
 from core.visuals import plan_visuals_with_retry, render_cards
+from core import layouts
 
 
 ROOT = Path(__file__).resolve().parent
@@ -92,9 +93,9 @@ def parse_args() -> argparse.Namespace:
              "spoken language only, and skips translation altogether.",
     )
     parser.add_argument(
-        "--layout", choices=["full", "inset"], default="full",
-        help="full burns captions over the whole picture; inset places the video "
-             "in the upper left of a pale field, leaving room for explanation.",
+        "--layout", default="左上角",
+        help="Which house style to start from, by name. They are files in "
+             "assets/layouts/, so one arranged in the editor can be used here.",
     )
     parser.add_argument(
         "--badges", metavar="DIR",
@@ -348,8 +349,7 @@ def main() -> None:
         print(f"[8/8] Rendering subtitles and cards（版面：{args.layout}）")
         # One frame, one renderer. The layout is a scene either way, so the
         # editor can open this run and see exactly what was burned.
-        stage = (scene.default_scene(burn_srt.name) if args.layout == "inset"
-                 else scene.full_scene(burn_srt.name))
+        stage = layouts.scene_for(args.layout, burn_srt.name)
         if args.badges:
             images = sorted(Path(args.badges).glob("*.png"))
             scene.add_badges(stage, images, duration(video), args.badge_every)

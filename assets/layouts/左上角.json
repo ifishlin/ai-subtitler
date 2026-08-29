@@ -1,0 +1,47 @@
+{
+  "canvas": [
+    1920,
+    1080
+  ],
+  "background": "#DCE9F5",
+  "elements": [
+    {
+      "id": "video",
+      "type": "video",
+      "box": [
+        48,
+        48,
+        1200,
+        696
+      ]
+    },
+    {
+      "id": "subtitle",
+      "type": "subtitle",
+      "srt": "subtitles_bilingual.srt",
+      "box": [
+        48,
+        790,
+        1200,
+        930
+      ],
+      "font": "PingFang TC",
+      "size": 20,
+      "colour": "#FFFFFF",
+      "outline": "#000000",
+      "outline_width": 3
+    },
+    {
+      "id": "icon",
+      "type": "image",
+      "file": "assets/cutouts/ChatGPT Image 2026年8月25日 下午10_03_37.png",
+      "box": [
+        1584,
+        744,
+        1864,
+        1024
+      ]
+    }
+  ],
+  "note": "畫面在左上、字幕在畫面正下方、頻道 icon 在右下角，其餘留白"
+}

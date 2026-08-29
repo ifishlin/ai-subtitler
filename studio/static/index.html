@@ -616,6 +616,8 @@ main{display:flex;flex:1;min-height:0}
           <button id="btnRevertScene" class="tiny" title="丟掉還沒存的修改，回到 scene.json">復原到已存檔</button>
           <button id="btnResetScene" class="tiny" title="回到影片＋字幕＋頻道 icon 的基本畫面">回預設版面</button>
           <button id="btnSaveScene" class="tiny">儲存版面</button>
+          <button id="btnSaveLayout" class="tiny"
+                  title="把現在的排法存成公版，第一階段就能直接用">存成公版</button>
           <button id="btnPreviewScene" class="tiny">壓 10 秒看成品</button>
           <button id="btnShowJson" class="tiny">看 JSON</button>
           <label id="pngBox" title="用壓片會用的那張字幕圖，而不是瀏覽器畫的字">
@@ -1829,6 +1831,27 @@ $("btnStepFwd").onclick = () => step(1);
 $("btnPlay").onclick = () => (video.paused ? video.play() : video.pause());
 $("btnBack").onclick = () => seek(video.currentTime - 2);
 $("btnFwd").onclick = () => seek(video.currentTime + 2);
+/* ---------- house styles ----------
+   The frame you arranged, kept by name so a run can start from it. What is
+   saved is the arrangement without the timing -- the cards on screen belong to
+   this video, not to the style. */
+$("btnSaveLayout").onclick = async () => {
+  if (!SCENE.data) return;
+  const name = prompt("存成公版，取個名字：\n\n"
+    + "會留下畫面框、字幕樣式和頻道 icon；\n"
+    + "有時間範圍的圖卡不會跟著走，那是這支影片的東西。");
+  if (name === null) return;
+  try {
+    const kept = await api("POST", "/api/layout", {
+      name: name.trim(), scene: SCENE.data,
+    });
+    toast(`存成公版「${kept.saved}」　留下 ${kept.kept} 個元件`
+      + (kept.dropped ? `，${kept.dropped} 個有時間的沒帶走` : ""));
+  } catch (error) {
+    toast(error.message, true);
+  }
+};
+
 /* ---------- projects ----------
    The dropdown chooses one; this says what each of them is, and lets one go.
    Going means moving to trash/, the same as a piece of material: a run is a

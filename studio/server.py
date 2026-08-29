@@ -352,6 +352,51 @@ def _sites() -> list[str]:
     return _sites.cached
 
 
+@app.get("/api/layouts")
+def get_layouts() -> dict[str, Any]:
+    """The house styles a run can start from."""
+    from core import layouts as layouts_module
+    return {"layouts": layouts_module.listing()}
+
+
+@app.post("/api/layout")
+def save_layout(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Keep the frame as it stands now as a house style.
+
+    What is saved is the arrangement without the timing: the picture's box, the
+    caption style, the channel mark. The cards that happen to be on screen
+    belong to this video and are left behind, which is the whole reason a
+    layout is a different thing from a scene.
+    """
+    from core import layouts as layouts_module
+    name = str(payload.get("name") or "").strip()
+    scene = payload.get("scene")
+    if not isinstance(scene, dict) or not isinstance(scene.get("elements"), list):
+        raise HTTPException(400, "沒有版面可以存")
+    try:
+        path = layouts_module.save(name, scene, str(payload.get("note") or ""))
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    kept = layouts_module.load(name)
+    dropped = len(scene["elements"]) - len(kept["elements"])
+    return {"saved": name, "at": str(path.relative_to(ROOT)),
+            "kept": len(kept["elements"]), "dropped": dropped,
+            "layouts": layouts_module.listing()}
+
+
+@app.delete("/api/layout")
+def remove_layout(name: str) -> dict[str, Any]:
+    from core import layouts as layouts_module
+    try:
+        path = layouts_module.path_for(name)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    if not path.is_file():
+        raise HTTPException(404, f"找不到版面 {name}")
+    _to_trash(path)
+    return {"removed": name, "layouts": layouts_module.listing()}
+
+
 @app.get("/api/sites")
 def sites(q: str = "") -> dict[str, Any]:
     """Which sites work. A list of 1700 names is not an answer, so it is
@@ -462,6 +507,12 @@ def start_produce(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                                  "所以現在跑只會得到一支英文字幕的影片。")
 
     extra = ["--render"] if payload.get("render", True) else []
+    layout = str(payload.get("layout") or "").strip()
+    if layout:
+        from core import layouts as layouts_module
+        if layout not in layouts_module.names():
+            raise HTTPException(404, f"找不到版面 {layout}")
+        extra += ["--layout", layout]
     with _produce_lock:
         if _produce["state"] == "running":
             return dict(_produce)

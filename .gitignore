@@ -19,6 +19,7 @@ work/.*.speech.json
 # 素材：去背圖是從 images/ 產的，影片是下載的，都可以重做
 assets/cutouts/
 assets/clips/
+# 公版是設計出來的，跟程式一起走
 
 # 衍生檔：proxy、波形、縮圖、字幕圖、抽出來的音軌、Chrome 的 profile
 editor_cache/

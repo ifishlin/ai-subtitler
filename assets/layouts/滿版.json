@@ -1,0 +1,36 @@
+{
+  "canvas": [
+    1920,
+    1080
+  ],
+  "background": "#000000",
+  "elements": [
+    {
+      "id": "video",
+      "type": "video",
+      "box": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "id": "subtitle",
+      "type": "subtitle",
+      "srt": "subtitles_bilingual.srt",
+      "box": [
+        0,
+        830,
+        1920,
+        1020
+      ],
+      "font": "PingFang TC",
+      "size": 20,
+      "colour": "#FFFFFF",
+      "outline": "#000000",
+      "outline_width": 3
+    }
+  ],
+  "note": "畫面填滿整個框，字幕壓在畫面上"
+}
