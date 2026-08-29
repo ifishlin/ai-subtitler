@@ -352,6 +352,72 @@ def _sites() -> list[str]:
     return _sites.cached
 
 
+# ------------------------------------------------------------------ topics
+
+@app.get("/api/topics")
+def get_topics() -> dict[str, Any]:
+    from core import topic as topic_module
+    return {"topics": topic_module.listing(),
+            "want": topic_module.WANT,
+            "media": topic_module.media()}
+
+
+@app.get("/api/topic")
+def get_topic(name: str) -> dict[str, Any]:
+    """A topic with the reading done on it: what is there, what is missing,
+    and whether anyone who disagrees has been heard."""
+    from core import topic as topic_module
+    try:
+        pile = topic_module.load(name)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    except FileNotFoundError as error:
+        raise HTTPException(404, str(error)) from error
+    enough, why = topic_module.ready(pile)
+    return {**pile, "counts": topic_module.counts(pile),
+            "balance": topic_module.balance(pile), "ready": enough, "why": why}
+
+
+@app.post("/api/topic")
+def new_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    from core import topic as topic_module
+    name = str(payload.get("name") or "").strip()
+    try:
+        path = topic_module.path_for(name)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    if path.is_file():
+        raise HTTPException(400, f"{name} 已經存在了")
+    pile = topic_module.blank(name, str(payload.get("angle") or "影響民眾生活"))
+    topic_module.save(name, pile)
+    return {"made": name, "topics": topic_module.listing()}
+
+
+@app.post("/api/topic/script")
+def make_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Write a script from what has been gathered.
+
+    Refused while the pile is one-sided: a script written from sources that all
+    agree is a pamphlet, and no amount of drafting fixes that afterwards.
+    """
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    enough, why = topic_module.ready(pile)
+    if not enough and not payload.get("anyway"):
+        raise HTTPException(400, f"素材還不夠：{why}")
+
+    reachable, complaint = _model_reachable()
+    if not reachable:
+        raise HTTPException(503, f"{complaint}　寫文案需要它。")
+    raise HTTPException(501, "產生文案的那一步還沒接上模型——"
+                             "素材、平衡檢查和頁面都好了，缺的是寫稿本身。")
+
+
 # ------------------------------------------------------------------ scripts
 
 @app.get("/api/scripts")

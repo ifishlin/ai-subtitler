@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>文案　AI-Desk</title>
+<title>題目與文案　AI-Desk</title>
 <style>
   :root{
     --bg:#0b0e12; --panel:#141a21; --panel2:#1b232c; --line:#26313d;
@@ -15,8 +15,13 @@
     display:flex;flex-direction:column;height:100vh}
   button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel2);
     border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer}
-  button:hover{border-color:var(--accent)}
+  button:hover:not(:disabled){border-color:var(--accent)}
+  button:disabled{opacity:.45;cursor:default}
+  button.primary{background:var(--accent);color:#0b1017;border-color:transparent;
+    font-weight:600}
   button.tiny{padding:3px 9px;font-size:12px}
+  input{background:var(--bg);border:1px solid var(--line);border-radius:7px;
+    color:var(--ink);padding:6px 10px;font-size:13px}
   a{color:var(--accent)}
 
   header{display:flex;align-items:center;gap:12px;padding:11px 18px;flex:none;
@@ -26,70 +31,75 @@
   header .grow{flex:1}
 
   main{flex:1;display:flex;min-height:0}
-  #list{width:290px;flex:none;overflow:auto;padding:12px;
+  #list{width:300px;flex:none;overflow:auto;padding:12px;
     border-right:1px solid var(--line)}
   #paper{flex:1;overflow:auto;padding:20px 26px 60px}
 
-  .item{padding:9px 10px;margin-bottom:6px;border-radius:8px;cursor:pointer;
+  .item{padding:10px;margin-bottom:6px;border-radius:8px;cursor:pointer;
     background:var(--panel);border:1px solid var(--line)}
   .item:hover{border-color:var(--accent)}
   .item.on{border-color:var(--accent);background:var(--panel2)}
   .item b{display:block;font-weight:600}
-  .item .facts{font:11px var(--mono);color:var(--faint);margin-top:4px}
-  .item .bad{color:var(--danger)}
+  .item .facts{font:11px var(--mono);color:var(--faint);margin-top:4px;display:block}
+  .item .bad{color:var(--warn)}
 
-  /* ---- the script itself ---- */
   h2{margin:0 0 4px;font-size:19px}
-  .topic{color:var(--dim);font-size:13px;margin-bottom:14px}
-  .sums{display:flex;gap:18px;flex-wrap:wrap;padding:11px 14px;margin-bottom:18px;
+  .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
+
+  /* ---- what has been gathered ---- */
+  .gauge{display:flex;gap:16px;flex-wrap:wrap;padding:12px 15px;margin-bottom:8px;
     background:var(--panel);border:1px solid var(--line);border-radius:9px}
-  .sums div{font-size:12px;color:var(--dim)}
-  .sums b{display:block;font:18px var(--mono);color:var(--ink);
-    font-variant-numeric:tabular-nums}
-  .sums b.over{color:var(--danger)}
-  .sums b.good{color:var(--ok)}
+  .gauge div{font-size:12px;color:var(--dim)}
+  .gauge b{display:block;font:18px var(--mono);font-variant-numeric:tabular-nums;
+    color:var(--ink)}
+  .gauge b.short{color:var(--warn)}
+  .gauge b.good{color:var(--ok)}
 
-  /* The bar is the point of the page: 90 seconds is a wall, and you should be
-     able to see how close the script is to it without reading a number. */
-  .ruler{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;
-    margin-bottom:20px;border:1px solid var(--line);display:flex}
-  .ruler i{display:block;height:100%;border-right:1px solid #0b0e12}
-  .ruler i:nth-child(odd){background:var(--accent)}
-  .ruler i:nth-child(even){background:#4a86cc}
-  .ruler i.spill{background:var(--danger)}
+  /* Who has been heard. The point is not the count -- it is whether the other
+     side is in there at all, so an empty column is coloured, not just small. */
+  .sides{display:flex;gap:6px;margin-bottom:14px}
+  .sides div{flex:1;text-align:center;padding:8px 4px;border-radius:8px;
+    background:var(--panel);border:1px solid var(--line);font-size:11px;
+    color:var(--faint)}
+  .sides div b{display:block;font:17px var(--mono);color:var(--ink);margin-bottom:2px}
+  .sides div.none{border-color:#5c3a2a;background:#241a14}
+  .sides div.none b{color:var(--warn)}
 
-  table{width:100%;border-collapse:collapse}
-  th{text-align:left;font-size:11px;color:var(--faint);font-weight:500;
-    padding:0 10px 7px;border-bottom:1px solid var(--line)}
-  td{padding:9px 10px;vertical-align:top;border-bottom:1px solid var(--line)}
-  tr:hover td{background:#161d25}
-  td.at{font:11px var(--mono);color:var(--faint);white-space:nowrap;width:5.4em}
-  td.say{font-size:15px;line-height:1.55}
-  td.show{font-size:12px;color:var(--dim);width:30%}
-  td.from{font-size:11px;color:var(--faint);width:9em;white-space:nowrap}
-  td.from.none{color:var(--danger)}
-  td.from.ours{color:var(--accent)}
-  .own{color:var(--ok)}
-  .theirs{color:var(--warn)}
+  #verdict{padding:11px 15px;border-radius:9px;margin-bottom:18px;font-size:13px}
+  #verdict.ok{background:#12291f;border:1px solid #2c5a45;color:var(--ok)}
+  #verdict.no{background:#241a14;border:1px solid #5c3a2a;color:var(--warn)}
 
-  h3{margin:26px 0 8px;font-size:13px;color:var(--dim)}
+  h3{margin:24px 0 8px;font-size:13px;color:var(--dim);
+    display:flex;align-items:center;gap:8px}
+  h3 .count{font:11px var(--mono);color:var(--faint)}
   .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    padding:10px 13px;margin-bottom:7px;font-size:13px}
-  .src .meta{font-size:11px;color:var(--faint);margin-top:3px}
-  .src .fact{font-size:12px;color:var(--dim);margin-top:5px}
-  #empty{color:var(--faint);padding:40px;text-align:center}
+    padding:11px 14px;margin-bottom:7px;font-size:13px}
+  .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
+  .src .fact{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.7}
+  .lean{font-size:10px;padding:1px 7px;border-radius:99px;margin-left:6px;
+    border:1px solid var(--line);color:var(--dim)}
+  .lean.left{color:#7fb4ff;border-color:#2d4a70}
+  .lean.right{color:#ff9d7f;border-color:#6b3f2e}
+  .lean.neutral{color:var(--ok);border-color:#2c5a45}
+  .empty{color:var(--faint);font-size:13px;padding:14px;text-align:center;
+    border:1px dashed var(--line);border-radius:9px}
+  #note{font-size:13px;margin-top:14px}
+  #note.bad{color:var(--danger)}
+  #note.warn{color:var(--warn)}
 </style>
 
 <header>
-  <h1>文案</h1>
-  <span class="where">先寫台詞，再配畫面</span>
+  <h1>題目</h1>
+  <span class="where">先收集，再寫</span>
   <span class="grow"></span>
+  <input id="newName" placeholder="新題目…" size="16">
+  <button id="btnNew" class="tiny">新增</button>
   <button id="btnBack" class="tiny">← 回編輯器</button>
 </header>
 
 <main>
   <div id="list"></div>
-  <div id="paper"><div id="empty">左邊選一份文案</div></div>
+  <div id="paper"><div class="empty">左邊選一個題目</div></div>
 </main>
 
 <script>
@@ -98,18 +108,22 @@ const $ = (id) => document.getElementById(id);
 const escapeHTML = (text) => String(text).replace(/[&<>"]/g,
   (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-const STATE = { list: [], limit: 90, chosen: null };
+const STATE = { list: [], want: { videos: 5, reports: 5 }, chosen: null };
 
-async function api(path) {
-  const response = await fetch(path);
+async function api(method, path, body) {
+  const response = await fetch(path, {
+    method, headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.detail || `${path} 失敗`);
   return data;
 }
 
-function clock(seconds) {
-  const whole = Math.max(0, seconds || 0);
-  return `${Math.floor(whole / 60)}:${(whole % 60).toFixed(1).padStart(4, "0")}`;
+function leanTag(lean) {
+  const which = /left/.test(lean) ? "left" : /right/.test(lean) ? "right"
+              : lean === "neutral" ? "neutral" : "";
+  return lean ? `<span class="lean ${which}">${escapeHTML(lean)}</span>` : "";
 }
 
 function renderList() {
@@ -117,96 +131,136 @@ function renderList() {
     <div class="item ${item.name === STATE.chosen ? "on" : ""}"
          data-name="${escapeHTML(item.name)}">
       <b>${escapeHTML(item.name)}</b>
-      <span class="facts">${clock(item.seconds)}　${item.characters} 字　${
-        item.lines} 句　${item.sources} 個來源</span>
-      ${item.over ? `<span class="facts bad">超出 ${item.over} 秒</span>` : ""}
-      ${item.unsourced ? `<span class="facts bad">${item.unsourced} 句沒標來源</span>` : ""}
-    </div>`).join("") || '<div id="empty">還沒有文案</div>';
+      <span class="facts">影片 ${item.counts.videos}/${STATE.want.videos}　`
+      + `報導 ${item.counts.reports}/${STATE.want.reports}　事實 ${item.facts} 條</span>
+      ${item.ready ? '<span class="facts" style="color:var(--ok)">素材夠了</span>'
+                   : `<span class="facts bad">${escapeHTML(item.why)}</span>`}
+      ${item.scripts.length
+        ? `<span class="facts">文案 ${item.scripts.length} 份</span>` : ""}
+    </div>`).join("") || '<div class="empty">還沒有題目</div>';
 }
 
-/** Whether a line leans on someone else's picture. The balance between these
- *  is what decides whether the video counts as ours, so it is on every row. */
-function whose(show) {
-  const theirs = /CNN|原畫面|新聞畫面|素材/.test(show || "");
-  return theirs ? '<span class="theirs">引用</span>' : '<span class="own">自製</span>';
+function sourceRows(items, kind) {
+  if (!items || !items.length) {
+    return `<div class="empty">還沒有${kind}</div>`;
+  }
+  return items.map((item) => `
+    <div class="src">
+      ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
+        escapeHTML(item.title || item.url)}</a>` : escapeHTML(item.title || "")}
+      ${leanTag(item.lean || "")}
+      <div class="who">${escapeHTML(item.outlet || "")}${
+        item.seconds ? `　${Math.round(item.seconds / 60)} 分` : ""}${
+        item.captions ? "　有字幕" : ""}${
+        item.use ? `　用 ${item.use.map((w) => `${w[0]}–${w[1]}s`).join("、")}` : ""}${
+        item.note ? `　${escapeHTML(item.note)}` : ""}</div>
+      ${(item.facts || []).length
+        ? `<div class="fact">${item.facts.map(escapeHTML).join("　·　")}</div>` : ""}
+    </div>`).join("");
 }
 
 async function open(name) {
   STATE.chosen = name;
   renderList();
-  let script;
-  try { script = await api(`/api/script?name=${encodeURIComponent(name)}`); }
-  catch (error) { $("paper").innerHTML = `<div id="empty">${escapeHTML(error.message)}</div>`; return; }
+  let pile;
+  try { pile = await api("GET", `/api/topic?name=${encodeURIComponent(name)}`); }
+  catch (error) { $("paper").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`; return; }
 
-  const sums = script.measured;
-  const ours = sums.lines.filter((line) => !/CNN|原畫面|新聞畫面|素材/.test(line.show || ""));
-  const oursSeconds = ours.reduce((total, line) => total + line.seconds, 0);
-  const share = sums.seconds ? Math.round((oursSeconds / sums.seconds) * 100) : 0;
-
-  const ruler = sums.lines.map((line) => {
-    const width = (line.seconds / Math.max(STATE.limit, sums.seconds)) * 100;
-    const spill = line.at > STATE.limit ? " spill" : "";
-    return `<i class="${spill}" style="width:${width}%" title="${clock(line.at)}"></i>`;
-  }).join("");
-
-  const rows = sums.lines.map((line) => `
-    <tr>
-      <td class="at">${clock(line.at)}</td>
-      <td class="say">${escapeHTML(line.say || "")}</td>
-      <td class="show">${whose(line.show)}　${escapeHTML(line.show || "")}</td>
-      <td class="from ${line.from ? (line.from === "觀點" ? "ours" : "") : "none"}">${
-        line.from ? escapeHTML(line.from) : (line.say ? "沒標來源" : "")}</td>
-    </tr>`).join("");
-
-  const kinds = [["video", "影片"], ["reports", "報告"], ["images", "圖表照片"]];
-  const sources = kinds.map(([key, label]) => {
-    const items = (script.sources || {})[key] || [];
-    if (!items.length) return "";
-    return `<h3>${label}（${items.length}）</h3>` + items.map((item) => `
-      <div class="src">
-        ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
-          escapeHTML(item.title || item.caption || item.url)}</a>`
-          : escapeHTML(item.title || item.caption || "")}
-        <div class="meta">${escapeHTML(item.source || item.note || "")}${
-          item.use ? `　用 ${item.use.map((w) => `${w[0]}–${w[1]}s`).join("、")}` : ""}</div>
-        ${(item.facts || []).length
-          ? `<div class="fact">${item.facts.map(escapeHTML).join("　·　")}</div>` : ""}
-      </div>`).join("");
-  }).join("");
+  const got = pile.counts.got, want = pile.counts.want, sides = pile.balance.sides;
+  const columns = [["left", "左"], ["neutral", "中立"], ["right", "右"],
+                   ["business", "財經"], ["other", "其他"]];
 
   $("paper").innerHTML = `
-    <h2>${escapeHTML(name)}</h2>
-    <div class="topic">${escapeHTML(script.topic || "")}${
-      script.note ? `　—　${escapeHTML(script.note)}` : ""}</div>
-    <div class="sums">
-      <div>長度<b class="${sums.over ? "over" : "good"}">${clock(sums.seconds)}</b></div>
-      <div>上限 ${STATE.limit} 秒<b>${sums.over ? `超出 ${sums.over}s` : "在裡面"}</b></div>
-      <div>字數<b>${sums.characters}</b></div>
-      <div>句數<b>${sums.lines.length}</b></div>
-      <div>自製畫面佔比<b class="${share >= 60 ? "good" : "over"}">${share}%</b></div>
-      <div>觀點<b class="${sums.opinion >= 4 ? "good" : ""}">${sums.opinion} 句</b></div>
-      <div>沒標來源<b class="${sums.unsourced.length ? "over" : "good"}">${
-        sums.unsourced.length}</b></div>
+    <h2>${escapeHTML(pile.topic || name)}</h2>
+    <div class="angle">角度：${escapeHTML(pile.angle || "")}${
+      pile.note ? `　—　${escapeHTML(pile.note)}` : ""}</div>
+
+    <div class="gauge">
+      <div>影片<b class="${got.videos >= want.videos ? "good" : "short"}">${
+        got.videos} / ${want.videos}</b></div>
+      <div>報導<b class="${got.reports >= want.reports ? "good" : "short"}">${
+        got.reports} / ${want.reports}</b></div>
+      <div>圖表照片<b>${got.images}</b></div>
+      <div>原始數據<b>${got.data}</b></div>
+      <div>整理出的事實<b>${(pile.facts || []).length}</b></div>
     </div>
-    <div class="ruler">${ruler}</div>
-    <table>
-      <thead><tr><th>起</th><th>台詞</th><th>畫面</th><th>來源</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-    ${sources}`;
+
+    <div class="sides">
+      ${columns.map(([key, label]) => `
+        <div class="${sides[key] ? "" : "none"}">
+          <b>${sides[key]}</b>${label}
+        </div>`).join("")}
+    </div>
+
+    <div id="verdict" class="${pile.ready ? "ok" : "no"}">
+      ${pile.ready ? "素材夠了，可以寫文案。"
+                   : `還不能寫：${escapeHTML(pile.why)}`}
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
+      ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">素材不齊也要寫</button>'}
+      <span style="flex:1"></span>
+      ${(pile.scripts || []).length
+        ? `<span style="font-size:12px;color:var(--dim)">已有文案：${
+            pile.scripts.map(escapeHTML).join("、")}</span>` : ""}
+    </div>
+    <div id="note"></div>
+
+    <h3>影片 <span class="count">${got.videos} / ${want.videos}</span></h3>
+    ${sourceRows(pile.sources.videos, "影片")}
+    <h3>報導 <span class="count">${got.reports} / ${want.reports}</span></h3>
+    ${sourceRows(pile.sources.reports, "報導")}
+    <h3>原始數據 <span class="count">${got.data}</span></h3>
+    ${sourceRows(pile.sources.data, "數據")}
+    <h3>整理出的事實 <span class="count">${(pile.facts || []).length}</span></h3>
+    ${(pile.facts || []).length
+      ? (pile.facts || []).map((fact) => `
+          <div class="src">${escapeHTML(fact.say)}
+            <div class="who">${escapeHTML(fact.from || "")}</div></div>`).join("")
+      : '<div class="empty">還沒有整理</div>'}`;
+
+  const write = async (anyway) => {
+    $("note").className = "";
+    $("note").textContent = "寫稿中…";
+    try {
+      const made = await api("POST", "/api/topic/script", { name, anyway });
+      $("note").textContent = `寫好了：${made.script}`;
+    } catch (error) {
+      $("note").className = "warn";
+      $("note").textContent = error.message;
+    }
+  };
+  if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
+  if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
 }
 
 $("list").addEventListener("click", (event) => {
   const row = event.target.closest("[data-name]");
   if (row) open(row.dataset.name);
 });
+
+$("btnNew").onclick = async () => {
+  const name = $("newName").value.trim();
+  if (!name) return;
+  try {
+    const made = await api("POST", "/api/topic", { name });
+    STATE.list = made.topics.sort((a, b) => b.modified - a.modified);
+    $("newName").value = "";
+    renderList();
+    open(name);
+  } catch (error) { alert(error.message); }
+};
+$("newName").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") $("btnNew").click();
+});
 $("btnBack").onclick = () => { location.href = "/"; };
 
 (async function boot() {
   try {
-    const found = await api("/api/scripts");
-    STATE.list = found.scripts.sort((a, b) => b.modified - a.modified);
-    STATE.limit = found.limit;
+    const found = await api("GET", "/api/topics");
+    STATE.list = found.topics.sort((a, b) => b.modified - a.modified);
+    STATE.want = found.want;
   } catch (error) { /* nothing yet */ }
   renderList();
   if (STATE.list.length) open(STATE.list[0].name);

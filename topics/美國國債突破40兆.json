@@ -1,0 +1,104 @@
+{
+  "topic": "美國國債突破40兆",
+  "angle": "影響民眾生活",
+  "made": 1788025467,
+  "sources": {
+    "videos": [
+      {
+        "title": "US debt hits $40T. Matt Egan has the price per person",
+        "outlet": "CNN",
+        "lean": "left",
+        "url": "https://www.youtube.com/watch?v=dqKmjoKFiC0",
+        "seconds": 591,
+        "captions": true,
+        "use": [
+          [
+            46.9,
+            52.0
+          ]
+        ],
+        "note": "圖表牆解說，數字大好讀"
+      }
+    ],
+    "reports": [
+      {
+        "title": "The National Debt Has Now Surpassed $40 Trillion",
+        "outlet": "Peter G. Peterson Foundation",
+        "lean": "primary",
+        "url": "https://www.pgpf.org/article/the-national-debt-is-now-more-than-40-trillion-what-does-that-mean/",
+        "facts": [
+          "每人 $117,000",
+          "每戶 $297,000",
+          "每分鐘 $4.8M",
+          "每天 $6.8B"
+        ]
+      },
+      {
+        "title": "US debt hits $40 trillion: Who does Washington owe?",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "url": "https://www.aljazeera.com/economy/2026/8/20/us-debt-hits-40-trillion-who-does-washington-owe-and-why-does-it-matter",
+        "facts": [
+          "政府欠自己 8 兆",
+          "國內 21 兆",
+          "國外 11 兆",
+          "日本 1.203 兆、英國 8890 億、中國 6830 億",
+          "2056 年利息可能吃掉稅收的 50%"
+        ]
+      },
+      {
+        "title": "Federal debt tops $40 trillion. Here's what it means for your wallet",
+        "outlet": "ABC News",
+        "lean": "centre-left",
+        "url": "https://abcnews.com/Business/federal-debt-tops-40-trillion-means-wallet/story?id=135802393",
+        "facts": [
+          "房貸、車貸、信用卡利率上升",
+          "Penn Wharton：三十年後平均薪資低 3.4%"
+        ]
+      }
+    ],
+    "images": [],
+    "data": [
+      {
+        "title": "Debt to the Penny",
+        "outlet": "US Treasury",
+        "url": "https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/",
+        "note": "每日餘額，可下載 CSV"
+      }
+    ]
+  },
+  "facts": [
+    {
+      "say": "國債總額 40.05 兆美元",
+      "from": "US Treasury"
+    },
+    {
+      "say": "每人分攤 $117,339",
+      "from": "PGPF"
+    },
+    {
+      "say": "每戶分攤 $297,000",
+      "from": "PGPF"
+    },
+    {
+      "say": "其中 8 兆是政府欠自己的",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "欠外國 11 兆，日本最多 1.203 兆",
+      "from": "Al Jazeera"
+    },
+    {
+      "say": "今年利息 9,310 億，超過國防 8,040 億",
+      "from": "US Treasury"
+    },
+    {
+      "say": "三十年後平均薪資低 3.4%",
+      "from": "Penn Wharton / ABC News"
+    }
+  ],
+  "scripts": [
+    "美國國債40兆"
+  ],
+  "note": "語氣詼諧。觀點：最嚇人的數字最不真實。"
+}
