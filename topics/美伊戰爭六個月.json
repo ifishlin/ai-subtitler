@@ -9,14 +9,20 @@
         "url": "https://www.youtube.com/watch?v=IdufvpqvhWg",
         "outlet": "Fox News",
         "lean": "right",
-        "seconds": 301.0
+        "seconds": 301.0,
+        "file": "assets/footage/美伊戰爭六個月/IdufvpqvhWg.mp4",
+        "captions": "assets/footage/美伊戰爭六個月/IdufvpqvhWg.en-US.vtt",
+        "size": 24698563
       },
       {
         "title": "Six months into the war on Iran, what counts as victory for Trump?",
         "url": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
         "outlet": "Al Jazeera English",
         "lean": "non-western",
-        "seconds": 169.0
+        "seconds": 169.0,
+        "file": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
+        "captions": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.en-orig.vtt",
+        "size": 27200292
       },
       {
         "title": "Costly consequences after six months of Iran war",
@@ -103,7 +109,8 @@
         "size": [
           5131,
           3421
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "17849728",
@@ -117,7 +124,8 @@
         "size": [
           3005,
           2003
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "12973597",
@@ -131,7 +139,8 @@
         "size": [
           5472,
           3648
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "33284879",
@@ -145,7 +154,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "27275198",
@@ -159,7 +169,8 @@
         "size": [
           8064,
           4536
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "15647002",
@@ -173,7 +184,8 @@
         "size": [
           4658,
           3494
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "38485170",
@@ -187,7 +199,8 @@
         "size": [
           4500,
           3375
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "29243395",
@@ -201,7 +214,8 @@
         "size": [
           5021,
           2831
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5595742",
@@ -215,7 +229,8 @@
         "size": [
           3909,
           2199
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "14815921",
@@ -229,7 +244,8 @@
         "size": [
           4320,
           3240
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11389636",
@@ -243,7 +259,8 @@
         "size": [
           4232,
           2699
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11042981",
@@ -257,7 +274,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "17681813",
@@ -271,7 +289,8 @@
         "size": [
           4257,
           2838
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "12377481",
@@ -285,7 +304,8 @@
         "size": [
           8944,
           6708
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "9796",
@@ -299,7 +319,8 @@
         "size": [
           4849,
           3228
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "29370541",
@@ -313,7 +334,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "34081589",
@@ -327,7 +349,8 @@
         "size": [
           6240,
           4160
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "1620390",
@@ -341,7 +364,8 @@
         "size": [
           2232,
           2231
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "18205661",
@@ -355,7 +379,8 @@
         "size": [
           6960,
           4640
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "33716553",
@@ -369,7 +394,8 @@
         "size": [
           5408,
           3605
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11433700",
@@ -383,7 +409,8 @@
         "size": [
           5107,
           4081
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "29786929",
@@ -397,7 +424,8 @@
         "size": [
           6240,
           4160
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "39212596",
@@ -411,7 +439,8 @@
         "size": [
           6774,
           4516
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "38796151",
@@ -425,7 +454,8 @@
         "size": [
           8640,
           5760
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "38782894",
@@ -439,7 +469,8 @@
         "size": [
           8640,
           5760
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "38474793",
@@ -453,7 +484,8 @@
         "size": [
           5643,
           3762
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "9000153",
@@ -467,7 +499,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "12932548",
@@ -481,6 +514,211 @@
         "size": [
           6000,
           4000
+        ],
+        "kind": "stock"
+      },
+      {
+        "id": "frame_IdufvpqvhWg_75",
+        "kind": "frame",
+        "term": "Fox News 75s",
+        "file": "assets/photos/美伊戰爭六個月/frame_IdufvpqvhWg_75.jpg",
+        "caption": "It's just a MATTER OF TIME before Iranian government COLLAPSES: Ret. Air Force g",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=IdufvpqvhWg",
+        "look": 1152358554670071807
+      },
+      {
+        "id": "frame_IdufvpqvhWg_225",
+        "kind": "frame",
+        "term": "Fox News 225s",
+        "file": "assets/photos/美伊戰爭六個月/frame_IdufvpqvhWg_225.jpg",
+        "caption": "It's just a MATTER OF TIME before Iranian government COLLAPSES: Ret. Air Force g",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=IdufvpqvhWg",
+        "look": 9943675332848007679
+      },
+      {
+        "id": "frame_5G9j0kS3P8E_42",
+        "kind": "frame",
+        "term": "Al Jazeera English 42s",
+        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_42.jpg",
+        "caption": "Six months into the war on Iran, what counts as victory for Trump?",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
+        "look": 18374124644287493623
+      },
+      {
+        "id": "frame_5G9j0kS3P8E_84",
+        "kind": "frame",
+        "term": "Al Jazeera English 84s",
+        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_84.jpg",
+        "caption": "Six months into the war on Iran, what counts as victory for Trump?",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
+        "look": 582085967871
+      },
+      {
+        "id": "frame_5G9j0kS3P8E_126",
+        "kind": "frame",
+        "term": "Al Jazeera English 126s",
+        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_126.jpg",
+        "caption": "Six months into the war on Iran, what counts as victory for Trump?",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
+        "look": 35461070126332
+      },
+      {
+        "id": "79848427",
+        "term": "Strait of Hormuz",
+        "file": "assets/photos/美伊戰爭六個月/79848427.jpg",
+        "caption": "CENTCOM RQ-4A Flight Path map.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "U.S. Central Command, U.S. DoD",
+        "credit": "U.S. Central Command, U.S. DoD／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:CENTCOM_RQ-4A_Flight_Path_map.jpg",
+        "look": 138481011574902535,
+        "size": [
+          1191,
+          526
+        ]
+      },
+      {
+        "id": "185806560",
+        "term": "Strait of Hormuz",
+        "file": "assets/photos/美伊戰爭六個月/185806560.jpg",
+        "caption": "Elphinstone Inlet 2.webp　CC BY 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "OpenStreetMap",
+        "credit": "OpenStreetMap／CC BY 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Elphinstone_Inlet_2.webp",
+        "look": 73470900524486426,
+        "size": [
+          4798,
+          2355
+        ]
+      },
+      {
+        "id": "102315478",
+        "term": "Strait of Hormuz",
+        "file": "assets/photos/美伊戰爭六個月/102315478.jpg",
+        "caption": "ISS047-E-146174 - View of Earth.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Earth Science and Remote Sensing Unit, Lyndon B. Johnson Space Center",
+        "credit": "Earth Science and Remote Sensing Unit, Lyndon B. Johnson Space Center／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:ISS047-E-146174_-_View_of_Earth.jpg",
+        "look": 17931307079935458816,
+        "size": [
+          4928,
+          3280
+        ]
+      },
+      {
+        "id": "126915546",
+        "term": "Tehran city",
+        "file": "assets/photos/美伊戰爭六個月/126915546.jpg",
+        "caption": "Alien Theater, by Albert Camus-City Theater of Tehran-Canon Photography-2016-Photo By Mostafa Meraji 27.jpg　CC0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Mostafameraji",
+        "credit": "Mostafameraji／CC0",
+        "page": "https://commons.wikimedia.org/wiki/File:Alien_Theater,_by_Albert_Camus-City_Theater_of_Tehran-Canon_Photography-2016-Photo_By_Mostafa_Meraji_27.jpg",
+        "look": 8680747863427254392,
+        "size": [
+          3500,
+          2333
+        ]
+      },
+      {
+        "id": "126915548",
+        "term": "Tehran city",
+        "file": "assets/photos/美伊戰爭六個月/126915548.jpg",
+        "caption": "Alien Theater, by Albert Camus-City Theater of Tehran-Canon Photography-2016-Photo By Mostafa Meraji 28.jpg　CC0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Mostafameraji",
+        "credit": "Mostafameraji／CC0",
+        "page": "https://commons.wikimedia.org/wiki/File:Alien_Theater,_by_Albert_Camus-City_Theater_of_Tehran-Canon_Photography-2016-Photo_By_Mostafa_Meraji_28.jpg",
+        "look": 8681950779212169216,
+        "size": [
+          3500,
+          2333
+        ]
+      },
+      {
+        "id": "126071711",
+        "term": "Tehran city",
+        "file": "assets/photos/美伊戰爭六個月/126071711.jpg",
+        "caption": "Aradkoh -2016-Tehran city-Iran country-Canon Photography-Mostafa Meraji 03.jpg　CC0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Mostafameraji",
+        "credit": "Mostafameraji／CC0",
+        "page": "https://commons.wikimedia.org/wiki/File:Aradkoh_-2016-Tehran_city-Iran_country-Canon_Photography-Mostafa_Meraji_03.jpg",
+        "look": 1153198581536980992,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "14989513",
+        "term": "aircraft carrier US Navy",
+        "file": "assets/photos/美伊戰爭六個月/14989513.jpg",
+        "caption": "F-8E(FN) catching wire on USS Eisenhower (CVN-69) 1983.JPEG　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Camera Operator: Walsworth, USN\n\nTouched up by Cobatfor ()",
+        "credit": "Camera Operator: Walsworth, USN\n\nTouched up by Cobatfor ()／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:F-8E(FN)_catching_wire_on_USS_Eisenhower_(CVN-69)_1983.JPEG",
+        "look": 3474527113432727295,
+        "size": [
+          2530,
+          1716
+        ]
+      },
+      {
+        "id": "61785380",
+        "term": "aircraft carrier US Navy",
+        "file": "assets/photos/美伊戰爭六個月/61785380.jpg",
+        "caption": "GHWB is the flagship of Carrier Strike Group (CSG) 2, which is comprised of the staff of CSG-2, GHWB, the nine squadrons and staff of Carrier Air Wing (CVW) 8, Destroyer Squadron (DESRON) 22 staff and 170713-N-AJ467-008.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Darien P Weigel",
+        "credit": "Darien P Weigel／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:GHWB_is_the_flagship_of_Carrier_Strike_Group_(CSG)_2,_which_is_comprised_of_the_staff_of_CSG-2,_GHWB,_the_nine_squadrons_and_staff_of_Carrier_Air_Wing_(CVW)_8,_Destroyer_Squadron_(DESRON)_22_staff_and_170713-N-AJ467-008.jpg",
+        "look": 9286695789377944828,
+        "size": [
+          5040,
+          4016
+        ]
+      },
+      {
+        "id": "58076228",
+        "term": "aircraft carrier US Navy",
+        "file": "assets/photos/美伊戰爭六個月/58076228.jpg",
+        "caption": "GHWB is the flagship of Carrier Strike Group (CSG) 2, which is comprised of the staff of CSG-2; GHWB; the nine squadrons and staff of Carrier Air Wing (CVW) 8; Destroyer Squadron (DESRON) 22 staff and 170404-N-YL257-045.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Petty Officer 3rd Class Christopher Gaines",
+        "credit": "Petty Officer 3rd Class Christopher Gaines／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:GHWB_is_the_flagship_of_Carrier_Strike_Group_(CSG)_2,_which_is_comprised_of_the_staff_of_CSG-2;_GHWB;_the_nine_squadrons_and_staff_of_Carrier_Air_Wing_(CVW)_8;_Destroyer_Squadron_(DESRON)_22_staff_and_170404-N-YL257-045.jpg",
+        "look": 18374403831196183612,
+        "size": [
+          2100,
+          1402
         ]
       }
     ],

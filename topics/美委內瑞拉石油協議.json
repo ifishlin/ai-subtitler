@@ -9,14 +9,20 @@
         "url": "https://www.youtube.com/watch?v=BF5XKzypiic",
         "outlet": "Fox Business",
         "lean": "right",
-        "seconds": 150.0
+        "seconds": 150.0,
+        "file": "assets/footage/美委內瑞拉石油協議/BF5XKzypiic.mp4",
+        "captions": "assets/footage/美委內瑞拉石油協議/BF5XKzypiic.en-US.vtt",
+        "size": 11050228
       },
       {
         "title": "Why Trump Wants ConocoPhillips, ExxonMobil And Chevron To Rebuild Venezuela’s Oil Fields",
         "url": "https://www.youtube.com/watch?v=w67-wxmkWeQ",
         "outlet": "CNBC",
         "lean": "neutral",
-        "seconds": 150.0
+        "seconds": 150.0,
+        "file": "assets/footage/美委內瑞拉石油協議/w67-wxmkWeQ.mp4",
+        "captions": "assets/footage/美委內瑞拉石油協議/w67-wxmkWeQ.en-en.vtt",
+        "size": 52954454
       },
       {
         "title": "US-Venezuela oil deal: What does it mean for Washington?",
@@ -120,7 +126,8 @@
         "size": [
           4267,
           2845
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "10396415",
@@ -134,7 +141,8 @@
         "size": [
           5383,
           3577
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "10386893",
@@ -148,7 +156,8 @@
         "size": [
           5454,
           5178
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "38150961",
@@ -162,7 +171,8 @@
         "size": [
           7360,
           4912
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "3151717",
@@ -176,7 +186,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "615670",
@@ -190,7 +201,8 @@
         "size": [
           4160,
           2340
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "16100273",
@@ -204,7 +216,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "13951485",
@@ -218,7 +231,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "14131887",
@@ -232,7 +246,8 @@
         "size": [
           3888,
           2592
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "16852979",
@@ -246,7 +261,8 @@
         "size": [
           4288,
           2848
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "14377364",
@@ -260,7 +276,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "16862261",
@@ -274,7 +291,8 @@
         "size": [
           4344,
           2840
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "18419622",
@@ -288,7 +306,8 @@
         "size": [
           5281,
           3219
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5987842",
@@ -302,7 +321,8 @@
         "size": [
           5000,
           3750
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "3856438",
@@ -316,7 +336,8 @@
         "size": [
           5417,
           5096
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8280027",
@@ -330,7 +351,8 @@
         "size": [
           4592,
           3448
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8634621",
@@ -344,7 +366,8 @@
         "size": [
           5920,
           3947
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8658595",
@@ -358,7 +381,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "6077326",
@@ -372,7 +396,8 @@
         "size": [
           5472,
           3648
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "33678872",
@@ -386,7 +411,8 @@
         "size": [
           5600,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5668481",
@@ -400,7 +426,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "27100751",
@@ -414,7 +441,8 @@
         "size": [
           6224,
           4149
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11409887",
@@ -428,7 +456,8 @@
         "size": [
           4429,
           2952
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "20000599",
@@ -442,7 +471,8 @@
         "size": [
           5238,
           3492
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "28247164",
@@ -456,7 +486,8 @@
         "size": [
           4624,
           3468
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "29411310",
@@ -470,7 +501,8 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "37589838",
@@ -484,7 +516,8 @@
         "size": [
           4000,
           2667
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "12198529",
@@ -498,7 +531,8 @@
         "size": [
           3000,
           1687
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "15633962",
@@ -512,7 +546,8 @@
         "size": [
           5184,
           3456
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5912581",
@@ -526,6 +561,291 @@
         "size": [
           3840,
           2160
+        ],
+        "kind": "stock"
+      },
+      {
+        "id": "181197184",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/181197184.jpg",
+        "caption": "2025-8-1-English-Poster-for-Nicolas-Maduro-Moros-Accessible-Clean.jpg　Public domain",
+        "outlet": "Wikimedia Commons",
+        "author": "United States Department of State",
+        "credit": "United States Department of State／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:2025-8-1-English-Poster-for-Nicolas-Maduro-Moros-Accessible-Clean.jpg",
+        "look": 36591643488943872,
+        "size": [
+          2550,
+          3300
+        ],
+        "kind": "real"
+      },
+      {
+        "id": "28319366",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/28319366.jpg",
+        "caption": "Maduro advertising.jpg　CC0",
+        "outlet": "Wikimedia Commons",
+        "author": "Wilfredor",
+        "credit": "Wilfredor／CC0",
+        "page": "https://commons.wikimedia.org/wiki/File:Maduro_advertising.jpg",
+        "look": 13835065212854067199,
+        "size": [
+          3366,
+          2104
+        ],
+        "kind": "real"
+      },
+      {
+        "id": "frame_BF5XKzypiic_37",
+        "kind": "frame",
+        "term": "Fox Business 37s",
+        "file": "assets/photos/美委內瑞拉石油協議/frame_BF5XKzypiic_37.jpg",
+        "caption": "TRUMP'S VENEZUELA GAMBIT: Undercutting China with oil and minerals",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=BF5XKzypiic",
+        "look": 9223116984525308387
+      },
+      {
+        "id": "frame_BF5XKzypiic_75",
+        "kind": "frame",
+        "term": "Fox Business 75s",
+        "file": "assets/photos/美委內瑞拉石油協議/frame_BF5XKzypiic_75.jpg",
+        "caption": "TRUMP'S VENEZUELA GAMBIT: Undercutting China with oil and minerals",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=BF5XKzypiic",
+        "look": 179600925657075487
+      },
+      {
+        "id": "frame_BF5XKzypiic_112",
+        "kind": "frame",
+        "term": "Fox Business 112s",
+        "file": "assets/photos/美委內瑞拉石油協議/frame_BF5XKzypiic_112.jpg",
+        "caption": "TRUMP'S VENEZUELA GAMBIT: Undercutting China with oil and minerals",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=BF5XKzypiic",
+        "look": 9493447826764930943
+      },
+      {
+        "id": "frame_w67-wxmkWeQ_37",
+        "kind": "frame",
+        "term": "CNBC 37s",
+        "file": "assets/photos/美委內瑞拉石油協議/frame_w67-wxmkWeQ_37.jpg",
+        "caption": "Why Trump Wants ConocoPhillips, ExxonMobil And Chevron To Rebuild Venezuela’s Oi",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=w67-wxmkWeQ",
+        "look": 10516451935368321152
+      },
+      {
+        "id": "frame_w67-wxmkWeQ_75",
+        "kind": "frame",
+        "term": "CNBC 75s",
+        "file": "assets/photos/美委內瑞拉石油協議/frame_w67-wxmkWeQ_75.jpg",
+        "caption": "Why Trump Wants ConocoPhillips, ExxonMobil And Chevron To Rebuild Venezuela’s Oi",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=w67-wxmkWeQ",
+        "look": 15607395049373636616
+      },
+      {
+        "id": "11069238",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/11069238.jpg",
+        "caption": "Nicolas Maduro - ABr 26072010FRP8143.jpg　CC BY 3.0 br",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Fabio Rodrigues Pozzebom/ABr",
+        "credit": "Fabio Rodrigues Pozzebom/ABr／CC BY 3.0 br",
+        "page": "https://commons.wikimedia.org/wiki/File:Nicolas_Maduro_-_ABr_26072010FRP8143.jpg",
+        "look": 15914317021956340735,
+        "size": [
+          3500,
+          2387
+        ]
+      },
+      {
+        "id": "11069235",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/11069235.jpg",
+        "caption": "Nicolas Maduro - ABr 26072010FRP8172.jpg　CC BY 3.0 br",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Fabio Rodrigues Pozzebom/ABr",
+        "credit": "Fabio Rodrigues Pozzebom/ABr／CC BY 3.0 br",
+        "page": "https://commons.wikimedia.org/wiki/File:Nicolas_Maduro_-_ABr_26072010FRP8172.jpg",
+        "look": 27271058973188096,
+        "size": [
+          3500,
+          2387
+        ]
+      },
+      {
+        "id": "11069233",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/11069233.jpg",
+        "caption": "Nicolas Maduro - ABr 26072010FRP8196.jpg　CC BY 3.0 br",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Fabio Rodrigues Pozzebom/ABr",
+        "credit": "Fabio Rodrigues Pozzebom/ABr／CC BY 3.0 br",
+        "page": "https://commons.wikimedia.org/wiki/File:Nicolas_Maduro_-_ABr_26072010FRP8196.jpg",
+        "look": 4339244732733986816,
+        "size": [
+          3500,
+          2387
+        ]
+      },
+      {
+        "id": "83354600",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/83354600.jpg",
+        "caption": "18th Summit of Non-Aligned Movement gets underway in Baku 027.jpg　CC BY 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Press Service of the President of the Republic of Azerbaijan",
+        "credit": "Press Service of the President of the Republic of Azerbaijan／CC BY 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:18th_Summit_of_Non-Aligned_Movement_gets_underway_in_Baku_027.jpg",
+        "look": 9908343044126932991,
+        "size": [
+          1596,
+          1292
+        ]
+      },
+      {
+        "id": "30748878",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/30748878.jpg",
+        "caption": "Caracas, Conferencia Suramericana sobre Recursos Naturales (9496948204).jpg　CC BY-SA 2.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Ricardo Patiño",
+        "credit": "Ricardo Patiño／CC BY-SA 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Caracas,_Conferencia_Suramericana_sobre_Recursos_Naturales_(9496948204).jpg",
+        "look": 128712026611711,
+        "size": [
+          5240,
+          3493
+        ]
+      },
+      {
+        "id": "181174016",
+        "term": "Nicolas Maduro",
+        "file": "assets/photos/美委內瑞拉石油協議/181174016.jpg",
+        "caption": "Concentració a Barcelona davant del Consolat Veneçolà a favor de Nicolás Maduro 20260103 01.jpg　CC0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Aniol",
+        "credit": "Aniol／CC0",
+        "page": "https://commons.wikimedia.org/wiki/File:Concentraci%C3%B3_a_Barcelona_davant_del_Consolat_Vene%C3%A7ol%C3%A0_a_favor_de_Nicol%C3%A1s_Maduro_20260103_01.jpg",
+        "look": 122593390065415,
+        "size": [
+          3840,
+          2160
+        ]
+      },
+      {
+        "id": "62058972",
+        "term": "Caracas",
+        "file": "assets/photos/美委內瑞拉石油協議/62058972.jpg",
+        "caption": "Cancha de Futbol soccer caracas venezuela 1.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Warairarepano&amp;Guaicaipuro",
+        "credit": "Warairarepano&amp;Guaicaipuro／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Cancha_de_Futbol_soccer_caracas_venezuela_1.jpg",
+        "look": 3637358733031388671,
+        "size": [
+          1600,
+          1200
+        ]
+      },
+      {
+        "id": "68779421",
+        "term": "Caracas",
+        "file": "assets/photos/美委內瑞拉石油協議/68779421.jpg",
+        "caption": "Galeria de Arte Nacional Caracas Museo La Candelaria 05.jpg　CC BY 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "QuinteroP",
+        "credit": "QuinteroP／CC BY 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Galeria_de_Arte_Nacional_Caracas_Museo_La_Candelaria_05.jpg",
+        "look": 18429224188100329727,
+        "size": [
+          2448,
+          3264
+        ]
+      },
+      {
+        "id": "68779454",
+        "term": "Caracas",
+        "file": "assets/photos/美委內瑞拉石油協議/68779454.jpg",
+        "caption": "Galeria de Arte Nacional Caracas Museo La Candelaria 24.jpg　CC BY 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "QuinteroP",
+        "credit": "QuinteroP／CC BY 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Galeria_de_Arte_Nacional_Caracas_Museo_La_Candelaria_24.jpg",
+        "look": 139421141294079,
+        "size": [
+          4908,
+          2508
+        ]
+      },
+      {
+        "id": "193764543",
+        "term": "Chevron oil",
+        "file": "assets/photos/美委內瑞拉石油協議/193764543.jpg",
+        "caption": "Burnaby Refinery.jpg　CC BY 2.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Robert Stupka",
+        "credit": "Robert Stupka／CC BY 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Burnaby_Refinery.jpg",
+        "look": 138027147263,
+        "size": [
+          4592,
+          3056
+        ]
+      },
+      {
+        "id": "61356827",
+        "term": "Chevron oil",
+        "file": "assets/photos/美委內瑞拉石油協議/61356827.jpg",
+        "caption": "Chevron El Segundo refinery, 2007.jpg　CC0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Pedro Szekely from Los Angeles, USA",
+        "credit": "Pedro Szekely from Los Angeles, USA／CC0",
+        "page": "https://commons.wikimedia.org/wiki/File:Chevron_El_Segundo_refinery,_2007.jpg",
+        "look": 54276102474827776,
+        "size": [
+          1600,
+          1149
+        ]
+      },
+      {
+        "id": "87254877",
+        "term": "Chevron oil",
+        "file": "assets/photos/美委內瑞拉石油協議/87254877.jpg",
+        "caption": "Chevron oil tanker in Richmond, CA.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Dreamyshade",
+        "credit": "Dreamyshade／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Chevron_oil_tanker_in_Richmond,_CA.jpg",
+        "look": 3504364559543504640,
+        "size": [
+          3397,
+          2548
         ]
       }
     ],

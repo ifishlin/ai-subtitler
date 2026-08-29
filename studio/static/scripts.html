@@ -87,6 +87,8 @@
   h3{margin:24px 0 8px;font-size:13px;color:var(--dim);
     display:flex;align-items:center;gap:8px}
   h3 .count{font:11px var(--mono);color:var(--faint)}
+  h3 .count.lacking{color:var(--warn)}
+  h3 .hint{font-size:11px;color:var(--faint);font-weight:400;margin-left:auto}
   .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin-bottom:7px;font-size:13px}
   .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
@@ -150,6 +152,15 @@ const escapeHTML = (text) => String(text).replace(/[&<>"]/g,
   (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 const STATE = { list: [], want: { videos: 5, reports: 5 }, chosen: null };
+
+/* Three kinds of picture because they cover different holes: stock stands in
+   for the abstract, Commons has the actual person and place, and a frame is
+   the event as it was broadcast. None substitutes for another. */
+const WHERE_FROM = {
+  stock: "Pexels，可商用免標示。用在抽象的東西——帳單、電表、排隊",
+  real: "Wikimedia Commons，多為 CC BY／BY-SA，出處要上畫面。用在有名字的人事地",
+  frame: "從這個題目自己的新聞影片剪的。算在 25% 的引用額度裡",
+};
 
 async function api(method, path, body) {
   const response = await fetch(path, {
@@ -303,19 +314,25 @@ async function open(name) {
     ${sourceRows(pile.sources.reports, "報導")}
     <h3>原始數據 <span class="count">${got.data}</span></h3>
     ${sourceRows(pile.sources.data, "數據")}
-    <h3>照片 <span class="count">${got.images} 張</span></h3>
-    ${(pile.sources.images || []).length ? `
-      <div class="shelf">
-        ${pile.sources.images.map((one) => `
-          <figure title="${escapeHTML(one.caption || "")}　${
-            escapeHTML(one.author || "")}">
-            <img src="/media/photo/${encodeURIComponent(name)}/${
-              encodeURIComponent((one.file || "").split("/").pop())}" alt="" loading="lazy">
-            <figcaption>${escapeHTML(one.term || "")}</figcaption>
-          </figure>`).join("")}
-      </div>
-      <div class="who" style="margin-top:6px">全部來自 Pexels，可商用免標示</div>`
-      : '<div class="empty">還沒有照片</div>'}
+    ${["stock", "real", "frame"].map((kind) => {
+      const spec = pile.counts.pictures[kind];
+      const shown = (pile.sources.images || []).filter(
+        (one) => (one.kind || "stock") === kind);
+      return `
+      <h3>${escapeHTML(spec.label)}
+        <span class="count ${spec.short ? "lacking" : ""}">${spec.have} / ${
+          spec.want}${spec.short ? `　還缺 ${spec.short}` : ""}</span>
+        <span class="hint">${WHERE_FROM[kind]}</span></h3>
+      ${shown.length ? `<div class="shelf">${shown.map((one) => `
+        <figure title="${escapeHTML(one.caption || "")}${
+          one.credit ? `　${escapeHTML(one.credit)}` : ""}">
+          <img src="/media/photo/${encodeURIComponent(name)}/${
+            encodeURIComponent((one.file || "").split("/").pop())}"
+            alt="" loading="lazy">
+          <figcaption>${escapeHTML(one.term || "")}</figcaption>
+        </figure>`).join("")}</div>`
+        : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}`;
+    }).join("")}
 
     <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
       <button id="btnVoices" class="tiny">抓留言</button></h3>

@@ -9,21 +9,30 @@
         "url": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
         "outlet": "Fox News",
         "lean": "right",
-        "seconds": 483.0
+        "seconds": 483.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.mp4",
+        "captions": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.en-US.vtt",
+        "size": 57580047
       },
       {
         "title": "Was climate change to blame for the Nepal floods?",
         "url": "https://www.youtube.com/watch?v=54KcFHke3cw",
         "outlet": "Reuters",
         "lean": "neutral",
-        "seconds": 178.0
+        "seconds": 178.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/54KcFHke3cw.mp4",
+        "captions": "assets/footage/尼泊爾冰川潰決洪災/54KcFHke3cw.en-orig.vtt",
+        "size": 47716484
       },
       {
         "title": "Return of tigers to Nepal brings both joy and fear - BBC News",
         "url": "https://www.youtube.com/watch?v=La0MDQohgk0",
         "outlet": "BBC News",
         "lean": "neutral",
-        "seconds": 226.0
+        "seconds": 226.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/La0MDQohgk0.mp4",
+        "captions": "assets/footage/尼泊爾冰川潰決洪災/La0MDQohgk0.en-orig.vtt",
+        "size": 27925899
       },
       {
         "title": "Nepal's deadly flood: causation, devastation, and preventive measures.",
@@ -108,7 +117,8 @@
         "size": [
           3821,
           2600
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "25245176",
@@ -122,7 +132,8 @@
         "size": [
           5221,
           3481
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "10640752",
@@ -136,7 +147,8 @@
         "size": [
           5684,
           3553
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5477795",
@@ -150,7 +162,8 @@
         "size": [
           4928,
           3264
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "36166009",
@@ -164,7 +177,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "36070133",
@@ -178,7 +192,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "39164204",
@@ -192,7 +207,8 @@
         "size": [
           3818,
           2863
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "34959182",
@@ -206,7 +222,8 @@
         "size": [
           5693,
           3795
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "14823609",
@@ -220,7 +237,8 @@
         "size": [
           4000,
           3000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "6780348",
@@ -234,7 +252,8 @@
         "size": [
           7315,
           4882
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "30271011",
@@ -248,7 +267,8 @@
         "size": [
           3999,
           2666
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "28447779",
@@ -262,7 +282,8 @@
         "size": [
           6558,
           4372
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "9410631",
@@ -276,7 +297,8 @@
         "size": [
           2800,
           1934
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "9410628",
@@ -290,7 +312,8 @@
         "size": [
           3000,
           1995
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "13611820",
@@ -304,7 +327,8 @@
         "size": [
           3408,
           2596
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "33974456",
@@ -318,7 +342,8 @@
         "size": [
           4032,
           3024
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "14224727",
@@ -332,7 +357,8 @@
         "size": [
           4352,
           3264
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "35401095",
@@ -346,7 +372,8 @@
         "size": [
           2976,
           1984
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "14000672",
@@ -360,7 +387,8 @@
         "size": [
           6016,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "28447767",
@@ -374,7 +402,8 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "28447774",
@@ -388,7 +417,8 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8701922",
@@ -402,7 +432,8 @@
         "size": [
           3936,
           2624
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "6646846",
@@ -416,7 +447,8 @@
         "size": [
           6661,
           4441
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "6646853",
@@ -430,7 +462,8 @@
         "size": [
           6574,
           4383
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7156164",
@@ -444,7 +477,8 @@
         "size": [
           5760,
           3840
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11939228",
@@ -458,7 +492,8 @@
         "size": [
           4592,
           3056
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8107291",
@@ -472,7 +507,8 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8898653",
@@ -486,7 +522,284 @@
         "size": [
           6000,
           4000
+        ],
+        "kind": "stock"
+      },
+      {
+        "id": "frame_54KcFHke3cw_44",
+        "kind": "frame",
+        "term": "Reuters 44s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_44.jpg",
+        "caption": "Was climate change to blame for the Nepal floods?",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
+        "look": 10306207423244531960
+      },
+      {
+        "id": "frame_54KcFHke3cw_133",
+        "kind": "frame",
+        "term": "Reuters 133s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_133.jpg",
+        "caption": "Was climate change to blame for the Nepal floods?",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
+        "look": 212081170124575
+      },
+      {
+        "id": "167725524",
+        "term": "Himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/167725524.jpg",
+        "caption": "Cholatse Peak and arakam Tse in the Himalaya of Nepal.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Rohit Sharma",
+        "credit": "Rohit Sharma／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Cholatse_Peak_and_arakam_Tse_in_the_Himalaya_of_Nepal.jpg",
+        "look": 9132302666843425024,
+        "size": [
+          3999,
+          2249
         ]
+      },
+      {
+        "id": "1810976",
+        "term": "Himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/1810976.jpg",
+        "caption": "Everest North Face toward Base Camp Tibet Luca Galuzzi 2006.jpg　CC BY-SA 2.5",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Luca Galuzzi (Lucag)",
+        "credit": "Luca Galuzzi (Lucag)／CC BY-SA 2.5",
+        "page": "https://commons.wikimedia.org/wiki/File:Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+        "look": 247274139491328,
+        "size": [
+          2000,
+          1333
+        ]
+      },
+      {
+        "id": "63413",
+        "term": "Himalaya glacier",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/63413.jpg",
+        "caption": "Himalaya annotated.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "NASA, Janderk Jan Derk",
+        "credit": "NASA, Janderk Jan Derk／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:Himalaya_annotated.jpg",
+        "look": 54255145834823423,
+        "size": [
+          1000,
+          662
+        ]
+      },
+      {
+        "id": "32982161",
+        "term": "Kathmandu",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/32982161.jpg",
+        "caption": "Blue Kathmandu.JPG　CC BY-SA 3.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "theganeshlife",
+        "credit": "theganeshlife／CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Blue_Kathmandu.JPG",
+        "look": 72057040977133584,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "97197146",
+        "term": "Kathmandu",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/97197146.jpg",
+        "caption": "Flute salesman in Kathmandu.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Janak Bhatta",
+        "credit": "Janak Bhatta／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Flute_salesman_in_Kathmandu.jpg",
+        "look": 10272225878306023295,
+        "size": [
+          1958,
+          1983
+        ]
+      },
+      {
+        "id": "103019847",
+        "term": "Kathmandu",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/103019847.jpg",
+        "caption": "Ganga Club sign, Kathmandu. 1993.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "John Hill",
+        "credit": "John Hill／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Ganga_Club_sign,_Kathmandu._1993.jpg",
+        "look": 4483399658453613628,
+        "size": [
+          1024,
+          654
+        ]
+      },
+      {
+        "id": "139112545",
+        "term": "Nepal Army",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/139112545.jpg",
+        "caption": "A 1st Special Forces Group Officer works closely with Nepal Officers and Soldier during a land navigation exercise.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "1st Special Forces Group (Airborne)",
+        "credit": "1st Special Forces Group (Airborne)／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:A_1st_Special_Forces_Group_Officer_works_closely_with_Nepal_Officers_and_Soldier_during_a_land_navigation_exercise.jpg",
+        "look": 9777241209761644223,
+        "size": [
+          2800,
+          2000
+        ]
+      },
+      {
+        "id": "139112547",
+        "term": "Nepal Army",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/139112547.jpg",
+        "caption": "A 1st Special Forces Group Officer works closely with Nepal Officers and soldiers during a Battalion Urban Operation Exercise.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "1st Special Forces Group (Airborne)",
+        "credit": "1st Special Forces Group (Airborne)／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:A_1st_Special_Forces_Group_Officer_works_closely_with_Nepal_Officers_and_soldiers_during_a_Battalion_Urban_Operation_Exercise.jpg",
+        "look": 16195544618626005819,
+        "size": [
+          2785,
+          1662
+        ]
+      },
+      {
+        "id": "38587516",
+        "term": "Nepal Army",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/38587516.jpg",
+        "caption": "A class of international Service members attending the Nepal Army High Altitude and Mountain Warfare School in 2014.jpg　Public domain",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Nepal Army High Altitude and Mountain Warfare School",
+        "credit": "Nepal Army High Altitude and Mountain Warfare School／Public domain",
+        "page": "https://commons.wikimedia.org/wiki/File:A_class_of_international_Service_members_attending_the_Nepal_Army_High_Altitude_and_Mountain_Warfare_School_in_2014.jpg",
+        "look": 18446462600913812992,
+        "size": [
+          1800,
+          1200
+        ]
+      },
+      {
+        "id": "frame_rBfpSsvXAOc_96",
+        "kind": "frame",
+        "term": "Fox News 96s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_96.jpg",
+        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 11457440582816211259
+      },
+      {
+        "id": "frame_rBfpSsvXAOc_193",
+        "kind": "frame",
+        "term": "Fox News 193s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_193.jpg",
+        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 18409870864771432668
+      },
+      {
+        "id": "frame_rBfpSsvXAOc_289",
+        "kind": "frame",
+        "term": "Fox News 289s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_289.jpg",
+        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 1944922772589418712
+      },
+      {
+        "id": "frame_rBfpSsvXAOc_386",
+        "kind": "frame",
+        "term": "Fox News 386s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_386.jpg",
+        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 18446102361631031490
+      },
+      {
+        "id": "frame_54KcFHke3cw_35",
+        "kind": "frame",
+        "term": "Reuters 35s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_35.jpg",
+        "caption": "Was climate change to blame for the Nepal floods?",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
+        "look": 17861832469535289584
+      },
+      {
+        "id": "frame_54KcFHke3cw_106",
+        "kind": "frame",
+        "term": "Reuters 106s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_106.jpg",
+        "caption": "Was climate change to blame for the Nepal floods?",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
+        "look": 72346975847310307
+      },
+      {
+        "id": "frame_La0MDQohgk0_45",
+        "kind": "frame",
+        "term": "BBC News 45s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_La0MDQohgk0_45.jpg",
+        "caption": "Return of tigers to Nepal brings both joy and fear - BBC News",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=La0MDQohgk0",
+        "look": 2165964257995476943
+      },
+      {
+        "id": "frame_La0MDQohgk0_135",
+        "kind": "frame",
+        "term": "BBC News 135s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_La0MDQohgk0_135.jpg",
+        "caption": "Return of tigers to Nepal brings both joy and fear - BBC News",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=La0MDQohgk0",
+        "look": 10385018709239398401
+      },
+      {
+        "id": "frame_La0MDQohgk0_180",
+        "kind": "frame",
+        "term": "BBC News 180s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_La0MDQohgk0_180.jpg",
+        "caption": "Return of tigers to Nepal brings both joy and fear - BBC News",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=La0MDQohgk0",
+        "look": 7786176259267574079
       }
     ],
     "data": []

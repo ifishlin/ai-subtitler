@@ -25,9 +25,15 @@ TOPIC_DIR = ROOT / "topics"
 MEDIA = ROOT / "assets" / "sources" / "media.json"
 SAFE_NAME = re.compile(r"[\w一-鿿][\w一-鿿 -]{0,63}")
 
-WANT = {"videos": 5, "reports": 5, "images": 10}
-# Ten pictures because a script wants more choice than it will use: the shot
-# that fits a line is rarely the one that looked best in the search.
+WANT = {"videos": 5, "reports": 5, "images": 15}
+
+# Three kinds of picture, five of each, because they cover different holes and
+# one cannot stand in for another.
+PICTURES = {
+    "stock": ("示意圖", 5),   # Pexels: a bill, a meter, a queue -- the abstract
+    "real":  ("真實人事地", 5),  # Commons: this person, this street, this building
+    "frame": ("新聞畫格", 5),   # cut from the topic's own videos: the event itself
+}
 
 # Who a topic actually reaches. The audience is not always "everyone" -- for a
 # market story it is a shareholder, and his contact point is an account
@@ -96,10 +102,21 @@ def balance(pile: dict[str, Any]) -> dict[str, Any]:
     return {"sides": sides, "missing": missing, "balanced": not missing}
 
 
+def picture_mix(pile: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """How many of each kind of picture, and how many are still wanted."""
+    images = pile.get("sources", {}).get("images") or []
+    mix = {}
+    for kind, (label, want) in PICTURES.items():
+        have = sum(1 for item in images if item.get("kind", "stock") == kind)
+        mix[kind] = {"label": label, "have": have, "want": want,
+                     "short": max(0, want - have)}
+    return mix
+
+
 def counts(pile: dict[str, Any]) -> dict[str, Any]:
     got = {kind: len(pile.get("sources", {}).get(kind) or [])
            for kind in ("videos", "reports", "images", "data")}
-    return {"got": got, "want": WANT,
+    return {"got": got, "want": WANT, "pictures": picture_mix(pile),
             "short": {kind: max(0, WANT[kind] - got.get(kind, 0)) for kind in WANT}}
 
 
@@ -114,7 +131,8 @@ def ready(pile: dict[str, Any]) -> tuple[bool, str]:
     even = balance(pile)
     gaps = [f"還缺 {n} 支影片" for k, n in lacking.items() if n and k == "videos"]
     gaps += [f"還缺 {n} 篇報導" for k, n in lacking.items() if n and k == "reports"]
-    gaps += [f"還缺 {n} 張照片" for k, n in lacking.items() if n and k == "images"]
+    gaps += [f"還缺 {n} 張{spec['label']}"
+             for spec in picture_mix(pile).values() if (n := spec["short"])]
     gaps += ([f"沒有{'、'.join(even['missing'])}的說法"] if even["missing"] else [])
     return (not gaps), "；".join(gaps)
 
@@ -154,6 +172,75 @@ def read_comments(video_url: str, most: int = 60) -> list[dict[str, Any]]:
                      "reply": bool(item.get("parent") and item["parent"] != "root")})
     kept.sort(key=lambda one: -one["likes"])
     return kept[:most]
+
+
+def footage(name: str) -> Path:
+    return ROOT / "assets" / "footage" / name
+
+
+def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
+    """Download one of a topic's videos, with its captions.
+
+    Kept because the real pictures come from here. Stock photographs stand in
+    for the abstract -- a bill, a meter, a queue -- but the person who said the
+    thing, the street it happened on, and the graphic the broadcaster put up
+    are only available where they were broadcast.
+    """
+    import subprocess
+    here = footage(name)
+    here.mkdir(parents=True, exist_ok=True)
+    stem = video["url"].rsplit("=", 1)[-1].rsplit("/", 1)[-1][:24]
+    target = here / f"{stem}.mp4"
+    if not target.is_file():
+        subprocess.run(
+            [str(ROOT / ".venv/bin/yt-dlp"), video["url"], "--no-playlist",
+             "-f", "bv*[height<=1080]+ba/b[height<=1080]",
+             "--merge-output-format", "mp4", "--write-auto-subs",
+             "--sub-langs", "en.*", "--convert-subs", "vtt", "--no-warnings",
+             "-o", str(here / f"{stem}.%(ext)s")],
+            capture_output=True, text=True)
+    if not target.is_file():
+        return {}
+    subs = sorted(here.glob(f"{stem}*.vtt"))
+    return {"file": str(target.relative_to(ROOT)),
+            "captions": str(subs[0].relative_to(ROOT)) if subs else None,
+            "size": target.stat().st_size}
+
+
+def cut_frames(name: str, video: dict[str, Any], at: list[float]) -> list[dict[str, Any]]:
+    """Stills from a topic's own video: the event as it was broadcast.
+
+    A frame is the cheapest kind of borrowed picture -- no seam, no audio, and
+    it can be held as long as the line needs -- so most of a short's borrowed
+    budget goes further as frames than as clips. It is still borrowed, and the
+    credit says so.
+    """
+    import subprocess
+    source = ROOT / video["file"]
+    if not source.is_file():
+        return []
+    here = ROOT / "assets" / "photos" / name
+    here.mkdir(parents=True, exist_ok=True)
+    stem = Path(video["file"]).stem
+    made = []
+    for moment in at:
+        target = here / f"frame_{stem}_{int(moment)}.jpg"
+        if not target.is_file():
+            subprocess.run(
+                ["ffmpeg", "-v", "error", "-ss", f"{moment:.2f}", "-i", str(source),
+                 "-frames:v", "1", "-vf", "scale=1600:-2", "-q:v", "3",
+                 str(target), "-y"], capture_output=True)
+        if not target.is_file():
+            continue
+        made.append({
+            "id": target.stem, "kind": "frame",
+            "term": f"{video['outlet']} {int(moment)}s",
+            "file": str(target.relative_to(ROOT)),
+            "caption": video.get("title", "")[:80],
+            "outlet": video.get("outlet", ""), "author": "",
+            "credit": f"畫面來源：{video.get('outlet', '')}",
+            "page": video.get("url", "")})
+    return made
 
 
 def path_for(name: str) -> Path:

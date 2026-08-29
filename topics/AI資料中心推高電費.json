@@ -16,7 +16,10 @@
         "url": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
         "outlet": "CNBC",
         "lean": "neutral",
-        "seconds": 225.0
+        "seconds": 225.0,
+        "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.en-en.vtt",
+        "size": 108353541
       },
       {
         "title": "Why communities are revolting against data centers",
@@ -111,7 +114,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7680324",
@@ -125,7 +129,8 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7111490",
@@ -139,7 +144,8 @@
         "size": [
           5909,
           3939
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11924298",
@@ -153,7 +159,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "10065200",
@@ -167,7 +174,8 @@
         "size": [
           6488,
           4328
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "30144993",
@@ -181,7 +189,8 @@
         "size": [
           7728,
           5152
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "37730212",
@@ -195,7 +204,8 @@
         "size": [
           4108,
           2734
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "17489151",
@@ -209,7 +219,8 @@
         "size": [
           3872,
           2592
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "17489160",
@@ -223,7 +234,8 @@
         "size": [
           6016,
           4016
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11166543",
@@ -237,7 +249,8 @@
         "size": [
           7952,
           5304
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "19686062",
@@ -251,7 +264,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "13216331",
@@ -265,7 +279,8 @@
         "size": [
           6960,
           4640
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "12551266",
@@ -279,7 +294,8 @@
         "size": [
           5472,
           3648
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "27275324",
@@ -293,7 +309,8 @@
         "size": [
           5688,
           3792
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "38341668",
@@ -307,7 +324,8 @@
         "size": [
           6129,
           3992
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11368700",
@@ -321,7 +339,8 @@
         "size": [
           6240,
           4160
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "3171295",
@@ -335,7 +354,8 @@
         "size": [
           4069,
           2718
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11369060",
@@ -349,7 +369,8 @@
         "size": [
           6199,
           4133
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "17489157",
@@ -363,7 +384,8 @@
         "size": [
           6016,
           4016
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5480781",
@@ -377,7 +399,8 @@
         "size": [
           6048,
           4024
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "37605910",
@@ -391,7 +414,8 @@
         "size": [
           4256,
           2832
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "34610699",
@@ -405,7 +429,8 @@
         "size": [
           3000,
           2000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "33217702",
@@ -419,7 +444,8 @@
         "size": [
           4806,
           2700
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "17018102",
@@ -433,7 +459,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7616651",
@@ -447,7 +474,8 @@
         "size": [
           5472,
           3648
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "36730582",
@@ -461,7 +489,8 @@
         "size": [
           3800,
           2138
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "271614",
@@ -475,7 +504,8 @@
         "size": [
           5616,
           3868
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5466795",
@@ -489,7 +519,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7735796",
@@ -503,7 +534,8 @@
         "size": [
           3751,
           2737
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5900233",
@@ -517,7 +549,416 @@
         "size": [
           6720,
           4480
+        ],
+        "kind": "stock"
+      },
+      {
+        "id": "frame_gk8ziQCWK1w_56",
+        "kind": "frame",
+        "term": "CNBC 56s",
+        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_56.jpg",
+        "caption": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "look": 1954313946741112977
+      },
+      {
+        "id": "frame_gk8ziQCWK1w_112",
+        "kind": "frame",
+        "term": "CNBC 112s",
+        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_112.jpg",
+        "caption": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "look": 145741125253503
+      },
+      {
+        "id": "frame_gk8ziQCWK1w_168",
+        "kind": "frame",
+        "term": "CNBC 168s",
+        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_168.jpg",
+        "caption": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "look": 11013773757042855711
+      },
+      {
+        "id": "141680753",
+        "term": "data center",
+        "file": "assets/photos/AI資料中心推高電費/141680753.jpg",
+        "caption": "BT Italia Settimo Milanese.jpg　CC0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Davide Alotto",
+        "credit": "Davide Alotto／CC0",
+        "page": "https://commons.wikimedia.org/wiki/File:BT_Italia_Settimo_Milanese.jpg",
+        "look": 553798926335,
+        "size": [
+          3264,
+          1836
         ]
+      },
+      {
+        "id": "26575836",
+        "term": "data center",
+        "file": "assets/photos/AI資料中心推高電費/26575836.jpg",
+        "caption": "BalticServers data center.jpg　CC BY-SA 3.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "BalticServers.com",
+        "credit": "BalticServers.com／CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg",
+        "look": 72905347689285383,
+        "size": [
+          2048,
+          1360
+        ]
+      },
+      {
+        "id": "165776581",
+        "term": "data center",
+        "file": "assets/photos/AI資料中心推高電費/165776581.jpg",
+        "caption": "Centre de donnees MTL8-S - 2025-04-09 - 01.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Jeangagnon",
+        "credit": "Jeangagnon／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Centre_de_donnees_MTL8-S_-_2025-04-09_-_01.jpg",
+        "look": 17941216106341005536,
+        "size": [
+          4000,
+          3000
+        ]
+      },
+      {
+        "id": "152346043",
+        "term": "electrical substation",
+        "file": "assets/photos/AI資料中心推高電費/152346043.jpg",
+        "caption": "20240407 Kraftwerk Mühltal.jpg　CC BY 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Flocci Nivis",
+        "credit": "Flocci Nivis／CC BY 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:20240407_Kraftwerk_M%C3%BChltal.jpg",
+        "look": 3476779119430664191,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "131774185",
+        "term": "electrical substation",
+        "file": "assets/photos/AI資料中心推高電費/131774185.jpg",
+        "caption": "Albenga stazione ferroviaria.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Al*from*Lig",
+        "credit": "Al*from*Lig／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Albenga_stazione_ferroviaria.jpg",
+        "look": 2090232078241041561,
+        "size": [
+          3106,
+          4096
+        ]
+      },
+      {
+        "id": "197834157",
+        "term": "electrical substation",
+        "file": "assets/photos/AI資料中心推高電費/197834157.jpg",
+        "caption": "DSC04737 APG Leoben Substation, Leoben-Donawitz, 2026-04.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Aciarium",
+        "credit": "Aciarium／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:DSC04737_APG_Leoben_Substation,_Leoben-Donawitz,_2026-04.jpg",
+        "look": 279823545425920,
+        "size": [
+          6554,
+          4369
+        ]
+      },
+      {
+        "id": "103494974",
+        "term": "power station",
+        "file": "assets/photos/AI資料中心推高電費/103494974.jpg",
+        "caption": "Andasol Guadix 4.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "kallerna",
+        "credit": "kallerna／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Andasol_Guadix_4.jpg",
+        "look": 4642670668480511,
+        "size": [
+          4150,
+          2790
+        ]
+      },
+      {
+        "id": "121140343",
+        "term": "power station",
+        "file": "assets/photos/AI資料中心推高電費/121140343.jpg",
+        "caption": "Banff National Park (AB, Canada), Bankhead, Lower Bankhead, Powerhouse -- 2022 -- 2253.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Dietmar Rabich",
+        "credit": "Dietmar Rabich／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Banff_National_Park_(AB,_Canada),_Bankhead,_Lower_Bankhead,_Powerhouse_--_2022_--_2253.jpg",
+        "look": 440831759089098303,
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "56720546",
+        "term": "power station",
+        "file": "assets/photos/AI資料中心推高電費/56720546.jpg",
+        "caption": "Bergtocht van parkeerplaats bij centrale Malga Mare naar Lago Lungo 44.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Agnes Monkelbaan",
+        "credit": "Agnes Monkelbaan／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Bergtocht_van_parkeerplaats_bij_centrale_Malga_Mare_naar_Lago_Lungo_44.jpg",
+        "look": 17874817828088539007,
+        "size": [
+          4119,
+          3199
+        ]
+      },
+      {
+        "id": "36433653",
+        "term": "transmission tower",
+        "file": "assets/photos/AI資料中心推高電費/36433653.jpg",
+        "caption": "2014 Kłodzko, ul. Drzymały 01.JPG　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Jacek Halicki",
+        "credit": "Jacek Halicki／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:2014_K%C5%82odzko,_ul._Drzyma%C5%82y_01.JPG",
+        "look": 432563851241193471,
+        "size": [
+          2337,
+          3208
+        ]
+      },
+      {
+        "id": "38708143",
+        "term": "transmission tower",
+        "file": "assets/photos/AI資料中心推高電費/38708143.jpg",
+        "caption": "2015 Freileitungen bei Marxheim.jpg　CC BY-SA 3.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Kreuzschnabel",
+        "credit": "Kreuzschnabel／CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File:2015_Freileitungen_bei_Marxheim.jpg",
+        "look": 50384020831145728,
+        "size": [
+          4509,
+          3553
+        ]
+      },
+      {
+        "id": "110102516",
+        "term": "transmission tower",
+        "file": "assets/photos/AI資料中心推高電費/110102516.jpg",
+        "caption": "Ada Bridge pylon (Sava river, Belgrade).jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Petar Milošević",
+        "credit": "Petar Milošević／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Ada_Bridge_pylon_(Sava_river,_Belgrade).jpg",
+        "look": 4340370632655962112,
+        "size": [
+          4608,
+          3456
+        ]
+      },
+      {
+        "id": "65122033",
+        "term": "server room",
+        "file": "assets/photos/AI資料中心推高電費/65122033.jpg",
+        "caption": "139 Server Room 01.jpg　CC BY-SA 3.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Indrajit Das",
+        "credit": "Indrajit Das／CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File:139_Server_Room_01.jpg",
+        "look": 18158725821647092990,
+        "size": [
+          3264,
+          2448
+        ]
+      },
+      {
+        "id": "66391416",
+        "term": "server room",
+        "file": "assets/photos/AI資料中心推高電費/66391416.jpg",
+        "caption": "3 intel NUC mini pc rack mount rack shelf.jpg　CC BY-SA 3.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Truenetworks",
+        "credit": "Truenetworks／CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File:3_intel_NUC_mini_pc_rack_mount_rack_shelf.jpg",
+        "look": 289165090438919,
+        "size": [
+          923,
+          645
+        ]
+      },
+      {
+        "id": "16886979",
+        "term": "server room",
+        "file": "assets/photos/AI資料中心推高電費/16886979.jpg",
+        "caption": "A view of the server room at The National Archives.jpg　CC BY 3.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "The National Archives (UK)",
+        "credit": "The National Archives (UK)／CC BY 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File:A_view_of_the_server_room_at_The_National_Archives.jpg",
+        "look": 594704746786863216,
+        "size": [
+          3600,
+          2100
+        ]
+      },
+      {
+        "id": "138554678",
+        "term": "computer server",
+        "file": "assets/photos/AI資料中心推高電費/138554678.jpg",
+        "caption": "3-2-1 backup 01.png　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Olaf Pichler",
+        "credit": "Olaf Pichler／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:3-2-1_backup_01.png",
+        "look": 11320947883769315784,
+        "size": [
+          3000,
+          1500
+        ]
+      },
+      {
+        "id": "29153949",
+        "term": "computer server",
+        "file": "assets/photos/AI資料中心推高電費/29153949.jpg",
+        "caption": "Cabinet Network Rear Close.jpg　CC BY-SA 3.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Robert.Harker",
+        "credit": "Robert.Harker／CC BY-SA 3.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Cabinet_Network_Rear_Close.jpg",
+        "look": 576602456108890304,
+        "size": [
+          2592,
+          3456
+        ]
+      },
+      {
+        "id": "110732208",
+        "term": "computer server",
+        "file": "assets/photos/AI資料中心推高電費/110732208.jpg",
+        "caption": "Cisco ESA IronPort C670.jpg　CC BY 2.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Johannes Weber",
+        "credit": "Johannes Weber／CC BY 2.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Cisco_ESA_IronPort_C670.jpg",
+        "look": 2176156725164604231,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "117569941",
+        "term": "electricity meter",
+        "file": "assets/photos/AI資料中心推高電費/117569941.jpg",
+        "caption": "23--MG 0377.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Prof OJ",
+        "credit": "Prof OJ／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:23--MG_0377.jpg",
+        "look": 123631998563207,
+        "size": [
+          3456,
+          2304
+        ]
+      },
+      {
+        "id": "117569947",
+        "term": "electricity meter",
+        "file": "assets/photos/AI資料中心推高電費/117569947.jpg",
+        "caption": "31--MG 0456.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Prof OJ",
+        "credit": "Prof OJ／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:31--MG_0456.jpg",
+        "look": 545391690751,
+        "size": [
+          3456,
+          2304
+        ]
+      },
+      {
+        "id": "95617449",
+        "term": "electricity meter",
+        "file": "assets/photos/AI資料中心推高電費/95617449.jpg",
+        "caption": "Carlton County History and Heritage Center-North.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Myotus",
+        "credit": "Myotus／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Carlton_County_History_and_Heritage_Center-North.jpg",
+        "look": 8935489106385959167,
+        "size": [
+          4160,
+          2340
+        ]
+      },
+      {
+        "id": "frame_gk8ziQCWK1w_45",
+        "kind": "frame",
+        "term": "CNBC 45s",
+        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_45.jpg",
+        "caption": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "look": 4575656199240204516
+      },
+      {
+        "id": "frame_gk8ziQCWK1w_90",
+        "kind": "frame",
+        "term": "CNBC 90s",
+        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_90.jpg",
+        "caption": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "look": 221521359098822590
+      },
+      {
+        "id": "frame_gk8ziQCWK1w_180",
+        "kind": "frame",
+        "term": "CNBC 180s",
+        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_180.jpg",
+        "caption": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "look": 8897280410524845574
       }
     ],
     "data": []

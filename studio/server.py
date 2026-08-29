@@ -422,6 +422,79 @@ def gather_voices(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "total": sum(len(v["comments"]) for v in pile.get("voices") or [])}
 
 
+@app.post("/api/topic/footage")
+def bring_footage(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Download a topic's videos so frames can be cut from them.
+
+    The 25% of a short that is someone else's pictures comes from here -- both
+    moving segments and single frames. A still costs nothing at the seam and
+    can be held as long as the line needs, so most of the budget goes further
+    as frames than as clips.
+    """
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    most = int(payload.get("most") or 3)
+    got = 0
+    for video in (pile["sources"]["videos"] or [])[:most]:
+        if video.get("file"):
+            continue
+        found = topic_module.bring_in(name, video)
+        if found:
+            video.update(found)
+            got += 1
+    topic_module.save(name, pile)
+    have = sum(1 for v in pile["sources"]["videos"] if v.get("file"))
+    return {"added": got, "have": have}
+
+
+@app.post("/api/topic/frames")
+def cut_frames(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Stills from the topic's own videos, spread across each one."""
+    from core import stock as stock_module
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    per_video = int(payload.get("per_video") or 3)
+    have = [item for item in pile["sources"]["images"] if item.get("look")]
+    marks = [item["look"] for item in have]
+    seen = {item.get("id") for item in pile["sources"]["images"]}
+    added = 0
+    for video in pile["sources"]["videos"]:
+        if not video.get("file"):
+            continue
+        span = float(video.get("seconds") or 0)
+        if span <= 0:
+            continue
+        # Spread across the piece rather than clustered: a news item changes
+        # what is on screen every few seconds, and the useful shot is rarely
+        # at the top.
+        moments = [span * (i + 1) / (per_video + 1) for i in range(per_video)]
+        for made in topic_module.cut_frames(name, video, moments):
+            if made["id"] in seen:
+                continue
+            look = stock_module.looks_like(ROOT / made["file"])
+            if any(stock_module.alike(look, other) for other in marks):
+                (ROOT / made["file"]).unlink(missing_ok=True)
+                continue
+            marks.append(look)
+            seen.add(made["id"])
+            pile["sources"]["images"].append({**made, "look": look})
+            added += 1
+    topic_module.save(name, pile)
+    return {"added": added,
+            "frames": sum(1 for i in pile["sources"]["images"]
+                          if i.get("kind") == "frame")}
+
+
 @app.post("/api/topic/images")
 def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Photographs for a topic, kept as a pile to choose from later."""
@@ -436,20 +509,30 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     terms = payload.get("terms") or []
     if not terms:
         raise HTTPException(400, "要給搜尋詞（英文，圖庫不吃中文）")
+    # Where to ask. Stock stands in for the abstract -- a bill, a queue, a
+    # meter; Commons has the actual person, street and building, which no
+    # stock library holds because those are not concepts.
+    where = str(payload.get("where") or "stock")
+    look = (stock_module.search_commons if where == "commons"
+            else stock_module.search_photos)
 
     # Six pictures from one search are six pictures of the same thing. Variety
     # comes from asking more questions, not from taking more of one answer, so
     # the cap is per term and near-identical results are dropped on arrival.
     PER_TERM = 3
+    failed: list[str] = []
     here = ROOT / "assets" / "photos" / name
     seen = {item.get("id") for item in pile["sources"]["images"]}
     marks = [item["look"] for item in pile["sources"]["images"] if item.get("look")]
     added = 0
     for term in terms[:10]:
         try:
-            found = stock_module.search_photos(term, count=PER_TERM * 3)
-        except Exception as error:                                # noqa: BLE001
-            raise HTTPException(502, f"圖庫查詢失敗：{error}") from error
+            found = look(term, count=PER_TERM * 3)
+        except Exception:                                         # noqa: BLE001
+            # One term failing is one term's worth of pictures, not the batch.
+            # Asking a library five times quickly is enough to be refused once.
+            failed.append(term)
+            continue
         kept_here = 0
         for picture in found:
             if kept_here >= PER_TERM:
@@ -471,13 +554,21 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 "id": picture.id, "term": term,
                 "file": str(target.relative_to(ROOT)),
                 "caption": picture.about or term,
-                "outlet": "Pexels", "author": picture.author,
+                "kind": "real" if where == "commons" else "stock",
+                "outlet": "Wikimedia Commons" if where == "commons" else "Pexels",
+                "author": picture.author,
+                # Commons is mostly CC BY or CC BY-SA: the author and licence
+                # have to reach the screen, so they travel with the picture
+                # rather than being looked up again later.
+                "credit": (f"{picture.author}／{picture.about.split('　')[-1]}"
+                           if where == "commons" else ""),
                 "page": picture.page, "look": look,
                 "size": [picture.width, picture.height]})
             seen.add(picture.id)
             added += 1
     topic_module.save(name, pile)
-    return {"added": added, "total": len(pile["sources"]["images"])}
+    return {"added": added, "total": len(pile["sources"]["images"]),
+            "failed": failed}
 
 
 @app.get("/media/photo/{name}/{picture}")

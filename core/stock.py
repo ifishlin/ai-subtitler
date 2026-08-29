@@ -15,6 +15,8 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import time
 import ssl
 import urllib.parse
 import urllib.request
@@ -214,6 +216,52 @@ def search_photos(query: str, count: int = 12, least_wide: int = 1200
     return found
 
 
+def search_commons(query: str, count: int = 6, least_wide: int = 900
+                   ) -> list[Picture]:
+    """Wikimedia Commons: the real person, the real place, the real building.
+
+    A stock library has no photograph of Maduro or of the village that flooded,
+    because those are not concepts. Commons does, freely, and needs no key --
+    but almost nothing there is public domain outright: most is CC BY or
+    CC BY-SA, which means the author and the licence travel with the picture
+    and have to appear on screen. So the credit is carried in the record, not
+    left to be looked up later.
+    """
+    params = urllib.parse.urlencode({
+        "action": "query", "format": "json", "generator": "search",
+        "gsrnamespace": "6",
+        "gsrsearch": f'filetype:bitmap intitle:"{query}" OR incategory:"{query}"'
+                     if " " not in query.strip() else
+                     f'filetype:bitmap "{query}"',
+        "gsrlimit": max(1, count) * 3, "prop": "imageinfo",
+        "iiprop": "url|size|extmetadata", "iiurlwidth": "1600",
+    })
+    data = _get_json(f"https://commons.wikimedia.org/w/api.php?{params}",
+                     {"User-Agent": WIKI_AGENT})
+    found = []
+    for page in (data.get("query", {}).get("pages") or {}).values():
+        info = (page.get("imageinfo") or [{}])[0]
+        meta = info.get("extmetadata") or {}
+        if int(info.get("width") or 0) < least_wide:
+            continue
+        licence = (meta.get("LicenseShortName", {}).get("value") or "").strip()
+        # Anything demanding permission is not usable without asking, and
+        # asking is not automation.
+        if "Fair use" in licence or "non-free" in licence.lower():
+            continue
+        author = re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value") or "").strip()
+        found.append(Picture(
+            provider="commons", id=str(page.get("pageid")),
+            url=info.get("thumburl") or info.get("url") or "",
+            width=int(info.get("width") or 0), height=int(info.get("height") or 0),
+            author=(author or "Wikimedia Commons")[:80],
+            page=info.get("descriptionurl") or "",
+            about=f"{page.get('title', '')[5:]}　{licence}"))
+        if len(found) >= count:
+            break
+    return found
+
+
 def looks_like(path: Path) -> int:
     """A perceptual fingerprint: shrink to 8x8 grey and record which pixels sit
     above the average. Two pictures of the same thing differ in a few bits; two
@@ -234,9 +282,20 @@ def alike(one: int, other: int, within: int = 12) -> bool:
     return bin(one ^ other).count("1") <= within
 
 
+# Wikimedia asks for an agent that says who is calling and how to reach them,
+# and answers 429 to anything that does not. It also wants a pause between
+# requests: a burst of ten is refused even when ten is a small number.
+WIKI_AGENT = ("video-pipeline/1.0 (local subtitle tool; "
+              "https://github.com/ifishlin/ai-subtitler)")
+WIKI_PAUSE = 1.2
+
+
 def fetch(url: str, destination: Path) -> Path:
     destination.parent.mkdir(parents=True, exist_ok=True)
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    agent = WIKI_AGENT if "wikimedia.org" in url else USER_AGENT
+    if "wikimedia.org" in url:
+        time.sleep(WIKI_PAUSE)
+    request = urllib.request.Request(url, headers={"User-Agent": agent})
     with urllib.request.urlopen(request, timeout=TIMEOUT,
                                 context=_ssl_context()) as reply:
         destination.write_bytes(reply.read())

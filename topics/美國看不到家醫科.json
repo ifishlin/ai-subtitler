@@ -16,21 +16,30 @@
         "url": "https://www.youtube.com/watch?v=ATa9QMISrvw",
         "outlet": "PBS NewsHour",
         "lean": "centre-left",
-        "seconds": 124.0
+        "seconds": 124.0,
+        "file": "assets/footage/美國看不到家醫科/ATa9QMISrvw.mp4",
+        "captions": null,
+        "size": 5474721
       },
       {
         "title": "Why Walmart Wants To Be Your Hospital Too",
         "url": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
         "outlet": "CNBC",
         "lean": "neutral",
-        "seconds": 754.0
+        "seconds": 754.0,
+        "file": "assets/footage/美國看不到家醫科/d-ZysrVnc-A.mp4",
+        "captions": "assets/footage/美國看不到家醫科/d-ZysrVnc-A.en-en.vtt",
+        "size": 179366218
       },
       {
         "title": "General practitioner shortage",
         "url": "https://www.youtube.com/watch?v=sY95WZm0vd8",
         "outlet": "CNN",
         "lean": "left",
-        "seconds": 225.0
+        "seconds": 225.0,
+        "file": "assets/footage/美國看不到家醫科/sY95WZm0vd8.mp4",
+        "captions": null,
+        "size": 9389338
       },
       {
         "title": "The town so deprived of GPs that children seek medical help from youth workers - BBC Newsnight",
@@ -100,7 +109,8 @@
         "size": [
           6438,
           4292
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "4266934",
@@ -114,7 +124,8 @@
         "size": [
           8142,
           5428
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "6129035",
@@ -128,7 +139,8 @@
         "size": [
           5704,
           3803
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "48603",
@@ -142,7 +154,8 @@
         "size": [
           3888,
           2592
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "16204178",
@@ -156,7 +169,8 @@
         "size": [
           5472,
           3648
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "13105349",
@@ -170,7 +184,8 @@
         "size": [
           5326,
           3551
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "263402",
@@ -184,7 +199,8 @@
         "size": [
           4928,
           3264
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "20026899",
@@ -198,7 +214,8 @@
         "size": [
           4000,
           3000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8673896",
@@ -212,7 +229,8 @@
         "size": [
           5616,
           3744
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "32213424",
@@ -226,7 +244,8 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "15551426",
@@ -240,7 +259,8 @@
         "size": [
           5184,
           3456
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "3985162",
@@ -254,7 +274,8 @@
         "size": [
           4500,
           3000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "29948395",
@@ -268,7 +289,8 @@
         "size": [
           4000,
           2250
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "12344720",
@@ -282,7 +304,8 @@
         "size": [
           5166,
           3462
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5203594",
@@ -296,7 +319,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "24193871",
@@ -310,7 +334,8 @@
         "size": [
           3911,
           3270
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "39192358",
@@ -324,7 +349,8 @@
         "size": [
           3840,
           2160
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "8413340",
@@ -338,7 +364,8 @@
         "size": [
           5788,
           3859
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "9810172",
@@ -352,7 +379,8 @@
         "size": [
           4501,
           3003
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11773871",
@@ -366,7 +394,8 @@
         "size": [
           4592,
           3064
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7580934",
@@ -380,7 +409,8 @@
         "size": [
           6546,
           4364
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7111490",
@@ -394,7 +424,8 @@
         "size": [
           5909,
           3939
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "35501875",
@@ -408,7 +439,8 @@
         "size": [
           3000,
           2001
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "7735775",
@@ -422,7 +454,8 @@
         "size": [
           3457,
           2522
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5932062",
@@ -436,7 +469,8 @@
         "size": [
           3600,
           2405
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "11152637",
@@ -450,7 +484,8 @@
         "size": [
           4000,
           3000
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5649560",
@@ -464,7 +499,8 @@
         "size": [
           5464,
           3070
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "6129194",
@@ -478,7 +514,8 @@
         "size": [
           6603,
           4402
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "5206922",
@@ -492,7 +529,8 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "kind": "stock"
       },
       {
         "id": "35645524",
@@ -506,7 +544,200 @@
         "size": [
           3936,
           2624
+        ],
+        "kind": "stock"
+      },
+      {
+        "id": "frame_ATa9QMISrvw_31",
+        "kind": "frame",
+        "term": "PBS NewsHour 31s",
+        "file": "assets/photos/美國看不到家醫科/frame_ATa9QMISrvw_31.jpg",
+        "caption": "Is money the reason for a primary care doctor shortage?",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=ATa9QMISrvw",
+        "look": 33532957097984
+      },
+      {
+        "id": "154775719",
+        "term": "medical clinic",
+        "file": "assets/photos/美國看不到家醫科/154775719.jpg",
+        "caption": "Arkadenklinik Filderstadt.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "5R-MFT",
+        "credit": "5R-MFT／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Arkadenklinik_Filderstadt.jpg",
+        "look": 18374881028997839088,
+        "size": [
+          2604,
+          4624
         ]
+      },
+      {
+        "id": "85730677",
+        "term": "medical clinic",
+        "file": "assets/photos/美國看不到家醫科/85730677.jpg",
+        "caption": "Clinic in Exarcheia.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Mafo",
+        "credit": "Mafo／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Clinic_in_Exarcheia.jpg",
+        "look": 4611412261527962623,
+        "size": [
+          4000,
+          3000
+        ]
+      },
+      {
+        "id": "132791735",
+        "term": "medical clinic",
+        "file": "assets/photos/美國看不到家醫科/132791735.jpg",
+        "caption": "Clinique tout est grâce Kara Tomdè.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Balenamf",
+        "credit": "Balenamf／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Clinique_tout_est_gr%C3%A2ce_Kara_Tomd%C3%A8.jpg",
+        "look": 2305843013256543743,
+        "size": [
+          4032,
+          3024
+        ]
+      },
+      {
+        "id": "197238159",
+        "term": "waiting room",
+        "file": "assets/photos/美國看不到家醫科/197238159.jpg",
+        "caption": "2026-06-30 Waiting Room (George Stephen House) 03.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Thomas1313",
+        "credit": "Thomas1313／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:2026-06-30_Waiting_Room_(George_Stephen_House)_03.jpg",
+        "look": 10973047142626561539,
+        "size": [
+          3000,
+          4000
+        ]
+      },
+      {
+        "id": "157645402",
+        "term": "waiting room",
+        "file": "assets/photos/美國看不到家醫科/157645402.jpg",
+        "caption": "A patient waiting room at an urgent care clinic and doctor’s office in North Carolina, United States 02.jpg　CC BY 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Harrison Keely",
+        "credit": "Harrison Keely／CC BY 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:A_patient_waiting_room_at_an_urgent_care_clinic_and_doctor%E2%80%99s_office_in_North_Carolina,_United_States_02.jpg",
+        "look": 8952030448729853567,
+        "size": [
+          4032,
+          3024
+        ]
+      },
+      {
+        "id": "149293632",
+        "term": "waiting room",
+        "file": "assets/photos/美國看不到家醫科/149293632.jpg",
+        "caption": "A waiting room at a medical healthcare clinic, doctor's office, hospital.jpg　CC BY 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Harrison Keely",
+        "credit": "Harrison Keely／CC BY 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:A_waiting_room_at_a_medical_healthcare_clinic,_doctor%27s_office,_hospital.jpg",
+        "look": 18414949503514821119,
+        "size": [
+          5712,
+          4284
+        ]
+      },
+      {
+        "id": "84449072",
+        "term": "medical school",
+        "file": "assets/photos/美國看不到家醫科/84449072.jpg",
+        "caption": "Brodie Medical Centre, Winnipeg.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Jimj wpg",
+        "credit": "Jimj wpg／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Brodie_Medical_Centre,_Winnipeg.jpg",
+        "look": 2529971943635200,
+        "size": [
+          3264,
+          2448
+        ]
+      },
+      {
+        "id": "82014670",
+        "term": "medical school",
+        "file": "assets/photos/美國看不到家醫科/82014670.jpg",
+        "caption": "CARe Medical College.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Nazriyas",
+        "credit": "Nazriyas／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:CARe_Medical_College.jpg",
+        "look": 66104376426495,
+        "size": [
+          946,
+          1682
+        ]
+      },
+      {
+        "id": "126527817",
+        "term": "medical school",
+        "file": "assets/photos/美國看不到家醫科/126527817.jpg",
+        "caption": "Janaki Medical College Premises.jpg　CC BY-SA 4.0",
+        "kind": "real",
+        "outlet": "Wikimedia Commons",
+        "author": "Subhmanish",
+        "credit": "Subhmanish／CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Janaki_Medical_College_Premises.jpg",
+        "look": 11574516024644468732,
+        "size": [
+          3280,
+          1425
+        ]
+      },
+      {
+        "id": "frame_d-ZysrVnc-A_150",
+        "kind": "frame",
+        "term": "CNBC 150s",
+        "file": "assets/photos/美國看不到家醫科/frame_d-ZysrVnc-A_150.jpg",
+        "caption": "Why Walmart Wants To Be Your Hospital Too",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
+        "look": 17316428532213088245
+      },
+      {
+        "id": "frame_sY95WZm0vd8_45",
+        "kind": "frame",
+        "term": "CNN 45s",
+        "file": "assets/photos/美國看不到家醫科/frame_sY95WZm0vd8_45.jpg",
+        "caption": "General practitioner shortage",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=sY95WZm0vd8",
+        "look": 17061113201835253248
+      },
+      {
+        "id": "frame_sY95WZm0vd8_135",
+        "kind": "frame",
+        "term": "CNN 135s",
+        "file": "assets/photos/美國看不到家醫科/frame_sY95WZm0vd8_135.jpg",
+        "caption": "General practitioner shortage",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=sY95WZm0vd8",
+        "look": 13889111133479829256
       }
     ],
     "data": []
