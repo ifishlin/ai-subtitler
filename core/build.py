@@ -267,6 +267,7 @@ def build(name: str, target: Path | None = None,
                              ("uncredited", "引用的畫面沒有出處"),
                              ("samey", "連續太多張長一樣"),
                              ("unsigned", "沒有結尾頁"),
+                             ("simplified", "簡體字"),
                              ("shapeless", "結構不對")):
         if measured.get(fault):
             faults = measured[fault]

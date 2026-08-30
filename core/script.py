@@ -162,6 +162,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "uncredited": uncredited(script, *gathered(script)),
             "samey": samey(script),
             "unsigned": unsigned(script),
+            "simplified": simplified(script),
             "house": rules_module.house(script.get("format")).get("name", ""),
             "roles": roles_of(script),
             "borrowed_most": most,
@@ -389,6 +390,55 @@ def undrawn(script: dict[str, Any]) -> list[dict[str, Any]]:
         lack.append({"line": index, "say": line.get("say", ""),
                      "show": line.get("show", ""), "why": "沒說這張卡怎麼畫"})
     return lack
+
+
+_BOTH_FORMS = set(rules_module.at("language.both_forms", "吃台岩游里托"))
+
+
+def _is_simplified(char: str) -> bool:
+    """Whether one character is written the mainland way.
+
+    Two questions, because either alone is wrong. `t2s` leaves it alone: a
+    traditional character would have been converted, so this is not one.
+    `s2t` changes it: there is a traditional form it is not using. 的 passes
+    the first and fails the second, which is right -- it is simply shared.
+    """
+    from opencc import OpenCC                            # slow import, rare use
+    global _T2S, _S2T
+    try:
+        _T2S
+    except NameError:
+        _T2S, _S2T = OpenCC("t2s"), OpenCC("s2t")
+    if char in _BOTH_FORMS:
+        return False
+    return _T2S.convert(char) == char and _S2T.convert(char) != char
+
+
+def simplified(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Lines written in simplified characters.
+
+    A gate rather than a line in the prompt, and it earned that the hard way:
+    the first Qwen draft came back entirely in simplified, including the roles
+    -- 疑点, 悬念 -- and `shapeless` caught it only by accident, because those
+    happened not to be words the format knew. Any format that had listed them
+    would have let a whole simplified script through.
+
+    The prompt never asked for traditional. Nine gates and six thousand words
+    of instruction, and the one thing every single caption depends on was in
+    neither. So it is checked here, where forgetting to write it down cannot
+    matter, and `{language.name}` fills the prompt from the same field.
+    """
+    wrong = []
+    for index, line in enumerate(script.get("lines") or []):
+        for field in ("say", "show", "note"):
+            found = sorted({char for char in str(line.get(field) or "")
+                            if _is_simplified(char)})
+            if found:
+                wrong.append({"line": index, "field": field,
+                              "say": line.get("say", ""),
+                              "chars": "".join(found),
+                              "why": f"簡體字：{''.join(found)}"})
+    return wrong
 
 
 def samey(script: dict[str, Any]) -> list[dict[str, Any]]:

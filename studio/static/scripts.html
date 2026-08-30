@@ -1495,6 +1495,9 @@ async function showScript(name) {
       <div title="同一種卡片連續超過三張就是投影片">重複<b class="${
         (sums.samey || []).length ? "short" : "good"}">${
         (sums.samey || []).length}</b></div>
+      <div title="燒進畫面的簡體字。台灣兩種寫法都通行的字不算">簡體<b class="${
+        (sums.simplified || []).length ? "short" : "good"}">${
+        (sums.simplified || []).length}</b></div>
       <div title="引用的畫面沒有出處，壓片會被擋下來">沒出處<b class="${
         (sums.uncredited || []).length ? "short" : "good"}">${
         (sums.uncredited || []).length}</b></div>
