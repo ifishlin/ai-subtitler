@@ -381,7 +381,9 @@ def get_topic(name: str) -> dict[str, Any]:
             # there was never written to, so finished scripts did not appear.
             "scripts": [one for one in script_module.listing()
                         if one["topic"] == name],
-            "audience": topic_module.audience(pile)}
+            "audience": topic_module.audience(pile),
+            # Offered, not shown as though it were the answer.
+            "audience_guess": topic_module.suggest_audience(pile)}
 
 
 @app.post("/api/topic")
@@ -397,6 +399,26 @@ def new_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     pile = topic_module.blank(name, str(payload.get("angle") or "影響民眾生活"))
     topic_module.save(name, pile)
     return {"made": name, "topics": topic_module.listing()}
+
+
+@app.post("/api/topic/audience")
+def set_audience(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Who this topic is for.
+
+    Stored rather than derived. It was being guessed from a table keyed on the
+    topic's own words, which announced that a piece about studios being bought
+    was for people whose jobs AI might take -- and the guess appeared in the
+    same place an answer would, so nobody looked at it twice.
+    """
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    pile["audience"] = str(payload.get("audience") or "").strip()
+    topic_module.save(name, pile)
+    return {"saved": True, "audience": pile["audience"]}
 
 
 @app.post("/api/topic/voices")

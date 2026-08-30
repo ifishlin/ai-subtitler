@@ -124,9 +124,29 @@ def counts(pile: dict[str, Any]) -> dict[str, Any]:
             "short": {kind: max(0, WANT[kind] - got.get(kind, 0)) for kind in WANT}}
 
 
+def suggest_audience(pile: dict[str, Any]) -> str:
+    """A guess from the keyword table, offered rather than shown.
+
+    It used to be what the page displayed, and a table keyed on the topic's
+    own words cannot know things: 好萊塢 matched the technology row and the
+    page announced that a piece about studios being bought was for people
+    whose jobs AI might take. It is for people who pay for streaming.
+
+    A guess presented as an answer is worse than no answer, because nobody
+    checks a field that is already filled in.
+    """
+    return audience_for(pile.get("name", ""), pile.get("angle", ""))
+
+
 def audience(pile: dict[str, Any]) -> str:
-    return pile.get("audience") or audience_for(pile.get("topic", ""),
-                                                pile.get("angle", ""))
+    """Who this topic is for, as decided rather than as guessed.
+
+    Empty until somebody says. The keyword table is in `suggest_audience` and
+    is offered on the page as something to click, because a field that arrives
+    already filled in is a field nobody reads -- and this one is wrong often
+    enough to matter: it is what the whole ending gets written towards.
+    """
+    return str(pile.get("audience") or "").strip()
 
 
 def ready(pile: dict[str, Any]) -> tuple[bool, str]:
