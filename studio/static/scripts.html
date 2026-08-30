@@ -65,6 +65,27 @@
   .shelf figcaption.got{color:var(--faint);white-space:normal;line-height:1.35;
     max-height:2.7em;border-top:1px solid var(--line);padding-top:4px}
   .shelf figcaption.who{color:#9a8; font-size:9px}
+  /* A shot at the size it will be seen. The row thumbnails are 82px tall
+     and a card's own type is 76px on a 1920 frame -- legible in the finished
+     video, illegible in the list -- so the list is for finding a shot and
+     this is for judging it. */
+  #big{position:fixed;inset:0;background:#000d;z-index:60;display:flex;
+    align-items:center;justify-content:center;padding:24px}
+  .big-inner{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:12px 14px 14px;max-width:min(94vw,760px);
+    max-height:94vh;display:flex;flex-direction:column;gap:10px}
+  .big-bar{display:flex;align-items:baseline;gap:10px}
+  .big-bar b{font-size:13px}
+  .big-bar span{font:11px var(--mono);color:var(--faint)}
+  /* Worded like every other panel's, because a ✕ is a symbol you have to
+     know and 關閉 is a word you can read. */
+  .big-bar button{margin-left:auto}
+  #bigStage{display:flex;align-items:center;justify-content:center;
+    min-height:0;overflow:auto}
+  #bigStage img,#bigStage video{max-width:100%;max-height:74vh;
+    border-radius:8px;display:block;background:#0d1014}
+  #bigNote{font:11px var(--mono);color:var(--faint);line-height:1.6}
+  #bigNote em{font-style:normal;color:#7fd4ff}
   .rights{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin:12px 0}
   .rights-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
@@ -164,6 +185,8 @@
     border:1px solid #6b4d17;border-radius:4px;padding:0 4px}
   td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
+  td.show{cursor:zoom-in}
+  .shelf figure{cursor:zoom-in}
   td.show img.pic.drawn{object-fit:contain;background:#0d1b2a;
     border:1px solid #22405c}
   td.show .grabbed.bad{color:#ff8a72}
@@ -194,6 +217,17 @@
   <div id="list"></div>
   <div id="paper"><div class="empty">左邊選一個題目</div></div>
 </main>
+
+<div id="big" hidden>
+  <div class="big-inner">
+    <div class="big-bar">
+      <b id="bigWho"></b><span id="bigWhat"></span>
+      <button id="bigClose" class="tiny">關閉</button>
+    </div>
+    <div id="bigStage"></div>
+    <div id="bigNote"></div>
+  </div>
+</div>
 
 <script>
 "use strict";
@@ -382,8 +416,13 @@ async function open(name) {
           spec.want}${spec.short ? `　還缺 ${spec.short}` : ""}</span>
         <span class="hint">${WHERE_FROM[kind]}</span></h3>
       ${shown.length ? `<div class="shelf">${shown.map((one) => `
-        <figure title="${escapeHTML(one.caption || "")}${
-          one.credit ? `　${escapeHTML(one.credit)}` : ""}">
+        <figure data-shot="${escapeHTML(JSON.stringify({
+            say: "", show: one.term || "",
+            pic: `/media/photo/${encodeURIComponent(name)}/${
+              encodeURIComponent((one.file || "").split("/").pop())}`,
+            caption: one.caption || "", credit: one.credit || "",
+            from: one.outlet || "",
+          }))}" title="點開來看">
           <img src="/media/photo/${encodeURIComponent(name)}/${
             encodeURIComponent((one.file || "").split("/").pop())}"
             alt="" loading="lazy">
@@ -575,7 +614,18 @@ async function showScript(name) {
     <table>
       <thead><tr><th>起</th><th>台詞</th><th>畫面</th><th>來源</th></tr></thead>
       <tbody>${sums.lines.map((line) => `
-        <tr>
+        <tr data-shot="${escapeHTML(JSON.stringify({
+            say: line.say || "", show: line.show || "",
+            card: line.card_file ? `/media/card/${encodeURIComponent(name)}/${
+              encodeURIComponent(line.card_file.split("/").pop())}` : "",
+            pic: line.pic ? `/media/pic/${
+              line.pic.split("/").map(encodeURIComponent).join("/")}` : "",
+            clip: line.clip ? `/media/pic/${
+              line.clip.file.split("/").map(encodeURIComponent).join("/")}` : "",
+            at: line.clip ? [line.clip.start, line.clip.end] : null,
+            caption: line.caption || "", credit: line.credit || "",
+            outlet: line.outlet || "", from: line.from || "",
+          }))}">
           <td class="at">${clock(line.at)}</td>
           <td class="say">${escapeHTML(line.say || "")}</td>
           <td class="show">
@@ -606,9 +656,60 @@ async function showScript(name) {
   $("btnBackTopic").onclick = () => open(STATE.chosen);
 }
 
+/* Opening one shot at the size it will be seen.
+
+   The row thumbnails are 82 pixels tall. A card's own heading is 76 pixels on
+   a 1920-tall frame, which is comfortable in the finished video and a smudge
+   in the list -- so the list answers "which shot is this line" and this
+   answers "is this shot any good", which is the question that was being
+   answered by not looking. */
+function openShot(shot) {
+  const stage = $("bigStage");
+  $("bigWho").textContent = shot.show || shot.say;
+  $("bigWhat").textContent = shot.say;
+  if (shot.clip) {
+    stage.innerHTML = `<video controls autoplay muted playsinline
+      src="${shot.clip}#t=${shot.at[0]},${shot.at[1]}"></video>`;
+  } else {
+    stage.innerHTML = `<img src="${shot.card || shot.pic}" alt="">`;
+  }
+  const notes = [];
+  if (shot.at) notes.push(`段落 <em>${shot.at[0]}–${shot.at[1]}s</em>`);
+  if (shot.caption) notes.push(`圖說 <em>${escapeHTML(shot.caption)}</em>`);
+  if (shot.credit) notes.push(escapeHTML(shot.credit));
+  if (shot.from) notes.push(`出處 ${escapeHTML(shot.from)}`);
+  if (shot.card) notes.push("自製卡片");
+  $("bigNote").innerHTML = notes.join("　·　");
+  $("big").hidden = false;
+}
+
+function closeShot() {
+  $("bigStage").innerHTML = "";        // stops a clip that is still playing
+  $("big").hidden = true;
+}
+
+$("bigClose").onclick = closeShot;
+$("big").addEventListener("click", (event) => {
+  if (event.target.id === "big") closeShot();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !$("big").hidden) closeShot();
+});
+
 $("paper").addEventListener("click", (event) => {
   const card = event.target.closest("[data-script]");
-  if (card) showScript(card.dataset.script);
+  if (card) { showScript(card.dataset.script); return; }
+
+  const shelf = event.target.closest(".shelf [data-shot]");
+  if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }
+
+  const row = event.target.closest("tr[data-shot]");
+  if (row && event.target.closest("td.show")) {
+    // The inline clip has its own controls; clicking those should scrub it,
+    // not open a second copy of the same footage.
+    if (event.target.tagName === "VIDEO") return;
+    openShot(JSON.parse(row.dataset.shot));
+  }
 });
 
 $("list").addEventListener("click", (event) => {
