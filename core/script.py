@@ -579,6 +579,28 @@ def save(name: str, script: dict[str, Any]) -> Path:
     return path
 
 
+def for_topic(topic: str) -> list[str]:
+    """The scripts written from this topic.
+
+    Derived rather than recorded. The topic file carried a `scripts` list that
+    nothing wrote to, so four finished scripts existed on disk and the page
+    showed none of them -- the link ran one way, from script to topic, and the
+    other direction was a copy somebody was supposed to keep up to date.
+
+    Two places holding one fact is the same fault that had a threshold written
+    into both the code and a prompt. Reading it off the scripts themselves
+    cannot drift.
+    """
+    found = []
+    for name in names():
+        try:
+            if load(name).get("topic") == topic:
+                found.append(name)
+        except (ValueError, json.JSONDecodeError, FileNotFoundError):
+            continue
+    return found
+
+
 def listing() -> list[dict[str, Any]]:
     found = []
     for name in names():

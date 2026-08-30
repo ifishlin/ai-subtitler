@@ -102,6 +102,25 @@
     border-radius:8px;display:block;background:#0d1014}
   #bigNote{font:11px var(--mono);color:var(--faint);line-height:1.6}
   #bigNote em{font-style:normal;color:#7fd4ff}
+  .shape{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;margin:12px 0}
+  .shape-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;
+    background:#0d1014}
+  .shape-bar i{display:flex;align-items:center;justify-content:center;
+    height:100%;min-width:0}
+  .shape-bar b{font:11px var(--mono);color:#0d1014;opacity:.85}
+  .turn{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}
+  .turn-head{font-size:12px;display:flex;align-items:baseline;gap:10px;
+    flex-wrap:wrap}
+  .turn-lines{margin:8px 0;display:flex;flex-direction:column;gap:3px}
+  .turn-lines div{font-size:13px;padding:4px 10px;border-radius:6px;
+    border-left:3px solid transparent}
+  .turn-lines .was{color:var(--faint);border-left-color:#3f9e73}
+  .turn-lines .now{color:var(--ink);border-left-color:#c8543f;
+    background:#2a1512}
+  .turn-lines .now.next{background:transparent;color:var(--faint)}
+  .turn-ask{font-size:11px;color:var(--faint);line-height:1.6}
+  .turn-ask b{color:#ff8a72}
   .rights{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin:12px 0}
   .rights-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
@@ -555,6 +574,53 @@ const RIGHT_NOTE = {
   credit: "CC BY／BY-SA：作者和授權條款必須出現在畫面上",
   claimed: "別人的著作權，以引用主張合理使用",
 };
+
+/* 起承轉合, laid out so it can be judged rather than counted.
+
+   The program can prove a line is labelled 轉 and sits in the first third; it
+   cannot tell whether anything was reversed. Restating the setup more loudly
+   passes every check. So the page shows the turn on its own, with the belief
+   it is supposed to overturn directly above it, which is the only form in
+   which the question "did the understanding change" can actually be asked. */
+const ROLE_COLOUR = {起: "#4f8ef0", 承: "#3f9e73", 轉: "#c8543f", 合: "#c9973a"};
+
+function shapePanel(sums) {
+  const lines = sums.lines || [];
+  if (!lines.some((line) => line.role)) return "";
+  const clock = sums.seconds || 1;
+  const runs = [];
+  lines.forEach((line) => {
+    const last = runs[runs.length - 1];
+    if (last && last.role === line.role) { last.seconds += line.seconds; last.n += 1; }
+    else runs.push({role: line.role, seconds: line.seconds, n: 1, at: line.at});
+  });
+  const turn = lines.find((line) => line.role === "轉");
+  const before = lines.filter((line) => line.at < (turn ? turn.at : 0)).slice(-2);
+  const after = turn ? lines.slice(lines.indexOf(turn), lines.indexOf(turn) + 2) : [];
+  return `
+  <div class="shape">
+    <div class="shape-bar">${runs.map((run) => `
+      <i style="width:${(run.seconds / clock) * 100}%;background:${
+        ROLE_COLOUR[run.role] || "#555"}"
+        title="${escapeHTML(run.role)}　${run.n} 句　${run.seconds.toFixed(1)}s">
+        <b>${escapeHTML(run.role || "")}</b></i>`).join("")}</div>
+    ${turn ? `
+    <div class="turn">
+      <div class="turn-head">這個「轉」翻轉了什麼？
+        <span class="hint">程式只證明它被標成轉、而且在前三分之一。
+          有沒有翻轉只有讀的人知道</span></div>
+      <div class="turn-lines">
+        ${before.map((line) => `<div class="was">${escapeHTML(line.role)}　${
+          escapeHTML(line.say)}</div>`).join("")}
+        ${after.map((line, index) => `<div class="now${index ? " next" : ""}">${
+          escapeHTML(line.role)}　${escapeHTML(line.say)}</div>`).join("")}
+      </div>
+      <div class="turn-ask">看完上面兩句，再看下面兩句——
+        <b>對同一批事實的理解變了嗎？</b>
+        沒變的話，那是補充或換句話說，不是轉。</div>
+    </div>` : ""}
+  </div>`;
+}
 
 function rightsPanel(rights) {
   if (!rights) return "";

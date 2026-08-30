@@ -373,9 +373,13 @@ def get_topic(name: str) -> dict[str, Any]:
         raise HTTPException(400, str(error)) from error
     except FileNotFoundError as error:
         raise HTTPException(404, str(error)) from error
+    from core import script as script_module
     enough, why = topic_module.ready(pile)
     return {**pile, "counts": topic_module.counts(pile),
             "balance": topic_module.balance(pile), "ready": enough, "why": why,
+            # Read off the scripts, not out of the topic file: the copy stored
+            # there was never written to, so finished scripts did not appear.
+            "scripts": script_module.for_topic(name),
             "audience": topic_module.audience(pile)}
 
 
