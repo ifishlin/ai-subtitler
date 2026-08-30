@@ -18,7 +18,12 @@ PY
   if node --check /tmp/_page.mjs 2>/tmp/_err; then
     echo "  ✅ $(basename "$f")"
   else
-    echo "  ❌ $(basename "$f")  $(tail -2 /tmp/_err | head -1)"; bad=1
+    # node prints the offending line, a caret, then the message. All three are
+    # worth having: "❌ produce.html" with nothing after it says only that
+    # something is wrong somewhere in three thousand lines.
+    echo "  ❌ $(basename "$f")"
+    sed -n '2,6p' /tmp/_err | sed 's/^/       /'
+    bad=1
   fi
   native=$(grep -o '\balert(\|\bconfirm(\|\bprompt(' /tmp/_page.mjs | wc -l | tr -d ' ')
   if [ "$native" != "0" ]; then
