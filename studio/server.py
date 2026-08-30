@@ -843,6 +843,65 @@ def edit_line(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "measured": script_module.measure(found)}
 
 
+@app.get("/api/formats")
+def get_formats() -> dict[str, Any]:
+    """The house styles a script can be written in, with why each exists."""
+    from core import rules as rules_module
+    known = rules_module.formats()
+    return {"formats": [{"key": key, **spec} for key, spec in known.items()]}
+
+
+@app.post("/api/script/format")
+def set_format(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Change which house style a script is written in.
+
+    Changing it re-checks everything against different thresholds, and the
+    roles usually stop being valid words -- an argument's 起承轉合 means
+    nothing to a story. That is reported rather than repaired: which line is
+    the scene and which is a doubt is a reading of the script, and guessing it
+    would be inventing the answer to the one question the format exists to ask.
+    """
+    from core import rules as rules_module
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    house = str(payload.get("format") or "")
+    if house not in rules_module.formats():
+        raise HTTPException(400, f"沒有這個公版：{house}")
+    try:
+        found = script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    found["format"] = house
+    script_module.save(name, found)
+    return {"saved": True, "measured": script_module.measure(found)}
+
+
+@app.post("/api/script/about")
+def set_about(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Change a script's own description of itself: the view, the tone, and
+    who it is for.
+
+    Who it is for is the field worth being able to edit. It is derived from a
+    table of topics when a script is written -- 電費 to whoever pays bills, 股市
+    to whoever holds shares -- and the table cannot know that a piece about big
+    tech buying studios is for people who pay for streaming rather than for
+    people whose jobs AI might take. It got that one wrong, and it is the field
+    the whole ending is written towards.
+    """
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    try:
+        found = script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    for field in ("for", "view", "tone"):
+        if field in payload:
+            found[field] = str(payload[field] or "").strip()
+    script_module.save(name, found)
+    return {"saved": True, "for": found.get("for", ""),
+            "view": found.get("view", ""), "tone": found.get("tone", "")}
+
+
 @app.post("/api/script/lines")
 def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Save a batch of hand edits, all of them or none.

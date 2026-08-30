@@ -108,6 +108,20 @@
   /* Unsaved edits are visible and countable. Saving on every keystroke meant
      there was no such state, so nothing could be discarded and nothing had to
      be confirmed. */
+  /* Two decisions about the whole film, made once and never revisited until
+     they were put here: which shape it is, and who it is for. */
+  .about{display:flex;align-items:center;gap:14px;margin:10px 0 14px;
+    padding:9px 14px;border-radius:9px;background:var(--panel);
+    border:1px solid var(--line);flex-wrap:wrap}
+  .about label{display:flex;align-items:center;gap:7px;font-size:12px;
+    color:var(--faint)}
+  .about label.grow{flex:1;min-width:240px}
+  .about select,.about input{font:13px inherit;color:var(--ink);
+    background:#0d1014;border:1px solid var(--line);border-radius:6px;
+    padding:4px 9px}
+  .about input{flex:1}
+  .about select:hover,.about input:focus{border-color:var(--accent)}
+  .about .hint{font-size:11px;color:var(--faint)}
   #pending{display:flex;align-items:center;gap:12px;margin:12px 0;
     padding:9px 14px;border-radius:9px;background:#2a2415;
     border:1px solid #5b4a22}
@@ -599,6 +613,14 @@ const RIGHT_NOTE = {
    its own looks fine and the sequence it lands in does not. */
 const PENDING = {name: null, changes: new Map()};
 
+/* The house styles, fetched once. A short is not one shape, and which shape
+   this one is decides what the checks even mean -- an argument's roles are
+   meaningless words to a story. */
+let FORMATS = [];
+api("GET", "/api/formats")
+  .then((back) => { FORMATS = back.formats || []; })
+  .catch(() => {});
+
 function pendingKey(index, field) { return `${index}:${field}`; }
 
 function markPending(index, field, value) {
@@ -649,9 +671,15 @@ function shapePanel(sums) {
     if (last && last.role === line.role) { last.seconds += line.seconds; last.n += 1; }
     else runs.push({role: line.role, seconds: line.seconds, n: 1, at: line.at});
   });
-  const turn = lines.find((line) => line.role === "轉");
+  // The third role is the one nothing can check: the reversal in an argument,
+  // the doubts in a story. Named from the format rather than written in, since
+  // the two vocabularies share no words.
+  const roles = sums.roles || ["起", "承", "轉", "合"];
+  const pivot = roles[2];
+  const turn = lines.find((line) => line.role === pivot);
   const before = lines.filter((line) => line.at < (turn ? turn.at : 0)).slice(-2);
   const after = turn ? lines.slice(lines.indexOf(turn), lines.indexOf(turn) + 2) : [];
+  const story = pivot === "疑點";
   return `
   <div class="shape">
     <div class="shape-bar">${runs.map((run) => `
@@ -661,18 +689,22 @@ function shapePanel(sums) {
         <b>${escapeHTML(run.role || "")}</b></i>`).join("")}</div>
     ${turn ? `
     <div class="turn">
-      <div class="turn-head">這個「轉」翻轉了什麼？
-        <span class="hint">程式只證明它被標成轉、而且在前三分之一。
-          有沒有翻轉只有讀的人知道</span></div>
+      <div class="turn-head">${story
+        ? "這個「疑點」有替觀眾想完嗎？" : "這個「轉」翻轉了什麼？"}
+        <span class="hint">${story
+          ? "程式只證明它被標成疑點。有沒有留白給觀眾，只有讀的人知道"
+          : "程式只證明它被標成轉、而且在前三分之一。有沒有翻轉只有讀的人知道"}</span></div>
       <div class="turn-lines">
         ${before.map((line) => `<div class="was">${escapeHTML(line.role)}　${
           escapeHTML(line.say)}</div>`).join("")}
         ${after.map((line, index) => `<div class="now${index ? " next" : ""}">${
           escapeHTML(line.role)}　${escapeHTML(line.say)}</div>`).join("")}
       </div>
-      <div class="turn-ask">看完上面兩句，再看下面兩句——
-        <b>對同一批事實的理解變了嗎？</b>
-        沒變的話，那是補充或換句話說，不是轉。</div>
+      <div class="turn-ask">${story
+        ? `這一句是<b>擺出一個矛盾</b>，還是替觀眾下了結論？
+           出現「顯示」「代表」「可見」通常就是想完了。`
+        : `看完上面兩句，再看下面兩句——<b>對同一批事實的理解變了嗎？</b>
+           沒變的話，那是補充或換句話說，不是轉。`}</div>
     </div>` : ""}
   </div>`;
 }
@@ -726,6 +758,26 @@ async function showScript(name) {
     <h2>${escapeHTML(name)}　<button id="btnBackTopic" class="tiny">← 回題目</button></h2>
     <div class="angle">觀點：${escapeHTML(made.view || "")}${
       made.tone ? `　語氣：${escapeHTML(made.tone)}` : ""}</div>
+    <!-- Which house style, and who it is for. Both are decisions about the
+         whole film that were being made once and then never revisited: the
+         format silently defaulted to the argument shape, and the audience came
+         from a lookup table that cannot know a piece about studios being bought
+         is for people paying for streaming. -->
+    <div class="about">
+      <label>公版
+        <select id="pickFormat">
+          ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
+            .map((one) => `<option value="${escapeHTML(one.key)}"${
+              one.key === (made.format || "argue") ? " selected" : ""
+            }>${escapeHTML(one.name || one.key)}</option>`).join("")}
+        </select>
+      </label>
+      <label class="grow">說給誰聽
+        <input id="forWhom" value="${escapeHTML(made["for"] || "")}"
+          placeholder="例如：每個要付帳單的人" spellcheck="false">
+      </label>
+      <span class="hint">結尾整段是寫給這群人聽的</span>
+    </div>
     <div class="gauge">
       <div>長度<b class="${sums.over ? "short" : "good"}">${clock(sums.seconds)}</b></div>
       <div>上限 90 秒<b>${sums.over ? `超出 ${sums.over}s` : "在裡面"}</b></div>
@@ -833,6 +885,44 @@ async function showScript(name) {
     open(STATE.chosen);
   };
   $("btnSaveLines").onclick = savePending;
+
+  // Changing the house style re-checks everything against other thresholds and
+  // usually leaves every role invalid, which is reported rather than repaired:
+  // which line is a scene and which is a doubt is a reading, and guessing it
+  // would be answering the question the format exists to ask.
+  $("pickFormat").onchange = async (event) => {
+    const house = event.target.value;
+    const spec = FORMATS.find((one) => one.key === house) || {};
+    const roles = (spec.structure || {}).roles || [];
+    if (!confirm(`改成「${spec.name || house}」？\n\n` +
+                 `角色會變成 ${roles.join("／")}，每一句都要重新標。\n` +
+                 `實拍上限也會跟著改。`)) {
+      event.target.value = made.format || "argue";
+      return;
+    }
+    try {
+      await api("POST", "/api/script/format", {name, format: house});
+      dropPending();
+      showScript(name);
+    } catch (error) { alert(error.message); }
+  };
+
+  // Who it is for. Written once from a lookup table that cannot know the
+  // topic, and the whole ending is aimed at it.
+  const whom = $("forWhom");
+  whom.dataset.was = whom.value;
+  const saveWhom = async () => {
+    if (whom.value.trim() === whom.dataset.was) return;
+    try {
+      await api("POST", "/api/script/about", {name, "for": whom.value.trim()});
+      whom.dataset.was = whom.value.trim();
+    } catch (error) { alert(error.message); whom.value = whom.dataset.was; }
+  };
+  whom.addEventListener("blur", saveWhom);
+  whom.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") { event.preventDefault(); whom.blur(); }
+    if (event.key === "Escape") { whom.value = whom.dataset.was; whom.blur(); }
+  });
   $("btnDropLines").onclick = () => { dropPending(); showScript(name); };
   drawPending();
 
