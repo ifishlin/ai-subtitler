@@ -72,6 +72,59 @@ Commons 沒有「排隊」「帳單」這種讀得出意思的畫面，兩者都
 每一個詞對應**文案裡的一句話**。給 {collect.terms} 個詞，
 每個詞最多留 {collect.per_term} 張——**六張同一個搜尋結果，是六張同一個東西。**
 
+## 輸出格式
+
+**所有搜尋詞一律用英文。** 這些詞要拿去 CNN、BBC、Reuters 的 YouTube 頻道搜，
+和 Pexels 的圖庫搜 —— 那些地方沒有中文內容，中文詞回來的是零筆。
+
+```
+不行   警报训练失误、误报系统、忽视警报
+可以   Messina museum theft、museum alarm ignored、Italy art heist
+```
+
+只輸出 JSON，不要別的：
+
+```json
+{
+  "videos": ["Messina museum theft", "Italy art heist",
+             "stolen Renaissance painting", "museum security failure"],
+  "pictures": ["museum gallery empty room", "religious procession crowd",
+               "security alarm panel wall", "night security guard monitor",
+               "cctv camera corridor", "wire fence cut",
+               "phone notification screen", "old church painting altar"]
+}
+```
+
+`videos` 是拿去問各家電視台的，**想像它們會怎麼下標題** —— 它們不會寫
+「梅西納名畫失竊」，會寫 `Italian museum theft`。三到五個，換不同說法，
+才問得到不同家。
+
+**至少一個詞要把事件釘死** —— 地名、人名、作品名。只寫類別，回來的是那一類
+裡最有名的那一件，不是你要的那一件：
+
+```
+museum theft、stolen painting、art heist police
+  → 25 支影片，全部是羅浮宮珠寶竊案。一支梅西納都沒有。
+    這幾年最大的博物館竊案是羅浮宮，所以每一家給你的都是它。
+
+Messina museum theft、Antonello da Messina stolen、Sicily museum robbery
+  → 才問得到這一件
+```
+
+而且錯的素材會繼續錯下去：`keywords()` 從這些標題抽關鍵字，抽出來的畫格
+也全是羅浮宮的。**收錯的第一步會污染後面每一步。**
+
+```
+好    Messina museum theft        事件本身
+      Italy art heist             換個說法，抓到不同家
+      museum security failure     角度不同，抓得到分析報導
+
+不好  Antonello da Messina        畫家名字太冷，電視台不會這樣下標
+      art                         太廣
+```
+
+`pictures` 是拿去圖庫的，{collect.terms} 個，**照「說給誰聽」那一欄去想**。
+
 ## 三種照片各去哪裡
 
 ```

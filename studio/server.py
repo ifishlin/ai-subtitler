@@ -451,6 +451,26 @@ def new_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     return {"made": name, "topics": topic_module.listing()}
 
 
+@app.post("/api/topic/terms")
+def suggest_terms(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Suggest what to search for, from the topic and who it is for.
+
+    Quick enough to wait for -- one short answer rather than a whole script --
+    so it returns the terms instead of becoming a job. They are put in the box
+    rather than used: a suggestion you cannot see before it runs is a decision
+    somebody else made.
+    """
+    from core import writer as writer_module
+    name = str(payload.get("name") or "")
+    reachable, complaint = _model_reachable()
+    if not reachable:
+        raise HTTPException(503, f"{complaint}　想搜尋詞需要它。")
+    try:
+        return writer_module.suggest_terms(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(400, str(error)) from error
+
+
 @app.post("/api/topic/gather")
 def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """The whole gathering round, as one job.
@@ -471,10 +491,28 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     except (ValueError, FileNotFoundError) as error:
         raise HTTPException(404, str(error)) from error
 
+    shots = [one.strip() for one in (payload.get("pictures") or "").split(",")
+             if one.strip()]
+
     def work(say) -> None:
+        from core import stock as stock_module
+        from core import writer as writer_module
+
+        # 1. What each outlet broadcast.
         found = topic_module.hunt(name, queries, say=say)
         pile = topic_module.load(name)
         pile["sources"]["videos"] = pile["sources"]["videos"] + found
+        topic_module.save(name, pile)
+
+        # 2. What each outlet wrote. The half that had no code at all, so the
+        # balance check could never pass without somebody typing reports in.
+        wrote = topic_module.hunt_reports(name, queries, say=say)
+        try:
+            wrote = writer_module.sift(name, wrote, say)
+        except Exception:                                         # noqa: BLE001
+            pass          # judging is optional; finding is not
+        pile = topic_module.load(name)
+        pile["sources"]["reports"] = (pile["sources"].get("reports") or []) + wrote
         topic_module.save(name, pile)
 
         # Download only what the balance actually needs, newest search first.
@@ -508,6 +546,44 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 marks.append(mark)
                 seen.add(made["id"])
                 fresh.append({**made, "look": mark})
+        # 4. Stock and encyclopaedia pictures. The counts ask for five of each
+        # kind because they cover different holes, and until now only frames
+        # were ever collected by this button.
+        marks = [i["look"] for i in fresh if i.get("look")]
+        seen = {i.get("id") for i in fresh}
+        here = ROOT / "assets" / "photos" / name
+        here.mkdir(parents=True, exist_ok=True)
+        per_term = topic_module.rules_module.at("collect.per_term", 3)
+        for index, term in enumerate(shots[:10], start=1):
+            say(index, len(shots[:10]), f"找圖 {term}")
+            try:
+                offered = stock_module.search_photos(term, count=per_term * 3)
+            except Exception:                                     # noqa: BLE001
+                continue
+            got = 0
+            for picture in offered:
+                if got >= per_term or picture.id in seen:
+                    continue
+                target = here / f"{picture.id}.jpg"
+                try:
+                    stock_module.fetch(picture.url, target)
+                except Exception:                                 # noqa: BLE001
+                    continue
+                mark = stock_module.looks_like(target)
+                if any(stock_module.alike(mark, other) for other in marks):
+                    target.unlink(missing_ok=True)
+                    continue
+                marks.append(mark)
+                seen.add(picture.id)
+                got += 1
+                fresh.append({
+                    "id": picture.id, "term": term, "kind": "stock",
+                    "file": str(target.relative_to(ROOT)),
+                    "caption": picture.about or term, "outlet": "Pexels",
+                    "author": picture.author, "credit": "",
+                    "answers": stock_module.answers(term, picture.about or ""),
+                    "page": picture.page, "look": mark,
+                    "size": [picture.width, picture.height]})
         topic_module.replace_images(name, fresh)
 
     _job_run(f"收集：{name}", name, work)
@@ -886,13 +962,21 @@ def make_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     reachable, complaint = _model_reachable()
     if not reachable:
         raise HTTPException(503, f"{complaint}　寫文案需要它。")
-    # The prompt is assembled either way, so a missing name in a prompt is
-    # found here rather than at the moment a model is finally connected.
-    asking = brief_module.prompt(name, house)
-    raise HTTPException(501, "產生文案的那一步還沒接上模型——"
-                             f"素材、平衡檢查、公版（{house}）和頁面都好了，"
-                             f"prompt 也組好了（{len(asking.encode()) // 1024} KB），"
-                             "缺的是寫稿本身。")
+    # The prompt is assembled either way, so a missing name is found here
+    # rather than at the moment a model is connected.
+    brief_module.prompt(name, house)
+
+    from core import writer as writer_module
+    into = str(payload.get("as") or "").strip() or None
+
+    def work(say) -> None:
+        made = writer_module.write(name, house, into, say)
+        say(3, 3, f"{made['name']}　{made['lines']} 句　{made['seconds']}s　"
+                  + ("全部通過" if not made["faults"]
+                     else "不合格：" + "、".join(made["faults"])))
+
+    _job_run(f"寫文案：{name}（{house}）", name, work)
+    return {"started": name, "format": house}
 
 
 # ------------------------------------------------------------------ scripts

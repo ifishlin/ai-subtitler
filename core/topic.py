@@ -490,6 +490,87 @@ def hunt(name: str, queries: list[str], most: int = 2,
     return found
 
 
+NEWS_RSS = "https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
+ITEM = re.compile(r"<item>(.*?)</item>", re.S)
+TITLE = re.compile(r"<title>(.*?)</title>", re.S)
+WHEN = re.compile(r"<pubDate>(.*?)</pubDate>", re.S)
+LINK = re.compile(r"<link>(.*?)</link>", re.S)
+
+
+def hunt_reports(name: str, queries: list[str], most: int = 2,
+                 say=None) -> list[dict[str, Any]]:
+    """Ask each outlet what it wrote, the same way we ask what it broadcast.
+
+    Reports were the half of gathering that had no code at all. `hunt` asked
+    nineteen YouTube channels and nothing asked the nineteen websites, so the
+    balance check could never pass on its own -- every report in this project
+    was found by hand and typed in. The button said 逐家問 and meant half of it.
+
+    Searched through Google News restricted to each outlet's own domain, which
+    is a keyless endpoint and is the same shape as the video round: the answer
+    arrives already knowing who wrote it, because we asked that publication and
+    no other. Searching the web instead returns whatever agrees with itself.
+    """
+    import html as html_module
+    import time as time_module
+    import urllib.parse
+    import urllib.request
+    from core import stock as stock_module
+
+    outlets = [one for one in media()["outlets"] if one.get("site")]
+    have = {r.get("url") for r in load(name)["sources"].get("reports") or []}
+    seen_titles = {r.get("title") for r in load(name)["sources"].get("reports") or []}
+    found: list[dict[str, Any]] = []
+    for index, spec in enumerate(outlets, start=1):
+        if say:
+            say(index, len(outlets), f"問 {spec['name']} 的官網")
+        kept = 0
+        for query in queries:
+            if kept >= most:
+                break
+            site = spec["site"].split("/")[0]
+            link = NEWS_RSS.format(query=urllib.parse.quote(
+                f"site:{site} {query}"))
+            try:
+                page = urllib.request.urlopen(
+                    urllib.request.Request(link, headers={"User-Agent": "Mozilla/5.0"}),
+                    timeout=25, context=stock_module._ssl_context()
+                ).read().decode("utf-8", "replace")
+            except Exception:                                     # noqa: BLE001
+                continue
+            for block in ITEM.findall(page):
+                if kept >= most:
+                    break
+                title = TITLE.search(block)
+                if not title:
+                    continue
+                said = html_module.unescape(title.group(1))
+                # Google News appends the outlet to every headline; strip it so
+                # the title reads as the outlet wrote it.
+                said = re.sub(r"\s+-\s+[^-]{2,40}$", "", said).strip()
+                url = (LINK.search(block).group(1).strip()
+                       if LINK.search(block) else "")
+                if not url or url in have or said in seen_titles:
+                    continue
+                # A section index, not an article. Google News returns these
+                # for outlets whose search pages are themselves indexed --
+                # PBS answered with 「art」 and 「italy」, CNN with 「CNN
+                # Newsroom」. A headline about one event is not four letters.
+                if len(said) < 18 or said.lower() in ("cnn newsroom", "transcripts"):
+                    continue
+                have.add(url)
+                seen_titles.add(said)
+                kept += 1
+                found.append({
+                    "title": said, "url": url, "outlet": spec["name"],
+                    "lean": spec.get("lean", ""),
+                    "when": (WHEN.search(block).group(1)[:16].strip()
+                             if WHEN.search(block) else ""),
+                    "paywall": bool(spec.get("paywall"))})
+            time_module.sleep(0.4)
+    return found
+
+
 def at_seconds() -> tuple[int, int]:
     """How long a usable video is. Too short has nothing to cut; too long is
     usually a whole programme repeated."""

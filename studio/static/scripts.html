@@ -600,8 +600,10 @@ async function open(name) {
       <span>收集</span>
       <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
         spellcheck="false">
-      <button id="btnGather" class="tiny primary">逐家問＋下載＋抽畫格</button>
+      <button id="btnTerms" class="tiny">想幾個</button>
+      <button id="btnGather" class="tiny primary">逐家問（影片＋報導＋圖）</button>
     </div>
+    <div id="termsNote" class="hint"></div>
 
     ${(pile.wanted || []).length ? `
     <!-- What the audience implies and the pile does not have. The counts say
@@ -840,11 +842,31 @@ async function open(name) {
     } catch (error) { alert(error.message); }
   };
 
+  // The picture terms ride along with the video ones: one suggestion, one
+  // gather. Kept here rather than in a second box because they are not a
+  // separate decision -- both come from the same reading of the topic.
+  TERMS.pictures = [];
+  // Suggested, then shown, then used. Putting the terms in the box rather
+  // than searching with them straight away is the difference between a
+  // suggestion and a decision somebody else made -- and these terms decide
+  // which nineteen answers come back.
+  if ($("btnTerms")) $("btnTerms").onclick = async () => {
+    $("termsNote").textContent = "想中…";
+    try {
+      const got = await api("POST", "/api/topic/terms", {name});
+      $("hunt").value = got.videos.join(", ");
+      TERMS.pictures = got.pictures || [];
+      $("termsNote").textContent = got.pictures.length
+        ? `圖庫的詞：${got.pictures.join("、")}（收集完會用到）　${got.took}s`
+        : `${got.took}s`;
+    } catch (error) { $("termsNote").textContent = error.message; }
+  };
   if ($("btnGather")) $("btnGather").onclick = async () => {
     const queries = $("hunt").value.trim();
     if (!queries) { alert("要給搜尋詞"); return; }
     try {
-      await api("POST", "/api/topic/gather", {name, queries});
+      await api("POST", "/api/topic/gather",
+                {name, queries, pictures: TERMS.pictures.join(", ")});
       watchJob(() => open(name));
     } catch (error) { alert(error.message); }
   };
@@ -893,6 +915,7 @@ const RIGHT_NOTE = {
    refused by the server with the whole set in hand, because a role moved on
    its own looks fine and the sequence it lands in does not. */
 const PENDING = {name: null, changes: new Map()};
+const TERMS = {pictures: []};
 
 /* Editing the house styles.
 
