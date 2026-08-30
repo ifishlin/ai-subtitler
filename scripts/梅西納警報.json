@@ -1,0 +1,488 @@
+{
+  "topic": "梅西納名畫失竊",
+  "view": "所有人在問誰幹的。沒有人追那一句：畫作的警報響了，警衛以為是誤報把它關掉——擋住小偷的最後一道，是一個人的判斷。",
+  "tone": "克制",
+  "for": "每個被誤報訓練到忽略警報的人",
+  "narration": false,
+  "lines": [
+    {
+      "say": "八月十五號晚上八點四十七分。",
+      "role": "起",
+      "show": "示意：夜裡的聖母遊行人群",
+      "pic": "assets/photos/梅西納名畫失竊/19286418.jpg",
+      "fit": "fill",
+      "tone": "cool",
+      "seen": true,
+      "from": "The Guardian",
+      "seconds": 3.04
+    },
+    {
+      "say": "梅西納市中心擠了十五萬人。",
+      "role": "起",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "聖母升天遊行",
+        "value": "15 萬",
+        "under": "人湧進市中心",
+        "note": "資料：The Guardian",
+        "ghost": "祭"
+      },
+      "from": "The Guardian",
+      "seconds": 2.54
+    },
+    {
+      "say": "數百名警察，道路全封。",
+      "role": "起",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "數百名警察\n道路全封",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 2.1
+    },
+    {
+      "say": "而市郊那棟樓，空的。",
+      "role": "起",
+      "show": "自製：字卡",
+      "tone": "cool",
+      "seen": true,
+      "from": "The Guardian",
+      "seconds": 1.9,
+      "card": {
+        "kind": "word",
+        "title": "而市郊那棟樓",
+        "under": "空的",
+        "ghost": "空"
+      }
+    },
+    {
+      "say": "兩個人剪開鐵絲網。",
+      "role": "承",
+      "show": "自製：清單卡",
+      "tone": "cool",
+      "seen": true,
+      "from": "The Guardian",
+      "seconds": 1.9,
+      "card": {
+        "kind": "stack",
+        "title": "他們做了三件事",
+        "items": [
+          "剪開外圍鐵絲網",
+          "撬開一扇側門",
+          "進到展示櫃前"
+        ],
+        "note": "資料：The Guardian"
+      }
+    },
+    {
+      "say": "撬開一扇沒裝警報的側門。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "那扇側門\n沒裝警報",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 2.32
+    },
+    {
+      "say": "三分鐘，帶走五片畫。",
+      "role": "承",
+      "show": "自製：一段時間畫成圈",
+      "card": {
+        "kind": "clock",
+        "title": "監視器上的整段過程",
+        "value": "3 分",
+        "part": 0.05,
+        "under": "五片全部帶走",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 1.9
+    },
+    {
+      "say": "那是安托內羅唯一沒離開過故鄉的作品。",
+      "role": "承",
+      "show": "影片：BBC 教堂裡的名畫",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
+        "start": 50.4,
+        "end": 56.5
+      },
+      "seconds": 6.1,
+      "seen": true,
+      "from": "BBC News"
+    },
+    {
+      "say": "它熬過一九〇八年的地震。",
+      "role": "承",
+      "show": "真實：一九〇八年梅西納地震後的廢墟",
+      "pic": "assets/photos/梅西納名畫失竊/Underwood_&_Underwood_©_1906_No._10495_-_Messina_-_The_once_beautiful_Water-front_after_the_earthquake_dett.jpg.jpg",
+      "fit": "ground",
+      "tone": "cool",
+      "seen": true,
+      "from": "The Guardian",
+      "seconds": 2.61
+    },
+    {
+      "say": "所有人在問誰幹的。",
+      "role": "轉",
+      "show": "自製：一條線分岔成兩條",
+      "card": {
+        "kind": "split",
+        "title": "大家在問的",
+        "branches": [
+          "黑手黨？",
+          "內鬼？"
+        ],
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "檢察長說不排除黑手黨。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "不排除\n黑手黨",
+        "tone": "light",
+        "note": "資料：Rai"
+      },
+      "from": "Rai",
+      "seconds": 2.1
+    },
+    {
+      "say": "追討專家說不可能。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "再狠的當地人\n也不會這樣做",
+        "tone": "light",
+        "note": "資料：Art Recovery International"
+      },
+      "from": "Art Recovery International",
+      "seconds": 1.9
+    },
+    {
+      "say": "但有一句話沒有人追下去。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "有一句話\n沒有人追",
+        "tone": "light",
+        "ghost": "？"
+      },
+      "from": "觀點",
+      "seconds": 2.32
+    },
+    {
+      "say": "畫作自己的警報響了。",
+      "role": "轉",
+      "show": "示意：牆上的紅色警報器",
+      "pic": "assets/photos/梅西納名畫失竊/31560987.jpg",
+      "fit": "fill",
+      "tone": "light",
+      "seen": true,
+      "from": "La Sicilia",
+      "seconds": 2.17
+    },
+    {
+      "say": "它做對了它該做的事。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "它做對了",
+        "under": "稍有移動就會叫",
+        "tone": "light",
+        "note": "資料：La Sicilia"
+      },
+      "from": "La Sicilia",
+      "seconds": 1.9
+    },
+    {
+      "say": "警衛聽到了。",
+      "role": "轉",
+      "show": "示意：值夜的警衛與監控螢幕",
+      "pic": "assets/photos/梅西納名畫失竊/30692441.jpg",
+      "fit": "ground",
+      "tone": "light",
+      "seen": true,
+      "from": "TG La7",
+      "seconds": 1.9
+    },
+    {
+      "say": "他把它關掉了。",
+      "role": "轉",
+      "show": "自製：劃掉舊的換新的",
+      "card": {
+        "kind": "swap",
+        "title": "接下來發生的",
+        "was": "警報響了",
+        "now": "被關掉",
+        "colour": "#b8360a",
+        "tone": "light",
+        "note": "資料：TG La7"
+      },
+      "from": "TG La7",
+      "seconds": 1.9
+    },
+    {
+      "say": "因為他以為是誤報。",
+      "role": "轉",
+      "show": "自製：圈起來的兩個字",
+      "card": {
+        "kind": "ring",
+        "title": "理由是",
+        "value": "誤報",
+        "tone": "light",
+        "note": "資料：TG La7"
+      },
+      "from": "TG La7",
+      "seconds": 1.9
+    },
+    {
+      "say": "十分鐘後路人發現兩片畫。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "The Guardian",
+      "card": {
+        "kind": "word",
+        "title": "十分鐘後",
+        "under": "路人在矮牆上發現兩片",
+        "tone": "light",
+        "note": "資料：The Guardian"
+      },
+      "seconds": 2.32
+    },
+    {
+      "say": "小心地靠著，不是摔在地上。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "The Guardian",
+      "card": {
+        "kind": "word",
+        "title": "小心地靠著",
+        "under": "為什麼丟下兩片？",
+        "tone": "light"
+      },
+      "seconds": 2.54
+    },
+    {
+      "say": "這不是第一次了。",
+      "role": "轉",
+      "show": "影片：CNN 羅浮宮竊案現場",
+      "from": "CNN",
+      "seconds": 5.9,
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
+        "start": 53.4,
+        "end": 59.3
+      },
+      "seen": true
+    },
+    {
+      "say": "門沒裝警報，是設計問題。",
+      "role": "合",
+      "show": "自製：清單卡",
+      "card": {
+        "kind": "stack",
+        "title": "這件事有三層",
+        "items": [
+          "門沒裝警報 —— 設計",
+          "剪鐵絲網 —— 體力",
+          "關掉警報 —— 判斷"
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.32
+    },
+    {
+      "say": "剪鐵絲網，是體力問題。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "前兩層\n都擋不住",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.1
+    },
+    {
+      "say": "最後那一層是判斷。",
+      "role": "合",
+      "show": "自製：同一條線上的三個點",
+      "card": {
+        "kind": "chain",
+        "title": "最後一道",
+        "points": [
+          "警報",
+          "警衛",
+          "判斷"
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "而它敗給一個念頭。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "敗給一個念頭",
+        "under": "「應該又是誤報」",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "那個念頭很合理。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "那個念頭\n很合理",
+        "tone": "warm"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "因為前面九十九次都是誤報。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "前面每一次\n都是誤報",
+        "tone": "warm"
+      },
+      "seconds": 2.54
+    },
+    {
+      "say": "羅浮宮那次，警鈴也響了。",
+      "role": "合",
+      "show": "影片：CNN 羅浮宮竊案",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
+        "start": 101.5,
+        "end": 107.8
+      },
+      "seconds": 6.3,
+      "seen": true,
+      "from": "CNN"
+    },
+    {
+      "say": "你手機每天幾則詐騙警告？",
+      "role": "合",
+      "show": "示意：滿是通知的手機螢幕",
+      "pic": "assets/photos/梅西納名畫失竊/7662059.jpg",
+      "fit": "fill",
+      "tone": "warm",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.61
+    },
+    {
+      "say": "你上次認真看是什麼時候？",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "上次認真看\n是什麼時候",
+        "tone": "warm",
+        "ghost": "？"
+      },
+      "from": "觀點",
+      "seconds": 2.32
+    },
+    {
+      "say": "火災警報也一樣。",
+      "role": "合",
+      "show": "自製：清單卡",
+      "from": "觀點",
+      "card": {
+        "kind": "stack",
+        "title": "被誤報訓練過的",
+        "items": [
+          "詐騙簡訊警告",
+          "公司資安通知",
+          "樓下的火災警報"
+        ],
+        "tone": "warm"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "誤報太多的系統，等於沒有。",
+      "role": "合",
+      "show": "自製：兩個量比大小",
+      "card": {
+        "kind": "bars",
+        "title": "一年響幾次",
+        "rows": [
+          [
+            "誤報",
+            99,
+            "#c39b86",
+            "99 次"
+          ],
+          [
+            "真的",
+            1,
+            "#ff7a4d",
+            "1 次"
+          ]
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.54
+    },
+    {
+      "say": "那個警衛不知道是哪一次。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "他不知道\n是哪一次",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.32
+    },
+    {
+      "say": "整件事是這樣的。",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "seconds": 6.2,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "ghost": "報",
+        "points": [
+          "遊行那天十五萬人在市中心，市郊空無一人",
+          "三分鐘，五片畫被帶走",
+          "畫作的警報響了，警衛以為是誤報，關掉它",
+          "大家在問誰幹的，那句話沒有人追"
+        ],
+        "title": "擋住小偷的最後一道\n是一個人的判斷",
+        "under": "梅西納名畫失竊"
+      },
+      "from": "觀點"
+    }
+  ]
+}

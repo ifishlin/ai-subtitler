@@ -1,0 +1,917 @@
+{
+  "topic": "梅西納名畫失竊",
+  "angle": "影響民眾生活",
+  "made": 1788095315,
+  "sources": {
+    "videos": [
+      {
+        "title": "Four 'extraordinary' Renaissance paintings stolen from Italian museum ",
+        "url": " BBC News|https://www.youtube.com/watch?v=99J1tPIXL1Q",
+        "seconds": 299,
+        "outlet": "BBC News",
+        "lean": "neutral"
+      },
+      {
+        "title": "Italian heist sees thieves steal paintings worth millions ",
+        "url": " BBC News|https://www.youtube.com/watch?v=PlH1yEuwiPk",
+        "seconds": 217,
+        "outlet": "BBC News",
+        "lean": "neutral"
+      },
+      {
+        "title": "Hunting for Italy’s stolen art - BBC News",
+        "url": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "seconds": 466,
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "file": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
+        "captions": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.en-orig.vtt",
+        "size": 90692090
+      },
+      {
+        "title": "'Priceless' Louvre crown jewels stolen, international manhunt underway",
+        "url": "https://www.youtube.com/watch?v=z7KC7vBtqwI",
+        "seconds": 606,
+        "outlet": "CNN",
+        "lean": "left",
+        "file": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
+        "captions": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.en.vtt",
+        "size": 41396632
+      },
+      {
+        "title": "Preview of Looted Art",
+        "url": "https://www.youtube.com/watch?v=5C7Hq1TtUXk",
+        "seconds": 127,
+        "outlet": "Fox Business",
+        "lean": "right",
+        "file": "assets/footage/梅西納名畫失竊/5C7Hq1TtUXk.mp4",
+        "captions": "assets/footage/梅西納名畫失竊/5C7Hq1TtUXk.en-orig.vtt",
+        "size": 21711251
+      },
+      {
+        "title": "'Priceless' jewels stolen in Germany's Green Vault museum heist",
+        "url": "https://www.youtube.com/watch?v=GmfZflmrHCk",
+        "seconds": 132,
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "file": "assets/footage/梅西納名畫失竊/GmfZflmrHCk.mp4",
+        "captions": null,
+        "size": 23202737
+      }
+    ],
+    "reports": [
+      {
+        "title": "Messina mystery: theft of Renaissance art from Sicilian museum leaves investigators baffled",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "url": "https://www.theguardian.com/artanddesign/2026/aug/30/messina-mystery-theft-of-renaissance-art-from-sicilian-museum-leaves-investigators-baffled"
+      },
+      {
+        "title": "Four 'extraordinary' Renaissance paintings stolen from Italian museum",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "url": "https://www.bbc.com/news"
+      },
+      {
+        "title": "Italian heist: thieves steal paintings worth millions",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "url": "https://www.bbc.com/news"
+      },
+      {
+        "title": "Louvre crown jewels stolen, international manhunt",
+        "outlet": "CNN",
+        "lean": "left",
+        "url": "https://www.cnn.com"
+      },
+      {
+        "title": "Preview of Looted Art",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "url": "https://www.foxbusiness.com"
+      },
+      {
+        "title": "'Priceless' jewels stolen in Germany's Green Vault museum",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "url": "https://www.aljazeera.com"
+      }
+    ],
+    "images": [
+      {
+        "id": "39113418",
+        "term": "museum gallery empty room",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/39113418.jpg",
+        "caption": "A contemporary interior space with natural light and a lone figure, captured in Porto, Portugal.",
+        "outlet": "Pexels",
+        "author": "Ashley Yeh",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/minimalist-interior-space-with-natural-light-in-porto-39113418/",
+        "look": 1089606179317810974,
+        "size": [
+          3840,
+          2560
+        ]
+      },
+      {
+        "id": "11843513",
+        "term": "museum gallery empty room",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/11843513.jpg",
+        "caption": "A solitary figure sitting in a contemporary art gallery surrounded by framed artworks.",
+        "outlet": "Pexels",
+        "author": "Xianyun Zhu",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/black-and-white-photo-of-art-museum-11843513/",
+        "look": 261992988093,
+        "size": [
+          6000,
+          4286
+        ]
+      },
+      {
+        "id": "110819",
+        "term": "museum gallery empty room",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/110819.jpg",
+        "caption": "Modern art museum exhibit featuring open books in glass cases, highlighting contemporary interior design.",
+        "outlet": "Pexels",
+        "author": "mali maeder",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/open-books-with-glass-case-inside-room-110819/",
+        "look": 2251658940914876608,
+        "size": [
+          5222,
+          3481
+        ]
+      },
+      {
+        "id": "19286418",
+        "term": "religious procession crowd street",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/19286418.jpg",
+        "caption": "A bustling night street procession with a religious figure, highlighting urban faith and community gathering.",
+        "outlet": "Pexels",
+        "author": "Gonzalo Carlos Novillo Lapeyra",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/a-religious-procession-at-night-19286418/",
+        "look": 280199813260443656,
+        "size": [
+          6034,
+          4028
+        ]
+      },
+      {
+        "id": "18772921",
+        "term": "religious procession crowd street",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/18772921.jpg",
+        "caption": "A vibrant traditional religious parade procession with diverse participants in urban setting.",
+        "outlet": "Pexels",
+        "author": "Fatima Yusuf",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/people-on-parade-in-town-18772921/",
+        "look": 18360874440490942516,
+        "size": [
+          3851,
+          3456
+        ]
+      },
+      {
+        "id": "18937552",
+        "term": "religious procession crowd street",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/18937552.jpg",
+        "caption": "A bustling aerial view of a religious procession in Lima, Peru's urban landscape.",
+        "outlet": "Pexels",
+        "author": "Lyon Peru",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/religious-procession-on-city-street-18937552/",
+        "look": 2298083836,
+        "size": [
+          8139,
+          5465
+        ]
+      },
+      {
+        "id": "38785606",
+        "term": "security alarm panel wall",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/38785606.jpg",
+        "caption": "Red emergency button on a grey patterned wall, emphasizing safety measures.",
+        "outlet": "Pexels",
+        "author": "Jan van der Wolf",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/red-emergency-button-on-grey-wall-background-38785606/",
+        "look": 739261463548133311,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "31560987",
+        "term": "security alarm panel wall",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/31560987.jpg",
+        "caption": "Red fire alarm and warning sign on a rustic wooden wall for safety awareness indoors.",
+        "outlet": "Pexels",
+        "author": "James Thomas",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/fire-alarm-on-rustic-wooden-wall-for-safety-31560987/",
+        "look": 7853425598440208620,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "12997193",
+        "term": "security alarm panel wall",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/12997193.jpg",
+        "caption": "Close-up view of a red fire alarm mounted on a textured outdoor wall, showcasing safety equipment.",
+        "outlet": "Pexels",
+        "author": "Joshua Brown",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/fire-alarm-on-a-wall-12997193/",
+        "look": 13898355706043886792,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "20783671",
+        "term": "cctv camera corridor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/20783671.jpg",
+        "caption": "Monochrome image of a modern surveillance camera mounted outdoors, emphasizing security.",
+        "outlet": "Pexels",
+        "author": "Brett Sayles",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/black-and-white-photo-of-a-surveillance-camera-20783671/",
+        "look": 8970181430306684478,
+        "size": [
+          4896,
+          3264
+        ]
+      },
+      {
+        "id": "5966513",
+        "term": "cctv camera corridor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/5966513.jpg",
+        "caption": "From below of modern camera for recording audio and video in building for security and protection",
+        "outlet": "Pexels",
+        "author": "Atypeek Dgn",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/modern-equipment-for-video-surveillance-on-wall-5966513/",
+        "look": 17420418078293046147,
+        "size": [
+          4000,
+          2667
+        ]
+      },
+      {
+        "id": "27658186",
+        "term": "cctv camera corridor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/27658186.jpg",
+        "caption": "Street security cameras mounted on a pole in an urban environment, highlighting surveillance.",
+        "outlet": "Pexels",
+        "author": "Elmir Jafarov",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-street-light-with-a-camera-on-it-27658186/",
+        "look": 289695989819180036,
+        "size": [
+          6000,
+          3376
+        ]
+      },
+      {
+        "id": "30692441",
+        "term": "night security guard monitor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/30692441.jpg",
+        "caption": "Security officer seated in a dimly lit control room, analyzing multiple surveillance screens.",
+        "outlet": "Pexels",
+        "author": "AMORIE SAM",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/security-officer-in-dark-control-room-with-monitors-30692441/",
+        "look": 54254469264308720,
+        "size": [
+          7008,
+          4672
+        ]
+      },
+      {
+        "id": "17095797",
+        "term": "night security guard monitor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/17095797.jpg",
+        "caption": "Shadowy figures reflected with security monitors in the foreground.",
+        "outlet": "Pexels",
+        "author": "Yusuf Çelik",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/two-people-standing-behind-the-glass-17095797/",
+        "look": 17300639799903534332,
+        "size": [
+          7728,
+          5152
+        ]
+      },
+      {
+        "id": "14709776",
+        "term": "night security guard monitor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/14709776.jpg",
+        "caption": "A security guard communicates via radio in an empty train station.",
+        "outlet": "Pexels",
+        "author": "Jimmy Liao",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/back-view-of-a-security-guard-using-radio-14709776/",
+        "look": 504412057572024319,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "9921317",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/9921317.jpg",
+        "caption": "Interior view of a historic church with frescoes in Nova Ponente, Italy.",
+        "outlet": "Pexels",
+        "author": "Stefano Parisi",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/fresco-on-wall-in-a-church-9921317/",
+        "look": 2594112864569942628,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "38109652",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/38109652.jpg",
+        "caption": "Interior of ancient church showcasing historic frescoes and stone architecture.",
+        "outlet": "Pexels",
+        "author": "Susanne Jutzeler, suju-foto",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/historic-church-with-ancient-frescoes-and-arches-38109652/",
+        "look": 504714594934030721,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "37607917",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/37607917.jpg",
+        "caption": "Detailed fresco painting inside a historical Tuscan church showcasing classical architecture.",
+        "outlet": "Pexels",
+        "author": "Claudia  Solano",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/intricate-fresco-in-historic-tuscan-church-37607917/",
+        "look": 9320898661648105088,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "39183052",
+        "term": "smoke detector ceiling",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/39183052.jpg",
+        "caption": "Close-up view of a ceiling-mounted fire alarm system ensuring safety in a building.",
+        "outlet": "Pexels",
+        "author": "Caleb Oquendo",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/ceiling-mounted-fire-alarm-system-in-building-39183052/",
+        "look": 18446717581340689345,
+        "size": [
+          8056,
+          5373
+        ]
+      },
+      {
+        "id": "21782970",
+        "term": "smoke detector ceiling",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/21782970.jpg",
+        "caption": "A red alarm box mounted on a gray concrete wall, offering urban security.",
+        "outlet": "Pexels",
+        "author": "Jakub Zerdzicki",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/alarm-box-on-gray-wall-21782970/",
+        "look": 1017279265848049180,
+        "size": [
+          3000,
+          2109
+        ]
+      },
+      {
+        "id": "38843328",
+        "term": "smoke detector ceiling",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/38843328.jpg",
+        "caption": "Illuminated green emergency exit sign with Thai text on a ceiling.",
+        "outlet": "Pexels",
+        "author": "NEOSiAM 18+",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/green-emergency-exit-sign-in-building-ceiling-38843328/",
+        "look": 9223357684701528322,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "7821755",
+        "term": "phone notification screen",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/7821755.jpg",
+        "caption": "Close-up of a smartphone displaying a fraud alert message on a wooden table.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/cellphone-on-a-wooden-surface-7821755/",
+        "look": 72346934030313223,
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "7821761",
+        "term": "phone notification screen",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/7821761.jpg",
+        "caption": "Close-up of smartphone on wooden surface displaying a bank alert message.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/smartphone-on-the-wooden-table-7821761/",
+        "look": 506381210001280259,
+        "size": [
+          6315,
+          4210
+        ]
+      },
+      {
+        "id": "7662059",
+        "term": "phone notification screen",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/7662059.jpg",
+        "caption": "Close-up view of smartphone screen featuring various app icons and notifications.",
+        "outlet": "Pexels",
+        "author": "Szabó Viktor",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/a-smartphone-in-close-up-photography-7662059/",
+        "look": 3458821947165383704,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "7555339",
+        "term": "sicily coastal town",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/7555339.jpg",
+        "caption": "A picturesque aerial shot of a coastal town in Sicily, showcasing the marina and historic architecture.",
+        "outlet": "Pexels",
+        "author": "Allan Feitor",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/italian-coastal-town-7555339/",
+        "look": 9187062864622853919,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "18377796",
+        "term": "sicily coastal town",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/18377796.jpg",
+        "caption": "Explore the stunning seaside architecture of Cefalù, Sicily, with rocky backdrops and historic charm.",
+        "outlet": "Pexels",
+        "author": "Efrem  Efre",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/hill-over-sea-coast-in-cefalu-town-in-italy-18377796/",
+        "look": 280405661974527,
+        "size": [
+          6960,
+          4640
+        ]
+      },
+      {
+        "id": "18453312",
+        "term": "sicily coastal town",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/18453312.jpg",
+        "caption": "Swimmers enjoy the water with Cefalù's historic seaside buildings and rocky cliffs in Sicily, Italy.",
+        "outlet": "Pexels",
+        "author": "Efrem  Efre",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/waterfront-of-cefalu-by-mountains-18453312/",
+        "look": 220411876194973950,
+        "size": [
+          6960,
+          4640
+        ]
+      },
+      {
+        "id": "2257453",
+        "term": "wire fence cut",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/2257453.jpg",
+        "caption": "Close-up of barbed wire with blurred background, creating a moody ambiance.",
+        "outlet": "Pexels",
+        "author": "Luis Quintero",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/selective-focus-photography-of-barbed-wires-2257453/",
+        "look": 16194948667618836287,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "14439232",
+        "term": "wire fence cut",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/14439232.jpg",
+        "caption": "Close-up of razor wire on a chain link fence with clear blue sky background.",
+        "outlet": "Pexels",
+        "author": "David Levinson",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/close-up-shot-of-barbed-wires-14439232/",
+        "look": 16084200085105675776,
+        "size": [
+          4368,
+          2913
+        ]
+      },
+      {
+        "id": "9806762",
+        "term": "wire fence cut",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊/9806762.jpg",
+        "caption": "Concrete wall with barbed wire in front of a house with two windows.",
+        "outlet": "Pexels",
+        "author": "Plato Terentev",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/concrete-wall-with-bard-wires-9806762/",
+        "look": 18446742978495193859,
+        "size": [
+          5101,
+          3401
+        ]
+      },
+      {
+        "id": "Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg",
+        "term": "Antonello da Messina",
+        "kind": "real",
+        "file": "assets/photos/梅西納名畫失竊/Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg.jpg",
+        "caption": "Antonello da Messina, properly Antonello di Giovanni di Antonio, but also called Antonello degli Antoni and Anglicized as Anthony of Messina, was an Italian painter from Messina, active during the Italian Early Renaissance.",
+        "outlet": "維基百科",
+        "author": "Antonello da Messina",
+        "credit": "Antonello da Messina／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg",
+        "look": 1084831069252630528,
+        "size": [
+          4309,
+          6000
+        ]
+      },
+      {
+        "id": "MessinaStrait.jpg",
+        "term": "Strait of Messina",
+        "kind": "real",
+        "file": "assets/photos/梅西納名畫失竊/MessinaStrait.jpg.jpg",
+        "caption": "The Strait of Messina is a narrow strait between the eastern tip of Sicily and the western tip of Calabria in Southern Italy. It connects the Tyrrhenian Sea to the north with the Ionian Sea to the south, within the central Mediterranean. At its narrowest point, between Torre Faro and Villa San Giova",
+        "outlet": "維基百科",
+        "author": "",
+        "credit": "／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:MessinaStrait.jpg",
+        "look": 16208721080380493312,
+        "size": [
+          694,
+          600
+        ]
+      },
+      {
+        "id": "Bild-Ottavio_Leoni,_Caravaggio.jpg",
+        "term": "Caravaggio",
+        "kind": "real",
+        "file": "assets/photos/梅西納名畫失竊/Bild-Ottavio_Leoni,_Caravaggio.jpg.jpg",
+        "caption": "Michelangelo Merisi da Caravaggio, known mononymously as Caravaggio, was an Italian painter active in Rome for a significant portion of his artistic life. He began his apprenticeship in Milan in 1584, and during the final four years of his life, he moved between Naples, Malta, and Sicily. His painti",
+        "outlet": "維基百科",
+        "author": "Ottavio Leoni",
+        "credit": "Ottavio Leoni／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Bild-Ottavio_Leoni,_Caravaggio.jpg",
+        "look": 18446465912359601135,
+        "size": [
+          1132,
+          1582
+        ]
+      },
+      {
+        "id": "Underwood_&_Underwood_©_1906_No._10495_-_Messina_-_The_once_beautiful_Water-front_after_the_earthquake_dett.jpg",
+        "term": "1908 Messina earthquake",
+        "kind": "real",
+        "file": "assets/photos/梅西納名畫失竊/Underwood_&_Underwood_©_1906_No._10495_-_Messina_-_The_once_beautiful_Water-front_after_the_earthquake_dett.jpg.jpg",
+        "caption": "A devastating earthquake occurred on 28 December 1908 in Sicily and Calabria, southern Italy, with a moment magnitude of 7.1 and a maximum Mercalli intensity of XI (Extreme). The epicentre was in the Strait of Messina which separates Sicily from the Italian mainland. The cities of Messina and Reggio",
+        "outlet": "維基百科",
+        "author": "Underwood &amp; Underwood",
+        "credit": "Underwood &amp; Underwood／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Underwood_%26_Underwood_%C2%A9_1906_No._10495_-_Messina_-_The_once_beautiful_Water-front_after_the_earthquake_dett.jpg",
+        "look": 16348278581993995519,
+        "size": [
+          912,
+          866
+        ]
+      },
+      {
+        "id": "Sicilia_Palermo5_tango7174.jpg",
+        "term": "Palermo",
+        "kind": "real",
+        "file": "assets/photos/梅西納名畫失竊/Sicilia_Palermo5_tango7174.jpg.jpg",
+        "caption": "Palermo is the capital and largest city of the autonomous island region of Sicily in southern Italy, located on the eponymous gulf facing the Tyrrhenian Sea. A 2,700-year-old city, it is noted for its history, culture, architecture and gastronomy, playing an important role throughout much of its exi",
+        "outlet": "維基百科",
+        "author": "Tango7174",
+        "credit": "Tango7174／CC BY-SA 4.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Sicilia_Palermo5_tango7174.jpg",
+        "look": 584375303524122367,
+        "size": [
+          734,
+          800
+        ]
+      },
+      {
+        "id": "frame_Ai55zArdmzA_315",
+        "kind": "frame",
+        "term": "BBC News 315s",
+        "file": "assets/photos/梅西納名畫失竊/frame_Ai55zArdmzA_315.jpg",
+        "caption": "than four and a half million stolen",
+        "said": "than four and a half million stolen",
+        "at": 315.87,
+        "source": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "look": 10963536942558282737
+      },
+      {
+        "id": "frame_Ai55zArdmzA_52",
+        "kind": "frame",
+        "term": "BBC News 52s",
+        "file": "assets/photos/梅西納名畫失竊/frame_Ai55zArdmzA_52.jpg",
+        "caption": "but sadly making artworks more readily",
+        "said": "but sadly making artworks more readily",
+        "at": 52.15,
+        "source": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "look": 9494647685001502784
+      },
+      {
+        "id": "frame_Ai55zArdmzA_89",
+        "kind": "frame",
+        "term": "BBC News 89s",
+        "file": "assets/photos/梅西納名畫失竊/frame_Ai55zArdmzA_89.jpg",
+        "caption": "Italy's most famous paintings",
+        "said": "Italy's most famous paintings",
+        "at": 89.56,
+        "source": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "look": 4052179856693921793
+      },
+      {
+        "id": "frame_z7KC7vBtqwI_54",
+        "kind": "frame",
+        "term": "CNN 54s",
+        "file": "assets/photos/梅西納名畫失竊/frame_z7KC7vBtqwI_54.jpg",
+        "caption": "French crown jewels",
+        "said": "French crown jewels",
+        "at": 54.12,
+        "source": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=z7KC7vBtqwI",
+        "look": 17509713876344388636
+      },
+      {
+        "id": "frame_z7KC7vBtqwI_103",
+        "kind": "frame",
+        "term": "CNN 103s",
+        "file": "assets/photos/梅西納名畫失竊/frame_z7KC7vBtqwI_103.jpg",
+        "caption": "of the French Crown Jewels.",
+        "said": "of the French Crown Jewels.",
+        "at": 103.04,
+        "source": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=z7KC7vBtqwI",
+        "look": 18374528632389428448
+      },
+      {
+        "id": "frame_z7KC7vBtqwI_224",
+        "kind": "frame",
+        "term": "CNN 224s",
+        "file": "assets/photos/梅西納名畫失竊/frame_z7KC7vBtqwI_224.jpg",
+        "caption": "only four of them in the museum",
+        "said": "only four of them in the museum",
+        "at": 224.64,
+        "source": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=z7KC7vBtqwI",
+        "look": 11312776183218725110
+      },
+      {
+        "id": "frame_5C7Hq1TtUXk_13",
+        "kind": "frame",
+        "term": "Fox Business 13s",
+        "file": "assets/photos/梅西納名畫失竊/frame_5C7Hq1TtUXk_13.jpg",
+        "caption": "precious art looted by the Nazis Renoir",
+        "said": "precious art looted by the Nazis Renoir",
+        "at": 13.23,
+        "source": "assets/footage/梅西納名畫失竊/5C7Hq1TtUXk.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=5C7Hq1TtUXk",
+        "look": 434106162749340537
+      },
+      {
+        "id": "frame_5C7Hq1TtUXk_41",
+        "kind": "frame",
+        "term": "Fox Business 41s",
+        "file": "assets/photos/梅西納名畫失竊/frame_5C7Hq1TtUXk_41.jpg",
+        "caption": "it's it's ours it's stolen",
+        "said": "it's it's ours it's stolen",
+        "at": 41.14,
+        "source": "assets/footage/梅西納名畫失竊/5C7Hq1TtUXk.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=5C7Hq1TtUXk",
+        "look": 16919517900783391
+      },
+      {
+        "id": "frame_5C7Hq1TtUXk_59",
+        "kind": "frame",
+        "term": "Fox Business 59s",
+        "file": "assets/photos/梅西納名畫失竊/frame_5C7Hq1TtUXk_59.jpg",
+        "caption": "greatest artists the Nazis stole these",
+        "said": "greatest artists the Nazis stole these",
+        "at": 59.11,
+        "source": "assets/footage/梅西納名畫失竊/5C7Hq1TtUXk.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=5C7Hq1TtUXk",
+        "look": 17327877632400727232
+      },
+      {
+        "id": "frame_5C7Hq1TtUXk_106",
+        "kind": "frame",
+        "term": "Fox Business 106s",
+        "file": "assets/photos/梅西納名畫失竊/frame_5C7Hq1TtUXk_106.jpg",
+        "caption": "starts in London after World War two",
+        "said": "starts in London after World War two",
+        "at": 106.69,
+        "source": "assets/footage/梅西納名畫失竊/5C7Hq1TtUXk.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=5C7Hq1TtUXk",
+        "look": 16199447992777899260
+      }
+    ],
+    "data": []
+  },
+  "facts": [
+    {
+      "say": "2026 年 8 月 15 日晚上約 8 點 47 分",
+      "from": "The Guardian"
+    },
+    {
+      "say": "至少兩人剪開博物館外圍鐵絲網，用鐵撬撬開側門",
+      "from": "The Guardian"
+    },
+    {
+      "say": "偷走安托內羅《聖額我略多聯畫》僅存的五片",
+      "from": "The Guardian"
+    },
+    {
+      "say": "那天是 Vara 聖母升天遊行，1535 年開始的",
+      "from": "The Guardian"
+    },
+    {
+      "say": "市中心擠進超過 15 萬人，數百名警察，主要道路封閉",
+      "from": "The Guardian"
+    },
+    {
+      "say": "而博物館在市郊，那天幾乎空無一人",
+      "from": "The Guardian"
+    },
+    {
+      "say": "監視器顯示整個過程只有兩到三分鐘",
+      "from": "The Guardian"
+    },
+    {
+      "say": "他們走的側門，是少數沒裝警報的入口之一",
+      "from": "The Guardian"
+    },
+    {
+      "say": "但畫作本身有感應式警報，而且響了",
+      "from": "La Sicilia／The Guardian"
+    },
+    {
+      "say": "警衛聽到了，把它關掉，因為他以為是誤報",
+      "from": "TG La7／The Guardian"
+    },
+    {
+      "say": "十分鐘後，一名婦人在外面矮牆上發現兩片畫",
+      "from": "The Guardian"
+    },
+    {
+      "say": "五片裡有兩片被小心地靠在牆上，沒有摔在地上",
+      "from": "The Guardian"
+    },
+    {
+      "say": "檢察長說不排除黑手黨涉入",
+      "from": "Rai／The Guardian"
+    },
+    {
+      "say": "反方：藝術追討專家說，再狠的當地黑手黨也不會這樣糟蹋梅西納",
+      "from": "Art Recovery International"
+    },
+    {
+      "say": "那件作品熬過 1908 年那場死掉半個城市的地震",
+      "from": "The Guardian"
+    },
+    {
+      "say": "1969 年巴勒摩失竊的卡拉瓦喬至今沒找回，仍在 FBI 通緝名單上",
+      "from": "The Guardian"
+    }
+  ],
+  "voices": [],
+  "scripts": []
+}
