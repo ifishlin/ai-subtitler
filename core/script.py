@@ -404,8 +404,8 @@ def samey(script: dict[str, Any]) -> list[dict[str, Any]]:
     each other by being photographs of different things; two cards of the same
     kind differ only in their words.
     """
-    most = rules_module.at("cards.same_kind_run", 3)
-    tone_most = rules_module.at("cards.same_tone_run", 12)
+    most = rules_module.of(script, "cards.same_kind_run", 3)
+    tone_most = rules_module.of(script, "cards.same_tone_run", 12)
     lines = script.get("lines") or []
     faults, run, tone_run = [], [], []
 
