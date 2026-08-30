@@ -498,7 +498,84 @@ def _swap(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
-KINDS = {"title": _title, "word": _word, "number": _number, "bars": _bars,
+def _brand(card: Image.Image, draw: ImageDraw.ImageDraw,
+           tone: dict[str, Any], t: float) -> None:
+    """The channel mark and the ask, bottom right of the last frame.
+
+    Bottom right and above the caption band, because below that is YouTube's
+    own furniture and anything put there is covered. It arrives last, after
+    the message has landed: someone who has just understood something will
+    look at what made them understand it, and that half second is the only
+    moment anybody subscribes.
+
+    A missing icon file draws a placed circle rather than nothing. Drawing
+    nothing is how the credit line disappeared from a finished film without
+    anyone noticing.
+    """
+    show = ease(max(0.0, (t - 0.55) / 0.45))
+    if show <= 0.02:
+        return
+    brand = rules_module.look("brand", {}) or {}
+    size = int(brand.get("icon_size", 116))
+    right = W - int(brand.get("corner_right", 74))
+    bottom = int(brand.get("corner_bottom", 1330))
+    box = [right - size, bottom - size, right, bottom]
+
+    icon = ROOT / str(brand.get("icon", ""))
+    if icon.is_file():
+        badge = Image.open(icon).convert("RGBA").resize((size, size))
+        round_mask = Image.new("L", (size, size), 0)
+        ImageDraw.Draw(round_mask).ellipse([0, 0, size - 1, size - 1], fill=255)
+        card.paste(badge, (box[0], box[1]), round_mask)
+    else:
+        # Drawn, not typed: PingFang has no ▶ and a missing glyph renders as
+        # nothing at all, which is exactly the failure this placeholder is
+        # here to make visible.
+        draw.ellipse(box, outline=tone["lead"], width=5)
+        middle = ((box[0] + box[2]) / 2, (box[1] + box[3]) / 2)
+        arm = size * 0.22
+        draw.polygon([(middle[0] - arm * 0.7, middle[1] - arm),
+                      (middle[0] - arm * 0.7, middle[1] + arm),
+                      (middle[0] + arm, middle[1])], fill=tone["lead"])
+
+    call = str(brand.get("call") or "請訂閱")
+    draw.text((box[0] - 22, bottom - size * 0.72), call, font=face(46),
+              fill=tone["ink"], anchor="ra")
+    handle = str(brand.get("handle") or "")
+    if handle:
+        draw.text((box[0] - 22, bottom - size * 0.30), handle, font=face(32, False),
+                  fill=tone["dim"], anchor="ra")
+
+
+def _outro(spec: dict[str, Any], t: float) -> Image.Image:
+    """The last page: one sentence to take away, and who said it.
+
+    Not a summary. The film has already made its case; this is the sentence
+    somebody would repeat to a friend, which is a different sentence from the
+    one that concludes an argument. It gets its own shot because the ending of
+    these is where attention is highest and the frame was previously spent on
+    another caption like all the others.
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 200)
+    top = 700 - (len(rows) - 1) * (size + 22) // 2
+    for index, row in enumerate(rows):
+        part = stagger(t, index, len(rows))
+        colour = "#" + "".join(f"{v:02x}" for v in
+                               _fade(spec.get("colour") or tone["lead"], part,
+                                     tone["top"]))
+        _mid(draw, top + index * (size + 22) + (1 - part) * 36, row, size, colour)
+    if spec.get("under"):
+        _mid(draw, top + len(rows) * (size + 22) + 46, spec["under"], 50,
+             tone["dim"], bold=False)
+    _brand(card, draw, tone, t)
+    _note(draw, spec, t)
+    return card
+
+
+KINDS = {"title": _title, "outro": _outro, "word": _word, "number": _number, "bars": _bars,
          "split": _split, "chain": _chain, "queue": _queue, "stack": _stack,
          "clock": _clock, "ring": _ring, "swap": _swap}
 

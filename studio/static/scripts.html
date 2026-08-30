@@ -620,6 +620,9 @@ async function showScript(name) {
       <div title="自製的句子沒說這張卡怎麼畫">沒畫卡<b class="${
         (sums.undrawn || []).length ? "short" : "good"}">${
         (sums.undrawn || []).length}</b></div>
+      <div title="最後一句要是 outro：一句帶得走的話 + 頻道標記">結尾<b class="${
+        (sums.unsigned || []).length ? "short" : "good"}">${
+        (sums.unsigned || []).length ? "缺" : "有"}</b></div>
       <div title="同一種卡片連續超過三張就是投影片">重複<b class="${
         (sums.samey || []).length ? "short" : "good"}">${
         (sums.samey || []).length}</b></div>

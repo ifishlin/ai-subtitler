@@ -30,7 +30,7 @@
         "ghost": "電"
       },
       "from": "CNBC",
-      "seconds": 2.83
+      "seconds": 2.57
     },
     {
       "say": "是通膨的兩倍多。",
@@ -95,7 +95,7 @@
         "ghost": "耗"
       },
       "from": "PBS NewsHour",
-      "seconds": 2.17
+      "seconds": 1.91
     },
     {
       "say": "有些州漲超過兩成。",
@@ -109,7 +109,7 @@
         "note": "資料：CNBC"
       },
       "from": "CNBC",
-      "seconds": 1.96
+      "seconds": 1.9
     },
     {
       "say": "德州的共和黨員受不了了。",
@@ -134,7 +134,7 @@
         "note": "資料：CNN"
       },
       "from": "CNN",
-      "seconds": 2.61
+      "seconds": 2.35
     },
     {
       "say": "但研究說，不是它們。",
@@ -148,7 +148,7 @@
         "note": "資料：IER"
       },
       "from": "Institute for Energy Research",
-      "seconds": 2.17
+      "seconds": 1.91
     },
     {
       "say": "是電網老了，天然氣在漲。",
@@ -166,7 +166,7 @@
         "note": "資料：IER"
       },
       "from": "Institute for Energy Research",
-      "seconds": 2.61
+      "seconds": 2.35
     },
     {
       "say": "兩邊都有數據。誰在說謊？",
@@ -182,7 +182,7 @@
         "tone": "light"
       },
       "from": "觀點",
-      "seconds": 2.61
+      "seconds": 2.35
     },
     {
       "say": "都沒有。",
@@ -211,7 +211,7 @@
         "tone": "light"
       },
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.13
     },
     {
       "say": "一邊算的是發電夠不夠。",
@@ -225,7 +225,7 @@
         "ghost": "電"
       },
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.13
     },
     {
       "say": "一邊算的是電線夠不夠。",
@@ -265,7 +265,7 @@
         "ghost": "線"
       },
       "from": "Reuters",
-      "seconds": 2.39
+      "seconds": 2.13
     },
     {
       "say": "電廠兩三年蓋得完。",
@@ -307,7 +307,7 @@
         "tone": "light",
         "note": "資料：Reuters"
       },
-      "seconds": 2.61
+      "seconds": 2.35
     },
     {
       "say": "沒有人想住在鐵塔旁邊。",
@@ -319,7 +319,7 @@
         "title": "沒有人想住\n在鐵塔旁邊",
         "tone": "light"
       },
-      "seconds": 2.39
+      "seconds": 2.13
     },
     {
       "say": "今年一半的機房蓋不成。",
@@ -334,7 +334,7 @@
         "note": "資料：Reuters"
       },
       "from": "Reuters",
-      "seconds": 2.39
+      "seconds": 2.13
     },
     {
       "say": "不是沒錢，是沒線。",
@@ -348,7 +348,7 @@
         "tone": "light"
       },
       "from": "Reuters",
-      "seconds": 1.96
+      "seconds": 1.9
     },
     {
       "say": "那條線，你家跟機房共用。",
@@ -372,7 +372,7 @@
         "tone": "warm"
       },
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.13
     },
     {
       "say": "你家、你鄰居、和機房。",
@@ -389,7 +389,7 @@
         "tone": "warm"
       },
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.13
     },
     {
       "say": "掛在同一條線上。",
@@ -431,7 +431,7 @@
         "ghost": "線"
       },
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 1.9
     },
     {
       "say": "電費單上沒有這一欄。",
@@ -448,7 +448,7 @@
         ],
         "tone": "warm"
       },
-      "seconds": 2.17
+      "seconds": 1.9
     },
     {
       "say": "但你每個月都在付。",
@@ -462,7 +462,7 @@
         "under": "都在付",
         "tone": "warm"
       },
-      "seconds": 1.96
+      "seconds": 1.9
     },
     {
       "say": "下個月打開帳單，",
@@ -490,7 +490,7 @@
         "note": "資料：Forbes"
       },
       "from": "Forbes",
-      "seconds": 1.96
+      "seconds": 1.9
     },
     {
       "say": "不是電變貴了。",
@@ -518,7 +518,21 @@
         "tone": "warm"
       },
       "from": "觀點",
-      "seconds": 1.2
+      "seconds": 1.9
+    },
+    {
+      "say": "你付的是那條線的錢。",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "card": {
+        "kind": "outro",
+        "title": "你付的不是他們用的電\n是他們插隊用的那條線",
+        "under": "AI 資料中心與你的電費",
+        "tone": "cool",
+        "ghost": "線"
+      },
+      "seconds": 3.94,
+      "from": "觀點"
     }
   ]
 }

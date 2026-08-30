@@ -93,5 +93,14 @@
   "still_fit": {
     "default": "blur",
     "why": "橫的照片放進直的畫面，總有空間要填。fill 裁成滿版最有力，但只留三分之一的寬度，適合主角是直的（電塔、人、單一物件）；ground 配當段 tone 的底色，靜圖和卡片才像同一部片；blur 用模糊放大的自己當底，永遠不會錯，代價是平庸而且每張都長一樣。"
+  },
+  "brand": {
+    "icon": "assets/brand/icon.png",
+    "call": "請訂閱",
+    "handle": "",
+    "corner_right": 74,
+    "corner_bottom": 1330,
+    "icon_size": 116,
+    "why": "頻道標記放在最後一頁的右下方，在字幕帶上面 —— 再往下就進了 YouTube 自己的介面。icon 檔不存在時畫一個佔位圓，不要靜靜地什麼都不畫：第一版影片的 credit 就是這樣安靜地消失的。"
   }
 }

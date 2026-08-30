@@ -159,6 +159,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "undrawn": undrawn(script),
             "uncredited": uncredited(script, *gathered(script)),
             "samey": samey(script),
+            "unsigned": unsigned(script),
             "shapeless": []}
     out["shapeless"] = structure(script, out)
     out["rights"] = rights(script, gathered(script)[0], out)
@@ -413,6 +414,36 @@ def samey(script: dict[str, Any]) -> list[dict[str, Any]]:
     close(run, most, "卡片")
     close(tone_run, tone_most, "色調")
     return faults
+
+
+def unsigned(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """A film that stops instead of ending.
+
+    The last frame is where attention is highest -- someone who has just
+    followed an argument to its end is, for about half a second, looking
+    straight at the thing that made them follow it. That half second is the
+    only moment anybody subscribes, and it was being spent on another caption
+    like all the others.
+
+    So the last line is an `outro`: one sentence worth repeating to a friend,
+    with the channel mark in the corner. Checked rather than remembered,
+    because "don't forget the end card" is precisely the kind of rule that
+    lives in a document and gets forgotten.
+    """
+    if not rules_module.at("ending.required", True):
+        return []
+    lines = script.get("lines") or []
+    if not lines:
+        return [{"why": "沒有句子"}]
+    last = lines[-1]
+    card = last.get("card") or {}
+    if str(card.get("kind")) != "outro":
+        return [{"line": len(lines), "say": last.get("say", ""),
+                 "why": "最後一句要是 outro：一句帶得走的話，右下角放頻道標記"}]
+    if not str(card.get("title") or "").strip():
+        return [{"line": len(lines), "say": last.get("say", ""),
+                 "why": "outro 沒寫那句帶得走的話"}]
+    return []
 
 
 def uncredited(script: dict[str, Any],
