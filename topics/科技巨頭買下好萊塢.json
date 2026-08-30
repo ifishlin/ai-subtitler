@@ -760,6 +760,57 @@
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=9XHCv0-BbY0",
         "look": 16429061900373124288
+      },
+      {
+        "id": "6963889",
+        "term": "bill on kitchen table",
+        "file": "assets/photos/科技巨頭買下好萊塢/6963889.jpg",
+        "caption": "A couple reviews bills at their kitchen table, looking concerned and thoughtful.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/a-shocked-man-spitting-a-drink-beside-a-woman-showing-a-paper-6963889/",
+        "look": 18229992540474770689,
+        "size": [
+          3632,
+          2700
+        ]
+      },
+      {
+        "id": "36812196",
+        "term": "bill on kitchen table",
+        "file": "assets/photos/科技巨頭買下好萊塢/36812196.jpg",
+        "caption": "Concerned couple reviewing financial document in modern kitchen setting.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "Vitaly Gariev",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/couple-reading-financial-document-in-kitchen-36812196/",
+        "look": 57487478378917116,
+        "size": [
+          3840,
+          2160
+        ]
+      },
+      {
+        "id": "6964099",
+        "term": "bill on kitchen table",
+        "file": "assets/photos/科技巨頭買下好萊塢/6964099.jpg",
+        "caption": "A couple reviews invoices together in a modern kitchen while enjoying coffee, creating a cozy and intimate atmosphere.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/woman-looking-on-paper-6964099/",
+        "look": 2369161658998066176,
+        "size": [
+          2673,
+          2634
+        ]
       }
     ],
     "data": []

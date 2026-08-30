@@ -258,6 +258,8 @@
     padding:8px 14px;border-radius:9px;background:#2a2415;
     border:1px solid #5b4a22;flex-wrap:wrap}
   .wanted > span{font-size:12px;color:#e2a33c;flex:none}
+  .wanted > span b{color:#ffd76a}
+  .wanted .why{font-size:11px;color:var(--faint);flex:1 0 100%;order:9}
   .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
   .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
     border:1px solid var(--line);border-radius:5px;padding:1px 7px}
@@ -663,10 +665,12 @@ async function open(name) {
          on, because the ending is aimed at a group of people and thirty
          pictures of the subject satisfy a number either way. -->
     <div class="wanted">
-      <span>結尾會需要，但還沒收到</span>
+      <span>結尾會需要的<b>示意圖</b>，還沒收到</span>
+      <span class="why">說給誰聽是「${escapeHTML(pile.audience || "")}」，
+        文案最後幾句要落在那群人的生活上</span>
       <div class="wanted-terms">${pile.wanted.map((one) =>
         `<code>${escapeHTML(one)}</code>`).join("")}</div>
-      <button id="btnWanted" class="tiny">抓這幾個</button>
+      <button id="btnWanted" class="tiny">去 Pexels 抓這幾個</button>
     </div>` : ""}
 
     <div style="display:flex;gap:8px;align-items:center">
