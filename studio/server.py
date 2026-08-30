@@ -774,12 +774,15 @@ def get_script(name: str) -> dict[str, Any]:
     # than the sentence describing it. Rendering is cached on the spec's own
     # hash: an edited card gets a new file, an unchanged one is not redrawn.
     from core import cards as cards_module
+    drawn: set[str] = set()
     for line in measured["lines"]:
         if line.get("card"):
             try:
                 line["card_file"] = cards_module.render(name, line["card"])
+                drawn.add(Path(line["card_file"]).name)
             except Exception as error:                            # noqa: BLE001
                 line["card_error"] = str(error)
+    cards_module.sweep(name, drawn)
     return {**found, "measured": measured}
 
 

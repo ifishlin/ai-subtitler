@@ -571,27 +571,53 @@ def _brand(card: Image.Image, draw: ImageDraw.ImageDraw,
 
 
 def _outro(spec: dict[str, Any], t: float) -> Image.Image:
-    """The last page: one sentence to take away, and who said it.
+    """The last page: what the film argued, then the sentence to take away.
 
-    Not a summary. The film has already made its case; this is the sentence
-    somebody would repeat to a friend, which is a different sentence from the
-    one that concludes an argument. It gets its own shot because the ending of
-    these is where attention is highest and the frame was previously spent on
-    another caption like all the others.
+    One line was not enough. Somebody arriving at the end of ninety seconds
+    has been given a dozen facts in the order that made the argument work, and
+    the order that makes an argument work is not the order somebody can carry
+    out of the room. So the ending restates it: three or four steps, then the
+    sentence that survives them.
+
+    It is built out of time rather than space -- the steps arrive one after
+    another, the conclusion lands after the last of them, the channel mark
+    after that. A page with all of it printed at once is a wall, and the frame
+    has room for either the steps or the sentence, not both at full size.
     """
     card, draw = _base(spec)
     tone = tone_of(spec)
+
+    points = [str(one) for one in (spec.get("points") or []) if str(one).strip()]
+    span = 0.5 if points else 0.0          # how much of the shot the recap takes
+    y = TOP + 30
+    for index, point in enumerate(points):
+        part = stagger(min(1.0, t / max(span, 0.01)), index, len(points))
+        if part <= 0.02:
+            continue
+        size = fits([point], 58, room=W - 2 * MARGIN - 90)
+        draw.text((MARGIN + 78, y + index * 96 - (1 - part) * 26), point,
+                  font=face(size, False),
+                  fill="#" + "".join(f"{v:02x}" for v in
+                                     _fade(tone["ink"], part * 0.9, tone["top"])),
+                  anchor="la")
+        # A rule down the left, growing with the list: it reads as one thing
+        # being counted off rather than four separate captions.
+        draw.line([(MARGIN + 40, y + index * 96 - 6),
+                   (MARGIN + 40, y + index * 96 + 60)],
+                  fill=tone["lead"], width=5)
+
+    after = ease(max(0.0, (t - span) / max(0.05, 1 - span)))
     rows = [row for row in str(spec.get("title", "")).split("\n") if row]
-    size = fits(rows, 200)
-    top = 700 - (len(rows) - 1) * (size + 22) // 2
+    size = fits(rows, 150)
+    top = y + len(points) * 96 + 56
     for index, row in enumerate(rows):
-        part = stagger(t, index, len(rows))
+        part = stagger(after, index, len(rows))
         colour = "#" + "".join(f"{v:02x}" for v in
                                _fade(spec.get("colour") or tone["lead"], part,
                                      tone["top"]))
-        _mid(draw, top + index * (size + 22) + (1 - part) * 36, row, size, colour)
-    if spec.get("under"):
-        _mid(draw, top + len(rows) * (size + 22) + 46, spec["under"], 50,
+        _mid(draw, top + index * (size + 20) + (1 - part) * 32, row, size, colour)
+    if spec.get("under") and after > 0.5:
+        _mid(draw, top + len(rows) * (size + 20) + 34, spec["under"], 44,
              tone["dim"], bold=False)
     _brand(card, draw, tone, t)
     _note(draw, spec, t)
@@ -624,10 +650,25 @@ def frames(spec: dict[str, Any], seconds: float, fps: int = FPS
         yield draw(spec, min(1.0, (index + 1) / arrive))
 
 
+def how() -> str:
+    """A fingerprint of what decides how a card looks.
+
+    The specification is only half of it: this module and the theme decide the
+    rest. Naming a drawn card after the specification alone meant the page
+    went on serving a picture drawn by code that no longer exists -- the
+    channel mark was enlarged and the still on the page never changed, because
+    the file was there and the file was wrong. The rendered film had exactly
+    the same fault for exactly the same reason.
+    """
+    here = Path(__file__)
+    marks = [str(here.stat().st_mtime_ns),
+             json.dumps(rules_module.theme(), sort_keys=True)]
+    return hashlib.sha1("|".join(marks).encode("utf-8")).hexdigest()[:8]
+
+
 def name_for(spec: dict[str, Any], suffix: str = ".png") -> str:
-    """A filename that changes when the card does, so an edited card is not
-    served from the last render."""
-    body = json.dumps(spec, ensure_ascii=False, sort_keys=True)
+    """A filename that changes when the card does -- or when the drawing does."""
+    body = json.dumps(spec, ensure_ascii=False, sort_keys=True) + how()
     return hashlib.sha1(body.encode("utf-8")).hexdigest()[:12] + suffix
 
 
@@ -639,6 +680,24 @@ def render(script_name: str, spec: dict[str, Any]) -> str:
     if not target.is_file():
         draw(spec, 1.0).save(target)
     return str(target.relative_to(ROOT))
+
+
+def sweep(script_name: str, keep: set[str]) -> int:
+    """Drop cards this script no longer refers to.
+
+    Here rather than in `render`, which sees one card and cannot know what the
+    rest of the script still points at. Every edit to a card, and every change
+    to this module, leaves the previous drawing behind unreachable.
+    """
+    here = CARD_DIR / script_name
+    if not here.is_dir():
+        return 0
+    gone = 0
+    for old in here.glob("*.png"):
+        if old.name not in keep:
+            old.unlink(missing_ok=True)
+            gone += 1
+    return gone
 
 
 def render_clip(script_name: str, spec: dict[str, Any], seconds: float,

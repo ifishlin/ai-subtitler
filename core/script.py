@@ -443,6 +443,11 @@ def unsigned(script: dict[str, Any]) -> list[dict[str, Any]]:
     if not str(card.get("title") or "").strip():
         return [{"line": len(lines), "say": last.get("say", ""),
                  "why": "outro 沒寫那句帶得走的話"}]
+    least, most = rules_module.at("ending.points", [3, 4])
+    points = [one for one in (card.get("points") or []) if str(one).strip()]
+    if not least <= len(points) <= most:
+        return [{"line": len(lines), "say": last.get("say", ""),
+                 "why": f"outro 的摘要有 {len(points)} 條，要 {least}–{most} 條"}]
     return []
 
 
