@@ -213,6 +213,14 @@
   .holders span{margin-right:12px}
   .holders b{color:#e0a; color:#e2a33c}
   .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
+  .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .note-line span{font-size:11px;color:var(--faint);flex:none}
+  .note-line input{flex:1;font:13px inherit;color:var(--dim);
+    background:transparent;border:1px solid transparent;border-radius:6px;
+    padding:3px 8px}
+  .note-line input:hover{border-color:var(--line)}
+  .note-line input:focus{border-color:var(--accent);background:#0d1014;
+    color:var(--ink);outline:none}
   .who-for{display:flex;align-items:baseline;gap:12px;padding:10px 15px;
     margin-bottom:12px;background:#12212e;border:1px solid #244055;
     border-radius:9px}
@@ -468,8 +476,15 @@ async function open(name) {
 
   $("paper").innerHTML = `
     <h2>${escapeHTML(pile.topic || name)}</h2>
-    <div class="angle">角度：${escapeHTML(pile.angle || "")}${
-      pile.note ? `　—　${escapeHTML(pile.note)}` : ""}</div>
+    <!-- Why this topic, and what to watch for. The one thing here nothing can
+         compute: whether the opposition is easy to find is in the balance
+         panel; that a medical topic cannot be monetised with an AI voice is
+         not anywhere else, and it decides whether the film gets made. -->
+    <div class="note-line">
+      <span>挑這題的理由</span>
+      <input id="topicNote" value="${escapeHTML(pile.note || "")}"
+        placeholder="為什麼值得花九十秒？有什麼坑？" spellcheck="false">
+    </div>
     <!-- Who the ending has to land on. Not always everyone: for a market
          story it is a shareholder, and his contact point is a balance. -->
     <!-- Decided, not guessed. The keyword table is offered as a button; it
@@ -691,6 +706,24 @@ async function open(name) {
   // Who this topic is for. Stored on the topic, and copied into a script when
   // one is written -- a topic can yield two shorts for two audiences, so the
   // script keeps its own once it exists.
+  const noteBox = $("topicNote");
+  if (noteBox) {
+    noteBox.dataset.was = noteBox.value;
+    const saveNote = async () => {
+      if (noteBox.value.trim() === noteBox.dataset.was) return;
+      try {
+        await api("POST", "/api/topic/note",
+                  {name, note: noteBox.value.trim()});
+        noteBox.dataset.was = noteBox.value.trim();
+      } catch (error) { alert(error.message); noteBox.value = noteBox.dataset.was; }
+    };
+    noteBox.addEventListener("blur", saveNote);
+    noteBox.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); noteBox.blur(); }
+      if (event.key === "Escape") { noteBox.value = noteBox.dataset.was; noteBox.blur(); }
+    });
+  }
+
   const who = $("topicWho");
   if (who) {
     who.dataset.was = who.value;

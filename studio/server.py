@@ -396,9 +396,28 @@ def new_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         raise HTTPException(400, str(error)) from error
     if path.is_file():
         raise HTTPException(400, f"{name} 已經存在了")
-    pile = topic_module.blank(name, str(payload.get("angle") or "影響民眾生活"))
+    pile = topic_module.blank(name, str(payload.get("note") or ""))
     topic_module.save(name, pile)
     return {"made": name, "topics": topic_module.listing()}
+
+
+@app.post("/api/topic/note")
+def set_note(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Why this topic is worth doing, and what to watch out for.
+
+    The one thing here nothing can compute. Whether the opposition is easy to
+    find is in `balance`; that a medical topic cannot be monetised with an AI
+    voice is not anywhere, and it decides whether the film gets made at all.
+    """
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    pile["note"] = str(payload.get("note") or "").strip()
+    topic_module.save(name, pile)
+    return {"saved": True, "note": pile["note"]}
 
 
 @app.post("/api/topic/audience")

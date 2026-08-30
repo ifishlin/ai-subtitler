@@ -54,9 +54,12 @@ AUDIENCE = [
 ]
 
 
-def audience_for(name: str, angle: str = "") -> str:
+def audience_for(name: str, _unused: str = "") -> str:
     """A first guess at who this topic reaches, from its name."""
-    hay = f"{name}{angle}"
+    # The topic's own words, and only those. It used to include `angle`, which
+    # was the same eight characters on every topic -- a field that never varies
+    # cannot narrow anything, and it was being fed to a keyword match.
+    hay = name
     for words, who in AUDIENCE:
         if any(word in hay for word in words):
             return who
@@ -135,7 +138,7 @@ def suggest_audience(pile: dict[str, Any]) -> str:
     A guess presented as an answer is worse than no answer, because nobody
     checks a field that is already filled in.
     """
-    return audience_for(pile.get("name", ""), pile.get("angle", ""))
+    return audience_for(pile.get("topic", "") or pile.get("name", ""))
 
 
 def audience(pile: dict[str, Any]) -> str:
@@ -454,8 +457,21 @@ def save(name: str, pile: dict[str, Any]) -> Path:
     return path
 
 
-def blank(name: str, angle: str = "影響民眾生活") -> dict[str, Any]:
-    return {"topic": name, "angle": angle, "made": int(time.time()),
+def blank(name: str, note: str = "") -> dict[str, Any]:
+    """A new topic.
+
+    No `angle`. Every topic carried one and every one of them said 影響民眾生活,
+    because it defaulted to that and nobody ever changed it -- a field that
+    never varies is not information, and this one was being read by a keyword
+    match and printed on the page as though it meant something. What it was
+    reaching for is covered twice over: 說給誰聽 says who, and a script's
+    `view` says what the argument is.
+
+    `note` stays, and is the thing that cannot be computed: why this is worth
+    ninety seconds, and what to watch out for. Whoever chooses the topic writes
+    it -- me now, the call that proposes topics later.
+    """
+    return {"topic": name, "note": note, "made": int(time.time()),
             "sources": {"videos": [], "reports": [], "images": [], "data": []},
             "facts": [], "voices": [], "scripts": []}
 
@@ -469,7 +485,7 @@ def listing() -> list[dict[str, Any]]:
             continue
         enough, why = ready(pile)
         found.append({
-            "name": name, "angle": pile.get("angle", ""),
+            "name": name, "note": pile.get("note", ""),
             "counts": counts(pile)["got"], "balance": balance(pile),
             "ready": enough, "why": why,
             "scripts": pile.get("scripts") or [],

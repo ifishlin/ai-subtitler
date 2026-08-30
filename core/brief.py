@@ -71,7 +71,7 @@ def sheet(name: str) -> dict[str, Any]:
     pictures.sort(key=lambda one: (one["kind"] == "frame",
                                    one["answers"], one["kind"]))
     return {"topic": name,
-            "angle": pile.get("angle", ""),
+            "note": pile.get("note", ""),
             "audience": topic_module.audience(pile),
             "facts": pile.get("facts") or [],
             "voices": (pile.get("voices") or [])[:20],
@@ -111,7 +111,10 @@ def as_text(name: str) -> str:
     """
     found = sheet(name)
     out = [f"# 題目：{found['topic']}",
-           f"角度：{found['angle']}　說給誰聽：{found['audience']}", ""]
+           f"說給誰聽：{found['audience'] or '（還沒決定）'}", ""]
+    if found["note"]:
+        out.append(f"挑這題的理由：{found['note']}")
+        out.append("")
 
     out.append("## 事實（每一條都要指得回出處）")
     for fact in found["facts"]:
