@@ -496,6 +496,8 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
     shots = [one.strip() for one in (payload.get("pictures") or "").split(",")
              if one.strip()]
+    named = [one.strip() for one in (payload.get("named") or "").split(",")
+             if one.strip()]
 
     def work(say) -> None:
         from core import stock as stock_module
@@ -590,7 +592,69 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                     "answers": stock_module.answers(term, picture.about or ""),
                     "page": picture.page, "look": mark,
                     "size": [picture.width, picture.height]})
+        # 5. The named things. A stock library has no photograph of Maduro or
+        # of the village that flooded, because those are not concepts; an
+        # encyclopaedia has already decided which picture is of this person.
+        import time as time_module
+        for index, title in enumerate(named[:10], start=1):
+            if sum(1 for i in fresh if i.get("kind") == "real") >= \
+                    topic_module.PICTURES["real"][1]:
+                break
+            say(index, len(named[:10]), f"查維基百科 {title}")
+            try:
+                offered = stock_module.wiki_lead(title)
+            except Exception:                                     # noqa: BLE001
+                continue
+            for picture in offered:
+                if picture.id in seen:
+                    continue
+                target = here / f"{picture.id}.jpg"
+                try:
+                    stock_module.fetch(picture.url, target)
+                except Exception:                                 # noqa: BLE001
+                    continue
+                mark = stock_module.looks_like(target)
+                if any(stock_module.alike(mark, other) for other in marks):
+                    target.unlink(missing_ok=True)
+                    continue
+                marks.append(mark)
+                seen.add(picture.id)
+                fresh.append({
+                    "id": picture.id, "term": title, "kind": "real",
+                    "file": str(target.relative_to(ROOT)),
+                    "caption": picture.about or title, "outlet": "維基百科",
+                    "author": picture.author,
+                    "credit": f"{picture.author}／{picture.licence or '見檔案頁'}",
+                    "answers": stock_module.answers(title, picture.about or ""),
+                    "page": picture.page, "look": mark,
+                    "size": [picture.width, picture.height]})
+            time_module.sleep(stock_module.WIKI_PAUSE)
+
         topic_module.replace_images(name, fresh)
+
+        # 6. What people said underneath. Their words are closer to the
+        # audience's than any press release, and they show where ordinary
+        # people got stuck -- which is where the explaining is needed.
+        pile = topic_module.load(name)
+        shot = [v for v in pile["sources"]["videos"] if v.get("file")]
+        voices = list(pile.get("voices") or [])
+        # `say`, not `text`. read_comments renames it on the way in -- the same
+        # word every line of a script uses for what is said -- and I wrote the
+        # yt-dlp field name from memory, so every comment was read as empty and
+        # skipped. Nothing failed: the job reported 完成 with none collected.
+        heard = {v.get("say") for v in voices}
+        for index, video in enumerate(shot[:3], start=1):
+            say(index, min(3, len(shot)), f"抓留言 {video.get('outlet', '')}")
+            try:
+                got = topic_module.read_comments(video["url"])
+            except Exception:                                     # noqa: BLE001
+                continue
+            for one in got:
+                if one.get("say") and one["say"] not in heard:
+                    heard.add(one["say"])
+                    voices.append(one)
+        pile["voices"] = voices
+        topic_module.save(name, pile)
 
     _job_run(f"收集：{name}", name, work)
     return {"started": name}

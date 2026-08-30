@@ -125,6 +125,27 @@ Messina museum theft、Antonello da Messina stolen、Sicily museum robbery
 
 `pictures` 是拿去圖庫的，{collect.terms} 個，**照「說給誰聽」那一欄去想**。
 
+`named` 是拿去查維基百科的，{collect.pictures.real} 個以上，**只能是專有名詞**：
+
+```json
+{
+  "named": ["Messina", "Antonello da Messina", "Strait of Messina",
+            "Palermo", "Caravaggio", "1908 Messina earthquake"]
+}
+```
+
+問「一個東西」，不要問「一個組織」或「一個國家」—— 組織和國家沒有長相，
+只有標誌。問 `Nepal` 拿回國徽，問 `United States Navy` 拿回海軍徽章。
+
+```
+可以   Kathmandu、Koshi River、Mount Everest      城市、河流、山
+      USS Gerald R. Ford、Nicolás Maduro         具體的船、人
+不行   Nepal、Iran                               國旗、國徽
+      United States Navy、PdVSA                  機構徽章、公司商標
+```
+
+查不到條目就跳過 —— 那是誠實的答案，比硬給一張最相近的好。
+
 ## 三種照片各去哪裡
 
 ```

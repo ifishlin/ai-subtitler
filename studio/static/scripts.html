@@ -614,7 +614,7 @@ async function open(name) {
       <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
         spellcheck="false">
       <button id="btnTerms" class="tiny">想幾個</button>
-      <button id="btnGather" class="tiny primary">逐家問（影片＋報導＋圖）</button>
+      <button id="btnGather" class="tiny primary">逐家問（影片＋報導＋圖＋留言）</button>
     </div>
     <div id="termsNote" class="hint"></div>
 
@@ -888,9 +888,12 @@ async function open(name) {
       const got = await api("POST", "/api/topic/terms", {name});
       $("hunt").value = got.videos.join(", ");
       TERMS.pictures = got.pictures || [];
-      $("termsNote").textContent = got.pictures.length
-        ? `圖庫的詞：${got.pictures.join("、")}（收集完會用到）　${got.took}s`
-        : `${got.took}s`;
+      TERMS.named = got.named || [];
+      const extra = [];
+      if (got.pictures.length) extra.push(`圖庫：${got.pictures.join("、")}`);
+      if ((got.named || []).length) extra.push(`維基：${got.named.join("、")}`);
+      $("termsNote").textContent = extra.length
+        ? `${extra.join("　｜　")}　${got.took}s` : `${got.took}s`;
     } catch (error) { $("termsNote").textContent = error.message; }
   };
   // Ruling on what the model doubted. Keeping is one click each because that
@@ -920,7 +923,8 @@ async function open(name) {
     if (!queries) { alert("要給搜尋詞"); return; }
     try {
       await api("POST", "/api/topic/gather",
-                {name, queries, pictures: TERMS.pictures.join(", ")});
+                {name, queries, pictures: TERMS.pictures.join(", "),
+                 named: TERMS.named.join(", ")});
       watchJob(() => open(name));
     } catch (error) { alert(error.message); }
   };
@@ -969,7 +973,7 @@ const RIGHT_NOTE = {
    refused by the server with the whole set in hand, because a role moved on
    its own looks fine and the sequence it lands in does not. */
 const PENDING = {name: null, changes: new Map()};
-const TERMS = {pictures: []};
+const TERMS = {pictures: [], named: []};
 
 /* Editing the house styles.
 

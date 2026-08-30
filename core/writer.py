@@ -146,6 +146,8 @@ def suggest_terms(topic: str, say=None) -> dict[str, Any]:
               if str(one).strip()]
     pictures = [str(one).strip() for one in (got.get("pictures") or [])
                 if str(one).strip()]
+    named = [str(one).strip() for one in (got.get("named") or [])
+             if str(one).strip()]
     if not videos:
         raise ValueError("回答裡沒有 videos 搜尋詞")
     # These go to YouTube channels and to a stock library, neither of which
@@ -153,11 +155,11 @@ def suggest_terms(topic: str, say=None) -> dict[str, Any]:
     # silently, which is the worst kind. The prompt says English and a 7B model
     # treats that as advice; it is a fact about the search, so it is checked.
     latin = re.compile(r"[A-Za-z]")
-    bad = [one for one in videos + pictures if not latin.search(one)]
+    bad = [one for one in videos + pictures + named if not latin.search(one)]
     if bad:
         raise ValueError("搜尋詞要用英文，這幾個不是：" + "、".join(bad[:6]))
-    return {"videos": videos, "pictures": pictures, "took": round(took, 1),
-            "raw": said[:2000]}
+    return {"videos": videos, "pictures": pictures, "named": named,
+            "took": round(took, 1), "raw": said[:2000]}
 
 
 def sift(topic: str, found: list[dict[str, Any]], say=None) -> list[dict[str, Any]]:
