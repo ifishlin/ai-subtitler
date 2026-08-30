@@ -106,7 +106,7 @@ from    出處。如果是你自己的判斷，寫「觀點」
 ## 數量
 
 ```
-句數      {length.lines} 句
+句數      有旁白 {length.lines} 句　無旁白 {length.lines_silent} 句
 觀點句    約一半
 長度      {length.limit_seconds} 秒
 ```

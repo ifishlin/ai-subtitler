@@ -179,11 +179,22 @@ def build(name: str, target: Path | None = None,
     except (ValueError, FileNotFoundError):
         pass
 
-    for fault in ("unpicked", "undrawn"):
-        if measured[fault]:
-            raise RuntimeError(
-                f"{name} 還有 {len(measured[fault])} 句沒有畫面：" +
-                "、".join(item["say"] for item in measured[fault][:3]))
+    # The gates, all of them, before a single frame is encoded. A film that
+    # takes four minutes to build should not spend them on a script that was
+    # never going to be publishable.
+    for fault, complaint in (("unpicked", "沒有畫面"), ("undrawn", "沒說卡片怎麼畫"),
+                             ("unchecked", "沒有人看過那張圖"),
+                             ("uncredited", "引用的畫面沒有出處"),
+                             ("shapeless", "結構不對")):
+        if measured.get(fault):
+            faults = measured[fault]
+            why = "、".join(item.get("say") or item.get("why", "")
+                            for item in faults[:3])
+            raise RuntimeError(f"{name} 有 {len(faults)} 處{complaint}：{why}")
+    if not measured["still_enough"]:
+        raise RuntimeError(
+            f"{name} 只有 {measured['clip_share']}% 的實拍會動，"
+            f"至少要一半 —— 無旁白的片子，動態是唯一還在動的東西")
 
     work = OUT_DIR / f".{name}"
     work.mkdir(parents=True, exist_ok=True)

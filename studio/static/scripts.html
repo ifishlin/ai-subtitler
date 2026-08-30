@@ -69,6 +69,9 @@
      and a card's own type is 76px on a 1920 frame -- legible in the finished
      video, illegible in the list -- so the list is for finding a shot and
      this is for judging it. */
+  /* Which of 起承轉合 this line claims to be. Shown because it is a claim the
+     writer made and the program checks, not decoration. */
+  td.at .role{display:block;margin-top:3px;font:11px var(--mono);color:#7fd4ff}
   .say-edit{outline:none;border-radius:6px;padding:3px 6px;margin:-3px -6px;
     border:1px solid transparent;cursor:text;white-space:pre-wrap}
   .say-edit:hover{border-color:var(--line)}
@@ -617,6 +620,13 @@ async function showScript(name) {
       <div title="自製的句子沒說這張卡怎麼畫">沒畫卡<b class="${
         (sums.undrawn || []).length ? "short" : "good"}">${
         (sums.undrawn || []).length}</b></div>
+      <div title="引用的畫面沒有出處，壓片會被擋下來">沒出處<b class="${
+        (sums.uncredited || []).length ? "short" : "good"}">${
+        (sums.uncredited || []).length}</b></div>
+      <div title="起承轉合：四種都在、順序沒亂、轉在前三分之一">結構<b class="${
+        (sums.shapeless || []).length ? "short" : "good"}">${
+        (sums.shapeless || []).length ? (sums.shapeless[0].why || "有問題")
+                                      : "過"}</b></div>
       <div title="影片段落佔實拍時間的比例，至少一半">會動的<b class="${
         sums.still_enough ? "good" : "short"}">${sums.clip_share || 0}%</b></div>
     </div>
@@ -639,7 +649,8 @@ async function showScript(name) {
             caption: line.caption || "", credit: line.credit || "",
             outlet: line.outlet || "", from: line.from || "",
           }))}">
-          <td class="at">${clock(line.at)}</td>
+          <td class="at">${clock(line.at)}${
+            line.role ? `<span class="role">${escapeHTML(line.role)}</span>` : ""}</td>
           <td class="say">
             <div class="say-edit" contenteditable="plaintext-only"
               spellcheck="false">${escapeHTML(line.say || "")}</div>
