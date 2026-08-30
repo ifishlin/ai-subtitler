@@ -609,8 +609,13 @@ function renderList() {
   };
 }
 
+/** Tolerant of both shapes, because files on disk hold both: the page's
+ *  button stored comments grouped under their video, the gathering round
+ *  stored them loose, and every count here read only the grouped one -- so
+ *  sixty comments sat in a file while the page said 0. */
 function voiceCount(pile) {
-  return (pile.voices || []).reduce((sum, one) => sum + (one.comments || []).length, 0);
+  return (pile.voices || []).reduce(
+    (sum, one) => sum + (Array.isArray(one.comments) ? one.comments.length : 1), 0);
 }
 
 /** What people said underneath, loudest first. No names: we want what was

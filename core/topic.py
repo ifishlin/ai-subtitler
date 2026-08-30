@@ -73,6 +73,29 @@ def media() -> dict[str, Any]:
     return json.loads(MEDIA.read_text(encoding="utf-8"))
 
 
+HOME = ("US", "EU")
+
+
+def asked_of(pile: dict[str, Any], how: str) -> list[dict[str, Any]]:
+    """Which outlets to ask about this topic, and why not always all of them.
+
+    The whole argument of this project is asking named outlets across the
+    spectrum rather than searching the web. That argument has a country in it
+    that nobody wrote down: nineteen American and European outlets are the
+    right spectrum for a story about Washington and a useless one for a
+    burglary in Saxony, where the outlets that covered it are German and the
+    spectrum that matters runs taz to BILD.
+
+    So a topic may name its own regions. Nothing set means the eleven US and
+    eight EU outlets, exactly as before. The two wires are always asked: they
+    file from everywhere, and they are the neutral floor the balance check
+    leans on.
+    """
+    want = set(pile.get("regions") or HOME)
+    return [one for one in media()["outlets"] if one.get(how)
+            and (one.get("region") in want or one.get("kind") == "wire")]
+
+
 def _lean_of(name: str, outlets: list[dict[str, Any]]) -> str:
     for outlet in outlets:
         if outlet["name"].lower() in (name or "").lower():
@@ -182,6 +205,41 @@ def ready(pile: dict[str, Any]) -> tuple[bool, str]:
              for spec in picture_mix(pile).values() if (n := spec["short"])]
     gaps += ([f"沒有{'、'.join(even['missing'])}的說法"] if even["missing"] else [])
     return (not gaps), "；".join(gaps)
+
+
+def voice_count(pile: dict[str, Any]) -> int:
+    """How many comments this topic holds.
+
+    Tolerant of both shapes on purpose. Two writers disagreed: the page's
+    button stored `{url, outlet, comments: [...]}` and the gathering round
+    stored the comments loose, so sixty comments about the Ellisons sat in the
+    file while every page said 鄉民留言 0 -- and a pile written by both would
+    have raised KeyError on `v["comments"]`.
+
+    New writing uses the grouped shape, which is the better one: a comment
+    without the video it sits under has lost the one thing that says who was
+    watching. This reads either, because the files already on disk are mixed.
+    """
+    total = 0
+    for one in pile.get("voices") or []:
+        held = one.get("comments")
+        total += len(held) if isinstance(held, list) else 1
+    return total
+
+
+def add_voices(pile: dict[str, Any], video: dict[str, Any],
+               said: list[dict[str, Any]]) -> int:
+    """File comments under the video they were left on. Returns how many are new."""
+    voices = pile.setdefault("voices", [])
+    group = next((one for one in voices if one.get("url") == video.get("url")), None)
+    if group is None:
+        group = {"url": video.get("url", ""), "title": video.get("title", ""),
+                 "outlet": video.get("outlet", ""), "comments": []}
+        voices.append(group)
+    heard = {one.get("say") for one in group["comments"]}
+    fresh = [one for one in said if one.get("say") and one["say"] not in heard]
+    group["comments"].extend(fresh)
+    return len(fresh)
 
 
 def read_comments(video_url: str, most: int = 60) -> list[dict[str, Any]]:
@@ -473,11 +531,11 @@ def hunt(name: str, queries: list[str], most: int = 2,
     """
     import subprocess
     import urllib.parse
-    known = {one["name"]: one for one in media()["outlets"]}
-    have = {v.get("url") for v in load(name)["sources"]["videos"]}
+    pile = load(name)
+    have = {v.get("url") for v in pile["sources"]["videos"]}
     least, ceiling = at_seconds()
     found: list[dict[str, Any]] = []
-    outlets = [one for one in known.values() if one.get("youtube")]
+    outlets = asked_of(pile, "youtube")
     for index, spec in enumerate(outlets, start=1):
         if say:
             say(index, len(outlets), f"問 {spec['name']}")
@@ -537,7 +595,7 @@ def hunt_reports(name: str, queries: list[str], most: int = 2,
     import urllib.request
     from core import stock as stock_module
 
-    outlets = [one for one in media()["outlets"] if one.get("site")]
+    outlets = asked_of(load(name), "site")
     have = {r.get("url") for r in load(name)["sources"].get("reports") or []}
     seen_titles = {r.get("title") for r in load(name)["sources"].get("reports") or []}
     found: list[dict[str, Any]] = []
@@ -713,7 +771,7 @@ def listing() -> list[dict[str, Any]]:
             # room it takes in a list.
             "archived": bool(pile.get("archived")),
             "films": films,
-            "voices": sum(len(v.get("comments") or []) for v in pile.get("voices") or []),
+            "voices": voice_count(pile),
             "modified": int(path_for(name).stat().st_mtime),
         })
     return found

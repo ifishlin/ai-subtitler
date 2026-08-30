@@ -686,24 +686,28 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         # people got stuck -- which is where the explaining is needed.
         pile = topic_module.load(name)
         shot = [v for v in pile["sources"]["videos"] if v.get("file")]
-        voices = list(pile.get("voices") or [])
         # `say`, not `text`. read_comments renames it on the way in -- the same
         # word every line of a script uses for what is said -- and I wrote the
         # yt-dlp field name from memory, so every comment was read as empty and
         # skipped. Nothing failed: the job reported 完成 with none collected.
-        heard = {v.get("say") for v in voices}
-        for index, video in enumerate(shot[:3], start=1):
-            say(index, min(3, len(shot)), f"抓留言 {video.get('outlet', '')}")
+        added = 0
+        asked = shot[:3]
+        for index, video in enumerate(asked, start=1):
+            say(index, len(asked), f"抓留言 {video.get('outlet', '')}")
             try:
                 got = topic_module.read_comments(video["url"])
             except Exception:                                     # noqa: BLE001
                 continue
-            for one in got:
-                if one.get("say") and one["say"] not in heard:
-                    heard.add(one["say"])
-                    voices.append(one)
-        pile["voices"] = voices
+            added += topic_module.add_voices(pile, video, got)
         topic_module.save(name, pile)
+        # Asked and got nothing back. Said out loud because this is the
+        # failure that looks most like success: three news channels with
+        # comments turned off and a bug that reads every comment as empty
+        # produce the same silence, and the job reported 完成 for both.
+        if asked and not added:
+            say(len(asked), len(asked),
+                f"⚠ 問了 {len(asked)} 支影片，一則留言都沒有"
+                "（可能是頻道關閉留言，也可能是抓取壞了）")
 
     _job_run(f"收集：{name}", name, work)
     return {"started": name}
@@ -821,13 +825,9 @@ def gather_voices(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         said = topic_module.read_comments(url)
         if not said:
             continue
-        pile.setdefault("voices", []).append({
-            "url": url, "title": video.get("title", ""),
-            "outlet": video.get("outlet", ""), "comments": said})
-        added += len(said)
+        added += topic_module.add_voices(pile, video, said)
     topic_module.save(name, pile)
-    return {"added": added,
-            "total": sum(len(v["comments"]) for v in pile.get("voices") or [])}
+    return {"added": added, "total": topic_module.voice_count(pile)}
 
 
 @app.post("/api/topic/footage")
