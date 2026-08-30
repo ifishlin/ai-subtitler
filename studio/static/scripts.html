@@ -222,6 +222,18 @@
   .holders span{margin-right:12px}
   .holders b{color:#e0a; color:#e2a33c}
   .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
+  #ask{position:fixed;inset:0;background:#000c;z-index:90;display:flex;
+    align-items:center;justify-content:center;padding:24px}
+  #ask[hidden]{display:none}
+  .ask-inner{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:18px 20px 16px;max-width:min(92vw,460px);
+    box-shadow:0 18px 50px #000a}
+  .ask-inner b{font-size:15px;display:block;margin-bottom:8px}
+  #askBody p{margin:0 0 8px;font-size:13px;color:var(--dim);line-height:1.7}
+  .ask-lose{margin:8px 0 0;padding-left:18px;font:12px var(--mono);
+    color:var(--faint);line-height:1.8}
+  .ask-buttons{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+
   #jobBar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
     align-items:center;gap:12px;padding:9px 18px;background:var(--panel);
     border-top:1px solid var(--line)}
@@ -409,6 +421,22 @@
 <!-- One long task at a time, and it says what it is doing. Gathering and
      rendering both took minutes and both ran only from the command line,
      which meant the page could not do half of what the pipeline does. -->
+<!-- The page's own asking and telling. The browser's confirm() and alert()
+     work, and they arrive with the wrong voice: a system chrome box in the
+     platform's font saying 127.0.0.1:8000 說, in the middle of a page that
+     spent some care on its own. They also cannot show what is about to be
+     lost, which is the only thing that matters when the question is 刪掉？ -->
+<div id="ask" hidden>
+  <div class="ask-inner">
+    <b id="askTitle"></b>
+    <div id="askBody"></div>
+    <div class="ask-buttons">
+      <button id="askNo" class="tiny">取消</button>
+      <button id="askYes" class="tiny primary">確定</button>
+    </div>
+  </div>
+</div>
+
 <div id="jobBar" hidden>
   <b id="jobWhat"></b>
   <span id="jobNote"></span>
@@ -489,6 +517,54 @@ async function watchJob(whenDone) {
   await tick();
   JOB_TIMER = setInterval(tick, 1500);
 }
+
+/* Asking and telling, in the page's own voice.
+
+   Both return promises so the call sites read the way the native ones did --
+   `if (!await confirmed(...)) return;` -- rather than turning every one of
+   them inside out into callbacks. */
+let ASKING = null;
+
+function showAsk(title, body, yes, no) {
+  $("askTitle").textContent = title;
+  $("askBody").innerHTML = body;
+  $("askYes").textContent = yes;
+  $("askNo").hidden = !no;
+  if (no) $("askNo").textContent = no;
+  $("ask").hidden = false;
+  $("askYes").focus();
+  return new Promise((settle) => { ASKING = settle; });
+}
+
+function closeAsk(answer) {
+  $("ask").hidden = true;
+  if (ASKING) { ASKING(answer); ASKING = null; }
+}
+
+/* `lose` is what this exists for: the native box cannot show what is about to
+   go, and that is the whole of the question. */
+function confirmed(title, {body = "", lose = [], yes = "確定", no = "取消"} = {}) {
+  const list = lose.length
+    ? `<ul class="ask-lose">${lose.map((one) =>
+        `<li>${escapeHTML(one)}</li>`).join("")}</ul>` : "";
+  return showAsk(title, `${body ? `<p>${escapeHTML(body)}</p>` : ""}${list}`,
+                 yes, no);
+}
+
+function told(title, body = "") {
+  return showAsk(title, body ? `<p>${escapeHTML(body)}</p>` : "", "好", "");
+}
+
+$("askYes").onclick = () => closeAsk(true);
+$("askNo").onclick = () => closeAsk(false);
+$("ask").addEventListener("click", (event) => {
+  if (event.target.id === "ask") closeAsk(false);
+});
+document.addEventListener("keydown", (event) => {
+  if ($("ask").hidden) return;
+  if (event.key === "Escape") closeAsk(false);
+  if (event.key === "Enter") closeAsk(true);
+});
 
 async function api(method, path, body) {
   const response = await fetch(path, {
@@ -878,12 +954,14 @@ async function open(name) {
     button.onclick = async (event) => {
       event.stopPropagation();          // the card itself opens the script
       const which = button.dataset.name;
-      if (!confirm(`刪掉「${which}」？\n\n文案移到 trash/，影片和卡片直接刪掉` +
-                   `（都可以從文案重壓）。`)) return;
+      if (!await confirmed(`刪掉文案「${which}」？`, {
+        body: "文案移到 trash/，可以救回來。",
+        lose: ["壓好的影片（可以重壓）", "畫好的卡片（可以重畫）",
+               "接觸表"]})) return;
       try {
         await api("DELETE", `/api/script?name=${encodeURIComponent(which)}`);
         open(name);
-      } catch (error) { alert(error.message); }
+      } catch (error) { told('出錯了', error.message); }
     };
   });
 
@@ -898,16 +976,18 @@ async function open(name) {
   // names pictures by path, so taking the pile away turns a script that was
   // fine yesterday into one missing every shot.
   if ($("btnDropTopic")) $("btnDropTopic").onclick = async () => {
-    if (!confirm(`刪掉題目「${name}」？\n\n` +
-                 `紀錄移到 trash/，下載的影片和照片直接刪掉（都可以重抓）。`)) return;
+    if (!await confirmed(`刪掉題目「${name}」？`, {
+      body: "紀錄移到 trash/，可以救回來。",
+      lose: ["下載的影片（可以重抓）", "下載的照片（可以重抓）",
+             "抽出來的新聞畫格"]})) return;
     try {
       const back = await api("DELETE",
                              `/api/topic?name=${encodeURIComponent(name)}`);
-      alert(`刪了。也清掉：${(back.also_removed || []).join("、") || "（沒有素材）"}`);
+      told(`刪了。也清掉：${(back.also_removed || []).join("、") || "（沒有素材）"}`);
       STATE.chosen = null;
       $("paper").innerHTML = "";
       reload(true);
-    } catch (error) { alert(error.message); }
+    } catch (error) { told('出錯了', error.message); }
   };
 
   const noteBox = $("topicNote");
@@ -919,7 +999,7 @@ async function open(name) {
         await api("POST", "/api/topic/note",
                   {name, note: noteBox.value.trim()});
         noteBox.dataset.was = noteBox.value.trim();
-      } catch (error) { alert(error.message); noteBox.value = noteBox.dataset.was; }
+      } catch (error) { told('出錯了', error.message); noteBox.value = noteBox.dataset.was; }
     };
     noteBox.addEventListener("blur", saveNote);
     noteBox.addEventListener("keydown", (event) => {
@@ -938,7 +1018,7 @@ async function open(name) {
                   {name, audience: who.value.trim()});
         who.dataset.was = who.value.trim();
         open(name);
-      } catch (error) { alert(error.message); who.value = who.dataset.was; }
+      } catch (error) { told('出錯了', error.message); who.value = who.dataset.was; }
     };
     who.addEventListener("blur", saveWho);
     who.addEventListener("keydown", (event) => {
@@ -951,7 +1031,7 @@ async function open(name) {
       await api("POST", "/api/topic/audience",
                 {name, audience: pile.audience_guess});
       open(name);
-    } catch (error) { alert(error.message); }
+    } catch (error) { told('出錯了', error.message); }
   };
 
   // The picture terms ride along with the video ones: one suggestion, one
@@ -986,27 +1066,28 @@ async function open(name) {
         await api("POST", "/api/topic/judge",
                   {name, urls: [row.dataset.url], keep: true});
         open(name);
-      } catch (error) { alert(error.message); }
+      } catch (error) { told('出錯了', error.message); }
     };
   });
   if ($("btnDropAll")) $("btnDropAll").onclick = async () => {
     const urls = [...$("paper").querySelectorAll(".doubt-row")]
       .map((row) => row.dataset.url);
-    if (!confirm(`丟掉這 ${urls.length} 篇？`)) return;
+    if (!await confirmed(`丟掉這 ${urls.length} 篇？`, {
+      body: "模型判定它們跟題目無關。丟掉之後就找不回來了。"})) return;
     try {
       await api("POST", "/api/topic/judge", {name, urls, keep: false});
       open(name);
-    } catch (error) { alert(error.message); }
+    } catch (error) { told('出錯了', error.message); }
   };
   if ($("btnGather")) $("btnGather").onclick = async () => {
     const queries = $("hunt").value.trim();
-    if (!queries) { alert("要給搜尋詞"); return; }
+    if (!queries) { told("要給搜尋詞"); return; }
     try {
       await api("POST", "/api/topic/gather",
                 {name, queries, pictures: TERMS.pictures.join(", "),
                  named: TERMS.named.join(", ")});
       watchJob(() => open(name));
-    } catch (error) { alert(error.message); }
+    } catch (error) { told('出錯了', error.message); }
   };
   if ($("btnWanted")) $("btnWanted").onclick = async () => {
     $("note").className = ""; $("note").textContent = "抓圖中…";
@@ -1170,7 +1251,7 @@ function readHouse(card) {
 
 async function drawHouses() {
   try { FORMATS = (await api("GET", "/api/formats")).formats || []; }
-  catch (error) { alert(error.message); return; }
+  catch (error) { told('出錯了', error.message); return; }
   $("housesList").innerHTML = FORMATS.map(houseRow).join("");
   $("housesList").querySelectorAll(".house-card").forEach((card) => {
     const key = card.dataset.key;
@@ -1178,15 +1259,15 @@ async function drawHouses() {
       try {
         await api("POST", "/api/format", {key, spec: readHouse(card)});
         drawHouses();
-      } catch (error) { alert(error.message); }
+      } catch (error) { told('出錯了', error.message); }
     };
     const drop = card.querySelector(".h-drop");
     if (drop) drop.onclick = async () => {
-      if (!confirm(`刪掉「${key}」？`)) return;
+      if (!await confirmed(`刪掉公版「${key}」？`)) return;
       try {
         await api("DELETE", `/api/format?key=${encodeURIComponent(key)}`);
         drawHouses();
-      } catch (error) { alert(error.message); }
+      } catch (error) { told('出錯了', error.message); }
     };
   });
 }
@@ -1199,7 +1280,7 @@ $("houses").addEventListener("click", (event) => {
 $("btnNewHouse").onclick = async () => {
   const key = $("newHouseKey").value.trim();
   const name = $("newHouseName").value.trim();
-  if (!key || !name) { alert("代號和名稱都要填"); return; }
+  if (!key || !name) { told("代號和名稱都要填"); return; }
   // A new shape starts as a copy of the argument, because starting from blank
   // means filling in eleven numbers before anything can be checked at all.
   const base = FORMATS.find((one) => one.key === "argue") || {};
@@ -1209,7 +1290,7 @@ $("btnNewHouse").onclick = async () => {
                            name, why: "（還沒寫為什麼有這個公版）"}});
     $("newHouseKey").value = ""; $("newHouseName").value = "";
     drawHouses();
-  } catch (error) { alert(error.message); }
+  } catch (error) { told('出錯了', error.message); }
 };
 
 /* The house styles, fetched once. A short is not one shape, and which shape
@@ -1248,7 +1329,7 @@ async function savePending() {
               {name, changes: [...PENDING.changes.values()]});
     dropPending();
     showScript(name);
-  } catch (error) { alert(error.message); }
+  } catch (error) { told('出錯了', error.message); }
 }
 
 /* 起承轉合, laid out so it can be judged rather than counted.
@@ -1348,7 +1429,7 @@ async function showScript(name) {
   PENDING.name = name;
   let made;
   try { made = await api("GET", `/api/script?name=${encodeURIComponent(name)}`); }
-  catch (error) { alert(error.message); return; }
+  catch (error) { told('出錯了', error.message); return; }
   const sums = made.measured;
   // One rule, and it lives in core/script.py: the share is measured there.
   const share = 100 - (sums.borrowed_share || 0);
@@ -1492,9 +1573,10 @@ async function showScript(name) {
         </tr>`).join("")}</tbody>
     </table>`;
   // Leaving for the topic drops pending edits too, and says so first.
-  $("btnBackTopic").onclick = () => {
+  $("btnBackTopic").onclick = async () => {
     if (PENDING.changes.size &&
-        !confirm(`有 ${PENDING.changes.size} 處還沒儲存，離開就會丟掉。要離開嗎？`))
+        !await confirmed(`有 ${PENDING.changes.size} 處還沒儲存`, {
+          body: "離開就會丟掉。", yes: "離開", no: "留下"}))
       return;
     dropPending();
     open(STATE.chosen);
@@ -1513,7 +1595,7 @@ async function showScript(name) {
     try {
       await api("POST", "/api/script/build", {name});
       watchJob(() => showScript(name));
-    } catch (error) { alert(error.message); }
+    } catch (error) { told('出錯了', error.message); }
   };
   $("btnSheet").onclick = () => {
     $("bigWho").textContent = `${name}　接觸表`;
@@ -1545,7 +1627,7 @@ async function showScript(name) {
         await api("POST", "/api/script/seen",
                   {name, line: index, seen: box.checked});
         showScript(name);
-      } catch (error) { alert(error.message); box.checked = !box.checked; }
+      } catch (error) { told('出錯了', error.message); box.checked = !box.checked; }
     });
   });
 
@@ -1559,9 +1641,10 @@ async function showScript(name) {
     const house = event.target.value;
     const spec = FORMATS.find((one) => one.key === house) || {};
     const roles = (spec.structure || {}).roles || [];
-    if (!confirm(`改成「${spec.name || house}」？\n\n` +
-                 `角色會變成 ${roles.join("／")}，每一句都要重新標。\n` +
-                 `實拍上限也會跟著改。`)) {
+    if (!await confirmed(`改成「${spec.name || house}」？`, {
+      body: "換公版會用另一組門檻重新檢查，而且角色通常會全部失效。",
+      lose: [`角色變成 ${roles.join("／")}，每一句都要重標`,
+             "實拍上限也會跟著改"]})) {
       event.target.value = made.format || "argue";
       return;
     }
@@ -1569,7 +1652,7 @@ async function showScript(name) {
       await api("POST", "/api/script/format", {name, format: house});
       dropPending();
       showScript(name);
-    } catch (error) { alert(error.message); }
+    } catch (error) { told('出錯了', error.message); }
   };
 
   // Who it is for. Written once from a lookup table that cannot know the
@@ -1581,7 +1664,7 @@ async function showScript(name) {
     try {
       await api("POST", "/api/script/about", {name, "for": whom.value.trim()});
       whom.dataset.was = whom.value.trim();
-    } catch (error) { alert(error.message); whom.value = whom.dataset.was; }
+    } catch (error) { told('出錯了', error.message); whom.value = whom.dataset.was; }
   };
   whom.addEventListener("blur", saveWhom);
   whom.addEventListener("keydown", (event) => {
@@ -1738,7 +1821,7 @@ $("btnNew").onclick = async () => {
     $("newName").value = "";
     renderList();
     open(name);
-  } catch (error) { alert(error.message); }
+  } catch (error) { told('出錯了', error.message); }
 };
 $("newName").addEventListener("keydown", (event) => {
   if (event.key === "Enter") $("btnNew").click();
