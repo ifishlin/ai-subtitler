@@ -244,6 +244,75 @@ def unchecked(script: dict[str, Any]) -> list[dict[str, Any]]:
     return out
 
 
+# What we may do with each shot, which is not the same question as where it
+# came from. Ordered by how much trouble it can cause.
+FREE = "free"        # public domain or a licence asking for nothing
+CREDIT = "credit"    # CC BY / BY-SA: the author has to appear on screen
+CLAIMED = "claimed"  # somebody else's copyright, used as quotation
+OURS = "ours"        # we drew it
+
+RIGHTS = {OURS: "自製", FREE: "免標示", CREDIT: "要標示", CLAIMED: "有版權"}
+
+
+def rights_of(line: dict[str, Any], source: dict[str, Any] | None) -> str:
+    """Which of those four this line's picture is.
+
+    A frame lifted from a broadcast is as much somebody else's copyright as
+    the moving version of it -- freezing a picture does not make it ours -- so
+    stills cut from the topic's own videos land in the same bucket as clips.
+    That is easy to forget precisely because the file looks like a photograph
+    by the time it reaches the script.
+    """
+    if not is_real(line.get("show")):
+        return OURS
+    if is_clip(line):
+        return CLAIMED
+    if not source:
+        return CLAIMED                    # unknown provenance is not a defence
+    if source.get("kind") == "frame":
+        return CLAIMED
+    return CREDIT if source.get("credit") else FREE
+
+
+def rights(script: dict[str, Any], sources: dict[str, dict[str, Any]],
+           measured: dict[str, Any] | None = None) -> dict[str, Any]:
+    """How much of the running time we may do what with.
+
+    The share that matters for a strike is not "borrowed" -- a stock
+    photograph is borrowed and carries no risk at all. It is the share that
+    somebody else owns, which on a video made of cards and quotations is a
+    much smaller number and the only one worth watching.
+    """
+    measured = measured or measure(script)
+    clock = measured["seconds"] or 1
+    seconds = {key: 0.0 for key in RIGHTS}
+    holders: dict[str, float] = {}
+    for line in measured["lines"]:
+        source = sources.get(line.get("pic") or "")
+        kind = rights_of(line, source)
+        seconds[kind] += line["seconds"]
+        if kind == CLAIMED:
+            who = (line.get("outlet") or (source or {}).get("outlet")
+                   or line.get("from") or "?")
+            holders[who] = round(holders.get(who, 0.0) + line["seconds"], 2)
+    return {
+        "seconds": {key: round(value, 2) for key, value in seconds.items()},
+        "share": {key: round(value / clock * 100) for key, value in seconds.items()},
+        "holders": sorted(({"who": who, "seconds": secs,
+                            "share": round(secs / clock * 100)}
+                           for who, secs in holders.items()),
+                          key=lambda one: -one["seconds"]),
+        "labels": RIGHTS,
+        # A quotation defence gets harder the more of the film is quotation and
+        # the longer any single quotation runs. Neither number is a legal test
+        # -- there is no percentage that makes it safe -- but they are the two
+        # a reviewer looks at first, so they are the two shown.
+        "longest": round(max((line["seconds"] for line in measured["lines"]
+                              if rights_of(line, sources.get(line.get("pic") or ""))
+                              == CLAIMED), default=0.0), 2),
+    }
+
+
 def too_long(script: dict[str, Any]) -> list[dict[str, Any]]:
     """Lines that will not fit, with what would be dropped."""
     over = []

@@ -743,12 +743,20 @@ def get_script(name: str) -> dict[str, Any]:
                  if item.get("file")}
     except (ValueError, FileNotFoundError):
         pass
+    footage = {v["file"]: v for v in (pile["sources"]["videos"] if known else [])
+               if v.get("file")}
     for line in measured["lines"]:
         source = known.get(line.get("pic") or "")
         if source:
             line["caption"] = source.get("caption", "")
             line["credit"] = source.get("credit", "")
             line["said"] = source.get("said", "")
+            line["outlet"] = source.get("outlet", "")
+        if line.get("clip"):
+            shot = footage.get(line["clip"]["file"], {})
+            line["outlet"] = shot.get("outlet", "")
+            line["credit"] = f"畫面來源：{shot.get('outlet', '')}"
+    measured["rights"] = script_module.rights(found, known, measured)
     return {**found, "measured": measured}
 
 

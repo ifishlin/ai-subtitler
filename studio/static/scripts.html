@@ -65,6 +65,26 @@
   .shelf figcaption.got{color:var(--faint);white-space:normal;line-height:1.35;
     max-height:2.7em;border-top:1px solid var(--line);padding-top:4px}
   .shelf figcaption.who{color:#9a8; font-size:9px}
+  .rights{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;margin:12px 0}
+  .rights-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .rights-head b{font-size:13px}
+  .rights-head .lead{font:13px var(--mono)}
+  .rights-head .lead.good{color:#5fcf9b}
+  .rights-head .lead.short{color:#ff8a72}
+  .rights .bar{display:flex;height:13px;border-radius:7px;overflow:hidden;
+    background:#0d1014}
+  .rights .bar i{display:block;height:100%}
+  .rights-keys{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;
+    font:11px var(--mono);color:var(--faint)}
+  .rights-keys i{display:inline-block;width:9px;height:9px;border-radius:2px;
+    margin-right:5px}
+  .rights-keys b{color:var(--ink);margin-left:5px}
+  .rights-keys em{font-style:normal;margin-left:4px}
+  .holders{margin-top:7px;font:11px var(--mono);color:var(--faint)}
+  .holders span{margin-right:12px}
+  .holders b{color:#e0a; color:#e2a33c}
+  .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
   .who-for{display:flex;align-items:baseline;gap:12px;padding:10px 15px;
     margin-bottom:12px;background:#12212e;border:1px solid #244055;
     border-radius:9px}
@@ -462,6 +482,54 @@ async function open(name) {
 /* ---------- one script ----------
    The same page, because a script is only ever read next to the pile it came
    from: every line names its source, and the source list is one click away. */
+/* Who owns what is on screen, as a share of the running time.
+
+   "Borrowed" was the wrong number to watch. A stock photograph is borrowed
+   and carries no risk whatever; a five-second clip of a broadcast is a
+   quotation of somebody else's copyright and is the only part that can cost
+   the channel anything. Those two were being added together, so the figure
+   that mattered was hidden inside a larger one that did not. */
+const RIGHT_COLOUR = {ours: "#4f8ef0", free: "#3f9e73",
+                      credit: "#c9973a", claimed: "#c8543f"};
+const RIGHT_NOTE = {
+  ours: "我們自己畫的，沒有人能主張",
+  free: "圖庫或公有領域，可商用且不必標示",
+  credit: "CC BY／BY-SA：作者和授權條款必須出現在畫面上",
+  claimed: "別人的著作權，以引用主張合理使用",
+};
+
+function rightsPanel(rights) {
+  if (!rights) return "";
+  const order = ["ours", "free", "credit", "claimed"];
+  const risky = rights.share.claimed || 0;
+  return `
+  <div class="rights">
+    <div class="rights-head">
+      <b>畫面的權利</b>
+      <span class="lead ${risky >= 25 ? "short" : "good"}">有版權 ${risky}%</span>
+      <span class="hint">最長一段引用 ${rights.longest} 秒</span>
+    </div>
+    <div class="bar">${order.map((key) => {
+      const share = rights.share[key] || 0;
+      return share ? `<i style="width:${share}%;background:${RIGHT_COLOUR[key]}"
+        title="${escapeHTML(rights.labels[key])} ${share}%　${
+        escapeHTML(RIGHT_NOTE[key])}"></i>` : "";
+    }).join("")}</div>
+    <div class="rights-keys">${order.map((key) => `
+      <span><i style="background:${RIGHT_COLOUR[key]}"></i>${
+        escapeHTML(rights.labels[key])}
+        <b>${rights.share[key] || 0}%</b>
+        <em>${rights.seconds[key] || 0}s</em></span>`).join("")}</div>
+    ${rights.holders.length ? `<div class="holders">引用了誰：${
+      rights.holders.map((one) => `<span>${escapeHTML(one.who)}
+        <b>${one.seconds}s</b>（${one.share}%）</span>`).join("")}</div>` : ""}
+    <p class="rights-why">${
+      risky >= 25
+        ? "引用比例偏高。合理使用沒有一條安全的百分比，但審查最先看的就是這個數字，超過四分之一很難主張整支片是我們的。"
+        : "引用的每一段都短、都有觀點、都標了來源。仍要注意 Content ID 連畫面一起比對，靜音躲得掉音軌、躲不掉畫面。"}</p>
+  </div>`;
+}
+
 async function showScript(name) {
   let made;
   try { made = await api("GET", `/api/script?name=${encodeURIComponent(name)}`); }
@@ -494,6 +562,7 @@ async function showScript(name) {
       <div title="影片段落佔實拍時間的比例，至少一半">會動的<b class="${
         sums.still_enough ? "good" : "short"}">${sums.clip_share || 0}%</b></div>
     </div>
+    ${rightsPanel(sums.rights)}
     <div class="ruler">${sums.lines.map((line) =>
       `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
           title="${clock(line.at)}"></i>`).join("")}</div>
