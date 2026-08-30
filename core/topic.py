@@ -442,6 +442,61 @@ def cut_frames(name: str, video: dict[str, Any],
     return made
 
 
+def hunt(name: str, queries: list[str], most: int = 2,
+         say=None) -> list[dict[str, Any]]:
+    """Ask each outlet on the list what it said about this.
+
+    The per-outlet round was the part of gathering that only ever ran from the
+    command line, which meant the page could not do the thing this project
+    argues for -- asking nineteen named outlets rather than searching the web,
+    so every answer arrives knowing who gave it.
+    """
+    import subprocess
+    import urllib.parse
+    known = {one["name"]: one for one in media()["outlets"]}
+    have = {v.get("url") for v in load(name)["sources"]["videos"]}
+    least, ceiling = at_seconds()
+    found: list[dict[str, Any]] = []
+    outlets = [one for one in known.values() if one.get("youtube")]
+    for index, spec in enumerate(outlets, start=1):
+        if say:
+            say(index, len(outlets), f"問 {spec['name']}")
+        kept = 0
+        for query in queries:
+            if kept >= most:
+                break
+            link = (f"https://www.youtube.com/{spec['youtube']}/search?query="
+                    + urllib.parse.quote(query))
+            try:
+                said = subprocess.run(
+                    [str(ROOT / ".venv/bin/yt-dlp"), link, "--flat-playlist",
+                     "--playlist-end", "5", "--no-warnings",
+                     "--print", "%(duration)s|%(title)s|%(webpage_url)s"],
+                    capture_output=True, text=True, timeout=90).stdout
+            except Exception:                                     # noqa: BLE001
+                continue
+            for row in said.strip().splitlines():
+                bits = row.split("|", 2)
+                if len(bits) != 3 or not bits[0].isdigit():
+                    continue
+                secs, title, url = int(bits[0]), bits[1], bits[2]
+                if not least <= secs <= ceiling or url in have or kept >= most:
+                    continue
+                have.add(url)
+                kept += 1
+                found.append({"title": title, "url": url, "seconds": secs,
+                              "outlet": spec["name"],
+                              "lean": spec.get("lean", "")})
+    return found
+
+
+def at_seconds() -> tuple[int, int]:
+    """How long a usable video is. Too short has nothing to cut; too long is
+    usually a whole programme repeated."""
+    span = rules_module.at("collect.video_seconds", [120, 2400])
+    return int(span[0]), int(span[1])
+
+
 def replace_images(name: str, fresh: list[dict[str, Any]]) -> dict[str, int]:
     """Swap a topic's pictures for a new set, old ones removed only after.
 

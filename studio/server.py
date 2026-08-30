@@ -333,6 +333,52 @@ def _to_trash(going: Path) -> Path:
 # moment it starts asking which card to use or where to put it, that is a
 # decision the pipeline failed to make, and the fix belongs in produce.py.
 
+# ------------------------------------------------------------------ jobs
+#
+# Gathering and rendering both take minutes, and both were things I ran on the
+# command line -- which meant the page could not do half of what the pipeline
+# does, and anybody but me could not do it at all. One runner for both: a job
+# says what it is doing and how far along, the page asks, and only one runs at
+# a time because both saturate the machine.
+
+_job: dict[str, Any] = {"state": "idle", "what": "", "step": 0, "steps": 0,
+                        "note": "", "topic": "", "started": 0.0, "log": []}
+_job_lock = threading.Lock()
+
+
+def _job_say(step: int, steps: int, note: str) -> None:
+    with _job_lock:
+        _job.update(step=step, steps=steps, note=note)
+        _job["log"] = (_job["log"] + [note])[-40:]
+
+
+def _job_run(what: str, topic: str, work) -> None:
+    """Run one long task in the background, reporting as it goes."""
+    with _job_lock:
+        if _job["state"] == "running":
+            raise HTTPException(409, f"還在做「{_job['what']}」，等它跑完")
+        _job.update(state="running", what=what, topic=topic, step=0, steps=0,
+                    note="開始", started=time.time(), log=[])
+
+    def go() -> None:
+        try:
+            work(_job_say)
+            with _job_lock:
+                _job.update(state="done", note="完成")
+        except Exception as error:                                # noqa: BLE001
+            with _job_lock:
+                _job.update(state="failed", note=str(error))
+
+    threading.Thread(target=go, daemon=True).start()
+
+
+@app.get("/api/job")
+def get_job() -> dict[str, Any]:
+    with _job_lock:
+        return {**_job, "seconds": round(time.time() - _job["started"], 1)
+                        if _job["started"] else 0.0}
+
+
 STEP_LINE = re.compile(r"^\[(\d)/(\d)\]\s*(.*)")
 _produce: dict[str, Any] = {"state": "idle", "step": 0, "steps": 8, "what": "",
                             "message": "", "warning": "", "project": None,
@@ -403,6 +449,69 @@ def new_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     pile = topic_module.blank(name, str(payload.get("note") or ""))
     topic_module.save(name, pile)
     return {"made": name, "topics": topic_module.listing()}
+
+
+@app.post("/api/topic/gather")
+def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """The whole gathering round, as one job.
+
+    Ask each outlet, download what they gave, cut frames where the captions
+    say to. All three ran only from the command line, which meant the page
+    could not do the part of this project that its whole argument rests on.
+    """
+    from core import stock as stock_module
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    queries = [one.strip() for one in (payload.get("queries") or "").split(",")
+               if one.strip()]
+    if not queries:
+        raise HTTPException(400, "要給搜尋詞（英文，逗號分隔）")
+    try:
+        topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    def work(say) -> None:
+        found = topic_module.hunt(name, queries, say=say)
+        pile = topic_module.load(name)
+        pile["sources"]["videos"] = pile["sources"]["videos"] + found
+        topic_module.save(name, pile)
+
+        # Download only what the balance actually needs, newest search first.
+        want = topic_module.WANT["videos"]
+        todo = [v for v in pile["sources"]["videos"] if not v.get("file")][:want]
+        for index, video in enumerate(todo, start=1):
+            say(index, len(todo), f"下載 {video.get('outlet', '')}")
+            got = topic_module.bring_in(name, video)
+            if got:
+                video.update(got)
+                topic_module.save(name, pile)
+
+        pile = topic_module.load(name)
+        words = topic_module.keywords(pile)
+        marks = [i["look"] for i in pile["sources"]["images"] if i.get("look")]
+        seen = {i.get("id") for i in pile["sources"]["images"]}
+        fresh = list(pile["sources"]["images"])
+        shot = [v for v in pile["sources"]["videos"] if v.get("file")]
+        for index, video in enumerate(shot, start=1):
+            say(index, len(shot), f"抽畫格 {video.get('outlet', '')}")
+            moments = topic_module.frame_moments(video, words, most=4)
+            if not moments:
+                continue
+            for made in topic_module.cut_frames(name, video, moments):
+                if made["id"] in seen:
+                    continue
+                mark = stock_module.looks_like(ROOT / made["file"])
+                if any(stock_module.alike(mark, other) for other in marks):
+                    (ROOT / made["file"]).unlink(missing_ok=True)
+                    continue
+                marks.append(mark)
+                seen.add(made["id"])
+                fresh.append({**made, "look": mark})
+        topic_module.replace_images(name, fresh)
+
+    _job_run(f"收集：{name}", name, work)
+    return {"started": name}
 
 
 @app.post("/api/topic/note")
@@ -1003,6 +1112,87 @@ def set_about(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     script_module.save(name, found)
     return {"saved": True, "for": found.get("for", ""),
             "view": found.get("view", ""), "tone": found.get("tone", "")}
+
+
+@app.post("/api/script/build")
+def build_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Render a script into the finished film.
+
+    Every gate runs before a frame is encoded, which is worth doing when a
+    build costs four minutes. The contact sheet is made at the end and is not
+    optional: looking at what was actually rendered is the one check nothing
+    else can do.
+    """
+    from core import build as build_module
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    try:
+        script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    def work(say) -> None:
+        made = build_module.build(
+            name, say=lambda index, total, line: say(index, total, line))
+        say(made["shots"], made["shots"], f"{made['seconds']}s　{made['file']}")
+
+    _job_run(f"壓片：{name}", name, work)
+    return {"started": name}
+
+
+@app.get("/api/script/film")
+def get_film(name: str) -> dict[str, Any]:
+    """Where the finished film and its contact sheet are, if they exist."""
+    from core import build as build_module
+    film = build_module.OUT_DIR / f"{name}.mp4"
+    sheet = build_module.OUT_DIR / f"{name}.contact.jpg"
+    return {"film": str(film.relative_to(ROOT)) if film.is_file() else "",
+            "sheet": str(sheet.relative_to(ROOT)) if sheet.is_file() else "",
+            "size": film.stat().st_size if film.is_file() else 0,
+            "made": int(film.stat().st_mtime) if film.is_file() else 0}
+
+
+@app.get("/media/film/{name}")
+def serve_film(name: str) -> FileResponse:
+    from core import build as build_module
+    target = build_module.OUT_DIR / f"{name}.mp4"
+    if not target.is_file():
+        raise HTTPException(404, "還沒壓")
+    return FileResponse(target, media_type="video/mp4")
+
+
+@app.get("/media/sheet/{name}")
+def serve_sheet(name: str) -> FileResponse:
+    from core import build as build_module
+    target = build_module.OUT_DIR / f"{name}.contact.jpg"
+    if not target.is_file():
+        raise HTTPException(404, "還沒壓")
+    return FileResponse(target, media_type="image/jpeg")
+
+
+@app.post("/api/script/seen")
+def mark_seen(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Record that somebody looked at a line's picture.
+
+    The gate has existed for a while and nothing could fill it but me editing
+    JSON. Which is the wrong shape twice over: it needs no model, and I am the
+    one who demonstrably forgets -- the first pictures in this project were
+    chosen without being opened, against a rule I had written myself.
+    """
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    index = int(payload.get("line") or 0) - 1
+    try:
+        found = script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    lines = found.get("lines") or []
+    if not 0 <= index < len(lines):
+        raise HTTPException(400, "沒有這一句")
+    lines[index]["seen"] = bool(payload.get("seen"))
+    script_module.save(name, found)
+    return {"saved": True, "line": index + 1, "seen": lines[index]["seen"],
+            "unchecked": len(script_module.unchecked(found))}
 
 
 @app.post("/api/script/lines")

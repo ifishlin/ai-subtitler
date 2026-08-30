@@ -168,6 +168,10 @@
   .about input{flex:1}
   .about select:hover,.about input:focus{border-color:var(--accent)}
   .about .hint{font-size:11px;color:var(--faint)}
+  .film{display:flex;align-items:center;gap:10px;margin:12px 0}
+  .film .grow{flex:1}
+  .film .hint{font:11px var(--mono);color:var(--faint)}
+
   #pending{display:flex;align-items:center;gap:12px;margin:12px 0;
     padding:9px 14px;border-radius:9px;background:#2a2415;
     border:1px solid #5b4a22}
@@ -213,6 +217,25 @@
   .holders span{margin-right:12px}
   .holders b{color:#e0a; color:#e2a33c}
   .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
+  #jobBar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
+    align-items:center;gap:12px;padding:9px 18px;background:var(--panel);
+    border-top:1px solid var(--line)}
+  #jobBar[hidden]{display:none}
+  #jobBar b{font-size:13px;flex:none}
+  #jobNote{font:12px var(--mono);color:var(--faint);flex:none;
+    max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .job-track{flex:1;height:6px;border-radius:3px;background:#0d1014;
+    overflow:hidden}
+  .job-track i{display:block;height:100%;background:var(--accent);
+    transition:width .3s}
+  #jobClock{font:12px var(--mono);color:var(--faint);flex:none}
+  #jobBar.failed{background:#2a1512;border-top-color:#5b2a22}
+  #jobBar.failed .job-track i{background:#ef6b6b}
+
+  .gather{display:flex;align-items:center;gap:10px;margin:10px 0}
+  .gather > span{font-size:11px;color:var(--faint);flex:none}
+  .gather input{flex:1}
+
   .wanted{display:flex;align-items:center;gap:11px;margin:10px 0;
     padding:8px 14px;border-radius:9px;background:#2a2415;
     border:1px solid #5b4a22;flex-wrap:wrap}
@@ -307,8 +330,11 @@
      shows. */
   td.show .grabbed{display:block;font:10px var(--mono);color:var(--faint);
     line-height:1.4;margin-top:3px}
-  td.show .unseen{font-style:normal;font-size:10px;color:#e2a33c;
-    border:1px solid #6b4d17;border-radius:4px;padding:0 4px}
+  .seen-box{display:inline-flex;align-items:center;gap:5px;margin-top:5px;
+    font:11px var(--mono);color:#e2a33c;border:1px solid #6b4d17;
+    border-radius:5px;padding:1px 7px;cursor:pointer;user-select:none}
+  .seen-box.on{color:#5fcf9b;border-color:#2c5a45}
+  .seen-box input{margin:0;accent-color:#5fcf9b}
   td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
   td.show{cursor:zoom-in}
@@ -343,6 +369,16 @@
 <!-- The house styles themselves. They began as two files I wrote by hand,
      which makes "what shapes a short can be" something only somebody editing
      the repository can change. They are data. -->
+<!-- One long task at a time, and it says what it is doing. Gathering and
+     rendering both took minutes and both ran only from the command line,
+     which meant the page could not do half of what the pipeline does. -->
+<div id="jobBar" hidden>
+  <b id="jobWhat"></b>
+  <span id="jobNote"></span>
+  <div class="job-track"><i id="jobFill"></i></div>
+  <span id="jobClock"></span>
+</div>
+
 <div id="houses" hidden>
   <div class="houses-inner">
     <div class="houses-bar">
@@ -392,6 +428,30 @@ const WHERE_FROM = {
   real: "Wikimedia Commons，多為 CC BY／BY-SA，出處要上畫面。用在有名字的人事地",
   frame: "從這個題目自己的新聞影片剪的。算在 25% 的引用額度裡",
 };
+
+/* Watching a job. Asked for rather than pushed, because both tasks are minutes
+   long and a page that goes quiet for four minutes looks broken. */
+let JOB_TIMER = null;
+async function watchJob(whenDone) {
+  const tick = async () => {
+    let job;
+    try { job = await api("GET", "/api/job"); } catch (error) { return; }
+    const bar = $("jobBar");
+    bar.hidden = job.state !== "running" && job.state !== "failed";
+    $("jobWhat").textContent = job.what || "";
+    $("jobNote").textContent = job.note || "";
+    $("jobClock").textContent = job.seconds ? `${Math.round(job.seconds)}s` : "";
+    $("jobFill").style.width =
+      job.steps ? `${(job.step / job.steps) * 100}%` : "0%";
+    bar.classList.toggle("failed", job.state === "failed");
+    if (job.state === "running") return;
+    clearInterval(JOB_TIMER); JOB_TIMER = null;
+    if (job.state === "done" && whenDone) whenDone();
+  };
+  clearInterval(JOB_TIMER);
+  await tick();
+  JOB_TIMER = setInterval(tick, 1500);
+}
 
 async function api(method, path, body) {
   const response = await fetch(path, {
@@ -530,6 +590,17 @@ async function open(name) {
     <div id="verdict" class="${pile.ready ? "ok" : "no"}">
       ${pile.ready ? "素材夠了，可以寫文案。"
                    : `還不能寫：${escapeHTML(pile.why)}`}
+    </div>
+
+    <!-- The per-outlet round: ask nineteen named outlets what they said,
+         download what they gave, cut frames where the captions point. This is
+         the argument the whole project rests on and it ran only from a
+         terminal. -->
+    <div class="gather">
+      <span>收集</span>
+      <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
+        spellcheck="false">
+      <button id="btnGather" class="tiny primary">逐家問＋下載＋抽畫格</button>
     </div>
 
     ${(pile.wanted || []).length ? `
@@ -769,6 +840,14 @@ async function open(name) {
     } catch (error) { alert(error.message); }
   };
 
+  if ($("btnGather")) $("btnGather").onclick = async () => {
+    const queries = $("hunt").value.trim();
+    if (!queries) { alert("要給搜尋詞"); return; }
+    try {
+      await api("POST", "/api/topic/gather", {name, queries});
+      watchJob(() => open(name));
+    } catch (error) { alert(error.message); }
+  };
   if ($("btnWanted")) $("btnWanted").onclick = async () => {
     $("note").className = ""; $("note").textContent = "抓圖中…";
     try {
@@ -1137,6 +1216,18 @@ async function showScript(name) {
       <div title="影片段落佔實拍時間的比例，至少一半">會動的<b class="${
         sums.still_enough ? "good" : "short"}">${sums.clip_share || 0}%</b></div>
     </div>
+    <!-- Rendering, and the sheet it produces. Looking at what was actually
+         rendered is the one check nothing else can do: two of the faults in
+         this project were only ever visible with all the shots laid out at
+         once. -->
+    <div class="film">
+      <button id="btnBuild" class="tiny primary">壓片</button>
+      <span id="filmWhere" class="hint">還沒壓</span>
+      <span class="grow"></span>
+      <button id="btnSheet" class="tiny" hidden>看接觸表</button>
+      <button id="btnWatch" class="tiny" hidden>看片</button>
+    </div>
+
     <div id="pending" hidden>
       <span id="pendingCount"></span>
       <span class="hint">切換到別的文案或回題目，這些改動會被丟掉</span>
@@ -1188,8 +1279,12 @@ async function showScript(name) {
               alt="" loading="lazy">`
              : line.card_error ? `<span class="grabbed bad">畫不出來：${
               escapeHTML(line.card_error)}</span>` : ""}
-            <span>${escapeHTML(line.show || "")}${
-              line.seen ? "" : ` <em class="unseen">沒看過</em>`}</span>
+            <span>${escapeHTML(line.show || "")}</span>
+            ${(line.pic || line.clip) ? `
+            <label class="seen-box${line.seen ? " on" : ""}">
+              <input type="checkbox" class="seen"${line.seen ? " checked" : ""}>
+              ${line.seen ? "看過了" : "沒看過"}
+            </label>` : ""}
             ${line.clip ? `<span class="grabbed">段落 ${
               Math.round(line.clip.start)}–${Math.round(line.clip.end)}s</span>` : ""}
             ${line.caption ? `<span class="grabbed">${
@@ -1207,6 +1302,56 @@ async function showScript(name) {
     dropPending();
     open(STATE.chosen);
   };
+  // The film, if there is one.
+  api("GET", `/api/script/film?name=${encodeURIComponent(name)}`)
+    .then((film) => {
+      if (!film.film) return;
+      const when = new Date(film.made * 1000);
+      $("filmWhere").textContent =
+        `${(film.size / 1048576).toFixed(1)} MB　${when.toLocaleString()}`;
+      $("btnSheet").hidden = !film.sheet;
+      $("btnWatch").hidden = false;
+    }).catch(() => {});
+  $("btnBuild").onclick = async () => {
+    try {
+      await api("POST", "/api/script/build", {name});
+      watchJob(() => showScript(name));
+    } catch (error) { alert(error.message); }
+  };
+  $("btnSheet").onclick = () => {
+    $("bigWho").textContent = `${name}　接觸表`;
+    $("bigWhat").textContent = "每個鏡頭在它自己長度的 90% 處截的";
+    $("bigStage").innerHTML =
+      `<img src="/media/sheet/${encodeURIComponent(name)}" alt="">`;
+    $("bigNote").innerHTML = "";
+    $("big").hidden = false;
+  };
+  $("btnWatch").onclick = () => {
+    $("bigWho").textContent = name;
+    $("bigWhat").textContent = "";
+    $("bigStage").innerHTML = `<video controls autoplay
+      src="/media/film/${encodeURIComponent(name)}"></video>`;
+    $("bigNote").innerHTML = "";
+    $("big").hidden = false;
+  };
+
+  // Confirming a picture is what it claims to be. The gate has existed for a
+  // while and nothing could fill it but me editing JSON -- which is the wrong
+  // shape twice: it needs no model, and I am the one who demonstrably forgets.
+  // Clicking the thumbnail opens it full size; the box records that somebody
+  // did.
+  $("paper").querySelectorAll("input.seen").forEach((box) => {
+    box.addEventListener("change", async () => {
+      const row = box.closest("tr");
+      const index = [...row.parentNode.children].indexOf(row) + 1;
+      try {
+        await api("POST", "/api/script/seen",
+                  {name, line: index, seen: box.checked});
+        showScript(name);
+      } catch (error) { alert(error.message); box.checked = !box.checked; }
+    });
+  });
+
   $("btnSaveLines").onclick = savePending;
 
   // Changing the house style re-checks everything against other thresholds and
@@ -1371,6 +1516,7 @@ $("paper").addEventListener("click", (event) => {
   if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }
 
   if (event.target.closest(".say-edit")) return;   // editing, not opening
+  if (event.target.closest(".seen-box")) return;   // ticking, not opening
 
   const row = event.target.closest("tr[data-shot]");
   if (row && event.target.closest("td.show")) {
