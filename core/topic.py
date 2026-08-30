@@ -665,21 +665,29 @@ def blank(name: str, note: str = "") -> dict[str, Any]:
     ninety seconds, and what to watch out for. Whoever chooses the topic writes
     it -- me now, the call that proposes topics later.
     """
+    # No `scripts` key. There used to be one, initialised to [] here and
+    # written to by nobody, while every page read it -- so eight topics
+    # holding ten scripts between them all reported 文案 0, for as long as
+    # anyone cared to look. A stored copy of something derivable does not
+    # merely risk drifting: this one was never right for a single moment.
     return {"topic": name, "note": note, "made": int(time.time()),
             "sources": {"videos": [], "reports": [], "images": [], "data": []},
-            "facts": [], "voices": [], "scripts": []}
+            "facts": [], "voices": []}
 
 
-def _films_of(name: str) -> int:
-    """How many finished shorts came out of this topic. Shown in the list so a
-    topic that produced something is distinguishable at a glance from one that
-    stalled -- which is the difference that matters when there are hundreds."""
+def _made_from(name: str) -> tuple[list[str], int]:
+    """The scripts written from this topic, and how many became films.
+
+    Derived from the scripts' own `topic` field every time, never stored. The
+    list is what the page shows and what refuses a delete; the count is what
+    tells a topic that produced something from one that stalled, which is the
+    difference that matters when there are hundreds.
+    """
     from core import script as script_module
-    made = 0
-    for one in script_module.for_topic(name):
-        if (ROOT / "assets" / "shorts" / f"{one}.mp4").is_file():
-            made += 1
-    return made
+    written = script_module.for_topic(name)
+    films = sum(1 for one in written
+                if (ROOT / "assets" / "shorts" / f"{one}.mp4").is_file())
+    return written, films
 
 
 def listing() -> list[dict[str, Any]]:
@@ -690,11 +698,12 @@ def listing() -> list[dict[str, Any]]:
         except json.JSONDecodeError:
             continue
         enough, why = ready(pile)
+        written, films = _made_from(name)
         found.append({
             "name": name, "note": pile.get("note", ""),
             "counts": counts(pile)["got"], "balance": balance(pile),
             "ready": enough, "why": why,
-            "scripts": pile.get("scripts") or [],
+            "scripts": written,
             "facts": len(pile.get("facts") or []),
             "leads": len(pile.get("leads") or []),
             "audience": audience(pile),
@@ -703,7 +712,7 @@ def listing() -> list[dict[str, Any]]:
             # far it got, why it stopped -- and that is worth more than the
             # room it takes in a list.
             "archived": bool(pile.get("archived")),
-            "films": _films_of(name),
+            "films": films,
             "voices": sum(len(v.get("comments") or []) for v in pile.get("voices") or []),
             "modified": int(path_for(name).stat().st_mtime),
         })
