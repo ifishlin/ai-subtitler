@@ -45,6 +45,49 @@ def as_prompt(name: str) -> str:
     return rules_module.fill(body) + "\n".join(lines)
 
 
+def rounds() -> int:
+    """How many times the writer may be asked to fix things.
+
+    One, then stop. Most of what a review returns is checkable -- line 14
+    cites nothing -- and one pass settles that. A second failure usually is
+    not a rewriting problem: it means the topic has no view in it.
+
+    Not unbounded, for two reasons this project has evidence for. A reviewer
+    is wrong sometimes: `unindexed` caught the BBC piece about tigers and also
+    flagged an AP piece squarely on topic, and rewriting to satisfy a mistaken
+    verdict is worse than not reviewing. And the writer and the reviewer are
+    two independent judgements, so past the second round they tend to oscillate
+    between versions that are both fine rather than converge on a better one.
+    """
+    from core import rules as rules_module
+    return int(rules_module.at("review.rounds", 1))
+
+
+def settle(name: str, rewrite=None) -> dict[str, Any]:
+    """Review, allow one fix, review again, then hand it over.
+
+    `rewrite` is whatever continues the writing conversation -- the writer
+    still has the material and its own draft in context, so a fix costs a few
+    hundred tokens rather than another copy of everything. The reviewer is a
+    fresh call each time on purpose: it must not know who wrote this.
+
+    Whatever comes out, the last word is the person watching. A verdict is
+    reported, never applied silently.
+    """
+    history = []
+    for turn in range(rounds() + 1):
+        said = read(name)
+        history.append({"round": turn, **said})
+        if not said.get("asked"):
+            return {"state": "not_asked", "rounds": history}
+        if said.get("verdict") == "pass":
+            return {"state": "passed", "rounds": history}
+        if turn >= rounds() or rewrite is None:
+            return {"state": "needs_you", "rounds": history}
+        rewrite(name, said)
+    return {"state": "needs_you", "rounds": history}
+
+
 def read(name: str) -> dict[str, Any]:
     """Ask, and give back what came back.
 
