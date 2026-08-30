@@ -213,6 +213,13 @@
   .holders span{margin-right:12px}
   .holders b{color:#e0a; color:#e2a33c}
   .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
+  .wanted{display:flex;align-items:center;gap:11px;margin:10px 0;
+    padding:8px 14px;border-radius:9px;background:#2a2415;
+    border:1px solid #5b4a22;flex-wrap:wrap}
+  .wanted > span{font-size:12px;color:#e2a33c;flex:none}
+  .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
+    border:1px solid var(--line);border-radius:5px;padding:1px 7px}
   .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .note-line span{font-size:11px;color:var(--faint);flex:none}
   .note-line input{flex:1;font:13px inherit;color:var(--dim);
@@ -525,6 +532,18 @@ async function open(name) {
                    : `還不能寫：${escapeHTML(pile.why)}`}
     </div>
 
+    ${(pile.wanted || []).length ? `
+    <!-- What the audience implies and the pile does not have. The counts say
+         this topic has enough pictures; they cannot say it has nothing to end
+         on, because the ending is aimed at a group of people and thirty
+         pictures of the subject satisfy a number either way. -->
+    <div class="wanted">
+      <span>結尾會需要，但還沒收到</span>
+      <div class="wanted-terms">${pile.wanted.map((one) =>
+        `<code>${escapeHTML(one)}</code>`).join("")}</div>
+      <button id="btnWanted" class="tiny">抓這幾個</button>
+    </div>` : ""}
+
     <div style="display:flex;gap:8px;align-items:center">
       <!-- Chosen before writing, not corrected afterwards. The shape decides
            the roles, the pacing, the borrowed ceiling and which prompt is
@@ -750,6 +769,17 @@ async function open(name) {
     } catch (error) { alert(error.message); }
   };
 
+  if ($("btnWanted")) $("btnWanted").onclick = async () => {
+    $("note").className = ""; $("note").textContent = "抓圖中…";
+    try {
+      const back = await api("POST", "/api/topic/images",
+                             {name, terms: pile.wanted, where: "stock"});
+      $("note").textContent = `收了 ${back.added} 張`;
+      open(name);
+    } catch (error) {
+      $("note").className = "warn"; $("note").textContent = error.message;
+    }
+  };
   if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
   if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
 }

@@ -275,6 +275,44 @@ def keywords(pile: dict[str, Any]) -> list[str]:
     return [word for word, _ in ranked[:12]]
 
 
+def wanted_shots(pile: dict[str, Any]) -> list[str]:
+    """What this topic still has no picture of.
+
+    Read off the audience rather than the topic. The pile is judged by counts
+    -- five of each kind -- and counts cannot tell that a film ending on
+    somebody's streaming bill has no picture of a sofa, a remote or a bill,
+    because thirty pictures of studios satisfy the number.
+    """
+    said = str(pile.get("audience") or "")
+    if not said:
+        return []
+    have = " ".join(str(item.get("term", "")).lower()
+                    for item in pile.get("sources", {}).get("images") or [])
+    # The audience is written in Chinese and the libraries are searched in
+    # English, so the bridge is a table -- small, and only for the接觸點 that
+    # keep recurring: money, time, health, safety.
+    bridge = [
+        (("帳單", "電費", "繳費", "付"), ["bill on kitchen table",
+                                        "person paying bills laptop"]),
+        (("加油", "油價"), ["gas station price sign", "refuelling nozzle close"]),
+        (("看病", "醫", "照顧"), ["clinic waiting room", "elderly patient waiting"]),
+        (("訂閱", "串流", "看新聞"), ["person watching tv sofa",
+                                     "remote control hand couch"]),
+        (("淹", "保費", "災"), ["flooded street houses", "insurance paperwork"]),
+        (("股", "退休金"), ["stock chart phone", "retirement statement paper"]),
+        (("警報", "通知", "簡訊"), ["phone notification screen",
+                                   "smoke detector ceiling"]),
+        (("役齡", "孩子", "家人"), ["family dinner table", "parent child home"]),
+        (("工作", "取代"), ["office worker desk", "empty office chair"]),
+    ]
+    want = []
+    for keys, terms in bridge:
+        if any(key in said for key in keys):
+            want += [term for term in terms
+                     if term.split()[0] not in have]
+    return want
+
+
 def unindexed(pile: dict[str, Any]) -> list[dict[str, Any]]:
     """Videos whose subtitles do not use the topic's own words.
 

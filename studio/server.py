@@ -383,7 +383,11 @@ def get_topic(name: str) -> dict[str, Any]:
                         if one["topic"] == name],
             "audience": topic_module.audience(pile),
             # Offered, not shown as though it were the answer.
-            "audience_guess": topic_module.suggest_audience(pile)}
+            "audience_guess": topic_module.suggest_audience(pile),
+            # Pictures the audience implies and the pile does not have. Counts
+            # cannot see this: thirty pictures of studios satisfy "15 photos"
+            # while the film has nothing to end on.
+            "wanted": topic_module.wanted_shots(pile)}
 
 
 @app.post("/api/topic")

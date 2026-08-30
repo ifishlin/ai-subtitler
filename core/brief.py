@@ -164,6 +164,48 @@ def as_text(name: str) -> str:
     return "\n".join(out)
 
 
+def to_collect(name: str) -> str:
+    """What to ask for, before there is anything to ask about.
+
+    The gathering prompt was the one nothing ever assembled: search terms were
+    typed by hand, so nothing in the program connected the topic's audience to
+    the pictures it needs -- and that connection is real. A piece about studios
+    being bought, aimed at people who pay for streaming, wants a sofa, a
+    remote, an empty cinema and a bill; aimed at people whose jobs AI might
+    take it wants a set, an actor, a synthesised face. Same topic, different
+    pile.
+
+    I was making that connection by reading the field and thinking. That works
+    exactly as long as the writer is me.
+    """
+    from core import topic as topic_module
+    pile = topic_module.load(name)
+    body = (ROOT / "assets" / "prompts" / "collect.md").read_text(encoding="utf-8")
+    missing = rules_module.unfilled(body)
+    if missing:
+        raise RuntimeError(f"collect.md 要的名字 rules／theme 裡沒有：{missing}")
+
+    said = ["", "---", "", f"# 題目：{name}",
+            f"說給誰聽：{topic_module.audience(pile) or '（還沒決定）'}"]
+    if pile.get("note"):
+        said.append(f"挑這題的理由：{pile['note']}")
+    said += ["", "**搜尋詞要照「說給誰聽」那一欄去想** —— 那群人的生活裡有什麼，"
+                 "文案就會需要什麼畫面。", ""]
+
+    have = pile.get("sources", {})
+    if have.get("videos") or have.get("reports"):
+        said.append("## 已經收到的（不要重複）")
+        for kind, label in (("videos", "影片"), ("reports", "報導")):
+            for item in have.get(kind) or []:
+                said.append(f"- {label}　{item.get('outlet', '')}　"
+                            f"{item.get('title', '')[:64]}")
+        said.append("")
+    counts = topic_module.counts(pile)
+    said.append("## 還缺")
+    said.append("、".join(counts["short"]) if counts["short"] else "（都齊了）")
+    return rules_module.fill(body) + "\n".join(said)
+
+
 def prompt(name: str, house: str = "argue") -> str:
     """A prompt for one house style, with today's numbers and the material.
 
