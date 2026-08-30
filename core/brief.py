@@ -75,7 +75,15 @@ def sheet(name: str) -> dict[str, Any]:
             "audience": topic_module.audience(pile),
             "facts": pile.get("facts") or [],
             "voices": (pile.get("voices") or [])[:20],
-            "reports": pile["sources"].get("reports") or [],
+            # Doubted sources do not go to the writer. They were excluded from
+            # the count already, and letting them into the prompt would be the
+            # same pile arriving by another door: twenty-five irrelevant
+            # headlines dilute the material a script is written from, and a
+            # model reading an airport malaria story alongside the theft is
+            # less likely to see the theft clearly, not more. Rescuing a
+            # wrongly doubted source is a button on the page, not a job for
+            # the prompt.
+            "reports": topic_module.settled(pile, "reports"),
             "videos": [{k: v.get(k) for k in
                         ("outlet", "lean", "title", "url", "file", "captions")}
                        for v in pile["sources"]["videos"]],
