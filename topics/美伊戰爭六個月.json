@@ -498,40 +498,6 @@
         ]
       },
       {
-        "id": "Flag_of_Iran_(official).svg.png",
-        "term": "Iran",
-        "kind": "real",
-        "file": "assets/photos/美伊戰爭六個月/Flag_of_Iran_(official).svg.png.jpg",
-        "caption": "Iran, officially the Islamic Republic of Iran, and historically known as Persia, is a country in West Asia. It borders Iraq to the west, Turkey, Azerbaijan, and Armenia to the northwest, the Caspian Sea to the north, Turkmenistan to the northeast, Afghanistan to the east, Pakistan to the southeast, ",
-        "outlet": "維基百科",
-        "author": "",
-        "credit": "／見檔案頁",
-        "answers": 1.0,
-        "page": "https://en.wikipedia.org/wiki/Iran",
-        "look": 281474976645120,
-        "size": [
-          1000,
-          572
-        ]
-      },
-      {
-        "id": "Emblem_of_the_United_States_Navy.svg.png",
-        "term": "United States Navy",
-        "kind": "real",
-        "file": "assets/photos/美伊戰爭六個月/Emblem_of_the_United_States_Navy.svg.png.jpg",
-        "caption": "The United States Navy (USN) is the maritime service branch of the United States Armed Forces and is designated as the navy of the United States in the Constitution. With 290 combat vessels, it is the world's second largest navy, behind the People's Liberation Army Navy, and by far the largest by di",
-        "outlet": "維基百科",
-        "author": "",
-        "credit": "／見檔案頁",
-        "answers": 1.0,
-        "page": "https://en.wikipedia.org/wiki/United_States_Navy",
-        "look": 6821913426803712,
-        "size": [
-          720,
-          720
-        ]
-      },
-      {
         "id": "frame_IdufvpqvhWg_28",
         "kind": "frame",
         "term": "Fox News 28s",
@@ -801,6 +767,40 @@
         "size": [
           600,
           400
+        ]
+      },
+      {
+        "id": "USS_Gerald_R._Ford_(CVN-78)_underway_in_the_Atlantic_Ocean_on_9_October_2022_(221009-N-TL968-1248).JPG",
+        "term": "USS Gerald R. Ford",
+        "kind": "real",
+        "file": "assets/photos/美伊戰爭六個月/USS_Gerald_R._Ford_(CVN-78)_underway_in_the_Atlantic_Ocean_on_9_October_2022_(221009-N-TL968-1248).JPG.jpg",
+        "caption": "USS Gerald R. Ford (CVN-78) is an aircraft carrier of the United States Navy and the lead ship of her class. The ship is named after the 38th president of the United States, Gerald Ford, whose World War II naval service included combat duty aboard the light aircraft carrier Monterey in the Pacific T",
+        "outlet": "維基百科",
+        "author": "U.S. Navy photo by Mass Communication Specialist 2nd Class Jackson Adkins",
+        "credit": "U.S. Navy photo by Mass Communication Specialist 2nd Class Jackson Adkins／Public domain",
+        "answers": 0.67,
+        "page": "https://commons.wikimedia.org/wiki/File:USS_Gerald_R._Ford_(CVN-78)_underway_in_the_Atlantic_Ocean_on_9_October_2022_(221009-N-TL968-1248).JPG",
+        "look": 7688796831743,
+        "size": [
+          4322,
+          2880
+        ]
+      },
+      {
+        "id": "ISS005-E-11900_lrg.jpg",
+        "term": "Kharg Island",
+        "kind": "real",
+        "file": "assets/photos/美伊戰爭六個月/ISS005-E-11900_lrg.jpg.jpg",
+        "caption": "Kharg Island, also spelled Khark Island and often referred to as the \"Forbidden Island\", is a continental island of Iran in the Persian Gulf. The island is 25 kilometres (16 mi) off the coast of Iran and 660 kilometres (410 mi) northwest of the Strait of Hormuz. Administered by the adjacent coastal ",
+        "outlet": "維基百科",
+        "author": "Johnson Space Center",
+        "credit": "Johnson Space Center／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:ISS005-E-11900_lrg.jpg",
+        "look": 13889313323159058687,
+        "size": [
+          2000,
+          3032
         ]
       }
     ],

@@ -1,0 +1,491 @@
+{
+  "topic": "美伊戰爭六個月",
+  "view": "「贏」的定義一直往後退——原本說政權會垮，沒垮，於是改成戰術成果。而汽油那一塊一毛一從來沒有退。",
+  "tone": "克制",
+  "for": "加油、繳稅、家裡有役齡孩子的人",
+  "narration": false,
+  "lines": [
+    {
+      "say": "這場仗打了六個月。",
+      "role": "起",
+      "show": "影片：半島電視台 航艦甲板",
+      "clip": {
+        "file": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
+        "start": 10.6,
+        "end": 17.3
+      },
+      "seconds": 6.7,
+      "seen": true,
+      "from": "Al Jazeera English"
+    },
+    {
+      "say": "美方軍費三百七十五億。",
+      "role": "起",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "美方軍事支出（至七月底）",
+        "value": "375 億",
+        "under": "美元",
+        "colour": "#ff6b52",
+        "note": "資料：Spectrum News",
+        "ghost": "$"
+      },
+      "from": "Spectrum News",
+      "seconds": 2.09
+    },
+    {
+      "say": "一天大約十億。",
+      "role": "起",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "換算下來",
+        "value": "10 億",
+        "under": "美元／天",
+        "note": "資料：布朗大學 Costs of War"
+      },
+      "from": "Costs of War",
+      "seconds": 1.9
+    },
+    {
+      "say": "布朗大學算的。",
+      "role": "起",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "布朗大學算的",
+        "under": "Costs of War 計畫"
+      },
+      "from": "Costs of War",
+      "seconds": 1.9
+    },
+    {
+      "say": "有些事確實做到了。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "確實做到了",
+        "ghost": "✓"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "原本的目標寫得很清楚。",
+      "role": "承",
+      "show": "影片：半島電視台 開戰時公布的軍事目標",
+      "clip": {
+        "file": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
+        "start": 22.6,
+        "end": 27.6
+      },
+      "seconds": 5.0,
+      "seen": true,
+      "from": "Al Jazeera English"
+    },
+    {
+      "say": "摧毀飛彈威脅。",
+      "role": "承",
+      "show": "自製：清單卡",
+      "card": {
+        "kind": "stack",
+        "title": "開戰時說的目標",
+        "items": [
+          "摧毀飛彈威脅",
+          "摧毀核子計畫"
+        ],
+        "note": "資料：Al Jazeera"
+      },
+      "from": "Al Jazeera English",
+      "seconds": 1.9
+    },
+    {
+      "say": "最高領袖被擊斃。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "最高領袖\n被擊斃",
+        "note": "資料：Reuters"
+      },
+      "from": "Reuters",
+      "seconds": 1.9
+    },
+    {
+      "say": "死亡人數超過六百。",
+      "role": "承",
+      "show": "自製：數字卡",
+      "from": "CNN",
+      "card": {
+        "kind": "number",
+        "title": "五角大廈更新的傷亡數",
+        "value": "624",
+        "under": "人",
+        "colour": "#ff6b52",
+        "note": "資料：CNN"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "其中十八個是美軍。",
+      "role": "承",
+      "show": "自製：字卡",
+      "from": "CNN",
+      "card": {
+        "kind": "word",
+        "title": "其中 18 個\n是美軍",
+        "note": "資料：CNN"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "所有人都以為政權會垮。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "所有人都以為\n政權會垮",
+        "ghost": "垮"
+      },
+      "from": "Fox News",
+      "seconds": 2.09
+    },
+    {
+      "say": "六個月後，政權還在。",
+      "role": "轉",
+      "show": "影片：半島電視台 川普與改變中的策略",
+      "clip": {
+        "file": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
+        "start": 0.2,
+        "end": 7.2
+      },
+      "seconds": 7.0,
+      "seen": true,
+      "from": "Al Jazeera English"
+    },
+    {
+      "say": "於是「贏」的定義變了。",
+      "role": "轉",
+      "show": "自製：劃掉舊的換新的",
+      "card": {
+        "kind": "swap",
+        "title": "什麼算贏",
+        "was": "政權垮台",
+        "now": "戰術成果",
+        "tone": "light",
+        "note": "資料：Reuters"
+      },
+      "from": "Reuters",
+      "seconds": 2.09
+    },
+    {
+      "say": "有戰術成果。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "有戰術成果",
+        "tone": "light",
+        "note": "資料：Reuters"
+      },
+      "from": "Reuters",
+      "seconds": 1.9
+    },
+    {
+      "say": "沒有宣稱過的戰略勝利。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "沒有\n戰略勝利",
+        "tone": "light",
+        "colour": "#b8360a",
+        "note": "資料：Reuters"
+      },
+      "from": "Reuters",
+      "seconds": 2.09
+    },
+    {
+      "say": "目標往後退了一格。",
+      "role": "轉",
+      "show": "自製：同一條線上的三個點",
+      "card": {
+        "kind": "chain",
+        "title": "目標退的方向",
+        "points": [
+          "政權垮台",
+          "削弱能力",
+          "戰術成果"
+        ],
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "那不是失敗。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "那不是失敗",
+        "tone": "light"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "是換了一把尺。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "是換了一把尺",
+        "tone": "light",
+        "ghost": "尺"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "海峽也還是封的。",
+      "role": "轉",
+      "show": "示意：油輪在海上",
+      "pic": "assets/photos/美伊戰爭六個月/27275198.jpg",
+      "fit": "ground",
+      "tone": "light",
+      "seen": true,
+      "from": "Reuters",
+      "seconds": 1.9
+    },
+    {
+      "say": "但總統說它是開的。",
+      "role": "轉",
+      "show": "影片：Fox 下標「荷姆茲海峽是開的」",
+      "clip": {
+        "file": "assets/footage/美伊戰爭六個月/IdufvpqvhWg.mp4",
+        "start": 42.5,
+        "end": 49.0
+      },
+      "seconds": 6.5,
+      "seen": true,
+      "from": "Fox News"
+    },
+    {
+      "say": "伊朗在跟阿曼談臨時航道。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "在談\n臨時航道",
+        "tone": "light",
+        "note": "資料：Reuters"
+      },
+      "from": "Reuters",
+      "seconds": 2.31
+    },
+    {
+      "say": "要談臨時航道的意思是——",
+      "role": "轉",
+      "show": "自製：圈起來的三個字",
+      "card": {
+        "kind": "ring",
+        "title": "要談臨時航道，表示",
+        "value": "現在不通",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 2.31
+    },
+    {
+      "say": "不通的東西會漲價。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "不通的東西\n會漲價",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "汽油從二點九八，",
+      "role": "合",
+      "show": "示意：加油機上的價格顯示",
+      "pic": "assets/photos/美伊戰爭六個月/8266747.jpg",
+      "fit": "fill",
+      "tone": "warm",
+      "seen": true,
+      "from": "Spectrum News",
+      "seconds": 1.9
+    },
+    {
+      "say": "漲到四點零九。",
+      "role": "合",
+      "show": "自製：兩個量比大小",
+      "card": {
+        "kind": "bars",
+        "title": "每加侖汽油",
+        "rows": [
+          [
+            "開戰前",
+            2.98,
+            "#7fb3c9",
+            "$2.98"
+          ],
+          [
+            "六個月後",
+            4.09,
+            "#ff7a4d",
+            "$4.09"
+          ]
+        ],
+        "tone": "warm",
+        "note": "資料：Spectrum News"
+      },
+      "from": "Spectrum News",
+      "seconds": 1.9
+    },
+    {
+      "say": "一加侖多一塊一毛一。",
+      "role": "合",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "每加侖多付",
+        "value": "$1.11",
+        "colour": "#ff7a4d",
+        "tone": "warm",
+        "note": "資料：Spectrum News"
+      },
+      "from": "Spectrum News",
+      "seconds": 1.9
+    },
+    {
+      "say": "加滿一次多十幾塊。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "加滿一次\n多十幾塊",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "你不會收到帳單。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "你不會\n收到帳單",
+        "tone": "warm"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "你在加油站收到。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "你在加油站\n收到",
+        "tone": "warm",
+        "ghost": "油"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "一個禮拜一次。",
+      "role": "合",
+      "show": "自製：圈起來的字",
+      "from": "觀點",
+      "card": {
+        "kind": "ring",
+        "title": "結帳的頻率",
+        "value": "每週",
+        "tone": "warm"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "那是每個禮拜的事。",
+      "role": "合",
+      "show": "示意：夫妻在餐桌前對帳單",
+      "pic": "assets/photos/美伊戰爭六個月/6963889.jpg",
+      "fit": "ground",
+      "tone": "warm",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "不是每季的事。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "不是每季\n是每週",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "目標換過三次。",
+      "role": "合",
+      "show": "自製：同一條線上的三個點",
+      "card": {
+        "kind": "chain",
+        "title": "六個月裡換過的說法",
+        "points": [
+          "政權垮台",
+          "削弱能力",
+          "戰術成果"
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "那一塊一毛一沒有換。",
+      "role": "合",
+      "show": "自製：圈起來的數字",
+      "card": {
+        "kind": "ring",
+        "title": "沒有換過的只有",
+        "value": "$1.11",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "整件事是這樣的。",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "seconds": 6.1,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "ghost": "贏",
+        "points": [
+          "六個月，三百七十五億美元",
+          "最高領袖被擊斃，政權還在",
+          "「贏」從政權垮台改成戰術成果",
+          "汽油從 2.98 漲到 4.09"
+        ],
+        "title": "目標換了三次\n那一塊一毛一沒有換",
+        "under": "美伊戰爭六個月"
+      },
+      "from": "觀點"
+    }
+  ]
+}

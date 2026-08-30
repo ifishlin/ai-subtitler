@@ -1,0 +1,498 @@
+{
+  "topic": "尼泊爾冰川潰決洪災",
+  "view": "大家吵的是「是不是氣候變遷造成的」——那是在追究過去。山上還掛著兩座沒有名字的湖，那是未來。",
+  "tone": "克制",
+  "for": "住在會淹的地方、保費會漲的人",
+  "narration": false,
+  "lines": [
+    {
+      "say": "一個山谷，一個早上沒了。",
+      "role": "起",
+      "show": "影片：Fox 空拍被沖毀的村落",
+      "clip": {
+        "file": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.mp4",
+        "start": 12.85,
+        "end": 19.11
+      },
+      "seconds": 6.26,
+      "seen": true,
+      "from": "Fox News"
+    },
+    {
+      "say": "先報二七三。",
+      "role": "起",
+      "show": "自製：劃掉舊數字換新的",
+      "card": {
+        "kind": "swap",
+        "title": "罹難人數",
+        "was": "273",
+        "now": "近 600",
+        "note": "資料：Fox News／CBC"
+      },
+      "from": "CBC",
+      "seconds": 1.9
+    },
+    {
+      "say": "一大塊冰從冰川斷裂。",
+      "role": "起",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "一大塊冰\n從冰川斷裂",
+        "note": "資料：NBC News"
+      },
+      "from": "NBC News",
+      "seconds": 2.17
+    },
+    {
+      "say": "墜落數千英尺。",
+      "role": "起",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "落差",
+        "value": "數千",
+        "under": "英尺",
+        "note": "資料：NBC News"
+      },
+      "from": "NBC News",
+      "seconds": 1.9
+    },
+    {
+      "say": "大家問的是同一個問題。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "所有人\n問同一句",
+        "ghost": "？"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "say": "是不是氣候變遷？",
+      "role": "承",
+      "show": "自製：圈起來的一句話",
+      "card": {
+        "kind": "ring",
+        "title": "四家媒體的標題都在問",
+        "value": "是氣候變遷嗎",
+        "under": "追究原因"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "喜馬拉雅的冰在退。",
+      "role": "承",
+      "show": "影片：Reuters 冰川與山谷",
+      "clip": {
+        "file": "assets/footage/尼泊爾冰川潰決洪災/54KcFHke3cw.mp4",
+        "start": 23.44,
+        "end": 30.8
+      },
+      "seconds": 6.2,
+      "seen": true,
+      "from": "Reuters"
+    },
+    {
+      "say": "永凍土融化，岩石鬆了。",
+      "role": "承",
+      "show": "自製：清單卡",
+      "card": {
+        "kind": "stack",
+        "title": "科學上的說法",
+        "items": [
+          "永凍土在融化",
+          "岩冰結合變弱",
+          "崩塌機率上升"
+        ],
+        "note": "資料：Nature"
+      },
+      "from": "Nature",
+      "seconds": 2.39
+    },
+    {
+      "say": "科學家說，很可能有關。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "很可能有關",
+        "under": "哥倫比亞大學地球物理學家",
+        "note": "資料：Nature"
+      },
+      "from": "Nature",
+      "seconds": 2.39
+    },
+    {
+      "say": "也有人說不能直接歸因。",
+      "role": "承",
+      "show": "自製：分岔卡",
+      "card": {
+        "kind": "split",
+        "title": "氣候變遷造成的嗎",
+        "branches": [
+          "很可能\n有關",
+          "不能直接\n歸因"
+        ],
+        "note": "資料：CSM"
+      },
+      "from": "Christian Science Monitor",
+      "seconds": 2.39
+    },
+    {
+      "say": "兩邊可以吵很久。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "可以吵很久",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "但那是在追究過去。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "那是在\n追究過去",
+        "tone": "light",
+        "ghost": "昨"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "山上還掛著兩座湖。",
+      "role": "轉",
+      "show": "影片：CNN 災前災後對照，湖的位置",
+      "clip": {
+        "file": "assets/footage/尼泊爾冰川潰決洪災/B06uPGK7Dpo.mp4",
+        "start": 67.3,
+        "end": 73.3
+      },
+      "seconds": 6.0,
+      "seen": true,
+      "from": "CNN"
+    },
+    {
+      "say": "第二座是災後才形成的。",
+      "role": "轉",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "災後新出現的堰塞湖",
+        "value": "第 2 座",
+        "colour": "#b8360a",
+        "tone": "light",
+        "note": "資料：CNN"
+      },
+      "from": "CNN",
+      "seconds": 2.39
+    },
+    {
+      "say": "擋住它們的是崩下來的土石。",
+      "role": "轉",
+      "show": "自製：清單卡",
+      "card": {
+        "kind": "stack",
+        "title": "那兩座湖靠什麼擋著",
+        "items": [
+          "崩落的土石",
+          "沒有人蓋的壩",
+          "沒有人管的水位"
+        ],
+        "tone": "light",
+        "note": "資料：CNN"
+      },
+      "from": "CNN",
+      "seconds": 2.83
+    },
+    {
+      "say": "土石只要鬆掉。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "只要鬆掉",
+        "tone": "light"
+      },
+      "from": "CNN",
+      "seconds": 1.9
+    },
+    {
+      "say": "水會再下來一次。",
+      "role": "轉",
+      "show": "示意：冰川末端一座被土石擋住的湖",
+      "pic": "assets/photos/尼泊爾冰川潰決洪災/35396068.jpg",
+      "fit": "ground",
+      "tone": "light",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "冰川湖是有在監測的。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "冰川湖有在監測",
+        "under": "最危險的那幾座",
+        "tone": "light",
+        "note": "資料：CNN"
+      },
+      "from": "CNN",
+      "seconds": 2.17
+    },
+    {
+      "say": "但新的那兩座還沒有名字。",
+      "role": "轉",
+      "show": "自製：劃掉舊的換新的",
+      "card": {
+        "kind": "swap",
+        "title": "名單上的",
+        "was": "已知的湖",
+        "now": "昨天才有的湖",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 2.61
+    },
+    {
+      "say": "沒有名字就沒有清單。",
+      "role": "轉",
+      "show": "自製：同一條線上的三個點",
+      "card": {
+        "kind": "chain",
+        "title": "預警是這樣來的",
+        "points": [
+          "有名字",
+          "進清單",
+          "發得出警報"
+        ],
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "沒有清單就沒有警報。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "沒有清單\n就沒有警報",
+        "tone": "light"
+      },
+      "seconds": 2.17
+    },
+    {
+      "say": "淹掉的不是山。",
+      "role": "合",
+      "show": "示意：整個被水淹掉的村子",
+      "pic": "assets/photos/尼泊爾冰川潰決洪災/14823609.jpg",
+      "fit": "ground",
+      "tone": "cool",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "是山下的村子。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "是山下的村子",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "而村子都在下游。",
+      "role": "合",
+      "show": "自製：同一條線上的三個點",
+      "card": {
+        "kind": "chain",
+        "title": "從湖到你家",
+        "points": [
+          "湖",
+          "溪",
+          "村子"
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "下游的意思是——",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "下游的意思是",
+        "tone": "warm",
+        "ghost": "下"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "你也可能在下游。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "你也可能\n在下游",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "你家上游有幾座湖？",
+      "role": "合",
+      "show": "示意：山谷裡的冰川湖",
+      "pic": "assets/photos/尼泊爾冰川潰決洪災/38403150.jpg",
+      "fit": "fill",
+      "tone": "warm",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "沒有人數過。",
+      "role": "合",
+      "show": "自製：圈起來的兩個字",
+      "card": {
+        "kind": "ring",
+        "title": "答案通常是",
+        "value": "不知道",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "保費會先知道。",
+      "role": "合",
+      "show": "示意：簽保單的手",
+      "pic": "assets/photos/尼泊爾冰川潰決洪災/7734574.jpg",
+      "fit": "ground",
+      "tone": "warm",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "你會比保費晚知道。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "你會比保費\n晚知道",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "因為保費算的是機率。",
+      "role": "合",
+      "show": "自製：兩個量比大小",
+      "from": "觀點",
+      "card": {
+        "kind": "bars",
+        "title": "兩種算法",
+        "rows": [
+          [
+            "保費",
+            100,
+            "#7fb3c9",
+            "算一百年"
+          ],
+          [
+            "你",
+            1,
+            "#ff7a4d",
+            "算那一天"
+          ]
+        ],
+        "tone": "warm"
+      },
+      "seconds": 2.17
+    },
+    {
+      "say": "而你算的是那一個早上。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "你算的是\n那一個早上",
+        "tone": "warm",
+        "ghost": "早"
+      },
+      "seconds": 2.39
+    },
+    {
+      "say": "追究過去的人還在吵。",
+      "role": "合",
+      "show": "自製：一條線分岔成兩條",
+      "card": {
+        "kind": "split",
+        "title": "兩件事",
+        "branches": [
+          "追究\n過去",
+          "數清楚\n未來"
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "該有人去數那些湖。",
+      "role": "合",
+      "show": "自製：一排排隊的人",
+      "card": {
+        "kind": "queue",
+        "title": "該有人去數",
+        "under": "那些還沒有名字的湖",
+        "count": 7,
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "整件事是這樣的。",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "seconds": 6.2,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "ghost": "湖",
+        "points": [
+          "一塊冰崩下來，近六百人罹難",
+          "大家在吵是不是氣候變遷",
+          "山上還掛著兩座新的湖",
+          "那兩座湖沒有名字，也沒有清單"
+        ],
+        "title": "該問的不是誰造成的\n是下一個什麼時候",
+        "under": "尼泊爾冰川潰決洪災"
+      },
+      "from": "觀點"
+    }
+  ]
+}

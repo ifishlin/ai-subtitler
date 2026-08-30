@@ -73,11 +73,20 @@ Commons 沒有「排隊」「帳單」這種讀得出意思的畫面，兩者都
 對得完全正確，但它不是照片。片子從淹掉的街道切到一枚紋章，就不是在看世界了，
 是在看參考書。
 
+**機構也一樣。** 我寫完上面這條之後，還是問了 `United States Navy`，
+拿回來一枚海軍徽章。條目的頭圖是那個東西的**標誌**，不是那個東西。
+
 ```
-不要問   Nepal、Iran、Venezuela        會拿到國徽或國旗
-要問     Kathmandu、Koshi River、Mount Everest、Strait of Hormuz
-         人名、城市、河流、山、建築、機構
+不要問   Nepal、Iran、Venezuela         國旗、國徽
+        United States Navy、PdVSA      機構徽章、公司商標
+要問     Kathmandu、Bandar Abbas        城市
+        Koshi River、Mount Everest      河流、山
+        USS Gerald R. Ford              具體的那一艘船
+        Nicolás Maduro                  人
 ```
+
+判準很簡單：**問「一個東西」，不要問「一個組織」或「一個國家」。**
+組織和國家沒有長相，只有標誌。
 
 我試過用程式擋——先數顏色數量，結果把一張黑白照片排在國徽前面（黑白照片
 顏色也少）；改成量「幾個顏色蓋掉多少面積」，國徽 0.57、那張黑白照片 0.62，

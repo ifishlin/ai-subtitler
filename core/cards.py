@@ -305,9 +305,20 @@ def _bars(spec: dict[str, Any], t: float) -> Image.Image:
                   fill=tone["dim"], anchor="ra")
         draw.rounded_rectangle([left, y, left + length, y + 96], 14, fill=colour)
         if part > 0.25:
-            draw.text((left + length + 26, y + 30),
-                      row[3] if len(row) > 3 else f"{value:g}",
-                      font=face(62), fill=colour, anchor="la")
+            label = row[3] if len(row) > 3 else f"{value:g}"
+            font = face(62)
+            # Outside the bar if it fits, inside if it does not. The longest
+            # bar is the one whose label has least room left, so a label drawn
+            # blindly to the right runs off exactly where the number matters
+            # most -- 算一百年 was reaching the frame as 算一.
+            outside = left + length + 26
+            if outside + draw.textlength(label, font=font) <= W - MARGIN:
+                draw.text((outside, y + 30), label, font=font, fill=colour,
+                          anchor="la")
+            else:
+                draw.text((left + length - 24, y + 30), label, font=font,
+                          fill=tone["top"] if isinstance(tone["top"], str)
+                               else "#0d1b2a", anchor="ra")
     _note(draw, spec, t)
     return card
 

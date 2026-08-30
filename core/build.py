@@ -273,6 +273,12 @@ def build(name: str, target: Path | None = None,
             why = "、".join(item.get("say") or item.get("why", "")
                             for item in faults[:3])
             raise RuntimeError(f"{name} 有 {len(faults)} 處{complaint}：{why}")
+    if measured["over"]:
+        # Measured all along and never gated, so a film that ran 0.78 seconds
+        # long went to the encoder anyway. A number that is computed, shown on
+        # the page, and cannot stop anything is a number that will be ignored.
+        raise RuntimeError(f"{name} 長 {measured['seconds']}s，"
+                           f"超出上限 {measured['over']}s")
     if not measured["still_enough"]:
         raise RuntimeError(
             f"{name} 只有 {measured['clip_share']}% 的實拍會動，"
