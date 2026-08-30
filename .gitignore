@@ -38,3 +38,12 @@ trash/
 
 # 隨手產出的短影音
 SHORT_*.mp4
+
+# 壓出來的成品和它的半成品。整支片可以從 scripts/*.json 重做，而中間的 36 個
+# 鏡頭更是純粹的暫存 —— 一次 `git add -A` 把它們全掃進去了，74 個檔 59 MB。
+assets/shorts/
+
+# 畫出來的卡片。規格在 scripts/*.json 裡，檔名是那份規格的雜湊，
+# 隨時可以重畫。templates/ 是手寫的，留著。
+assets/cards/*/
+!assets/cards/templates/
