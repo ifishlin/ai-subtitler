@@ -261,23 +261,20 @@
   .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
   .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
     border:1px solid var(--line);border-radius:5px;padding:1px 7px}
-  /* One rule between piles, so a closed one still reads as a section rather
-     than as a line of text that happens to be bold. */
-  .pile{border-top:1px solid var(--line);margin-top:14px;padding-top:2px}
+  /* A rule between piles, so one section ends visibly before the next
+     begins. Everything stays open: a pile you have to unfold is a pile you
+     forget is there. */
+  .pile{border-top:1px solid var(--line);margin-top:16px;
+    scroll-margin-top:12px}
   .pile:first-of-type{border-top:none}
-  .pile.on{background:linear-gradient(var(--panel),transparent 60px);
-    border-radius:9px;padding:0 10px 8px;margin-left:-10px;margin-right:-10px}
-  h3.fold{cursor:pointer;display:flex;align-items:baseline;gap:9px;
-    user-select:none;margin:12px 0 8px}
-  h3.fold:hover{color:var(--accent)}
-  h3.fold .arrow{color:var(--faint);font-size:10px;flex:none;width:12px}
-  h3.fold .hint{font-size:11px;color:var(--faint);font-weight:400}
-  /* What is inside, when it is shut. */
-  h3.fold .shut{font:11px var(--mono);color:var(--faint);font-weight:400;
-    margin-left:auto;overflow:hidden;text-overflow:ellipsis;
-    white-space:nowrap;max-width:46%}
-  .folded{display:none}
-  .folded.on{display:block}
+  .pile h3{display:flex;align-items:baseline;gap:9px;margin:14px 0 8px}
+  .pile h3 .hint{font-size:11px;color:var(--faint);font-weight:400}
+
+  .jump{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px;
+    position:sticky;top:0;z-index:20;padding:8px 0;background:var(--bg)}
+  .jump button{color:var(--faint)}
+  .jump button b{color:var(--ink);margin-left:3px}
+  .jump button.lacking b{color:var(--warn)}
 
   .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .note-line span{font-size:11px;color:var(--faint);flex:none}
@@ -714,12 +711,11 @@ async function open(name) {
           <div class="who">${escapeHTML(lead.outlet || "")}</div>
         </div>`).join("")}` : ""}
 
+    ${jumpBar(pile)}
     ${fold("影片", `${got.videos} / ${want.videos}`,
-           sourceRows(pile.sources.videos, "影片"), "",
-           firstFew(pile.sources.videos))}
+           sourceRows(pile.sources.videos, "影片"))}
     ${fold("報導", `${got.reports} / ${want.reports}`,
-           sourceRows(pile.sources.reports, "報導"), "",
-           firstFew(pile.sources.reports))}
+           sourceRows(pile.sources.reports, "報導"))}
     ${fold("原始數據", `${got.data}`,
            sourceRows(pile.sources.data, "數據"),
            "能下載 CSV 的官方統計（財政部、CBO、FRED、Eurostat），用來自己畫圖表。"
@@ -737,18 +733,12 @@ async function open(name) {
       const shown = (pile.sources.images || []).filter(
         (one) => (one.kind || "stock") === kind);
       return `
-      <section class="pile${OPEN.has(spec.label) ? " on" : ""}">
-      <h3 class="fold" data-fold="${escapeHTML(spec.label)}">
-        <span class="arrow">${OPEN.has(spec.label) ? "▾" : "▸"}</span>
-        ${escapeHTML(spec.label)}
+      <section class="pile" id="pile-${escapeHTML(spec.label)}">
+      <h3>${escapeHTML(spec.label)}
         <span class="count ${spec.short ? "lacking" : ""}">${spec.have} / ${
           spec.want}${spec.short ? `　還缺 ${spec.short}` : ""}</span>
-        <span class="hint">${WHERE_FROM[kind]}</span>
-        ${OPEN.has(spec.label) ? "" : `<span class="shut">${
-          [...new Set(shown.slice(0, 4).map((one) => one.term))].join("、")
-        }</span>`}</h3>
-      ${shown.length ? `<div class="folded${
-        OPEN.has(spec.label) ? " on" : ""}"><div class="shelf">${shown.map((one) => `
+        <span class="hint">${WHERE_FROM[kind]}</span></h3>
+      ${shown.length ? `<div class="shelf">${shown.map((one) => `
         <figure data-shot="${escapeHTML(JSON.stringify({
             say: "", show: one.term || "",
             pic: `/media/photo/${encodeURIComponent(name)}/${
@@ -764,21 +754,27 @@ async function open(name) {
                            : one.term || "")}</figcaption>
           <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
           ${one.credit ? `<figcaption class="who">${escapeHTML(one.credit)}</figcaption>` : ""}
-        </figure>`).join("")}</div></div>`
+        </figure>`).join("")}</div>`
         : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}
       </section>`;
     }).join("")}
 
-    <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
-      <button id="btnVoices" class="tiny">抓留言</button></h3>
-    ${voiceRows(pile.voices)}
+    <section class="pile" id="pile-鄉民反應">
+      <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
+        <button id="btnVoices" class="tiny">抓留言</button></h3>
+      ${voiceRows(pile.voices)}
+    </section>
 
-    <h3>整理出的事實 <span class="count">${(pile.facts || []).length}</span></h3>
-    ${(pile.facts || []).length
-      ? (pile.facts || []).map((fact) => `
-          <div class="src">${escapeHTML(fact.say)}
-            <div class="who">${escapeHTML(fact.from || "")}</div></div>`).join("")
-      : '<div class="empty">還沒有整理</div>'}`;
+    <section class="pile" id="pile-整理出的事實">
+      <h3>整理出的事實 <span class="count">${(pile.facts || []).length}</span>
+        <span class="hint">每一條都要指得回某一篇。還沒有程式在抽，
+          要手動加進 topics/*.json</span></h3>
+      ${(pile.facts || []).length
+        ? (pile.facts || []).map((fact) => `
+            <div class="src">${escapeHTML(fact.say)}
+              <div class="who">${escapeHTML(fact.from || "")}</div></div>`).join("")
+        : '<div class="empty">還沒有整理</div>'}
+    </section>`;
 
   const write = async (anyway) => {
     $("note").className = "";
@@ -884,11 +880,10 @@ async function open(name) {
     };
   });
 
-  $("paper").querySelectorAll("h3.fold").forEach((head) => {
-    head.onclick = () => {
-      const key = head.dataset.fold;
-      if (OPEN.has(key)) OPEN.delete(key); else OPEN.add(key);
-      open(name);
+  $("paper").querySelectorAll("[data-jump]").forEach((button) => {
+    button.onclick = () => {
+      const target = document.getElementById(`pile-${button.dataset.jump}`);
+      if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
     };
   });
 
@@ -1041,30 +1036,35 @@ const TERMS = {pictures: [], named: []};
    reports and forty-nine pictures -- right for something browsed once and
    consulted later, wrong to scroll past on every visit. Remembered across
    redraws so opening one and acting on it does not shut it again. */
-const OPEN = new Set();
-
-/* What a closed pile says about itself. A collapsed function still shows its
-   signature; a collapsed pile that shows nothing hides that there is a pile. */
-function firstFew(rows, most = 3) {
-  const some = (rows || []).filter((one) => !one.doubt).slice(0, most);
-  if (!some.length) return "";
-  const names = [...new Set(some.map((one) => one.outlet).filter(Boolean))];
-  const tail = (rows || []).length > some.length
-    ? `⋯ 還有 ${(rows || []).length - some.length}` : "";
-  return `${names.join("、")}${tail ? "　" + tail : ""}`;
+/* Getting to a pile without scrolling past the others. The counts are on the
+   buttons, so it doubles as the summary of what has been gathered -- which is
+   the thing you actually came to the page to find out. */
+function jumpBar(pile) {
+  const got = pile.counts.got, want = pile.counts.want;
+  const piles = [
+    ["影片", `${got.videos}/${want.videos}`],
+    ["報導", `${got.reports}/${want.reports}`],
+    ["原始數據", `${got.data}`],
+    ...Object.values(pile.counts.pictures).map(
+      (spec) => [spec.label, `${spec.have}/${spec.want}`, spec.short]),
+    ["鄉民反應", `${voiceCount(pile)}`],
+    ["整理出的事實", `${(pile.facts || []).length}`],
+  ];
+  return `<div class="jump">${piles.map(([title, count, short]) => `
+    <button class="tiny${short ? " lacking" : ""}" data-jump="${escapeHTML(title)}">
+      ${escapeHTML(title)} <b>${escapeHTML(count)}</b></button>`).join("")}</div>`;
 }
 
-function fold(title, count, body, why, shut) {
-  const on = OPEN.has(title);
+/* Everything open, always. Folding was the wrong answer to a long page: a
+   pile you have to open is a pile you forget is there, and the point of
+   gathering is to see what you have. What was actually wanted is a way to get
+   to a section without scrolling past the others. */
+function fold(title, count, body, why) {
   return `
-    <section class="pile${on ? " on" : ""}">
-      <h3 class="fold" data-fold="${escapeHTML(title)}">
-        <span class="arrow">${on ? "▾" : "▸"}</span>
-        ${escapeHTML(title)} <span class="count">${escapeHTML(count)}</span>
-        ${why ? `<span class="hint">${escapeHTML(why)}</span>` : ""}
-        ${on ? "" : `<span class="shut">${escapeHTML(shut || "")}</span>`}
-      </h3>
-      <div class="folded${on ? " on" : ""}">${body}</div>
+    <section class="pile" id="pile-${escapeHTML(title)}">
+      <h3>${escapeHTML(title)} <span class="count">${escapeHTML(count)}</span>
+        ${why ? `<span class="hint">${escapeHTML(why)}</span>` : ""}</h3>
+      ${body}
     </section>`;
 }
 
