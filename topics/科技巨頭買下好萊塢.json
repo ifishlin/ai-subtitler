@@ -1,0 +1,828 @@
+{
+  "topic": "科技巨頭買下好萊塢",
+  "angle": "影響民眾生活",
+  "made": 1788094638,
+  "sources": {
+    "videos": [
+      {
+        "title": "What Makes Paramount Skydance's Deal For Warner Bros. Discovery So Unique",
+        "url": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "seconds": 515,
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "file": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.en-orig.vtt",
+        "size": 35153986
+      },
+      {
+        "title": "Larry Ellison Personally Backs Paramount's Bid for Warner",
+        "url": "https://www.youtube.com/watch?v=8rr4pKtsoNY",
+        "seconds": 225,
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "file": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.en-orig.vtt",
+        "size": 19087867
+      },
+      {
+        "title": "Paramount Skydance launches hostile bid for Warner Bros. Discovery",
+        "url": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
+        "seconds": 481,
+        "outlet": "Fox Business",
+        "lean": "right",
+        "file": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.en-orig.vtt",
+        "size": 37240477
+      },
+      {
+        "title": "A new 'AI actress' has Hollywood fuming",
+        "url": "https://www.youtube.com/watch?v=9XHCv0-BbY0",
+        "seconds": 202,
+        "outlet": "CNN",
+        "lean": "left",
+        "file": "assets/footage/科技巨頭買下好萊塢/9XHCv0-BbY0.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/9XHCv0-BbY0.en.vtt",
+        "size": 13182453
+      },
+      {
+        "title": "Who will win the Warner Bros battle - Netflix or Paramount? ",
+        "url": " The Take|https://www.youtube.com/watch?v=BqqbYmPaohQ",
+        "seconds": 1247,
+        "outlet": "Al Jazeera English",
+        "lean": "non-western"
+      },
+      {
+        "title": "Warner Bros favours Netflix offer over $108bn Paramount bid ",
+        "url": " BBC News|https://www.youtube.com/watch?v=3C3x-CFFgfc",
+        "seconds": 230,
+        "outlet": "BBC News",
+        "lean": "neutral"
+      }
+    ],
+    "reports": [
+      {
+        "title": "Big tech goes to Hollywood: is Silicon Valley ready for a silver-screen reckoning?",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "url": "https://www.theguardian.com/film/2026/aug/30/big-tech-hollywood-the-social-reckoning-artificial"
+      },
+      {
+        "title": "Judge puts temporary pause on Paramount-Warner Bros merger",
+        "outlet": "NBC News",
+        "lean": "centre-left",
+        "url": "https://www.nbcnews.com/business/media/judge-puts-temporary-pause-paramount-warner-bros-merger-rcna587804"
+      },
+      {
+        "title": "Paramount CEO David Ellison is at the final hurdle before buying WBD. So far, he can't clear it",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "url": "https://www.cnbc.com/2026/08/24/paramount-ceo-david-ellison-wbd-acquisition-final-hurdle.html"
+      },
+      {
+        "title": "David and Larry Ellison sued by Paramount investor alleging 'illegal' side deal with Donald Trump",
+        "outlet": "Variety",
+        "lean": "neutral",
+        "url": "https://variety.com/2026/film/news/david-larry-ellison-sued-paramount-side-deal-trump-warner-bros-1236812034/"
+      },
+      {
+        "title": "Paramount-Warner Bros. trial to start in March 2027 in blow to David Ellison's team",
+        "outlet": "The Hollywood Reporter",
+        "lean": "neutral",
+        "url": "https://www.hollywoodreporter.com/business/business-news/paramount-warner-bros-trial-march-2027-1236664236/"
+      },
+      {
+        "title": "Larry Ellison guarantees $40.4 billion in Paramount's hostile bid for Warner Bros. Discovery",
+        "outlet": "Variety",
+        "lean": "neutral",
+        "url": "https://au.variety.com/2025/tv/news/paramount-skydance-larry-ellison-irrevocable-personal-guarantee-warner-bros-discovery-31376"
+      }
+    ],
+    "images": [
+      {
+        "id": "7991489",
+        "term": "empty cinema seats",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7991489.jpg",
+        "caption": "Rows of empty red seats in a darkened movie theater, awaiting audience.",
+        "outlet": "Pexels",
+        "author": "Tima Miroshnichenko",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/ann-array-of-red-chairs-in-a-movie-theater-7991489/",
+        "look": 4038743703349620960,
+        "size": [
+          3936,
+          2624
+        ]
+      },
+      {
+        "id": "3709370",
+        "term": "empty cinema seats",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/3709370.jpg",
+        "caption": "An empty auditorium with wooden seats facing a blank theater screen.",
+        "outlet": "Pexels",
+        "author": "Adrien Olichon",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/brown-chairs-in-front-of-white-wall-3709370/",
+        "look": 65535,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "32731350",
+        "term": "empty cinema seats",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/32731350.jpg",
+        "caption": "Rows of modern blue theater seats in an empty auditorium, highlighting architectural design.",
+        "outlet": "Pexels",
+        "author": "Miff Ibra",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/modern-theater-seats-in-a-blue-auditorium-32731350/",
+        "look": 13770069219343269888,
+        "size": [
+          5884,
+          3923
+        ]
+      },
+      {
+        "id": "3653770",
+        "term": "film camera set",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/3653770.jpg",
+        "caption": "A close-up image of camera equipment alongside several rolls of 35mm film.",
+        "outlet": "Pexels",
+        "author": "Athena Sandrini",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/close-up-photo-of-camera-beside-films-3653770/",
+        "look": 2238014136947515327,
+        "size": [
+          5472,
+          3072
+        ]
+      },
+      {
+        "id": "11043433",
+        "term": "film camera set",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/11043433.jpg",
+        "caption": "Team of videographers setting up professional camera equipment in a studio environment.",
+        "outlet": "Pexels",
+        "author": "BSM Rental",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-man-holding-a-camera-11043433/",
+        "look": 1696783453586179,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "10395639",
+        "term": "film camera set",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/10395639.jpg",
+        "caption": "Close-up of a professional filmmaking camera setup on an outdoor set with blurred background.",
+        "outlet": "Pexels",
+        "author": "Syed Qaarif Andrabi",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/close-up-photo-of-black-camera-10395639/",
+        "look": 504403164229238655,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "1200450",
+        "term": "movie theatre marquee",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/1200450.jpg",
+        "caption": "Low-angle shot of a vintage movie theater sign in Bern, Switzerland with a clear blue sky.",
+        "outlet": "Pexels",
+        "author": "Louis",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/1-movie-2-signage-under-white-clouds-1200450/",
+        "look": 72342432502464319,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "32011978",
+        "term": "movie theatre marquee",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/32011978.jpg",
+        "caption": "Stanford Theatre sign promoting Audrey Hepburn Film Festival in Palo Alto, California.",
+        "outlet": "Pexels",
+        "author": "frank minjarez",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/audrey-hepburn-film-festival-sign-in-palo-alto-32011978/",
+        "look": 9294875520015826431,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "2923675",
+        "term": "movie theatre marquee",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/2923675.jpg",
+        "caption": "Exterior view of a brick theater showcasing current movie advertisements in an urban setting.",
+        "outlet": "Pexels",
+        "author": "Lisa Fotios",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/exterior-of-a-brick-wall-building-2923675/",
+        "look": 18446462601265476860,
+        "size": [
+          4200,
+          3064
+        ]
+      },
+      {
+        "id": "6077447",
+        "term": "courtroom gavel judge",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/6077447.jpg",
+        "caption": "Judge signing documents at desk with focus on gavel, representing law and justice.",
+        "outlet": "Pexels",
+        "author": "KATRIN  BOLOVTSOVA",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/judge-signing-on-the-papers-6077447/",
+        "look": 17940362877651124224,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "37732186",
+        "term": "courtroom gavel judge",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/37732186.jpg",
+        "caption": "Close-up image of a wooden gavel held by hand on a desk in a courtroom setting.",
+        "outlet": "Pexels",
+        "author": "SHOX ART",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/judge-s-wooden-gavel-on-desk-close-up-37732186/",
+        "look": 288256893666148159,
+        "size": [
+          5184,
+          3888
+        ]
+      },
+      {
+        "id": "34817076",
+        "term": "courtroom gavel judge",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/34817076.jpg",
+        "caption": "Female judge in a courtroom setting, focusing on legal documents with a gavel.",
+        "outlet": "Pexels",
+        "author": "khezez  | خزاز",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/judge-in-courtroom-making-a-ruling-34817076/",
+        "look": 6985354433263093992,
+        "size": [
+          9504,
+          5346
+        ]
+      },
+      {
+        "id": "37730212",
+        "term": "server room data centre",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/37730212.jpg",
+        "caption": "Close-up of server racks in a data center highlighting modern technology infrastructure.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/data-center-server-racks-with-active-equipment-37730212/",
+        "look": 3474588892269132832,
+        "size": [
+          4108,
+          2734
+        ]
+      },
+      {
+        "id": "17489151",
+        "term": "server room data centre",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/17489151.jpg",
+        "caption": "Close-up of tower servers in a data center with blue and red lighting.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/line-of-pc-towers-17489151/",
+        "look": 8025529350858828623,
+        "size": [
+          3872,
+          2592
+        ]
+      },
+      {
+        "id": "37730211",
+        "term": "server room data centre",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/37730211.jpg",
+        "caption": "Modern server rack with blue lighting in a secure data center environment.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/close-up-of-a-blue-server-rack-in-datacenter-37730211/",
+        "look": 1085102592571150087,
+        "size": [
+          4040,
+          2688
+        ]
+      },
+      {
+        "id": "7155738",
+        "term": "person watching tv sofa",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7155738.jpg",
+        "caption": "Bearded man in casual wear relaxing on a sofa, enjoying coffee while watching TV indoors.",
+        "outlet": "Pexels",
+        "author": "Gustavo Fring",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/man-sitting-on-couch-holding-a-remote-control-7155738/",
+        "look": 1152922662361599951,
+        "size": [
+          4000,
+          2666
+        ]
+      },
+      {
+        "id": "7283715",
+        "term": "person watching tv sofa",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7283715.jpg",
+        "caption": "Woman lounging comfortably on a sofa with a remote control, enjoying leisure time indoors.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/woman-in-black-top-lying-on-sofa-7283715/",
+        "look": 506100563700613119,
+        "size": [
+          6426,
+          4284
+        ]
+      },
+      {
+        "id": "3811867",
+        "term": "person watching tv sofa",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/3811867.jpg",
+        "caption": "Serious young male with long curly hair sitting with crossed legs on couch in living room and enjoying interesting movie while chilling at home during weekend",
+        "outlet": "Pexels",
+        "author": "Andrea Piacquadio",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/man-with-a-bowl-of-popcorn-watching-tv-at-home-3811867/",
+        "look": 8830939102460,
+        "size": [
+          7052,
+          4701
+        ]
+      },
+      {
+        "id": "7234386",
+        "term": "popcorn cinema screen",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7234386.jpg",
+        "caption": "A close-up view of popcorn in a themed bucket with movie bokeh background.",
+        "outlet": "Pexels",
+        "author": "Pavel Danilyuk",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/popcorn-in-a-blue-container-7234386/",
+        "look": 4331350172553009408,
+        "size": [
+          4740,
+          3164
+        ]
+      },
+      {
+        "id": "8263344",
+        "term": "popcorn cinema screen",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/8263344.jpg",
+        "caption": "A group of young adults enjoying a movie at the cinema, complete with popcorn and 3D glasses.",
+        "outlet": "Pexels",
+        "author": "cottonbro studio",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/people-at-the-movies-8263344/",
+        "look": 3463286214522050561,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "7234215",
+        "term": "popcorn cinema screen",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7234215.jpg",
+        "caption": "An empty cinema hall with black leather seats and a bucket of popcorn on an armrest.",
+        "outlet": "Pexels",
+        "author": "Pavel Danilyuk",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/empty-seats-in-movie-theater-7234215/",
+        "look": 9230153825598239715,
+        "size": [
+          4740,
+          3164
+        ]
+      },
+      {
+        "id": "36288084",
+        "term": "office tower glass night",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/36288084.jpg",
+        "caption": "A night view of an office building in Central Visayas, Philippines, showcasing illuminated office windows.",
+        "outlet": "Pexels",
+        "author": "Angelyn Sanjorjo",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/night-office-building-exterior-view-central-visayas-36288084/",
+        "look": 4503175758088306944,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "9740059",
+        "term": "office tower glass night",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/9740059.jpg",
+        "caption": "Vibrant cityscape featuring modern skyscrapers with illuminated windows at twilight.",
+        "outlet": "Pexels",
+        "author": "Jimmy Liao",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/high-rise-buildings-with-lights-9740059/",
+        "look": 868665030814395630,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "37418435",
+        "term": "office tower glass night",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/37418435.jpg",
+        "caption": "Nighttime view of a brightly lit office building's windows, showcasing interior activity.",
+        "outlet": "Pexels",
+        "author": "wal_ 172619",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/illuminated-office-building-at-night-37418435/",
+        "look": 35729484103448576,
+        "size": [
+          4051,
+          2591
+        ]
+      },
+      {
+        "id": "5826828",
+        "term": "film reel projector",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/5826828.jpg",
+        "caption": "Black and white image of a retro film projector showcasing cinematographic equipment.",
+        "outlet": "Pexels",
+        "author": "Nicolette  Villavicencio",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/grayscale-photo-of-film-reels-5826828/",
+        "look": 2025524987144440860,
+        "size": [
+          4846,
+          3231
+        ]
+      },
+      {
+        "id": "19374140",
+        "term": "film reel projector",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/19374140.jpg",
+        "caption": "A cozy retro cinema room showcasing vintage film projectors and comfortable seating.",
+        "outlet": "Pexels",
+        "author": "Sami TÜRK",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/sofas-and-vintage-film-projectors-in-a-room-19374140/",
+        "look": 4530547713376190464,
+        "size": [
+          7878,
+          5255
+        ]
+      },
+      {
+        "id": "5824580",
+        "term": "film reel projector",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/5824580.jpg",
+        "caption": "Retro film projector placed on glass shelf near brick wall in cozy apartment",
+        "outlet": "Pexels",
+        "author": "Charlotte May",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/vintage-film-projector-placed-on-shelf-in-room-5824580/",
+        "look": 18392612672539204670,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "Larry_Ellison_picture_(cropped).png",
+        "term": "Larry Ellison",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Larry_Ellison_picture_(cropped).png.jpg",
+        "caption": "Lawrence Joseph Ellison is an American businessman. He co-founded the software company Oracle Corporation, and was its CEO from 1977 to 2014. He now serves as its CTO and executive chairman. According to Forbes, as of early 2026, Ellison's estimated net worth is $201–203 billion, making him the worl",
+        "outlet": "維基百科",
+        "author": "Oracle PR Hartmann Studios",
+        "credit": "Oracle PR Hartmann Studios／CC BY 2.0",
+        "answers": 0.5,
+        "page": "https://commons.wikimedia.org/wiki/File:Larry_Ellison_picture_(cropped).png",
+        "look": 27060922417675512,
+        "size": [
+          1288,
+          1717
+        ]
+      },
+      {
+        "id": "Hollywood_sign_(8485145044).jpg",
+        "term": "Hollywood Sign",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Hollywood_sign_(8485145044).jpg.jpg",
+        "caption": "The Hollywood Sign is an American landmark and cultural icon overlooking Hollywood, Los Angeles. Originally the Hollywoodland Sign, it is on Mount Lee, above Beachwood Canyon in the Santa Monica Mountains. It was originally erected in 1923 as a temporary advertisement for a local real estate develop",
+        "outlet": "維基百科",
+        "author": "Gnaphron",
+        "credit": "Gnaphron／CC BY-SA 2.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Hollywood_sign_(8485145044).jpg",
+        "look": 547608330239,
+        "size": [
+          3888,
+          2592
+        ]
+      },
+      {
+        "id": "Gate_4_Warner_Bros._Studios.jpg",
+        "term": "Warner Bros. Studios, Burbank",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Gate_4_Warner_Bros._Studios.jpg.jpg",
+        "caption": "Warner Bros. Studios Burbank, formerly known as First National Studio (1926–1929), Warner Bros.-Seven Arts Studios (1967–1970) and The Burbank Studios (1972–1990), is a major filmmaking facility owned and run by Warner Bros. Entertainment in Burbank, California, United States. First National Picture",
+        "outlet": "維基百科",
+        "author": "Coolcaesar",
+        "credit": "Coolcaesar／CC BY-SA 4.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Gate_4_Warner_Bros._Studios.jpg",
+        "look": 18376938283528486911,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "Meeting_with_Masayoshi_Son_and_Sam_Altman_(February_3,_2025)_(3x4_cropped_on_Altman).jpg",
+        "term": "Sam Altman",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Meeting_with_Masayoshi_Son_and_Sam_Altman_(February_3,_2025)_(3x4_cropped_on_Altman).jpg.jpg",
+        "caption": "Samuel Harris Altman is an American entrepreneur and investor who has been the chief executive officer (CEO) of the artificial intelligence company OpenAI since 2019.",
+        "outlet": "維基百科",
+        "author": "首相官邸ホームページ / Office of the Prime Minister of Japan Official Website",
+        "credit": "首相官邸ホームページ / Office of the Prime Minister of Japan Official Website／CC BY 4.0",
+        "answers": 0.5,
+        "page": "https://commons.wikimedia.org/wiki/File:Meeting_with_Masayoshi_Son_and_Sam_Altman_(February_3,_2025)_(3x4_cropped_on_Altman).jpg",
+        "look": 587923126662849527,
+        "size": [
+          390,
+          520
+        ]
+      },
+      {
+        "id": "F20250904AH-2824_(54778373111)_(3x4_cropped_on_Zuckerberg_following_the_rule_of_thirds).jpg",
+        "term": "Mark Zuckerberg",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/F20250904AH-2824_(54778373111)_(3x4_cropped_on_Zuckerberg_following_the_rule_of_thirds).jpg.jpg",
+        "caption": "Mark Elliot Zuckerberg is an American businessman and programmer who co-founded the social media service Facebook and its parent company Meta Platforms. He is its chairman, chief executive officer (CEO), and controlling shareholder.",
+        "outlet": "維基百科",
+        "author": "The White House",
+        "credit": "The White House／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:F20250904AH-2824_(54778373111)_(3x4_cropped_on_Zuckerberg_following_the_rule_of_thirds).jpg",
+        "look": 1736164924537622270,
+        "size": [
+          374,
+          499
+        ]
+      },
+      {
+        "id": "frame_viwG_sFgu_0_162",
+        "kind": "frame",
+        "term": "CNBC 162s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_162.jpg",
+        "caption": "Warner Bros. Discovery board just said,",
+        "said": "Warner Bros. Discovery board just said,",
+        "at": 162.2,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 72057594029408256
+      },
+      {
+        "id": "frame_viwG_sFgu_0_482",
+        "kind": "frame",
+        "term": "CNBC 482s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_482.jpg",
+        "caption": "Warner Bros. Discovery, would be bad for",
+        "said": "Warner Bros. Discovery, would be bad for",
+        "at": 482.1,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 17877210261964845029
+      },
+      {
+        "id": "frame_viwG_sFgu_0_11",
+        "kind": "frame",
+        "term": "CNBC 11s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_11.jpg",
+        "caption": ">> Is there a point at which David Ellison",
+        "said": ">> Is there a point at which David Ellison",
+        "at": 11.72,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 71201967686082
+      },
+      {
+        "id": "frame_viwG_sFgu_0_64",
+        "kind": "frame",
+        "term": "CNBC 64s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_64.jpg",
+        "caption": ">> June 2025, Warner Brothers Discovery",
+        "said": ">> June 2025, Warner Brothers Discovery",
+        "at": 64.58,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 2305892732214439919
+      },
+      {
+        "id": "frame_8rr4pKtsoNY_2",
+        "kind": "frame",
+        "term": "Bloomberg 2s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_8rr4pKtsoNY_2.jpg",
+        "caption": "offer for Warner Brothers today. Larry",
+        "said": "offer for Warner Brothers today. Larry",
+        "at": 2.68,
+        "source": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=8rr4pKtsoNY",
+        "look": 18337814379129931532
+      },
+      {
+        "id": "frame_mEy6dWIrJd0_86",
+        "kind": "frame",
+        "term": "Fox Business 86s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_86.jpg",
+        "caption": "this hostile takeover bid from Paramount",
+        "said": "this hostile takeover bid from Paramount",
+        "at": 86.64,
+        "source": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
+        "look": 1387107589476614399
+      },
+      {
+        "id": "frame_mEy6dWIrJd0_4",
+        "kind": "frame",
+        "term": "Fox Business 4s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_4.jpg",
+        "caption": "battle over Warner Brothers Discovery.",
+        "said": "battle over Warner Brothers Discovery.",
+        "at": 4.84,
+        "source": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
+        "look": 233908733143875390
+      },
+      {
+        "id": "frame_9XHCv0-BbY0_99",
+        "kind": "frame",
+        "term": "CNN 99s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_9XHCv0-BbY0_99.jpg",
+        "caption": "that Hollywood talent",
+        "said": "that Hollywood talent",
+        "at": 99.65,
+        "source": "assets/footage/科技巨頭買下好萊塢/9XHCv0-BbY0.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=9XHCv0-BbY0",
+        "look": 16429061900373124288
+      }
+    ],
+    "data": []
+  },
+  "facts": [
+    {
+      "say": "《Artificial》拍完後被亞馬遜 MGM 下架，2026 年 6 月",
+      "from": "The Guardian"
+    },
+    {
+      "say": "理由是「換一家發行會更好」",
+      "from": "The Guardian"
+    },
+    {
+      "say": "幾個月前亞馬遜與 OpenAI 簽了 500 億美元策略合作",
+      "from": "The Guardian"
+    },
+    {
+      "say": "獨立片商 Neon 接手，2027 年初上映",
+      "from": "The Guardian"
+    },
+    {
+      "say": "迪士尼去年對 OpenAI 投資 10 億美元並簽授權",
+      "from": "The Guardian"
+    },
+    {
+      "say": "A24 與 Google DeepMind 簽 7500 萬美元研究合作",
+      "from": "The Guardian"
+    },
+    {
+      "say": "Netflix 2024 年宣布的《Thumblite》始終沒有開拍",
+      "from": "The Guardian"
+    },
+    {
+      "say": "派拉蒙以約 1110 億美元敵意併購華納兄弟",
+      "from": "NBC News"
+    },
+    {
+      "say": "12 個州的檢察長聯手，法官下暫時禁制令",
+      "from": "NBC News"
+    },
+    {
+      "say": "併成之後，兩家片廠、兩個串流、兩家新聞台歸同一個人",
+      "from": "NBC News"
+    },
+    {
+      "say": "Larry Ellison 個人擔保 404 億美元",
+      "from": "Variety"
+    },
+    {
+      "say": "股東告 Ellison 父子與川普做了「非法的檯面下交易」換取核准",
+      "from": "Variety"
+    },
+    {
+      "say": "審判排到 2027 年 3 月",
+      "from": "The Hollywood Reporter"
+    },
+    {
+      "say": "反方：支持者說合併才擋得住 Netflix 與科技業",
+      "from": "Fox Business"
+    }
+  ],
+  "voices": [],
+  "scripts": []
+}

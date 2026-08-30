@@ -1,0 +1,465 @@
+{
+  "topic": "科技巨頭買下好萊塢",
+  "view": "大家在吵 AI 會不會取代演員。沒有人在吵誰決定哪些故事拍得出來——而併購案成了，兩家片廠、兩個串流、兩家新聞台會歸同一個人。",
+  "tone": "克制",
+  "for": "付串流訂閱、看新聞的人",
+  "narration": false,
+  "lines": [
+    {
+      "say": "有一部電影拍完了。",
+      "role": "起",
+      "show": "示意：拍片現場的攝影機",
+      "pic": "assets/photos/科技巨頭買下好萊塢/10395639.jpg",
+      "fit": "ground",
+      "tone": "cool",
+      "seen": true,
+      "from": "The Guardian",
+      "seconds": 1.96
+    },
+    {
+      "say": "拍的是 OpenAI 的故事。",
+      "role": "起",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "拍的是\nOpenAI 的故事",
+        "under": "《Artificial》",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 2.7
+    },
+    {
+      "say": "然後它被下架了。",
+      "role": "起",
+      "show": "自製：劃掉舊的換新的",
+      "card": {
+        "kind": "swap",
+        "title": "2026 年 6 月",
+        "was": "要上映",
+        "now": "被下架",
+        "colour": "#ff6b52",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 1.9
+    },
+    {
+      "say": "出資方是亞馬遜。",
+      "role": "起",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "下架它的是\n亞馬遜 MGM",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 1.9
+    },
+    {
+      "say": "大家吵的是另一件事。",
+      "role": "承",
+      "show": "影片：CNN 好萊塢對「AI 女演員」的反彈",
+      "clip": {
+        "file": "assets/footage/科技巨頭買下好萊塢/9XHCv0-BbY0.mp4",
+        "start": 98.9,
+        "end": 104.9
+      },
+      "seconds": 6.0,
+      "seen": true,
+      "from": "CNN"
+    },
+    {
+      "say": "AI 會不會取代演員。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "AI 會不會\n取代演員",
+        "ghost": "AI"
+      },
+      "from": "CNN",
+      "seconds": 2.04
+    },
+    {
+      "say": "這個問題很合理。",
+      "role": "承",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "問得很合理"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "而且答案大概是會。",
+      "role": "承",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "答案大概是會"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "但那部片不是被 AI 換掉的。",
+      "role": "轉",
+      "show": "自製：劃掉舊的換新的",
+      "card": {
+        "kind": "swap",
+        "title": "被換掉的不是",
+        "was": "演員",
+        "now": "整部片",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 2.7
+    },
+    {
+      "say": "它是被出資方換掉的。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "是出資方\n換掉的",
+        "tone": "light"
+      },
+      "from": "The Guardian",
+      "seconds": 2.04
+    },
+    {
+      "say": "而亞馬遜跟 OpenAI 有合作。",
+      "role": "轉",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "亞馬遜與 OpenAI 的策略合作",
+        "value": "500 億",
+        "under": "美元",
+        "colour": "#b8360a",
+        "tone": "light",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 3.13
+    },
+    {
+      "say": "迪士尼也投了十億。",
+      "role": "轉",
+      "show": "自製：清單卡",
+      "card": {
+        "kind": "stack",
+        "title": "還有誰簽了",
+        "items": [
+          "迪士尼投 OpenAI 10 億",
+          "A24 與 DeepMind 7500 萬"
+        ],
+        "tone": "light",
+        "note": "資料：The Guardian"
+      },
+      "from": "The Guardian",
+      "seconds": 1.9
+    },
+    {
+      "say": "片廠都在跟 AI 公司簽約。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "The Guardian",
+      "card": {
+        "kind": "word",
+        "title": "片廠都在\n跟 AI 公司簽約",
+        "tone": "light"
+      },
+      "seconds": 2.48
+    },
+    {
+      "say": "簽約的人也決定拍什麼。",
+      "role": "轉",
+      "show": "自製：一條線分岔成兩條",
+      "from": "觀點",
+      "card": {
+        "kind": "split",
+        "title": "同一批人手上有兩件事",
+        "branches": [
+          "跟誰\n合作",
+          "拍什麼\n不拍什麼"
+        ],
+        "tone": "light"
+      },
+      "seconds": 2.26
+    },
+    {
+      "say": "而最大的一筆在法院裡。",
+      "role": "轉",
+      "show": "示意：法槌握在手上",
+      "pic": "assets/photos/科技巨頭買下好萊塢/37732186.jpg",
+      "fit": "ground",
+      "tone": "light",
+      "seen": true,
+      "from": "NBC News",
+      "seconds": 2.39
+    },
+    {
+      "say": "派拉蒙要買下華納。",
+      "role": "轉",
+      "show": "影片：CNBC 華納與 Netflix",
+      "clip": {
+        "file": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "start": 161.4,
+        "end": 167.5
+      },
+      "seconds": 6.1,
+      "seen": true,
+      "from": "CNBC"
+    },
+    {
+      "say": "一千一百一十億美元。",
+      "role": "轉",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "title": "敵意併購的金額",
+        "value": "1110 億",
+        "under": "美元",
+        "colour": "#b8360a",
+        "tone": "light",
+        "note": "資料：NBC News"
+      },
+      "from": "NBC News",
+      "seconds": 2.04
+    },
+    {
+      "say": "一個人個人擔保四百億。",
+      "role": "轉",
+      "show": "影片：Bloomberg 艾利森個人擔保",
+      "clip": {
+        "file": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
+        "start": 66.6,
+        "end": 72.9
+      },
+      "seconds": 6.3,
+      "seen": true,
+      "from": "Bloomberg"
+    },
+    {
+      "say": "十二個州的檢察長告了。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "12 個州\n的檢察長",
+        "under": "聯手提告",
+        "tone": "light",
+        "note": "資料：NBC News"
+      },
+      "from": "NBC News",
+      "seconds": 2.26
+    },
+    {
+      "say": "法官下了暫時禁制令。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "法官擋下來了",
+        "under": "暫時禁制令",
+        "tone": "light",
+        "note": "資料：NBC News"
+      },
+      "from": "NBC News",
+      "seconds": 2.04
+    },
+    {
+      "say": "股東告他們跟白宮做交易。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "股東告他們\n跟白宮做交易",
+        "tone": "light",
+        "colour": "#b8360a",
+        "note": "資料：Variety"
+      },
+      "from": "Variety",
+      "seconds": 2.48
+    },
+    {
+      "say": "審判排到二〇二七年三月。",
+      "role": "轉",
+      "show": "自製：一段年數畫成圈",
+      "card": {
+        "kind": "clock",
+        "title": "開庭時間",
+        "value": "2027",
+        "part": 0.6,
+        "under": "三月",
+        "tone": "light",
+        "note": "資料：THR"
+      },
+      "from": "The Hollywood Reporter",
+      "seconds": 2.48
+    },
+    {
+      "say": "在那之前什麼都不會動。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "The Hollywood Reporter",
+      "card": {
+        "kind": "word",
+        "title": "在那之前\n什麼都不會動",
+        "tone": "light"
+      },
+      "seconds": 2.26
+    },
+    {
+      "say": "併成了會變成什麼？",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "併成了\n會怎樣",
+        "tone": "warm",
+        "ghost": "？"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "兩家片廠。",
+      "role": "合",
+      "show": "示意：華納片廠的門口",
+      "pic": "assets/photos/科技巨頭買下好萊塢/Gate_4_Warner_Bros._Studios.jpg.jpg",
+      "fit": "ground",
+      "tone": "warm",
+      "seen": true,
+      "from": "NBC News",
+      "seconds": 1.9
+    },
+    {
+      "say": "兩個串流平台。",
+      "role": "合",
+      "show": "自製：同一條線上的三個點",
+      "card": {
+        "kind": "chain",
+        "title": "歸同一個人的",
+        "points": [
+          "片廠",
+          "串流",
+          "新聞台"
+        ],
+        "tone": "warm",
+        "note": "資料：NBC News"
+      },
+      "from": "NBC News",
+      "seconds": 1.9
+    },
+    {
+      "say": "還有兩家新聞台。",
+      "role": "合",
+      "show": "自製：圈起來的四個字",
+      "card": {
+        "kind": "ring",
+        "title": "最後那一項是",
+        "value": "兩家新聞台",
+        "tone": "warm",
+        "note": "資料：NBC News"
+      },
+      "from": "NBC News",
+      "seconds": 1.9
+    },
+    {
+      "say": "那就不是電影的事了。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "那就不是\n電影的事了",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.04
+    },
+    {
+      "say": "你付的是訂閱費。",
+      "role": "合",
+      "show": "示意：有人拿著遙控器在沙發上",
+      "pic": "assets/photos/科技巨頭買下好萊塢/7155738.jpg",
+      "fit": "ground",
+      "tone": "warm",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "看的是他們挑過的。",
+      "role": "合",
+      "show": "自製：字卡",
+      "card": {
+        "kind": "word",
+        "title": "看的是\n他們挑過的",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "挑掉的那些沒有新聞。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "挑掉的那些\n沒有新聞",
+        "tone": "warm"
+      },
+      "seconds": 2.04
+    },
+    {
+      "say": "Netflix 那部就這樣消失了。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "The Guardian",
+      "card": {
+        "kind": "word",
+        "title": "宣布了，然後沒了",
+        "under": "《Thumblite》，2024",
+        "tone": "warm",
+        "note": "資料：The Guardian"
+      },
+      "seconds": 3.35
+    },
+    {
+      "say": "沒拍的你不會知道。",
+      "role": "合",
+      "show": "示意：空的戲院座位",
+      "pic": "assets/photos/科技巨頭買下好萊塢/7991489.jpg",
+      "fit": "fill",
+      "tone": "warm",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "整件事是這樣的。",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "seconds": 6.0,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "ghost": "片",
+        "points": [
+          "一部拍 OpenAI 的電影，拍完後被下架",
+          "下架它的出資方跟 OpenAI 有 500 億合作",
+          "1110 億的併購案卡在法院，12 州提告",
+          "併成了，兩家片廠兩個串流兩家新聞台歸一人"
+        ],
+        "title": "大家在問 AI 會不會取代演員\n沒有人在問誰批准開拍",
+        "under": "科技巨頭買下好萊塢"
+      },
+      "from": "觀點"
+    }
+  ]
+}
