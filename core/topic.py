@@ -25,7 +25,11 @@ TOPIC_DIR = ROOT / "topics"
 MEDIA = ROOT / "assets" / "sources" / "media.json"
 SAFE_NAME = re.compile(r"[\w一-鿿][\w一-鿿 -]{0,63}")
 
-WANT = {"videos": 5, "reports": 5, "images": 15}
+from core import rules as rules_module
+
+WANT = {"videos": rules_module.at("collect.videos", 5),
+        "reports": rules_module.at("collect.reports", 5),
+        "images": rules_module.at("collect.images", 15)}
 
 # Three kinds of picture, five of each, because they cover different holes and
 # one cannot stand in for another.

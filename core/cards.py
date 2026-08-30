@@ -41,43 +41,44 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parent.parent
 CARD_DIR = ROOT / "assets" / "cards"
 
-W, H, FPS = 1080, 1920, 30
+from core import rules as rules_module
+
+W = rules_module.look("frame.width", 1080)
+H = rules_module.look("frame.height", 1920)
+FPS = rules_module.look("frame.fps", 30)
 # The caption sits on a fixed bottom line and grows upward from it, so a
 # three-row line and a one-row line end in the same place. Nothing drawn may
 # reach the tallest case, or the words sit on the picture explaining them.
-CAPTION_BOTTOM = 1700
-CAPTION_TOP = CAPTION_BOTTOM - 3 * 92
+CAPTION_BOTTOM = rules_module.look("frame.caption_bottom", 1700)
+CAPTION_TOP = CAPTION_BOTTOM - rules_module.at("caption.most_rows", 3) * \
+    rules_module.look("frame.row_step", 92)
 # Where the source line goes. It used to sit just above the caption, in the
 # middle of the ghosted word, which read as the big letter being cut off.
 # Above the card instead: nothing else is up there.
-NOTE_TOP = 300
+NOTE_TOP = rules_module.look("frame.note_top", 300)
 # Where a card's subject begins: the line the kept picture is placed on in
 # core/shorts.py, so a card and a photograph put their subject in the same
 # part of the frame and the cut between them does not jump.
-TOP = 470
-FONT = "/System/Library/Fonts/PingFang.ttc"
+TOP = rules_module.look("frame.card_top", 470)
+FONT = rules_module.look("font", "/System/Library/Fonts/PingFang.ttc")
 
 
 # --- palettes ---------------------------------------------------------------
 # The tone turns with the argument rather than with taste. Twenty-nine cards on
 # one ground read as one long slide; changing at the turn makes the structure
 # visible without a word being spent on it.
-TONES = {
-    "cool": {"top": (13, 27, 42), "bottom": (18, 41, 61), "ink": "#ffffff",
-             "lead": "#ffd76a", "dim": "#9db4c6", "rule": "#22405c",
-             "hot": "#ff6b52", "cold": "#4f8ef0", "ghost": (90, 130, 165, 26)},
-    "light": {"top": (242, 237, 227), "bottom": (228, 219, 205),
-              "ink": "#16232e", "lead": "#b8360a", "dim": "#5f7080",
-              "rule": "#cbbfae", "hot": "#b8360a", "cold": "#1f5f8f",
-              "ghost": (22, 35, 46, 20)},
-    "warm": {"top": (36, 18, 14), "bottom": (54, 26, 19), "ink": "#fff3e8",
-             "lead": "#ffb347", "dim": "#c39b86", "rule": "#5c3325",
-             "hot": "#ff7a4d", "cold": "#7fb3c9", "ghost": (200, 120, 70, 24)},
-}
-
-
 def tone_of(spec: dict[str, Any]) -> dict[str, Any]:
-    return TONES.get(str(spec.get("tone") or "cool"), TONES["cool"])
+    """This card's palette, from assets/theme.json.
+
+    Read every time rather than captured at import, so changing a colour in the
+    file changes the next card drawn -- which is the whole reason for it being
+    a file. Lists become tuples because Pillow wants a tuple for a colour and
+    JSON has no such thing.
+    """
+    tones = rules_module.look("tones", {})
+    found = tones.get(str(spec.get("tone") or "cool")) or tones.get("cool") or {}
+    return {key: tuple(value) if isinstance(value, list) else value
+            for key, value in found.items() if key != "why"}
 
 
 def face(size: int, bold: bool = True) -> ImageFont.FreeTypeFont:

@@ -201,6 +201,40 @@ class Picture:
     licence: str = ""
 
 
+WORD = re.compile(r"[A-Za-z][A-Za-z'-]+")
+
+
+def answers(term: str, caption: str) -> float:
+    """How much of the search term the picture's own caption actually contains.
+
+    Not a filter, and it cannot be one. `electricity bill` returned a fuse box
+    because a stock library matches word by word and the caption said
+    "billing"; whole-word matching rejects that, which is right -- and rejects
+    the correct picture too, whose caption reads "a five dollar bill and
+    receipts" and never says electricity. There is no string test that keeps
+    one and drops the other.
+
+    Matching is by prefix, because exact words are useless here: `meter`
+    against "meters" and `electric` against "Electrical" are both the same
+    word and both fail a whole-word test, which scored every correct picture
+    zero along with the wrong ones.
+
+    What is left catches only a total miss -- a caption about something else
+    entirely. It does not catch the fuse box, which scores exactly what the
+    right picture scores. That is the honest limit of a string test, and the
+    reason `seen` exists: the page sorts the doubtful to the front, and
+    whether the picture shows the thing stays with something that can see it.
+    """
+    wanted = {word.lower() for word in WORD.findall(term) if len(word) > 2}
+    if not wanted:
+        return 1.0
+    have = {word.lower() for word in WORD.findall(caption or "")}
+    hit = sum(1 for word in wanted
+              if any(word.startswith(other) or other.startswith(word)
+                     for other in have if min(len(word), len(other)) >= 4))
+    return round(hit / len(wanted), 2)
+
+
 def search_photos(query: str, count: int = 12, least_wide: int = 1200
                   ) -> list[Picture]:
     """Photographs, not footage. A script wants more of these than it will use:

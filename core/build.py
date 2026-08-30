@@ -36,10 +36,12 @@ W, H, FPS = shorts_module.WIDTH, shorts_module.HEIGHT, shorts_module.FPS
 # Anchored at the top, a three-row line reached 276 pixels further down than a
 # one-row line and landed under YouTube's own bottom furniture; anchored here,
 # every line ends in the same place and the room above is the picture's.
-CAPTION_BOTTOM = 1700
-CAPTION_SIZE = 64
-ROW_STEP = 92
-FONT = "/System/Library/Fonts/PingFang.ttc"
+from core import rules as rules_module
+
+CAPTION_BOTTOM = rules_module.look("frame.caption_bottom", 1700)
+CAPTION_SIZE = rules_module.look("frame.caption_size", 64)
+ROW_STEP = rules_module.look("frame.row_step", 92)
+FONT = rules_module.look("font", "/System/Library/Fonts/PingFang.ttc")
 
 
 def caption_layer(rows: list[str]) -> Image.Image:
@@ -78,16 +80,49 @@ def placed_size(pic: Path) -> tuple[int, int]:
     return W, max(2, round(W * high / max(1, wide)) // 2 * 2)
 
 
-def _still(pic: Path, seconds: float, target: Path, overlay: Path) -> Path:
-    """A photograph, held, pushed in slowly, over a blurred enlargement of
-    itself so the tall frame is filled rather than letterboxed."""
+def _ground_colour(tone: str) -> str:
+    """The flat colour behind a photograph, taken from the same palette the
+    cards use, so a still and the card before it belong to one film."""
+    palette = cards_module.tone_of({"tone": tone})
+    red, green, blue = palette.get("bottom", (13, 27, 42))
+    return f"0x{red:02x}{green:02x}{blue:02x}"
+
+
+def _still(pic: Path, seconds: float, target: Path, overlay: Path,
+           fit: str = "blur", tone: str = "cool") -> Path:
+    """A photograph, held, pushed in slowly, standing in the tall frame.
+
+    A landscape picture in a 9:16 frame always leaves room, and how that room
+    is filled is a judgement about the picture rather than a default:
+
+        fill    crop to the frame. The strongest, and it throws away two
+                thirds of the width -- right when the subject is upright (a
+                pylon, a person, one object), wrong for a wide scene
+        ground  the palette colour of this part of the film behind it, so
+                stills and cards look like one thing rather than cards with
+                photographs pasted on
+        blur    a blurred enlargement of the picture itself. Never wrong,
+                which is why it was the only option, and dull for the same
+                reason: every shot in the film gets the same treatment
+    """
     size = placed_size(pic)
-    graph = (
-        f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
-        f"crop={W}:{H},boxblur=44:3,eq=brightness=-0.16[bg];"
-        f"[0:v]{shorts_module._push_filter(seconds, size)}[fg];"
-        f"[bg][fg]overlay=(W-w)/2:{shorts_module.PICTURE_TOP}[under];"
-        f"[under][1:v]overlay=0:0,fps={FPS}[v]")
+    if fit == "fill":
+        # Cropping to the whole frame means the push has to happen at frame
+        # size too, or the picture is scaled twice and softens.
+        front = (f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                 f"crop={W}:{H},{shorts_module._push_filter(seconds, (W, H))}[fg]")
+        graph = f"{front};[fg][1:v]overlay=0:0,fps={FPS}[v]"
+    else:
+        if fit == "ground":
+            back = (f"color=c={_ground_colour(tone)}:s={W}x{H}:"
+                    f"d={seconds:.2f}:r={FPS}[bg]")
+        else:
+            back = (f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                    f"crop={W}:{H},boxblur=44:3,eq=brightness=-0.16[bg]")
+        graph = (
+            f"{back};[0:v]{shorts_module._push_filter(seconds, size)}[fg];"
+            f"[bg][fg]overlay=(W-w)/2:{shorts_module.PICTURE_TOP}[under];"
+            f"[under][1:v]overlay=0:0,fps={FPS}[v]")
     subprocess.run(
         ["ffmpeg", "-v", "error", "-loop", "1", "-i", str(pic),
          "-i", str(overlay), "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
@@ -167,7 +202,10 @@ def build(name: str, target: Path | None = None,
                     line["clip"]["end"], seconds, piece, overlay=plate,
                     credit=f"畫面來源：{who}" if who else "")
             elif line.get("pic"):
-                _still(ROOT / line["pic"], seconds, piece, plate)
+                _still(ROOT / line["pic"], seconds, piece, plate,
+                       fit=line.get("fit")
+                           or rules_module.look("still_fit.default", "blur"),
+                       tone=line.get("tone") or "cool")
             else:
                 _card(line["card"], seconds, piece, plate)
         pieces.append(piece)

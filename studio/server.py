@@ -641,6 +641,9 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 # rather than being looked up again later.
                 "credit": ("" if where == "stock" else
                            f"{picture.author}／{picture.licence or '見檔案頁'}"),
+                # How much of what we asked for the picture's own caption
+                # actually says. Recorded now, while both halves are in hand.
+                "answers": stock_module.answers(term, picture.about or ""),
                 "page": picture.page, "look": mark,
                 "size": [picture.width, picture.height]})
             seen.add(picture.id)
@@ -767,8 +770,6 @@ def get_script(name: str) -> dict[str, Any]:
             shot = footage.get(line["clip"]["file"], {})
             line["outlet"] = shot.get("outlet", "")
             line["credit"] = f"畫面來源：{shot.get('outlet', '')}"
-    measured["rights"] = script_module.rights(found, known, measured)
-
     # Cards are drawn on the way out, so the page shows the actual shot rather
     # than the sentence describing it. Rendering is cached on the spec's own
     # hash: an edited card gets a new file, an unchanged one is not redrawn.

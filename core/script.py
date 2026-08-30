@@ -26,8 +26,16 @@ SAFE_NAME = re.compile(r"[\w一-鿿][\w一-鿿 -]{0,63}")
 
 # Measured on news-paced Mandarin. Used to turn a script into seconds before
 # anything is recorded, so "90 seconds" is arithmetic rather than a hope.
-PER_SECOND = 4.5
-LIMIT = 90.0
+#
+# These read from assets/rules.json rather than being written here, because
+# every one of them was also written into a prompt in prose and the two copies
+# drift apart without anything noticing.
+from core import rules as rules_module
+
+PER_SECOND = rules_module.at("pace.spoken_per_second", 4.5)
+READ_PER_SECOND = rules_module.at("pace.read_per_second", 4.6)
+LEAST_SECONDS = rules_module.at("pace.least_seconds", 1.9)
+LIMIT = rules_module.at("length.limit_seconds", 90.0)
 
 
 def spoken_length(text: str) -> int:
@@ -45,9 +53,9 @@ def line_seconds(line: dict[str, Any]) -> float:
     return round(spoken_length(line.get("say", "")) / PER_SECOND, 2)
 
 
-REAL_AIM = 0.25          # photographs and footage, as a share of the running time
-REAL_MOST = 0.35         # above this the video starts reading as someone else's
-CLIP_LEAST = 0.5         # of that borrowed time, how much has to move
+REAL_AIM = rules_module.at("borrowed.aim", 0.25)
+REAL_MOST = rules_module.at("borrowed.most", 0.35)
+CLIP_LEAST = rules_module.at("borrowed.clip_least", 0.5)
 DRAWN = "自製"
 
 
@@ -84,6 +92,28 @@ def is_real(show: str | None) -> bool:
     return bool(show) and not show.strip().startswith(DRAWN)
 
 
+def gathered(script: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """What the topic knows about this script's pictures and footage.
+
+    Here rather than in whoever happens to be calling. The credit line went
+    missing from a finished film because this join lived in the web handler
+    only, so the builder had no way to know which channel a file came from and
+    passed an empty string; the check that would have caught it could not run
+    either, for the same reason. A check that depends on the caller
+    remembering to supply its evidence is a check that will not run on the day
+    it matters.
+    """
+    from core import topic as topic_module
+    try:
+        pile = topic_module.load(script.get("topic", ""))
+    except (ValueError, FileNotFoundError):
+        return {}, {}
+    return ({item["file"]: item for item in pile["sources"]["images"]
+             if item.get("file")},
+            {item["file"]: item for item in pile["sources"]["videos"]
+             if item.get("file")})
+
+
 def measure(script: dict[str, Any]) -> dict[str, Any]:
     """The script's own arithmetic: length, and whether it fits."""
     lines = script.get("lines") or []
@@ -114,7 +144,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
         where = min(2, int(item["at"] / max(clock, 1) * 3))
         thirds[where] += 1
     moving = sum(item["seconds"] for item in lifted if is_clip(item))
-    return {"lines": laid, "seconds": round(clock, 2), "characters": said,
+    out = {"lines": laid, "seconds": round(clock, 2), "characters": said,
             "over": round(max(0.0, clock - LIMIT), 2), "unsourced": unsourced,
             "opinion": opinion,
             "borrowed": round(borrowed, 2),
@@ -126,11 +156,16 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "still_enough": borrowed > 0 and moving >= borrowed * CLIP_LEAST,
             "unpicked": missing_pictures(script),
             "unchecked": unchecked(script),
-            "undrawn": undrawn(script)}
+            "undrawn": undrawn(script),
+            "uncredited": uncredited(script, *gathered(script)),
+            "shapeless": []}
+    out["shapeless"] = structure(script, out)
+    out["rights"] = rights(script, gathered(script)[0], out)
+    return out
 
 
-PER_ROW = 13        # characters that fit across a 1080-wide frame at 64px
-MOST_ROWS = 3
+PER_ROW = rules_module.at("caption.per_row", 13)
+MOST_ROWS = rules_module.at("caption.most_rows", 3)
 
 
 def _chunks(text: str) -> list[str]:
@@ -161,7 +196,7 @@ def _chunks(text: str) -> list[str]:
     return pieces
 
 
-def wrap(text: str, per: int = PER_ROW, most: int = MOST_ROWS) -> list[str]:
+def wrap(text: str, per: int | None = None, most: int | None = None) -> list[str]:
     """Break a caption into rows that fit the frame.
 
     Breaking only at punctuation is not enough, and the failure is invisible
@@ -170,6 +205,8 @@ def wrap(text: str, per: int = PER_ROW, most: int = MOST_ROWS) -> list[str]:
     of the frame. Width decides where a row ends; the chunks decide where it
     may end.
     """
+    per = per or rules_module.at("caption.per_row", PER_ROW)
+    most = most or rules_module.at("caption.most_rows", MOST_ROWS)
     rows: list[str] = []
     row = ""
     for piece in _chunks(text):
@@ -331,6 +368,95 @@ def undrawn(script: dict[str, Any]) -> list[dict[str, Any]]:
         lack.append({"line": index, "say": line.get("say", ""),
                      "show": line.get("show", ""), "why": "沒說這張卡怎麼畫"})
     return lack
+
+
+def uncredited(script: dict[str, Any],
+               sources: dict[str, dict[str, Any]] | None = None,
+               footage: dict[str, dict[str, Any]] | None = None
+               ) -> list[dict[str, Any]]:
+    """Borrowed shots with nobody's name on them.
+
+    This one had already been written down twice -- COLLECTING.md says the
+    credit has to reach the screen, the prompt says it -- and the first cut of
+    the film went out with none of its three quotations credited. `clip_cut`
+    refuses to *crop* without a credit, and nothing was cropped, so the guard
+    never fired; the join from a file to the broadcaster who shot it existed
+    only in the web handler, so the builder passed an empty string and ffmpeg
+    dutifully drew nothing. The channel logos survived, which is why it was not
+    obvious.
+
+    Taking someone's pictures and putting our own words on them without saying
+    whose they are is misappropriation whatever the intent, so this is a gate
+    and not a warning.
+    """
+    sources, footage = sources or {}, footage or {}
+    lack = []
+    for index, line in enumerate(script.get("lines") or [], start=1):
+        if not is_real(line.get("show")):
+            continue
+        if is_clip(line):
+            who = footage.get(line["clip"]["file"], {}).get("outlet", "")
+            if not who:
+                lack.append({"line": index, "say": line.get("say", ""),
+                             "why": "這段影片查不到是哪一台的"})
+            continue
+        source = sources.get(line.get("pic") or "")
+        if not source:
+            continue                       # already reported as unpicked
+        # A stock photograph asks for nothing; Commons and a lifted frame both
+        # do, and both record what they ask for when they are fetched.
+        if source.get("kind") in ("real", "frame") and not source.get("credit"):
+            lack.append({"line": index, "say": line.get("say", ""),
+                         "why": f"{source.get('outlet') or '這張圖'} 沒有出處"})
+    return lack
+
+
+ROLES = rules_module.at("structure.roles", ["起", "承", "轉", "合"])
+
+
+def structure(script: dict[str, Any],
+              measured: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Whether the thing has a shape.
+
+    "It should have a beginning, a development, a turn and a landing" cannot be
+    checked, and saying it in a prompt is how it goes unread. What can be
+    checked is whether the writer *said* which line is which -- so every line
+    declares a role, and this checks the declaration: all four present, in
+    order, and the turn inside the first third.
+
+    That does not make the turn good. It makes the unanswerable question small:
+    from "is this script well structured" down to "is this one turn a real
+    reversal or just the same thing said again", which is what the second pass
+    is for.
+    """
+    measured = measured or measure(script)
+    lines = measured["lines"]
+    faults = []
+    given = [line.get("role") for line in lines]
+    if any(role not in ROLES for role in given):
+        return [{"why": "每一句都要標 " + "／".join(ROLES),
+                 "lines": [index + 1 for index, role in enumerate(given)
+                           if role not in ROLES]}]
+
+    for role, least in (rules_module.at("structure.least_per_role") or {}).items():
+        got = given.count(role)
+        if got < least:
+            faults.append({"why": f"「{role}」只有 {got} 句，至少要 {least} 句"})
+
+    order = [ROLES.index(role) for role in given]
+    if order != sorted(order):
+        back = next(i for i in range(1, len(order)) if order[i] < order[i - 1])
+        faults.append({"why": f"順序亂了：第 {back + 1} 句的「{given[back]}」"
+                              f"排在「{given[back - 1]}」後面"})
+
+    clock = measured["seconds"] or 1
+    turn = next((line for line in lines if line.get("role") == "轉"), None)
+    before = rules_module.at("structure.turn_before", 0.34)
+    if turn and turn["at"] > clock * before:
+        faults.append({"why": f"轉出現在 {turn['at']:.0f} 秒，"
+                              f"超過前 {before * 100:.0f}%（{clock * before:.0f} 秒）"
+                              f"，太晚了留不住人"})
+    return faults
 
 
 def too_long(script: dict[str, Any]) -> list[dict[str, Any]]:

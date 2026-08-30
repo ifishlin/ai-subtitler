@@ -28,10 +28,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-WIDTH, HEIGHT, FPS = 1080, 1920, 30
+from core import rules as rules_module
+
+WIDTH = rules_module.look("frame.width", 1080)
+HEIGHT = rules_module.look("frame.height", 1920)
+FPS = rules_module.look("frame.fps", 30)
 LIMIT = 180.0            # YouTube's ceiling for a Short
 SWEET = (25.0, 60.0)     # what actually holds attention
-PICTURE_TOP = 430        # where the kept picture sits on the tall canvas
+PICTURE_TOP = rules_module.look("frame.picture_top", 430)
 
 
 @dataclass
@@ -184,7 +188,7 @@ def _graph(box: tuple[int, int, int, int] | None, subtitles: Path | None,
 
 # A still that pushes in slowly reads as film rather than as a slide. The
 # push crops the edges away, so nothing may sit closer to them than this.
-PUSH = 1.085
+PUSH = rules_module.look("frame.push", 1.085)
 SAFE = round(HEIGHT * (1 - 1 / PUSH) / 2) + 24
 
 
