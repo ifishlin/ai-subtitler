@@ -71,7 +71,10 @@
      this is for judging it. */
   /* Which of 起承轉合 this line claims to be. Shown because it is a claim the
      writer made and the program checks, not decoration. */
-  td.at .role{display:block;margin-top:3px;font:11px var(--mono);color:#7fd4ff}
+  td.at select.role{display:block;margin-top:4px;font:11px var(--mono);
+    color:#7fd4ff;background:#0d1014;border:1px solid var(--line);
+    border-radius:5px;padding:2px 4px;cursor:pointer}
+  td.at select.role:hover{border-color:var(--accent)}
   .say-edit{outline:none;border-radius:6px;padding:3px 6px;margin:-3px -6px;
     border:1px solid transparent;cursor:text;white-space:pre-wrap}
   .say-edit:hover{border-color:var(--line)}
@@ -721,8 +724,11 @@ async function showScript(name) {
             caption: line.caption || "", credit: line.credit || "",
             outlet: line.outlet || "", from: line.from || "",
           }))}">
-          <td class="at">${clock(line.at)}${
-            line.role ? `<span class="role">${escapeHTML(line.role)}</span>` : ""}</td>
+          <td class="at">${clock(line.at)}
+            <select class="role" data-was="${escapeHTML(line.role || "")}">
+              ${["起","承","轉","合"].map((one) => `<option${
+                one === line.role ? " selected" : ""}>${one}</option>`).join("")}
+            </select></td>
           <td class="say">
             <div class="say-edit" contenteditable="plaintext-only"
               spellcheck="false">${escapeHTML(line.say || "")}</div>

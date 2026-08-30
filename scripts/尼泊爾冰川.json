@@ -45,32 +45,6 @@
       "seconds": 2.17
     },
     {
-      "say": "墜落數千英尺。",
-      "role": "起",
-      "show": "自製：數字卡",
-      "card": {
-        "kind": "number",
-        "title": "落差",
-        "value": "數千",
-        "under": "英尺",
-        "note": "資料：NBC News"
-      },
-      "from": "NBC News",
-      "seconds": 1.9
-    },
-    {
-      "say": "大家問的是同一個問題。",
-      "role": "承",
-      "show": "自製：字卡",
-      "card": {
-        "kind": "word",
-        "title": "所有人\n問同一句",
-        "ghost": "？"
-      },
-      "from": "觀點",
-      "seconds": 2.39
-    },
-    {
       "say": "是不是氣候變遷？",
       "role": "承",
       "show": "自製：圈起來的一句話",
@@ -143,20 +117,8 @@
       "seconds": 2.39
     },
     {
-      "say": "兩邊可以吵很久。",
-      "role": "轉",
-      "show": "自製：字卡",
-      "card": {
-        "kind": "word",
-        "title": "可以吵很久",
-        "tone": "light"
-      },
-      "from": "觀點",
-      "seconds": 1.9
-    },
-    {
       "say": "但那是在追究過去。",
-      "role": "轉",
+      "role": "承",
       "show": "自製：字卡",
       "card": {
         "kind": "word",
@@ -294,6 +256,31 @@
       "seconds": 2.17
     },
     {
+      "say": "而那兩座還在長。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "CNN",
+      "card": {
+        "kind": "word",
+        "title": "而那兩座\n還在長",
+        "tone": "light",
+        "note": "資料：CNN"
+      },
+      "seconds": 1.9
+    },
+    {
+      "say": "水一直流進去。",
+      "role": "轉",
+      "show": "自製：字卡",
+      "from": "CNN",
+      "card": {
+        "kind": "word",
+        "title": "水一直\n流進去",
+        "tone": "light"
+      },
+      "seconds": 1.9
+    },
+    {
       "say": "淹掉的不是山。",
       "role": "合",
       "show": "示意：整個被水淹掉的村子",
@@ -364,7 +351,7 @@
       "show": "示意：山谷裡的冰川湖",
       "pic": "assets/photos/尼泊爾冰川潰決洪災/38403150.jpg",
       "fit": "fill",
-      "tone": "warm",
+      "tone": "cool",
       "seen": true,
       "from": "觀點",
       "seconds": 1.96
@@ -381,6 +368,18 @@
       },
       "from": "觀點",
       "seconds": 1.9
+    },
+    {
+      "say": "問過的人也問不到。",
+      "role": "合",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "card": {
+        "kind": "word",
+        "title": "問了也\n問不到",
+        "tone": "warm"
+      },
+      "seconds": 1.96
     },
     {
       "say": "保費會先知道。",

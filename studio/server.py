@@ -811,6 +811,21 @@ def edit_line(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     if not 0 <= index < len(lines):
         raise HTTPException(400, "沒有這一句")
 
+    role = payload.get("role")
+    if role is not None:
+        # Which of 起承轉合 a line is, changed by hand. The label is a claim
+        # about the writing, and the writer is the worst judge of it -- the
+        # Nepal turn was on a line that only remarks on the argument, and every
+        # check passed because they all measure the label rather than the
+        # thing. Somebody reading it has to be able to move it.
+        from core import script as script_module
+        if role and role not in script_module.ROLES:
+            raise HTTPException(400, "角色只能是 " + "／".join(script_module.ROLES))
+        lines[index]["role"] = role
+        script_module.save(name, found)
+        return {"saved": True, "line": index + 1, "role": role,
+                "measured": script_module.measure(found)}
+
     say = str(payload.get("say") or "").strip()
     if not say:
         raise HTTPException(400, "台詞不能是空的")
