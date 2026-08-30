@@ -236,6 +236,19 @@
   .gather > span{font-size:11px;color:var(--faint);flex:none}
   .gather input{flex:1}
 
+  .doubted{margin:10px 0;padding:9px 14px;border-radius:9px;background:#2a2415;
+    border:1px solid #5b4a22}
+  .doubted-head{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
+  .doubted-head b{font-size:12px;color:#e2a33c}
+  .doubted-head .hint{font-size:11px;color:var(--faint)}
+  .doubted-head .grow{flex:1}
+  .doubt-row{display:flex;align-items:center;gap:9px;padding:2px 0;
+    font-size:12px}
+  .doubt-row .who{color:var(--faint);font:11px var(--mono);flex:none;
+    width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .doubt-row .what{color:var(--dim);overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap}
+
   .wanted{display:flex;align-items:center;gap:11px;margin:10px 0;
     padding:8px 14px;border-radius:9px;background:#2a2415;
     border:1px solid #5b4a22;flex-wrap:wrap}
@@ -605,6 +618,25 @@ async function open(name) {
     </div>
     <div id="termsNote" class="hint"></div>
 
+    ${(pile.doubted || []).length ? `
+    <!-- A model's opinion, held for a decision. Deleting on it loses both the
+         source and the fact that anything was judged: the count simply reads
+         lower and looks like a search that found less. -->
+    <div class="doubted">
+      <div class="doubted-head">
+        <b>模型覺得這 ${pile.doubted.length} 篇跟題目無關</b>
+        <span class="hint">還留著，也還沒算進計數。掃一遍，撿回判錯的</span>
+        <span class="grow"></span>
+        <button id="btnDropAll" class="tiny">其餘全部丟</button>
+      </div>
+      ${pile.doubted.map((one) => `
+        <div class="doubt-row" data-url="${escapeHTML(one.url || "")}">
+          <button class="tiny keep">留</button>
+          <span class="who">${escapeHTML(one.outlet || "")}</span>
+          <span class="what">${escapeHTML(one.title || "")}</span>
+        </div>`).join("")}
+    </div>` : ""}
+
     ${(pile.wanted || []).length ? `
     <!-- What the audience implies and the pile does not have. The counts say
          this topic has enough pictures; they cannot say it has nothing to end
@@ -860,6 +892,28 @@ async function open(name) {
         ? `圖庫的詞：${got.pictures.join("、")}（收集完會用到）　${got.took}s`
         : `${got.took}s`;
     } catch (error) { $("termsNote").textContent = error.message; }
+  };
+  // Ruling on what the model doubted. Keeping is one click each because that
+  // is the direction worth making easy -- a wrongly dropped source is a fact
+  // that stops existing, a wrongly kept one is a line in a list.
+  $("paper").querySelectorAll(".doubt-row .keep").forEach((button) => {
+    button.onclick = async () => {
+      const row = button.closest(".doubt-row");
+      try {
+        await api("POST", "/api/topic/judge",
+                  {name, urls: [row.dataset.url], keep: true});
+        open(name);
+      } catch (error) { alert(error.message); }
+    };
+  });
+  if ($("btnDropAll")) $("btnDropAll").onclick = async () => {
+    const urls = [...$("paper").querySelectorAll(".doubt-row")]
+      .map((row) => row.dataset.url);
+    if (!confirm(`丟掉這 ${urls.length} 篇？`)) return;
+    try {
+      await api("POST", "/api/topic/judge", {name, urls, keep: false});
+      open(name);
+    } catch (error) { alert(error.message); }
   };
   if ($("btnGather")) $("btnGather").onclick = async () => {
     const queries = $("hunt").value.trim();

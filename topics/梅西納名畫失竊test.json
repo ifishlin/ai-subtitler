@@ -59,7 +59,10 @@
         "url": "https://www.youtube.com/watch?v=AMLAVy2AtQ0",
         "seconds": 289,
         "outlet": "Bloomberg",
-        "lean": "neutral"
+        "lean": "neutral",
+        "file": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.mp4",
+        "captions": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.en-orig.vtt",
+        "size": 45068816
       },
       {
         "title": "Four 'extraordinary' Renaissance paintings stolen from Italian museum ",
@@ -73,7 +76,10 @@
         "url": "https://www.youtube.com/watch?v=Ai55zArdmzA",
         "seconds": 466,
         "outlet": "BBC News",
-        "lean": "neutral"
+        "lean": "neutral",
+        "file": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
+        "captions": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.en-orig.vtt",
+        "size": 90692090
       },
       {
         "title": "Why famous masterpieces remain prime targets for thieves ",
@@ -104,7 +110,260 @@
         "lean": "non-western"
       }
     ],
-    "reports": [],
+    "reports": [
+      {
+        "title": "Thieves steal 4 Renaissance artworks in a Sicilian museum heist during an Italian holiday",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQdnlrWmxPWkVSVUdZaG9JZXY1UTVpbDFIWUI2NEF4SG1pbnBVaVhQaXRxUjhIOVN5Sk5Pd0VJck1sbTZwLTFsbVpIMDNqVjQ3S2ZjV0t1S0dJU1hjcHpwc2J5dExUaC1zNXNqUG5uX0ZOQzZJZS1DVG1aOGJELVZ5RXktSm5ycXR5d2hDTEZUWEIwS3BXTVNTOUhRcW8?oc=5",
+        "outlet": "AP News",
+        "lean": "neutral",
+        "when": "Sun, 16 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Thieves steal paintings by Renoir, Cézanne and Matisse from a private museum in Italy",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNWV9ncW5ZOEt0LWhybHhnbDVjWE9kQ0dmNm9zRlNLaTllcUZFRHhSMVJxdkJjY1RGWGViOUJxYW9mRWxNdmt6ZzB6Mmo3a2YxRS0wWEZ3Z196bUJJVnNRQkltLWEtLVhxc2RaV1hVaW1lQkFkamQzTGlGcDREdlUzOTA2WFhpRHkwUHB1cmhvdUxtYzE2ZWdTdGl1cTkzcHJHbE1jenlNaXliNHBmUWdNOXJB?oc=5",
+        "outlet": "AP News",
+        "lean": "neutral",
+        "when": "Mon, 30 Mar 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Mafia link feared in Sicilian grand master theft",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOaTRLcVp3a0VLeE1TVWR6RWJVWFg0UUFBUGlicEx3UW1IWjRsT3NqT3ZMZ0RHbHBGMmhxbGF5eUxiRFEzZzhURzg4YVR4N3d2b2JKaFc5TmZJMnNheVVOYm1pMjRndEZEOExrMFdyZWg3cktWNmpCR1JKUE10YzliZmZaaUV5Zm5FSW5lTmE3YlozOGtWbnc?oc=5",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "when": "Mon, 17 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Four Antonello da Messina works stolen in Renaissance painter's hometown",
+        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPNE5XWE93dVd5bUpMcEhWSjRsZ0lBc2dmWjl4WmJQNWFUQzZyZldlQ3BYRVl6YXgydllsSDBObTItem4xTlpwcFJrZGNRbEtNbmc5VEpWaEZZUnZkRTE4YXB3djFSWDJMc1NzQWhjMl9hRE00MXBkT0Z5bTEzaXI0YVBpZ1V5YVFDRmIteFpwd3lmZUtYYXhqYTF4SUdZUEtVZVJWalVfRnQ4bDhBNS1j?oc=5",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "when": "Sun, 16 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "The U.S. ignored corruption within the Afghan government. Did that lead to its fall?",
+        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPV2Z2WlRZNFRvNVFCRzhlUmJJbG5FOXg5dXR4UENvRWQwbW1ycDl1SDRJdHJKeFZSSVBiOTVOZUJEUjR1Nkh5cnRYRFY1dnY0X2lMOEtrbHR3YmNCR0xBV1Z2cllEOUV1SXJPdk1JYVJheFBSalVtajlyTkRSbF9nMFFrSzg3ZWc3UGdubVFmOURhbmlEM29UbEZDcjJsYUF4SmJzS0xXVkhrVGlvSUpaV2RhcnVGUdIBuwFBVV95cUxNb1BwbmRvUmF2NkV0bHFodnBPY2Z6NEVjZjJaQXcwQ0s4WkNnNlhaZ3R0bm9VamsyTW11VEIxcUdZd3phRVNKckJlaVpOZzlBU3ctcDhuUGI1LWt5MTZleUpTaUctREZ4RDZMRzNUaldndEIwU2N0ekhkV2hJYWhvQzV5cTNhNjZZbHdYcDhHVi03VnJpc2JFdlpHeXctRUx5UHo4XzlKd0hCZlp6ZUhQSnI5NzhpV1A2LXVV?oc=5",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "when": "Fri, 20 Aug 2021",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "No clear path for U.S.-China trade dispute as round of talks ends",
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQZ3UtanZhYUVNd2xzVUpLc3JSSUVkQ1drcEVNVmZyVHVwVExNZFRIblRuZjhTN0FZRUV3QkNSVl90ai1hQ3NIZmZ5ODBIZzhXWGx2cEhtcUpaVWJCNHhsNjZHMjdIVFBBall4QVJBcC1OeC1CVWVxWlBtSUFqLW1lZmNvUDE5Sk1ZZDVVTmFLc2J4X2ljRWN2cmF2SENtcXloR3Nj0gGoAUFVX3lxTE90VFhuckw1ajZja0t2QzVtLTZXSkhTLTRtRGMtUWwwVmxrVzFQVzJsQ2JSYjJ4TUJEX2FkYS1lX0IwTTc2M1JtMGJYYlJ2dFFvb2pWeGdXc3l5QUxtMXRPeHE5RXR3bGdKSnhkV0NCNUNDemxfWjZQTV8xYWZ4NGlfRDVvQXdDbGFuUkFHWU9LLXlZQjV1VXZkQkRVLTZ5MUlrc0VkQWVKdw?oc=5",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "when": "Thu, 10 Jan 2019",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "A good – and bad – week for Italy’s art police and museum security",
+        "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBZNXhkVVZ3YzhNXzZBeUVJYWFZbVVZUTB3MERTZXJfbzRDUzR3LWxwWHpGSWxEbTc5VElyeUlMZmxpdW9Ca1Iteml4MlVSS0Y4X3FodEs4Q0pLREdDTmtaSGkzRkNjWVlzbmpJTmJJMGJKYnBiZ2l6RWdBb1NlNjA?oc=5",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "when": "Sun, 16 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Suspects arrested over the theft of crown jewels from the Louvre museum in Paris",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOaE5Sdm9iWTRlMmZ1WlZpR0U2WmtkN0JLek84UnJ6VHdDSU1COXNzOUVJYmtoZ0p0UDZadGtNOHc0VVJ0dVJPNy1KZ2tGVF9PTUlRcWdhUy15N3JRX0pPQ2otenVBd00tUFNiQm5SbDVUdjlKTkJrRFU4R3hqblMyYXVrNHA1cEN3VGVWWUVYTQ?oc=5",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "when": "Sun, 26 Oct 2025",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "CNN.com - Transcripts",
+        "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE4tQ25LV0J6aVNNMWEzWWZJM1JsdWJJQ2tZOTFSbEpaZzJlNkR1YUNaRnotcDhTemZRUXJYR2VxLVdHZE44WHRHVGdnSFdRRmx6amc0dHhJanlzTUwyU01BN01mNXlMTTZoaXNzVFZ4Yw?oc=5",
+        "outlet": "CNN",
+        "lean": "left",
+        "when": "Mon, 17 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "New CCTV video shows Italy art heist",
+        "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9TM2xfeGJXRm5lak8tTDIzSkJkYk44ZUxDVkF4WWlyMDhwWlBxVTJFeTNDYXJzNkZoM242a2RmMzdxZnlsMV9XSUlqMUNjVVd2dTBRamY1akNGMDdTNE5vaUxQWElGdlg3UmJya2VfMEw4TG5CdUE?oc=5",
+        "outlet": "CNN",
+        "lean": "left",
+        "when": "Sat, 15 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "2 airport workers are dead after malaria cases shock officials at major travel hub",
+        "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNYUk1S2VIcWlSbnNjUFpiblJnUG5FMGpUWnphYVlhclM3eVZmTlB1MVFZN1FDVl9LZFhOaE9JZUpjOElHZzl5d3RVOXA3ZVZQWDJ0ZVlsNXFTSk0wa3dNenE0clA1amV3WHhqQXQ4Tm9sazZKcnYyMTFKdEhQQVRlUm81YnJZdEZXQWJnZzdRNVVSX0NRYlZDbnY0NkQxTDlvNkFIbzVkc0xwUdIBrwFBVV95cUxOTzRpY0lNV1VKWlZtUkVzc2x0akpEeWFRMHFON055cmdNR1QtckN2SGZ2a2t4LUhyNk5VRC1wbVNDRnFySTM1enlMaDZyS3lQUFMxOHVDVEd4NUN6eUhfUGxRUG56YVAtZ2ozdUpNTldOUngtUkZsa080RkRtaWd0TDJsclNXcnJCNms1WG5RQlhHeklOZTBnWVFxdTJFYlFlTUlmV0lyRHpfMEROMk5n?oc=5",
+        "outlet": "Fox News",
+        "lean": "right",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Archaeologists uncover massive artifact depicting pharaoh thought to have challenged Moses in Exodus",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOeGxSTlJONFBGbUtLTEVZVFlPUHRkN3pDQ1lSVTNvMjR4Vm05cWVFWjVzWXlzUTJRdE5ZR1hzeC1ZNWdyWE1hUlJnOG9qWUs1RDVFRjBOUVo0NzJEdTRrU1RrVmdabFByRVJ4UkNsc3hzZnU0WDNib2pWUmZ0WkJGM3BSdlJrMkN0ekJPT0pCQ1lxaUd2cGI2MzlPbGphZGJ0Vndjdkl5a0lrR2NCd05VMFR1amEwdThrSGlxcEp0MHNLYmPSAcgBQVVfeXFMTzJNWllLbm1vbjJaUGh0Tk1TN2xIR3ltYk5JaEtsN0ZYazJCQXR5U2FFbF9QR3hzX3dIVjkwaHBKRHFDdENZZ0dPNGtHei04LUZHUzBZcE1DeEl6ZnQxSHo0a1VDZ1VHdkcxUmRRc0NjY2hfejhBUVc4WjRtU2lBQ0k1R1BhemMtb01oNnZ0WUpIZHZCWGZVRVpGaWkyUFB1T1FncWh0THQ1U2dWYUJyT1FyYXN3b19rVFVwYS1XYXFXZGZpZmxVZlk?oc=5",
+        "outlet": "Fox News",
+        "lean": "right",
+        "when": "Sun, 03 May 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Exhibition Review: 'Building the Picture: Architecture in Italian Renaissance Paintings'",
+        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPLUowdGFfa3dWN1VCQmstN2Y3WTZmZ1IxZnlhQXd4Mjg5MTAyYmtSOV9ISXpqZUZvcXNQVVJOYU53c0RWV3VINDVyMnE3VkFrUmtzR3p0TFM1ZWxyekpNUzZjRXhQdlhTSUpXVWE2OXJ3dlltNktDS2gzSlpxeS0zU3VzTUdJTl9DcTRaaDRkMjFmaTZTSVFEYkNVTkJ2SXIyTzBZRmh5SWFkTGFiVl9ReFoyRUZrNDVPMFFkX3NUOEFBQQ?oc=5",
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "when": "Wed, 09 Jul 2014",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "A Wintry Twist on an Age-Old Tale",
+        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNbGU4czVfYVBxeGJCQjl1ckYxSi1yMWNTVXhtWkNFWUFsR0tJVHljU1dsVlpMSERiTjlCaW9ucU1PbE8yNTZoOXcwSmMtckhVaHdYNm03cDNzMUxKbmZKVHV5cm9KUEpOeFFjbFB1RkZoaURYSV9tcDFWMU43MDZUdUVFZl9talVTNTFKdVB6ekgwQWNaMm1ET2FPUzVpZlM3SUdyaGJCZkNzWEZteFJQUFJ4ZnB5LU91TkctSU56dnZNV2hUVnE3XzNBMHdVWWM?oc=5",
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "when": "Mon, 26 Dec 2022",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Four 'extraordinary' Renaissance paintings stolen from Italian museum",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1NQVJhVkZNQzdIemZ4UldWcF94R0ZYSFJXUENsdi0wQzJHSXROQ1pkNWhPU0NBQkFPRTRRWjI3dkF4RVRNZmRYVFhhb0xUVHVLcmF5OV9qN0ZCQQ?oc=5",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "when": "Sun, 16 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Renoir, Cézanne and Matisse art among items stolen in Italian job",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9vTW1vbGpxYlBMbjUyN1p0UHduN2tEcU1YcDRocnlXZGhKeWpIeUVLSVoxd3BGdS1PS0poNWRlSTduRTFzdkFwc1FES0Y5SlBHVzFjQkp0MmFFZw?oc=5",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "when": "Sun, 29 Mar 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Travel writers’ discoveries — and disappointments — of 2025",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9VRTBBX2wtcXdoSmlNYm1PODJtcUkxMzRSS0xNbGNWeDBRUHNaaUo0bHdYTWVoWXZwSk0zSjF6UjBmc0FINU5FZnR5TnZQaGR5bUZnNENVSFhqcFBXSjc0SkUxemNzaFkyTFpuSXVZeU4?oc=5",
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "when": "Fri, 05 Dec 2025",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "World in Brief: Indonesia hit by earthquake; migrants stage protest in Ceuta",
+        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQZW5BZ2lJRnkwSEozb0duRmpzZWZzUy01c2NLRVlNYVdBRVBjWWlKV3NzbHI4MGhwWVl0czViNFFUZC1QNm5FS3FHa0hYUnVNYy01UlBCU3N0dk1GeDBQZmRVbzYtbk9jOUFqS1N1aUxUYWRuOE4tMVZ2Szk4SHJGbnlmOExEaUNjcmFJNWFoMHRCaUlMNU9r?oc=5",
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "when": "Sun, 16 Aug 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Messina mystery: theft of Renaissance art from Sicilian museum leaves investigators baffled",
+        "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPZjd3WndNLXVUY3NGU3h0T2RVc0NQTnd4dmZmR05PdnZwalJUa2pPbnlLd21pdVU0d3NJNG9HZmpubk1KSzgyQkR3VDJyODVQc3BMVFBwN2llbF8wN0MweGs0WGs0ODJjY0V6YUpvX0oxR2w0VXRvTFVSZ0VyM2RIU1NCbUlyVnMzSTJtT0hkd2FmVlJXVUozUl9fUHNSVEphY3lBVkk3QVpRV1RxdkwyWXpjRFoyQlV5YmNyWmF5QmNBSW1JSDcxNGk3Rk5Jci1rU2xDYlh0MlZPcDQ?oc=5",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Bronze age treasure stolen in four-minute Spanish museum heist",
+        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPYWNDYUxodjVhekxyUkxFTzM4dTZZXzBuZG1sVkx4ZjhHY1BtLTRsMlB1RnV5SnQ5RnJVSHdVLU5rZGlQWU4xbm9aTUNKbkttSFc0a2hLbWx4QWNFaG1QdUZuWFRyT3NQNXo5UFptb3p0SHpCTVFHeDlCN0k3eG9xbUE1U0RhU3JmZlFvakRlM0lUWnVoMnp6Q3NJdldGaUVxbTRHdEdFLUU3VFRwM1VPTmt1VQ?oc=5",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Italy: Thieves steal key Renaissance paintings in Sicily",
+        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNU0ZDbFkzYjZkSEE4c3Q1LXh3Y3huT01lNTJKamptNW1fVElac0hKbTJoYURHRk1OUGR3OGJiLVpTYkVENjZEUkR0X3UxZzM4eGxmbW1sVF9yc0QyVHZqcHdJSWp0TjliSGFRbWlqemhDYk9wVHRNV1NXRTZMYUVfV2ZPRlVRZ3Vtd1loSGF4bjVSUdIBkgFBVV95cUxOaHZGMjhWWXFTMmE0cHFBNnJ5U3FPLUtjZDB0cmtNYkpVYld3MEQ3dW1jZ1pNYTBDMlFNbUF1dmhMZjdYYkVTUktNMEY0V1p3YTlVeC1BR1FNUnRRXzJ1YzVqOFJnZnpNUmN5VHpRQnV5V3NZNWlZM3NyRzR5aloxUWt1UzQzdGpKaVhPNjR5RTZOUQ?oc=5",
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "when": "Sun, 16 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Austria museum heist: Thieves snatch diamond necklace",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOVjFDd1E2QVNUcGctNnY4c1IzWXRoOWg4UjVHVUlrOTU4TXNCUzQ3MnlWTF9Gai01YUJiblQ5ZVAyZGR6WVUyV1ZaVGxTU1NUMmdrcDFnb2lINUtPeVJDYVFINWhlcjlicC1QMDN1dWF0dWprbmFtdnJmMWpBdG9rV0hSc1hxY25JVi1kWEJ30gGOAUFVX3lxTE5WMUN3UTZBU1RwZy02djhzUjNZdGg5aDhSNUdVSWs5NThNc0JTNDcyeVZMX0ZqLTVhQmJuVDllUDJkZHpZVTJXVlpUbFNTU1QyZ2twMWdvaUg1S095UkNhUUg1aGVyOWJwLVAwM3V1YXR1amtuYW12cmYxakF0b2tXSFJzWHFjbklWLWRYQnc?oc=5",
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Italy: Four Renaissance artworks stolen from Messina museum in Sicily",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPQVVUQ0dQV0xRbHBOWF9qZndoakVDX19QMmRfdUtvNEdVU0VxWDUyUk50X1o2ZEdsLS1ZSDFLTVlob3hfN09ZekhSU3dPYlhZWWJjV1k0dmlOZTVWYXAzRFBuOVhab2NIWVp4QWJkRVUzSjVhUF92NzFmMzBFZXMtVjlrc2dkX1JoS1I1dmQ0NTB4VHA1bWZHZ09VUXo?oc=5",
+        "outlet": "France 24",
+        "lean": "neutral",
+        "when": "Sun, 16 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Sicilian museum hit by €80 million art theft",
+        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPZkFwaER4WkFZQkl4SnhjVmdlRzRvWmcyZGZvWWc1T2swTUxINWlsdWd1QXJTdm9hNjJnNGlzci1DTkVtSGtoU08yUmQ5R0Z5M2FoSFljWkJqQkoyeVM4dXhxWnl5aDZLUl9wTVBpTHlMTW9IdTRtSzQ0T3h1R25ZcHRSeW9mZWEzQm1DZ3FxQmpxMExsOUljaG9IUQ?oc=5",
+        "outlet": "France 24",
+        "lean": "neutral",
+        "when": "Mon, 17 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Thieves buy tickets before plundering necklace from Vienna museum",
+        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNUk01dlFyLTJZOW1ndUwydW1HNkV5N0hHS2Vma3J2R2JaaUoyTmNlMUJXcFl0STNoRldaM2R3UlZSQUI3blROaDVNS0J1bFgzRlE4YlFvMnRUOFpWU29QaXMtYlJfY3M3MGpzenRrWkI5WnhUNkNvLWZraVZneG9WN0V2aXpfUEw4b2dDNE0tbm1WREx3NFdIdThEUDloR3dVbUIybHI1c3pNS0lETHQ5aGlPeFNDa3VjWW8wQi11cUM0UQ?oc=5",
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Thieves steal Villena Treasure in under four minutes, one of Europe's great Bronze Age hoards",
+        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQQklyQ2psX3MzdzdKWWktaThMbWxkcGZoQXdMbDhSQWpKVzJOTDRoOGxxc2k5UmoxRUF3TG9WdzM4ZG5GU2piT3dfaDA4cnUzc2otbENsTzhwVzAwMGM2WTZfY0FrWFRHMEo4cHpfczJETHRoUFExWG9jMlN5d1ROeUNaYmZVaDhINWppal9KRF85dll0UWFIbVBiMmFuTXRva0huaFV6SlZwaDhnNGV2OVpkRUpHZXpDTS1rUXJLMmwwbjU2aV94eWstSG1aTUE?oc=5",
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Thieves raid bronze age collection in ‘super-fast’ Spain museum heist",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQV2JaU3pONTlXYXc1b3hBbGQzX2U1TW1ZbHFTWklZUG9KcDQ4RXh0VmxpeDNkeVhENzNWcWdZVzFhZzIzZHJUZHhTeGhKMklkaFJMeTRYZzYtZGc1R0tUUm5JLURmajZ4UjFUSkVjbHNQX2pTdW02MHAtZ0pNOUxIX2NKbWJzZ1o3eGFrQlJxckdoWm8xVW45Qk1jSlRYaUtxeVVKNTNkM0RFTlBw0gGyAUFVX3lxTE5JcGNqVWxIQkFjYTlOc2ZfcjRuS0VQUUN1aTdBZTh3dVJiT3F6QnpnSGxVd1ZVZjR1Q21KYlh5WVpEY2FsdVhlZTNsRDhkdF9TZzFTYWUzdV9sbHg3dHh6NXU3MU5vajN4YUNxTy0xamxMRjdCZmVZcUFhUTlKQ2FmRUdFcEg3MENQZHUwczJEMWlYbzByYnhmbFVjM2NBRG9EQ3N1XzdGVUYyYWJYS2I0Mnc?oc=5",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Thieves steal Renaissance artworks in museum heist during Italian holiday",
+        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNY3RHUHV0WTdya2dSRUZHdVBSYkdFdlhLaHYzcWpOV3pCLWxjTDBHZ0lOdmFtUGNsMm9Qa3oxYTFNcjZrLXBHU3NMWGpEVGdkd3dzV3VuckxmNGt5WE91eGVWYWFDZDFmdmxOYVJPbHRlRVU1WHF2Q0pwTnlSTHJkY2RuQkFPajBuYkIySUlWcmc0ckw1Wi1lalM1UmdaM2tnYXZCVW1iZVZlNTY1bWltR1lORkrSAboBQVVfeXFMTkV6TVdBRzZVYmFTV0phV2w4dUxBMHpwSmlkQzZseFZkeVRIZmhkQ2NYQ0RPMlZ1Y0NpbGxTX3c5UlZkNk9vTmNOMER5ZEw1b1J3aGQ1QkUtMndjU2o3QnVyY1dpM0I0ZUY2V0p4UmlXd09qVWdvNUIyQ2ZMSXFLTWcxWVNVQm9tcXVpNjZRdFRpa3lEM2lIMHAwakpFMGxkOVcyekxTbk43M0E3bllkTDAyRjFUOGNaMTNB?oc=5",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "when": "Mon, 17 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      }
+    ],
     "images": [
       {
         "id": "frame_e5VqmNPVYPw_7",
@@ -165,6 +424,534 @@
         "credit": "畫面來源：Wall Street Journal",
         "page": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
         "look": 9223441167587215360
+      },
+      {
+        "id": "frame_8DiXdXVd7ho_116",
+        "kind": "frame",
+        "term": "AP News 116s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_8DiXdXVd7ho_116.jpg",
+        "caption": "start to do more analysis in due",
+        "said": "start to do more analysis in due",
+        "at": 116.8,
+        "source": "assets/footage/梅西納名畫失竊test/8DiXdXVd7ho.mp4",
+        "outlet": "AP News",
+        "author": "",
+        "credit": "畫面來源：AP News",
+        "page": "https://www.youtube.com/watch?v=8DiXdXVd7ho",
+        "look": 592254543174008446
+      },
+      {
+        "id": "frame_e5VqmNPVYPw_65",
+        "kind": "frame",
+        "term": "Wall Street Journal 65s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_e5VqmNPVYPw_65.jpg",
+        "caption": "art it's about revealing the narratives",
+        "said": "art it's about revealing the narratives",
+        "at": 65.12,
+        "source": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.mp4",
+        "outlet": "Wall Street Journal",
+        "author": "",
+        "credit": "畫面來源：Wall Street Journal",
+        "page": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
+        "look": 18446460129126645760
+      },
+      {
+        "id": "frame_AMLAVy2AtQ0_42",
+        "kind": "frame",
+        "term": "Bloomberg 42s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_AMLAVy2AtQ0_42.jpg",
+        "caption": "particular one will probably continue to",
+        "said": "particular one will probably continue to",
+        "at": 42.33,
+        "source": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=AMLAVy2AtQ0",
+        "look": 18337545011250108544
+      },
+      {
+        "id": "frame_AMLAVy2AtQ0_121",
+        "kind": "frame",
+        "term": "Bloomberg 121s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_AMLAVy2AtQ0_121.jpg",
+        "caption": "meanwhile there was an article in The",
+        "said": "meanwhile there was an article in The",
+        "at": 121.94,
+        "source": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=AMLAVy2AtQ0",
+        "look": 18228021597431697537
+      },
+      {
+        "id": "frame_Ai55zArdmzA_89",
+        "kind": "frame",
+        "term": "BBC News 89s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_89.jpg",
+        "caption": "Italy's most famous paintings",
+        "said": "Italy's most famous paintings",
+        "at": 89.56,
+        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "look": 4052179856693921793
+      },
+      {
+        "id": "frame_Ai55zArdmzA_315",
+        "kind": "frame",
+        "term": "BBC News 315s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_315.jpg",
+        "caption": "than four and a half million stolen",
+        "said": "than four and a half million stolen",
+        "at": 315.87,
+        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "look": 10963536942558282737
+      },
+      {
+        "id": "frame_Ai55zArdmzA_22",
+        "kind": "frame",
+        "term": "BBC News 22s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_22.jpg",
+        "caption": "the amazing art you can find here",
+        "said": "the amazing art you can find here",
+        "at": 22.32,
+        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "look": 54202990575
+      },
+      {
+        "id": "frame_Ai55zArdmzA_45",
+        "kind": "frame",
+        "term": "BBC News 45s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_45.jpg",
+        "caption": "in everyday spaces all around Italy like",
+        "said": "in everyday spaces all around Italy like",
+        "at": 45.6,
+        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
+        "look": 13834865572968972352
+      },
+      {
+        "id": "39113418",
+        "term": "museum gallery empty room",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/39113418.jpg",
+        "caption": "A contemporary interior space with natural light and a lone figure, captured in Porto, Portugal.",
+        "outlet": "Pexels",
+        "author": "Ashley Yeh",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/minimalist-interior-space-with-natural-light-in-porto-39113418/",
+        "look": 1089606179317810974,
+        "size": [
+          3840,
+          2560
+        ]
+      },
+      {
+        "id": "110819",
+        "term": "museum gallery empty room",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/110819.jpg",
+        "caption": "Modern art museum exhibit featuring open books in glass cases, highlighting contemporary interior design.",
+        "outlet": "Pexels",
+        "author": "mali maeder",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/open-books-with-glass-case-inside-room-110819/",
+        "look": 2251658940914876608,
+        "size": [
+          5222,
+          3481
+        ]
+      },
+      {
+        "id": "19968245",
+        "term": "museum gallery empty room",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/19968245.jpg",
+        "caption": "A well-lit museum room displaying classic framed paintings with a wooden floor.",
+        "outlet": "Pexels",
+        "author": "Filipp Romanovski",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/view-of-an-empty-room-with-art-on-the-walls-19968245/",
+        "look": 1736171871119858566,
+        "size": [
+          4000,
+          2667
+        ]
+      },
+      {
+        "id": "38785606",
+        "term": "security alarm panel wall",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/38785606.jpg",
+        "caption": "Red emergency button on a grey patterned wall, emphasizing safety measures.",
+        "outlet": "Pexels",
+        "author": "Jan van der Wolf",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/red-emergency-button-on-grey-wall-background-38785606/",
+        "look": 739261463548133311,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "31560987",
+        "term": "security alarm panel wall",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/31560987.jpg",
+        "caption": "Red fire alarm and warning sign on a rustic wooden wall for safety awareness indoors.",
+        "outlet": "Pexels",
+        "author": "James Thomas",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/fire-alarm-on-rustic-wooden-wall-for-safety-31560987/",
+        "look": 7853425598440208620,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "12997193",
+        "term": "security alarm panel wall",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/12997193.jpg",
+        "caption": "Close-up view of a red fire alarm mounted on a textured outdoor wall, showcasing safety equipment.",
+        "outlet": "Pexels",
+        "author": "Joshua Brown",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/fire-alarm-on-a-wall-12997193/",
+        "look": 13898355706043886792,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "30692441",
+        "term": "night security guard monitor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/30692441.jpg",
+        "caption": "Security officer seated in a dimly lit control room, analyzing multiple surveillance screens.",
+        "outlet": "Pexels",
+        "author": "AMORIE SAM",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/security-officer-in-dark-control-room-with-monitors-30692441/",
+        "look": 54254469264308720,
+        "size": [
+          7008,
+          4672
+        ]
+      },
+      {
+        "id": "17095797",
+        "term": "night security guard monitor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/17095797.jpg",
+        "caption": "Shadowy figures reflected with security monitors in the foreground.",
+        "outlet": "Pexels",
+        "author": "Yusuf Çelik",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/two-people-standing-behind-the-glass-17095797/",
+        "look": 17300639799903534332,
+        "size": [
+          7728,
+          5152
+        ]
+      },
+      {
+        "id": "14709776",
+        "term": "night security guard monitor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/14709776.jpg",
+        "caption": "A security guard communicates via radio in an empty train station.",
+        "outlet": "Pexels",
+        "author": "Jimmy Liao",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/back-view-of-a-security-guard-using-radio-14709776/",
+        "look": 504412057572024319,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "19286418",
+        "term": "religious procession crowd street",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/19286418.jpg",
+        "caption": "A bustling night street procession with a religious figure, highlighting urban faith and community gathering.",
+        "outlet": "Pexels",
+        "author": "Gonzalo Carlos Novillo Lapeyra",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/a-religious-procession-at-night-19286418/",
+        "look": 280199813260443656,
+        "size": [
+          6034,
+          4028
+        ]
+      },
+      {
+        "id": "18772921",
+        "term": "religious procession crowd street",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/18772921.jpg",
+        "caption": "A vibrant traditional religious parade procession with diverse participants in urban setting.",
+        "outlet": "Pexels",
+        "author": "Fatima Yusuf",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/people-on-parade-in-town-18772921/",
+        "look": 18360874440490942516,
+        "size": [
+          3851,
+          3456
+        ]
+      },
+      {
+        "id": "18937552",
+        "term": "religious procession crowd street",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/18937552.jpg",
+        "caption": "A bustling aerial view of a religious procession in Lima, Peru's urban landscape.",
+        "outlet": "Pexels",
+        "author": "Lyon Peru",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/religious-procession-on-city-street-18937552/",
+        "look": 2298083836,
+        "size": [
+          8139,
+          5465
+        ]
+      },
+      {
+        "id": "20783671",
+        "term": "cctv camera corridor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/20783671.jpg",
+        "caption": "Monochrome image of a modern surveillance camera mounted outdoors, emphasizing security.",
+        "outlet": "Pexels",
+        "author": "Brett Sayles",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/black-and-white-photo-of-a-surveillance-camera-20783671/",
+        "look": 8970181430306684478,
+        "size": [
+          4896,
+          3264
+        ]
+      },
+      {
+        "id": "5966513",
+        "term": "cctv camera corridor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/5966513.jpg",
+        "caption": "From below of modern camera for recording audio and video in building for security and protection",
+        "outlet": "Pexels",
+        "author": "Atypeek Dgn",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/modern-equipment-for-video-surveillance-on-wall-5966513/",
+        "look": 17420418078293046147,
+        "size": [
+          4000,
+          2667
+        ]
+      },
+      {
+        "id": "27658186",
+        "term": "cctv camera corridor",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/27658186.jpg",
+        "caption": "Street security cameras mounted on a pole in an urban environment, highlighting surveillance.",
+        "outlet": "Pexels",
+        "author": "Elmir Jafarov",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-street-light-with-a-camera-on-it-27658186/",
+        "look": 289695989819180036,
+        "size": [
+          6000,
+          3376
+        ]
+      },
+      {
+        "id": "9921317",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/9921317.jpg",
+        "caption": "Interior view of a historic church with frescoes in Nova Ponente, Italy.",
+        "outlet": "Pexels",
+        "author": "Stefano Parisi",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/fresco-on-wall-in-a-church-9921317/",
+        "look": 2594112864569942628,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "38109652",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/38109652.jpg",
+        "caption": "Interior of ancient church showcasing historic frescoes and stone architecture.",
+        "outlet": "Pexels",
+        "author": "Susanne Jutzeler, suju-foto",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/historic-church-with-ancient-frescoes-and-arches-38109652/",
+        "look": 504714594934030721,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "37607917",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/37607917.jpg",
+        "caption": "Detailed fresco painting inside a historical Tuscan church showcasing classical architecture.",
+        "outlet": "Pexels",
+        "author": "Claudia  Solano",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/intricate-fresco-in-historic-tuscan-church-37607917/",
+        "look": 9320898661648105088,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "2257453",
+        "term": "wire fence cut",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/2257453.jpg",
+        "caption": "Close-up of barbed wire with blurred background, creating a moody ambiance.",
+        "outlet": "Pexels",
+        "author": "Luis Quintero",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/selective-focus-photography-of-barbed-wires-2257453/",
+        "look": 16194948667618836287,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "14439232",
+        "term": "wire fence cut",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/14439232.jpg",
+        "caption": "Close-up of razor wire on a chain link fence with clear blue sky background.",
+        "outlet": "Pexels",
+        "author": "David Levinson",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/close-up-shot-of-barbed-wires-14439232/",
+        "look": 16084200085105675776,
+        "size": [
+          4368,
+          2913
+        ]
+      },
+      {
+        "id": "37341755",
+        "term": "wire fence cut",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/37341755.jpg",
+        "caption": "Close-up view of a rusty chain-link fence with blurred background, outdoors.",
+        "outlet": "Pexels",
+        "author": "Diana ✨",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/close-up-of-rusty-chain-link-fence-outdoors-37341755/",
+        "look": 18446742969886113792,
+        "size": [
+          6048,
+          3402
+        ]
+      },
+      {
+        "id": "7821755",
+        "term": "phone notification screen",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/7821755.jpg",
+        "caption": "Close-up of a smartphone displaying a fraud alert message on a wooden table.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/cellphone-on-a-wooden-surface-7821755/",
+        "look": 72346934030313223,
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "7821761",
+        "term": "phone notification screen",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/7821761.jpg",
+        "caption": "Close-up of smartphone on wooden surface displaying a bank alert message.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/smartphone-on-the-wooden-table-7821761/",
+        "look": 506381210001280259,
+        "size": [
+          6315,
+          4210
+        ]
+      },
+      {
+        "id": "7662059",
+        "term": "phone notification screen",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/7662059.jpg",
+        "caption": "Close-up view of smartphone screen featuring various app icons and notifications.",
+        "outlet": "Pexels",
+        "author": "Szabó Viktor",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/a-smartphone-in-close-up-photography-7662059/",
+        "look": 3458821947165383704,
+        "size": [
+          6000,
+          4000
+        ]
       }
     ],
     "data": []

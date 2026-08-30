@@ -191,10 +191,28 @@ def sift(topic: str, found: list[dict[str, Any]], say=None) -> list[dict[str, An
         say(0, 1, f"判斷 {len(found)} 篇哪些相關")
     try:
         said, _ = ask(asking, None)
+    except Exception as error:                                    # noqa: BLE001
+        # Not the same as "it kept everything". The tunnel died during a run
+        # and every one of twenty-eight reports was kept, including an
+        # architecture review and a story about malaria at an airport -- and
+        # the job reported 完成. A step that did not happen must not look like
+        # a step that decided nothing needed doing.
+        raise RuntimeError(f"問不到模型，沒辦法判斷相關性：{error}") from error
+    try:
         keep = {int(one) for one in read(said).get("keep") or []}
     except Exception:                                             # noqa: BLE001
-        return found        # cannot judge: keep everything, and say so upstream
-    return [one for index, one in enumerate(found, start=1) if index in keep]
+        return found        # asked, could not answer: keep everything
+    # Marked, not removed. Asked which of twenty-eight reports were about the
+    # theft, a 7B model kept four and threw away six that plainly were --
+    # including the Guardian piece this topic started from. Deleting on that
+    # judgement loses the article and the fact that anything was judged: the
+    # count simply reads lower and looks like a search that found less.
+    #
+    # Keeping a wrong report costs a line in a list. Dropping a right one costs
+    # a fact that no longer exists, so the doubt is recorded and somebody
+    # decides.
+    return [{**one, "doubt": index not in keep}
+            for index, one in enumerate(found, start=1)]
 
 
 def write(topic: str, house: str = "argue", name: str | None = None,

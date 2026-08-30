@@ -89,7 +89,9 @@ def balance(pile: dict[str, Any]) -> dict[str, Any]:
     outlets = media().get("outlets", [])
     sides = {"left": 0, "right": 0, "neutral": 0, "other": 0}
     for kind in ("videos", "reports"):
-        for item in pile.get("sources", {}).get(kind) or []:
+        # Doubted sources do not vote. Noise is what makes an unbalanced pile
+        # look balanced -- twenty-four irrelevant headlines carry leans too.
+        for item in settled(pile, kind):
             lean = item.get("lean") or _lean_of(item.get("outlet", ""), outlets)
             if "left" in lean:
                 sides["left"] += 1
@@ -120,8 +122,26 @@ def picture_mix(pile: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return mix
 
 
+def settled(pile: dict[str, Any], kind: str) -> list[dict[str, Any]]:
+    """Sources nobody has doubted.
+
+    A report marked `doubt` is still there and still readable; it just does not
+    count towards having enough. Counting it would let a search that returned
+    an airport malaria story and an architecture review report 報導 28/5 --
+    ready to write, on material about something else.
+    """
+    return [one for one in pile.get("sources", {}).get(kind) or []
+            if not one.get("doubt")]
+
+
+def doubted(pile: dict[str, Any], kind: str = "reports") -> list[dict[str, Any]]:
+    """Sources something judged irrelevant and nobody has ruled on yet."""
+    return [one for one in pile.get("sources", {}).get(kind) or []
+            if one.get("doubt")]
+
+
 def counts(pile: dict[str, Any]) -> dict[str, Any]:
-    got = {kind: len(pile.get("sources", {}).get(kind) or [])
+    got = {kind: len(settled(pile, kind))
            for kind in ("videos", "reports", "images", "data")}
     return {"got": got, "want": WANT, "pictures": picture_mix(pile),
             "short": {kind: max(0, WANT[kind] - got.get(kind, 0)) for kind in WANT}}

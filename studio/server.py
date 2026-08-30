@@ -433,7 +433,10 @@ def get_topic(name: str) -> dict[str, Any]:
             # Pictures the audience implies and the pile does not have. Counts
             # cannot see this: thirty pictures of studios satisfy "15 photos"
             # while the film has nothing to end on.
-            "wanted": topic_module.wanted_shots(pile)}
+            "wanted": topic_module.wanted_shots(pile),
+            # Kept, but flagged. A decision waiting for somebody, not a
+            # deletion already carried out on a model's say-so.
+            "doubted": topic_module.doubted(pile)}
 
 
 @app.post("/api/topic")
@@ -509,8 +512,11 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         wrote = topic_module.hunt_reports(name, queries, say=say)
         try:
             wrote = writer_module.sift(name, wrote, say)
-        except Exception:                                         # noqa: BLE001
-            pass          # judging is optional; finding is not
+        except Exception as error:                                # noqa: BLE001
+            # Kept, but said so. Swallowing this is how twenty-eight reports
+            # including an airport malaria story were filed as relevant while
+            # the job reported 完成.
+            say(0, 1, f"⚠ 沒判斷相關性（{error}），全部留著")
         pile = topic_module.load(name)
         pile["sources"]["reports"] = (pile["sources"].get("reports") or []) + wrote
         topic_module.save(name, pile)
@@ -588,6 +594,39 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
     _job_run(f"收集：{name}", name, work)
     return {"started": name}
+
+
+@app.post("/api/topic/judge")
+def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Rule on what a model doubted: keep it, or drop it.
+
+    Both directions are here because both were wrong once. Asked which of
+    twenty-eight reports concerned the theft, a 7B model kept four and
+    discarded six that plainly did -- including the article this topic began
+    from -- while an airport malaria story it also discarded plainly did not.
+    Whoever is looking settles it.
+    """
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    urls = {str(one) for one in (payload.get("urls") or []) if one}
+    keep = bool(payload.get("keep"))
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    kind = str(payload.get("kind") or "reports")
+    rows = pile["sources"].get(kind) or []
+    if keep:
+        for one in rows:
+            if one.get("url") in urls:
+                one.pop("doubt", None)
+    else:
+        rows = [one for one in rows if one.get("url") not in urls]
+        pile["sources"][kind] = rows
+    topic_module.save(name, pile)
+    return {"kept" if keep else "dropped": len(urls),
+            "left": len(topic_module.doubted(pile, kind))}
 
 
 @app.post("/api/topic/note")
