@@ -108,6 +108,13 @@
   /* Unsaved edits are visible and countable. Saving on every keystroke meant
      there was no such state, so nothing could be discarded and nothing had to
      be confirmed. */
+  .pick-house{display:flex;align-items:center;gap:7px;font-size:12px;
+    color:var(--faint)}
+  .pick-house select{font:13px inherit;color:var(--ink);background:#0d1014;
+    border:1px solid var(--line);border-radius:6px;padding:4px 9px;cursor:pointer}
+  .pick-house select:hover{border-color:var(--accent)}
+  #whyHouse{font-size:11px;color:var(--faint);flex:1;line-height:1.5}
+
   /* Which shape a script is, on its card. Not only inside the script view:
      it decides what every other number on that card means -- 38% borrowed is
      over the ceiling for an argument and comfortable for a story. */
@@ -441,8 +448,20 @@ async function open(name) {
     </div>
 
     <div style="display:flex;gap:8px;align-items:center">
+      <!-- Chosen before writing, not corrected afterwards. The shape decides
+           the roles, the pacing, the borrowed ceiling and which prompt is
+           sent, so picking it after the fact means every line has to be
+           relabelled -- which is what happened to Messina. -->
+      <label class="pick-house">寫成
+        <select id="writeAs">
+          ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
+            .map((one) => `<option value="${escapeHTML(one.key)}">${
+              escapeHTML(one.name || one.key)}</option>`).join("")}
+        </select>
+      </label>
       <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
       ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">素材不齊也要寫</button>'}
+      <span id="whyHouse" class="hint"></span>
       <span style="flex:1"></span>
     </div>
     <div id="note"></div>
@@ -526,7 +545,8 @@ async function open(name) {
     $("note").className = "";
     $("note").textContent = "寫稿中…";
     try {
-      const made = await api("POST", "/api/topic/script", { name, anyway });
+      const made = await api("POST", "/api/topic/script",
+                             { name, anyway, format: $("writeAs").value });
       $("note").textContent = `寫好了：${made.script}`;
     } catch (error) {
       $("note").className = "warn";
@@ -593,6 +613,18 @@ async function open(name) {
       $("note").textContent = error.message;
     }
   };
+  // Each shape says in its own file why it exists; show that beside the
+  // chooser, because "新聞報導 or 說故事" is not a choice anybody can make from
+  // the two words alone.
+  const writeAs = $("writeAs");
+  if (writeAs) {
+    const sayWhy = () => {
+      const spec = FORMATS.find((one) => one.key === writeAs.value) || {};
+      $("whyHouse").textContent = spec.why || "";
+    };
+    writeAs.onchange = sayWhy;
+    sayWhy();
+  }
   if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
   if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
 }

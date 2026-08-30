@@ -720,11 +720,25 @@ def make_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     if not enough and not payload.get("anyway"):
         raise HTTPException(400, f"素材還不夠：{why}")
 
+    # Which shape to write. Chosen here rather than corrected afterwards: it
+    # decides the roles, the pacing, the borrowed ceiling and which prompt is
+    # sent, so choosing it later means relabelling every line.
+    from core import brief as brief_module
+    from core import rules as rules_module
+    house = str(payload.get("format") or rules_module.FALLBACK)
+    if house not in rules_module.formats():
+        raise HTTPException(400, f"沒有這個公版：{house}")
+
     reachable, complaint = _model_reachable()
     if not reachable:
         raise HTTPException(503, f"{complaint}　寫文案需要它。")
+    # The prompt is assembled either way, so a missing name in a prompt is
+    # found here rather than at the moment a model is finally connected.
+    asking = brief_module.prompt(name, house)
     raise HTTPException(501, "產生文案的那一步還沒接上模型——"
-                             "素材、平衡檢查和頁面都好了，缺的是寫稿本身。")
+                             f"素材、平衡檢查、公版（{house}）和頁面都好了，"
+                             f"prompt 也組好了（{len(asking.encode()) // 1024} KB），"
+                             "缺的是寫稿本身。")
 
 
 # ------------------------------------------------------------------ scripts
