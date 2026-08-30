@@ -842,6 +842,60 @@ def edit_line(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "measured": script_module.measure(found)}
 
 
+@app.post("/api/script/lines")
+def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Save a batch of hand edits, all of them or none.
+
+    One at a time was wrong in two ways. Every keystroke reaching disk meant
+    there was no such thing as an unsaved change, so leaving the page could not
+    discard anything and a half-finished thought was already the script. And a
+    role moved on its own can pass while leaving the sequence broken -- 合
+    before 轉 is not a shape anybody is working towards, and it is only
+    visible when the whole set is considered together.
+
+    So the new lines are assembled, checked, and only then written. A rejected
+    batch leaves the script exactly as it was, which is the same order that
+    keeps a failed re-collection from destroying the pictures it was replacing.
+    """
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    changes = payload.get("changes") or []
+    try:
+        found = script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    lines = [dict(line) for line in (found.get("lines") or [])]
+    for change in changes:
+        index = int(change.get("line") or 0) - 1
+        if not 0 <= index < len(lines):
+            raise HTTPException(400, f"沒有第 {index + 1} 句")
+        if "role" in change:
+            role = str(change["role"] or "")
+            if role and role not in script_module.ROLES:
+                raise HTTPException(400, "角色只能是 " +
+                                    "／".join(script_module.ROLES))
+            lines[index]["role"] = role
+        if "say" in change:
+            say = str(change["say"] or "").strip()
+            if not say:
+                raise HTTPException(400, f"第 {index + 1} 句的台詞不能是空的")
+            lines[index]["say"] = say
+            if not lines[index].get("clip"):
+                lines[index]["seconds"] = round(
+                    max(script_module.LEAST_SECONDS,
+                        script_module.spoken_length(say) /
+                        script_module.READ_PER_SECOND), 2)
+
+    broken = script_module.out_of_order([line.get("role", "") for line in lines])
+    if broken:
+        raise HTTPException(400, f"起承轉合的順序會壞掉：{broken}")
+
+    found["lines"] = lines
+    script_module.save(name, found)
+    return {"saved": len(changes), "measured": script_module.measure(found)}
+
+
 @app.get("/scripts")
 def scripts_page() -> HTMLResponse:
     return HTMLResponse((Path(__file__).parent / "static" / "scripts.html")

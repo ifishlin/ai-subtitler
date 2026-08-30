@@ -451,6 +451,22 @@ def unsigned(script: dict[str, Any]) -> list[dict[str, Any]]:
     return []
 
 
+def out_of_order(roles: list[str]) -> str:
+    """Where a sequence of 起承轉合 stops going forwards.
+
+    Separate from `structure` because it answers a different question at a
+    different moment: `structure` reports on a finished script, this one is
+    asked before an edit is accepted. A story can be short of 承 while it is
+    being written; it cannot have 合 in front of 轉 at any point, because that
+    is not a shape anybody is working towards.
+    """
+    seen = [ROLES.index(role) for role in roles if role in ROLES]
+    for index in range(1, len(seen)):
+        if seen[index] < seen[index - 1]:
+            return f"「{ROLES[seen[index]]}」不能排在「{ROLES[seen[index - 1]]}」後面"
+    return ""
+
+
 def uncredited(script: dict[str, Any],
                sources: dict[str, dict[str, Any]] | None = None,
                footage: dict[str, dict[str, Any]] | None = None

@@ -105,6 +105,15 @@
     border-radius:8px;display:block;background:#0d1014}
   #bigNote{font:11px var(--mono);color:var(--faint);line-height:1.6}
   #bigNote em{font-style:normal;color:#7fd4ff}
+  /* Unsaved edits are visible and countable. Saving on every keystroke meant
+     there was no such state, so nothing could be discarded and nothing had to
+     be confirmed. */
+  #pending{display:flex;align-items:center;gap:12px;margin:12px 0;
+    padding:9px 14px;border-radius:9px;background:#2a2415;
+    border:1px solid #5b4a22}
+  #pending[hidden]{display:none}
+  #pendingCount{font:12px var(--mono);color:#e2a33c}
+  #pending .hint{font-size:11px;color:var(--faint);flex:1}
   .shape{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin:12px 0}
   .shape-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;
@@ -578,6 +587,49 @@ const RIGHT_NOTE = {
   claimed: "別人的著作權，以引用主張合理使用",
 };
 
+/* Hand edits are held until they are saved.
+
+   Every keystroke used to reach disk, which meant there was no such thing as
+   an unsaved change: a half-finished thought was already the script and
+   leaving the page could not undo it. Edits now collect here, the button says
+   how many are waiting, and going anywhere else drops them.
+
+   Order is checked on the way in, not on the way out: 合 in front of 轉 is
+   refused by the server with the whole set in hand, because a role moved on
+   its own looks fine and the sequence it lands in does not. */
+const PENDING = {name: null, changes: new Map()};
+
+function pendingKey(index, field) { return `${index}:${field}`; }
+
+function markPending(index, field, value) {
+  PENDING.changes.set(pendingKey(index, field), {line: index, [field]: value});
+  drawPending();
+}
+
+function dropPending() {
+  PENDING.changes.clear();
+  PENDING.name = null;
+}
+
+function drawPending() {
+  const bar = $("pending");
+  if (!bar) return;
+  const count = PENDING.changes.size;
+  bar.hidden = count === 0;
+  if (count) $("pendingCount").textContent = `${count} 處未儲存`;
+}
+
+async function savePending() {
+  if (!PENDING.changes.size) return;
+  const name = PENDING.name;
+  try {
+    await api("POST", "/api/script/lines",
+              {name, changes: [...PENDING.changes.values()]});
+    dropPending();
+    showScript(name);
+  } catch (error) { alert(error.message); }
+}
+
 /* 起承轉合, laid out so it can be judged rather than counted.
 
    The program can prove a line is labelled 轉 and sits in the first third; it
@@ -658,6 +710,11 @@ function rightsPanel(rights) {
 }
 
 async function showScript(name) {
+  // Opening a different script drops whatever was pending on the last one.
+  // Deliberate: an edit that was never saved is not a change, and carrying it
+  // across would make it one without anybody deciding to.
+  if (PENDING.name && PENDING.name !== name) dropPending();
+  PENDING.name = name;
   let made;
   try { made = await api("GET", `/api/script?name=${encodeURIComponent(name)}`); }
   catch (error) { alert(error.message); return; }
@@ -705,6 +762,13 @@ async function showScript(name) {
       <div title="影片段落佔實拍時間的比例，至少一半">會動的<b class="${
         sums.still_enough ? "good" : "short"}">${sums.clip_share || 0}%</b></div>
     </div>
+    <div id="pending" hidden>
+      <span id="pendingCount"></span>
+      <span class="hint">切換到別的文案或回題目，這些改動會被丟掉</span>
+      <button id="btnSaveLines" class="primary tiny">儲存</button>
+      <button id="btnDropLines" class="tiny">放棄</button>
+    </div>
+    ${shapePanel(sums)}
     ${rightsPanel(sums.rights)}
     <div class="ruler">${sums.lines.map((line) =>
       `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
@@ -759,7 +823,48 @@ async function showScript(name) {
             escapeHTML(line.from || "")}</td>
         </tr>`).join("")}</tbody>
     </table>`;
-  $("btnBackTopic").onclick = () => open(STATE.chosen);
+  // Leaving for the topic drops pending edits too, and says so first.
+  $("btnBackTopic").onclick = () => {
+    if (PENDING.changes.size &&
+        !confirm(`有 ${PENDING.changes.size} 處還沒儲存，離開就會丟掉。要離開嗎？`))
+      return;
+    dropPending();
+    open(STATE.chosen);
+  };
+  $("btnSaveLines").onclick = savePending;
+  $("btnDropLines").onclick = () => { dropPending(); showScript(name); };
+  drawPending();
+
+  // 起承轉合 is a claim about the writing, and the writer is its worst judge,
+  // so whoever is reading has to be able to move it. The order it lands in is
+  // checked by the server with the whole set in hand.
+  $("paper").querySelectorAll("select.role").forEach((box) => {
+    box.addEventListener("change", () => {
+      const row = box.closest("tr");
+      markPending([...row.parentNode.children].indexOf(row) + 1,
+                  "role", box.value);
+    });
+  });
+
+  // Typing shows the count live; leaving the box, or Enter, queues it.
+  // Escape puts the old words back, because a half-typed line should not be
+  // able to overwrite a finished one by accident.
+  $("paper").querySelectorAll(".say-edit").forEach((cell) => {
+    cell.dataset.was = cell.textContent.trim();
+    cell.addEventListener("input", () => {
+      cell.closest("td").querySelector(".say-meter").innerHTML =
+        sayMeter(cell.textContent);
+    });
+    cell.addEventListener("blur", () => saveLine(cell, name));
+    cell.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); cell.blur(); }
+      if (event.key === "Escape") {
+        event.stopPropagation();
+        cell.textContent = cell.dataset.was;
+        cell.blur();
+      }
+    });
+  });
 }
 
 /* How the line measures against the frame it has to fit.
@@ -788,18 +893,20 @@ function sayMeter(say) {
       ? `<span class="hint">太短，至少停 ${FLOOR}s</span>` : ""}`;
 }
 
-async function saveLine(cell, name) {
+/* An edit joins the queue; it does not reach disk.
+
+   Saving on blur meant a half-typed line was already the script and there was
+   nothing for leaving the page to discard. Waiting also lets the order of
+   起承轉合 be checked over the whole set at once, which is the only way it can
+   be checked -- a role moved on its own always looks fine. */
+function saveLine(cell, name) {
   const row = cell.closest("tr");
   const index = [...row.parentNode.children].indexOf(row) + 1;
   const say = cell.textContent.trim();
   if (!say || say === cell.dataset.was) return;
-  try {
-    const back = await api("POST", "/api/script/line", {name, line: index, say});
-    cell.dataset.was = say;
-    row.querySelector(".say-meter").innerHTML = sayMeter(say);
-    // Every line after this one has moved, and the gauge above has changed.
-    showScript(name);
-  } catch (error) { alert(error.message); }
+  markPending(index, "say", say);
+  cell.dataset.was = say;
+  row.querySelector(".say-meter").innerHTML = sayMeter(say);
 }
 
 /* Opening one shot at the size it will be seen.
