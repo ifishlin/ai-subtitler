@@ -228,13 +228,23 @@ def wrap(text: str, per: int | None = None, most: int | None = None) -> list[str
 
 
 def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
-    """Lines that call for a photograph and do not name one.
+    """Lines that call for a photograph and do not name one this topic gathered.
 
     A line used to say 真實：變電所 and the file was chosen days later, while
     building. That splits one decision in two: the writer never saw what was
     available, and whoever picked the file never knew why the line wanted it.
     So a line that is not drawn names its picture, and the page shows it.
+
+    Existing on disk is not enough, and the difference matters more the less a
+    person is involved. Three times I named a picture from memory and twice it
+    belonged to a different topic -- files that exist, so this check passed
+    them, and only the credit and the caption showed anything was wrong.
+    Writing scripts in Python I can be handed a dictionary of this topic's
+    pictures and be unable to mistype one; a model returning JSON writes the
+    path itself, and would sail straight through. So the check is now that the
+    file is one of this topic's own.
     """
+    pictures, footage = gathered(script)
     lack = []
     for index, line in enumerate(script.get("lines") or [], start=1):
         if not is_real(line.get("show")):
@@ -245,6 +255,8 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
             clip = line["clip"]
             if not (ROOT / clip["file"]).is_file():
                 lack.append({**note, "why": f"找不到 {clip['file']}"})
+            elif footage and clip["file"] not in footage:
+                lack.append({**note, "why": f"{clip['file']} 不是這個題目的影片"})
             elif float(clip.get("end", 0)) <= float(clip.get("start", 0)):
                 lack.append({**note, "why": "段落的起訖時間不對"})
             continue
@@ -253,6 +265,8 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
             lack.append({**note, "why": "沒指定圖片"})
         elif not (ROOT / pic).is_file():
             lack.append({**note, "why": f"找不到 {pic}"})
+        elif pictures and pic not in pictures:
+            lack.append({**note, "why": f"{pic} 不是這個題目收的圖"})
     return lack
 
 
