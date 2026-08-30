@@ -83,7 +83,10 @@
         "seconds": 481,
         "outlet": "Fox Business",
         "lean": "right",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.en-orig.vtt",
+        "size": 37240477
       },
       {
         "title": "Democrats should disavow Farrakhan: RNC spokesperson",
@@ -107,7 +110,10 @@
         "seconds": 342,
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/NPvyaz3BCw0.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/NPvyaz3BCw0.en-orig.vtt",
+        "size": 15509054
       },
       {
         "title": "Paramount Reaffirms Warner Bros. Offer, Views Cable Channels as Worth Nothing",
@@ -123,7 +129,10 @@
         "seconds": 515,
         "outlet": "CNBC",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.en-orig.vtt",
+        "size": 35153986
       },
       {
         "title": "How Oracle’s AI-Fueled Debt Load Has Investors On Edge",
@@ -139,7 +148,10 @@
         "seconds": 141,
         "outlet": "The Economist",
         "lean": "market-liberal",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.en-orig.vtt",
+        "size": 6685315
       },
       {
         "title": "Bari Weiss and the Israel narrative in the US ",
@@ -836,6 +848,209 @@
         "size": [
           1288,
           1717
+        ]
+      },
+      {
+        "id": "frame_mEy6dWIrJd0_86",
+        "kind": "frame",
+        "term": "Fox Business 86s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_86.jpg",
+        "caption": "this hostile takeover bid from Paramount",
+        "said": "this hostile takeover bid from Paramount",
+        "at": 86.64,
+        "source": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
+        "look": 1387107589476614399
+      },
+      {
+        "id": "frame_mEy6dWIrJd0_4",
+        "kind": "frame",
+        "term": "Fox Business 4s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_4.jpg",
+        "caption": "battle over Warner Brothers Discovery.",
+        "said": "battle over Warner Brothers Discovery.",
+        "at": 4.84,
+        "source": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
+        "look": 233908733143875390
+      },
+      {
+        "id": "frame_mEy6dWIrJd0_183",
+        "kind": "frame",
+        "term": "Fox Business 183s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_183.jpg",
+        "caption": "Warner Brothers Discovery pairing. So,",
+        "said": "Warner Brothers Discovery pairing. So,",
+        "at": 183.96,
+        "source": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "outlet": "Fox Business",
+        "author": "",
+        "credit": "畫面來源：Fox Business",
+        "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
+        "look": 1242851669920580348
+      },
+      {
+        "id": "frame_NPvyaz3BCw0_1",
+        "kind": "frame",
+        "term": "Bloomberg 1s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_NPvyaz3BCw0_1.jpg",
+        "caption": "Warner Brothers would create cultural",
+        "said": "Warner Brothers would create cultural",
+        "at": 1.16,
+        "source": "assets/footage/科技巨頭買下好萊塢/NPvyaz3BCw0.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=NPvyaz3BCw0",
+        "look": 17744184778367696895
+      },
+      {
+        "id": "frame_viwG_sFgu_0_482",
+        "kind": "frame",
+        "term": "CNBC 482s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_482.jpg",
+        "caption": "Warner Bros. Discovery, would be bad for",
+        "said": "Warner Bros. Discovery, would be bad for",
+        "at": 482.1,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 17877210261964845029
+      },
+      {
+        "id": "frame_viwG_sFgu_0_64",
+        "kind": "frame",
+        "term": "CNBC 64s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_64.jpg",
+        "caption": ">> June 2025, Warner Brothers Discovery",
+        "said": ">> June 2025, Warner Brothers Discovery",
+        "at": 64.58,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 2305892732214439919
+      },
+      {
+        "id": "frame_lGsc338MTSk_59",
+        "kind": "frame",
+        "term": "The Economist 59s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_59.jpg",
+        "caption": "Warner and Paramount's vast media",
+        "said": "Warner and Paramount's vast media",
+        "at": 59.72,
+        "source": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
+        "outlet": "The Economist",
+        "author": "",
+        "credit": "畫面來源：The Economist",
+        "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
+        "look": 13787905877016320
+      },
+      {
+        "id": "frame_lGsc338MTSk_25",
+        "kind": "frame",
+        "term": "The Economist 25s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_25.jpg",
+        "caption": "company, Warner Brothers Discovery. If",
+        "said": "company, Warner Brothers Discovery. If",
+        "at": 25.36,
+        "source": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
+        "outlet": "The Economist",
+        "author": "",
+        "credit": "畫面來源：The Economist",
+        "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
+        "look": 104268038143
+      },
+      {
+        "id": "frame_lGsc338MTSk_100",
+        "kind": "frame",
+        "term": "The Economist 100s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_100.jpg",
+        "caption": "of these deals is set in stone. A Warner",
+        "said": "of these deals is set in stone. A Warner",
+        "at": 100.32,
+        "source": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
+        "outlet": "The Economist",
+        "author": "",
+        "credit": "畫面來源：The Economist",
+        "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
+        "look": 557942556671
+      },
+      {
+        "id": "Gate_4_Warner_Bros._Studios.jpg",
+        "term": "Warner Bros. Studios, Burbank",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Gate_4_Warner_Bros._Studios.jpg.jpg",
+        "caption": "Warner Bros. Studios Burbank, formerly known as First National Studio (1926–1929), Warner Bros.-Seven Arts Studios (1967–1970) and The Burbank Studios (1972–1990), is a major filmmaking facility owned and run by Warner Bros. Entertainment in Burbank, California, United States. First National Picture",
+        "outlet": "維基百科",
+        "author": "Coolcaesar",
+        "credit": "Coolcaesar／CC BY-SA 4.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Gate_4_Warner_Bros._Studios.jpg",
+        "look": 18376938283528486911,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "Brendan_Carr,_official_portrait_2025_(cropped)(b).jpg",
+        "term": "Brendan Carr (lawyer)",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Brendan_Carr,_official_portrait_2025_(cropped)(b).jpg.jpg",
+        "caption": "Brendan Thomas Carr is an American lawyer who has served as the chair of the Federal Communications Commission (FCC) since 2025. He has additionally served as a commissioner of the FCC since 2017.",
+        "outlet": "維基百科",
+        "author": "Federal Communications Commission",
+        "credit": "Federal Communications Commission／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Brendan_Carr,_official_portrait_2025_(cropped)(b).jpg",
+        "look": 2278296003738872,
+        "size": [
+          3674,
+          4583
+        ]
+      },
+      {
+        "id": "David_Zaslav_LQ_2026.jpg",
+        "term": "David Zaslav",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/David_Zaslav_LQ_2026.jpg.jpg",
+        "caption": "David Zaslav is an American media executive. He is the current chief executive officer (CEO) and president of Warner Bros. Discovery (WBD). Zaslav became CEO and president of Discovery, Inc. in 2006. He oversaw the company as it went public in 2008 and then merged with WarnerMedia in April 2022.",
+        "outlet": "維基百科",
+        "author": "US Embassy Italy",
+        "credit": "US Embassy Italy／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:David_Zaslav_LQ_2026.jpg",
+        "look": 4565382614417407,
+        "size": [
+          237,
+          344
+        ]
+      },
+      {
+        "id": "CBS_Broadcast_Center_(55282653632).jpg",
+        "term": "CBS Broadcast Center",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/CBS_Broadcast_Center_(55282653632).jpg.jpg",
+        "caption": "The CBS Broadcast Center is a television and radio production facility located on the West Side of Midtown Manhattan in New York City. It is CBS's main East Coast production hub, similar to CBS Studio Center in Los Angeles as the West Coast hub. The Broadcast Center is one of two production faciliti",
+        "outlet": "維基百科",
+        "author": "Ajay Suresh",
+        "credit": "Ajay Suresh／CC BY 4.0",
+        "answers": 0.67,
+        "page": "https://commons.wikimedia.org/wiki/File:CBS_Broadcast_Center_(55282653632).jpg",
+        "look": 141574065881087,
+        "size": [
+          8457,
+          4757
         ]
       }
     ],

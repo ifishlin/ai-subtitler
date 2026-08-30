@@ -22,6 +22,8 @@ import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
+
+from core import rules as rules_module
 from typing import Any
 
 TIMEOUT = 20
@@ -391,8 +393,24 @@ def looks_like(path: Path) -> int:
     return bits
 
 
-def alike(one: int, other: int, within: int = 12) -> bool:
-    return bin(one ^ other).count("1") <= within
+SAME_WITHIN = rules_module.at("picture.same_within", 8)
+
+
+def alike(one: int, other: int, within: int | None = None) -> bool:
+    """Whether two fingerprints are the same picture.
+
+    The threshold was 12 and the docstring above claimed different pictures
+    differ by dozens of bits. Measured on a real pile, they do not: unrelated
+    news frames and stock photographs sit 13 to 16 bits apart, because most of
+    them are mid-grey rectangles. Twelve was inside the noise, and a portrait
+    of David Zaslav was discarded for resembling a photograph of a television
+    remote -- silently, the way every picture fault in this project fails.
+
+    The same picture resized is 0 bits away and cropped 5% is 1 to 6, so eight
+    sits in the gap with room on both sides.
+    """
+    return bin(one ^ other).count("1") <= (
+        SAME_WITHIN if within is None else within)
 
 
 # Wikimedia asks for an agent that says who is calling and how to reach them,
