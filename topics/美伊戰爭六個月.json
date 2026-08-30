@@ -29,21 +29,30 @@
         "url": "https://www.youtube.com/watch?v=r7KP6RIhcNc",
         "outlet": "Reuters",
         "lean": "neutral",
-        "seconds": 126.0
+        "seconds": 126.0,
+        "file": "assets/footage/美伊戰爭六個月/r7KP6RIhcNc.mp4",
+        "captions": "assets/footage/美伊戰爭六個月/r7KP6RIhcNc.en-orig.vtt",
+        "size": 13121396
       },
       {
         "title": "Iran war: Casualty count exceeds 600 as Pentagon changes accounting",
         "url": "https://www.youtube.com/watch?v=j3bIf9mfc-Q",
         "outlet": "CNN",
         "lean": "left",
-        "seconds": 570.0
+        "seconds": 570.0,
+        "file": "assets/footage/美伊戰爭六個月/j3bIf9mfc-Q.mp4",
+        "captions": "assets/footage/美伊戰爭六個月/j3bIf9mfc-Q.en.vtt",
+        "size": 38615467
       },
       {
         "title": "7 people around the world share how the Iran war reshaped their lives",
         "url": "https://www.youtube.com/watch?v=N_5yXWXZJ7A",
         "outlet": "AP News",
         "lean": "neutral",
-        "seconds": 475.0
+        "seconds": 475.0,
+        "file": "assets/footage/美伊戰爭六個月/N_5yXWXZJ7A.mp4",
+        "captions": "assets/footage/美伊戰爭六個月/N_5yXWXZJ7A.en-orig.vtt",
+        "size": 40343167
       }
     ],
     "reports": [

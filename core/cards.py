@@ -512,13 +512,14 @@ def _brand(card: Image.Image, draw: ImageDraw.ImageDraw,
     nothing is how the credit line disappeared from a finished film without
     anyone noticing.
     """
-    show = ease(max(0.0, (t - 0.55) / 0.45))
+    brand = rules_module.look("brand", {}) or {}
+    begin = float(brand.get("show_from", 0.35))
+    show = ease(max(0.0, (t - begin) / max(0.05, 1 - begin)))
     if show <= 0.02:
         return
-    brand = rules_module.look("brand", {}) or {}
-    size = int(brand.get("icon_size", 116))
+    size = int(brand.get("icon_size", 168))
     right = W - int(brand.get("corner_right", 74))
-    bottom = int(brand.get("corner_bottom", 1330))
+    bottom = int(brand.get("corner_bottom", 1300))
     box = [right - size, bottom - size, right, bottom]
 
     icon = ROOT / str(brand.get("icon", ""))
@@ -527,6 +528,11 @@ def _brand(card: Image.Image, draw: ImageDraw.ImageDraw,
         round_mask = Image.new("L", (size, size), 0)
         ImageDraw.Draw(round_mask).ellipse([0, 0, size - 1, size - 1], fill=255)
         card.paste(badge, (box[0], box[1]), round_mask)
+        # A ring around it. Without one the avatar's own edge dissolves into
+        # whatever colour is behind it, and this is watched on a phone at
+        # arm's length: a mark is either legible or it should not be there.
+        if brand.get("ring", True):
+            ImageDraw.Draw(card).ellipse(box, outline=tone["lead"], width=6)
     else:
         # Drawn, not typed: PingFang has no ▶ and a missing glyph renders as
         # nothing at all, which is exactly the failure this placeholder is
@@ -539,12 +545,29 @@ def _brand(card: Image.Image, draw: ImageDraw.ImageDraw,
                       (middle[0] + arm, middle[1])], fill=tone["lead"])
 
     call = str(brand.get("call") or "請訂閱")
-    draw.text((box[0] - 22, bottom - size * 0.72), call, font=face(46),
-              fill=tone["ink"], anchor="ra")
+    size_call = 52
+    font = face(size_call)
+    wide = draw.textlength(call, font=font)
+    right_edge = box[0] - 26
+    middle = (box[1] + box[3]) / 2
+    if brand.get("plate", True):
+        # White on a bright card and white on a dark one are different
+        # problems; a plate solves both, and it is the same device the
+        # captions already use, so the frame does not gain a new idiom.
+        draw.rounded_rectangle(
+            [right_edge - wide - 30, middle - size_call * 0.72,
+             right_edge, middle + size_call * 0.78],
+            26, fill=tone["lead"])
+        draw.text((right_edge - 15, middle - size_call * 0.58), call, font=font,
+                  fill=tone["top"] if isinstance(tone["top"], str) else "#101820",
+                  anchor="ra")
+    else:
+        draw.text((right_edge, middle - size_call * 0.58), call, font=font,
+                  fill=tone["ink"], anchor="ra")
     handle = str(brand.get("handle") or "")
     if handle:
-        draw.text((box[0] - 22, bottom - size * 0.30), handle, font=face(32, False),
-                  fill=tone["dim"], anchor="ra")
+        draw.text((right_edge, middle + size_call * 0.9), handle,
+                  font=face(32, False), fill=tone["dim"], anchor="ra")
 
 
 def _outro(spec: dict[str, Any], t: float) -> Image.Image:

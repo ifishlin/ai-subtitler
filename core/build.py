@@ -18,6 +18,8 @@ between shot kinds.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -67,6 +69,36 @@ def caption_layer(rows: list[str]) -> Image.Image:
         draw.text((W / 2, top + index * ROW_STEP), row, font=font,
                   fill=(255, 255, 255, 255), anchor="ma")
     return layer
+
+
+def _how() -> str:
+    """A fingerprint of the code that draws a shot.
+
+    Shots were cached by their position in the film -- `07.mp4` -- so a change
+    to how cards are drawn did not invalidate anything: the next build happily
+    reused every frame it had. I enlarged the channel mark, rebuilt, and would
+    have shipped the old ending without noticing, because the file was there
+    and the file was wrong.
+
+    A cached thing has to be named after everything that decides what it
+    contains. That is the line's own specification plus the code, so editing
+    either produces a different name and the old file is simply not found.
+    """
+    marks = []
+    for module in ("cards.py", "build.py", "shorts.py"):
+        here = Path(__file__).parent / module
+        if here.is_file():
+            marks.append(str(here.stat().st_mtime_ns))
+    marks.append(json.dumps(rules_module.theme(), sort_keys=True))
+    return hashlib.sha1("|".join(marks).encode("utf-8")).hexdigest()[:8]
+
+
+def _recipe(line: dict[str, Any], how: str) -> str:
+    """The filename for one rendered shot: its own content, and the code."""
+    body = json.dumps({key: line[key] for key in sorted(line)
+                       if key not in ("at", "characters")},
+                      ensure_ascii=False, sort_keys=True)
+    return hashlib.sha1((body + how).encode("utf-8")).hexdigest()[:12]
 
 
 def placed_size(pic: Path) -> tuple[int, int]:
@@ -249,12 +281,13 @@ def build(name: str, target: Path | None = None,
     work = OUT_DIR / f".{name}"
     work.mkdir(parents=True, exist_ok=True)
     target = target or OUT_DIR / f"{name}.mp4"
+    how = _how()
     pieces = []
     for index, line in enumerate(measured["lines"]):
         seconds = line["seconds"]
         plate = work / f"cap{index:02d}.png"
         caption_layer(script_module.wrap(line["say"])).save(plate)
-        piece = work / f"{index:02d}.mp4"
+        piece = work / f"{index:02d}.{_recipe(line, how)}.mp4"
         if not piece.is_file():
             if line.get("clip"):
                 who = footage.get(line["clip"]["file"], {}).get("outlet", "")
@@ -272,6 +305,13 @@ def build(name: str, target: Path | None = None,
         pieces.append(piece)
         if say:
             say(index + 1, len(measured["lines"]), line["say"])
+
+    # Anything left from an older recipe is now unreachable and only takes up
+    # room; a film's worth of intermediate shots is tens of megabytes.
+    keep = {piece.name for piece in pieces}
+    for stale in work.glob("*.mp4"):
+        if stale.name not in keep:
+            stale.unlink(missing_ok=True)
 
     listing = work / "join.txt"
     listing.write_text("".join(f"file '{piece}'\n" for piece in pieces),

@@ -9,7 +9,10 @@
         "url": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
         "outlet": "Fox News",
         "lean": "right",
-        "seconds": 483.0
+        "seconds": 483.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.mp4",
+        "captions": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.en-US.vtt",
+        "size": 57580047
       },
       {
         "title": "Was climate change to blame for the Nepal floods?",
@@ -26,28 +29,40 @@
         "url": "https://www.youtube.com/watch?v=La0MDQohgk0",
         "outlet": "BBC News",
         "lean": "neutral",
-        "seconds": 226.0
+        "seconds": 226.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/La0MDQohgk0.mp4",
+        "captions": "assets/footage/尼泊爾冰川潰決洪災/La0MDQohgk0.en-orig.vtt",
+        "size": 27925899
       },
       {
         "title": "Nepal's deadly flood: causation, devastation, and preventive measures.",
         "url": "https://www.youtube.com/watch?v=JU-oiX2J4s4",
         "outlet": "Al Jazeera English",
         "lean": "non-western",
-        "seconds": 193.0
+        "seconds": 193.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/JU-oiX2J4s4.mp4",
+        "captions": "assets/footage/尼泊爾冰川潰決洪災/JU-oiX2J4s4.en-orig.vtt",
+        "size": 22060058
       },
       {
         "title": "LIVE: Aftermath of floods on Nepal-China border caused by glacier collapse",
         "url": "https://www.youtube.com/watch?v=sW2potT5Erw",
         "outlet": "AP News",
         "lean": "neutral",
-        "seconds": 482.0
+        "seconds": 482.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/sW2potT5Erw.mp4",
+        "captions": null,
+        "size": 40897959
       },
       {
         "title": "New barrier lakes heighten danger near Nepal flood zone",
         "url": "https://www.youtube.com/watch?v=B06uPGK7Dpo",
         "outlet": "CNN",
         "lean": "left",
-        "seconds": 559.0
+        "seconds": 559.0,
+        "file": "assets/footage/尼泊爾冰川潰決洪災/B06uPGK7Dpo.mp4",
+        "captions": "assets/footage/尼泊爾冰川潰決洪災/B06uPGK7Dpo.en.vtt",
+        "size": 55651516
       }
     ],
     "reports": [
