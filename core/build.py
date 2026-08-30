@@ -273,10 +273,15 @@ def build(name: str, target: Path | None = None,
             why = "、".join(item.get("say") or item.get("why", "")
                             for item in faults[:3])
             raise RuntimeError(f"{name} 有 {len(faults)} 處{complaint}：{why}")
-    if measured["over"]:
-        # Measured all along and never gated, so a film that ran 0.78 seconds
-        # long went to the encoder anyway. A number that is computed, shown on
-        # the page, and cannot stop anything is a number that will be ignored.
+    # Measured all along and never gated, so a film that ran 0.78 seconds long
+    # went to the encoder anyway. A number that is computed, shown on the page,
+    # and cannot stop anything is a number that will be ignored.
+    #
+    # The tolerance is one frame, and it is not a fudge: a film cannot be
+    # shorter than its own frames, so an overrun below that is arithmetic
+    # rather than length. Without it the gate refused a 90.01s film, which is
+    # the kind of correctness that teaches people to work around the gate.
+    if measured["over"] > 1 / FPS:
         raise RuntimeError(f"{name} 長 {measured['seconds']}s，"
                            f"超出上限 {measured['over']}s")
     if not measured["still_enough"]:

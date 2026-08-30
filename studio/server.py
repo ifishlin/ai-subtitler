@@ -819,8 +819,9 @@ def edit_line(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         # check passed because they all measure the label rather than the
         # thing. Somebody reading it has to be able to move it.
         from core import script as script_module
-        if role and role not in script_module.ROLES:
-            raise HTTPException(400, "角色只能是 " + "／".join(script_module.ROLES))
+        roles = script_module.roles_of(found)
+        if role and role not in roles:
+            raise HTTPException(400, "角色只能是 " + "／".join(roles))
         lines[index]["role"] = role
         script_module.save(name, found)
         return {"saved": True, "line": index + 1, "role": role,
@@ -872,9 +873,9 @@ def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             raise HTTPException(400, f"沒有第 {index + 1} 句")
         if "role" in change:
             role = str(change["role"] or "")
-            if role and role not in script_module.ROLES:
-                raise HTTPException(400, "角色只能是 " +
-                                    "／".join(script_module.ROLES))
+            roles = script_module.roles_of(found)
+            if role and role not in roles:
+                raise HTTPException(400, "角色只能是 " + "／".join(roles))
             lines[index]["role"] = role
         if "say" in change:
             say = str(change["say"] or "").strip()
@@ -887,7 +888,9 @@ def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                         script_module.spoken_length(say) /
                         script_module.READ_PER_SECOND), 2)
 
-    broken = script_module.out_of_order([line.get("role", "") for line in lines])
+    broken = script_module.out_of_order(
+        [line.get("role", "") for line in lines],
+        script_module.roles_of(found))
     if broken:
         raise HTTPException(400, f"起承轉合的順序會壞掉：{broken}")
 

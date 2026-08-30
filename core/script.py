@@ -144,22 +144,27 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
         where = min(2, int(item["at"] / max(clock, 1) * 3))
         thirds[where] += 1
     moving = sum(item["seconds"] for item in lifted if is_clip(item))
+    most = rules_module.of(script, "borrowed.most", REAL_MOST)
+    least = rules_module.of(script, "borrowed.clip_least", CLIP_LEAST)
     out = {"lines": laid, "seconds": round(clock, 2), "characters": said,
             "over": round(max(0.0, clock - LIMIT), 2), "unsourced": unsourced,
             "opinion": opinion,
             "borrowed": round(borrowed, 2),
             "borrowed_share": round(borrowed / clock * 100) if clock else 0,
             "spread": thirds,
-            "even": all(thirds) and borrowed <= clock * REAL_MOST,
+            "even": all(thirds) and borrowed <= clock * most,
             "clip_seconds": round(moving, 2),
             "clip_share": round(moving / borrowed * 100) if borrowed else 0,
-            "still_enough": borrowed > 0 and moving >= borrowed * CLIP_LEAST,
+            "still_enough": borrowed > 0 and moving >= borrowed * least,
             "unpicked": missing_pictures(script),
             "unchecked": unchecked(script),
             "undrawn": undrawn(script),
             "uncredited": uncredited(script, *gathered(script)),
             "samey": samey(script),
             "unsigned": unsigned(script),
+            "house": rules_module.house(script.get("format")).get("name", ""),
+            "roles": roles_of(script),
+            "borrowed_most": most,
             "shapeless": []}
     out["shapeless"] = structure(script, out)
     out["rights"] = rights(script, gathered(script)[0], out)
@@ -457,7 +462,7 @@ def unsigned(script: dict[str, Any]) -> list[dict[str, Any]]:
     if not str(card.get("title") or "").strip():
         return [{"line": len(lines), "say": last.get("say", ""),
                  "why": "outro 沒寫那句帶得走的話"}]
-    least, most = rules_module.at("ending.points", [3, 4])
+    least, most = rules_module.of(script, "ending.points", [3, 4])
     points = [one for one in (card.get("points") or []) if str(one).strip()]
     if not least <= len(points) <= most:
         return [{"line": len(lines), "say": last.get("say", ""),
@@ -465,7 +470,7 @@ def unsigned(script: dict[str, Any]) -> list[dict[str, Any]]:
     return []
 
 
-def out_of_order(roles: list[str]) -> str:
+def out_of_order(given: list[str], roles: list[str] | None = None) -> str:
     """Where a sequence of 起承轉合 stops going forwards.
 
     Separate from `structure` because it answers a different question at a
@@ -474,10 +479,11 @@ def out_of_order(roles: list[str]) -> str:
     being written; it cannot have 合 in front of 轉 at any point, because that
     is not a shape anybody is working towards.
     """
-    seen = [ROLES.index(role) for role in roles if role in ROLES]
+    roles = roles or ROLES
+    seen = [roles.index(role) for role in given if role in roles]
     for index in range(1, len(seen)):
         if seen[index] < seen[index - 1]:
-            return f"「{ROLES[seen[index]]}」不能排在「{ROLES[seen[index - 1]]}」後面"
+            return f"「{roles[seen[index]]}」不能排在「{roles[seen[index - 1]]}」後面"
     return ""
 
 
@@ -525,6 +531,16 @@ def uncredited(script: dict[str, Any],
 ROLES = rules_module.at("structure.roles", ["起", "承", "轉", "合"])
 
 
+def roles_of(script: dict[str, Any]) -> list[str]:
+    """The role vocabulary this script is written in.
+
+    An argument runs 起承轉合; a story runs 場景／事件／疑點／懸念. Both are
+    checkable in exactly the same way -- all present, in order, each with
+    enough lines -- and neither can be checked against the other's words.
+    """
+    return rules_module.of(script, "structure.roles", ROLES)
+
+
 def structure(script: dict[str, Any],
               measured: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     """Whether the thing has a shape.
@@ -541,30 +557,33 @@ def structure(script: dict[str, Any],
     is for.
     """
     measured = measured or measure(script)
+    roles = roles_of(script)
     lines = measured["lines"]
     faults = []
     given = [line.get("role") for line in lines]
-    if any(role not in ROLES for role in given):
-        return [{"why": "每一句都要標 " + "／".join(ROLES),
+    if any(role not in roles for role in given):
+        return [{"why": "每一句都要標 " + "／".join(roles),
                  "lines": [index + 1 for index, role in enumerate(given)
-                           if role not in ROLES]}]
+                           if role not in roles]}]
 
-    for role, least in (rules_module.at("structure.least_per_role") or {}).items():
+    for role, least in (rules_module.of(script, "structure.least_per_role") or {}).items():
         got = given.count(role)
         if got < least:
             faults.append({"why": f"「{role}」只有 {got} 句，至少要 {least} 句"})
 
-    order = [ROLES.index(role) for role in given]
+    order = [roles.index(role) for role in given]
     if order != sorted(order):
         back = next(i for i in range(1, len(order)) if order[i] < order[i - 1])
         faults.append({"why": f"順序亂了：第 {back + 1} 句的「{given[back]}」"
                               f"排在「{given[back - 1]}」後面"})
 
     clock = measured["seconds"] or 1
-    turn = next((line for line in lines if line.get("role") == "轉"), None)
-    before = rules_module.at("structure.turn_before", 0.34)
-    if turn and turn["at"] > clock * before:
-        faults.append({"why": f"轉出現在 {turn['at']:.0f} 秒，"
+    # The third role is the turn in an argument and the doubts in a story;
+    # a story sets `turn_before` to 0, which means it is not on a clock.
+    turn = next((line for line in lines if line.get("role") == roles[2]), None)
+    before = rules_module.of(script, "structure.turn_before", 0.34)
+    if before and turn and turn["at"] > clock * before:
+        faults.append({"why": f"「{roles[2]}」出現在 {turn['at']:.0f} 秒，"
                               f"超過前 {before * 100:.0f}%（{clock * before:.0f} 秒）"
                               f"，太晚了留不住人"})
     return faults

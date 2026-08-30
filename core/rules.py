@@ -14,6 +14,7 @@ the current one or fails loudly on a name that does not exist.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -82,14 +83,23 @@ def _flatten(source: dict[str, Any], prefix: str = "") -> dict[str, Any]:
     return out
 
 
-def fill(text: str) -> str:
+NAMED = re.compile(r"\{([^{}\s:]+)(?::([a-z]+))?\}")
+
+
+def fill(text: str, house_of: str | None = None) -> str:
     """Put the current numbers into a prompt.
 
     A prompt says `每句 {caption.per_row} 個中文字以內`, and this puts today's
     figure in on the way out. Prose that quotes a number is prose that goes
     stale; prose that names one cannot.
+
+    `house_of` names a format, whose values win over the shared ones -- the
+    story prompt asks for `{structure.least_per_role.疑點}`, which only exists
+    in that format.
     """
     known = _flatten(rules())
+    if house_of:
+        known.update(_flatten(house(house_of)))
     known.update({f"theme.{key}": value for key, value in _flatten(theme()).items()})
     for name, value in known.items():
         for how, shown in _shapes(value).items():
@@ -115,12 +125,71 @@ def _shapes(value: Any) -> dict[str, str]:
     return out
 
 
-def unfilled(text: str) -> list[str]:
+def unfilled(text: str, house_of: str | None = None) -> list[str]:
     """Names a prompt asks for that the rule files do not have. Checked when a
     prompt is loaded, so a typo is found at that moment rather than reaching a
     model as a literal brace."""
-    import re
     known = set(_flatten(rules())) | {
         f"theme.{key}" for key in _flatten(theme())}
-    return [name for name in re.findall(r"\{([a-z_.]+)(?::[a-z]+)?\}", text)
-            if name not in known]
+    if house_of:
+        known |= set(_flatten(house(house_of)))
+    # Any name, not only ASCII ones. The pattern used to be [a-z_.]+, so
+    # `{structure.least_per_role.疑點}` matched nothing: fill left it alone and
+    # unfilled reported the prompt clean, and the literal braces would have
+    # reached the model. A checker that cannot see a whole class of mistake
+    # reports every one of them as fine.
+    return [name for name, _ in NAMED.findall(text) if name not in known]
+
+
+FORMATS = ROOT / "assets" / "formats"
+FALLBACK = "argue"
+
+
+def formats() -> dict[str, dict[str, Any]]:
+    """The house styles a script can be written in.
+
+    A short is not one shape. "Everyone argues about A and nobody asks B" wants
+    a reversal in the first third and a conclusion that lands on the viewer's
+    week; a theft wants to put you at the scene and leave you puzzled. Written
+    to one template, the Messina script spent its first third compressing
+    exposition -- the time, the crowd, the police, the closed roads -- to reach
+    a turn on schedule, and those were the pictures worth dwelling on.
+
+    So the thresholds that differ by shape live in a format, and the ones that
+    do not -- caption width, reading pace, the length ceiling -- stay in
+    rules.json, where there is one of each.
+    """
+    found = {}
+    for path in sorted(FORMATS.glob("*.json")) if FORMATS.is_dir() else []:
+        try:
+            found[path.stem] = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+    return found
+
+
+def house(which: str | None = None) -> dict[str, Any]:
+    """One house style, falling back to the argument shape.
+
+    Falling back rather than failing: a script written before formats existed
+    has no `format` field and is an argument, which is what every one of them
+    was.
+    """
+    known = formats()
+    return known.get(str(which or FALLBACK)) or known.get(FALLBACK) or {}
+
+
+def of(script: dict[str, Any], path: str, fallback: Any = None) -> Any:
+    """A threshold for this script, from its own house style first.
+
+    `of(script, "borrowed.most")` gives 0.35 to an argument and 0.5 to a story,
+    and falls through to rules.json for anything a format does not override --
+    so a format says only what makes it different, and the rest cannot drift
+    apart from it.
+    """
+    where: Any = house(script.get("format"))
+    for step in path.split("."):
+        if not isinstance(where, dict) or step not in where:
+            return at(path, fallback)
+        where = where[step]
+    return where

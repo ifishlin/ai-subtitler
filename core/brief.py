@@ -161,11 +161,18 @@ def as_text(name: str) -> str:
     return "\n".join(out)
 
 
-def prompt(name: str, which: str = "script") -> str:
-    """A prompt with today's numbers in it and the material under it."""
+def prompt(name: str, house: str = "argue") -> str:
+    """A prompt for one house style, with today's numbers and the material.
+
+    Which prompt to send is the format's own business -- an argument gets
+    script.md, a story gets story.md -- so naming the format is enough.
+    """
+    spec = rules_module.house(house)
+    which = str(spec.get("prompt") or "script.md").removesuffix(".md")
     body = (ROOT / "assets" / "prompts" / f"{which}.md").read_text(
         encoding="utf-8")
-    missing = rules_module.unfilled(body)
+    missing = rules_module.unfilled(body, house)
     if missing:
-        raise RuntimeError(f"{which}.md 要的名字 rules/theme 裡沒有：{missing}")
-    return rules_module.fill(body) + "\n\n---\n\n" + as_text(name)
+        raise RuntimeError(f"{which}.md 要的名字在 rules／theme／{house} 裡沒有："
+                           f"{missing}")
+    return (rules_module.fill(body, house) + "\n\n---\n\n" + as_text(name))

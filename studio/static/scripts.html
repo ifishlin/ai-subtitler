@@ -790,8 +790,9 @@ async function showScript(name) {
           }))}">
           <td class="at">${clock(line.at)}
             <select class="role" data-was="${escapeHTML(line.role || "")}">
-              ${["起","承","轉","合"].map((one) => `<option${
-                one === line.role ? " selected" : ""}>${one}</option>`).join("")}
+              ${(sums.roles || ["起","承","轉","合"]).map((one) => `<option${
+                one === line.role ? " selected" : ""}>${escapeHTML(one)}</option>`
+              ).join("")}
             </select></td>
           <td class="say">
             <div class="say-edit" contenteditable="plaintext-only"
