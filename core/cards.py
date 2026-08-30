@@ -60,6 +60,8 @@ NOTE_TOP = rules_module.look("frame.note_top", 300)
 # core/shorts.py, so a card and a photograph put their subject in the same
 # part of the frame and the cut between them does not jump.
 TOP = rules_module.look("frame.card_top", 470)
+# Nothing drawn may come closer than this to either edge.
+MARGIN = rules_module.look("frame.side_margin", 74)
 FONT = rules_module.look("font", "/System/Library/Fonts/PingFang.ttc")
 
 
@@ -158,6 +160,25 @@ def _mid(draw: ImageDraw.ImageDraw, y: float, text: str, size: int,
     draw.text((W // 2, y), text, font=face(size, bold), fill=fill, anchor="ma")
 
 
+def fits(rows: list[str], want: int, bold: bool = True,
+         room: int | None = None) -> int:
+    """The largest size at or below `want` that leaves a margin on both sides.
+
+    Sizes used to come from a table of character counts -- three characters
+    get 300, five get 220 -- which is a guess about width dressed as a rule.
+    Five characters at 220 is 1100 pixels on a 1080 frame, so 「沒有這一欄」
+    was drawn off both edges. Measuring costs nothing and cannot be wrong
+    about the font it is actually using.
+    """
+    room = room if room is not None else W - 2 * MARGIN
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    for size in range(want, 23, -4):
+        font = face(size, bold)
+        if max((ruler.textlength(row, font=font) for row in rows), default=0) <= room:
+            return size
+    return 24
+
+
 def _fade(colour: str, part: float, ground: tuple[int, int, int]) -> tuple[int, int, int]:
     """A colour on its way in, mixed towards the ground behind it."""
     part = min(1.0, max(0.0, part))
@@ -184,6 +205,7 @@ def _heading(draw: ImageDraw.ImageDraw, spec: dict[str, Any], t: float,
     everything at one scale."""
     tone = tone_of(spec)
     rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, size)
     colour = "#" + "".join(f"{v:02x}" for v in
                            _fade(tone["lead"], ease(t * 2), tone["top"]))
     for index, row in enumerate(rows):
@@ -204,8 +226,7 @@ def _word(spec: dict[str, Any], t: float) -> Image.Image:
     card, draw = _base(spec)
     tone = tone_of(spec)
     rows = [row for row in str(spec.get("title", "")).split("\n") if row]
-    longest = max((len(row) for row in rows), default=1)
-    size = 300 if longest <= 3 else 220 if longest <= 5 else 150 if longest <= 7 else 108
+    size = fits(rows, 300)
     top = 820 - (len(rows) - 1) * (size + 20) // 2
     for index, row in enumerate(rows):
         part = stagger(t, index, len(rows))
@@ -246,7 +267,7 @@ def _number(spec: dict[str, Any], t: float) -> Image.Image:
             shown = text
     else:
         shown = text
-    size = 430 if len(text) <= 3 else 320 if len(text) <= 5 else 230
+    size = fits([text], 430)
     colour = spec.get("colour") or tone["lead"]
     _mid(draw, 640, shown, size,
          "#" + "".join(f"{v:02x}" for v in _fade(colour, min(1, part * 1.6),
@@ -424,7 +445,8 @@ def _ring(spec: dict[str, Any], t: float) -> Image.Image:
     if spec.get("title"):
         _mid(draw, 520, spec["title"], 58, tone["dim"], bold=False)
     text = str(spec.get("value", ""))
-    size = 260 if len(text) <= 4 else 180
+    # Tighter than the rest: the ring is drawn around it and needs the room.
+    size = fits([text], 260, room=W - 2 * MARGIN - 200)
     _mid(draw, 720, text, size, tone["ink"])
 
     sweep = ease(max(0.0, (t - 0.3) / 0.7)) * 1.12       # overshoots, then stops
@@ -456,19 +478,20 @@ def _swap(spec: dict[str, Any], t: float) -> Image.Image:
     tone = tone_of(spec)
     top = _heading(draw, spec, t)
     was, now = str(spec.get("was", "")), str(spec.get("now", ""))
+    was_size, now_size = fits([was], 96), fits([now], 130)
     faded = _fade(tone["dim"], 1 - 0.55 * ease(max(0.0, (t - 0.4) / 0.6)),
                   tone["top"])
-    _mid(draw, top + 90, was, 96,
+    _mid(draw, top + 90, was, was_size,
          "#" + "".join(f"{v:02x}" for v in faded))
     if t > 0.35:
-        width = draw.textlength(was, font=face(96))
+        width = draw.textlength(was, font=face(was_size))
         strike = ease((t - 0.35) / 0.35)
         draw.line([(W / 2 - width / 2, top + 150),
                    (W / 2 - width / 2 + width * min(1, strike), top + 150)],
                   fill=tone["hot"], width=10)
     arrive = ease(max(0.0, (t - 0.5) / 0.5))
     if arrive > 0.01:
-        _mid(draw, top + 300 + (1 - arrive) * 40, now, 130,
+        _mid(draw, top + 300 + (1 - arrive) * 40, now, now_size,
              "#" + "".join(f"{v:02x}" for v in
                            _fade(tone["lead"], arrive, tone["top"])))
     _note(draw, spec, t)

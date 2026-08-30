@@ -158,6 +158,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "unchecked": unchecked(script),
             "undrawn": undrawn(script),
             "uncredited": uncredited(script, *gathered(script)),
+            "samey": samey(script),
             "shapeless": []}
     out["shapeless"] = structure(script, out)
     out["rights"] = rights(script, gathered(script)[0], out)
@@ -368,6 +369,50 @@ def undrawn(script: dict[str, Any]) -> list[dict[str, Any]]:
         lack.append({"line": index, "say": line.get("say", ""),
                      "show": line.get("show", ""), "why": "沒說這張卡怎麼畫"})
     return lack
+
+
+def samey(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Runs of identical-looking shots.
+
+    Found by laying the finished film out as one sheet, which is the only way
+    it can be found: every one of those cards is fine on its own, and four of
+    them in a row are a slideshow. The first ending ran six `word` cards
+    together -- same size, same position, same ground -- and the eye has
+    nothing to follow from one to the next.
+
+    A run of borrowed shots is not counted. Photographs and clips differ from
+    each other by being photographs of different things; two cards of the same
+    kind differ only in their words.
+    """
+    most = rules_module.at("cards.same_kind_run", 3)
+    tone_most = rules_module.at("cards.same_tone_run", 12)
+    lines = script.get("lines") or []
+    faults, run, tone_run = [], [], []
+
+    def close(group: list[tuple[int, str]], limit: int, what: str) -> None:
+        if len(group) > limit:
+            faults.append({
+                "line": group[0][0], "why": f"連續 {len(group)} 句都是"
+                                            f"{what}「{group[0][1]}」，最多 {limit}",
+                "lines": [index for index, _ in group]})
+
+    for index, line in enumerate(lines, start=1):
+        card = line.get("card") or {}
+        kind = str(card.get("kind") or "") if not is_real(line.get("show")) else ""
+        if kind and run and run[-1][1] == kind:
+            run.append((index, kind))
+        else:
+            close(run, most, "卡片")
+            run = [(index, kind)] if kind else []
+        tone = str(card.get("tone") or line.get("tone") or "cool")
+        if tone_run and tone_run[-1][1] == tone:
+            tone_run.append((index, tone))
+        else:
+            close(tone_run, tone_most, "色調")
+            tone_run = [(index, tone)]
+    close(run, most, "卡片")
+    close(tone_run, tone_most, "色調")
+    return faults
 
 
 def uncredited(script: dict[str, Any],

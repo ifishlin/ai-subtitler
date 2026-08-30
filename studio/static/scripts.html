@@ -620,6 +620,9 @@ async function showScript(name) {
       <div title="自製的句子沒說這張卡怎麼畫">沒畫卡<b class="${
         (sums.undrawn || []).length ? "short" : "good"}">${
         (sums.undrawn || []).length}</b></div>
+      <div title="同一種卡片連續超過三張就是投影片">重複<b class="${
+        (sums.samey || []).length ? "short" : "good"}">${
+        (sums.samey || []).length}</b></div>
       <div title="引用的畫面沒有出處，壓片會被擋下來">沒出處<b class="${
         (sums.uncredited || []).length ? "short" : "good"}">${
         (sums.uncredited || []).length}</b></div>

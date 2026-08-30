@@ -155,6 +155,54 @@ def _card(spec: dict[str, Any], seconds: float, target: Path,
     return target
 
 
+def contact(name: str, film: Path | None = None, settled: float = 0.9,
+            across: int = 7, wide: int = 190) -> Path:
+    """One frame per shot, taken where the shot has settled.
+
+    Sampling a finished film at round numbers -- 1s, 4s, 6s -- picks moments
+    that have nothing to do with where the shots are, so a frame lands
+    wherever it lands: mid-animation, on a cut, or in the shot before the one
+    you meant. A counting card caught at 85s read 119 億 when the figure is
+    230 億, and I reported it as a fault in the film. It was a fault in how I
+    looked at it.
+
+    The script already knows when every shot starts and how long it lasts, so
+    the sampling comes from there: `settled` of the way through each one, past
+    the arrival, before the cut. That also makes the sheet worth keeping --
+    thirty-six frames in the order they are seen, each showing what the
+    audience will actually be looking at while that line is on screen.
+    """
+    from PIL import Image as _Image
+    found = script_module.load(name)
+    measured = script_module.measure(found)
+    film = film or OUT_DIR / f"{name}.mp4"
+    work = OUT_DIR / f".{name}" / "contact"
+    work.mkdir(parents=True, exist_ok=True)
+
+    shots = []
+    for index, line in enumerate(measured["lines"]):
+        at = line["at"] + line["seconds"] * settled
+        piece = work / f"{index:02d}.jpg"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-ss", f"{at:.2f}", "-i", str(film),
+             "-frames:v", "1", "-vf", f"scale={wide}:-2", "-q:v", "4",
+             str(piece), "-y"], check=False)
+        if piece.is_file():
+            shots.append(piece)
+
+    if not shots:
+        raise RuntimeError(f"{film} 抽不出畫面")
+    high = _Image.open(shots[0]).height
+    down = (len(shots) + across - 1) // across
+    sheet = _Image.new("RGB", (across * wide, down * high), "black")
+    for index, piece in enumerate(shots):
+        sheet.paste(_Image.open(piece),
+                    ((index % across) * wide, (index // across) * high))
+    target = OUT_DIR / f"{name}.contact.jpg"
+    sheet.save(target, quality=88)
+    return target
+
+
 def build(name: str, target: Path | None = None,
           say: Any = None) -> dict[str, Any]:
     """The whole film, one shot per line."""
@@ -185,6 +233,7 @@ def build(name: str, target: Path | None = None,
     for fault, complaint in (("unpicked", "沒有畫面"), ("undrawn", "沒說卡片怎麼畫"),
                              ("unchecked", "沒有人看過那張圖"),
                              ("uncredited", "引用的畫面沒有出處"),
+                             ("samey", "連續太多張長一樣"),
                              ("shapeless", "結構不對")):
         if measured.get(fault):
             faults = measured[fault]
@@ -232,4 +281,8 @@ def build(name: str, target: Path | None = None,
          str(target), "-y"], check=True)
     return {"file": str(target.relative_to(ROOT)),
             "seconds": measured["seconds"], "shots": len(pieces),
+            # Made every time rather than on request: looking at what was
+            # actually rendered is the one check nothing else can do, and a
+            # check that has to be remembered is one that will be skipped.
+            "contact": str(contact(name, target).relative_to(ROOT)),
             "rights": script_module.rights(found, pictures, measured)}

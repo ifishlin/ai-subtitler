@@ -436,24 +436,30 @@
     {
       "say": "電費單上沒有這一欄。",
       "role": "合",
-      "show": "自製：字卡",
+      "show": "自製：帳單上的欄位清單",
       "from": "觀點",
       "card": {
-        "kind": "word",
-        "title": "帳單上\n沒有這一欄",
-        "tone": "warm",
-        "ghost": "線"
+        "kind": "stack",
+        "title": "帳單上有的欄位",
+        "items": [
+          "用電度數",
+          "基本費",
+          "燃料調整"
+        ],
+        "tone": "warm"
       },
       "seconds": 2.17
     },
     {
       "say": "但你每個月都在付。",
       "role": "合",
-      "show": "自製：字卡",
+      "show": "自製：圈起來的兩個字",
       "from": "觀點",
       "card": {
-        "kind": "word",
-        "title": "但你每個月\n都在付",
+        "kind": "ring",
+        "title": "沒有這一欄，但是",
+        "value": "每個月",
+        "under": "都在付",
         "tone": "warm"
       },
       "seconds": 1.96
