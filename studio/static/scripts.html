@@ -69,8 +69,21 @@
      and a card's own type is 76px on a 1920 frame -- legible in the finished
      video, illegible in the list -- so the list is for finding a shot and
      this is for judging it. */
+  .say-edit{outline:none;border-radius:6px;padding:3px 6px;margin:-3px -6px;
+    border:1px solid transparent;cursor:text;white-space:pre-wrap}
+  .say-edit:hover{border-color:var(--line)}
+  .say-edit:focus{border-color:var(--accent);background:#0d1014}
+  .say-meter{margin-top:4px;font:10px var(--mono);color:var(--faint);
+    display:flex;gap:9px;flex-wrap:wrap}
+  .say-meter .warn{color:#e2a33c}
+  .say-meter .hint{opacity:.62}
   #big{position:fixed;inset:0;background:#000d;z-index:60;display:flex;
     align-items:center;justify-content:center;padding:24px}
+  /* `display:flex` on the element itself outranks the browser's own
+     `[hidden]{display:none}`, so the overlay came up on load and covered the
+     page -- a black sheet with one 關閉 button on it. The attribute has to be
+     given back its authority explicitly. */
+  #big[hidden]{display:none}
   .big-inner{background:var(--panel);border:1px solid var(--line);
     border-radius:12px;padding:12px 14px 14px;max-width:min(94vw,760px);
     max-height:94vh;display:flex;flex-direction:column;gap:10px}
@@ -627,7 +640,11 @@ async function showScript(name) {
             outlet: line.outlet || "", from: line.from || "",
           }))}">
           <td class="at">${clock(line.at)}</td>
-          <td class="say">${escapeHTML(line.say || "")}</td>
+          <td class="say">
+            <div class="say-edit" contenteditable="plaintext-only"
+              spellcheck="false">${escapeHTML(line.say || "")}</div>
+            <div class="say-meter">${sayMeter(line.say || "")}</div>
+          </td>
           <td class="show">
             ${line.clip ? `<video class="pic" preload="metadata" muted
               controls src="/media/pic/${
@@ -654,6 +671,46 @@ async function showScript(name) {
         </tr>`).join("")}</tbody>
     </table>`;
   $("btnBackTopic").onclick = () => open(STATE.chosen);
+}
+
+/* How the line measures against the frame it has to fit.
+
+   Advice, not a gate. 13 characters is what fits across 1080 at the caption
+   size and 3 rows is what fits above the safe area, but a writer looking at
+   the picture can see that a fourteenth character sits fine where the
+   arithmetic says it does not. Refusing the edit would only move the writing
+   into a text editor, where nothing is measured at all -- so the number turns
+   amber and the line is saved.
+
+   The second figure is the one that is easy to forget: with no narration the
+   floor is a reader's, and no line may be shorter than 1.9 seconds however
+   few characters it has. */
+const PER_ROW = 13, MOST_ROWS = 3, READ = 4.6, FLOOR = 1.9;
+
+function sayMeter(say) {
+  const said = String(say).replace(/[\s\-/:-@]/g, "").length;
+  const seconds = Math.max(FLOOR, said / READ);
+  const over = said > PER_ROW * MOST_ROWS;
+  return `<span class="${said > PER_ROW ? "warn" : ""}">${said} 字</span>
+    <span class="hint">建議 ${PER_ROW} 字內</span>
+    <span>${seconds.toFixed(1)}s</span>${
+    over ? `<span class="warn">會被截掉</span>` : ""}${
+    said <= PER_ROW * READ / READ && said / READ < FLOOR
+      ? `<span class="hint">太短，至少停 ${FLOOR}s</span>` : ""}`;
+}
+
+async function saveLine(cell, name) {
+  const row = cell.closest("tr");
+  const index = [...row.parentNode.children].indexOf(row) + 1;
+  const say = cell.textContent.trim();
+  if (!say || say === cell.dataset.was) return;
+  try {
+    const back = await api("POST", "/api/script/line", {name, line: index, say});
+    cell.dataset.was = say;
+    row.querySelector(".say-meter").innerHTML = sayMeter(say);
+    // Every line after this one has moved, and the gauge above has changed.
+    showScript(name);
+  } catch (error) { alert(error.message); }
 }
 
 /* Opening one shot at the size it will be seen.
@@ -702,6 +759,8 @@ $("paper").addEventListener("click", (event) => {
 
   const shelf = event.target.closest(".shelf [data-shot]");
   if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }
+
+  if (event.target.closest(".say-edit")) return;   // editing, not opening
 
   const row = event.target.closest("tr[data-shot]");
   if (row && event.target.closest("td.show")) {

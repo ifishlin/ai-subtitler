@@ -23,8 +23,9 @@
         "title": "全美住宅電價",
         "value": "+7.1%",
         "under": "2025 年",
-        "colour": "#d1453b",
-        "note": "資料：CNBC"
+        "colour": "#ff6b52",
+        "note": "資料：CNBC",
+        "ghost": "電"
       }
     },
     {
@@ -39,13 +40,13 @@
           [
             "通膨",
             3.2,
-            "#2b4459",
+            "#3b5a72",
             "3.2%"
           ],
           [
             "電價",
             7.1,
-            "#d1453b",
+            "#ff6b52",
             "7.1%"
           ]
         ],
@@ -58,11 +59,10 @@
       "from": "CNBC",
       "seconds": 1.96,
       "card": {
-        "kind": "number",
+        "kind": "ring",
         "title": "漲最凶的幾個州",
         "value": "+20%",
         "under": "以上",
-        "colour": "#d1453b",
         "note": "資料：CNBC"
       }
     },
@@ -72,9 +72,10 @@
       "from": "觀點",
       "seconds": 1.9,
       "card": {
-        "kind": "title",
-        "title": "你沒有多開冷氣",
-        "under": "用電量沒變"
+        "kind": "word",
+        "title": "你沒有\n多開冷氣",
+        "under": "用電量沒變",
+        "ghost": "？"
       }
     },
     {
@@ -83,9 +84,9 @@
       "from": "觀點",
       "seconds": 1.9,
       "card": {
-        "kind": "title",
-        "title": "帳單就是變厚了",
-        "under": "多出來的是什麼？"
+        "kind": "word",
+        "title": "帳單就是\n變厚了",
+        "colour": "#ff6b52"
       }
     },
     {
@@ -106,8 +107,10 @@
       "from": "Institute for Energy Research",
       "seconds": 2.17,
       "card": {
-        "kind": "title",
-        "title": "但也有研究說\n不是它們",
+        "kind": "word",
+        "title": "不是它們",
+        "under": "另一邊的研究這樣說",
+        "tone": "light",
         "note": "資料：IER"
       }
     },
@@ -124,6 +127,7 @@
           "天然氣價格上漲",
           "天災後的重建"
         ],
+        "tone": "light",
         "note": "資料：IER"
       }
     },
@@ -137,6 +141,7 @@
         "title": "部分輸電線路",
         "value": "40 年",
         "under": "沒有換過",
+        "tone": "light",
         "note": "資料：IER"
       }
     },
@@ -151,7 +156,8 @@
         "branches": [
           "資料中心\n害的",
           "不是資料\n中心"
-        ]
+        ],
+        "tone": "light"
       }
     },
     {
@@ -160,8 +166,10 @@
       "from": "觀點",
       "seconds": 1.9,
       "card": {
-        "kind": "title",
-        "title": "都沒有。"
+        "kind": "word",
+        "title": "都沒有",
+        "tone": "light",
+        "ghost": "謊"
       }
     },
     {
@@ -171,11 +179,12 @@
       "seconds": 2.39,
       "card": {
         "kind": "split",
-        "title": "他們算的\n不是同一件事",
+        "title": "他們算的不是同一件事",
         "branches": [
           "發電\n夠不夠",
           "電線\n夠不夠"
-        ]
+        ],
+        "tone": "light"
       }
     },
     {
@@ -184,9 +193,11 @@
       "from": "觀點",
       "seconds": 2.39,
       "card": {
-        "kind": "title",
-        "title": "一邊算：發電",
-        "under": "電廠、機組、燃料"
+        "kind": "word",
+        "title": "發電",
+        "under": "電廠、機組、燃料",
+        "tone": "light",
+        "ghost": "電"
       }
     },
     {
@@ -198,8 +209,9 @@
         "kind": "clock",
         "title": "蓋一座電廠",
         "value": "2–3 年",
-        "part": 0.3,
-        "under": "錢到位就能開工"
+        "part": 0.32,
+        "under": "錢到位就能開工",
+        "tone": "light"
       }
     },
     {
@@ -209,13 +221,14 @@
       "seconds": 1.96,
       "card": {
         "kind": "chain",
-        "title": "一邊算：送電",
+        "title": "送電",
         "points": [
           "電廠",
           "鐵塔",
           "你家"
         ],
-        "under": "要徵地、要許可、要排隊"
+        "under": "要徵地、要許可、要排隊",
+        "tone": "light"
       }
     },
     {
@@ -232,9 +245,11 @@
       "from": "Reuters",
       "seconds": 1.9,
       "card": {
-        "kind": "title",
-        "title": "美國不缺電",
-        "under": "能源是夠的",
+        "kind": "swap",
+        "title": "問題不是",
+        "was": "缺電",
+        "now": "缺線",
+        "tone": "light",
         "note": "資料：Reuters"
       }
     },
@@ -244,9 +259,11 @@
       "from": "Reuters",
       "seconds": 2.39,
       "card": {
-        "kind": "title",
-        "title": "缺的是把電\n送過去的線",
-        "note": "資料：Reuters"
+        "kind": "word",
+        "title": "缺的是線",
+        "tone": "light",
+        "note": "資料：Reuters",
+        "ghost": "線"
       }
     },
     {
@@ -261,16 +278,17 @@
           [
             "蓋電廠",
             2.5,
-            "#1f9d8f",
+            "#1f7f8f",
             "2–3 年"
           ],
           [
             "接電網",
             7,
-            "#d1453b",
+            "#b8360a",
             "7 年"
           ]
         ],
+        "tone": "light",
         "note": "資料：Reuters"
       }
     },
@@ -297,6 +315,7 @@
         "value": "7 年",
         "part": 1.0,
         "under": "最長的等待",
+        "tone": "light",
         "note": "資料：Reuters"
       }
     },
@@ -306,11 +325,11 @@
       "from": "Reuters",
       "seconds": 2.39,
       "card": {
-        "kind": "number",
+        "kind": "ring",
         "title": "今年規劃的資料中心",
         "value": "近一半",
         "under": "延後或取消",
-        "colour": "#d1453b",
+        "tone": "light",
         "note": "資料：Reuters"
       }
     },
@@ -320,12 +339,11 @@
       "from": "觀點",
       "seconds": 1.96,
       "card": {
-        "kind": "split",
-        "title": "卡住的不是錢",
-        "branches": [
-          "錢\n不缺",
-          "線\n不夠"
-        ]
+        "kind": "swap",
+        "title": "卡住的不是",
+        "was": "錢",
+        "now": "線",
+        "tone": "warm"
       }
     },
     {
@@ -342,9 +360,10 @@
       "from": "觀點",
       "seconds": 2.39,
       "card": {
-        "kind": "title",
+        "kind": "word",
         "title": "線的錢\n照人頭分攤",
-        "under": "不是照用量"
+        "under": "不是照用量",
+        "tone": "warm"
       }
     },
     {
@@ -359,7 +378,8 @@
           "你家",
           "鄰居",
           "機房"
-        ]
+        ],
+        "tone": "warm"
       }
     },
     {
@@ -375,7 +395,8 @@
           "鄰居",
           "機房"
         ],
-        "under": "帳單一起分"
+        "under": "帳單一起分",
+        "tone": "warm"
       }
     },
     {
@@ -396,8 +417,9 @@
       "from": "CNN",
       "seconds": 2.61,
       "card": {
-        "kind": "title",
-        "title": "州長暫停\n新的機房許可",
+        "kind": "word",
+        "title": "暫停\n新的許可",
+        "tone": "warm",
         "note": "資料：CNN"
       }
     },
@@ -415,8 +437,10 @@
       "from": "觀點",
       "seconds": 2.39,
       "card": {
-        "kind": "title",
-        "title": "你付的是\n那條線的錢"
+        "kind": "word",
+        "title": "你付的是\n那條線的錢",
+        "tone": "warm",
+        "ghost": "線"
       }
     },
     {
@@ -425,8 +449,9 @@
       "from": "觀點",
       "seconds": 1.9,
       "card": {
-        "kind": "title",
-        "title": "下個月\n打開帳單"
+        "kind": "word",
+        "title": "下個月\n打開帳單",
+        "tone": "warm"
       }
     },
     {
@@ -439,7 +464,8 @@
         "title": "已經轉嫁到帳單上的",
         "value": "230 億",
         "under": "美元，全美合計",
-        "colour": "#d1453b",
+        "colour": "#ff7a4d",
+        "tone": "warm",
         "note": "資料：Forbes"
       }
     },
@@ -449,8 +475,11 @@
       "from": "觀點",
       "seconds": 1.9,
       "card": {
-        "kind": "title",
-        "title": "不是電變貴了"
+        "kind": "swap",
+        "title": "",
+        "was": "電變貴了",
+        "now": "隊伍變長了",
+        "tone": "warm"
       }
     },
     {
@@ -462,7 +491,8 @@
         "kind": "queue",
         "title": "是隊伍變長了",
         "count": 9,
-        "under": "而你排在後面"
+        "under": "而你排在後面",
+        "tone": "warm"
       }
     }
   ]

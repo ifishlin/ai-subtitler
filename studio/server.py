@@ -782,6 +782,43 @@ def get_script(name: str) -> dict[str, Any]:
     return {**found, "measured": measured}
 
 
+@app.post("/api/script/line")
+def edit_line(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Change one line's words by hand.
+
+    The measurements are advice, not a gate: a line over the suggested width
+    is saved and reported, because a writer looking at the frame can see that
+    a fourteenth character fits where the arithmetic says it does not, and a
+    tool that refuses the edit just moves the work into a text editor where
+    nothing is measured at all.
+    """
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    index = int(payload.get("line") or 0) - 1
+    try:
+        found = script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    lines = found.get("lines") or []
+    if not 0 <= index < len(lines):
+        raise HTTPException(400, "沒有這一句")
+
+    say = str(payload.get("say") or "").strip()
+    if not say:
+        raise HTTPException(400, "台詞不能是空的")
+    lines[index]["say"] = say
+    # The duration was computed from the old words; recompute it unless this
+    # line was given one on purpose (a clip's length, a held picture).
+    if not lines[index].get("clip"):
+        lines[index]["seconds"] = round(
+            max(1.9, script_module.spoken_length(say) / 4.6), 2)
+    script_module.save(name, found)
+    return {"saved": True, "line": index + 1,
+            "seconds": lines[index]["seconds"],
+            "rows": script_module.wrap(say),
+            "measured": script_module.measure(found)}
+
+
 @app.get("/scripts")
 def scripts_page() -> HTMLResponse:
     return HTMLResponse((Path(__file__).parent / "static" / "scripts.html")
