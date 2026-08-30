@@ -1438,6 +1438,44 @@ def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     return {"saved": len(changes), "measured": script_module.measure(found)}
 
 
+@app.delete("/api/script")
+def drop_script(name: str) -> dict[str, Any]:
+    """Remove a script, and the film and cards made from it.
+
+    Into trash/ rather than deleted: a script is the only place a set of
+    judgements lives -- which picture for which line, which passage, which
+    card -- and every one of them took looking at something. The film and the
+    drawn cards do go, because both rebuild exactly from the script.
+    """
+    import shutil
+    import time as time_module
+    from core import build as build_module
+    from core import cards as cards_module
+    from core import script as script_module
+    try:
+        path = script_module.path_for(name)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    if not path.is_file():
+        raise HTTPException(404, f"找不到文案 {name}")
+
+    bin_here = ROOT / "trash"
+    bin_here.mkdir(exist_ok=True)
+    shutil.move(str(path), bin_here / f"{name}.{int(time_module.time())}.json")
+
+    gone = []
+    for target in (build_module.OUT_DIR / f"{name}.mp4",
+                   build_module.OUT_DIR / f"{name}.contact.jpg"):
+        if target.is_file():
+            target.unlink()
+            gone.append(target.name)
+    for folder in (build_module.OUT_DIR / f".{name}", cards_module.CARD_DIR / name):
+        if folder.is_dir():
+            shutil.rmtree(folder)
+            gone.append(folder.name)
+    return {"deleted": name, "moved_to": "trash/", "also_removed": gone}
+
+
 @app.get("/scripts")
 def scripts_page() -> HTMLResponse:
     return HTMLResponse((Path(__file__).parent / "static" / "scripts.html")

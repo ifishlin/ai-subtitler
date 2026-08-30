@@ -15,14 +15,34 @@
         "size": 16704939
       },
       {
-        "title": "Hall of Shame: Players Tied to Steroid Use Denied Honors",
-        "url": "https://www.youtube.com/watch?v=nwPUB0YK7qo",
-        "seconds": 313,
+        "title": "Cruise Gets Blunt: 'Don't Be a Wimp'",
+        "url": "https://www.youtube.com/watch?v=UXJdDv74Z1E",
+        "seconds": 123,
+        "outlet": "AP News",
+        "lean": "neutral",
+        "file": "assets/footage/梅西納名畫失竊test/UXJdDv74Z1E.mp4",
+        "captions": "assets/footage/梅西納名畫失竊test/UXJdDv74Z1E.en-orig.vtt",
+        "size": 14396785
+      },
+      {
+        "title": "New museum aims to showcase history of creative labor by actors of color",
+        "url": "https://www.youtube.com/watch?v=8_TdRXcYacQ",
+        "seconds": 397,
         "outlet": "PBS NewsHour",
         "lean": "centre-left",
-        "file": "assets/footage/梅西納名畫失竊test/nwPUB0YK7qo.mp4",
+        "file": "assets/footage/梅西納名畫失竊test/8_TdRXcYacQ.mp4",
         "captions": null,
-        "size": 56035423
+        "size": 39328080
+      },
+      {
+        "title": "Stevie Van Zandt’s new memoir documents his life in music and show business",
+        "url": "https://www.youtube.com/watch?v=8wO01BoWXp8",
+        "seconds": 324,
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "file": "assets/footage/梅西納名畫失竊test/8wO01BoWXp8.mp4",
+        "captions": null,
+        "size": 21704533
       },
       {
         "title": "500-year-old paintings from Italian master found",
@@ -35,34 +55,81 @@
         "size": 11348215
       },
       {
-        "title": "GUINNESS ARTWORK LOST FOR 40 YRS FOUND",
-        "url": "https://www.youtube.com/watch?v=dTxtA0qkJB0",
-        "seconds": 130,
+        "title": "INSIDE THE LOUVRE - RARE LOOK AT THE MONA LISA",
+        "url": "https://www.youtube.com/watch?v=W99avjpFS7Q",
+        "seconds": 180,
         "outlet": "CNN",
-        "lean": "left",
-        "file": "assets/footage/梅西納名畫失竊test/dTxtA0qkJB0.mp4",
-        "captions": null,
-        "size": 31508678
+        "lean": "left"
+      },
+      {
+        "title": "Gutfeld: They're nuts for banning this",
+        "url": "https://www.youtube.com/watch?v=6hU827bdr94",
+        "seconds": 762,
+        "outlet": "Fox News",
+        "lean": "right"
+      },
+      {
+        "title": "Media helping Sony hackers?",
+        "url": "https://www.youtube.com/watch?v=kZLLJRNzICA",
+        "seconds": 295,
+        "outlet": "Fox News",
+        "lean": "right"
+      },
+      {
+        "title": "Mother of three warns 'way too many schools' are betraying parents",
+        "url": "https://www.youtube.com/watch?v=JtRp_dGbe68",
+        "seconds": 234,
+        "outlet": "Fox Business",
+        "lean": "right"
+      },
+      {
+        "title": "This is why law enforcement continues to get vilified: Brandon Judd",
+        "url": "https://www.youtube.com/watch?v=vVTM65M5vc4",
+        "seconds": 343,
+        "outlet": "Fox Business",
+        "lean": "right"
       },
       {
         "title": "A Statue, Restored, Can Now Walk and Talk",
         "url": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
         "seconds": 149,
         "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "file": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.mp4",
-        "captions": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.en-orig.vtt",
-        "size": 27999285
+        "lean": "right-editorial"
       },
       {
-        "title": "How the Coronavirus Is Impacting the Private Equity Space",
-        "url": "https://www.youtube.com/watch?v=AMLAVy2AtQ0",
-        "seconds": 289,
+        "title": "How Building Panels Fuel High-Rise Fires",
+        "url": "https://www.youtube.com/watch?v=3jP_UpeSwzw",
+        "seconds": 252,
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial"
+      },
+      {
+        "title": "Robots Set New Records at World Humanoid Robot Games",
+        "url": "https://www.youtube.com/watch?v=0lsrUAdcPPE",
+        "seconds": 295,
         "outlet": "Bloomberg",
-        "lean": "neutral",
-        "file": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.mp4",
-        "captions": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.en-orig.vtt",
-        "size": 45068816
+        "lean": "neutral"
+      },
+      {
+        "title": "JPMorgan's Dimon: Regulators Should Look at Short-Selling of Banks",
+        "url": "https://www.youtube.com/watch?v=iHU13hGejcI",
+        "seconds": 144,
+        "outlet": "Bloomberg",
+        "lean": "neutral"
+      },
+      {
+        "title": "How Two Companies Dominate The $67 Billion Art World",
+        "url": "https://www.youtube.com/watch?v=xa06nroeXOE",
+        "seconds": 936,
+        "outlet": "CNBC",
+        "lean": "neutral"
+      },
+      {
+        "title": "The Difference Between The Stock Market And The Economy",
+        "url": "https://www.youtube.com/watch?v=59im9CtR9YI",
+        "seconds": 424,
+        "outlet": "CNBC",
+        "lean": "neutral"
       },
       {
         "title": "Four 'extraordinary' Renaissance paintings stolen from Italian museum ",
@@ -72,14 +139,25 @@
         "lean": "neutral"
       },
       {
-        "title": "Hunting for Italy’s stolen art - BBC News",
-        "url": "https://www.youtube.com/watch?v=Ai55zArdmzA",
-        "seconds": 466,
+        "title": "Stealing from the British Museum: How, why, who? - BBC Newsnight",
+        "url": "https://www.youtube.com/watch?v=-eAEoRUfVFw",
+        "seconds": 249,
         "outlet": "BBC News",
-        "lean": "neutral",
-        "file": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
-        "captions": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.en-orig.vtt",
-        "size": 90692090
+        "lean": "neutral"
+      },
+      {
+        "title": "Donald Trump’s Great American State Fair fails to attract crowds ",
+        "url": " FT #shorts|https://www.youtube.com/watch?v=FJcd4QJz6tw",
+        "seconds": 120,
+        "outlet": "Financial Times",
+        "lean": "neutral"
+      },
+      {
+        "title": "Attacks darken Tunisian democracy ",
+        "url": " FT Comment|https://www.youtube.com/watch?v=RlIYzDUjeg4",
+        "seconds": 287,
+        "outlet": "Financial Times",
+        "lean": "neutral"
       },
       {
         "title": "Why famous masterpieces remain prime targets for thieves ",
@@ -89,10 +167,17 @@
         "lean": "neutral"
       },
       {
-        "title": "Germany: The Rhino Mafia ",
-        "url": " European Journal|https://www.youtube.com/watch?v=38IjHOdJt8Y",
-        "seconds": 266,
+        "title": "Rare Cranach exhibition to open in Moscow ",
+        "url": " DW News|https://www.youtube.com/watch?v=AWXUH4ejo4I",
+        "seconds": 124,
         "outlet": "Deutsche Welle",
+        "lean": "neutral"
+      },
+      {
+        "title": "Getting vaccinated – with a shot of culture on the side",
+        "url": "https://www.youtube.com/watch?v=GOGyBfXodAA",
+        "seconds": 135,
+        "outlet": "Euronews",
         "lean": "neutral"
       },
       {
@@ -100,20 +185,14 @@
         "url": "https://www.youtube.com/watch?v=YTA-IiZk_d0",
         "seconds": 311,
         "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "file": "assets/footage/梅西納名畫失竊test/YTA-IiZk_d0.mp4",
-        "captions": "assets/footage/梅西納名畫失竊test/YTA-IiZk_d0.en-orig.vtt",
-        "size": 34153907
+        "lean": "non-western"
       },
       {
-        "title": "Uffizi museum reopens: Florentines enjoy break from mass tourism",
-        "url": "https://www.youtube.com/watch?v=GmejkYkZHlk",
-        "seconds": 176,
+        "title": "Souls grown deep: London exhibit showcases African American art",
+        "url": "https://www.youtube.com/watch?v=6B2QHOpPMns",
+        "seconds": 132,
         "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "file": "assets/footage/梅西納名畫失竊test/GmejkYkZHlk.mp4",
-        "captions": "assets/footage/梅西納名畫失竊test/GmejkYkZHlk.en-orig.vtt",
-        "size": 25790336
+        "lean": "non-western"
       }
     ],
     "reports": [
@@ -127,24 +206,6 @@
         "doubt": false
       },
       {
-        "title": "Thieves steal paintings by Renoir, Cézanne and Matisse from a private museum in Italy",
-        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNWV9ncW5ZOEt0LWhybHhnbDVjWE9kQ0dmNm9zRlNLaTllcUZFRHhSMVJxdkJjY1RGWGViOUJxYW9mRWxNdmt6ZzB6Mmo3a2YxRS0wWEZ3Z196bUJJVnNRQkltLWEtLVhxc2RaV1hVaW1lQkFkamQzTGlGcDREdlUzOTA2WFhpRHkwUHB1cmhvdUxtYzE2ZWdTdGl1cTkzcHJHbE1jenlNaXliNHBmUWdNOXJB?oc=5",
-        "outlet": "AP News",
-        "lean": "neutral",
-        "when": "Mon, 30 Mar 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Mafia link feared in Sicilian grand master theft",
-        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOaTRLcVp3a0VLeE1TVWR6RWJVWFg0UUFBUGlicEx3UW1IWjRsT3NqT3ZMZ0RHbHBGMmhxbGF5eUxiRFEzZzhURzg4YVR4N3d2b2JKaFc5TmZJMnNheVVOYm1pMjRndEZEOExrMFdyZWg3cktWNmpCR1JKUE10YzliZmZaaUV5Zm5FSW5lTmE3YlozOGtWbnc?oc=5",
-        "outlet": "Reuters",
-        "lean": "neutral",
-        "when": "Mon, 17 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
         "title": "Four Antonello da Messina works stolen in Renaissance painter's hometown",
         "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPNE5XWE93dVd5bUpMcEhWSjRsZ0lBc2dmWjl4WmJQNWFUQzZyZldlQ3BYRVl6YXgydllsSDBObTItem4xTlpwcFJrZGNRbEtNbmc5VEpWaEZZUnZkRTE4YXB3djFSWDJMc1NzQWhjMl9hRE00MXBkT0Z5bTEzaXI0YVBpZ1V5YVFDRmIteFpwd3lmZUtYYXhqYTF4SUdZUEtVZVJWalVfRnQ4bDhBNS1j?oc=5",
         "outlet": "Reuters",
@@ -154,96 +215,6 @@
         "doubt": false
       },
       {
-        "title": "The U.S. ignored corruption within the Afghan government. Did that lead to its fall?",
-        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPV2Z2WlRZNFRvNVFCRzhlUmJJbG5FOXg5dXR4UENvRWQwbW1ycDl1SDRJdHJKeFZSSVBiOTVOZUJEUjR1Nkh5cnRYRFY1dnY0X2lMOEtrbHR3YmNCR0xBV1Z2cllEOUV1SXJPdk1JYVJheFBSalVtajlyTkRSbF9nMFFrSzg3ZWc3UGdubVFmOURhbmlEM29UbEZDcjJsYUF4SmJzS0xXVkhrVGlvSUpaV2RhcnVGUdIBuwFBVV95cUxNb1BwbmRvUmF2NkV0bHFodnBPY2Z6NEVjZjJaQXcwQ0s4WkNnNlhaZ3R0bm9VamsyTW11VEIxcUdZd3phRVNKckJlaVpOZzlBU3ctcDhuUGI1LWt5MTZleUpTaUctREZ4RDZMRzNUaldndEIwU2N0ekhkV2hJYWhvQzV5cTNhNjZZbHdYcDhHVi03VnJpc2JFdlpHeXctRUx5UHo4XzlKd0hCZlp6ZUhQSnI5NzhpV1A2LXVV?oc=5",
-        "outlet": "PBS NewsHour",
-        "lean": "centre-left",
-        "when": "Fri, 20 Aug 2021",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "No clear path for U.S.-China trade dispute as round of talks ends",
-        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQZ3UtanZhYUVNd2xzVUpLc3JSSUVkQ1drcEVNVmZyVHVwVExNZFRIblRuZjhTN0FZRUV3QkNSVl90ai1hQ3NIZmZ5ODBIZzhXWGx2cEhtcUpaVWJCNHhsNjZHMjdIVFBBall4QVJBcC1OeC1CVWVxWlBtSUFqLW1lZmNvUDE5Sk1ZZDVVTmFLc2J4X2ljRWN2cmF2SENtcXloR3Nj0gGoAUFVX3lxTE90VFhuckw1ajZja0t2QzVtLTZXSkhTLTRtRGMtUWwwVmxrVzFQVzJsQ2JSYjJ4TUJEX2FkYS1lX0IwTTc2M1JtMGJYYlJ2dFFvb2pWeGdXc3l5QUxtMXRPeHE5RXR3bGdKSnhkV0NCNUNDemxfWjZQTV8xYWZ4NGlfRDVvQXdDbGFuUkFHWU9LLXlZQjV1VXZkQkRVLTZ5MUlrc0VkQWVKdw?oc=5",
-        "outlet": "PBS NewsHour",
-        "lean": "centre-left",
-        "when": "Thu, 10 Jan 2019",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "A good – and bad – week for Italy’s art police and museum security",
-        "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBZNXhkVVZ3YzhNXzZBeUVJYWFZbVVZUTB3MERTZXJfbzRDUzR3LWxwWHpGSWxEbTc5VElyeUlMZmxpdW9Ca1Iteml4MlVSS0Y4X3FodEs4Q0pLREdDTmtaSGkzRkNjWVlzbmpJTmJJMGJKYnBiZ2l6RWdBb1NlNjA?oc=5",
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "when": "Sun, 16 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Suspects arrested over the theft of crown jewels from the Louvre museum in Paris",
-        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOaE5Sdm9iWTRlMmZ1WlZpR0U2WmtkN0JLek84UnJ6VHdDSU1COXNzOUVJYmtoZ0p0UDZadGtNOHc0VVJ0dVJPNy1KZ2tGVF9PTUlRcWdhUy15N3JRX0pPQ2otenVBd00tUFNiQm5SbDVUdjlKTkJrRFU4R3hqblMyYXVrNHA1cEN3VGVWWUVYTQ?oc=5",
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "when": "Sun, 26 Oct 2025",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "CNN.com - Transcripts",
-        "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE4tQ25LV0J6aVNNMWEzWWZJM1JsdWJJQ2tZOTFSbEpaZzJlNkR1YUNaRnotcDhTemZRUXJYR2VxLVdHZE44WHRHVGdnSFdRRmx6amc0dHhJanlzTUwyU01BN01mNXlMTTZoaXNzVFZ4Yw?oc=5",
-        "outlet": "CNN",
-        "lean": "left",
-        "when": "Mon, 17 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "New CCTV video shows Italy art heist",
-        "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9TM2xfeGJXRm5lak8tTDIzSkJkYk44ZUxDVkF4WWlyMDhwWlBxVTJFeTNDYXJzNkZoM242a2RmMzdxZnlsMV9XSUlqMUNjVVd2dTBRamY1akNGMDdTNE5vaUxQWElGdlg3UmJya2VfMEw4TG5CdUE?oc=5",
-        "outlet": "CNN",
-        "lean": "left",
-        "when": "Sat, 15 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "2 airport workers are dead after malaria cases shock officials at major travel hub",
-        "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNYUk1S2VIcWlSbnNjUFpiblJnUG5FMGpUWnphYVlhclM3eVZmTlB1MVFZN1FDVl9LZFhOaE9JZUpjOElHZzl5d3RVOXA3ZVZQWDJ0ZVlsNXFTSk0wa3dNenE0clA1amV3WHhqQXQ4Tm9sazZKcnYyMTFKdEhQQVRlUm81YnJZdEZXQWJnZzdRNVVSX0NRYlZDbnY0NkQxTDlvNkFIbzVkc0xwUdIBrwFBVV95cUxOTzRpY0lNV1VKWlZtUkVzc2x0akpEeWFRMHFON055cmdNR1QtckN2SGZ2a2t4LUhyNk5VRC1wbVNDRnFySTM1enlMaDZyS3lQUFMxOHVDVEd4NUN6eUhfUGxRUG56YVAtZ2ozdUpNTldOUngtUkZsa080RkRtaWd0TDJsclNXcnJCNms1WG5RQlhHeklOZTBnWVFxdTJFYlFlTUlmV0lyRHpfMEROMk5n?oc=5",
-        "outlet": "Fox News",
-        "lean": "right",
-        "when": "Thu, 27 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Archaeologists uncover massive artifact depicting pharaoh thought to have challenged Moses in Exodus",
-        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOeGxSTlJONFBGbUtLTEVZVFlPUHRkN3pDQ1lSVTNvMjR4Vm05cWVFWjVzWXlzUTJRdE5ZR1hzeC1ZNWdyWE1hUlJnOG9qWUs1RDVFRjBOUVo0NzJEdTRrU1RrVmdabFByRVJ4UkNsc3hzZnU0WDNib2pWUmZ0WkJGM3BSdlJrMkN0ekJPT0pCQ1lxaUd2cGI2MzlPbGphZGJ0Vndjdkl5a0lrR2NCd05VMFR1amEwdThrSGlxcEp0MHNLYmPSAcgBQVVfeXFMTzJNWllLbm1vbjJaUGh0Tk1TN2xIR3ltYk5JaEtsN0ZYazJCQXR5U2FFbF9QR3hzX3dIVjkwaHBKRHFDdENZZ0dPNGtHei04LUZHUzBZcE1DeEl6ZnQxSHo0a1VDZ1VHdkcxUmRRc0NjY2hfejhBUVc4WjRtU2lBQ0k1R1BhemMtb01oNnZ0WUpIZHZCWGZVRVpGaWkyUFB1T1FncWh0THQ1U2dWYUJyT1FyYXN3b19rVFVwYS1XYXFXZGZpZmxVZlk?oc=5",
-        "outlet": "Fox News",
-        "lean": "right",
-        "when": "Sun, 03 May 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Exhibition Review: 'Building the Picture: Architecture in Italian Renaissance Paintings'",
-        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPLUowdGFfa3dWN1VCQmstN2Y3WTZmZ1IxZnlhQXd4Mjg5MTAyYmtSOV9ISXpqZUZvcXNQVVJOYU53c0RWV3VINDVyMnE3VkFrUmtzR3p0TFM1ZWxyekpNUzZjRXhQdlhTSUpXVWE2OXJ3dlltNktDS2gzSlpxeS0zU3VzTUdJTl9DcTRaaDRkMjFmaTZTSVFEYkNVTkJ2SXIyTzBZRmh5SWFkTGFiVl9ReFoyRUZrNDVPMFFkX3NUOEFBQQ?oc=5",
-        "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "when": "Wed, 09 Jul 2014",
-        "paywall": true,
-        "doubt": true
-      },
-      {
-        "title": "A Wintry Twist on an Age-Old Tale",
-        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNbGU4czVfYVBxeGJCQjl1ckYxSi1yMWNTVXhtWkNFWUFsR0tJVHljU1dsVlpMSERiTjlCaW9ucU1PbE8yNTZoOXcwSmMtckhVaHdYNm03cDNzMUxKbmZKVHV5cm9KUEpOeFFjbFB1RkZoaURYSV9tcDFWMU43MDZUdUVFZl9talVTNTFKdVB6ekgwQWNaMm1ET2FPUzVpZlM3SUdyaGJCZkNzWEZteFJQUFJ4ZnB5LU91TkctSU56dnZNV2hUVnE3XzNBMHdVWWM?oc=5",
-        "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "when": "Mon, 26 Dec 2022",
-        "paywall": true,
-        "doubt": true
-      },
-      {
         "title": "Four 'extraordinary' Renaissance paintings stolen from Italian museum",
         "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1NQVJhVkZNQzdIemZ4UldWcF94R0ZYSFJXUENsdi0wQzJHSXROQ1pkNWhPU0NBQkFPRTRRWjI3dkF4RVRNZmRYVFhhb0xUVHVLcmF5OV9qN0ZCQQ?oc=5",
         "outlet": "BBC News",
@@ -251,492 +222,9 @@
         "when": "Sun, 16 Aug 2026",
         "paywall": false,
         "doubt": false
-      },
-      {
-        "title": "Renoir, Cézanne and Matisse art among items stolen in Italian job",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9vTW1vbGpxYlBMbjUyN1p0UHduN2tEcU1YcDRocnlXZGhKeWpIeUVLSVoxd3BGdS1PS0poNWRlSTduRTFzdkFwc1FES0Y5SlBHVzFjQkp0MmFFZw?oc=5",
-        "outlet": "BBC News",
-        "lean": "neutral",
-        "when": "Sun, 29 Mar 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Travel writers’ discoveries — and disappointments — of 2025",
-        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9VRTBBX2wtcXdoSmlNYm1PODJtcUkxMzRSS0xNbGNWeDBRUHNaaUo0bHdYTWVoWXZwSk0zSjF6UjBmc0FINU5FZnR5TnZQaGR5bUZnNENVSFhqcFBXSjc0SkUxemNzaFkyTFpuSXVZeU4?oc=5",
-        "outlet": "Financial Times",
-        "lean": "neutral",
-        "when": "Fri, 05 Dec 2025",
-        "paywall": true,
-        "doubt": true
-      },
-      {
-        "title": "World in Brief: Indonesia hit by earthquake; migrants stage protest in Ceuta",
-        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQZW5BZ2lJRnkwSEozb0duRmpzZWZzUy01c2NLRVlNYVdBRVBjWWlKV3NzbHI4MGhwWVl0czViNFFUZC1QNm5FS3FHa0hYUnVNYy01UlBCU3N0dk1GeDBQZmRVbzYtbk9jOUFqS1N1aUxUYWRuOE4tMVZ2Szk4SHJGbnlmOExEaUNjcmFJNWFoMHRCaUlMNU9r?oc=5",
-        "outlet": "The Economist",
-        "lean": "market-liberal",
-        "when": "Sun, 16 Aug 2026",
-        "paywall": true,
-        "doubt": true
-      },
-      {
-        "title": "Messina mystery: theft of Renaissance art from Sicilian museum leaves investigators baffled",
-        "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPZjd3WndNLXVUY3NGU3h0T2RVc0NQTnd4dmZmR05PdnZwalJUa2pPbnlLd21pdVU0d3NJNG9HZmpubk1KSzgyQkR3VDJyODVQc3BMVFBwN2llbF8wN0MweGs0WGs0ODJjY0V6YUpvX0oxR2w0VXRvTFVSZ0VyM2RIU1NCbUlyVnMzSTJtT0hkd2FmVlJXVUozUl9fUHNSVEphY3lBVkk3QVpRV1RxdkwyWXpjRFoyQlV5YmNyWmF5QmNBSW1JSDcxNGk3Rk5Jci1rU2xDYlh0MlZPcDQ?oc=5",
-        "outlet": "The Guardian",
-        "lean": "left",
-        "when": "Sun, 30 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Bronze age treasure stolen in four-minute Spanish museum heist",
-        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPYWNDYUxodjVhekxyUkxFTzM4dTZZXzBuZG1sVkx4ZjhHY1BtLTRsMlB1RnV5SnQ5RnJVSHdVLU5rZGlQWU4xbm9aTUNKbkttSFc0a2hLbWx4QWNFaG1QdUZuWFRyT3NQNXo5UFptb3p0SHpCTVFHeDlCN0k3eG9xbUE1U0RhU3JmZlFvakRlM0lUWnVoMnp6Q3NJdldGaUVxbTRHdEdFLUU3VFRwM1VPTmt1VQ?oc=5",
-        "outlet": "The Guardian",
-        "lean": "left",
-        "when": "Thu, 27 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Italy: Thieves steal key Renaissance paintings in Sicily",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNU0ZDbFkzYjZkSEE4c3Q1LXh3Y3huT01lNTJKamptNW1fVElac0hKbTJoYURHRk1OUGR3OGJiLVpTYkVENjZEUkR0X3UxZzM4eGxmbW1sVF9yc0QyVHZqcHdJSWp0TjliSGFRbWlqemhDYk9wVHRNV1NXRTZMYUVfV2ZPRlVRZ3Vtd1loSGF4bjVSUdIBkgFBVV95cUxOaHZGMjhWWXFTMmE0cHFBNnJ5U3FPLUtjZDB0cmtNYkpVYld3MEQ3dW1jZ1pNYTBDMlFNbUF1dmhMZjdYYkVTUktNMEY0V1p3YTlVeC1BR1FNUnRRXzJ1YzVqOFJnZnpNUmN5VHpRQnV5V3NZNWlZM3NyRzR5aloxUWt1UzQzdGpKaVhPNjR5RTZOUQ?oc=5",
-        "outlet": "Deutsche Welle",
-        "lean": "neutral",
-        "when": "Sun, 16 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Austria museum heist: Thieves snatch diamond necklace",
-        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOVjFDd1E2QVNUcGctNnY4c1IzWXRoOWg4UjVHVUlrOTU4TXNCUzQ3MnlWTF9Gai01YUJiblQ5ZVAyZGR6WVUyV1ZaVGxTU1NUMmdrcDFnb2lINUtPeVJDYVFINWhlcjlicC1QMDN1dWF0dWprbmFtdnJmMWpBdG9rV0hSc1hxY25JVi1kWEJ30gGOAUFVX3lxTE5WMUN3UTZBU1RwZy02djhzUjNZdGg5aDhSNUdVSWs5NThNc0JTNDcyeVZMX0ZqLTVhQmJuVDllUDJkZHpZVTJXVlpUbFNTU1QyZ2twMWdvaUg1S095UkNhUUg1aGVyOWJwLVAwM3V1YXR1amtuYW12cmYxakF0b2tXSFJzWHFjbklWLWRYQnc?oc=5",
-        "outlet": "Deutsche Welle",
-        "lean": "neutral",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Italy: Four Renaissance artworks stolen from Messina museum in Sicily",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPQVVUQ0dQV0xRbHBOWF9qZndoakVDX19QMmRfdUtvNEdVU0VxWDUyUk50X1o2ZEdsLS1ZSDFLTVlob3hfN09ZekhSU3dPYlhZWWJjV1k0dmlOZTVWYXAzRFBuOVhab2NIWVp4QWJkRVUzSjVhUF92NzFmMzBFZXMtVjlrc2dkX1JoS1I1dmQ0NTB4VHA1bWZHZ09VUXo?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Sun, 16 Aug 2026",
-        "paywall": false,
-        "doubt": false
-      },
-      {
-        "title": "Sicilian museum hit by €80 million art theft",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPZkFwaER4WkFZQkl4SnhjVmdlRzRvWmcyZGZvWWc1T2swTUxINWlsdWd1QXJTdm9hNjJnNGlzci1DTkVtSGtoU08yUmQ5R0Z5M2FoSFljWkJqQkoyeVM4dXhxWnl5aDZLUl9wTVBpTHlMTW9IdTRtSzQ0T3h1R25ZcHRSeW9mZWEzQm1DZ3FxQmpxMExsOUljaG9IUQ?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Mon, 17 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Thieves buy tickets before plundering necklace from Vienna museum",
-        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNUk01dlFyLTJZOW1ndUwydW1HNkV5N0hHS2Vma3J2R2JaaUoyTmNlMUJXcFl0STNoRldaM2R3UlZSQUI3blROaDVNS0J1bFgzRlE4YlFvMnRUOFpWU29QaXMtYlJfY3M3MGpzenRrWkI5WnhUNkNvLWZraVZneG9WN0V2aXpfUEw4b2dDNE0tbm1WREx3NFdIdThEUDloR3dVbUIybHI1c3pNS0lETHQ5aGlPeFNDa3VjWW8wQi11cUM0UQ?oc=5",
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Thieves steal Villena Treasure in under four minutes, one of Europe's great Bronze Age hoards",
-        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQQklyQ2psX3MzdzdKWWktaThMbWxkcGZoQXdMbDhSQWpKVzJOTDRoOGxxc2k5UmoxRUF3TG9WdzM4ZG5GU2piT3dfaDA4cnUzc2otbENsTzhwVzAwMGM2WTZfY0FrWFRHMEo4cHpfczJETHRoUFExWG9jMlN5d1ROeUNaYmZVaDhINWppal9KRF85dll0UWFIbVBiMmFuTXRva0huaFV6SlZwaDhnNGV2OVpkRUpHZXpDTS1rUXJLMmwwbjU2aV94eWstSG1aTUE?oc=5",
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "when": "Thu, 27 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Thieves raid bronze age collection in ‘super-fast’ Spain museum heist",
-        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQV2JaU3pONTlXYXc1b3hBbGQzX2U1TW1ZbHFTWklZUG9KcDQ4RXh0VmxpeDNkeVhENzNWcWdZVzFhZzIzZHJUZHhTeGhKMklkaFJMeTRYZzYtZGc1R0tUUm5JLURmajZ4UjFUSkVjbHNQX2pTdW02MHAtZ0pNOUxIX2NKbWJzZ1o3eGFrQlJxckdoWm8xVW45Qk1jSlRYaUtxeVVKNTNkM0RFTlBw0gGyAUFVX3lxTE5JcGNqVWxIQkFjYTlOc2ZfcjRuS0VQUUN1aTdBZTh3dVJiT3F6QnpnSGxVd1ZVZjR1Q21KYlh5WVpEY2FsdVhlZTNsRDhkdF9TZzFTYWUzdV9sbHg3dHh6NXU3MU5vajN4YUNxTy0xamxMRjdCZmVZcUFhUTlKQ2FmRUdFcEg3MENQZHUwczJEMWlYbzByYnhmbFVjM2NBRG9EQ3N1XzdGVUYyYWJYS2I0Mnc?oc=5",
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "when": "Thu, 27 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Thieves steal Renaissance artworks in museum heist during Italian holiday",
-        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNY3RHUHV0WTdya2dSRUZHdVBSYkdFdlhLaHYzcWpOV3pCLWxjTDBHZ0lOdmFtUGNsMm9Qa3oxYTFNcjZrLXBHU3NMWGpEVGdkd3dzV3VuckxmNGt5WE91eGVWYWFDZDFmdmxOYVJPbHRlRVU1WHF2Q0pwTnlSTHJkY2RuQkFPajBuYkIySUlWcmc0ckw1Wi1lalM1UmdaM2tnYXZCVW1iZVZlNTY1bWltR1lORkrSAboBQVVfeXFMTkV6TVdBRzZVYmFTV0phV2w4dUxBMHpwSmlkQzZseFZkeVRIZmhkQ2NYQ0RPMlZ1Y0NpbGxTX3c5UlZkNk9vTmNOMER5ZEw1b1J3aGQ1QkUtMndjU2o3QnVyY1dpM0I0ZUY2V0p4UmlXd09qVWdvNUIyQ2ZMSXFLTWcxWVNVQm9tcXVpNjZRdFRpa3lEM2lIMHAwakpFMGxkOVcyekxTbk43M0E3bllkTDAyRjFUOGNaMTNB?oc=5",
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "when": "Mon, 17 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Thieves steal crown jewels in 4 minutes from Louvre Museum",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPSG84WWREdXNyWXNGMGExaDNqMHlvSnpxMzhPX1hWZEZmMVpBQXNNUzNFbVhMU0dvOHBCNXd1STlYR2dNV1pkN0Y0VXZ0WF9sQXp3ZGc0Y050ZDlVd3ZZUi1XclYwNWRTX1N3YldWUTFzNzZLdk11cGFKRUZPV3BPZVVEQmhjVXdTSjZLYWQ3ejE2dw?oc=5",
-        "outlet": "AP News",
-        "lean": "neutral",
-        "when": "Sun, 19 Oct 2025",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "What to know about the Louvre heist investigation",
-        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOM2FreE9DTENONGg1ZkNQU0VFeXJ6Y0ZQVjlpU3A3MkJOYmdBeEZiUnZOcjJmNnZfbFZKZ1R2QUtjOTFYQ1RaR0tkOTRYM3FfQWwzRk45cGZJMVpDa2dSaE1LNkMzZ0xCcEVsMjNYTVZrQS1fRkRYVEU0dUhIS2dlamxjVjJGMXNVSlVWS2FVNnliNFRGblFjVkxvVGtmNkZGaEJGdmtBX0xRY2RpMWIxb3BFcTI?oc=5",
-        "outlet": "AP News",
-        "lean": "neutral",
-        "when": "Thu, 30 Oct 2025",
-        "paywall": false,
-        "doubt": false
-      },
-      {
-        "title": "Paintings by Renoir, Cezanne and Matisse stolen from Italian museum",
-        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQbDlSVHVBaEljN1JhYmxRYXB2eU54MlJSYzVrb0pBYkotWDlBRHN4RTVtN0EyaTlaVWxUTkJncUVQZjJHZjU0T3N2UHdkY3dQeGF1blRqUGJPT0lqYzFKT0gzRTUwLXI3d0lYdndOWnFXWWw0T3lFYWl2R29xc3JvV1lvamduUXZRb0NsSktrSWJ3STJSamFVMk5DaEdTQ0E4dEhHT2RR?oc=5",
-        "outlet": "Reuters",
-        "lean": "neutral",
-        "when": "Mon, 30 Mar 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Count of Paris urges Louvre thieves to 'give us back our jewels'",
-        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPYjFiOVJhc0hhLUpiNlptaXlmanhsQlpybVd5OFA0bWNYLTYzanlzeG1STUF6ZDBsUUJjSkN0Z2RkRmM0ZWd1c195b0dhNjBGbkE4NXI2NURieGRVUVhRT0Y2WEt2M2VQamlZbGppM0Q0OW03ejhDUnZmYWQwUTNvVHVyNDlfNGFFZkx1dElQZXphOHc2M1M1OTdmX0JNZGhpMms0OQ?oc=5",
-        "outlet": "Reuters",
-        "lean": "neutral",
-        "when": "Fri, 31 Oct 2025",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "6 Years After Museum Heist, Missing Picasso Possibly Found In Romania",
-        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOc2lVT09aTTJmQ3h1Z3JzdmlXZzBwWFpMSkNBczFqd1dhZlBjeHhSZG9pbEc2RjZfWFgwaklTcC1WandaelpPcVNfbDJXbEdMZ01BNlQwV2JWdTJCbFZnbDd1TXBySno0SXZnbXJ5eHp3ZlRlcWNPSmxwN01BNTRrVGlnTHhsVlJDWW9pQXRBWlJwckRBbVBzazlYb3BiSEJOUW9GR1JrVkJiTGh6dlo1dQ?oc=5",
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "when": "Sun, 18 Nov 2018",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Hot Tip On Old Heist Could Be Worth $10 Million, Gardner Museum Says",
-        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPT1RQMzNyNTViTFJNbGNHaXpiYTMzSzZyMTk1R3lSNFNiWTZQcVNOVjA1M2VkdnFqS1RqdWNoY1Z1WE1CanVOSnFSUzc0U2hPT3RSLW5FNTVENk1OcWs3YTJsTkFKd1dpYmlZeGZtTXlkNTNWeFJnUDhTWEMwQ3oyS3RnM3g1ZDlPSzdtUG83WWdfYVUxd0FFcWIwLVEwdmxmc3lrT1FyTENBb0tpRl9SM0ZFQU5DWGNDNERaZTViTW1WeHlVN2c?oc=5",
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "when": "Wed, 24 May 2017",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Messina Denaro: Notorious Italian Mafia boss dies",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9aekxkQ3R3OF9RbWo3Rmt1MXQ3bWdPM2tlRG1xdWdQZ1MybDhvclBZMkk5ejFqaDhkZmlESnFsRnpVUmFnMW55LVc0NEEwS29Kb2ZSdElQSkNhUQ?oc=5",
-        "outlet": "BBC News",
-        "lean": "neutral",
-        "when": "Mon, 25 Sep 2023",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Italy gives final approval for world's longest suspension bridge to Sicily",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBMOWZZMEo1TjU5WV9hY21DczlSU0xuTzZ3OEQyUDdiSUVHWDB1QllZdlJBWTNQTXMwMjAwNXczSVFLR2FfYmZCWU95RHp6cmx1b2J2T1NycUdVZw?oc=5",
-        "outlet": "BBC News",
-        "lean": "neutral",
-        "when": "Wed, 06 Aug 2025",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Egyptian queen’s 673-diamond necklace stolen in Vienna smash-and-grab raid | Art theft",
-        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOWXN0YV94SkVFNzVhbXcyVXJ2dWJHamZOcExlQlFTWWlLMjctcUVRLXB5TDBaRGI2Y0NlY3JxQnIwaWtxMTJmTDdqdzRmdWJnUDhCazg5aU1LdGRkXzRvY29ma2E2NkFpeF9vN2FSQ0xpd0pFVGN2WDd1eW4zYm1qd1pzNTdIOVRBdEF6ckc2LW5DRHdjcThLTU51ay1yOW51eVpiVE53?oc=5",
-        "outlet": "The Guardian",
-        "lean": "left",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Guns, axes, explosives: violent museum heists are on the rise, says Europol",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNQktiVVhENHdkYVk3dEoyMmlGY3pPMnRaOXZteEltQzhIdkRsZnFlUkhkRmhlN1V3T252TVJyNDVoQ3J6QXZsQ1dPYlh6V0lEOXY1djhjMFZUb1VvMTU5Y1hFMl9fNkdVcVJUa3hETGFZLUFKTFM0WEJpVHFfWFdXel9aOFZTcGxzOGQ3eXVQZkk?oc=5",
-        "outlet": "The Guardian",
-        "lean": "left",
-        "when": "Mon, 24 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Law and Justice – All Content on this topic – Page 1 of 200",
-        "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE43TjFvWHVwNE91alRJZ2N6TWFZa2NSY09xRTI2MmdiTEZoRHk4bW5BTncxZWhNUk05VHljTk45VVNRZ3hweWFudkt4eFkyLWJlaFowcTVNaFV5WXBfeE94SUhUcU1Edw?oc=5",
-        "outlet": "Deutsche Welle",
-        "lean": "neutral",
-        "when": "Sun, 30 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Crime – All Content on this topic – Page 1 of 147",
-        "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5Da2tRbkZjZ3d3bF9sbnBlMnN2UU0wZmpkMnlWTjJ3a3NQT0NaTm9XaGg5SGNDcW1WZnp4WnBVQW1kYV82MUMwelFyY2M5YWdRaDV4enJEY0M?oc=5",
-        "outlet": "Deutsche Welle",
-        "lean": "neutral",
-        "when": "Tue, 04 Jun 2024",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Louvre jewellery heist sparks security debate in France",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNWmpFN1l6bWJDczFiSzZCbUFzWm1wWFFhQjYwcEQzUk5jdEUzWVNkUndtSTcyeElfVHlIUC1jdVpJajRpS1BTVXJrdVFsd0RqRFFBTWRGNE5JanNuZ21iZFlqSVg3YnJNbGlVdGsyZnB5WERjTTVZV3VXbmxUTGkwTjJKWVJVQWxlM0ZIRlZVdGg0LVpEOUVYdHdzRVU?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Mon, 20 Oct 2025",
-        "paywall": false,
-        "doubt": false
-      },
-      {
-        "title": "Sicily: news, videos, reports and analysis",
-        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE45V3BiXzBTMmRXWGZPNWtNem00OXh1WFF3UWRhOE05UVR6S0pibVBYLW1RS0gxeXpDWEU1ejZ2QXNrS1BKMm1NbXJUQ2Fnc1Vh?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Wed, 21 Aug 2024",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Thieves steal four Renaissance artworks from Sicily museum",
-        "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPd3YzTWpjRWRuaDBUZFpUUl9XLVd6WXBtanlEeVhwY3UyZFhCNm5LMFJGQ2FsdFhkVEZwaTNmcGFMRzc5eGx6VUJoMlh1SGpFdHdoVkd5N09XWHZYUV9OYTJ4OEN1LUV3amNrakM3VzQ4akpxeW1ic0k1eWwtdVR5QXhpOEhiQUtRNEJvUy05eWlDaFBlSXA2b3B4NHAtcXlXdkhTVktwTGI4ZUE1MXc5dkJNZ0pvQ09mZWIzRUlR?oc=5",
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "when": "Sun, 16 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Video. Thieves steal four Renaissance artworks from Sicily museum",
-        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQVC1TQ2FMMFp5aXJZcWtlbzRncFZKckczTjJxTzlHdWVhNGJOaFkxczgwc2g3WW5iNDZKZlhwZEVDdmxMNVdKYXBrQUpXdlJ3UXliU0hIZ0Y1OUJtRHBaUHpwekV5VWtkVlc2MGJRNmpBWVJFZjVub0tyWVJrc0NuS01mR2VBZjB1VmRqRGhCMExiS05HRG5ZWko5cDNpMTlnbkp2N09mazZZMmF2MFpLNlFrMjJjYW5ySmNn?oc=5",
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "when": "Sun, 16 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Turkey demands return of plundered ancient artefacts",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNaVNKLWYySFplcW80Tk56d1VCMXdzNUYwbTE3TW9hdlliSnFIVGZvVWpVWjBZX1FSRU9WcnJDZG1SUWpOZ3NyQnVxTnBuNnVSUl9KVHpQMXNSWGdlenpOWkhhd2RkNFFqVExjUHJrbS1Rc3VsSkVaVURrMHRXeUJqYWhITFpSYXRLdnhfREpaSjdxOXhTVHlFeU43NDfSAaIBQVVfeXFMUGJaNDJZdlV3a1NIZ2JvR0NDcFcweWlKSFNJbFd2dS1CcmlsUkhERGFHMTNrd0pYSktRazhmVjdaSTZ1ZnE3MDU5QktId1JJQmRtMTQ3RUtiY3R3R1AtcjJXSHhoQmE3NTY3MFJPRzNyZ1ZnRXI5eHF4WHRMUUZMSGxibkVIVHdXMGYzSS0yVXJmZklqVmZxTWRkTzFLazRROFRn?oc=5",
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "when": "Mon, 09 Apr 2018",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Breaking News, World News and Video from Al Jazeera",
-        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSVpVbHVkZGI0WmtGZUlrVEpIU0J0Rm91MnVwWnN1eWVGNkNab1hhS2Z6RGdldjRnM3NYejNJR1RUdXJSaHJLcXZSTkVqbnFCQ3YwczdrTDdxaDR5aUdlVC12Q25RYktaVm5BeHNqSmNaRUxXR2tJQndqcTZ2WkxrVURNTzFoZUtyTEZ6VllCMDhiLTVaNzVqeVVfcXo0azEzclU5WnB4ckVsNUFZ?oc=5",
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "when": "Sun, 09 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Paris prosecutor says arrested man is thought to be 4th member of Louvre heist gang",
-        "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOZFY5b2VheFBBc25QcGsweHo3ZjNSRWZEM3RyRGJuS01SSVhSblZaYlRRQVpBaGFReTlwQzJXTks4N2Jnd0pvanByLUk3OXVMNUhMSXU4aGFyelFueWg1c1BvQXEyQjUxd1puR1RlcEVIWmlPQzlKV2N0Vnlwdk9YV2FWSG12QXNxdVNKTlRuZkFVajNwQzBIZzRNbHFKVGRNZ2lEbDJFVHA?oc=5",
-        "outlet": "AP News",
-        "lean": "neutral",
-        "when": "Fri, 28 Nov 2025",
-        "paywall": false,
-        "doubt": false
-      },
-      {
-        "title": "Thieves steal Roman statues from Syria’s national museum",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPQVZIUF94OVk0R1pGWU10VmxoOW0wUGtsYmk0Q3VVRXhUamkyMU8tTFdsWFVCLU5ZbnQzRlZGWXI4TWhTNWhUNHB2ZmYxbEVXYTVtcGtBUlkzczFEUTRoYWYwa296ZjZTelNBeGZrWkZUSHdhYmRZVzZmNlNtalNsa3RmVW9FZGVmNzZNeVV4Q2t0WHVQdW4xNnd3eHBDTFM2cFE?oc=5",
-        "outlet": "AP News",
-        "lean": "neutral",
-        "when": "Tue, 11 Nov 2025",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Articles sitemap of 2026-08-17",
-        "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5Ga3V6UEtiRWtjS1VmemFjcUE4VHNWSW96cXF5cDk1a1NQWXhWcDJpU214QzMzMURqYzJGQXUwNS1sd1VkNnZoc1llSGRJa0JRRlJ3NkNTaWw?oc=5",
-        "outlet": "Reuters",
-        "lean": "neutral",
-        "when": "Mon, 17 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Phallic 12-metre art installation raises eyebrows in Naples",
-        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPSmJMOGc2Q2JXdUpNTnM3Q0hjWldJbjNlQVBZdHpwcU8yRFRBZGxZdjZsS0lYdUU3Qk9RRUU5b3p3dk43S0hTdXhEaFFOUWV4SF83Y3VLdFQySnFGcXZzLTIybUFaNDBxZ2NHRUVKa3lISUhTbFp3b1FjcUluekJ4Zm9TUmV0OFNwaDh5djVVbF9PSlozMzZLS1psU2pLUHBUN3pxLQ?oc=5",
-        "outlet": "Reuters",
-        "lean": "neutral",
-        "when": "Thu, 10 Oct 2024",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Got The Scoop On The Gardner Museum Art Heist? You Have 4 Days To Earn $10 Million : The Two-Way",
-        "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQdlJuS1VwajRIRzBQU0dPWE44SlhlZTliaW5xVVRUYWZjT2V1SzJOX2VKRU5VSThBYTljdUxmcjFDRGV6a050TU5BR2RGSnVUM2xfWXZydnVoV0RyYTktaHFvT0ZGTWo3cVFUNjQ0S0xwRkV2WmluTXl2TFhyOVpRUHRra3VldmZpWXZfenFQcHpjbUM0YTVHS2RCdTJXaGtnTkF4dFh3akw0WC1YaVJzeUY3QlQtQ0tZMnJBcklQdmphcG5BLTVfT1lEUUNKM1Y3VDlhcDRFd0g?oc=5",
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "when": "Wed, 27 Dec 2017",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "The secret life of a stolen Van Gogh : The Sunday Story",
-        "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQczRMc19taTNWS2FWZGR3eXFJckZjaHJ6YWdjMWdyOTE0R2VQa0YyVUVJaFVSNTY5b1RUTnpiVkFRa2JQaFRYZUNyTTlyMnMxWVRSbmJ6SjI3Y2ZfTTQ1cFcxLWRsU3haX3lnbW9nNnkwWGZoRC1mRnNTZmhadGZiX0ZIY19uWFFs?oc=5",
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "when": "Sun, 28 Jun 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Italy theft: Two suspects killed in jewellery shop robbery",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE0zYmlLSUVwMS1lczRWMnlQS0xvS213NkVEZHBGZVFmdVJQUFZWWEp6R3AtRzVZb19yQ3I1aVpnUXRoUUlJRGMtNkhGQ1BUNUtudy1RWmJ4RGZNUQ?oc=5",
-        "outlet": "BBC News",
-        "lean": "neutral",
-        "when": "Thu, 29 Apr 2021",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Italian burglar caught after sitting down with book",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9yUjVqZEFXVUtPLTdYNkxNamVSYkdhYUNSc25oSlluZmROeFl3STZTT3BsLVdzX3ZmRU1HWE5fY3FVeFNQbHBvR3htNnBsOGU5aFFiWkpPdHNUdw?oc=5",
-        "outlet": "BBC News",
-        "lean": "neutral",
-        "when": "Sat, 24 Aug 2024",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "London Science Museum cuts links with BP after decades of partnership",
-        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNM0VQU3FUMTAtekV3TEhCZ21CcEF0eXBXWFBLNHBGX2drczcyY2k0TXU5SFVad2h6WUk3VXlKUFFoZVA2cXRqS0hiM3hxU3RiaEUzQWotbFlzN01BYklsNjZuZTFQZ0VUaFpwTnJmM1E2RllJNmNXdjI2RlY2cFN1bW9maGxKTGRHdm8taGlzQkNHT25INnN2LTBsZEhjNkVfaVVhWW1aS09YaTJ0R2JXVFdDckFKalRC?oc=5",
-        "outlet": "The Guardian",
-        "lean": "left",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Yayoi Kusama, Japanese artist who became a global superstar, dies aged 97",
-        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPcTF6ZFpSR2h3M1ZzaDFPcElRTWRxNG5ZSnhYNzVWVmFBTEtNei13aVVOamxhcjd2NFlPS2F1RU5LSG9UYWxTeGJxY0N2TDliaS1hTjVFemxFbFMtV1hRdnNFbExLcjRYbkZmM2pqOWVKdFRhelo3RDl4dTl3X3dXSjJwdHZaNXBQUlNHQXY0UzlzeEdo?oc=5",
-        "outlet": "The Guardian",
-        "lean": "left",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "'Whether you're Labour or not', Andy Burnham embodies a 'hope of political stability'",
-        "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQV1cweEQ5WXdRN2RrS0lad3Y4V284a0N2bEx4U2dsVUxTX2t4aTlmOERsWXZEZzNpOUtSZExwc09WZmlFWGk2N3ZZN0NHa1lEMDhHMGtJSTRkNGN2elVyN3EwazRhUW9IMDY2RE4ySElTSUdvSWlOMDR4a0F6ZE43WUo3STNCbG9mLXRTYzI0Qld0dzYyRENsSnJVdTZwXzhEWjZXbDZCOVlHa0Yzd0UyMnNVdVE5d2c?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Fri, 17 Jul 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Police arrest two more over attempted attack on US bank HQ in Paris",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNVXFNRE9hSEhHNVJSTnlOSVNkZXZzaGhpTHVvdlFkN3ZNeWNFdV9reXJtV21IU2YzLXpYUUJhSG5OaktFWmlvejVvb05PYlV1QmYxSVJERmVsdGsyZVJ5OGFKa0p5THJ6dDRJMnF1T2dRRlZDYXJDYTVpajhjOFZnUkRCdnF2NE5yeXd3eUJTcC1fRXE5ME5YSVV4Zw?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Mon, 30 Mar 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "French billionaire art collector back in court for tax fraud",
-        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOT1FLZFhQUExRR0dnZ3FTRUlOa05uTE1hNzZMXzFYTlIyQnIyMjdsZFF0dGtud1gzTFc5YjNwT25jREdjMTczekI2aElQOGprZFUtX1V3ZzM0YVhWVjRsNHd2czZTZElWLXVKTHowY1B4cUlXZ0xlZFFzRXlvMzlnX2YtWjRjSzFkbzQwZ1FPWnlzR0w5UVZDMWk2cVh1NEpRRzgzdklJbWM5RkRLMzczMmtId3QyN1JfV1BDdmNtOA?oc=5",
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "when": "Wed, 20 Sep 2023",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "How an unsolved homophobic murder is sparking interest in Italy",
-        "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQNnl0NllsdG90X2RxelNnd0NEck1zMmpPVDNfZE1VZVRnXy14Zlkzdk56YnhZdjQ3Tmh1cVRpQmZraURsRnljSUY3OGhwaVdIcW9yM2x0V0xDTGtWbldtTktGYlFRYVJZbGhqNVR5a3l6QzV5aW9fT05hMVFkNmJxWjhCQ1VSZXJodGIzaFNUR2pScHU2LUQxbDdmZnkzcC0tNTFTdFMxUWdmSC1SRDVKU3Z4NEdRTGI0LURPNEV5Wk0?oc=5",
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "when": "Wed, 28 Jun 2023",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Britain’s belated reckoning with imperial crimes",
-        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOU2t4SEFRVFYydXR6X2lINzBtRHRGQ1pPOTloN2szR1QzRXZXR0ZjeHA3NzgyM3pyU2Q3VDlNSm9ReEJCb1ZIMkZLMnp6UDJ4N2FXcXc4cWtmSnpNTlhDeExkYWM3TlZOM1VHZTZjblA3VXVBOWlxVWRqdmJram5XQkdWdFhud0hsMGk4MUpIQTAzcEwtMGfSAZsBQVVfeXFMTW9RQlV4R29NcXNjbGRUdU9iTlJPTEJkX2MtTzEzMTNab1RUOFE5dXBsVWdabEFYbE9uLWZMNTlxR1ZvNk85cmxmMlhIcTlZQk1vRGdvLWRCY2VVUzdLSEhaaE92akFpeUllaVl5Qm5NcWphanBhV2k5RThjUi1ieDRxYWZIODZjUV9QWVlsaGZCVmh1QjlzSktMbjA?oc=5",
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "when": "Sat, 02 Mar 2019",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "Young Palestinian musicians challenge ‘system of oppression’",
-        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNSnhnN2N3aUZFUHQ1R0NlbGVyNUVlOTRPWVBpSUlteGEzZEVuSGlYOE0zQlNKcGtoZ0lSOWwyTDZlRzNUcGdRMDVIMFY0ajM2NWdWTkwxYTV6NThfTlBuNHJUWXYteHh1RUdyVVNQQ2h3U2wzeFJkc2ZFQ3R2TGdpU1pQZ1prQ1gyZFdxM0xFcl9ScjAzRlViZWNVRG14QTJUcVJEWNIBqgFBVV95cUxNVHZyTmZmQUNjV3pCSFNjNllBSHFmS2lPZDFzSW1sMnByZFRfMUd5NWJJM1BYYmNhS1ByNWQ0b2RHQWVXMlJic0JvMVIyZEhObUpCUXNCMmNseGJNYW1pVFJGRGdmV3dJMUl6RzRXT3NKVjZYTS1vZjZJcVVkdFdRd2ctdHVUeEJ2RHZOb1g1TUpGZDd1UTA3SmcwdkxuRTFKZHRjbXJwRFNFUQ?oc=5",
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "when": "Mon, 05 Aug 2019",
-        "paywall": false,
-        "doubt": false
       }
     ],
     "images": [
-      {
-        "id": "frame_e5VqmNPVYPw_7",
-        "kind": "frame",
-        "term": "Wall Street Journal 7s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_e5VqmNPVYPw_7.jpg",
-        "caption": "pedestal here at the Metropolitan Museum",
-        "said": "pedestal here at the Metropolitan Museum",
-        "at": 7.48,
-        "source": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.mp4",
-        "outlet": "Wall Street Journal",
-        "author": "",
-        "credit": "畫面來源：Wall Street Journal",
-        "page": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
-        "look": 16493524119225418948
-      },
-      {
-        "id": "frame_e5VqmNPVYPw_38",
-        "kind": "frame",
-        "term": "Wall Street Journal 38s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_e5VqmNPVYPw_38.jpg",
-        "caption": "with an actress who plays a museum",
-        "said": "with an actress who plays a museum",
-        "at": 38.04,
-        "source": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.mp4",
-        "outlet": "Wall Street Journal",
-        "author": "",
-        "credit": "畫面來源：Wall Street Journal",
-        "page": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
-        "look": 1732952246190531298
-      },
-      {
-        "id": "frame_e5VqmNPVYPw_110",
-        "kind": "frame",
-        "term": "Wall Street Journal 110s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_e5VqmNPVYPw_110.jpg",
-        "caption": "sculptures of the Italian Renaissance",
-        "said": "sculptures of the Italian Renaissance",
-        "at": 110.62,
-        "source": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.mp4",
-        "outlet": "Wall Street Journal",
-        "author": "",
-        "credit": "畫面來源：Wall Street Journal",
-        "page": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
-        "look": 1737290185459636248
-      },
-      {
-        "id": "frame_e5VqmNPVYPw_140",
-        "kind": "frame",
-        "term": "Wall Street Journal 140s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_e5VqmNPVYPw_140.jpg",
-        "caption": "continuously during Museum hours through",
-        "said": "continuously during Museum hours through",
-        "at": 140.08,
-        "source": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.mp4",
-        "outlet": "Wall Street Journal",
-        "author": "",
-        "credit": "畫面來源：Wall Street Journal",
-        "page": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
-        "look": 9223441167587215360
-      },
       {
         "id": "frame_8DiXdXVd7ho_116",
         "kind": "frame",
@@ -753,109 +241,34 @@
         "look": 592254543174008446
       },
       {
-        "id": "frame_e5VqmNPVYPw_65",
+        "id": "frame_UXJdDv74Z1E_35",
         "kind": "frame",
-        "term": "Wall Street Journal 65s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_e5VqmNPVYPw_65.jpg",
-        "caption": "art it's about revealing the narratives",
-        "said": "art it's about revealing the narratives",
-        "at": 65.12,
-        "source": "assets/footage/梅西納名畫失竊test/e5VqmNPVYPw.mp4",
-        "outlet": "Wall Street Journal",
+        "term": "AP News 35s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_UXJdDv74Z1E_35.jpg",
+        "caption": "she just looked at me and I just started",
+        "said": "she just looked at me and I just started",
+        "at": 35.78,
+        "source": "assets/footage/梅西納名畫失竊test/UXJdDv74Z1E.mp4",
+        "outlet": "AP News",
         "author": "",
-        "credit": "畫面來源：Wall Street Journal",
-        "page": "https://www.youtube.com/watch?v=e5VqmNPVYPw",
-        "look": 18446460129126645760
+        "credit": "畫面來源：AP News",
+        "page": "https://www.youtube.com/watch?v=UXJdDv74Z1E",
+        "look": 4116633361304457987
       },
       {
-        "id": "frame_AMLAVy2AtQ0_42",
+        "id": "frame_UXJdDv74Z1E_107",
         "kind": "frame",
-        "term": "Bloomberg 42s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_AMLAVy2AtQ0_42.jpg",
-        "caption": "particular one will probably continue to",
-        "said": "particular one will probably continue to",
-        "at": 42.33,
-        "source": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.mp4",
-        "outlet": "Bloomberg",
+        "term": "AP News 107s",
+        "file": "assets/photos/梅西納名畫失竊test/frame_UXJdDv74Z1E_107.jpg",
+        "caption": "good think we better start over oh come",
+        "said": "good think we better start over oh come",
+        "at": 107.48,
+        "source": "assets/footage/梅西納名畫失竊test/UXJdDv74Z1E.mp4",
+        "outlet": "AP News",
         "author": "",
-        "credit": "畫面來源：Bloomberg",
-        "page": "https://www.youtube.com/watch?v=AMLAVy2AtQ0",
-        "look": 18337545011250108544
-      },
-      {
-        "id": "frame_AMLAVy2AtQ0_121",
-        "kind": "frame",
-        "term": "Bloomberg 121s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_AMLAVy2AtQ0_121.jpg",
-        "caption": "meanwhile there was an article in The",
-        "said": "meanwhile there was an article in The",
-        "at": 121.94,
-        "source": "assets/footage/梅西納名畫失竊test/AMLAVy2AtQ0.mp4",
-        "outlet": "Bloomberg",
-        "author": "",
-        "credit": "畫面來源：Bloomberg",
-        "page": "https://www.youtube.com/watch?v=AMLAVy2AtQ0",
-        "look": 18228021597431697537
-      },
-      {
-        "id": "frame_Ai55zArdmzA_89",
-        "kind": "frame",
-        "term": "BBC News 89s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_89.jpg",
-        "caption": "Italy's most famous paintings",
-        "said": "Italy's most famous paintings",
-        "at": 89.56,
-        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
-        "look": 4052179856693921793
-      },
-      {
-        "id": "frame_Ai55zArdmzA_315",
-        "kind": "frame",
-        "term": "BBC News 315s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_315.jpg",
-        "caption": "than four and a half million stolen",
-        "said": "than four and a half million stolen",
-        "at": 315.87,
-        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
-        "look": 10963536942558282737
-      },
-      {
-        "id": "frame_Ai55zArdmzA_22",
-        "kind": "frame",
-        "term": "BBC News 22s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_22.jpg",
-        "caption": "the amazing art you can find here",
-        "said": "the amazing art you can find here",
-        "at": 22.32,
-        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
-        "look": 54202990575
-      },
-      {
-        "id": "frame_Ai55zArdmzA_45",
-        "kind": "frame",
-        "term": "BBC News 45s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_45.jpg",
-        "caption": "in everyday spaces all around Italy like",
-        "said": "in everyday spaces all around Italy like",
-        "at": 45.6,
-        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
-        "look": 13834865572968972352
+        "credit": "畫面來源：AP News",
+        "page": "https://www.youtube.com/watch?v=UXJdDv74Z1E",
+        "look": 37018236717614592
       },
       {
         "id": "39113418",
@@ -872,6 +285,23 @@
         "size": [
           3840,
           2560
+        ]
+      },
+      {
+        "id": "11843513",
+        "term": "museum gallery empty room",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/11843513.jpg",
+        "caption": "A solitary figure sitting in a contemporary art gallery surrounded by framed artworks.",
+        "outlet": "Pexels",
+        "author": "Xianyun Zhu",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/black-and-white-photo-of-art-museum-11843513/",
+        "look": 261992988093,
+        "size": [
+          6000,
+          4286
         ]
       },
       {
@@ -892,20 +322,54 @@
         ]
       },
       {
-        "id": "19968245",
-        "term": "museum gallery empty room",
+        "id": "28664275",
+        "term": "religious procession crowd",
         "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/19968245.jpg",
-        "caption": "A well-lit museum room displaying classic framed paintings with a wooden floor.",
+        "file": "assets/photos/梅西納名畫失竊test/28664275.jpg",
+        "caption": "Religious procession with individuals in white attire during a rainy cultural celebration.",
         "outlet": "Pexels",
-        "author": "Filipp Romanovski",
+        "author": "Christian  Alemu",
         "credit": "",
-        "answers": 0.5,
-        "page": "https://www.pexels.com/photo/view-of-an-empty-room-with-art-on-the-walls-19968245/",
-        "look": 1736171871119858566,
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/traditional-religious-parade-in-vibrant-rain-28664275/",
+        "look": 4557502081973420064,
         "size": [
-          4000,
-          2667
+          9227,
+          6151
+        ]
+      },
+      {
+        "id": "18772921",
+        "term": "religious procession crowd",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/18772921.jpg",
+        "caption": "A vibrant traditional religious parade procession with diverse participants in urban setting.",
+        "outlet": "Pexels",
+        "author": "Fatima Yusuf",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/people-on-parade-in-town-18772921/",
+        "look": 18360874440490942516,
+        "size": [
+          3851,
+          3456
+        ]
+      },
+      {
+        "id": "19286418",
+        "term": "religious procession crowd",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/19286418.jpg",
+        "caption": "A bustling night street procession with a religious figure, highlighting urban faith and community gathering.",
+        "outlet": "Pexels",
+        "author": "Gonzalo Carlos Novillo Lapeyra",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/a-religious-procession-at-night-19286418/",
+        "look": 280199813260443656,
+        "size": [
+          6034,
+          4028
         ]
       },
       {
@@ -1011,57 +475,6 @@
         ]
       },
       {
-        "id": "19286418",
-        "term": "religious procession crowd street",
-        "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/19286418.jpg",
-        "caption": "A bustling night street procession with a religious figure, highlighting urban faith and community gathering.",
-        "outlet": "Pexels",
-        "author": "Gonzalo Carlos Novillo Lapeyra",
-        "credit": "",
-        "answers": 0.75,
-        "page": "https://www.pexels.com/photo/a-religious-procession-at-night-19286418/",
-        "look": 280199813260443656,
-        "size": [
-          6034,
-          4028
-        ]
-      },
-      {
-        "id": "18772921",
-        "term": "religious procession crowd street",
-        "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/18772921.jpg",
-        "caption": "A vibrant traditional religious parade procession with diverse participants in urban setting.",
-        "outlet": "Pexels",
-        "author": "Fatima Yusuf",
-        "credit": "",
-        "answers": 0.5,
-        "page": "https://www.pexels.com/photo/people-on-parade-in-town-18772921/",
-        "look": 18360874440490942516,
-        "size": [
-          3851,
-          3456
-        ]
-      },
-      {
-        "id": "18937552",
-        "term": "religious procession crowd street",
-        "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/18937552.jpg",
-        "caption": "A bustling aerial view of a religious procession in Lima, Peru's urban landscape.",
-        "outlet": "Pexels",
-        "author": "Lyon Peru",
-        "credit": "",
-        "answers": 0.5,
-        "page": "https://www.pexels.com/photo/religious-procession-on-city-street-18937552/",
-        "look": 2298083836,
-        "size": [
-          8139,
-          5465
-        ]
-      },
-      {
         "id": "20783671",
         "term": "cctv camera corridor",
         "kind": "stock",
@@ -1113,54 +526,20 @@
         ]
       },
       {
-        "id": "9921317",
-        "term": "old church painting altar",
+        "id": "14549807",
+        "term": "wire fence cut",
         "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/9921317.jpg",
-        "caption": "Interior view of a historic church with frescoes in Nova Ponente, Italy.",
+        "file": "assets/photos/梅西納名畫失竊test/14549807.jpg",
+        "caption": "Close-up of a rustic barbed wire fence in Montselgues, France, with a tranquil landscape.",
         "outlet": "Pexels",
-        "author": "Stefano Parisi",
+        "author": "César Guillotel",
         "credit": "",
-        "answers": 0.25,
-        "page": "https://www.pexels.com/photo/fresco-on-wall-in-a-church-9921317/",
-        "look": 2594112864569942628,
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/close-up-shot-of-barbed-wires-14549807/",
+        "look": 956301311,
         "size": [
-          6016,
-          4016
-        ]
-      },
-      {
-        "id": "38109652",
-        "term": "old church painting altar",
-        "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/38109652.jpg",
-        "caption": "Interior of ancient church showcasing historic frescoes and stone architecture.",
-        "outlet": "Pexels",
-        "author": "Susanne Jutzeler, suju-foto",
-        "credit": "",
-        "answers": 0.25,
-        "page": "https://www.pexels.com/photo/historic-church-with-ancient-frescoes-and-arches-38109652/",
-        "look": 504714594934030721,
-        "size": [
-          7952,
-          5304
-        ]
-      },
-      {
-        "id": "37607917",
-        "term": "old church painting altar",
-        "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/37607917.jpg",
-        "caption": "Detailed fresco painting inside a historical Tuscan church showcasing classical architecture.",
-        "outlet": "Pexels",
-        "author": "Claudia  Solano",
-        "credit": "",
-        "answers": 0.5,
-        "page": "https://www.pexels.com/photo/intricate-fresco-in-historic-tuscan-church-37607917/",
-        "look": 9320898661648105088,
-        "size": [
-          6000,
-          4000
+          5634,
+          3752
         ]
       },
       {
@@ -1195,23 +574,6 @@
         "size": [
           4368,
           2913
-        ]
-      },
-      {
-        "id": "37341755",
-        "term": "wire fence cut",
-        "kind": "stock",
-        "file": "assets/photos/梅西納名畫失竊test/37341755.jpg",
-        "caption": "Close-up view of a rusty chain-link fence with blurred background, outdoors.",
-        "outlet": "Pexels",
-        "author": "Diana ✨",
-        "credit": "",
-        "answers": 0.33,
-        "page": "https://www.pexels.com/photo/close-up-of-rusty-chain-link-fence-outdoors-37341755/",
-        "look": 18446742969886113792,
-        "size": [
-          6048,
-          3402
         ]
       },
       {
@@ -1266,140 +628,54 @@
         ]
       },
       {
-        "id": "frame_Ai55zArdmzA_104",
-        "kind": "frame",
-        "term": "BBC News 104s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_Ai55zArdmzA_104.jpg",
-        "caption": "painting was stolen by one of Sicily's",
-        "said": "painting was stolen by one of Sicily's",
-        "at": 104.67,
-        "source": "assets/footage/梅西納名畫失竊test/Ai55zArdmzA.mp4",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=Ai55zArdmzA",
-        "look": 2531871382049394189
-      },
-      {
-        "id": "frame_YTA-IiZk_d0_5",
-        "kind": "frame",
-        "term": "Al Jazeera English 5s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_YTA-IiZk_d0_5.jpg",
-        "caption": "artifacts to Italy police in Rome",
-        "said": "artifacts to Italy police in Rome",
-        "at": 5.46,
-        "source": "assets/footage/梅西納名畫失竊test/YTA-IiZk_d0.mp4",
-        "outlet": "Al Jazeera English",
-        "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=YTA-IiZk_d0",
-        "look": 18376752762769653760
-      },
-      {
-        "id": "frame_YTA-IiZk_d0_219",
-        "kind": "frame",
-        "term": "Al Jazeera English 219s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_YTA-IiZk_d0_219.jpg",
-        "caption": "stolen artifacts now",
-        "said": "stolen artifacts now",
-        "at": 219.93,
-        "source": "assets/footage/梅西納名畫失竊test/YTA-IiZk_d0.mp4",
-        "outlet": "Al Jazeera English",
-        "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=YTA-IiZk_d0",
-        "look": 5728313875524260048
-      },
-      {
-        "id": "frame_YTA-IiZk_d0_23",
-        "kind": "frame",
-        "term": "Al Jazeera English 23s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_YTA-IiZk_d0_23.jpg",
-        "caption": "artifacts from the U.S to Rome in",
-        "said": "artifacts from the U.S to Rome in",
-        "at": 23.94,
-        "source": "assets/footage/梅西納名畫失竊test/YTA-IiZk_d0.mp4",
-        "outlet": "Al Jazeera English",
-        "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=YTA-IiZk_d0",
-        "look": 7456284346335353795
-      },
-      {
-        "id": "frame_GmejkYkZHlk_41",
-        "kind": "frame",
-        "term": "Al Jazeera English 41s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_GmejkYkZHlk_41.jpg",
-        "caption": "if we consider it part of our culture as",
-        "said": "if we consider it part of our culture as",
-        "at": 41.72,
-        "source": "assets/footage/梅西納名畫失竊test/GmejkYkZHlk.mp4",
-        "outlet": "Al Jazeera English",
-        "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=GmejkYkZHlk",
-        "look": 1012793286097386552
-      },
-      {
-        "id": "frame_GmejkYkZHlk_57",
-        "kind": "frame",
-        "term": "Al Jazeera English 57s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_GmejkYkZHlk_57.jpg",
-        "caption": "famous paintings in the world",
-        "said": "famous paintings in the world",
-        "at": 57.12,
-        "source": "assets/footage/梅西納名畫失竊test/GmejkYkZHlk.mp4",
-        "outlet": "Al Jazeera English",
-        "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=GmejkYkZHlk",
-        "look": 1142185882931665
-      },
-      {
-        "id": "frame_GmejkYkZHlk_120",
-        "kind": "frame",
-        "term": "Al Jazeera English 120s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_GmejkYkZHlk_120.jpg",
-        "caption": "museums in the world",
-        "said": "museums in the world",
-        "at": 120.52,
-        "source": "assets/footage/梅西納名畫失竊test/GmejkYkZHlk.mp4",
-        "outlet": "Al Jazeera English",
-        "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=GmejkYkZHlk",
-        "look": 290314738669450203
-      },
-      {
-        "id": "frame_GmejkYkZHlk_153",
-        "kind": "frame",
-        "term": "Al Jazeera English 153s",
-        "file": "assets/photos/梅西納名畫失竊test/frame_GmejkYkZHlk_153.jpg",
-        "caption": "in the future art and culture many here",
-        "said": "in the future art and culture many here",
-        "at": 153.88,
-        "source": "assets/footage/梅西納名畫失竊test/GmejkYkZHlk.mp4",
-        "outlet": "Al Jazeera English",
-        "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=GmejkYkZHlk",
-        "look": 16278790722875408865
-      },
-      {
-        "id": "Messina_2003.JPG",
-        "term": "Messina",
-        "kind": "real",
-        "file": "assets/photos/梅西納名畫失竊test/Messina_2003.JPG.jpg",
-        "caption": "Messina is a harbour city and the capital of the Italian Metropolitan City of Messina. It is the third largest city on the island of Sicily, and the 13th largest city in Italy, with a population of 217,033 inhabitants in the city proper and 595,948 in the metropolitan city as of 2025. It is located ",
-        "outlet": "維基百科",
-        "author": "Alexander Hoernigk",
-        "credit": "Alexander Hoernigk／CC BY 3.0",
-        "answers": 1.0,
-        "page": "https://commons.wikimedia.org/wiki/File:Messina_2003.JPG",
-        "look": 9223402838212739071,
+        "id": "9921317",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/9921317.jpg",
+        "caption": "Interior view of a historic church with frescoes in Nova Ponente, Italy.",
+        "outlet": "Pexels",
+        "author": "Stefano Parisi",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/fresco-on-wall-in-a-church-9921317/",
+        "look": 2594112864569942628,
         "size": [
-          1573,
-          1180
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "38109652",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/38109652.jpg",
+        "caption": "Interior of ancient church showcasing historic frescoes and stone architecture.",
+        "outlet": "Pexels",
+        "author": "Susanne Jutzeler, suju-foto",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/historic-church-with-ancient-frescoes-and-arches-38109652/",
+        "look": 504714594934030721,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "37607917",
+        "term": "old church painting altar",
+        "kind": "stock",
+        "file": "assets/photos/梅西納名畫失竊test/37607917.jpg",
+        "caption": "Detailed fresco painting inside a historical Tuscan church showcasing classical architecture.",
+        "outlet": "Pexels",
+        "author": "Claudia  Solano",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/intricate-fresco-in-historic-tuscan-church-37607917/",
+        "look": 9320898661648105088,
+        "size": [
+          6000,
+          4000
         ]
       },
       {
@@ -1417,57 +693,6 @@
         "size": [
           4309,
           6000
-        ]
-      },
-      {
-        "id": "MessinaStrait.jpg",
-        "term": "Strait of Messina",
-        "kind": "real",
-        "file": "assets/photos/梅西納名畫失竊test/MessinaStrait.jpg.jpg",
-        "caption": "The Strait of Messina is a narrow strait between the eastern tip of Sicily and the western tip of Calabria in Southern Italy. It connects the Tyrrhenian Sea to the north with the Ionian Sea to the south, within the central Mediterranean. At its narrowest point, between Torre Faro and Villa San Giova",
-        "outlet": "維基百科",
-        "author": "",
-        "credit": "／Public domain",
-        "answers": 1.0,
-        "page": "https://commons.wikimedia.org/wiki/File:MessinaStrait.jpg",
-        "look": 16208721080380493312,
-        "size": [
-          694,
-          600
-        ]
-      },
-      {
-        "id": "Sicilia_Palermo5_tango7174.jpg",
-        "term": "Palermo",
-        "kind": "real",
-        "file": "assets/photos/梅西納名畫失竊test/Sicilia_Palermo5_tango7174.jpg.jpg",
-        "caption": "Palermo is the capital and largest city of the autonomous island region of Sicily in southern Italy, located on the eponymous gulf facing the Tyrrhenian Sea. A 2,700-year-old city, it is noted for its history, culture, architecture and gastronomy, playing an important role throughout much of its exi",
-        "outlet": "維基百科",
-        "author": "Tango7174",
-        "credit": "Tango7174／CC BY-SA 4.0",
-        "answers": 1.0,
-        "page": "https://commons.wikimedia.org/wiki/File:Sicilia_Palermo5_tango7174.jpg",
-        "look": 584375303524122367,
-        "size": [
-          734,
-          800
-        ]
-      },
-      {
-        "id": "Bild-Ottavio_Leoni,_Caravaggio.jpg",
-        "term": "Caravaggio",
-        "kind": "real",
-        "file": "assets/photos/梅西納名畫失竊test/Bild-Ottavio_Leoni,_Caravaggio.jpg.jpg",
-        "caption": "Michelangelo Merisi da Caravaggio, known mononymously as Caravaggio, was an Italian painter active in Rome for a significant portion of his artistic life. He began his apprenticeship in Milan in 1584, and during the final four years of his life, he moved between Naples, Malta, and Sicily. His painti",
-        "outlet": "維基百科",
-        "author": "Ottavio Leoni",
-        "credit": "Ottavio Leoni／Public domain",
-        "answers": 1.0,
-        "page": "https://commons.wikimedia.org/wiki/File:Bild-Ottavio_Leoni,_Caravaggio.jpg",
-        "look": 18446465912359601135,
-        "size": [
-          1132,
-          1582
         ]
       }
     ],
@@ -1494,357 +719,15 @@
       "reply": false
     },
     {
-      "say": "If the movie Indian in the Cupboard taught me anything, Jesus and Mary are about to be the mother of all chapel-fell underboard of lock and key released.\n\nSpooky Halloween Stats as of 8:03 pm ny time October Tuesday 31st 2023:\n2 comments including this \n103 views \n4 likes, 5 with mine\nViews 106\nChannel Subs 2.41m including mine",
-      "likes": 0,
-      "when": "2 years ago",
-      "reply": false
-    },
-    {
       "say": "Hello friend, I also trade with Mrs Jessica wayne services what a coincidence, she's such a wonderful trader.",
       "likes": 0,
       "when": "2 years ago",
       "reply": true
     },
     {
-      "say": "I can never understand why anyone would give thumbs down to these amazing findings... talk about losers!  Lol",
-      "likes": 48,
-      "when": "6 years ago",
-      "reply": false
-    },
-    {
-      "say": "awesome, grazie RAFFAELLO!",
-      "likes": 27,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "That's not the Vatican, who the hell gave CNN permission to film my Bathroom?",
-      "likes": 17,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "Fake painting fake news",
-      "likes": 7,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "That's totally amazing !!!",
-      "likes": 6,
-      "when": "4 years ago",
-      "reply": false
-    },
-    {
-      "say": "There is a hidden Raphael behind the Mona Lisa.",
-      "likes": 6,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "Fake",
-      "likes": 5,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "This is one of few stories CNN has posted without bias...",
-      "likes": 4,
-      "when": "2 years ago (edited)",
-      "reply": false
-    },
-    {
-      "say": "Yeah right... You just found this my ass.",
-      "likes": 4,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "this is such a god news thank you woww he is my favorite painter =)",
-      "likes": 4,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "Magnificent",
-      "likes": 3,
-      "when": "6 years ago",
-      "reply": false
-    },
-    {
-      "say": "How were they not seen if they were on a wall with other works? Were they painted over? 🤔",
-      "likes": 3,
-      "when": "5 years ago",
-      "reply": false
-    },
-    {
-      "say": "2022???",
-      "likes": 3,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "This is 2022 why did this show up on my phone ?",
-      "likes": 2,
-      "when": "4 years ago",
-      "reply": false
-    },
-    {
-      "say": "Bellissimo!",
-      "likes": 2,
-      "when": "7 years ago",
-      "reply": false
-    },
-    {
-      "say": "would you add subtitles?",
-      "likes": 2,
-      "when": "5 years ago",
-      "reply": false
-    },
-    {
-      "say": "Yes😊",
-      "likes": 2,
-      "when": "3 years ago",
-      "reply": true
-    },
-    {
-      "say": "FAKE PAINTING AND FAKE ASS NEWS",
-      "likes": 2,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "Missclick?",
-      "likes": 1,
-      "when": "5 years ago",
-      "reply": true
-    },
-    {
-      "say": "The fact that we’re now in 2023. Just wow",
-      "likes": 1,
-      "when": "3 years ago",
-      "reply": false
-    },
-    {
-      "say": "Yyyyaaaassssss!!!",
-      "likes": 1,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "Isnt this the double wall that they thought there was a fresco behind ?",
-      "likes": 1,
-      "when": "3 years ago",
-      "reply": false
-    },
-    {
-      "say": "Five years ago and you said 2022? How about who’s here in 2033?",
-      "likes": 1,
-      "when": "3 years ago",
-      "reply": true
-    },
-    {
-      "say": "meff",
-      "likes": 1,
-      "when": "8 years ago (edited)",
-      "reply": false
-    },
-    {
-      "say": "There seems to be a misunderstanding. The answer to question 1  should be True\n\n.\n\nThe text clearly states: \"Raphael, who painted these famous frescos in three rooms at the Vatican...\" This confirms that Raphael did indeed paint in three different rooms at the Vatican. So, option (a) - True - is the correct answer  and not the option (b) for question 1",
-      "likes": 1,
-      "when": "2 years ago",
-      "reply": false
-    },
-    {
-      "say": ":D",
-      "likes": 1,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "PI RA KING OF PASSION FOR GOD and Jacob",
-      "likes": 1,
-      "when": "3 years ago",
-      "reply": false
-    },
-    {
-      "say": "And still giving itself a thumb's up.",
-      "likes": 1,
-      "when": "8 years ago",
-      "reply": true
-    },
-    {
-      "say": "Ah Roma, urbs aeterna, and the Vatican where the Vicar of Christ resides. Home of all the Gods who rule this world.",
-      "likes": 1,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "One of the Ten Commandments says not to have idols beside the lord but yet people idolize",
-      "likes": 1,
-      "when": "3 years ago",
-      "reply": false
-    },
-    {
-      "say": "Painting/drawing and restoring are two completely separate fields... you have no idea what you are talking about",
-      "likes": 1,
-      "when": "2 years ago",
-      "reply": true
-    },
-    {
-      "say": "Subliminal messages software SilentIdeas to boost creativity in arts and in all activities.",
-      "likes": 1,
-      "when": "4 years ago",
-      "reply": false
-    },
-    {
-      "say": "This CNN news was fake news 🤣 😂",
-      "likes": 1,
-      "when": "5 years ago",
-      "reply": false
-    },
-    {
-      "say": "TEŞEKKÜRLER ÇAĞLA HOCAM❤😂",
+      "say": "If the movie Indian in the Cupboard taught me anything, Jesus and Mary are about to be the mother of all chapel-fell underboard of lock and key released.\n\nSpooky Halloween Stats as of 8:03 pm ny time October Tuesday 31st 2023:\n2 comments including this \n103 views \n4 likes, 5 with mine\nViews 106\nChannel Subs 2.41m including mine",
       "likes": 0,
       "when": "2 years ago",
-      "reply": false
-    },
-    {
-      "say": "Congratulations",
-      "likes": 0,
-      "when": "1 year ago",
-      "reply": false
-    },
-    {
-      "say": "It's very interesting date of Raphael",
-      "likes": 0,
-      "when": "1 year ago",
-      "reply": false
-    },
-    {
-      "say": "2021",
-      "likes": 0,
-      "when": "5 years ago",
-      "reply": true
-    },
-    {
-      "say": "2022",
-      "likes": 0,
-      "when": "4 years ago",
-      "reply": true
-    },
-    {
-      "say": "🤲🎨🎨🎨🌹",
-      "likes": 0,
-      "when": "4 years ago",
-      "reply": false
-    },
-    {
-      "say": "🤲🎨🎨🎨🖼",
-      "likes": 0,
-      "when": "4 years ago",
-      "reply": false
-    },
-    {
-      "say": "Hola cordiales saludos excelente  pinturas .dignas de un gran genio . él hecho qué la nacional Galería de Londres aya adquirido una copia del chico de Rojo la pintura original no. Aún existe .y el público europeo no podrá exponer la copia ya qué está violando los derechos reservados de la pintura original . colección de latino América Jacobo Hernández desde Colombia actualmente dueño de la obra E inmortal y legendaria y mística pintura del chico de Rojo .Si dieron una suma de 10.8 millones de euros . cuánto están dispuestos a ofrecer por la pintura original del chico de Rojo .los escucho ofert",
-      "likes": 0,
-      "when": "4 years ago",
-      "reply": false
-    },
-    {
-      "say": "1999 looks like 1960´s\n\nfast foward to 2005 and we are already all havin cell phones and internet and\n\nhow wierd",
-      "likes": 0,
-      "when": "7 months ago",
-      "reply": false
-    },
-    {
-      "say": "Yup world’s greatest of the greatest painter used to live here Raphell ,Galileo are one of them welcome to 🇻🇦",
-      "likes": 0,
-      "when": "2 years ago",
-      "reply": false
-    },
-    {
-      "say": "No i need 2020 year old ago. Paintings.",
-      "likes": 0,
-      "when": "5 years ago",
-      "reply": false
-    },
-    {
-      "say": "There are no mysteries at the Vatican, FYI.",
-      "likes": 0,
-      "when": "5 years ago",
-      "reply": false
-    },
-    {
-      "say": "Dafayel",
-      "likes": 0,
-      "when": "7 years ago",
-      "reply": false
-    },
-    {
-      "say": "✝️  🎨 🖌 🙂 2:58",
-      "likes": 0,
-      "when": "2 years ago",
-      "reply": false
-    },
-    {
-      "say": "1:26 correction: 16th century",
-      "likes": 0,
-      "when": "3 months ago",
-      "reply": false
-    },
-    {
-      "say": "ShadowDrift me🌚",
-      "likes": 0,
-      "when": "8 years ago",
-      "reply": true
-    },
-    {
-      "say": "raphael pedazo de boton !!!! vigilante !!!",
-      "likes": 0,
-      "when": "3 months ago",
-      "reply": false
-    },
-    {
-      "say": "@Arturo Meraz you are absolutely right. \"Such a magnificent artist\"\n\nWhen they should say \"What a Magnificent GOD!\"",
-      "likes": 0,
-      "when": "3 years ago",
-      "reply": true
-    },
-    {
-      "say": "I thinkheied relatively young... of an untreated STD. He enjoyed lots of sex, with both men and women.",
-      "likes": 0,
-      "when": "8 years ago",
-      "reply": false
-    },
-    {
-      "say": "CNN, the most trusted lying unethical news.",
-      "likes": 0,
-      "when": "2 months ago",
-      "reply": false
-    },
-    {
-      "say": "ah \"restoration\" aka the early destruction of a painting.  I wish we could let the painting live and die instead of trying to \"restore\" it.  I found out how ridiculous the idea is when I tried to restore one of my own pastel paintings that i had accidentally scraped.   If the original artist can't restore their own painting then how would someone else. Much less the paintings of someone considered to be one of the greatest artist of all time.   Wipe the dirt off of the surface, try to take care of it, other than that , leave it alone. Paintings are not eternal objects nor should they be.",
-      "likes": 0,
-      "when": "3 years ago",
-      "reply": false
-    },
-    {
-      "say": "@IulianLeu  The fact that they are separate fields is not really a counter argument to my point.\n The effect of the painting is conveyed through the sum of its marks, getting a mark 'wrong' has the potential to ruin the effect.\n An artist is someone who looks at the painting and judges if the effect is conveyed is correct.\n Replacing or changing marks on the painting such that the correct effect is still conveyed is difficult even for the artist. \nFor someone other than the artist it is almost impossible, furthermore , they would not even know if they had ruined it because they are not the one",
-      "likes": 0,
-      "when": "2 years ago (edited)",
-      "reply": true
-    },
-    {
-      "say": "Not enough diversity, no visible minorities in Raphael’s Art....shame, shame, shame.",
-      "likes": 0,
-      "when": "5 years ago",
-      "reply": false
-    },
-    {
-      "say": "🤲🎨🎨🎨🎨",
-      "likes": 0,
-      "when": "4 years ago",
       "reply": false
     }
   ],

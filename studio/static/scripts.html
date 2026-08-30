@@ -147,6 +147,11 @@
   /* Which shape a script is, on its card. Not only inside the script view:
      it decides what every other number on that card means -- 38% borrowed is
      over the ceiling for an argument and comfortable for a story. */
+  .src.written{position:relative}
+  .src.written .drop-script{position:absolute;right:10px;top:9px;opacity:0;
+    color:var(--faint)}
+  .src.written:hover .drop-script{opacity:1}
+  .src.written .drop-script:hover{color:#ff8a72;border-color:#5b2a22}
   .src.written .house{display:inline-block;margin-left:8px;padding:1px 8px;
     border-radius:99px;font:11px var(--mono)}
   .src.written .house.argue{background:#12212e;color:#7fd4ff;
@@ -256,6 +261,14 @@
   .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
   .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
     border:1px solid var(--line);border-radius:5px;padding:1px 7px}
+  h3.fold{cursor:pointer;display:flex;align-items:baseline;gap:9px;
+    user-select:none}
+  h3.fold:hover{color:var(--accent)}
+  h3.fold .arrow{color:var(--faint);font-size:11px;margin-left:auto}
+  h3.fold .hint{font-size:11px;color:var(--faint);font-weight:400}
+  .folded{display:none}
+  .folded.on{display:block}
+
   .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .note-line span{font-size:11px;color:var(--faint);flex:none}
   .note-line input{flex:1;font:13px inherit;color:var(--dim);
@@ -672,6 +685,8 @@ async function open(name) {
       <h3>寫好的文案 <span class="count">${pile.scripts.length} 份</span></h3>
       ${pile.scripts.map((one) => `
         <div class="src written" data-script="${escapeHTML(one.name || one)}">
+          <button class="tiny drop-script"
+            data-name="${escapeHTML(one.name || one)}" title="刪掉這份文案">刪</button>
           <b>${escapeHTML(one.name || one)}</b>
           ${one.house ? `<span class="house ${
             one.format === "story" ? "story" : "argue"}">${
@@ -689,12 +704,14 @@ async function open(name) {
           <div class="who">${escapeHTML(lead.outlet || "")}</div>
         </div>`).join("")}` : ""}
 
-    <h3>影片 <span class="count">${got.videos} / ${want.videos}</span></h3>
-    ${sourceRows(pile.sources.videos, "影片")}
-    <h3>報導 <span class="count">${got.reports} / ${want.reports}</span></h3>
-    ${sourceRows(pile.sources.reports, "報導")}
-    <h3>原始數據 <span class="count">${got.data}</span></h3>
-    ${sourceRows(pile.sources.data, "數據")}
+    ${fold("影片", `${got.videos} / ${want.videos}`,
+           sourceRows(pile.sources.videos, "影片"))}
+    ${fold("報導", `${got.reports} / ${want.reports}`,
+           sourceRows(pile.sources.reports, "報導"))}
+    ${fold("原始數據", `${got.data}`,
+           sourceRows(pile.sources.data, "數據"),
+           "能下載 CSV 的官方統計（財政部、CBO、FRED、Eurostat），用來自己畫圖表。"
+           + "還沒有程式在收，要手動加進 topics/*.json")}
     <h3>臨時要找一張
       <span class="hint">寫文案時想到什麼就打什麼，英文</span></h3>
     <div class="hunt">
@@ -708,11 +725,13 @@ async function open(name) {
       const shown = (pile.sources.images || []).filter(
         (one) => (one.kind || "stock") === kind);
       return `
-      <h3>${escapeHTML(spec.label)}
+      <h3 class="fold${OPEN.has(spec.label) ? " on" : ""}"
+        data-fold="${escapeHTML(spec.label)}">${escapeHTML(spec.label)}
         <span class="count ${spec.short ? "lacking" : ""}">${spec.have} / ${
           spec.want}${spec.short ? `　還缺 ${spec.short}` : ""}</span>
         <span class="hint">${WHERE_FROM[kind]}</span></h3>
-      ${shown.length ? `<div class="shelf">${shown.map((one) => `
+      ${shown.length ? `<div class="folded${
+        OPEN.has(spec.label) ? " on" : ""}"><div class="shelf">${shown.map((one) => `
         <figure data-shot="${escapeHTML(JSON.stringify({
             say: "", show: one.term || "",
             pic: `/media/photo/${encodeURIComponent(name)}/${
@@ -728,7 +747,7 @@ async function open(name) {
                            : one.term || "")}</figcaption>
           <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
           ${one.credit ? `<figcaption class="who">${escapeHTML(one.credit)}</figcaption>` : ""}
-        </figure>`).join("")}</div>`
+        </figure>`).join("")}</div></div>`
         : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}`;
     }).join("")}
 
@@ -830,6 +849,31 @@ async function open(name) {
   // Who this topic is for. Stored on the topic, and copied into a script when
   // one is written -- a topic can yield two shorts for two audiences, so the
   // script keeps its own once it exists.
+  // Deleting a script. It goes to trash/ rather than away: a script is the
+  // only place a set of judgements lives -- which picture for which line,
+  // which passage, which card -- and each of those took looking at something.
+  // The film and the drawn cards do go, since both rebuild from it exactly.
+  $("paper").querySelectorAll(".drop-script").forEach((button) => {
+    button.onclick = async (event) => {
+      event.stopPropagation();          // the card itself opens the script
+      const which = button.dataset.name;
+      if (!confirm(`刪掉「${which}」？\n\n文案移到 trash/，影片和卡片直接刪掉` +
+                   `（都可以從文案重壓）。`)) return;
+      try {
+        await api("DELETE", `/api/script?name=${encodeURIComponent(which)}`);
+        open(name);
+      } catch (error) { alert(error.message); }
+    };
+  });
+
+  $("paper").querySelectorAll("h3.fold").forEach((head) => {
+    head.onclick = () => {
+      const key = head.dataset.fold;
+      if (OPEN.has(key)) OPEN.delete(key); else OPEN.add(key);
+      open(name);
+    };
+  });
+
   const noteBox = $("topicNote");
   if (noteBox) {
     noteBox.dataset.was = noteBox.value;
@@ -974,6 +1018,23 @@ const RIGHT_NOTE = {
    its own looks fine and the sequence it lands in does not. */
 const PENDING = {name: null, changes: new Map()};
 const TERMS = {pictures: [], named: []};
+
+/* Which piles are open. A gathered topic is twenty-five videos, thirty-six
+   reports and forty-nine pictures -- right for something browsed once and
+   consulted later, wrong to scroll past on every visit. Remembered across
+   redraws so opening one and acting on it does not shut it again. */
+const OPEN = new Set();
+
+function fold(title, count, body, why) {
+  const on = OPEN.has(title);
+  return `
+    <h3 class="fold${on ? " on" : ""}" data-fold="${escapeHTML(title)}">
+      ${escapeHTML(title)} <span class="count">${escapeHTML(count)}</span>
+      ${why ? `<span class="hint">${escapeHTML(why)}</span>` : ""}
+      <span class="arrow">${on ? "▾" : "▸"}</span>
+    </h3>
+    <div class="folded${on ? " on" : ""}">${body}</div>`;
+}
 
 /* Editing the house styles.
 
