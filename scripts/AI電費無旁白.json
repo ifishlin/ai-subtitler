@@ -82,8 +82,8 @@
   "lines": [
     {
       "say": "你的電費帳單，去年變貴了。",
-      "show": "示意：帳單特寫",
-      "pic": "assets/photos/AI資料中心推高電費/13785838.jpg",
+      "show": "示意：鈔票和帳單",
+      "pic": "assets/photos/AI資料中心推高電費/7680324.jpg",
       "from": "觀點"
     },
     {
@@ -130,7 +130,7 @@
     },
     {
       "say": "還有天然氣在漲。",
-      "show": "新聞畫格：CNBC 渦輪機特寫",
+      "show": "新聞畫格：CNBC 廠內訪談",
       "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_180.jpg",
       "from": "EPRI"
     },
@@ -162,8 +162,8 @@
     },
     {
       "say": "你家跟機房共用同一條線，你就會知道。",
-      "show": "真實：住宅區的輸電塔",
-      "pic": "assets/photos/AI資料中心推高電費/36433653.jpg",
+      "show": "示意：住家後面的高壓電塔",
+      "pic": "assets/photos/AI資料中心推高電費/38341668.jpg",
       "from": "觀點"
     },
     {
