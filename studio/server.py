@@ -474,6 +474,49 @@ def suggest_terms(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         raise HTTPException(400, str(error)) from error
 
 
+@app.delete("/api/topic")
+def drop_topic(name: str) -> dict[str, Any]:
+    """Remove a topic and everything gathered for it.
+
+    Refused while a script is written from it. A script names pictures and
+    passages by path; taking the pile away leaves it pointing at files that no
+    longer exist, and the checks would report a script that was fine yesterday
+    as missing every shot. Delete the scripts first, deliberately.
+
+    The record goes to trash/, the footage and photographs are removed. Both
+    are downloadable again from what the record holds -- which is why the
+    record is the part worth keeping.
+    """
+    import shutil
+    import time as time_module
+    from core import script as script_module
+    from core import topic as topic_module
+    try:
+        path = topic_module.path_for(name)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    if not path.is_file():
+        raise HTTPException(404, f"找不到題目 {name}")
+
+    written = script_module.for_topic(name)
+    if written:
+        raise HTTPException(400, f"還有 {len(written)} 份文案在用："
+                                 + "、".join(written) + "。先刪文案。")
+
+    bin_here = ROOT / "trash"
+    bin_here.mkdir(exist_ok=True)
+    shutil.move(str(path), bin_here / f"{name}.{int(time_module.time())}.json")
+    gone = []
+    for folder in (ROOT / "assets" / "footage" / name,
+                   ROOT / "assets" / "photos" / name):
+        if folder.is_dir():
+            size = sum(one.stat().st_size for one in folder.rglob("*")
+                       if one.is_file())
+            shutil.rmtree(folder)
+            gone.append(f"{folder.parent.name}/{name}　{size / 1048576:.0f} MB")
+    return {"deleted": name, "moved_to": "trash/", "also_removed": gone}
+
+
 @app.post("/api/topic/gather")
 def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """The whole gathering round, as one job.

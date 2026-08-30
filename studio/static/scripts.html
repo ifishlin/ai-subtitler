@@ -280,6 +280,8 @@
 
   .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
   .note-line span{font-size:11px;color:var(--faint);flex:none}
+  #btnDropTopic{color:var(--faint);flex:none}
+  #btnDropTopic:hover{color:#ff8a72;border-color:#5b2a22}
   .note-line input{flex:1;font:13px inherit;color:var(--dim);
     background:transparent;border:1px solid transparent;border-radius:6px;
     padding:3px 8px}
@@ -583,6 +585,7 @@ async function open(name) {
          panel; that a medical topic cannot be monetised with an AI voice is
          not anywhere else, and it decides whether the film gets made. -->
     <div class="note-line">
+      <button id="btnDropTopic" class="tiny" title="刪掉這個題目">刪題目</button>
       <span>挑這題的理由</span>
       <input id="topicNote" value="${escapeHTML(pile.note || "")}"
         placeholder="為什麼值得花九十秒？有什麼坑？" spellcheck="false">
@@ -890,6 +893,22 @@ async function open(name) {
       if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
     };
   });
+
+  // Deleting a topic. Refused while a script is written from it: a script
+  // names pictures by path, so taking the pile away turns a script that was
+  // fine yesterday into one missing every shot.
+  if ($("btnDropTopic")) $("btnDropTopic").onclick = async () => {
+    if (!confirm(`刪掉題目「${name}」？\n\n` +
+                 `紀錄移到 trash/，下載的影片和照片直接刪掉（都可以重抓）。`)) return;
+    try {
+      const back = await api("DELETE",
+                             `/api/topic?name=${encodeURIComponent(name)}`);
+      alert(`刪了。也清掉：${(back.also_removed || []).join("、") || "（沒有素材）"}`);
+      STATE.chosen = null;
+      $("paper").innerHTML = "";
+      reload(true);
+    } catch (error) { alert(error.message); }
+  };
 
   const noteBox = $("topicNote");
   if (noteBox) {
@@ -1726,13 +1745,15 @@ $("newName").addEventListener("keydown", (event) => {
 });
 $("btnBack").onclick = () => { location.href = "/"; };
 
-(async function boot() {
+async function reload(openFirst) {
   try {
     const found = await api("GET", "/api/topics");
     STATE.list = found.topics.sort((a, b) => b.modified - a.modified);
     STATE.want = found.want;
   } catch (error) { /* nothing yet */ }
   renderList();
-  if (STATE.list.length) open(STATE.list[0].name);
-})();
+  if (openFirst && STATE.list.length) open(STATE.list[0].name);
+}
+
+reload(true);
 </script>
