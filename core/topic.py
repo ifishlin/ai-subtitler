@@ -670,6 +670,18 @@ def blank(name: str, note: str = "") -> dict[str, Any]:
             "facts": [], "voices": [], "scripts": []}
 
 
+def _films_of(name: str) -> int:
+    """How many finished shorts came out of this topic. Shown in the list so a
+    topic that produced something is distinguishable at a glance from one that
+    stalled -- which is the difference that matters when there are hundreds."""
+    from core import script as script_module
+    made = 0
+    for one in script_module.for_topic(name):
+        if (ROOT / "assets" / "shorts" / f"{one}.mp4").is_file():
+            made += 1
+    return made
+
+
 def listing() -> list[dict[str, Any]]:
     found = []
     for name in names():
@@ -686,6 +698,12 @@ def listing() -> list[dict[str, Any]]:
             "facts": len(pile.get("facts") or []),
             "leads": len(pile.get("leads") or []),
             "audience": audience(pile),
+            # Out of the way rather than gone. A topic that came to nothing is
+            # still the record of having asked -- which outlets covered it, how
+            # far it got, why it stopped -- and that is worth more than the
+            # room it takes in a list.
+            "archived": bool(pile.get("archived")),
+            "films": _films_of(name),
             "voices": sum(len(v.get("comments") or []) for v in pile.get("voices") or []),
             "modified": int(path_for(name).stat().st_mtime),
         })

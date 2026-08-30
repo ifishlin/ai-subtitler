@@ -742,6 +742,27 @@ def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "left": len(topic_module.doubted(pile, kind))}
 
 
+@app.post("/api/topic/archive")
+def archive_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Put a topic out of the way, or bring it back.
+
+    Not the same as deleting. A topic that came to nothing still records having
+    asked -- which of the nineteen covered it, how far the balance got, why it
+    stopped -- and that record is worth more than the row it occupies. Messina
+    is the case in point: four outlets ran it and nobody on the right did, so it
+    cannot become a short, and knowing that is worth keeping.
+    """
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    pile["archived"] = bool(payload.get("archived"))
+    topic_module.save(name, pile)
+    return {"name": name, "archived": pile["archived"]}
+
+
 @app.post("/api/topic/note")
 def set_note(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Why this topic is worth doing, and what to watch out for.

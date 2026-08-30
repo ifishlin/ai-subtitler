@@ -732,5 +732,6 @@
     }
   ],
   "scripts": [],
-  "audience": "喜歡故事的人"
+  "audience": "喜歡故事的人",
+  "archived": true
 }

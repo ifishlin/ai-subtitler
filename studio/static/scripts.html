@@ -43,6 +43,19 @@
   .item b{display:block;font-weight:600}
   .item .facts{font:11px var(--mono);color:var(--faint);margin-top:4px;display:block}
   .item .bad{color:var(--warn)}
+  .item b .films{float:right;font:11px var(--mono);color:var(--faint);
+    font-weight:400}
+  .item.archived{opacity:.55}
+
+  .sift{display:flex;gap:6px;margin-bottom:10px}
+  .sift input{flex:1;min-width:0;font-size:12px;padding:5px 9px}
+  .sift select{font:12px inherit;color:var(--dim);background:var(--bg);
+    border:1px solid var(--line);border-radius:7px;padding:5px 7px;
+    cursor:pointer}
+  .filed-head{font:11px var(--mono);color:var(--faint);cursor:pointer;
+    padding:9px 4px 6px;border-top:1px solid var(--line);margin-top:8px;
+    user-select:none}
+  .filed-head:hover{color:var(--accent)}
 
   h2{margin:0 0 4px;font-size:19px}
   .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
@@ -513,19 +526,79 @@ function leanTag(lean) {
   return lean ? `<span class="lean ${which}">${escapeHTML(lean)}</span>` : "";
 }
 
-function renderList() {
-  $("list").innerHTML = STATE.list.map((item) => `
-    <div class="item ${item.name === STATE.chosen ? "on" : ""}"
+/* How the list is arranged. Sorted by when the file was last written, which
+   is what it always did and is worth saying out loud: editing an audience
+   moves a topic to the top. `state` sorts by how far each one got instead --
+   which is the question once there are more topics than fit on a screen. */
+const SIFT = {find: "", sort: "recent", showArchived: false};
+
+function topicCard(item) {
+  return `
+    <div class="item ${item.name === STATE.chosen ? "on" : ""}${
+      item.archived ? " archived" : ""}"
          data-name="${escapeHTML(item.name)}">
-      <b>${escapeHTML(item.name)}</b>
+      <b>${escapeHTML(item.name)}${
+        item.films ? `<span class="films">🎬 ${item.films}</span>` : ""}</b>
       <span class="facts">影片 ${item.counts.videos}/${STATE.want.videos}　`
       + `報導 ${item.counts.reports}/${STATE.want.reports}　事實 ${item.facts} 條</span>
       ${item.ready ? '<span class="facts" style="color:var(--ok)">素材夠了</span>'
                    : `<span class="facts bad">${escapeHTML(item.why)}</span>`}
-      ${item.leads ? `<span class="facts">線索 ${item.leads} 條</span>` : ""}
       ${item.scripts.length
         ? `<span class="facts">文案 ${item.scripts.length} 份</span>` : ""}
-    </div>`).join("") || '<div class="empty">還沒有題目</div>';
+    </div>`;
+}
+
+function renderList() {
+  const find = SIFT.find.trim().toLowerCase();
+  const matches = (one) => !find
+    || one.name.toLowerCase().includes(find)
+    || (one.note || "").toLowerCase().includes(find)
+    || (one.audience || "").toLowerCase().includes(find);
+
+  const rank = {
+    // Newest first: what the list has always done.
+    recent: (a, b) => b.modified - a.modified,
+    // By how far it got, so the ones waiting on something are together.
+    state: (a, b) => (b.films - a.films)
+      || (b.scripts.length - a.scripts.length)
+      || (Number(b.ready) - Number(a.ready))
+      || (b.modified - a.modified),
+    name: (a, b) => a.name.localeCompare(b.name, "zh-Hant"),
+  }[SIFT.sort];
+
+  const all = STATE.list.filter(matches);
+  const live = all.filter((one) => !one.archived).sort(rank);
+  const filed = all.filter((one) => one.archived).sort(rank);
+
+  $("list").innerHTML = `
+    <div class="sift">
+      <input id="findTopic" value="${escapeHTML(SIFT.find)}"
+        placeholder="找題目、理由、受眾…" spellcheck="false">
+      <select id="sortTopic">
+        <option value="recent"${SIFT.sort === "recent" ? " selected" : ""}>最近改過</option>
+        <option value="state"${SIFT.sort === "state" ? " selected" : ""}>做到哪</option>
+        <option value="name"${SIFT.sort === "name" ? " selected" : ""}>名稱</option>
+      </select>
+    </div>
+    ${live.map(topicCard).join("") || '<div class="empty">沒有符合的題目</div>'}
+    ${filed.length ? `
+      <div class="filed-head" id="showFiled">
+        ${SIFT.showArchived ? "▾" : "▸"} 封存的 ${filed.length} 個
+      </div>
+      ${SIFT.showArchived ? filed.map(topicCard).join("") : ""}` : ""}`;
+
+  $("findTopic").oninput = (event) => {
+    SIFT.find = event.target.value;
+    const where = event.target.selectionStart;
+    renderList();
+    $("findTopic").focus();
+    $("findTopic").setSelectionRange(where, where);
+  };
+  $("sortTopic").onchange = (event) => { SIFT.sort = event.target.value; renderList(); };
+  if ($("showFiled")) $("showFiled").onclick = () => {
+    SIFT.showArchived = !SIFT.showArchived;
+    renderList();
+  };
 }
 
 function voiceCount(pile) {
@@ -587,6 +660,8 @@ async function open(name) {
          panel; that a medical topic cannot be monetised with an AI voice is
          not anywhere else, and it decides whether the film gets made. -->
     <div class="note-line">
+      <button id="btnArchive" class="tiny">${
+        pile.archived ? "取出" : "封存"}</button>
       <button id="btnDropTopic" class="tiny" title="刪掉這個題目">刪題目</button>
       <span>挑這題的理由</span>
       <input id="topicNote" value="${escapeHTML(pile.note || "")}"
@@ -897,6 +972,18 @@ async function open(name) {
       if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
     };
   });
+
+  // Out of the way, not gone. A topic that came to nothing still records
+  // having asked -- Messina was covered by four outlets and by nobody on the
+  // right, so it cannot become a short, and that is worth knowing later.
+  if ($("btnArchive")) $("btnArchive").onclick = async () => {
+    try {
+      await api("POST", "/api/topic/archive",
+                {name, archived: !pile.archived});
+      await reload(false);
+      open(name);
+    } catch (error) { told("出錯了", error.message); }
+  };
 
   // Deleting a topic. Refused while a script is written from it: a script
   // names pictures by path, so taking the pile away turns a script that was
