@@ -311,6 +311,9 @@
   .who-for input:hover{border-color:#244055}
   .who-for input:focus{border-color:var(--accent);background:#0d1014;outline:none}
   .who-for input::placeholder{color:var(--faint);font-size:13px}
+  /* The measured script: length, shares, and every gate's count. Still two
+     rows of tiles because that is a readout of twelve independent numbers,
+     none of which is printed anywhere else on the page. */
   .gauge{display:flex;gap:16px;flex-wrap:wrap;padding:12px 15px;margin-bottom:8px;
     background:var(--panel);border:1px solid var(--line);border-radius:9px}
   .gauge div{font-size:12px;color:var(--dim)}
@@ -319,17 +322,22 @@
   .gauge b.short{color:var(--warn)}
   .gauge b.good{color:var(--ok)}
 
-  /* Who has been heard. The point is not the count -- it is whether the other
-     side is in there at all, so an empty column is coloured, not just small. */
-  .sides{display:flex;gap:6px;margin-bottom:14px}
-  .sides div{flex:1;text-align:center;padding:8px 4px;border-radius:8px;
-    background:var(--panel);border:1px solid var(--line);font-size:11px;
-    color:var(--faint)}
-  .sides div b{display:block;font:17px var(--mono);color:var(--ink);margin-bottom:2px}
-  .sides div.none{border-color:#5c3a2a;background:#241a14}
-  .sides div.none b{color:var(--warn)}
+  /* Who has been heard. The point is not the count -- it is whether the
+     other side is in there at all, so an empty one is coloured, not just
+     small. Riding along on the verdict line because it answers the same
+     question: is this writable yet. */
+  .sides{display:flex;gap:5px;flex-shrink:0}
+  .sides i{font-style:normal;font-size:11px;color:var(--faint);
+    padding:2px 7px;border-radius:11px;background:#00000033;
+    border:1px solid transparent}
+  .sides i b{font:12px var(--mono);font-variant-numeric:tabular-nums;
+    color:var(--ink);margin-left:4px}
+  .sides i.none{border-color:#5c3a2a;background:#241a14}
+  .sides i.none b{color:var(--warn)}
 
-  #verdict{padding:11px 15px;border-radius:9px;margin-bottom:18px;font-size:13px}
+  #verdict{display:flex;align-items:center;justify-content:space-between;
+    gap:14px;flex-wrap:wrap;
+    padding:11px 15px;border-radius:9px;margin:14px 0 18px;font-size:13px}
   #verdict.ok{background:#12291f;border:1px solid #2c5a45;color:var(--ok)}
   #verdict.no{background:#241a14;border:1px solid #5c3a2a;color:var(--warn)}
 
@@ -683,28 +691,18 @@ async function open(name) {
              escapeHTML(pile.audience_guess)}」</button>` : ""}
     </div>
 
-    <div class="gauge">
-      <div>影片<b class="${got.videos >= want.videos ? "good" : "short"}">${
-        got.videos} / ${want.videos}</b></div>
-      <div>報導<b class="${got.reports >= want.reports ? "good" : "short"}">${
-        got.reports} / ${want.reports}</b></div>
-      <div>照片<b class="${got.images >= want.images ? "good" : "short"}">${
-        got.images} / ${want.images}</b></div>
-      <div>原始數據<b>${got.data}</b></div>
-      <div>整理出的事實<b>${(pile.facts || []).length}</b></div>
-      <div>鄉民留言<b>${voiceCount(pile)}</b></div>
-    </div>
-
-    <div class="sides">
-      ${columns.map(([key, label]) => `
-        <div class="${sides[key] ? "" : "none"}">
-          <b>${sides[key]}</b>${label}
-        </div>`).join("")}
-    </div>
-
+    <!-- One line, not two panels. The six counts that used to sit here are
+         on the sticky jump bar a little further down, where each one is also
+         the way to reach that pile -- printing them twice made the top of
+         the page a table of contents for a table of contents. What is left
+         is the one thing the jump bar cannot say: whether this is writable,
+         and who has not been heard. -->
     <div id="verdict" class="${pile.ready ? "ok" : "no"}">
-      ${pile.ready ? "素材夠了，可以寫文案。"
-                   : `還不能寫：${escapeHTML(pile.why)}`}
+      <span>${pile.ready ? "素材夠了，可以寫文案。"
+                         : `還不能寫：${escapeHTML(pile.why)}`}</span>
+      <span class="sides">${columns.map(([key, label]) => `
+        <i class="${sides[key] ? "" : "none"}">${label}<b>${sides[key]}</b></i>`
+      ).join("")}</span>
     </div>
 
     <!-- The per-outlet round: ask nineteen named outlets what they said,
