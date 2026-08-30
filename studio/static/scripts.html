@@ -261,11 +261,21 @@
   .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
   .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
     border:1px solid var(--line);border-radius:5px;padding:1px 7px}
+  /* One rule between piles, so a closed one still reads as a section rather
+     than as a line of text that happens to be bold. */
+  .pile{border-top:1px solid var(--line);margin-top:14px;padding-top:2px}
+  .pile:first-of-type{border-top:none}
+  .pile.on{background:linear-gradient(var(--panel),transparent 60px);
+    border-radius:9px;padding:0 10px 8px;margin-left:-10px;margin-right:-10px}
   h3.fold{cursor:pointer;display:flex;align-items:baseline;gap:9px;
-    user-select:none}
+    user-select:none;margin:12px 0 8px}
   h3.fold:hover{color:var(--accent)}
-  h3.fold .arrow{color:var(--faint);font-size:11px;margin-left:auto}
+  h3.fold .arrow{color:var(--faint);font-size:10px;flex:none;width:12px}
   h3.fold .hint{font-size:11px;color:var(--faint);font-weight:400}
+  /* What is inside, when it is shut. */
+  h3.fold .shut{font:11px var(--mono);color:var(--faint);font-weight:400;
+    margin-left:auto;overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap;max-width:46%}
   .folded{display:none}
   .folded.on{display:block}
 
@@ -705,9 +715,11 @@ async function open(name) {
         </div>`).join("")}` : ""}
 
     ${fold("影片", `${got.videos} / ${want.videos}`,
-           sourceRows(pile.sources.videos, "影片"))}
+           sourceRows(pile.sources.videos, "影片"), "",
+           firstFew(pile.sources.videos))}
     ${fold("報導", `${got.reports} / ${want.reports}`,
-           sourceRows(pile.sources.reports, "報導"))}
+           sourceRows(pile.sources.reports, "報導"), "",
+           firstFew(pile.sources.reports))}
     ${fold("原始數據", `${got.data}`,
            sourceRows(pile.sources.data, "數據"),
            "能下載 CSV 的官方統計（財政部、CBO、FRED、Eurostat），用來自己畫圖表。"
@@ -725,11 +737,16 @@ async function open(name) {
       const shown = (pile.sources.images || []).filter(
         (one) => (one.kind || "stock") === kind);
       return `
-      <h3 class="fold${OPEN.has(spec.label) ? " on" : ""}"
-        data-fold="${escapeHTML(spec.label)}">${escapeHTML(spec.label)}
+      <section class="pile${OPEN.has(spec.label) ? " on" : ""}">
+      <h3 class="fold" data-fold="${escapeHTML(spec.label)}">
+        <span class="arrow">${OPEN.has(spec.label) ? "▾" : "▸"}</span>
+        ${escapeHTML(spec.label)}
         <span class="count ${spec.short ? "lacking" : ""}">${spec.have} / ${
           spec.want}${spec.short ? `　還缺 ${spec.short}` : ""}</span>
-        <span class="hint">${WHERE_FROM[kind]}</span></h3>
+        <span class="hint">${WHERE_FROM[kind]}</span>
+        ${OPEN.has(spec.label) ? "" : `<span class="shut">${
+          [...new Set(shown.slice(0, 4).map((one) => one.term))].join("、")
+        }</span>`}</h3>
       ${shown.length ? `<div class="folded${
         OPEN.has(spec.label) ? " on" : ""}"><div class="shelf">${shown.map((one) => `
         <figure data-shot="${escapeHTML(JSON.stringify({
@@ -748,7 +765,8 @@ async function open(name) {
           <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
           ${one.credit ? `<figcaption class="who">${escapeHTML(one.credit)}</figcaption>` : ""}
         </figure>`).join("")}</div></div>`
-        : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}`;
+        : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}
+      </section>`;
     }).join("")}
 
     <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
@@ -1025,15 +1043,29 @@ const TERMS = {pictures: [], named: []};
    redraws so opening one and acting on it does not shut it again. */
 const OPEN = new Set();
 
-function fold(title, count, body, why) {
+/* What a closed pile says about itself. A collapsed function still shows its
+   signature; a collapsed pile that shows nothing hides that there is a pile. */
+function firstFew(rows, most = 3) {
+  const some = (rows || []).filter((one) => !one.doubt).slice(0, most);
+  if (!some.length) return "";
+  const names = [...new Set(some.map((one) => one.outlet).filter(Boolean))];
+  const tail = (rows || []).length > some.length
+    ? `⋯ 還有 ${(rows || []).length - some.length}` : "";
+  return `${names.join("、")}${tail ? "　" + tail : ""}`;
+}
+
+function fold(title, count, body, why, shut) {
   const on = OPEN.has(title);
   return `
-    <h3 class="fold${on ? " on" : ""}" data-fold="${escapeHTML(title)}">
-      ${escapeHTML(title)} <span class="count">${escapeHTML(count)}</span>
-      ${why ? `<span class="hint">${escapeHTML(why)}</span>` : ""}
-      <span class="arrow">${on ? "▾" : "▸"}</span>
-    </h3>
-    <div class="folded${on ? " on" : ""}">${body}</div>`;
+    <section class="pile${on ? " on" : ""}">
+      <h3 class="fold" data-fold="${escapeHTML(title)}">
+        <span class="arrow">${on ? "▾" : "▸"}</span>
+        ${escapeHTML(title)} <span class="count">${escapeHTML(count)}</span>
+        ${why ? `<span class="hint">${escapeHTML(why)}</span>` : ""}
+        ${on ? "" : `<span class="shut">${escapeHTML(shut || "")}</span>`}
+      </h3>
+      <div class="folded${on ? " on" : ""}">${body}</div>
+    </section>`;
 }
 
 /* Editing the house styles.
