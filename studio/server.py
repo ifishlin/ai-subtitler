@@ -669,6 +669,17 @@ def script_picture(picture: str) -> FileResponse:
     raise HTTPException(404, "找不到這張圖")
 
 
+@app.get("/media/card/{script}/{card}")
+def script_card(script: str, card: str) -> FileResponse:
+    """One drawn shot. Named after a hash of its own specification, so the
+    path is checked by looking rather than trusted."""
+    from core import cards as cards_module
+    target = cards_module.CARD_DIR / script / card
+    if not target.is_file() or target.suffix != ".png":
+        raise HTTPException(404, "找不到這張卡")
+    return FileResponse(target, media_type="image/png")
+
+
 @app.get("/media/photo/{name}/{picture}")
 def topic_photo(name: str, picture: str) -> FileResponse:
     """One gathered photograph, matched against the topic's own list."""
@@ -757,6 +768,17 @@ def get_script(name: str) -> dict[str, Any]:
             line["outlet"] = shot.get("outlet", "")
             line["credit"] = f"畫面來源：{shot.get('outlet', '')}"
     measured["rights"] = script_module.rights(found, known, measured)
+
+    # Cards are drawn on the way out, so the page shows the actual shot rather
+    # than the sentence describing it. Rendering is cached on the spec's own
+    # hash: an edited card gets a new file, an unchanged one is not redrawn.
+    from core import cards as cards_module
+    for line in measured["lines"]:
+        if line.get("card"):
+            try:
+                line["card_file"] = cards_module.render(name, line["card"])
+            except Exception as error:                            # noqa: BLE001
+                line["card_error"] = str(error)
     return {**found, "measured": measured}
 
 

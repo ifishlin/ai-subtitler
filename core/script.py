@@ -125,7 +125,8 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "clip_share": round(moving / borrowed * 100) if borrowed else 0,
             "still_enough": borrowed > 0 and moving >= borrowed * CLIP_LEAST,
             "unpicked": missing_pictures(script),
-            "unchecked": unchecked(script)}
+            "unchecked": unchecked(script),
+            "undrawn": undrawn(script)}
 
 
 PER_ROW = 13        # characters that fit across a 1080-wide frame at 64px
@@ -311,6 +312,25 @@ def rights(script: dict[str, Any], sources: dict[str, dict[str, Any]],
                               if rights_of(line, sources.get(line.get("pic") or ""))
                               == CLAIMED), default=0.0), 2),
     }
+
+
+def undrawn(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Drawn lines that say what they want and do not say how to draw it.
+
+    The counterpart of `unpicked`. Seven tenths of the running time is cards,
+    and for a long time every one of them existed only as a sentence in a
+    `show` field -- 自製：一條線分岔成兩條 -- to be drawn by hand, later, by
+    somebody reading that sentence. Which is the same split that put a fuse
+    box under a line about a bill: the person who wrote it never saw it, and
+    the person who drew it never knew why the line wanted it.
+    """
+    lack = []
+    for index, line in enumerate(script.get("lines") or [], start=1):
+        if is_real(line.get("show")) or line.get("card"):
+            continue
+        lack.append({"line": index, "say": line.get("say", ""),
+                     "show": line.get("show", ""), "why": "沒說這張卡怎麼畫"})
+    return lack
 
 
 def too_long(script: dict[str, Any]) -> list[dict[str, Any]]:

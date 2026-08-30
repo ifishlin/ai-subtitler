@@ -17,31 +17,76 @@
       "say": "住宅電價漲了百分之七點一。",
       "show": "自製：數字卡",
       "from": "CNBC",
-      "seconds": 2.83
+      "seconds": 2.83,
+      "card": {
+        "kind": "number",
+        "title": "全美住宅電價",
+        "value": "+7.1%",
+        "under": "2025 年",
+        "colour": "#d1453b",
+        "note": "資料：CNBC"
+      }
     },
     {
       "say": "是通膨的兩倍多。",
       "show": "自製：兩根長短不一的柱子",
       "from": "CNBC",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "bars",
+        "title": "漲幅比一比",
+        "rows": [
+          [
+            "通膨",
+            3.2,
+            "#2b4459",
+            "3.2%"
+          ],
+          [
+            "電價",
+            7.1,
+            "#d1453b",
+            "7.1%"
+          ]
+        ],
+        "note": "資料：CNBC"
+      }
     },
     {
       "say": "有些州漲超過兩成。",
       "show": "自製：地圖卡",
       "from": "CNBC",
-      "seconds": 1.96
+      "seconds": 1.96,
+      "card": {
+        "kind": "number",
+        "title": "漲最凶的幾個州",
+        "value": "+20%",
+        "under": "以上",
+        "colour": "#d1453b",
+        "note": "資料：CNBC"
+      }
     },
     {
       "say": "你沒有多開冷氣。",
       "show": "自製：關著的冷氣遙控器",
       "from": "觀點",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "title",
+        "title": "你沒有多開冷氣",
+        "under": "用電量沒變"
+      }
     },
     {
       "say": "帳單就是變厚了。",
       "show": "自製：兩張疊起來的帳單",
       "from": "觀點",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "title",
+        "title": "帳單就是變厚了",
+        "under": "多出來的是什麼？"
+      }
     },
     {
       "say": "大家說，是資料中心害的。",
@@ -59,55 +104,119 @@
       "say": "但研究說，不是它們。",
       "show": "自製：問號卡",
       "from": "Institute for Energy Research",
-      "seconds": 2.17
+      "seconds": 2.17,
+      "card": {
+        "kind": "title",
+        "title": "但也有研究說\n不是它們",
+        "note": "資料：IER"
+      }
     },
     {
       "say": "是電網老了，天然氣在漲。",
       "show": "自製：清單卡",
       "from": "Institute for Energy Research",
-      "seconds": 2.61
+      "seconds": 2.61,
+      "card": {
+        "kind": "stack",
+        "title": "另一邊的說法",
+        "items": [
+          "電網老化要汰換",
+          "天然氣價格上漲",
+          "天災後的重建"
+        ],
+        "note": "資料：IER"
+      }
     },
     {
       "say": "電網有些線路四十年沒換。",
       "show": "自製：年份卡",
       "from": "Institute for Energy Research",
-      "seconds": 2.61
+      "seconds": 2.61,
+      "card": {
+        "kind": "number",
+        "title": "部分輸電線路",
+        "value": "40 年",
+        "under": "沒有換過",
+        "note": "資料：IER"
+      }
     },
     {
       "say": "兩邊都有數據。誰在說謊？",
       "show": "自製：兩份報告並排",
       "from": "觀點",
-      "seconds": 2.61
+      "seconds": 2.61,
+      "card": {
+        "kind": "split",
+        "title": "兩邊都有數據",
+        "branches": [
+          "資料中心\n害的",
+          "不是資料\n中心"
+        ]
+      }
     },
     {
       "say": "都沒有。",
       "show": "自製：兩個字",
       "from": "觀點",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "title",
+        "title": "都沒有。"
+      }
     },
     {
       "say": "他們算的不是同一件事。",
       "show": "自製：一條線分岔成兩條",
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.39,
+      "card": {
+        "kind": "split",
+        "title": "他們算的\n不是同一件事",
+        "branches": [
+          "發電\n夠不夠",
+          "電線\n夠不夠"
+        ]
+      }
     },
     {
       "say": "一邊算的是發電夠不夠。",
       "show": "自製：發電廠圖示",
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.39,
+      "card": {
+        "kind": "title",
+        "title": "一邊算：發電",
+        "under": "電廠、機組、燃料"
+      }
     },
     {
       "say": "發電，是蓋一座電廠。",
       "show": "自製：電廠圖示",
       "from": "觀點",
-      "seconds": 2.17
+      "seconds": 2.17,
+      "card": {
+        "kind": "clock",
+        "title": "蓋一座電廠",
+        "value": "2–3 年",
+        "part": 0.3,
+        "under": "錢到位就能開工"
+      }
     },
     {
       "say": "送電，是拉一條線。",
       "show": "自製：一條線",
       "from": "觀點",
-      "seconds": 1.96
+      "seconds": 1.96,
+      "card": {
+        "kind": "chain",
+        "title": "一邊算：送電",
+        "points": [
+          "電廠",
+          "鐵塔",
+          "你家"
+        ],
+        "under": "要徵地、要許可、要排隊"
+      }
     },
     {
       "say": "一邊算的是電線夠不夠。",
@@ -121,19 +230,49 @@
       "say": "美國其實不缺電。",
       "show": "自製：字卡",
       "from": "Reuters",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "title",
+        "title": "美國不缺電",
+        "under": "能源是夠的",
+        "note": "資料：Reuters"
+      }
     },
     {
       "say": "缺的是把電送過去的線。",
       "show": "自製：字卡",
       "from": "Reuters",
-      "seconds": 2.39
+      "seconds": 2.39,
+      "card": {
+        "kind": "title",
+        "title": "缺的是把電\n送過去的線",
+        "note": "資料：Reuters"
+      }
     },
     {
       "say": "電廠兩三年蓋得完。",
       "show": "自製：兩三年",
       "from": "觀點",
-      "seconds": 1.96
+      "seconds": 1.96,
+      "card": {
+        "kind": "bars",
+        "title": "蓋得完 vs 接得上",
+        "rows": [
+          [
+            "蓋電廠",
+            2.5,
+            "#1f9d8f",
+            "2–3 年"
+          ],
+          [
+            "接電網",
+            7,
+            "#d1453b",
+            "7 年"
+          ]
+        ],
+        "note": "資料：Reuters"
+      }
     },
     {
       "say": "發電機造得出來。",
@@ -151,19 +290,43 @@
       "say": "接上電網要排七年。",
       "show": "自製：七年",
       "from": "Reuters",
-      "seconds": 1.96
+      "seconds": 1.96,
+      "card": {
+        "kind": "clock",
+        "title": "併網排隊",
+        "value": "7 年",
+        "part": 1.0,
+        "under": "最長的等待",
+        "note": "資料：Reuters"
+      }
     },
     {
       "say": "今年一半的機房蓋不成。",
       "show": "自製：一半",
       "from": "Reuters",
-      "seconds": 2.39
+      "seconds": 2.39,
+      "card": {
+        "kind": "number",
+        "title": "今年規劃的資料中心",
+        "value": "近一半",
+        "under": "延後或取消",
+        "colour": "#d1453b",
+        "note": "資料：Reuters"
+      }
     },
     {
       "say": "不是沒錢，是沒線。",
       "show": "自製：錢和線",
       "from": "觀點",
-      "seconds": 1.96
+      "seconds": 1.96,
+      "card": {
+        "kind": "split",
+        "title": "卡住的不是錢",
+        "branches": [
+          "錢\n不缺",
+          "線\n不夠"
+        ]
+      }
     },
     {
       "say": "那條線，你家跟機房共用。",
@@ -177,19 +340,43 @@
       "say": "而線的錢，照人頭分攤。",
       "show": "自製：分攤圖",
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.39,
+      "card": {
+        "kind": "title",
+        "title": "線的錢\n照人頭分攤",
+        "under": "不是照用量"
+      }
     },
     {
       "say": "你家、你鄰居、和機房。",
       "show": "自製：三個點",
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.39,
+      "card": {
+        "kind": "chain",
+        "title": "同一條饋線上",
+        "points": [
+          "你家",
+          "鄰居",
+          "機房"
+        ]
+      }
     },
     {
       "say": "掛在同一條線上。",
       "show": "自製：一條線串起三個點",
       "from": "觀點",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "chain",
+        "title": "掛在同一條線上",
+        "points": [
+          "你家",
+          "鄰居",
+          "機房"
+        ],
+        "under": "帳單一起分"
+      }
     },
     {
       "say": "德州的共和黨員受不了了。",
@@ -207,7 +394,12 @@
       "say": "州長暫停了新的機房許可。",
       "show": "自製：暫停",
       "from": "CNN",
-      "seconds": 2.61
+      "seconds": 2.61,
+      "card": {
+        "kind": "title",
+        "title": "州長暫停\n新的機房許可",
+        "note": "資料：CNN"
+      }
     },
     {
       "say": "你付的不是他們用的電。",
@@ -221,31 +413,57 @@
       "say": "是他們插隊用的那條線。",
       "show": "自製：結論卡",
       "from": "觀點",
-      "seconds": 2.39
+      "seconds": 2.39,
+      "card": {
+        "kind": "title",
+        "title": "你付的是\n那條線的錢"
+      }
     },
     {
       "say": "下個月打開帳單，",
       "show": "自製：帳單",
       "from": "觀點",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "title",
+        "title": "下個月\n打開帳單"
+      }
     },
     {
       "say": "多出來的那幾百塊，",
       "show": "自製：數字",
       "from": "觀點",
-      "seconds": 1.96
+      "seconds": 1.96,
+      "card": {
+        "kind": "number",
+        "title": "已經轉嫁到帳單上的",
+        "value": "230 億",
+        "under": "美元，全美合計",
+        "colour": "#d1453b",
+        "note": "資料：Forbes"
+      }
     },
     {
       "say": "不是電變貴了。",
       "show": "自製：字卡",
       "from": "觀點",
-      "seconds": 1.9
+      "seconds": 1.9,
+      "card": {
+        "kind": "title",
+        "title": "不是電變貴了"
+      }
     },
     {
       "say": "是隊伍變長了。",
       "show": "自製：一排排隊的人",
       "from": "觀點",
-      "seconds": 1.8
+      "seconds": 1.8,
+      "card": {
+        "kind": "queue",
+        "title": "是隊伍變長了",
+        "count": 9,
+        "under": "而你排在後面"
+      }
     }
   ]
 }

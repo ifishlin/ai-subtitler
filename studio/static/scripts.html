@@ -164,6 +164,9 @@
     border:1px solid #6b4d17;border-radius:4px;padding:0 4px}
   td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
+  td.show img.pic.drawn{object-fit:contain;background:#0d1b2a;
+    border:1px solid #22405c}
+  td.show .grabbed.bad{color:#ff8a72}
   td.show img.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
   td.from{font-size:11px;color:var(--faint);width:11em}
@@ -559,6 +562,9 @@ async function showScript(name) {
         (sums.unpicked || []).length}</b></div>
       <div>沒看過<b class="${(sums.unchecked || []).length ? "short" : "good"}">${
         (sums.unchecked || []).length}</b></div>
+      <div title="自製的句子沒說這張卡怎麼畫">沒畫卡<b class="${
+        (sums.undrawn || []).length ? "short" : "good"}">${
+        (sums.undrawn || []).length}</b></div>
       <div title="影片段落佔實拍時間的比例，至少一半">會動的<b class="${
         sums.still_enough ? "good" : "short"}">${sums.clip_share || 0}%</b></div>
     </div>
@@ -579,7 +585,13 @@ async function showScript(name) {
               line.clip.start},${line.clip.end}"></video>`
              : line.pic ? `<img class="pic" src="/media/pic/${
               line.pic.split("/").map(encodeURIComponent).join("/")}"
-              alt="" loading="lazy">` : ""}
+              alt="" loading="lazy">`
+             : line.card_file ? `<img class="pic drawn" src="/media/card/${
+              encodeURIComponent(name)}/${
+              encodeURIComponent(line.card_file.split("/").pop())}"
+              alt="" loading="lazy">`
+             : line.card_error ? `<span class="grabbed bad">畫不出來：${
+              escapeHTML(line.card_error)}</span>` : ""}
             <span>${escapeHTML(line.show || "")}${
               line.seen ? "" : ` <em class="unseen">沒看過</em>`}</span>
             ${line.clip ? `<span class="grabbed">段落 ${
