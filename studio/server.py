@@ -638,6 +638,18 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "failed": failed}
 
 
+@app.get("/media/pic/{picture:path}")
+def script_picture(picture: str) -> FileResponse:
+    """A picture a script names. Matched against what some topic gathered, so
+    the path is checked rather than trusted."""
+    from core import topic as topic_module
+    for name in topic_module.names():
+        pile = topic_module.load(name)
+        if picture in {item.get("file") for item in pile["sources"]["images"]}:
+            return FileResponse(ROOT / picture, media_type="image/jpeg")
+    raise HTTPException(404, "找不到這張圖")
+
+
 @app.get("/media/photo/{name}/{picture}")
 def topic_photo(name: str, picture: str) -> FileResponse:
     """One gathered photograph, matched against the topic's own list."""

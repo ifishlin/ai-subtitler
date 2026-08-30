@@ -2,10 +2,10 @@
   "topic": "AI資料中心推高電費",
   "angle": "影響民眾生活",
   "audience": "每個要付帳單的人",
-  "view": "兩邊都有數據，因為算的不是同一件事——全州平均會稀釋掉，電網是區域性的",
+  "view": "兩邊都有數據，因為算的不是同一件事——全州平均會稀釋掉，資料中心不是平均分布的",
   "tone": "詼諧",
   "voice": "無旁白",
-  "note": "無旁白版：字幕為主，音效點綴。引用畫面分三段出現。",
+  "note": "每一句實拍都在寫的時候就指定了圖檔。",
   "sources": {
     "video": [
       {
@@ -24,13 +24,6 @@
         "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
         "captions": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.en-en.vtt",
         "size": 108353541
-      },
-      {
-        "title": "Why communities are revolting against data centers",
-        "url": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
-        "outlet": "PBS NewsHour",
-        "lean": "centre-left",
-        "seconds": 1607.0
       }
     ],
     "reports": [
@@ -90,11 +83,12 @@
     {
       "say": "你的電費帳單，去年變貴了。",
       "show": "示意：帳單特寫",
+      "pic": "assets/photos/AI資料中心推高電費/13785838.jpg",
       "from": "觀點"
     },
     {
       "say": "全美住宅電價漲了百分之七點一。",
-      "show": "自製：折線圖，7.1%",
+      "show": "自製：折線圖 7.1%",
       "from": "CNBC"
     },
     {
@@ -104,12 +98,13 @@
     },
     {
       "say": "有些州漲超過兩成。",
-      "show": "自製：美國地圖，幾個州亮起",
+      "show": "自製：地圖，幾個州亮起",
       "from": "CNBC"
     },
     {
       "say": "大家都說，是 AI 資料中心害的。",
-      "show": "新聞畫格：CNBC 機房畫面",
+      "show": "新聞畫格：CNBC 發電機組",
+      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_90.jpg",
       "from": "CNBC"
     },
     {
@@ -119,17 +114,24 @@
     },
     {
       "say": "聽起來很清楚。但有研究說完全沒這回事。",
-      "show": "自製：標題卡，換底色",
+      "show": "自製：標題卡",
       "from": "觀點"
     },
     {
       "say": "州級資料顯示，資料中心數量跟電價沒有統計關聯。",
-      "show": "自製：散點圖，一片散亂",
+      "show": "自製：散點圖",
       "from": "IER"
     },
     {
-      "say": "電力研究院說，主因是老電網要換、天災要重建、天然氣在漲。",
-      "show": "真實：變電所／輸電塔",
+      "say": "電力研究院說，主因是老電網要換、天災要重建。",
+      "show": "新聞畫格：CNBC 渦輪機廠全景",
+      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_56.jpg",
+      "from": "EPRI"
+    },
+    {
+      "say": "還有天然氣在漲。",
+      "show": "新聞畫格：CNBC 渦輪機特寫",
+      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_180.jpg",
       "from": "EPRI"
     },
     {
@@ -153,13 +155,15 @@
       "from": "觀點"
     },
     {
-      "say": "但電網是區域性的。",
-      "show": "新聞畫格：電網地圖",
-      "from": "觀點"
+      "say": "但資料中心不是平均分布的。",
+      "show": "新聞畫格：CNBC 全美資料中心分布圖",
+      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_112.jpg",
+      "from": "CNBC"
     },
     {
       "say": "你家跟機房共用同一條線，你就會知道。",
-      "show": "真實：住宅區的高壓電線",
+      "show": "真實：住宅區的輸電塔",
+      "pic": "assets/photos/AI資料中心推高電費/36433653.jpg",
       "from": "觀點"
     },
     {
@@ -180,6 +184,7 @@
     {
       "say": "帳單上不會寫「這裡有 AI」。",
       "show": "示意：電表特寫",
+      "pic": "assets/photos/AI資料中心推高電費/11924298.jpg",
       "from": "觀點"
     },
     {

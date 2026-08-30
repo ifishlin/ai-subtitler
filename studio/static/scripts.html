@@ -124,7 +124,11 @@
   tr:hover td{background:#161d25}
   td.at{font:11px var(--mono);color:var(--faint);white-space:nowrap;width:5.4em}
   td.say{font-size:15px;line-height:1.55}
-  td.show{font-size:12px;color:var(--dim);width:28%}
+  /* The picture beside the line it belongs to: the two were chosen together
+     and should be read together. */
+  td.show{font-size:12px;color:var(--dim);width:30%}
+  td.show img.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
+    border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
   td.from{font-size:11px;color:var(--faint);width:11em}
   td.from.ours{color:var(--accent)}
   .ruler{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;
@@ -442,10 +446,8 @@ async function showScript(name) {
   try { made = await api("GET", `/api/script?name=${encodeURIComponent(name)}`); }
   catch (error) { alert(error.message); return; }
   const sums = made.measured;
-  const ours = sums.lines.filter((line) =>
-    !/CNN|原畫面|新聞畫面|素材/.test(line.show || ""));
-  const share = sums.seconds
-    ? Math.round(ours.reduce((sum, l) => sum + l.seconds, 0) / sums.seconds * 100) : 0;
+  // One rule, and it lives in core/script.py: the share is measured there.
+  const share = 100 - (sums.borrowed_share || 0);
 
   $("paper").innerHTML = `
     <h2>${escapeHTML(name)}　<button id="btnBackTopic" class="tiny">← 回題目</button></h2>
@@ -457,9 +459,15 @@ async function showScript(name) {
       <div>字數<b>${sums.characters}</b></div>
       <div>句數<b>${sums.lines.length}</b></div>
       <div>觀點<b class="${sums.opinion >= 6 ? "good" : ""}">${sums.opinion} 句</b></div>
-      <div>自製畫面<b class="${share >= 60 ? "good" : "short"}">${share}%</b></div>
+      <div>自製<b class="${share >= 60 ? "good" : "short"}">${share}%</b></div>
+      <div>實拍<b class="${(sums.borrowed_share || 0) <= 35 ? "good" : "short"}">${
+        sums.borrowed_share || 0}%</b></div>
+      <div>三段分布<b class="${sums.even ? "good" : "short"}">${
+        (sums.spread || []).join(" / ")}</b></div>
       <div>沒標來源<b class="${sums.unsourced.length ? "short" : "good"}">${
         sums.unsourced.length}</b></div>
+      <div>沒指定圖<b class="${(sums.unpicked || []).length ? "short" : "good"}">${
+        (sums.unpicked || []).length}</b></div>
     </div>
     <div class="ruler">${sums.lines.map((line) =>
       `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
@@ -470,7 +478,12 @@ async function showScript(name) {
         <tr>
           <td class="at">${clock(line.at)}</td>
           <td class="say">${escapeHTML(line.say || "")}</td>
-          <td class="show">${escapeHTML(line.show || "")}</td>
+          <td class="show">
+            ${line.pic ? `<img class="pic" src="/media/pic/${
+              line.pic.split("/").map(encodeURIComponent).join("/")}"
+              alt="" loading="lazy">` : ""}
+            <span>${escapeHTML(line.show || "")}</span>
+          </td>
           <td class="from ${line.from === "觀點" ? "ours" : ""}">${
             escapeHTML(line.from || "")}</td>
         </tr>`).join("")}</tbody>

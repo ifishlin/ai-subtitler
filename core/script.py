@@ -101,7 +101,101 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "borrowed": round(borrowed, 2),
             "borrowed_share": round(borrowed / clock * 100) if clock else 0,
             "spread": thirds,
-            "even": all(thirds) and borrowed <= clock * REAL_MOST}
+            "even": all(thirds) and borrowed <= clock * REAL_MOST,
+            "unpicked": missing_pictures(script)}
+
+
+PER_ROW = 13        # characters that fit across a 1080-wide frame at 64px
+MOST_ROWS = 3
+
+
+def _chunks(text: str) -> list[str]:
+    """The pieces a line may be broken between.
+
+    A run of Latin letters or digits is one piece -- "AI" and "7.1%" read as
+    words and splitting them is worse than a ragged edge. Punctuation joins
+    the piece before it, so a row never opens with a comma or a closing
+    bracket stranded on its own.
+    """
+    pieces: list[str] = []
+    run = ""
+    for ch in text:
+        if ch.isascii() and (ch.isalnum() or ch in ".%$-"):
+            run += ch
+            continue
+        if run:
+            pieces.append(run)
+            run = ""
+        if ch in "，。、？！：；」』…％" and pieces:
+            pieces[-1] += ch          # closers stay with what they close
+        elif ch.strip():
+            pieces.append(ch)
+        elif pieces:
+            pieces[-1] += ch          # a space belongs to the word before it
+    if run:
+        pieces.append(run)
+    return pieces
+
+
+def wrap(text: str, per: int = PER_ROW, most: int = MOST_ROWS) -> list[str]:
+    """Break a caption into rows that fit the frame.
+
+    Breaking only at punctuation is not enough, and the failure is invisible
+    until it is burned in: a sentence whose first comma falls before the limit
+    never breaks there, so the whole line runs on and is drawn off both edges
+    of the frame. Width decides where a row ends; the chunks decide where it
+    may end.
+    """
+    rows: list[str] = []
+    row = ""
+    for piece in _chunks(text):
+        if row and len(row) + len(piece) > per:
+            rows.append(row)
+            row = piece
+        else:
+            row += piece
+        # A row that closes on punctuation is a good place to stop, so long as
+        # it is not so short that the next one is left carrying everything.
+        if row and row[-1] in "。？！" and len(row) >= per - 5:
+            rows.append(row)
+            row = ""
+    if row:
+        rows.append(row)
+    return rows[:most] or [text[:per]]
+
+
+def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Lines that call for a photograph and do not name one.
+
+    A line used to say 真實：變電所 and the file was chosen days later, while
+    building. That splits one decision in two: the writer never saw what was
+    available, and whoever picked the file never knew why the line wanted it.
+    So a line that is not drawn names its picture, and the page shows it.
+    """
+    lack = []
+    for index, line in enumerate(script.get("lines") or [], start=1):
+        if not is_real(line.get("show")):
+            continue
+        pic = line.get("pic")
+        if not pic:
+            lack.append({"line": index, "say": line.get("say", ""),
+                         "show": line.get("show", ""), "why": "沒指定圖片"})
+        elif not (ROOT / pic).is_file():
+            lack.append({"line": index, "say": line.get("say", ""),
+                         "show": line.get("show", ""), "why": f"找不到 {pic}"})
+    return lack
+
+
+def too_long(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Lines that will not fit, with what would be dropped."""
+    over = []
+    for index, line in enumerate(script.get("lines") or [], start=1):
+        rows = wrap(line.get("say", ""))
+        shown = "".join(rows)
+        if shown != line.get("say", ""):
+            over.append({"line": index, "say": line["say"],
+                         "lost": line["say"][len(shown):]})
+    return over
 
 
 def path_for(name: str) -> Path:
