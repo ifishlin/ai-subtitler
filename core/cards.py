@@ -42,9 +42,15 @@ ROOT = Path(__file__).resolve().parent.parent
 CARD_DIR = ROOT / "assets" / "cards"
 
 W, H, FPS = 1080, 1920, 30
-# Where the burnt-in caption starts. Nothing drawn may reach it, or the line
-# being spoken sits on top of the picture explaining it.
-CAPTION_TOP = H - 420
+# The caption sits on a fixed bottom line and grows upward from it, so a
+# three-row line and a one-row line end in the same place. Nothing drawn may
+# reach the tallest case, or the words sit on the picture explaining them.
+CAPTION_BOTTOM = 1700
+CAPTION_TOP = CAPTION_BOTTOM - 3 * 92
+# Where the source line goes. It used to sit just above the caption, in the
+# middle of the ghosted word, which read as the big letter being cut off.
+# Above the card instead: nothing else is up there.
+NOTE_TOP = 300
 # Where a card's subject begins: the line the kept picture is placed on in
 # core/shorts.py, so a card and a photograph put their subject in the same
 # part of the frame and the cut between them does not jump.
@@ -129,7 +135,7 @@ def _ground(spec: dict[str, Any]) -> Image.Image:
     ghost = str(spec.get("ghost") or "")[:2]
     if ghost:
         layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        ImageDraw.Draw(layer).text((W // 2, 620), ghost, font=face(760),
+        ImageDraw.Draw(layer).text((W // 2, 560), ghost, font=face(820),
                                    fill=tone["ghost"], anchor="ma")
         card = Image.alpha_composite(card, layer.filter(
             ImageFilter.GaussianBlur(2)))
@@ -159,12 +165,12 @@ def _fade(colour: str, part: float, ground: tuple[int, int, int]) -> tuple[int, 
 
 
 def _note(draw: ImageDraw.ImageDraw, spec: dict[str, Any], t: float) -> None:
-    """Where the number came from, small, above the caption. On the card
+    """Where the number came from, small, at the top of the frame. On the card
     rather than only in the description: a figure with no source on screen is
     the thing viewers screenshot and argue about."""
     if spec.get("note"):
         tone = tone_of(spec)
-        _mid(draw, CAPTION_TOP - 78, spec["note"], 30,
+        _mid(draw, NOTE_TOP, spec["note"], 30,
              "#" + "".join(f"{v:02x}" for v in
                            _fade(tone["dim"], ease(t * 1.4) * 0.75, tone["bottom"])),
              bold=False)

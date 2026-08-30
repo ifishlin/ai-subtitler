@@ -188,19 +188,28 @@ PUSH = 1.085
 SAFE = round(HEIGHT * (1 - 1 / PUSH) / 2) + 24
 
 
-def _push_filter(seconds: float) -> str:
+def _push_filter(seconds: float, size: tuple[int, int] | None = None) -> str:
     """Slowly enlarge a still, from its centre.
 
     zoompan starts at the top left corner unless told otherwise, so a still
     without x and y does not zoom -- it drifts down and to the right, and
     whatever was near the bottom leaves the frame. Naming the centre is the
     whole fix, and it is easy to forget because the first second looks fine.
+
+    `size` is the frame the push comes out at, and leaving it to default is
+    the second easy mistake: this was written for full-frame cards, so it
+    returned 1080x1920 whatever went in. A landscape photograph put through it
+    came out as a tall crop, and then being placed at PICTURE_TOP hung it 430
+    pixels past the bottom of the film -- the picture ran off the end of the
+    frame and only a strip of the blurred ground was left showing at the top.
+    A photograph has to be pushed at its own shape.
     """
+    wide, high = size or (WIDTH, HEIGHT)
     frames = round(seconds * FPS)
-    return (f"fps={FPS},scale={WIDTH * 2}:{HEIGHT * 2},"
+    return (f"fps={FPS},scale={wide * 2}:{high * 2},"
             f"zoompan=z='min(1+{(PUSH - 1) / frames:.6f}*on,{PUSH})'"
             f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-            f":d={frames}:s={WIDTH}x{HEIGHT}:fps={FPS},fade=in:0:8")
+            f":d={frames}:s={wide}x{high}:fps={FPS},fade=in:0:8")
 
 
 def interlude(cards: list[Path], target: Path, each: float = 5.0) -> Path:

@@ -32,7 +32,11 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "assets" / "shorts"
 
 W, H, FPS = shorts_module.WIDTH, shorts_module.HEIGHT, shorts_module.FPS
-CAPTION_TOP = H - 420
+# The caption grows upward from a fixed line rather than downward from one.
+# Anchored at the top, a three-row line reached 276 pixels further down than a
+# one-row line and landed under YouTube's own bottom furniture; anchored here,
+# every line ends in the same place and the room above is the picture's.
+CAPTION_BOTTOM = 1700
 CAPTION_SIZE = 64
 ROW_STEP = 92
 FONT = "/System/Library/Fonts/PingFang.ttc"
@@ -53,23 +57,35 @@ def caption_layer(rows: list[str]) -> Image.Image:
     draw = ImageDraw.Draw(layer)
     font = ImageFont.truetype(FONT, CAPTION_SIZE, index=1)
     widest = max((draw.textlength(row, font=font) for row in rows), default=0)
-    high = len(rows) * ROW_STEP
-    box = [(W - widest) / 2 - 34, CAPTION_TOP - 26,
-           (W + widest) / 2 + 34, CAPTION_TOP + high + 10]
+    top = CAPTION_BOTTOM - len(rows) * ROW_STEP
+    box = [(W - widest) / 2 - 34, top - 26,
+           (W + widest) / 2 + 34, top + len(rows) * ROW_STEP + 10]
     draw.rounded_rectangle(box, 18, fill=(6, 10, 14, 168))
     for index, row in enumerate(rows):
-        draw.text((W / 2, CAPTION_TOP + index * ROW_STEP), row, font=font,
+        draw.text((W / 2, top + index * ROW_STEP), row, font=font,
                   fill=(255, 255, 255, 255), anchor="ma")
     return layer
+
+
+def placed_size(pic: Path) -> tuple[int, int]:
+    """How big this photograph sits in the frame: full width, its own shape.
+
+    Rounded to even numbers because H.264 chroma is subsampled and an odd
+    dimension is rejected outright.
+    """
+    with Image.open(pic) as opened:
+        wide, high = opened.size
+    return W, max(2, round(W * high / max(1, wide)) // 2 * 2)
 
 
 def _still(pic: Path, seconds: float, target: Path, overlay: Path) -> Path:
     """A photograph, held, pushed in slowly, over a blurred enlargement of
     itself so the tall frame is filled rather than letterboxed."""
+    size = placed_size(pic)
     graph = (
         f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
         f"crop={W}:{H},boxblur=44:3,eq=brightness=-0.16[bg];"
-        f"[0:v]{shorts_module._push_filter(seconds)}[fg];"
+        f"[0:v]{shorts_module._push_filter(seconds, size)}[fg];"
         f"[bg][fg]overlay=(W-w)/2:{shorts_module.PICTURE_TOP}[under];"
         f"[under][1:v]overlay=0:0,fps={FPS}[v]")
     subprocess.run(
