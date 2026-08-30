@@ -115,700 +115,662 @@
     ],
     "images": [
       {
-        "id": "28749430",
-        "term": "himalaya glacier",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/28749430.jpg",
-        "caption": "Stunning view of the Himalayan mountains in Nepal, showcasing snow-capped peaks under a bright blue sky.",
-        "outlet": "Pexels",
-        "author": "Lisanne W",
-        "page": "https://www.pexels.com/photo/majestic-himalayan-peaks-under-clear-blue-sky-28749430/",
-        "look": 18221811445933342720,
-        "size": [
-          3821,
-          2600
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "25245176",
-        "term": "himalaya glacier",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/25245176.jpg",
-        "caption": "Majestic Annapurna Base Camp landscape in Himalayas, perfect for trekking and adventure.",
-        "outlet": "Pexels",
-        "author": "Abdul Kayum",
-        "page": "https://www.pexels.com/photo/a-view-of-the-mountains-and-valleys-in-nepal-25245176/",
-        "look": 17510277977768706047,
-        "size": [
-          5221,
-          3481
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "10640752",
-        "term": "himalaya glacier",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/10640752.jpg",
-        "caption": "Breathtaking view of a snow-covered mountain peak in Tibet, showcasing natural beauty and winter scenery.",
-        "outlet": "Pexels",
-        "author": "Lu Li",
-        "page": "https://www.pexels.com/photo/scenic-view-of-a-snow-covered-mountain-10640752/",
-        "look": 18376027746956417024,
-        "size": [
-          5684,
-          3553
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "5477795",
-        "term": "melting ice",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/5477795.jpg",
-        "caption": "Detailed macro shot of ice crystals slowly melting, showcasing intricate patterns and textures.",
-        "outlet": "Pexels",
-        "author": "Julia Sakelli",
-        "page": "https://www.pexels.com/photo/melting-ice-5477795/",
-        "look": 2315053036092554303,
-        "size": [
-          4928,
-          3264
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "36166009",
-        "term": "melting ice",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/36166009.jpg",
-        "caption": "A frosty puddle with intricate ice patterns surrounded by leaves and gravel suggesting a cold winter day.",
-        "outlet": "Pexels",
-        "author": "Oliver Schröder",
-        "page": "https://www.pexels.com/photo/frozen-puddle-with-ice-patterns-in-winter-36166009/",
-        "look": 2319141046094147584,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "36070133",
-        "term": "melting ice",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/36070133.jpg",
-        "caption": "Abstract aerial view of a frozen river with striking ice melting patterns captured during winter.",
-        "outlet": "Pexels",
-        "author": "apertur 2.8",
-        "page": "https://www.pexels.com/photo/frozen-river-with-melting-ice-patterns-36070133/",
-        "look": 3330879776767,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock"
-      },
-      {
         "id": "39164204",
         "term": "flooded village",
+        "kind": "stock",
         "file": "assets/photos/尼泊爾冰川潰決洪災/39164204.jpg",
         "caption": "Aerial perspective of a village submerged in floodwaters, highlighting tin-roofed houses and boats.",
         "outlet": "Pexels",
         "author": "Muhammad Amdad Hossain",
+        "credit": "",
+        "answers": 0.5,
         "page": "https://www.pexels.com/photo/aerial-view-of-flooded-village-with-tin-roofs-39164204/",
         "look": 13552512889678172082,
         "size": [
           3818,
           2863
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "34959182",
         "term": "flooded village",
+        "kind": "stock",
         "file": "assets/photos/尼泊爾冰川潰決洪災/34959182.jpg",
         "caption": "Dramatic flood scene with palm trees submerged in Phú Yên, Vietnam",
         "outlet": "Pexels",
         "author": "Long Bà Mùi",
+        "credit": "",
+        "answers": 0.5,
         "page": "https://www.pexels.com/photo/flooded-landscape-with-palm-trees-in-phu-yen-34959182/",
         "look": 8717983716187373567,
         "size": [
           5693,
           3795
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "14823609",
         "term": "flooded village",
+        "kind": "stock",
         "file": "assets/photos/尼泊爾冰川潰決洪災/14823609.jpg",
         "caption": "Aerial view of a flooded village in Kijal, Terengganu, Malaysia, showcasing submerged houses and streets.",
         "outlet": "Pexels",
         "author": "Pok Rie",
+        "credit": "",
+        "answers": 1.0,
         "page": "https://www.pexels.com/photo/aerial-view-of-flooded-house-14823609/",
         "look": 9162557471023038464,
         "size": [
           4000,
           3000
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "6780348",
-        "term": "muddy river",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/6780348.jpg",
-        "caption": "Peaceful river reflecting trees and clouds in a vibrant green forest on a sunny day.",
+        "id": "35396068",
+        "term": "mountain glacier lake",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/35396068.jpg",
+        "caption": "Breathtaking view of a Swiss glacier surrounded by mountains and a serene blue lake, capturing nature's raw beauty.",
         "outlet": "Pexels",
-        "author": "Petr Ganaj",
-        "page": "https://www.pexels.com/photo/a-muddy-river-in-the-forest-6780348/",
-        "look": 2021003527125401343,
+        "author": "Jean-Paul Wettstein",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/stunning-swiss-glacier-landscape-with-lake-view-35396068/",
+        "look": 39582401769747,
         "size": [
-          7315,
-          4882
-        ],
-        "kind": "stock"
+          6064,
+          4040
+        ]
       },
       {
-        "id": "30271011",
-        "term": "muddy river",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/30271011.jpg",
-        "caption": "Bare trees standing in muddy floodwaters during winter season in a natural forest landscape.",
+        "id": "22484270",
+        "term": "mountain glacier lake",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/22484270.jpg",
+        "caption": "A breathtaking aerial view of the Andes with glaciers surrounding a turquoise lake under a vibrant blue sky.",
         "outlet": "Pexels",
-        "author": "Markus Winkler",
-        "page": "https://www.pexels.com/photo/bare-trees-in-flooded-river-landscape-30271011/",
-        "look": 18444492827425566970,
+        "author": "Willian Justen de Vasconcellos",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/scenic-view-of-a-glacier-and-rocky-mountain-peaks-22484270/",
+        "look": 217033764469997536,
         "size": [
-          3999,
-          2666
-        ],
-        "kind": "stock"
+          3992,
+          2853
+        ]
       },
       {
-        "id": "28447779",
-        "term": "muddy river",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/28447779.jpg",
-        "caption": "A serene view of a flooded park with willow trees bending over a reflective water surface.",
+        "id": "38403150",
+        "term": "mountain glacier lake",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/38403150.jpg",
+        "caption": "Stunning view of a turquoise glacier lake with majestic mountains at Mount Currie, Canada.",
         "outlet": "Pexels",
-        "author": "Helena Jankovičová Kováčová",
-        "page": "https://www.pexels.com/photo/flooded-park-landscape-with-willow-trees-28447779/",
-        "look": 4359060561388898428,
-        "size": [
-          6558,
-          4372
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "9410631",
-        "term": "rescue workers mountain",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/9410631.jpg",
-        "caption": "Rescue team conducting a mountain rescue mission, equipped with safety gear.",
-        "outlet": "Pexels",
-        "author": "Roman Apaza",
-        "page": "https://www.pexels.com/photo/people-standing-on-the-mountain-9410631/",
-        "look": 9223372036854980607,
-        "size": [
-          2800,
-          1934
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "9410628",
-        "term": "rescue workers mountain",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/9410628.jpg",
-        "caption": "Rescue team performs mountain rescue using a stretcher to aid an injured hiker.",
-        "outlet": "Pexels",
-        "author": "Roman Apaza",
-        "page": "https://www.pexels.com/photo/rescuers-on-the-mountain-9410628/",
-        "look": 16156691739949998003,
-        "size": [
-          3000,
-          1995
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "13611820",
-        "term": "rescue workers mountain",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/13611820.jpg",
-        "caption": "Helicopter rescue operation in İzmir, Türkiye, showcasing urban safety efforts.",
-        "outlet": "Pexels",
-        "author": "Foto Kesit",
-        "page": "https://www.pexels.com/photo/helicopter-rescue-team-in-action-13611820/",
-        "look": 18410371145673506563,
-        "size": [
-          3408,
-          2596
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "33974456",
-        "term": "nepal village",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/33974456.jpg",
-        "caption": "Aerial shot of a traditional village with wooden houses and dirt roads in Nepal, showcasing rural life.",
-        "outlet": "Pexels",
-        "author": "mero ghar",
-        "page": "https://www.pexels.com/photo/aerial-view-of-traditional-village-in-nepal-33974456/",
-        "look": 8020559921348207072,
+        "author": "Bhavy Ahuja",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/turquoise-glacier-lake-at-mount-currie-38403150/",
+        "look": 18446465910172336137,
         "size": [
           4032,
-          3024
-        ],
-        "kind": "stock"
+          2759
+        ]
       },
       {
-        "id": "14224727",
-        "term": "nepal village",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/14224727.jpg",
-        "caption": "A scenic aerial view of terraced rice fields with farmers at work in Nepal, showcasing traditional agriculture.",
+        "id": "36072012",
+        "term": "rescue workers mud",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/36072012.jpg",
+        "caption": "Rescue workers in orange gear helping people during a flood, showcasing bravery and teamwork.",
         "outlet": "Pexels",
-        "author": "Mehmet Turgut  Kirkgoz",
-        "page": "https://www.pexels.com/photo/aerial-view-on-people-working-on-field-14224727/",
-        "look": 1799469523948994560,
+        "author": "Juan Moccagatta",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/rescue-team-assisting-flood-victims-in-action-36072012/",
+        "look": 1089606262668595216,
         "size": [
-          4352,
-          3264
-        ],
-        "kind": "stock"
+          5152,
+          3435
+        ]
       },
       {
-        "id": "35401095",
-        "term": "nepal village",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/35401095.jpg",
-        "caption": "View of rural mountain village with clear skies and agricultural fields.",
+        "id": "15545136",
+        "term": "rescue workers mud",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/15545136.jpg",
+        "caption": "Rescue workers searching through rubble after an earthquake, showcasing teamwork and determination.",
         "outlet": "Pexels",
-        "author": "dilkumar limbu",
-        "page": "https://www.pexels.com/photo/mountain-village-life-in-rural-landscape-35401095/",
-        "look": 2030043135,
+        "author": "samimibirfotografci",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/group-of-men-working-at-a-calamity-site-15545136/",
+        "look": 66825698529,
         "size": [
-          2976,
-          1984
-        ],
-        "kind": "stock"
+          5472,
+          3648
+        ]
       },
       {
-        "id": "14000672",
-        "term": "destroyed house flood",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/14000672.jpg",
-        "caption": "Severe flood damage to rural homes in Mocoa, Colombia, highlighting devastation and recovery needs.",
+        "id": "14000669",
+        "term": "rescue workers mud",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14000669.jpg",
+        "caption": "Survivors navigate debris in Mocoa after a devastating natural disaster.",
         "outlet": "Pexels",
         "author": "Franklin Peña Gutierrez",
-        "page": "https://www.pexels.com/photo/destroyed-building-by-stream-in-village-14000672/",
-        "look": 18374123254706077727,
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/people-in-a-destroyed-village-14000669/",
+        "look": 16287272450871246846,
         "size": [
           6016,
           4000
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "28447767",
-        "term": "destroyed house flood",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/28447767.jpg",
-        "caption": "A monochrome image of a suburban house affected by floodwaters.",
+        "id": "30319634",
+        "term": "collapsed bridge river",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/30319634.jpg",
+        "caption": "A ruined bridge over a serene river surrounded by lush greenery under a clear sky in Kyiv Oblast, Ukraine.",
         "outlet": "Pexels",
-        "author": "Helena Jankovičová Kováčová",
-        "page": "https://www.pexels.com/photo/flooded-suburban-house-in-monochrome-28447767/",
-        "look": 2269312873412958207,
+        "author": "Kristina Bekher",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/ruined-bridge-over-river-in-kyiv-oblast-ukraine-30319634/",
+        "look": 519691042815,
         "size": [
-          6720,
-          4480
-        ],
-        "kind": "stock"
+          3049,
+          2021
+        ]
+      },
+      {
+        "id": "37969407",
+        "term": "collapsed bridge river",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/37969407.jpg",
+        "caption": "Aerial shot of a broken bridge spanning a river amidst lush greenery and farmland.",
+        "outlet": "Pexels",
+        "author": "Phi Long",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/aerial-view-of-broken-bridge-over-river-in-lush-landscape-37969407/",
+        "look": 9277662038877734847,
+        "size": [
+          8192,
+          4608
+        ]
+      },
+      {
+        "id": "14655917",
+        "term": "collapsed bridge river",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14655917.jpg",
+        "caption": "A rustic sewer entrance with fallen tree branches and water flow, creating an urban decay vibe.",
+        "outlet": "Pexels",
+        "author": "Chris F",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/wood-in-front-of-a-sewer-14655917/",
+        "look": 72587497237904638,
+        "size": [
+          5753,
+          3719
+        ]
+      },
+      {
+        "id": "28387041",
+        "term": "himalaya mountain range",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/28387041.jpg",
+        "caption": "A lone traveler in a red jacket admires the vast mountain range in Juphal, Nepal.",
+        "outlet": "Pexels",
+        "author": "Ashok J Kshetri",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/stunning-mountain-landscape-in-juphal-nepal-28387041/",
+        "look": 7565199646205442048,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "28749430",
+        "term": "himalaya mountain range",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/28749430.jpg",
+        "caption": "Stunning view of the Himalayan mountains in Nepal, showcasing snow-capped peaks under a bright blue sky.",
+        "outlet": "Pexels",
+        "author": "Lisanne W",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/majestic-himalayan-peaks-under-clear-blue-sky-28749430/",
+        "look": 18221811445933342720,
+        "size": [
+          3821,
+          2600
+        ]
+      },
+      {
+        "id": "39100011",
+        "term": "himalaya mountain range",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/39100011.jpg",
+        "caption": "Scenic view of Machhapuchhre and Annapurna range from Pokhara, Nepal.",
+        "outlet": "Pexels",
+        "author": "Nishess Shakya",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/majestic-view-of-machhapuchhre-in-the-himalayas-39100011/",
+        "look": 18374686488261525504,
+        "size": [
+          3840,
+          2563
+        ]
+      },
+      {
+        "id": "14000736",
+        "term": "landslide debris",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14000736.jpg",
+        "caption": "Debris and destruction after a severe landslide in Mocoa, Colombia.",
+        "outlet": "Pexels",
+        "author": "Franklin Peña Gutierrez",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/wooden-dam-on-river-in-village-14000736/",
+        "look": 2305984829016535151,
+        "size": [
+          6016,
+          4000
+        ]
+      },
+      {
+        "id": "14000708",
+        "term": "landslide debris",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14000708.jpg",
+        "caption": "Rural village houses damaged by flood debris in Mocoa, Colombia.",
+        "outlet": "Pexels",
+        "author": "Franklin Peña Gutierrez",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/wood-lying-down-near-village-houses-14000708/",
+        "look": 17933351308442484735,
+        "size": [
+          6016,
+          4000
+        ]
+      },
+      {
+        "id": "14000748",
+        "term": "landslide debris",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/14000748.jpg",
+        "caption": "A landscape showing mud, debris, and a lone boot in Mocoa, Colombia's natural disaster aftermath.",
+        "outlet": "Pexels",
+        "author": "Franklin Peña Gutierrez",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/a-rubber-boot-on-the-ground-14000748/",
+        "look": 18446742969374867968,
+        "size": [
+          6016,
+          4000
+        ]
+      },
+      {
+        "id": "17067103",
+        "term": "family displaced tent",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/17067103.jpg",
+        "caption": "Families gathered at a refugee camp, living in tents.",
+        "outlet": "Pexels",
+        "author": "Hamza Awan",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/people-sitting-by-tent-17067103/",
+        "look": 106519231266559,
+        "size": [
+          5258,
+          3275
+        ]
+      },
+      {
+        "id": "6758631",
+        "term": "family displaced tent",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/6758631.jpg",
+        "caption": "Full body of cute kid standing on dirty ground near adults and weathered tents in poor refugee camp in countryside",
+        "outlet": "Pexels",
+        "author": "Ahmed akacha",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/child-near-shabby-tents-in-countryside-6758631/",
+        "look": 302308714083480575,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "27198722",
+        "term": "family displaced tent",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/27198722.jpg",
+        "caption": "A young girl stands by a tent in a refugee camp in Idlib, Syria.",
+        "outlet": "Pexels",
+        "author": "Ahmed akacha",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-young-girl-standing-in-front-of-a-tent-27198722/",
+        "look": 16710578943054413183,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "7734574",
+        "term": "flood insurance paperwork",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/7734574.jpg",
+        "caption": "Close-up image of two people signing an insurance policy document on a wooden desk.",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-person-holding-a-black-pen-7734574/",
+        "look": 17582047945615411979,
+        "size": [
+          3873,
+          2559
+        ]
+      },
+      {
+        "id": "7734569",
+        "term": "flood insurance paperwork",
+        "kind": "stock",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/7734569.jpg",
+        "caption": "Close-up of hands reviewing a home insurance policy, emphasizing professionalism and finance.",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-person-holding-a-black-pen-7734569/",
+        "look": 2302465161274661129,
+        "size": [
+          3873,
+          2559
+        ]
       },
       {
         "id": "28447774",
-        "term": "destroyed house flood",
+        "term": "flood insurance paperwork",
+        "kind": "stock",
         "file": "assets/photos/尼泊爾冰川潰決洪災/28447774.jpg",
         "caption": "A suburban house surrounded by floodwaters after heavy rain, showing impact of natural disaster.",
         "outlet": "Pexels",
         "author": "Helena Jankovičová Kováčová",
+        "credit": "",
+        "answers": 0.33,
         "page": "https://www.pexels.com/photo/flooded-suburban-house-during-heavy-rain-28447774/",
         "look": 972213521605474559,
         "size": [
           6720,
           4480
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "8701922",
-        "term": "mountain valley asia",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/8701922.jpg",
-        "caption": "Explore the dramatic landscapes and deep valleys of the Altai Mountains in this breathtaking nature photograph.",
-        "outlet": "Pexels",
-        "author": "Anastasia Rezvanova",
-        "page": "https://www.pexels.com/photo/river-between-mountains-8701922/",
-        "look": 14479320161793929470,
+        "id": "Himalayas_and_allied_ranges_NASA_Landsat_showing_the_eight_thousanders,_annotated_with_major_rivers.jpg",
+        "term": "Himalayas",
+        "kind": "real",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/Himalayas_and_allied_ranges_NASA_Landsat_showing_the_eight_thousanders,_annotated_with_major_rivers.jpg.jpg",
+        "caption": "The Himalayas, or Himalaya, is a mountain range in Asia separating the plains of the Indian subcontinent from the Tibetan Plateau. The range has some of the Earth's highest peaks, including the highest, Mount Everest. More than 100 peaks exceeding elevations of 7,200 metres above sea level lie in th",
+        "outlet": "維基百科",
+        "author": "NASA Landsat image",
+        "credit": "NASA Landsat image／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Himalayas_and_allied_ranges_NASA_Landsat_showing_the_eight_thousanders,_annotated_with_major_rivers.jpg",
+        "look": 570866576261119,
         "size": [
-          3936,
-          2624
-        ],
-        "kind": "stock"
+          3464,
+          2308
+        ]
       },
       {
-        "id": "6646846",
-        "term": "relief supplies",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/6646846.jpg",
-        "caption": "Stacked aid boxes ready for distribution in a delivery vehicle.",
-        "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/a-brown-cardboard-box-with-aid-label-6646846/",
-        "look": 2124987747891295904,
+        "id": "Hubbard_Glacier_May_20.2000.jpg",
+        "term": "Glacial lake outburst flood",
+        "kind": "real",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/Hubbard_Glacier_May_20.2000.jpg.jpg",
+        "caption": "A glacial lake outburst flood (GLOF) is a type of outburst flood caused by the failure of a dam containing a glacial lake. An event similar to a GLOF, where a body of water contained by a glacier melts or overflows the glacier, is called a jökulhlaup. The dam can consist of glacier ice or a terminal",
+        "outlet": "維基百科",
+        "author": "",
+        "credit": "／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Hubbard_Glacier_May_20.2000.jpg",
+        "look": 4556924871988678463,
         "size": [
-          6661,
-          4441
-        ],
-        "kind": "stock"
+          590,
+          647
+        ]
       },
       {
-        "id": "6646853",
-        "term": "relief supplies",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/6646853.jpg",
-        "caption": "A volunteer organizes aid boxes containing food and medicine in a van for community service.",
-        "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/a-person-holding-a-cardboard-box-with-food-label-6646853/",
-        "look": 443401218322013953,
+        "id": "Mt._Everest_from_Gokyo_Ri_November_5,_2012.jpg",
+        "term": "Mount Everest",
+        "kind": "real",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/Mt._Everest_from_Gokyo_Ri_November_5,_2012.jpg.jpg",
+        "caption": "Mount Everest is the highest mountain on Earth above sea level. It lies in the Mahalangur Himal sub-range of the Himalayas and marks part of the China–Nepal border at its summit. Its height was most recently measured in 2020 through a joint survey by Nepalese and Chinese authorities as 8,848.86 m.",
+        "outlet": "維基百科",
+        "author": "Rdevany",
+        "credit": "Rdevany／CC BY-SA 3.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Mt._Everest_from_Gokyo_Ri_November_5,_2012.jpg",
+        "look": 593630725681387520,
         "size": [
-          6574,
-          4383
-        ],
-        "kind": "stock"
+          3157,
+          2104
+        ]
       },
       {
-        "id": "7156164",
-        "term": "relief supplies",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/7156164.jpg",
-        "caption": "Focused volunteer in gloves sorting donation supplies in a community center.",
-        "outlet": "Pexels",
-        "author": "Gustavo Fring",
-        "page": "https://www.pexels.com/photo/close-up-of-person-sorting-goods-at-donation-center-7156164/",
-        "look": 1232281922220932862,
-        "size": [
-          5760,
-          3840
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "11939228",
-        "term": "climate protest",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/11939228.jpg",
-        "caption": "Large protest banner reading 'Climate Justice Now!' displayed outdoors during a demonstration.",
-        "outlet": "Pexels",
-        "author": "Valentin Sarte",
-        "page": "https://www.pexels.com/photo/people-carrying-a-banner-11939228/",
-        "look": 18446675903971336192,
-        "size": [
-          4592,
-          3056
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "8107291",
-        "term": "climate protest",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/8107291.jpg",
-        "caption": "Young adults at a climate change protest holding eco-friendly posters outdoors.",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "page": "https://www.pexels.com/photo/woman-holding-a-green-placard-8107291/",
-        "look": 16276556546508486656,
-        "size": [
-          6720,
-          4480
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "8898653",
-        "term": "climate protest",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/8898653.jpg",
-        "caption": "Young activists holding climate change signs in a city protest rally outdoors.",
-        "outlet": "Pexels",
-        "author": "Lara Jameson",
-        "page": "https://www.pexels.com/photo/group-of-protesters-holding-cardboards-8898653/",
-        "look": 63262587591916796,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "frame_54KcFHke3cw_44",
+        "id": "frame_rBfpSsvXAOc_14",
         "kind": "frame",
-        "term": "Reuters 44s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_44.jpg",
-        "caption": "Was climate change to blame for the Nepal floods?",
+        "term": "Fox News 14s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_14.jpg",
+        "caption": "MISSING AFTER FLOODS TRIGGERED",
+        "said": "MISSING AFTER FLOODS TRIGGERED",
+        "at": 14.21,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 9223098323035423551
+      },
+      {
+        "id": "frame_rBfpSsvXAOc_229",
+        "kind": "frame",
+        "term": "Fox News 229s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_229.jpg",
+        "caption": "BECAUSE OF CLIMATE CHANGE AND",
+        "said": "BECAUSE OF CLIMATE CHANGE AND",
+        "at": 229.43,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 18446534073460578498
+      },
+      {
+        "id": "frame_rBfpSsvXAOc_445",
+        "kind": "frame",
+        "term": "Fox News 445s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_445.jpg",
+        "caption": "FLOODS US ARE SEEING ON IMAGERY",
+        "said": "FLOODS US ARE SEEING ON IMAGERY",
+        "at": 445.03,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 18409942259683492044
+      },
+      {
+        "id": "frame_rBfpSsvXAOc_32",
+        "kind": "frame",
+        "term": "Fox News 32s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_32.jpg",
+        "caption": "ROCK LANDSLIDE NEAR THE BORDER",
+        "said": "ROCK LANDSLIDE NEAR THE BORDER",
+        "at": 32.24,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/rBfpSsvXAOc.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
+        "look": 1801088077833730174
+      },
+      {
+        "id": "frame_54KcFHke3cw_2",
+        "kind": "frame",
+        "term": "Reuters 2s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_2.jpg",
+        "caption": "A devastating flood in the border area",
+        "said": "A devastating flood in the border area",
+        "at": 2.24,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/54KcFHke3cw.mp4",
         "outlet": "Reuters",
         "author": "",
         "credit": "畫面來源：Reuters",
         "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
-        "look": 10306207423244531960
+        "look": 2533009868625809215
       },
       {
-        "id": "frame_54KcFHke3cw_133",
+        "id": "frame_54KcFHke3cw_24",
         "kind": "frame",
-        "term": "Reuters 133s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_133.jpg",
-        "caption": "Was climate change to blame for the Nepal floods?",
+        "term": "Reuters 24s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_24.jpg",
+        "caption": "floods.",
+        "said": "floods.",
+        "at": 24.2,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/54KcFHke3cw.mp4",
         "outlet": "Reuters",
         "author": "",
         "credit": "畫面來源：Reuters",
         "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
-        "look": 212081170124575
+        "look": 1085103145815638016
       },
       {
-        "id": "167725524",
-        "term": "Himalaya glacier",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/167725524.jpg",
-        "caption": "Cholatse Peak and arakam Tse in the Himalaya of Nepal.jpg　CC BY-SA 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Rohit Sharma",
-        "credit": "Rohit Sharma／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Cholatse_Peak_and_arakam_Tse_in_the_Himalaya_of_Nepal.jpg",
-        "look": 9132302666843425024,
-        "size": [
-          3999,
-          2249
-        ]
+        "id": "frame_54KcFHke3cw_116",
+        "kind": "frame",
+        "term": "Reuters 116s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_116.jpg",
+        "caption": ">> With climate change, that summer melting",
+        "said": ">> With climate change, that summer melting",
+        "at": 116.4,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/54KcFHke3cw.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
+        "look": 11601557445091259379
       },
       {
-        "id": "1810976",
-        "term": "Himalaya glacier",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/1810976.jpg",
-        "caption": "Everest North Face toward Base Camp Tibet Luca Galuzzi 2006.jpg　CC BY-SA 2.5",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Luca Galuzzi (Lucag)",
-        "credit": "Luca Galuzzi (Lucag)／CC BY-SA 2.5",
-        "page": "https://commons.wikimedia.org/wiki/File:Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
-        "look": 247274139491328,
-        "size": [
-          2000,
-          1333
-        ]
+        "id": "frame_La0MDQohgk0_47",
+        "kind": "frame",
+        "term": "BBC News 47s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_La0MDQohgk0_47.jpg",
+        "caption": "one of the key factors of nepal's",
+        "said": "one of the key factors of nepal's",
+        "at": 47.2,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/La0MDQohgk0.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=La0MDQohgk0",
+        "look": 4611699551582482175
       },
       {
-        "id": "63413",
-        "term": "Himalaya glacier",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/63413.jpg",
-        "caption": "Himalaya annotated.jpg　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "NASA, Janderk Jan Derk",
-        "credit": "NASA, Janderk Jan Derk／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:Himalaya_annotated.jpg",
-        "look": 54255145834823423,
-        "size": [
-          1000,
-          662
-        ]
+        "id": "frame_JU-oiX2J4s4_18",
+        "kind": "frame",
+        "term": "Al Jazeera English 18s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_JU-oiX2J4s4_18.jpg",
+        "caption": "floods? What is threatening the rescue",
+        "said": "floods? What is threatening the rescue",
+        "at": 18.48,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/JU-oiX2J4s4.mp4",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=JU-oiX2J4s4",
+        "look": 1721969418403584
       },
       {
-        "id": "32982161",
-        "term": "Kathmandu",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/32982161.jpg",
-        "caption": "Blue Kathmandu.JPG　CC BY-SA 3.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "theganeshlife",
-        "credit": "theganeshlife／CC BY-SA 3.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Blue_Kathmandu.JPG",
-        "look": 72057040977133584,
-        "size": [
-          5184,
-          3456
-        ]
+        "id": "frame_B06uPGK7Dpo_41",
+        "kind": "frame",
+        "term": "CNN 41s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_B06uPGK7Dpo_41.jpg",
+        "caption": "the area where that glacier collapse happened that you were talking about a short while ago,",
+        "said": "the area where that glacier collapse happened that you were talking about a short while ago,",
+        "at": 41.68,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/B06uPGK7Dpo.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=B06uPGK7Dpo",
+        "look": 13834936565853438207
       },
       {
-        "id": "97197146",
-        "term": "Kathmandu",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/97197146.jpg",
-        "caption": "Flute salesman in Kathmandu.jpg　CC BY-SA 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Janak Bhatta",
-        "credit": "Janak Bhatta／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Flute_salesman_in_Kathmandu.jpg",
-        "look": 10272225878306023295,
-        "size": [
-          1958,
-          1983
-        ]
+        "id": "frame_B06uPGK7Dpo_176",
+        "kind": "frame",
+        "term": "CNN 176s",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_B06uPGK7Dpo_176.jpg",
+        "caption": "and that piece of the glacier collapsed with the bedrock and then on the way down it uh just the",
+        "said": "and that piece of the glacier collapsed with the bedrock and then on the way down it uh just the",
+        "at": 176.72,
+        "source": "assets/footage/尼泊爾冰川潰決洪災/B06uPGK7Dpo.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=B06uPGK7Dpo",
+        "look": 18374651739299149824
       },
       {
-        "id": "103019847",
-        "term": "Kathmandu",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/103019847.jpg",
-        "caption": "Ganga Club sign, Kathmandu. 1993.jpg　CC BY-SA 4.0",
+        "id": "Koshi_or_Kosi_River_Nepal_tributary_of_Ganges_River_in_Bihar_India.jpg",
+        "term": "Koshi River",
         "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "John Hill",
-        "credit": "John Hill／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Ganga_Club_sign,_Kathmandu._1993.jpg",
-        "look": 4483399658453613628,
-        "size": [
-          1024,
-          654
-        ]
-      },
-      {
-        "id": "139112545",
-        "term": "Nepal Army",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/139112545.jpg",
-        "caption": "A 1st Special Forces Group Officer works closely with Nepal Officers and Soldier during a land navigation exercise.jpg　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "1st Special Forces Group (Airborne)",
-        "credit": "1st Special Forces Group (Airborne)／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:A_1st_Special_Forces_Group_Officer_works_closely_with_Nepal_Officers_and_Soldier_during_a_land_navigation_exercise.jpg",
-        "look": 9777241209761644223,
-        "size": [
-          2800,
-          2000
-        ]
-      },
-      {
-        "id": "139112547",
-        "term": "Nepal Army",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/139112547.jpg",
-        "caption": "A 1st Special Forces Group Officer works closely with Nepal Officers and soldiers during a Battalion Urban Operation Exercise.jpg　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "1st Special Forces Group (Airborne)",
-        "credit": "1st Special Forces Group (Airborne)／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:A_1st_Special_Forces_Group_Officer_works_closely_with_Nepal_Officers_and_soldiers_during_a_Battalion_Urban_Operation_Exercise.jpg",
-        "look": 16195544618626005819,
-        "size": [
-          2785,
-          1662
-        ]
-      },
-      {
-        "id": "38587516",
-        "term": "Nepal Army",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/38587516.jpg",
-        "caption": "A class of international Service members attending the Nepal Army High Altitude and Mountain Warfare School in 2014.jpg　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Nepal Army High Altitude and Mountain Warfare School",
-        "credit": "Nepal Army High Altitude and Mountain Warfare School／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:A_class_of_international_Service_members_attending_the_Nepal_Army_High_Altitude_and_Mountain_Warfare_School_in_2014.jpg",
-        "look": 18446462600913812992,
+        "file": "assets/photos/尼泊爾冰川潰決洪災/Koshi_or_Kosi_River_Nepal_tributary_of_Ganges_River_in_Bihar_India.jpg.jpg",
+        "caption": "The Kosi or Koshi is a transboundary river which flows through China, Nepal and India. It drains the northern slopes of the Himalayas in Tibet and the southern slopes in Nepal. From a major confluence of tributaries north of the Chatra Gorge onwards, the Kosi River is also known as the Saptakoshi fo",
+        "outlet": "維基百科",
+        "author": "Mayank Bhagya",
+        "credit": "Mayank Bhagya／CC BY 2.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Koshi_or_Kosi_River_Nepal_tributary_of_Ganges_River_in_Bihar_India.jpg",
+        "look": 18374686476433620992,
         "size": [
           1800,
           1200
         ]
       },
       {
-        "id": "frame_rBfpSsvXAOc_96",
-        "kind": "frame",
-        "term": "Fox News 96s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_96.jpg",
-        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
-        "outlet": "Fox News",
-        "author": "",
-        "credit": "畫面來源：Fox News",
-        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
-        "look": 11457440582816211259
-      },
-      {
-        "id": "frame_rBfpSsvXAOc_193",
-        "kind": "frame",
-        "term": "Fox News 193s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_193.jpg",
-        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
-        "outlet": "Fox News",
-        "author": "",
-        "credit": "畫面來源：Fox News",
-        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
-        "look": 18409870864771432668
-      },
-      {
-        "id": "frame_rBfpSsvXAOc_289",
-        "kind": "frame",
-        "term": "Fox News 289s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_289.jpg",
-        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
-        "outlet": "Fox News",
-        "author": "",
-        "credit": "畫面來源：Fox News",
-        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
-        "look": 1944922772589418712
-      },
-      {
-        "id": "frame_rBfpSsvXAOc_386",
-        "kind": "frame",
-        "term": "Fox News 386s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_rBfpSsvXAOc_386.jpg",
-        "caption": "NEW DETAILS: Glacial collapse triggers CATASTROPHIC floods near China-Nepal bord",
-        "outlet": "Fox News",
-        "author": "",
-        "credit": "畫面來源：Fox News",
-        "page": "https://www.youtube.com/watch?v=rBfpSsvXAOc",
-        "look": 18446102361631031490
-      },
-      {
-        "id": "frame_54KcFHke3cw_35",
-        "kind": "frame",
-        "term": "Reuters 35s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_35.jpg",
-        "caption": "Was climate change to blame for the Nepal floods?",
-        "outlet": "Reuters",
-        "author": "",
-        "credit": "畫面來源：Reuters",
-        "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
-        "look": 17861832469535289584
-      },
-      {
-        "id": "frame_54KcFHke3cw_106",
-        "kind": "frame",
-        "term": "Reuters 106s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_54KcFHke3cw_106.jpg",
-        "caption": "Was climate change to blame for the Nepal floods?",
-        "outlet": "Reuters",
-        "author": "",
-        "credit": "畫面來源：Reuters",
-        "page": "https://www.youtube.com/watch?v=54KcFHke3cw",
-        "look": 72346975847310307
-      },
-      {
-        "id": "frame_La0MDQohgk0_45",
-        "kind": "frame",
-        "term": "BBC News 45s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_La0MDQohgk0_45.jpg",
-        "caption": "Return of tigers to Nepal brings both joy and fear - BBC News",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=La0MDQohgk0",
-        "look": 2165964257995476943
-      },
-      {
-        "id": "frame_La0MDQohgk0_135",
-        "kind": "frame",
-        "term": "BBC News 135s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_La0MDQohgk0_135.jpg",
-        "caption": "Return of tigers to Nepal brings both joy and fear - BBC News",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=La0MDQohgk0",
-        "look": 10385018709239398401
-      },
-      {
-        "id": "frame_La0MDQohgk0_180",
-        "kind": "frame",
-        "term": "BBC News 180s",
-        "file": "assets/photos/尼泊爾冰川潰決洪災/frame_La0MDQohgk0_180.jpg",
-        "caption": "Return of tigers to Nepal brings both joy and fear - BBC News",
-        "outlet": "BBC News",
-        "author": "",
-        "credit": "畫面來源：BBC News",
-        "page": "https://www.youtube.com/watch?v=La0MDQohgk0",
-        "look": 7786176259267574079
+        "id": "Thame.JPG",
+        "term": "Thame, Nepal",
+        "kind": "real",
+        "file": "assets/photos/尼泊爾冰川潰決洪災/Thame.JPG.jpg",
+        "caption": "Thame and its neighbouring Thameteng are small Sherpa villages in Namche VDC of the Solukhumbu District in Nepal. These were the last year-round villages on the salt trading route that existed between Tibet, India, and Nepal. Thame is home to many famous Sherpa mountaineers, including Apa Sherpa and",
+        "outlet": "維基百科",
+        "author": "Moralist",
+        "credit": "Moralist／CC BY-SA 3.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Thame.JPG",
+        "look": 18374686213387902976,
+        "size": [
+          3872,
+          2592
+        ]
       }
     ],
     "data": []

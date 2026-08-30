@@ -100,6 +100,15 @@ def as_text(name: str) -> str:
         out.append(f"- {text}　／{whom}")
     out.append("")
 
+    from core import topic as topic_module
+    stray = topic_module.unindexed(topic_module.load(name))
+    if stray:
+        out.append("## 這幾支影片不能用字幕挑畫面")
+        for one in stray:
+            out.append(f"- {one['outlet']}　{one['title']}")
+            out.append(f"  {one['why']}")
+        out.append("")
+
     out.append("## 影片段落　—— 起訖只能從這裡挑，它們已經落在句子邊界上")
     for index, one in enumerate(found["passages"], start=1):
         out.append(f"[C{index}] {one['outlet']}　{one['start']}–{one['end']}s"

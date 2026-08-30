@@ -109,453 +109,512 @@
       {
         "id": "8266747",
         "term": "gas station price sign",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/8266747.jpg",
         "caption": "Close-up of a gas pump display showing price per liter and total volume during a transaction.",
         "outlet": "Pexels",
         "author": "Erik Mclean",
+        "credit": "",
+        "answers": 0.25,
         "page": "https://www.pexels.com/photo/display-screen-of-a-gasoline-pump-8266747/",
         "look": 288256867522838527,
         "size": [
           5131,
           3421
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "17849728",
         "term": "gas station price sign",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/17849728.jpg",
         "caption": "People walking near a Chevron gas station with prominent signage and parked vehicles on a sunny day.",
         "outlet": "Pexels",
         "author": "David Brown",
+        "credit": "",
+        "answers": 0.5,
         "page": "https://www.pexels.com/photo/chevron-gas-station-17849728/",
         "look": 17367128035553575425,
         "size": [
           3005,
           2003
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "12973597",
         "term": "gas station price sign",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/12973597.jpg",
         "caption": "Night view of an illuminated Irving street sign and subway entrance in an urban area.",
         "outlet": "Pexels",
         "author": "Erik Mclean",
+        "credit": "",
+        "answers": 0.25,
         "page": "https://www.pexels.com/photo/illuminated-text-signage-during-night-time-12973597/",
         "look": 1157478087810555679,
         "size": [
           5472,
           3648
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "33284879",
         "term": "oil tanker sea",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/33284879.jpg",
         "caption": "A fleet of cargo ships docked near oil storage tanks along a serene coastline with a clear blue sky above.",
         "outlet": "Pexels",
         "author": "Zifeng Xiong",
+        "credit": "",
+        "answers": 0.0,
         "page": "https://www.pexels.com/photo/cargo-ships-anchored-at-coastal-port-under-blue-sky-33284879/",
         "look": 824633720831,
         "size": [
           6000,
           4000
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "27275198",
         "term": "oil tanker sea",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/27275198.jpg",
         "caption": "Aerial shot of an oil tanker sailing in the ocean near Vado Ligure, Italy.",
         "outlet": "Pexels",
         "author": "DeLuca G",
+        "credit": "",
+        "answers": 0.33,
         "page": "https://www.pexels.com/photo/default-27275198/",
         "look": 1704364229025792,
         "size": [
           8064,
           4536
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "15647002",
         "term": "oil tanker sea",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/15647002.jpg",
         "caption": "Large oil tanker on the ocean near the coast, sailing under a vibrant sunset sky.",
         "outlet": "Pexels",
         "author": "G.isle  px.",
+        "credit": "",
+        "answers": 0.33,
         "page": "https://www.pexels.com/photo/view-of-a-large-tanker-on-the-sea-near-a-shore-at-sunset-15647002/",
         "look": 4396951321681919,
         "size": [
           4658,
           3494
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "38485170",
-        "term": "aircraft carrier",
+        "term": "military aircraft carrier",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/38485170.jpg",
         "caption": "A powerful aircraft carrier navigates through the open sea, showcasing its immense size and strength.",
         "outlet": "Pexels",
         "author": "Christian Palau",
+        "credit": "",
+        "answers": 0.67,
         "page": "https://www.pexels.com/photo/majestic-aircraft-carrier-on-open-sea-38485170/",
         "look": 250567921499135,
         "size": [
           4500,
           3375
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "29243395",
-        "term": "aircraft carrier",
-        "file": "assets/photos/美伊戰爭六個月/29243395.jpg",
-        "caption": "The USS Yorktown aircraft carrier docked in Charleston Harbor, USA.",
+        "id": "29367433",
+        "term": "military aircraft carrier",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/29367433.jpg",
+        "caption": "View of USS Yorktown aircraft carrier docked at harbor with walkway and flags.",
         "outlet": "Pexels",
-        "author": "Karen F",
-        "page": "https://www.pexels.com/photo/uss-yorktown-aircraft-carrier-in-charleston-harbor-29243395/",
-        "look": 72089479875063808,
+        "author": "Chris F",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/uss-yorktown-aircraft-carrier-in-harbor-29367433/",
+        "look": 72625216915699712,
         "size": [
-          5021,
-          2831
-        ],
-        "kind": "stock"
+          6017,
+          3374
+        ]
       },
       {
-        "id": "5595742",
-        "term": "aircraft carrier",
-        "file": "assets/photos/美伊戰爭六個月/5595742.jpg",
-        "caption": "Dramatic grayscale image of a military fighter jet on a wet tarmac under cloudy skies.",
+        "id": "6963889",
+        "term": "family kitchen table bills",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/6963889.jpg",
+        "caption": "A couple reviews bills at their kitchen table, looking concerned and thoughtful.",
         "outlet": "Pexels",
-        "author": "Presto Reviews",
-        "page": "https://www.pexels.com/photo/grayscale-photo-of-fighter-plane-5595742/",
-        "look": 54289489370021887,
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/a-shocked-man-spitting-a-drink-beside-a-woman-showing-a-paper-6963889/",
+        "look": 18229992540474770689,
         "size": [
-          3909,
-          2199
-        ],
-        "kind": "stock"
+          3632,
+          2700
+        ]
       },
       {
-        "id": "14815921",
-        "term": "cargo ship strait",
-        "file": "assets/photos/美伊戰爭六個月/14815921.jpg",
-        "caption": "A cargo ship sails past the historic Dolmabahçe Palace with urban skyline in Istanbul.",
+        "id": "36812196",
+        "term": "family kitchen table bills",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/36812196.jpg",
+        "caption": "Concerned couple reviewing financial document in modern kitchen setting.",
         "outlet": "Pexels",
-        "author": "Afitab",
-        "page": "https://www.pexels.com/photo/city-waterfront-and-an-industrial-ship-in-the-sea-14815921/",
-        "look": 9096710548111556607,
+        "author": "Vitaly Gariev",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/couple-reading-financial-document-in-kitchen-36812196/",
+        "look": 57487478378917116,
         "size": [
-          4320,
-          3240
-        ],
-        "kind": "stock"
+          3840,
+          2160
+        ]
+      },
+      {
+        "id": "6964108",
+        "term": "family kitchen table bills",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/6964108.jpg",
+        "caption": "A couple sits at a table reviewing financial documents, looking concerned and focused.",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/woman-holding-a-paper-6964108/",
+        "look": 4682603354214630400,
+        "size": [
+          3214,
+          2135
+        ]
       },
       {
         "id": "11389636",
         "term": "soldier silhouette",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/11389636.jpg",
         "caption": "A silhouette of a soldier holding a rifle against a dramatic sunset sky.",
         "outlet": "Pexels",
         "author": "Gökhan Tahincioğlu",
+        "credit": "",
+        "answers": 1.0,
         "page": "https://www.pexels.com/photo/a-man-in-black-jacket-holding-a-rifle-11389636/",
         "look": 1952663528767294,
         "size": [
           4232,
           2699
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "11042981",
         "term": "soldier silhouette",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/11042981.jpg",
         "caption": "Silhouette of a soldier holding a rifle, displayed against a wall with historical inscriptions in Ankara, Türkiye.",
         "outlet": "Pexels",
         "author": "Enes YOLDAŞ",
+        "credit": "",
+        "answers": 1.0,
         "page": "https://www.pexels.com/photo/shadow-on-the-wall-of-a-soldier-holding-a-rifle-11042981/",
         "look": 630722479237549772,
         "size": [
           6000,
           4000
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "17681813",
         "term": "soldier silhouette",
+        "kind": "stock",
         "file": "assets/photos/美伊戰爭六個月/17681813.jpg",
         "caption": "Dramatic silhouette of a soldier with a rifle against a sunrise backdrop.",
         "outlet": "Pexels",
         "author": "Beyzanur K.",
+        "credit": "",
+        "answers": 1.0,
         "page": "https://www.pexels.com/photo/silhouette-of-man-with-gun-at-golden-hour-17681813/",
         "look": 9861983533278293244,
         "size": [
           4257,
           2838
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "12377481",
-        "term": "fuel pump hand",
-        "file": "assets/photos/美伊戰爭六個月/12377481.jpg",
-        "caption": "Close-up of a hand holding a green fuel nozzle at a gas pump station outdoors.",
+        "id": "10396415",
+        "term": "oil refinery night",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/10396415.jpg",
+        "caption": "A stunning aerial shot of an illuminated oil refinery at night showcasing industrial production in Rosemount, MN.",
         "outlet": "Pexels",
-        "author": "Engin Akyurt",
-        "page": "https://www.pexels.com/photo/a-person-s-hand-holding-a-gas-pump-12377481/",
-        "look": 9911736270550828959,
+        "author": "Tom Fisk",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/illuminated-industrial-buildings-10396415/",
+        "look": 593489985173192704,
         "size": [
-          8944,
-          6708
-        ],
-        "kind": "stock"
+          5383,
+          3577
+        ]
       },
       {
-        "id": "9796",
-        "term": "fuel pump hand",
-        "file": "assets/photos/美伊戰爭六個月/9796.jpg",
-        "caption": "Close-up of a person refueling a car at a gas pump during night.",
+        "id": "10386893",
+        "term": "oil refinery night",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/10386893.jpg",
+        "caption": "Dramatic aerial shot of an illuminated oil refinery at night in Rosemount, MN.",
         "outlet": "Pexels",
-        "author": "ClickerHappy",
-        "page": "https://www.pexels.com/photo/car-refill-transportation-gas-9796/",
-        "look": 16415479943621581625,
+        "author": "Tom Fisk",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/illuminated-oil-rafinery-10386893/",
+        "look": 13889382725736988672,
         "size": [
-          4849,
-          3228
-        ],
-        "kind": "stock"
+          5454,
+          5178
+        ]
       },
       {
-        "id": "29370541",
-        "term": "fuel pump hand",
-        "file": "assets/photos/美伊戰爭六個月/29370541.jpg",
-        "caption": "Close-up of a hand refilling a car's gas tank at a station with a green fuel nozzle.",
+        "id": "6045858",
+        "term": "oil refinery night",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/6045858.jpg",
+        "caption": "Illuminated refinery emitting smoke at night in Normandie, highlighting industrial impact.",
         "outlet": "Pexels",
-        "author": "Fahad Puthawala",
-        "page": "https://www.pexels.com/photo/fuel-pumping-into-car-at-a-gas-station-29370541/",
-        "look": 1085093763073179647,
+        "author": "Loïc Manegarium",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/industrial-building-at-night-6045858/",
+        "look": 14123286713850658816,
         "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock"
+          5825,
+          3720
+        ]
       },
       {
-        "id": "34081589",
-        "term": "military aircraft",
-        "file": "assets/photos/美伊戰爭六個月/34081589.jpg",
-        "caption": "Impressive aerobatic display of jets in formation against a clear sky.",
+        "id": "14815921",
+        "term": "cargo ship strait",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/14815921.jpg",
+        "caption": "A cargo ship sails past the historic Dolmabahçe Palace with urban skyline in Istanbul.",
         "outlet": "Pexels",
-        "author": "Gibson G. Wairagu",
-        "page": "https://www.pexels.com/photo/aerobatic-jet-formation-in-clear-sky-34081589/",
-        "look": 18446602301251977216,
+        "author": "Afitab",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/city-waterfront-and-an-industrial-ship-in-the-sea-14815921/",
+        "look": 9096710548111556607,
         "size": [
-          6240,
-          4160
-        ],
-        "kind": "stock"
+          4320,
+          3240
+        ]
       },
       {
-        "id": "1620390",
-        "term": "military aircraft",
-        "file": "assets/photos/美伊戰爭六個月/1620390.jpg",
-        "caption": "Fighter jets in a precise formation fly against a vibrant blue sky during an airshow.",
+        "id": "11428872",
+        "term": "protest crowd street",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/11428872.jpg",
+        "caption": "A massive nighttime protest with crowds holding banners and placards on a city street.",
         "outlet": "Pexels",
-        "author": "Lio  Photography",
-        "page": "https://www.pexels.com/photo/green-and-white-show-planes-on-sky-1620390/",
-        "look": 16955011510304768,
+        "author": "Davide",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/crowd-of-people-protesting-11428872/",
+        "look": 17511965676389007344,
         "size": [
-          2232,
-          2231
-        ],
-        "kind": "stock"
+          4894,
+          4135
+        ]
       },
       {
-        "id": "18205661",
-        "term": "military aircraft",
-        "file": "assets/photos/美伊戰爭六個月/18205661.jpg",
-        "caption": "Five Blue Angels jets in aerial formation with smoke trails against clear sky.",
+        "id": "11428850",
+        "term": "protest crowd street",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/11428850.jpg",
+        "caption": "A vibrant, peaceful protest with a diverse crowd holding banners and placards on a city street.",
         "outlet": "Pexels",
-        "author": "Jacob Moore",
-        "page": "https://www.pexels.com/photo/planes-blue-angels-air-show-air-plane-18205661/",
-        "look": 18446741807243460608,
+        "author": "Davide",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/crowd-of-people-at-a-rally-11428850/",
+        "look": 282832640900958,
         "size": [
-          6960,
-          4640
-        ],
-        "kind": "stock"
+          5476,
+          4136
+        ]
       },
       {
-        "id": "33716553",
-        "term": "tehran street",
-        "file": "assets/photos/美伊戰爭六個月/33716553.jpg",
-        "caption": "View of a serene Tehran street with a view of the Milad Tower in the distance.",
+        "id": "13452186",
+        "term": "protest crowd street",
+        "kind": "stock",
+        "file": "assets/photos/美伊戰爭六個月/13452186.jpg",
+        "caption": "Crowd of protesters gather in Kuala Lumpur amid the cityscape and raised banners.",
         "outlet": "Pexels",
-        "author": "Mehdi Khoshnejad",
-        "page": "https://www.pexels.com/photo/quiet-street-scene-in-tehran-with-milad-tower-33716553/",
-        "look": 18392164351002443388,
+        "author": "Phearak Chamrien",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/crowd-of-protesters-on-the-street-13452186/",
+        "look": 2438960572211007,
         "size": [
-          5408,
-          3605
-        ],
-        "kind": "stock"
+          4592,
+          3448
+        ]
       },
       {
-        "id": "11433700",
-        "term": "tehran street",
-        "file": "assets/photos/美伊戰爭六個月/11433700.jpg",
-        "caption": "Women wearing headscarves and vibrant scarves walk on a sunny street in Iran, showcasing cultural fashion.",
-        "outlet": "Pexels",
-        "author": "Beyza Nur Arı",
-        "page": "https://www.pexels.com/photo/women-in-headscarves-in-city-11433700/",
-        "look": 2537888226361151,
+        "id": "Strait_of_Hormuz_and_Musandam_Peninsula_(MODIS_2018-12-10).jpg",
+        "term": "Strait of Hormuz",
+        "kind": "real",
+        "file": "assets/photos/美伊戰爭六個月/Strait_of_Hormuz_and_Musandam_Peninsula_(MODIS_2018-12-10).jpg.jpg",
+        "caption": "The Strait of Hormuz is a waterway between the Persian Gulf and the Gulf of Oman. On the north coast lies Iran, and on the south coast lies the Musandam Peninsula under the Musandam Governorate of Oman, with a portion of the southwest of the peninsula under the United Arab Emirates (UAE). The strait",
+        "outlet": "維基百科",
+        "author": "MODIS Land Rapid Response Team, NASA GSFC",
+        "credit": "MODIS Land Rapid Response Team, NASA GSFC／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Strait_of_Hormuz_and_Musandam_Peninsula_(MODIS_2018-12-10).jpg",
+        "look": 4548085905423921151,
         "size": [
-          5107,
-          4081
-        ],
-        "kind": "stock"
+          2320,
+          1860
+        ]
       },
       {
-        "id": "29786929",
-        "term": "tehran street",
-        "file": "assets/photos/美伊戰爭六個月/29786929.jpg",
-        "caption": "Bustling Tehran street scene with cars, mosque minarets, and traditional architecture.",
-        "outlet": "Pexels",
-        "author": "Necati Ömer Karpuzoğlu",
-        "page": "https://www.pexels.com/photo/busy-tehran-street-with-mosque-and-traffic-29786929/",
-        "look": 2327320939013619518,
+        "id": "PersianGulf_vue_satellite_du_golfe_persique.jpg",
+        "term": "Persian Gulf",
+        "kind": "real",
+        "file": "assets/photos/美伊戰爭六個月/PersianGulf_vue_satellite_du_golfe_persique.jpg.jpg",
+        "caption": "The Persian Gulf, sometimes called the Arabian Gulf, is a mediterranean sea in West Asia. The body of water is an extension of the Arabian Sea and the larger Indian Ocean located between the Arabian Peninsula and Iran (Persia). It is connected to the Gulf of Oman in the east by the Strait of Hormuz.",
+        "outlet": "維基百科",
+        "author": "NASA",
+        "credit": "NASA／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:PersianGulf_vue_satellite_du_golfe_persique.jpg",
+        "look": 18396931128664650432,
         "size": [
-          6240,
-          4160
-        ],
-        "kind": "stock"
+          4000,
+          5200
+        ]
       },
       {
-        "id": "39212596",
-        "term": "oil price chart",
-        "file": "assets/photos/美伊戰爭六個月/39212596.jpg",
-        "caption": "Hand pointing at a financial graph displaying cryptocurrency data analysis and trends.",
-        "outlet": "Pexels",
-        "author": "Rafael Minguet Delgado",
-        "page": "https://www.pexels.com/photo/analyzing-cryptocurrency-market-trends-39212596/",
-        "look": 9182945611549245825,
+        "id": "Flag_of_Iran_(official).svg.png",
+        "term": "Iran",
+        "kind": "real",
+        "file": "assets/photos/美伊戰爭六個月/Flag_of_Iran_(official).svg.png.jpg",
+        "caption": "Iran, officially the Islamic Republic of Iran, and historically known as Persia, is a country in West Asia. It borders Iraq to the west, Turkey, Azerbaijan, and Armenia to the northwest, the Caspian Sea to the north, Turkmenistan to the northeast, Afghanistan to the east, Pakistan to the southeast, ",
+        "outlet": "維基百科",
+        "author": "",
+        "credit": "／見檔案頁",
+        "answers": 1.0,
+        "page": "https://en.wikipedia.org/wiki/Iran",
+        "look": 281474976645120,
         "size": [
-          6774,
-          4516
-        ],
-        "kind": "stock"
+          1000,
+          572
+        ]
       },
       {
-        "id": "38796151",
-        "term": "oil price chart",
-        "file": "assets/photos/美伊戰爭六個月/38796151.jpg",
-        "caption": "Close-up of a cryptocurrency market graph focusing on BNB price and volume trends over time.",
-        "outlet": "Pexels",
-        "author": "Rafael Minguet Delgado",
-        "page": "https://www.pexels.com/photo/cryptocurrency-market-graph-showing-bnb-trends-38796151/",
-        "look": 9511598289838080512,
+        "id": "Emblem_of_the_United_States_Navy.svg.png",
+        "term": "United States Navy",
+        "kind": "real",
+        "file": "assets/photos/美伊戰爭六個月/Emblem_of_the_United_States_Navy.svg.png.jpg",
+        "caption": "The United States Navy (USN) is the maritime service branch of the United States Armed Forces and is designated as the navy of the United States in the Constitution. With 290 combat vessels, it is the world's second largest navy, behind the People's Liberation Army Navy, and by far the largest by di",
+        "outlet": "維基百科",
+        "author": "",
+        "credit": "／見檔案頁",
+        "answers": 1.0,
+        "page": "https://en.wikipedia.org/wiki/United_States_Navy",
+        "look": 6821913426803712,
         "size": [
-          8640,
-          5760
-        ],
-        "kind": "stock"
+          720,
+          720
+        ]
       },
       {
-        "id": "38782894",
-        "term": "oil price chart",
-        "file": "assets/photos/美伊戰爭六個月/38782894.jpg",
-        "caption": "Colorful financial stock market chart displayed on a digital screen with analysis tools.",
-        "outlet": "Pexels",
-        "author": "Rafael Minguet Delgado",
-        "page": "https://www.pexels.com/photo/financial-stock-market-chart-on-digital-screen-38782894/",
-        "look": 18407109084709912576,
-        "size": [
-          8640,
-          5760
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "38474793",
-        "term": "family car road",
-        "file": "assets/photos/美伊戰爭六個月/38474793.jpg",
-        "caption": "Joyful family enjoying a sunset road trip with a vintage car, capturing happiness and togetherness.",
-        "outlet": "Pexels",
-        "author": "Breno Cardoso",
-        "page": "https://www.pexels.com/photo/happy-family-road-trip-with-vintage-car-38474793/",
-        "look": 5764722336519225343,
-        "size": [
-          5643,
-          3762
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "9000153",
-        "term": "family car road",
-        "file": "assets/photos/美伊戰爭六個月/9000153.jpg",
-        "caption": "Classic beige sedan carrying luggage, driving on highway with city in background.",
-        "outlet": "Pexels",
-        "author": "needtofly",
-        "page": "https://www.pexels.com/photo/vintage-car-on-the-road-9000153/",
-        "look": 136881555520556,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "12932548",
-        "term": "family car road",
-        "file": "assets/photos/美伊戰爭六個月/12932548.jpg",
-        "caption": "A family sits in a car trunk, enjoying an outdoor adventure in a scenic countryside.",
-        "outlet": "Pexels",
-        "author": "Atlantic Ambience",
-        "page": "https://www.pexels.com/photo/family-sitting-on-car-back-12932548/",
-        "look": 16210980606999323009,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "frame_IdufvpqvhWg_75",
+        "id": "frame_IdufvpqvhWg_28",
         "kind": "frame",
-        "term": "Fox News 75s",
-        "file": "assets/photos/美伊戰爭六個月/frame_IdufvpqvhWg_75.jpg",
-        "caption": "It's just a MATTER OF TIME before Iranian government COLLAPSES: Ret. Air Force g",
+        "term": "Fox News 28s",
+        "file": "assets/photos/美伊戰爭六個月/frame_IdufvpqvhWg_28.jpg",
+        "caption": "TROUBLE FOR IRAN. IS THAT A FAIR ASSESSMENT?",
+        "said": "TROUBLE FOR IRAN. IS THAT A FAIR ASSESSMENT?",
+        "at": 28.3,
+        "source": "assets/footage/美伊戰爭六個月/IdufvpqvhWg.mp4",
         "outlet": "Fox News",
         "author": "",
         "credit": "畫面來源：Fox News",
         "page": "https://www.youtube.com/watch?v=IdufvpqvhWg",
-        "look": 1152358554670071807
+        "look": 70993305319110911
       },
       {
-        "id": "frame_IdufvpqvhWg_225",
+        "id": "frame_IdufvpqvhWg_79",
         "kind": "frame",
-        "term": "Fox News 225s",
-        "file": "assets/photos/美伊戰爭六個月/frame_IdufvpqvhWg_225.jpg",
-        "caption": "It's just a MATTER OF TIME before Iranian government COLLAPSES: Ret. Air Force g",
+        "term": "Fox News 79s",
+        "file": "assets/photos/美伊戰爭六個月/frame_IdufvpqvhWg_79.jpg",
+        "caption": "I THINK IT’S JUST A MATTER OF TIME BEFORE THE IRANIAN",
+        "said": "I THINK IT’S JUST A MATTER OF TIME BEFORE THE IRANIAN",
+        "at": 79.54,
+        "source": "assets/footage/美伊戰爭六個月/IdufvpqvhWg.mp4",
         "outlet": "Fox News",
         "author": "",
         "credit": "畫面來源：Fox News",
         "page": "https://www.youtube.com/watch?v=IdufvpqvhWg",
-        "look": 9943675332848007679
+        "look": 13834917326804943871
       },
       {
-        "id": "frame_5G9j0kS3P8E_42",
+        "id": "frame_IdufvpqvhWg_2",
         "kind": "frame",
-        "term": "Al Jazeera English 42s",
-        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_42.jpg",
-        "caption": "Six months into the war on Iran, what counts as victory for Trump?",
+        "term": "Fox News 2s",
+        "file": "assets/photos/美伊戰爭六個月/frame_IdufvpqvhWg_2.jpg",
+        "caption": "PERIODS ME TO THE ECONOMIC NOOSE TIGHTENING AROUND THAT.",
+        "said": "PERIODS ME TO THE ECONOMIC NOOSE TIGHTENING AROUND THAT.",
+        "at": 2.45,
+        "source": "assets/footage/美伊戰爭六個月/IdufvpqvhWg.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=IdufvpqvhWg",
+        "look": 18302070333740973567
+      },
+      {
+        "id": "frame_5G9j0kS3P8E_1",
+        "kind": "frame",
+        "term": "Al Jazeera English 1s",
+        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_1.jpg",
+        "caption": "At the start of the war with Iran, the",
+        "said": "At the start of the war with Iran, the",
+        "at": 1.32,
+        "source": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
+        "look": 21396548830919806
+      },
+      {
+        "id": "frame_5G9j0kS3P8E_24",
+        "kind": "frame",
+        "term": "Al Jazeera English 24s",
+        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_24.jpg",
+        "caption": "terms. Destroy Iran's missile threat.",
+        "said": "terms. Destroy Iran's missile threat.",
+        "at": 24.04,
+        "source": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
+        "look": 72053101156630528
+      },
+      {
+        "id": "frame_5G9j0kS3P8E_43",
+        "kind": "frame",
+        "term": "Al Jazeera English 43s",
+        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_43.jpg",
+        "caption": "Iran. They are decimated both militarily",
+        "said": "Iran. They are decimated both militarily",
+        "at": 43.2,
+        "source": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
         "outlet": "Al Jazeera English",
         "author": "",
         "credit": "畫面來源：Al Jazeera English",
@@ -563,171 +622,185 @@
         "look": 18374124644287493623
       },
       {
-        "id": "frame_5G9j0kS3P8E_84",
+        "id": "frame_5G9j0kS3P8E_61",
         "kind": "frame",
-        "term": "Al Jazeera English 84s",
-        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_84.jpg",
-        "caption": "Six months into the war on Iran, what counts as victory for Trump?",
+        "term": "Al Jazeera English 61s",
+        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_61.jpg",
+        "caption": "an end to the war, leaving the White",
+        "said": "an end to the war, leaving the White",
+        "at": 61.92,
+        "source": "assets/footage/美伊戰爭六個月/5G9j0kS3P8E.mp4",
         "outlet": "Al Jazeera English",
         "author": "",
         "credit": "畫面來源：Al Jazeera English",
         "page": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
-        "look": 582085967871
+        "look": 289356829085892351
       },
       {
-        "id": "frame_5G9j0kS3P8E_126",
+        "id": "frame_r7KP6RIhcNc_31",
         "kind": "frame",
-        "term": "Al Jazeera English 126s",
-        "file": "assets/photos/美伊戰爭六個月/frame_5G9j0kS3P8E_126.jpg",
-        "caption": "Six months into the war on Iran, what counts as victory for Trump?",
-        "outlet": "Al Jazeera English",
+        "term": "Reuters 31s",
+        "file": "assets/photos/美伊戰爭六個月/frame_r7KP6RIhcNc_31.jpg",
+        "caption": "The war with Iran has undermined",
+        "said": "The war with Iran has undermined",
+        "at": 31.68,
+        "source": "assets/footage/美伊戰爭六個月/r7KP6RIhcNc.mp4",
+        "outlet": "Reuters",
         "author": "",
-        "credit": "畫面來源：Al Jazeera English",
-        "page": "https://www.youtube.com/watch?v=5G9j0kS3P8E",
-        "look": 35461070126332
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=r7KP6RIhcNc",
+        "look": 9151318858110795775
       },
       {
-        "id": "79848427",
-        "term": "Strait of Hormuz",
-        "file": "assets/photos/美伊戰爭六個月/79848427.jpg",
-        "caption": "CENTCOM RQ-4A Flight Path map.jpg　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "U.S. Central Command, U.S. DoD",
-        "credit": "U.S. Central Command, U.S. DoD／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:CENTCOM_RQ-4A_Flight_Path_map.jpg",
-        "look": 138481011574902535,
-        "size": [
-          1191,
-          526
-        ]
+        "id": "frame_r7KP6RIhcNc_1",
+        "kind": "frame",
+        "term": "Reuters 1s",
+        "file": "assets/photos/美伊戰爭六個月/frame_r7KP6RIhcNc_1.jpg",
+        "caption": "the war has hurt the Republicans brand",
+        "said": "the war has hurt the Republicans brand",
+        "at": 1.74,
+        "source": "assets/footage/美伊戰爭六個月/r7KP6RIhcNc.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=r7KP6RIhcNc",
+        "look": 571642949464304
       },
       {
-        "id": "185806560",
-        "term": "Strait of Hormuz",
-        "file": "assets/photos/美伊戰爭六個月/185806560.jpg",
-        "caption": "Elphinstone Inlet 2.webp　CC BY 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "OpenStreetMap",
-        "credit": "OpenStreetMap／CC BY 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Elphinstone_Inlet_2.webp",
-        "look": 73470900524486426,
-        "size": [
-          4798,
-          2355
-        ]
+        "id": "frame_r7KP6RIhcNc_52",
+        "kind": "frame",
+        "term": "Reuters 52s",
+        "file": "assets/photos/美伊戰爭六個月/frame_r7KP6RIhcNc_52.jpg",
+        "caption": "war has hurt the Republicans brand as",
+        "said": "war has hurt the Republicans brand as",
+        "at": 52.4,
+        "source": "assets/footage/美伊戰爭六個月/r7KP6RIhcNc.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=r7KP6RIhcNc",
+        "look": 16172690971466069759
       },
       {
-        "id": "102315478",
-        "term": "Strait of Hormuz",
-        "file": "assets/photos/美伊戰爭六個月/102315478.jpg",
-        "caption": "ISS047-E-146174 - View of Earth.jpg　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Earth Science and Remote Sensing Unit, Lyndon B. Johnson Space Center",
-        "credit": "Earth Science and Remote Sensing Unit, Lyndon B. Johnson Space Center／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:ISS047-E-146174_-_View_of_Earth.jpg",
-        "look": 17931307079935458816,
-        "size": [
-          4928,
-          3280
-        ]
+        "id": "frame_j3bIf9mfc-Q_16",
+        "kind": "frame",
+        "term": "CNN 16s",
+        "file": "assets/photos/美伊戰爭六個月/frame_j3bIf9mfc-Q_16.jpg",
+        "caption": "its war with Iran on February the 28th. 18 US troops have died and 624 have been wounded. Now,",
+        "said": "its war with Iran on February the 28th. 18 US troops have died and 624 have been wounded. Now,",
+        "at": 16.4,
+        "source": "assets/footage/美伊戰爭六個月/j3bIf9mfc-Q.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=j3bIf9mfc-Q",
+        "look": 18446475900269633552
       },
       {
-        "id": "126915546",
-        "term": "Tehran city",
-        "file": "assets/photos/美伊戰爭六個月/126915546.jpg",
-        "caption": "Alien Theater, by Albert Camus-City Theater of Tehran-Canon Photography-2016-Photo By Mostafa Meraji 27.jpg　CC0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Mostafameraji",
-        "credit": "Mostafameraji／CC0",
-        "page": "https://commons.wikimedia.org/wiki/File:Alien_Theater,_by_Albert_Camus-City_Theater_of_Tehran-Canon_Photography-2016-Photo_By_Mostafa_Meraji_27.jpg",
-        "look": 8680747863427254392,
-        "size": [
-          3500,
-          2333
-        ]
+        "id": "frame_j3bIf9mfc-Q_139",
+        "kind": "frame",
+        "term": "CNN 139s",
+        "file": "assets/photos/美伊戰爭六個月/frame_j3bIf9mfc-Q_139.jpg",
+        "caption": "fury category. Epic fury being the first phase of the Pentagon's war with Iran. The new overseas",
+        "said": "fury category. Epic fury being the first phase of the Pentagon's war with Iran. The new overseas",
+        "at": 139.48,
+        "source": "assets/footage/美伊戰爭六個月/j3bIf9mfc-Q.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=j3bIf9mfc-Q",
+        "look": 18374422700266307384
       },
       {
-        "id": "126915548",
-        "term": "Tehran city",
-        "file": "assets/photos/美伊戰爭六個月/126915548.jpg",
-        "caption": "Alien Theater, by Albert Camus-City Theater of Tehran-Canon Photography-2016-Photo By Mostafa Meraji 28.jpg　CC0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Mostafameraji",
-        "credit": "Mostafameraji／CC0",
-        "page": "https://commons.wikimedia.org/wiki/File:Alien_Theater,_by_Albert_Camus-City_Theater_of_Tehran-Canon_Photography-2016-Photo_By_Mostafa_Meraji_28.jpg",
-        "look": 8681950779212169216,
-        "size": [
-          3500,
-          2333
-        ]
+        "id": "frame_j3bIf9mfc-Q_285",
+        "kind": "frame",
+        "term": "CNN 285s",
+        "file": "assets/photos/美伊戰爭六個月/frame_j3bIf9mfc-Q_285.jpg",
+        "caption": "said that the number was 18 last week while he was uh justifying the ongoing war in Iran and",
+        "said": "said that the number was 18 last week while he was uh justifying the ongoing war in Iran and",
+        "at": 285.68,
+        "source": "assets/footage/美伊戰爭六個月/j3bIf9mfc-Q.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=j3bIf9mfc-Q",
+        "look": 17653988187371583775
       },
       {
-        "id": "126071711",
-        "term": "Tehran city",
-        "file": "assets/photos/美伊戰爭六個月/126071711.jpg",
-        "caption": "Aradkoh -2016-Tehran city-Iran country-Canon Photography-Mostafa Meraji 03.jpg　CC0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Mostafameraji",
-        "credit": "Mostafameraji／CC0",
-        "page": "https://commons.wikimedia.org/wiki/File:Aradkoh_-2016-Tehran_city-Iran_country-Canon_Photography-Mostafa_Meraji_03.jpg",
-        "look": 1153198581536980992,
-        "size": [
-          5472,
-          3648
-        ]
+        "id": "frame_j3bIf9mfc-Q_349",
+        "kind": "frame",
+        "term": "CNN 349s",
+        "file": "assets/photos/美伊戰爭六個月/frame_j3bIf9mfc-Q_349.jpg",
+        "caption": "communications failure around the war. It's not just deaths. It's also how uh and when does this",
+        "said": "communications failure around the war. It's not just deaths. It's also how uh and when does this",
+        "at": 349.2,
+        "source": "assets/footage/美伊戰爭六個月/j3bIf9mfc-Q.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=j3bIf9mfc-Q",
+        "look": 13906975886385080311
       },
       {
-        "id": "14989513",
-        "term": "aircraft carrier US Navy",
-        "file": "assets/photos/美伊戰爭六個月/14989513.jpg",
-        "caption": "F-8E(FN) catching wire on USS Eisenhower (CVN-69) 1983.JPEG　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Camera Operator: Walsworth, USN\n\nTouched up by Cobatfor ()",
-        "credit": "Camera Operator: Walsworth, USN\n\nTouched up by Cobatfor ()／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:F-8E(FN)_catching_wire_on_USS_Eisenhower_(CVN-69)_1983.JPEG",
-        "look": 3474527113432727295,
-        "size": [
-          2530,
-          1716
-        ]
+        "id": "frame_N_5yXWXZJ7A_66",
+        "kind": "frame",
+        "term": "AP News 66s",
+        "file": "assets/photos/美伊戰爭六個月/frame_N_5yXWXZJ7A_66.jpg",
+        "caption": "around and looking for parking.",
+        "said": "around and looking for parking.",
+        "at": 66.3,
+        "source": "assets/footage/美伊戰爭六個月/N_5yXWXZJ7A.mp4",
+        "outlet": "AP News",
+        "author": "",
+        "credit": "畫面來源：AP News",
+        "page": "https://www.youtube.com/watch?v=N_5yXWXZJ7A",
+        "look": 1736171806412183580
       },
       {
-        "id": "61785380",
-        "term": "aircraft carrier US Navy",
-        "file": "assets/photos/美伊戰爭六個月/61785380.jpg",
-        "caption": "GHWB is the flagship of Carrier Strike Group (CSG) 2, which is comprised of the staff of CSG-2, GHWB, the nine squadrons and staff of Carrier Air Wing (CVW) 8, Destroyer Squadron (DESRON) 22 staff and 170713-N-AJ467-008.jpg　Public domain",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Darien P Weigel",
-        "credit": "Darien P Weigel／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:GHWB_is_the_flagship_of_Carrier_Strike_Group_(CSG)_2,_which_is_comprised_of_the_staff_of_CSG-2,_GHWB,_the_nine_squadrons_and_staff_of_Carrier_Air_Wing_(CVW)_8,_Destroyer_Squadron_(DESRON)_22_staff_and_170713-N-AJ467-008.jpg",
-        "look": 9286695789377944828,
-        "size": [
-          5040,
-          4016
-        ]
+        "id": "frame_N_5yXWXZJ7A_133",
+        "kind": "frame",
+        "term": "AP News 133s",
+        "file": "assets/photos/美伊戰爭六個月/frame_N_5yXWXZJ7A_133.jpg",
+        "caption": "of whatever is going on around the",
+        "said": "of whatever is going on around the",
+        "at": 133.62,
+        "source": "assets/footage/美伊戰爭六個月/N_5yXWXZJ7A.mp4",
+        "outlet": "AP News",
+        "author": "",
+        "credit": "畫面來源：AP News",
+        "page": "https://www.youtube.com/watch?v=N_5yXWXZJ7A",
+        "look": 9096267457849397023
       },
       {
-        "id": "58076228",
-        "term": "aircraft carrier US Navy",
-        "file": "assets/photos/美伊戰爭六個月/58076228.jpg",
-        "caption": "GHWB is the flagship of Carrier Strike Group (CSG) 2, which is comprised of the staff of CSG-2; GHWB; the nine squadrons and staff of Carrier Air Wing (CVW) 8; Destroyer Squadron (DESRON) 22 staff and 170404-N-YL257-045.jpg　Public domain",
+        "id": "frame_N_5yXWXZJ7A_152",
+        "kind": "frame",
+        "term": "AP News 152s",
+        "file": "assets/photos/美伊戰爭六個月/frame_N_5yXWXZJ7A_152.jpg",
+        "caption": "Since [music] the start of the war, the",
+        "said": "Since [music] the start of the war, the",
+        "at": 152.98,
+        "source": "assets/footage/美伊戰爭六個月/N_5yXWXZJ7A.mp4",
+        "outlet": "AP News",
+        "author": "",
+        "credit": "畫面來源：AP News",
+        "page": "https://www.youtube.com/watch?v=N_5yXWXZJ7A",
+        "look": 506390109445045360
+      },
+      {
+        "id": "Bandarabbas-sahel-2.jpg",
+        "term": "Bandar Abbas",
         "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Petty Officer 3rd Class Christopher Gaines",
-        "credit": "Petty Officer 3rd Class Christopher Gaines／Public domain",
-        "page": "https://commons.wikimedia.org/wiki/File:GHWB_is_the_flagship_of_Carrier_Strike_Group_(CSG)_2,_which_is_comprised_of_the_staff_of_CSG-2;_GHWB;_the_nine_squadrons_and_staff_of_Carrier_Air_Wing_(CVW)_8;_Destroyer_Squadron_(DESRON)_22_staff_and_170404-N-YL257-045.jpg",
-        "look": 18374403831196183612,
+        "file": "assets/photos/美伊戰爭六個月/Bandarabbas-sahel-2.jpg.jpg",
+        "caption": "Bandar Abbas is a port city in the Central District of Bandar Abbas County, Hormozgan Province, Iran serving as capital of the province, the county, and the district. Bandar Abbas is a port on the southern coast of the country, on the Persian Gulf.",
+        "outlet": "維基百科",
+        "author": "Abed",
+        "credit": "Abed／GFDL",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Bandarabbas-sahel-2.jpg",
+        "look": 11065067208056037375,
         "size": [
-          2100,
-          1402
+          600,
+          400
         ]
       }
     ],

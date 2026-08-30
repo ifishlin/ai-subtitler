@@ -241,8 +241,55 @@ def keywords(pile: dict[str, Any]) -> list[str]:
                 low = word.lower()
                 if low not in dull:
                     seen[low] = seen.get(low, 0) + 1
-    ranked = sorted(seen.items(), key=lambda one: (-one[1], one[0]))
+    # A word only counts if more than one source used it. Taking the top words
+    # outright let a single off-topic result vote for its own vocabulary: a BBC
+    # piece about tigers returning to Nepal was collected for a topic about a
+    # glacial flood, and "tigers" duly became a keyword, so the video matched
+    # the topic it had nothing to do with. Agreement between sources is what
+    # makes a word describe the topic rather than one result.
+    agreed = [(word, count) for word, count in seen.items() if count > 1]
+    ranked = sorted(agreed or seen.items(), key=lambda one: (-one[1], one[0]))
     return [word for word, _ in ranked[:12]]
+
+
+def unindexed(pile: dict[str, Any]) -> list[dict[str, Any]]:
+    """Videos whose subtitles do not use the topic's own words.
+
+    Named for what it measures rather than what I first wanted it to mean.
+    It catches the search noise it was written for -- a BBC piece about tigers
+    returning to Nepal, collected for a topic about a glacial flood, which its
+    captions betray by mentioning nothing but the country. But it also flags an
+    AP piece that is squarely on topic and simply never says so: seven people
+    describing what the war did to their week, in the words of somebody talking
+    about petrol and parking.
+
+    Both are true of the same thing. Frames and passages are chosen by looking
+    for the topic's words in the captions, so a video that does not use them
+    cannot be indexed that way whether or not it is about the subject. It is
+    still usable by hand; it is not usable by the part of this that runs
+    without a person.
+    """
+    words = keywords(pile)
+    if not words:
+        return []
+    least = 3
+    stray = []
+    for video in pile.get("sources", {}).get("videos") or []:
+        if not video.get("file") or not video.get("captions"):
+            continue
+        said = " ".join(cue["text"] for cue in cues_of(video)).lower()
+        # By stem, not by word. `nepal` and `nepal's` are one thing, and the
+        # video this check exists to catch scored two on exactly that pair.
+        hits = {word.rstrip("'s").rstrip("'") for word in words if word in said}
+        if len(hits) < least:
+            stray.append({"outlet": video.get("outlet", ""),
+                          "title": video.get("title", "")[:60],
+                          "hits": sorted(hits),
+                          "why": f"字幕只用到 {len(hits)} 個題目的詞"
+                                 f"（{'、'.join(sorted(hits)) or '零'}），"
+                                 f"至少要 {least} 個 —— 沒辦法用字幕替它挑畫面。"
+                                 f"可能是搜到不相干的片子，也可能只是它講得比較白話"})
+    return stray
 
 
 def cues_of(video: dict[str, Any]) -> list[dict[str, Any]]:
@@ -332,6 +379,33 @@ def cut_frames(name: str, video: dict[str, Any],
             "credit": f"畫面來源：{video.get('outlet', '')}",
             "page": video.get("url", "")})
     return made
+
+
+def replace_images(name: str, fresh: list[dict[str, Any]]) -> dict[str, int]:
+    """Swap a topic's pictures for a new set, old ones removed only after.
+
+    Written after a re-collection deleted forty-seven photographs and then
+    failed on its third fetch, leaving a topic whose JSON listed pictures that
+    no longer existed. The order was the whole mistake: clear, then gather.
+    Anything that throws in between takes the originals with it.
+
+    So the new set arrives complete, is written, and only then is what nothing
+    points at any more swept. A failure before that costs nothing but time --
+    the topic still has every picture it had.
+    """
+    pile = load(name)
+    keep = {item.get("file") for item in fresh if item.get("file")}
+    dropped = [item for item in pile["sources"]["images"]
+               if item.get("file") and item["file"] not in keep]
+    pile["sources"]["images"] = fresh
+    save(name, pile)                      # the record first, the files after
+    gone = 0
+    for item in dropped:
+        target = ROOT / item["file"]
+        if target.is_file():
+            target.unlink()
+            gone += 1
+    return {"kept": len(fresh), "removed": gone}
 
 
 def path_for(name: str) -> Path:

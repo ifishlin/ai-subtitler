@@ -104,646 +104,617 @@
     ],
     "images": [
       {
-        "id": "6129107",
-        "term": "doctor waiting room",
-        "file": "assets/photos/美國看不到家醫科/6129107.jpg",
-        "caption": "A hospital scene showing patients and medical staff in a corridor, illustrating healthcare environments.",
+        "id": "13185365",
+        "term": "empty waiting room clinic",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/13185365.jpg",
+        "caption": "Crutches resting against a wall in a minimalist waiting room with blue chairs.",
         "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/nurse-pushing-a-patient-on-a-wheelchair-6129107/",
-        "look": 508641810363432959,
+        "author": "Juan Manuel Montejano Lopez",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/crutches-leaning-on-white-wall-13185365/",
+        "look": 1736411421811211516,
         "size": [
-          6438,
-          4292
-        ],
-        "kind": "stock"
+          6960,
+          4640
+        ]
       },
       {
-        "id": "4266934",
-        "term": "doctor waiting room",
-        "file": "assets/photos/美國看不到家醫科/4266934.jpg",
-        "caption": "A doctor in scrubs consulting a female patient in a modern clinic waiting room, using a tablet.",
+        "id": "305564",
+        "term": "empty waiting room clinic",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/305564.jpg",
+        "caption": "High-angle view of a modern dental chair and equipment setup in a professional clinic.",
         "outlet": "Pexels",
-        "author": "Cedric Fauntleroy",
-        "page": "https://www.pexels.com/photo/a-doctor-talking-to-a-patient-while-holding-a-tablet-4266934/",
-        "look": 1737347964931472636,
-        "size": [
-          8142,
-          5428
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "6129035",
-        "term": "doctor waiting room",
-        "file": "assets/photos/美國看不到家醫科/6129035.jpg",
-        "caption": "Doctors and patients in a hospital environment, fostering care and companionship.",
-        "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/people-at-the-hospital-hallway-6129035/",
-        "look": 14540092158355963767,
-        "size": [
-          5704,
-          3803
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "48603",
-        "term": "stethoscope clinic",
-        "file": "assets/photos/美國看不到家醫科/48603.jpg",
-        "caption": "A smartphone and blue stethoscope on a clean white surface, emphasizing modern healthcare.",
-        "outlet": "Pexels",
-        "author": "Negative Space",
-        "page": "https://www.pexels.com/photo/silver-iphone-6-near-blue-and-silver-stethoscope-48603/",
-        "look": 11061275949254508543,
+        "author": "Daniel Frank",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/chairs-arranged-on-table-305564/",
+        "look": 18192423982913941560,
         "size": [
           3888,
           2592
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "16204178",
-        "term": "stethoscope clinic",
-        "file": "assets/photos/美國看不到家醫科/16204178.jpg",
-        "caption": "A detailed close-up photo of a stethoscope on a clean white background, ideal for health topics.",
+        "id": "19921278",
+        "term": "empty waiting room clinic",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/19921278.jpg",
+        "caption": "Row of empty chairs in a hospital corridor, soft lighting and modern interior design.",
         "outlet": "Pexels",
-        "author": "Paloma Gil",
-        "page": "https://www.pexels.com/photo/close-up-of-a-stethoscope-lying-on-a-white-surface-16204178/",
-        "look": 9146475247026703902,
+        "author": "wutthichai charoenburi",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/empty-seats-in-corridor-19921278/",
+        "look": 17940353550455244295,
         "size": [
-          5472,
-          3648
-        ],
-        "kind": "stock"
+          3968,
+          2976
+        ]
       },
       {
-        "id": "13105349",
-        "term": "stethoscope clinic",
-        "file": "assets/photos/美國看不到家醫科/13105349.jpg",
-        "caption": "Close-up of a stethoscope on a yellow background, symbolizing healthcare.",
+        "id": "20100299",
+        "term": "doctor stethoscope patient",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/20100299.jpg",
+        "caption": "A close-up image showing a doctor holding a stethoscope, symbolizing healthcare and medical practice.",
         "outlet": "Pexels",
-        "author": "Etatics Inc.",
-        "page": "https://www.pexels.com/photo/a-stethoscope-on-a-yellow-surface-13105349/",
-        "look": 18446638037535787007,
+        "author": "Felipe Queiroz",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/stethoscope-in-doctor-hands-20100299/",
+        "look": 180848570066860282,
         "size": [
-          5326,
-          3551
-        ],
-        "kind": "stock"
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "39192389",
+        "term": "doctor stethoscope patient",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/39192389.jpg",
+        "caption": "Doctor conducting a health checkup on a child using a stethoscope indoors.",
+        "outlet": "Pexels",
+        "author": "Vitaly Gariev",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/doctor-examining-child-with-stethoscope-39192389/",
+        "look": 3391086955819959300,
+        "size": [
+          3840,
+          2160
+        ]
+      },
+      {
+        "id": "5327584",
+        "term": "doctor stethoscope patient",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/5327584.jpg",
+        "caption": "A female doctor in a white coat using a stethoscope during a patient examination.",
+        "outlet": "Pexels",
+        "author": "Thirdman",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/photo-of-doctor-checking-on-her-patient-5327584/",
+        "look": 17436242282746001656,
+        "size": [
+          6446,
+          4297
+        ]
       },
       {
         "id": "263402",
         "term": "hospital emergency entrance",
+        "kind": "stock",
         "file": "assets/photos/美國看不到家醫科/263402.jpg",
         "caption": "Close-up of a modern hospital emergency room entrance with prominent red letters.",
         "outlet": "Pexels",
         "author": "Pixabay",
+        "credit": "",
+        "answers": 1.0,
         "page": "https://www.pexels.com/photo/emergency-signage-263402/",
         "look": 76413736954329595,
         "size": [
           4928,
           3264
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "20026899",
         "term": "hospital emergency entrance",
+        "kind": "stock",
         "file": "assets/photos/美國看不到家醫科/20026899.jpg",
         "caption": "Ambulance parking area on a quiet street near a modern building with road access.",
         "outlet": "Pexels",
         "author": "Timothy Huliselan",
+        "credit": "",
+        "answers": 0.0,
         "page": "https://www.pexels.com/photo/hospital-by-the-street-20026899/",
         "look": 18446742158200423106,
         "size": [
           4000,
           3000
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "8673896",
         "term": "hospital emergency entrance",
+        "kind": "stock",
         "file": "assets/photos/美國看不到家醫科/8673896.jpg",
         "caption": "A deserted hospital corridor with open doors and dim lighting, enhancing a mysterious ambiance.",
         "outlet": "Pexels",
         "author": "Даниил Зенцов",
+        "credit": "",
+        "answers": 0.33,
         "page": "https://www.pexels.com/photo/selective-focus-of-empty-hallway-8673896/",
         "look": 3393360215555612,
         "size": [
           5616,
           3744
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "32213424",
-        "term": "medical student books",
+        "term": "medical student debt",
+        "kind": "stock",
         "file": "assets/photos/美國看不到家醫科/32213424.jpg",
         "caption": "Group of diverse medical students wearing lab coats in university corridor, representing future healthcare professionals.",
         "outlet": "Pexels",
         "author": "Yusuf Çelik",
+        "credit": "",
+        "answers": 0.67,
         "page": "https://www.pexels.com/photo/young-medical-students-in-university-hallway-32213424/",
         "look": 4051093348390732033,
         "size": [
           6720,
           4480
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "15551426",
-        "term": "medical student books",
-        "file": "assets/photos/美國看不到家醫科/15551426.jpg",
-        "caption": "A veterinarian sits confidently at her desk surrounded by veterinary books and tools, embodying professionalism.",
+        "id": "32752500",
+        "term": "medical student debt",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/32752500.jpg",
+        "caption": "Female doctor examining X-rays in a clinical setting, showcasing medical expertise.",
         "outlet": "Pexels",
-        "author": "Italo Crespi",
-        "page": "https://www.pexels.com/photo/veterinarian-doctor-sitting-at-desk-15551426/",
-        "look": 17933598667769969919,
+        "author": "Fira  Fatul",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/medical-professional-analyzing-x-ray-films-32752500/",
+        "look": 1157444414082923772,
         "size": [
-          5184,
-          3456
-        ],
-        "kind": "stock"
+          4354,
+          2903
+        ]
       },
       {
-        "id": "3985162",
-        "term": "medical student books",
-        "file": "assets/photos/美國看不到家醫科/3985162.jpg",
-        "caption": "A group of medical students in white coats studying together in a hospital hallway.",
+        "id": "3985154",
+        "term": "medical student debt",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/3985154.jpg",
+        "caption": "Three medical students in a hospital hallway sharing notes and learning together.",
         "outlet": "Pexels",
         "author": "Gustavo Fring",
-        "page": "https://www.pexels.com/photo/group-of-medical-students-at-the-hallway-3985162/",
-        "look": 18229489891457694972,
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/group-of-medical-students-at-the-hallway-sharing-notes-3985154/",
+        "look": 18428487944336688099,
         "size": [
           4500,
           3000
-        ],
-        "kind": "stock"
+        ]
+      },
+      {
+        "id": "11588163",
+        "term": "elderly patient waiting",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/11588163.jpg",
+        "caption": "Monochrome image of an elderly African man sitting in a wheelchair outdoors, conveying resilience.",
+        "outlet": "Pexels",
+        "author": "Safari  Consoler",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/grayscale-photo-of-an-elderly-man-sitting-on-wheelchair-11588163/",
+        "look": 5151905772325827443,
+        "size": [
+          5760,
+          3840
+        ]
+      },
+      {
+        "id": "6129035",
+        "term": "elderly patient waiting",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/6129035.jpg",
+        "caption": "Doctors and patients in a hospital environment, fostering care and companionship.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/people-at-the-hospital-hallway-6129035/",
+        "look": 14540092158355963767,
+        "size": [
+          5704,
+          3803
+        ]
+      },
+      {
+        "id": "13018109",
+        "term": "elderly patient waiting",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/13018109.jpg",
+        "caption": "People wearing masks in a hospital waiting room, interacting and maintaining social distance.",
+        "outlet": "Pexels",
+        "author": "Serena Koi",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/grayscale-photo-of-people-sitting-at-the-table-13018109/",
+        "look": 4548510283634646943,
+        "size": [
+          4624,
+          3468
+        ]
+      },
+      {
+        "id": "17485603",
+        "term": "rural town main street",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/17485603.jpg",
+        "caption": "Empty town street with historic buildings and moody clouds. Perfect for travel or urban exploration themes.",
+        "outlet": "Pexels",
+        "author": "Connor Scott McManus",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/clouds-over-empty-street-in-town-17485603/",
+        "look": 68790664830,
+        "size": [
+          7008,
+          4672
+        ]
+      },
+      {
+        "id": "19512691",
+        "term": "rural town main street",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/19512691.jpg",
+        "caption": "Charming closed diner with a vintage Texaco sign in the small town of Stockholm, Wisconsin.",
+        "outlet": "Pexels",
+        "author": "Tom Fisk",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/view-of-an-old-closed-diner-by-the-street-in-city-19512691/",
+        "look": 17329873360129032191,
+        "size": [
+          8640,
+          5760
+        ]
+      },
+      {
+        "id": "28575495",
+        "term": "rural town main street",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/28575495.jpg",
+        "caption": "Black and white photo of a historic main street with vintage buildings and cars.",
+        "outlet": "Pexels",
+        "author": "Kurt Hudspeth",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/historic-main-street-in-black-and-white-28575495/",
+        "look": 2309227332029612031,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "7581018",
+        "term": "calendar appointment booking",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/7581018.jpg",
+        "caption": "Close-up of a person writing a lunch reminder on an October calendar with a purple pen.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/person-writing-on-a-calendar-7581018/",
+        "look": 1017284224903346233,
+        "size": [
+          6592,
+          4395
+        ]
+      },
+      {
+        "id": "6809657",
+        "term": "calendar appointment booking",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/6809657.jpg",
+        "caption": "A receptionist and client converse over an appointment book at a clinic reception desk.",
+        "outlet": "Pexels",
+        "author": "Pavel Danilyuk",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/woman-at-reception-desk-showing-a-calendar-to-a-man-6809657/",
+        "look": 16212110895658097916,
+        "size": [
+          5473,
+          3654
+        ]
+      },
+      {
+        "id": "5408684",
+        "term": "calendar appointment booking",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/5408684.jpg",
+        "caption": "Top view of hands using a planner with coffee and accessories, focused on May 2021 calendar.",
+        "outlet": "Pexels",
+        "author": "Leeloo The First",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-person-writing-on-a-desk-calendar-5408684/",
+        "look": 16204213061114722777,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "5894937",
+        "term": "hospital corridor night",
+        "kind": "stock",
+        "file": "assets/photos/美國看不到家醫科/5894937.jpg",
+        "caption": "A deserted, dimly lit hallway with tiled walls and overhead lights.",
+        "outlet": "Pexels",
+        "author": "Manuel Nielsen",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/white-tiled-hallway-5894937/",
+        "look": 1733916910208089638,
+        "size": [
+          5184,
+          3456
+        ]
       },
       {
         "id": "29948395",
-        "term": "empty clinic corridor",
+        "term": "hospital corridor night",
+        "kind": "stock",
         "file": "assets/photos/美國看不到家醫科/29948395.jpg",
         "caption": "Wide corridor view in a modern hospital, Ankara, Türkiye. Well-lit and clean interior.",
         "outlet": "Pexels",
         "author": "Burçak Çubukçu",
+        "credit": "",
+        "answers": 0.67,
         "page": "https://www.pexels.com/photo/modern-hospital-corridor-in-ankara-turkiye-29948395/",
         "look": 2251532679856721695,
         "size": [
           4000,
           2250
-        ],
-        "kind": "stock"
+        ]
       },
       {
         "id": "12344720",
-        "term": "empty clinic corridor",
+        "term": "hospital corridor night",
+        "kind": "stock",
         "file": "assets/photos/美國看不到家醫科/12344720.jpg",
         "caption": "Empty hospital corridor in black and white, emphasizing open doors and healthcare environment.",
         "outlet": "Pexels",
         "author": "Oleg PavLove",
+        "credit": "",
+        "answers": 0.67,
         "page": "https://www.pexels.com/photo/black-and-white-photo-of-doors-in-hospital-corridor-12344720/",
         "look": 4638829657670434880,
         "size": [
           5166,
           3462
-        ],
-        "kind": "stock"
+        ]
       },
       {
-        "id": "5203594",
-        "term": "empty clinic corridor",
-        "file": "assets/photos/美國看不到家醫科/5203594.jpg",
-        "caption": "White-walled hospital corridor with modern design and bright overhead lighting.",
-        "outlet": "Pexels",
-        "author": "Enrique Silva",
-        "page": "https://www.pexels.com/photo/a-corridor-of-a-hospital-5203594/",
-        "look": 11285632120340251648,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "24193871",
-        "term": "elderly patient",
-        "file": "assets/photos/美國看不到家醫科/24193871.jpg",
-        "caption": "A senior patient using crutches to walk down a hospital corridor, symbolizing recovery and mobility assistance.",
-        "outlet": "Pexels",
-        "author": "Stéf -b.",
-        "page": "https://www.pexels.com/photo/rear-view-of-a-patient-walking-with-crutches-on-a-hospital-corridor-24193871/",
-        "look": 9288434098112141720,
-        "size": [
-          3911,
-          3270
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "39192358",
-        "term": "elderly patient",
-        "file": "assets/photos/美國看不到家醫科/39192358.jpg",
-        "caption": "Medical professional discusses health with senior man in modern office setting.",
-        "outlet": "Pexels",
-        "author": "Vitaly Gariev",
-        "page": "https://www.pexels.com/photo/doctor-consulting-with-older-patient-in-office-39192358/",
-        "look": 18374670474159915265,
-        "size": [
-          3840,
-          2160
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "8413340",
-        "term": "elderly patient",
-        "file": "assets/photos/美國看不到家醫科/8413340.jpg",
-        "caption": "Elderly man in dental chair during appointment, receiving care from dentist.",
-        "outlet": "Pexels",
-        "author": "SHVETS production",
-        "page": "https://www.pexels.com/photo/close-up-photo-of-an-elderly-man-8413340/",
-        "look": 4484580564133212031,
-        "size": [
-          5788,
-          3859
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "9810172",
-        "term": "appointment calendar",
-        "file": "assets/photos/美國看不到家醫科/9810172.jpg",
-        "caption": "Close-up of a calendar with red push pins marking important dates, emphasizing deadlines.",
-        "outlet": "Pexels",
-        "author": "Towfiqu barbhuiya",
-        "page": "https://www.pexels.com/photo/close-up-photo-of-red-pins-on-a-calendar-9810172/",
-        "look": 17357120147300499327,
-        "size": [
-          4501,
-          3003
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "11773871",
-        "term": "appointment calendar",
-        "file": "assets/photos/美國看不到家醫科/11773871.jpg",
-        "caption": "Close-up shot of a hand marking a date on a calendar with a pen, emphasizing planning and scheduling.",
-        "outlet": "Pexels",
-        "author": "Towfiqu barbhuiya",
-        "page": "https://www.pexels.com/photo/a-person-holding-black-pen-pointing-on-calendar-11773871/",
-        "look": 63182606761066384,
-        "size": [
-          4592,
-          3064
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "7580934",
-        "term": "appointment calendar",
-        "file": "assets/photos/美國看不到家醫科/7580934.jpg",
-        "caption": "A person marking a calendar in September with a purple pen on a wooden desk.",
-        "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/person-marking-his-calendar-7580934/",
-        "look": 16204223033261748472,
-        "size": [
-          6546,
-          4364
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "7111490",
-        "term": "medical bill paperwork",
-        "file": "assets/photos/美國看不到家醫科/7111490.jpg",
-        "caption": "Top view of financial papers labeled 'Paid' and 'Due' beside a calculator and glasses.",
-        "outlet": "Pexels",
-        "author": "Tara Winstead",
-        "page": "https://www.pexels.com/photo/black-calculator-beside-white-papers-7111490/",
-        "look": 18230007228433140177,
-        "size": [
-          5909,
-          3939
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "35501875",
-        "term": "medical bill paperwork",
-        "file": "assets/photos/美國看不到家醫科/35501875.jpg",
-        "caption": "Zloty banknotes and financial paperwork scattered on a desk, representing budgeting and finance.",
-        "outlet": "Pexels",
-        "author": "Jakub Zerdzicki",
-        "page": "https://www.pexels.com/photo/polish-currency-and-financial-documents-on-desk-35501875/",
-        "look": 2269602158385037488,
-        "size": [
-          3000,
-          2001
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "7735775",
-        "term": "medical bill paperwork",
-        "file": "assets/photos/美國看不到家醫科/7735775.jpg",
-        "caption": "Close-up of hands analyzing financial document with US dollar bills on table.",
-        "outlet": "Pexels",
-        "author": "Mikhail Nilov",
-        "page": "https://www.pexels.com/photo/bank-notes-on-the-gray-table-7735775/",
-        "look": 11159031001326208736,
-        "size": [
-          3457,
-          2522
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "5932062",
-        "term": "rural town america",
-        "file": "assets/photos/美國看不到家醫科/5932062.jpg",
-        "caption": "Idyllic small town nestled beneath dramatic Alaskan mountain range at sunset.",
-        "outlet": "Pexels",
-        "author": "Stephen Meyers",
-        "page": "https://www.pexels.com/photo/photo-of-a-town-with-a-mountain-range-in-the-background-5932062/",
-        "look": 577322769570594591,
-        "size": [
-          3600,
-          2405
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "11152637",
-        "term": "rural town america",
-        "file": "assets/photos/美國看不到家醫科/11152637.jpg",
-        "caption": "Aerial view of Hancock, NH showcasing fall foliage, a church, and a tranquil lake.",
-        "outlet": "Pexels",
-        "author": "Eathan Hood",
-        "page": "https://www.pexels.com/photo/town-with-church-in-autumn-11152637/",
-        "look": 77137848804892927,
-        "size": [
-          4000,
-          3000
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "5649560",
-        "term": "rural town america",
-        "file": "assets/photos/美國看不到家醫科/5649560.jpg",
-        "caption": "Picturesque scenery of peaceful coastal town located on verdant shore of tranquil blue river under blue sky",
-        "outlet": "Pexels",
-        "author": "K",
-        "page": "https://www.pexels.com/photo/scenery-of-remote-coastal-town-near-azure-river-5649560/",
-        "look": 8825375267418552575,
-        "size": [
-          5464,
-          3070
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "6129194",
-        "term": "nurse working",
-        "file": "assets/photos/美國看不到家醫科/6129194.jpg",
-        "caption": "A nurse in blue scrubs reads a folder near an emergency room sign in a hospital.",
-        "outlet": "Pexels",
-        "author": "RDNE Stock project",
-        "page": "https://www.pexels.com/photo/nurse-leaning-on-the-wall-while-reading-a-document-6129194/",
-        "look": 212102259146751,
-        "size": [
-          6603,
-          4402
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "5206922",
-        "term": "nurse working",
-        "file": "assets/photos/美國看不到家醫科/5206922.jpg",
-        "caption": "Close-up of a nurse in green scrubs holding a tablet and stethoscope, symbolizing modern healthcare.",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "page": "https://www.pexels.com/photo/a-doctor-holding-a-digital-tablet-5206922/",
-        "look": 16700440203493636079,
-        "size": [
-          6720,
-          4480
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "35645524",
-        "term": "nurse working",
-        "file": "assets/photos/美國看不到家醫科/35645524.jpg",
-        "caption": "Nurse performing blood draw with blue gloves in medical clinic setting.",
-        "outlet": "Pexels",
-        "author": "Sahil Singh",
-        "page": "https://www.pexels.com/photo/phlebotomy-procedure-in-medical-clinic-35645524/",
-        "look": 4499131276792373023,
-        "size": [
-          3936,
-          2624
-        ],
-        "kind": "stock"
-      },
-      {
-        "id": "frame_ATa9QMISrvw_31",
-        "kind": "frame",
-        "term": "PBS NewsHour 31s",
-        "file": "assets/photos/美國看不到家醫科/frame_ATa9QMISrvw_31.jpg",
-        "caption": "Is money the reason for a primary care doctor shortage?",
-        "outlet": "PBS NewsHour",
+        "id": "2025_Medicare_plans_-_US.svg.png",
+        "term": "Medicare (United States)",
+        "kind": "real",
+        "file": "assets/photos/美國看不到家醫科/2025_Medicare_plans_-_US.svg.png.jpg",
+        "caption": "Medicare is a federal health insurance program in the United States for people age 65 or older and younger people with disabilities, including those with end stage renal disease and amyotrophic lateral sclerosis. It started in 1965 under the Social Security Administration and is now administered by ",
+        "outlet": "維基百科",
         "author": "",
-        "credit": "畫面來源：PBS NewsHour",
-        "page": "https://www.youtube.com/watch?v=ATa9QMISrvw",
-        "look": 33532957097984
-      },
-      {
-        "id": "154775719",
-        "term": "medical clinic",
-        "file": "assets/photos/美國看不到家醫科/154775719.jpg",
-        "caption": "Arkadenklinik Filderstadt.jpg　CC BY-SA 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "5R-MFT",
-        "credit": "5R-MFT／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Arkadenklinik_Filderstadt.jpg",
-        "look": 18374881028997839088,
+        "credit": "／見檔案頁",
+        "answers": 1.0,
+        "page": "https://en.wikipedia.org/wiki/Medicare_(United_States)",
+        "look": 18428941825109717955,
         "size": [
-          2604,
-          4624
+          2000,
+          800
         ]
       },
       {
-        "id": "85730677",
-        "term": "medical clinic",
-        "file": "assets/photos/美國看不到家醫科/85730677.jpg",
-        "caption": "Clinic in Exarcheia.jpg　CC BY-SA 4.0",
+        "id": "Biddulph_Primary_Care_Centre_2018_02.jpg",
+        "term": "Primary care",
         "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Mafo",
-        "credit": "Mafo／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Clinic_in_Exarcheia.jpg",
-        "look": 4611412261527962623,
-        "size": [
-          4000,
-          3000
-        ]
-      },
-      {
-        "id": "132791735",
-        "term": "medical clinic",
-        "file": "assets/photos/美國看不到家醫科/132791735.jpg",
-        "caption": "Clinique tout est grâce Kara Tomdè.jpg　CC BY-SA 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Balenamf",
-        "credit": "Balenamf／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Clinique_tout_est_gr%C3%A2ce_Kara_Tomd%C3%A8.jpg",
-        "look": 2305843013256543743,
+        "file": "assets/photos/美國看不到家醫科/Biddulph_Primary_Care_Centre_2018_02.jpg.jpg",
+        "caption": "Primary care is the day-to-day healthcare given by a health care provider. Typically, this provider acts as the first contact and principal point of continuing care for patients within a healthcare system, and coordinates any additional care the patient may require. Patients commonly receive primary",
+        "outlet": "維基百科",
+        "author": "Photograph by Mike Peel ( www.mikepeel.net ).",
+        "credit": "Photograph by Mike Peel ( www.mikepeel.net ).／CC BY-SA 4.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Biddulph_Primary_Care_Centre_2018_02.jpg",
+        "look": 432346111825874847,
         "size": [
           4032,
           3024
         ]
       },
       {
-        "id": "197238159",
-        "term": "waiting room",
-        "file": "assets/photos/美國看不到家醫科/197238159.jpg",
-        "caption": "2026-06-30 Waiting Room (George Stephen House) 03.jpg　CC BY-SA 4.0",
+        "id": "Doctors_stethoscope_1.jpg",
+        "term": "General practitioner",
         "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Thomas1313",
-        "credit": "Thomas1313／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:2026-06-30_Waiting_Room_(George_Stephen_House)_03.jpg",
-        "look": 10973047142626561539,
+        "file": "assets/photos/美國看不到家醫科/Doctors_stethoscope_1.jpg.jpg",
+        "caption": "A general practitioner (GP) is a doctor who practices general medicine. GPs have distinct expertise and experience in providing whole person medical care, whilst managing the complexity, uncertainty and risk associated with the continuous care they provide. By contrast with specialist physicians, GP",
+        "outlet": "維基百科",
+        "author": "Stethoscopes",
+        "credit": "Stethoscopes／CC BY-SA 3.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Doctors_stethoscope_1.jpg",
+        "look": 16420656274077776895,
         "size": [
-          3000,
-          4000
+          2304,
+          1761
         ]
       },
       {
-        "id": "157645402",
-        "term": "waiting room",
-        "file": "assets/photos/美國看不到家醫科/157645402.jpg",
-        "caption": "A patient waiting room at an urgent care clinic and doctor’s office in North Carolina, United States 02.jpg　CC BY 4.0",
+        "id": "FEMA_-_18213_-_Photograph_by_Robert_Kaufmann_taken_on_10-25-2005_in_Louisiana.jpg",
+        "term": "Emergency department",
         "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Harrison Keely",
-        "credit": "Harrison Keely／CC BY 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:A_patient_waiting_room_at_an_urgent_care_clinic_and_doctor%E2%80%99s_office_in_North_Carolina,_United_States_02.jpg",
-        "look": 8952030448729853567,
+        "file": "assets/photos/美國看不到家醫科/FEMA_-_18213_-_Photograph_by_Robert_Kaufmann_taken_on_10-25-2005_in_Louisiana.jpg.jpg",
+        "caption": "An emergency department (ED), also known as an emergency room (ER), accident and emergency (A&E), or casualty, is a medical treatment facility specializing in emergency medicine, the acute care of patients who present without prior appointment; either by their own means or by that of an ambulance. T",
+        "outlet": "維基百科",
+        "author": "Robert Kaufmann",
+        "credit": "Robert Kaufmann／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:FEMA_-_18213_-_Photograph_by_Robert_Kaufmann_taken_on_10-25-2005_in_Louisiana.jpg",
+        "look": 4123461143112982015,
         "size": [
-          4032,
-          3024
+          3300,
+          2200
         ]
       },
       {
-        "id": "149293632",
-        "term": "waiting room",
-        "file": "assets/photos/美國看不到家醫科/149293632.jpg",
-        "caption": "A waiting room at a medical healthcare clinic, doctor's office, hospital.jpg　CC BY 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Harrison Keely",
-        "credit": "Harrison Keely／CC BY 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:A_waiting_room_at_a_medical_healthcare_clinic,_doctor%27s_office,_hospital.jpg",
-        "look": 18414949503514821119,
-        "size": [
-          5712,
-          4284
-        ]
-      },
-      {
-        "id": "84449072",
-        "term": "medical school",
-        "file": "assets/photos/美國看不到家醫科/84449072.jpg",
-        "caption": "Brodie Medical Centre, Winnipeg.jpg　CC BY-SA 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Jimj wpg",
-        "credit": "Jimj wpg／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Brodie_Medical_Centre,_Winnipeg.jpg",
-        "look": 2529971943635200,
-        "size": [
-          3264,
-          2448
-        ]
-      },
-      {
-        "id": "82014670",
-        "term": "medical school",
-        "file": "assets/photos/美國看不到家醫科/82014670.jpg",
-        "caption": "CARe Medical College.jpg　CC BY-SA 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Nazriyas",
-        "credit": "Nazriyas／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:CARe_Medical_College.jpg",
-        "look": 66104376426495,
-        "size": [
-          946,
-          1682
-        ]
-      },
-      {
-        "id": "126527817",
-        "term": "medical school",
-        "file": "assets/photos/美國看不到家醫科/126527817.jpg",
-        "caption": "Janaki Medical College Premises.jpg　CC BY-SA 4.0",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Subhmanish",
-        "credit": "Subhmanish／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Janaki_Medical_College_Premises.jpg",
-        "look": 11574516024644468732,
-        "size": [
-          3280,
-          1425
-        ]
-      },
-      {
-        "id": "frame_d-ZysrVnc-A_150",
+        "id": "frame_rsC4RJ4Jld4_110",
         "kind": "frame",
-        "term": "CNBC 150s",
-        "file": "assets/photos/美國看不到家醫科/frame_d-ZysrVnc-A_150.jpg",
-        "caption": "Why Walmart Wants To Be Your Hospital Too",
+        "term": "Fox News 110s",
+        "file": "assets/photos/美國看不到家醫科/frame_rsC4RJ4Jld4_110.jpg",
+        "caption": "PRIMARY CARE PEDIATRICIAN AND",
+        "said": "PRIMARY CARE PEDIATRICIAN AND",
+        "at": 110.81,
+        "source": "assets/footage/美國看不到家醫科/rsC4RJ4Jld4.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rsC4RJ4Jld4",
+        "look": 18433096469442693774
+      },
+      {
+        "id": "frame_rsC4RJ4Jld4_14",
+        "kind": "frame",
+        "term": "Fox News 14s",
+        "file": "assets/photos/美國看不到家醫科/frame_rsC4RJ4Jld4_14.jpg",
+        "caption": "RESPIRATORY ILLS IN CHILDREN AND",
+        "said": "RESPIRATORY ILLS IN CHILDREN AND",
+        "at": 14.12,
+        "source": "assets/footage/美國看不到家醫科/rsC4RJ4Jld4.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rsC4RJ4Jld4",
+        "look": 18378984466296372992
+      },
+      {
+        "id": "frame_rsC4RJ4Jld4_41",
+        "kind": "frame",
+        "term": "Fox News 41s",
+        "file": "assets/photos/美國看不到家醫科/frame_rsC4RJ4Jld4_41.jpg",
+        "caption": "WELCOME, DOCTOR.",
+        "said": "WELCOME, DOCTOR.",
+        "at": 41.07,
+        "source": "assets/footage/美國看不到家醫科/rsC4RJ4Jld4.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rsC4RJ4Jld4",
+        "look": 18446568634503422191
+      },
+      {
+        "id": "frame_rsC4RJ4Jld4_67",
+        "kind": "frame",
+        "term": "Fox News 67s",
+        "file": "assets/photos/美國看不到家醫科/frame_rsC4RJ4Jld4_67.jpg",
+        "caption": "OF ANTIBIOTICS AND THIS SUPPLY",
+        "said": "OF ANTIBIOTICS AND THIS SUPPLY",
+        "at": 67.78,
+        "source": "assets/footage/美國看不到家醫科/rsC4RJ4Jld4.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=rsC4RJ4Jld4",
+        "look": 18410437199555140284
+      },
+      {
+        "id": "frame_d-ZysrVnc-A_551",
+        "kind": "frame",
+        "term": "CNBC 551s",
+        "file": "assets/photos/美國看不到家醫科/frame_d-ZysrVnc-A_551.jpg",
+        "caption": "primary care physicians",
+        "said": "primary care physicians",
+        "at": 551.64,
+        "source": "assets/footage/美國看不到家醫科/d-ZysrVnc-A.mp4",
         "outlet": "CNBC",
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
-        "look": 17316428532213088245
+        "look": 9295712209807069183
       },
       {
-        "id": "frame_sY95WZm0vd8_45",
+        "id": "frame_d-ZysrVnc-A_5",
         "kind": "frame",
-        "term": "CNN 45s",
-        "file": "assets/photos/美國看不到家醫科/frame_sY95WZm0vd8_45.jpg",
-        "caption": "General practitioner shortage",
-        "outlet": "CNN",
+        "term": "CNBC 5s",
+        "file": "assets/photos/美國看不到家醫科/frame_d-ZysrVnc-A_5.jpg",
+        "caption": "launched walmart health a primary care",
+        "said": "launched walmart health a primary care",
+        "at": 5.88,
+        "source": "assets/footage/美國看不到家醫科/d-ZysrVnc-A.mp4",
+        "outlet": "CNBC",
         "author": "",
-        "credit": "畫面來源：CNN",
-        "page": "https://www.youtube.com/watch?v=sY95WZm0vd8",
-        "look": 17061113201835253248
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
+        "look": 14108585504249216768
       },
       {
-        "id": "frame_sY95WZm0vd8_135",
+        "id": "frame_d-ZysrVnc-A_41",
         "kind": "frame",
-        "term": "CNN 135s",
-        "file": "assets/photos/美國看不到家醫科/frame_sY95WZm0vd8_135.jpg",
-        "caption": "General practitioner shortage",
-        "outlet": "CNN",
+        "term": "CNBC 41s",
+        "file": "assets/photos/美國看不到家醫科/frame_d-ZysrVnc-A_41.jpg",
+        "caption": "americans spend annually on healthcare",
+        "said": "americans spend annually on healthcare",
+        "at": 41.68,
+        "source": "assets/footage/美國看不到家醫科/d-ZysrVnc-A.mp4",
+        "outlet": "CNBC",
         "author": "",
-        "credit": "畫面來源：CNN",
-        "page": "https://www.youtube.com/watch?v=sY95WZm0vd8",
-        "look": 13889111133479829256
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=d-ZysrVnc-A",
+        "look": 4609991908289151104
+      },
+      {
+        "id": "frame_ZGGyu4k3HGk_23",
+        "kind": "frame",
+        "term": "BBC News 23s",
+        "file": "assets/photos/美國看不到家醫科/frame_ZGGyu4k3HGk_23.jpg",
+        "caption": "getting hold of healthcare hard I never",
+        "said": "getting hold of healthcare hard I never",
+        "at": 23.1,
+        "source": "assets/footage/美國看不到家醫科/ZGGyu4k3HGk.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=ZGGyu4k3HGk",
+        "look": 13907097849901875201
+      },
+      {
+        "id": "Mayo_Clinic_2023_logo.svg.png",
+        "term": "Mayo Clinic",
+        "kind": "real",
+        "file": "assets/photos/美國看不到家醫科/Mayo_Clinic_2023_logo.svg.png.jpg",
+        "caption": "Mayo Clinic is a private American academic medical center focused on integrated healthcare, education, and research. It maintains three major campuses, in Rochester, Minnesota; Jacksonville, Florida; and Phoenix/Scottsdale, Arizona.",
+        "outlet": "維基百科",
+        "author": "",
+        "credit": "／見檔案頁",
+        "answers": 1.0,
+        "page": "https://en.wikipedia.org/wiki/Mayo_Clinic",
+        "look": 0,
+        "size": [
+          500,
+          500
+        ]
       }
     ],
     "data": []
