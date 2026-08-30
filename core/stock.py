@@ -178,6 +178,15 @@ def search(query: str, providers: tuple[str, ...] = ("pexels", "pixabay"),
     return found
 
 
+TAGGED = re.compile(r"<[^>]+>")
+
+
+def _strip_tags(html: str) -> str:
+    """Commons stores its credit fields as HTML -- an anchor round the author's
+    name, a span round the licence. On screen that has to be plain text."""
+    return " ".join(TAGGED.sub(" ", html).split())
+
+
 @dataclass
 class Picture:
     """One downloadable photograph."""
@@ -189,6 +198,7 @@ class Picture:
     author: str = ""
     page: str = ""
     about: str = ""
+    licence: str = ""
 
 
 def search_photos(query: str, count: int = 12, least_wide: int = 1200
@@ -214,6 +224,65 @@ def search_photos(query: str, count: int = 12, least_wide: int = 1200
         if len(found) >= count:
             break
     return found
+
+
+def wiki_lead(title: str, lang: str = "en") -> list[Picture]:
+    """The picture at the top of a Wikipedia article.
+
+    Commons fails in the opposite direction from a stock library. Ask a stock
+    library for a concept and it gives you something that matches the words --
+    "electricity bill" returned a fuse box, because the caption said "billing".
+    Ask Commons for a name and it gives you that person; ask it for a concept
+    and it wanders, which is how "server rack" found a bicycle rack.
+
+    So for anything with a name, do not search at all. An encyclopaedia has
+    already decided which picture is of this person, and its lead image is
+    that decision. One request, no ranking to second-guess, and the licence
+    comes back with it.
+
+    Nothing is returned for a subject with no article: that is the honest
+    answer, and better than the best match for a name nobody wrote about.
+    """
+    quoted = urllib.parse.quote(title.replace(" ", "_"), safe="")
+    summary = _get_json(
+        f"https://{lang}.wikipedia.org/api/rest_v1/page/summary/{quoted}",
+        {"User-Agent": WIKI_AGENT})
+    source = (summary.get("originalimage") or {}).get("source")
+    if not source:
+        return []
+    # The REST summary appends its own analytics query string to the URL, and
+    # a thumbnail URL carries the width in front of the name. Neither is part
+    # of the filename Commons is indexed by.
+    file = urllib.parse.unquote(source.split("?", 1)[0].rsplit("/", 1)[-1])
+    if "px-" in file:
+        file = file.split("px-", 1)[-1]
+    time.sleep(WIKI_PAUSE)
+
+    # The article gives the picture; Commons gives the terms it travels under.
+    params = urllib.parse.urlencode({
+        "action": "query", "format": "json", "prop": "imageinfo",
+        "titles": f"File:{file}", "iiprop": "url|size|extmetadata"})
+    data = _get_json(f"https://commons.wikimedia.org/w/api.php?{params}",
+                     {"User-Agent": WIKI_AGENT})
+    pages = (data.get("query") or {}).get("pages") or {}
+    info = next((page["imageinfo"][0] for page in pages.values()
+                 if page.get("imageinfo")), None)
+    meta = (info or {}).get("extmetadata") or {}
+
+    def field(key: str) -> str:
+        return _strip_tags(str((meta.get(key) or {}).get("value") or ""))
+
+    return [Picture(
+        provider="commons", id=file,
+        url=(info or {}).get("url") or source,
+        width=int((info or {}).get("width") or (summary.get("originalimage") or {}).get("width") or 0),
+        height=int((info or {}).get("height") or (summary.get("originalimage") or {}).get("height") or 0),
+        author=field("Artist") or field("Credit"),
+        licence=field("LicenseShortName") or "見檔案頁",
+        page=(info or {}).get("descriptionurl") or summary.get("content_urls", {}).get("desktop", {}).get("page", ""),
+        # The article's own first sentence: what this is, in words somebody
+        # wrote on purpose, rather than a filename.
+        about=(summary.get("extract") or field("ImageDescription"))[:300])]
 
 
 def search_commons(query: str, count: int = 6, least_wide: int = 900
@@ -264,7 +333,9 @@ def search_commons(query: str, count: int = 6, least_wide: int = 900
             width=int(info.get("width") or 0), height=int(info.get("height") or 0),
             author=(author or "Wikimedia Commons")[:80],
             page=info.get("descriptionurl") or "",
-            about=f"{page.get('title', '')[5:]}　{licence}"))
+            licence=licence or "見檔案頁",
+            about=_strip_tags(str((meta.get("ImageDescription") or {}).get("value") or ""))[:300]
+                  or page.get("title", "")[5:]))
         if len(found) >= count:
             break
     return found

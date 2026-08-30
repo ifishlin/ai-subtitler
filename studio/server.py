@@ -467,17 +467,22 @@ def cut_frames(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     have = [item for item in pile["sources"]["images"] if item.get("look")]
     marks = [item["look"] for item in have]
     seen = {item.get("id") for item in pile["sources"]["images"]}
-    added = 0
+    # What this topic is about, in the language the captions are in.
+    words = [w.strip() for w in (payload.get("words") or "").split(",") if w.strip()]
+    words = words or topic_module.keywords(pile)
+    added, skipped = 0, []
     for video in pile["sources"]["videos"]:
         if not video.get("file"):
             continue
-        span = float(video.get("seconds") or 0)
-        if span <= 0:
+        # Evenly spaced sampling is gone. It returned the titles, the anchor's
+        # face and two people on stools, because a broadcast cuts every few
+        # seconds and the shot that illustrates the story is not at 1/4, 2/4,
+        # 3/4. The captions say when the story is being told; a video without
+        # captions is not a frame source, and that is better than guessing.
+        moments = topic_module.frame_moments(video, words, most=per_video)
+        if not moments:
+            skipped.append(video.get("outlet") or video.get("title", "")[:24])
             continue
-        # Spread across the piece rather than clustered: a news item changes
-        # what is on screen every few seconds, and the useful shot is rarely
-        # at the top.
-        moments = [span * (i + 1) / (per_video + 1) for i in range(per_video)]
         for made in topic_module.cut_frames(name, video, moments):
             if made["id"] in seen:
                 continue
@@ -490,7 +495,7 @@ def cut_frames(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             pile["sources"]["images"].append({**made, "look": look})
             added += 1
     topic_module.save(name, pile)
-    return {"added": added,
+    return {"added": added, "words": words, "skipped": skipped,
             "frames": sum(1 for i in pile["sources"]["images"]
                           if i.get("kind") == "frame")}
 
@@ -579,9 +584,13 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     # Where to ask. Stock stands in for the abstract -- a bill, a queue, a
     # meter; Commons has the actual person, street and building, which no
     # stock library holds because those are not concepts.
+    # Commons is asked by name, not by concept. Ask it for a concept and it
+    # wanders -- "server rack" found a bicycle rack -- but an encyclopaedia has
+    # already decided which picture is of this person, so for anything with an
+    # article the lead image is taken instead of searching at all.
     where = str(payload.get("where") or "stock")
-    look = (stock_module.search_commons if where == "commons"
-            else stock_module.search_photos)
+    search = {"commons": stock_module.search_commons,
+              "wiki": stock_module.wiki_lead}.get(where, stock_module.search_photos)
 
     # Six pictures from one search are six pictures of the same thing. Variety
     # comes from asking more questions, not from taking more of one answer, so
@@ -594,7 +603,8 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     added = 0
     for term in terms[:10]:
         try:
-            found = look(term, count=PER_TERM * 3)
+            found = (search(term) if where == "wiki"
+                     else search(term, count=PER_TERM * 3))
         except Exception:                                         # noqa: BLE001
             # One term failing is one term's worth of pictures, not the batch.
             # Asking a library five times quickly is enough to be refused once.
@@ -611,25 +621,27 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 stock_module.fetch(picture.url, target)
             except Exception:                                     # noqa: BLE001
                 continue
-            look = stock_module.looks_like(target)
-            if any(stock_module.alike(look, other) for other in marks):
+            mark = stock_module.looks_like(target)
+            if any(stock_module.alike(mark, other) for other in marks):
                 target.unlink(missing_ok=True)        # already have one like it
                 continue
-            marks.append(look)
+            marks.append(mark)
             kept_here += 1
             pile["sources"]["images"].append({
                 "id": picture.id, "term": term,
                 "file": str(target.relative_to(ROOT)),
                 "caption": picture.about or term,
-                "kind": "real" if where == "commons" else "stock",
-                "outlet": "Wikimedia Commons" if where == "commons" else "Pexels",
+                "kind": "stock" if where == "stock" else "real",
+                "outlet": ("Pexels" if where == "stock"
+                           else "維基百科" if where == "wiki"
+                           else "Wikimedia Commons"),
                 "author": picture.author,
                 # Commons is mostly CC BY or CC BY-SA: the author and licence
                 # have to reach the screen, so they travel with the picture
                 # rather than being looked up again later.
-                "credit": (f"{picture.author}／{picture.about.split('　')[-1]}"
-                           if where == "commons" else ""),
-                "page": picture.page, "look": look,
+                "credit": ("" if where == "stock" else
+                           f"{picture.author}／{picture.licence or '見檔案頁'}"),
+                "page": picture.page, "look": mark,
                 "size": [picture.width, picture.height]})
             seen.add(picture.id)
             added += 1
@@ -640,13 +652,20 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
 @app.get("/media/pic/{picture:path}")
 def script_picture(picture: str) -> FileResponse:
-    """A picture a script names. Matched against what some topic gathered, so
-    the path is checked rather than trusted."""
+    """A picture -- or a piece of footage -- that a script names.
+
+    Matched against what some topic gathered, so the path is checked rather
+    than trusted. Footage is served whole and the page seeks within it, which
+    is how a chosen passage can be watched on the script page instead of being
+    represented by one frozen frame.
+    """
     from core import topic as topic_module
     for name in topic_module.names():
         pile = topic_module.load(name)
         if picture in {item.get("file") for item in pile["sources"]["images"]}:
             return FileResponse(ROOT / picture, media_type="image/jpeg")
+        if picture in {item.get("file") for item in pile["sources"]["videos"]}:
+            return FileResponse(ROOT / picture, media_type="video/mp4")
     raise HTTPException(404, "找不到這張圖")
 
 
@@ -710,7 +729,27 @@ def get_script(name: str) -> dict[str, Any]:
         raise HTTPException(400, str(error)) from error
     except FileNotFoundError as error:
         raise HTTPException(404, str(error)) from error
-    return {**found, "measured": script_module.measure(found)}
+    measured = script_module.measure(found)
+
+    # The picture's own caption, brought over from the topic and hung beside
+    # the label the writer typed. A line reading 示意：帳單特寫 next to a
+    # caption reading `fuse box on a white wall` gives itself away; with only
+    # the label on screen it never did.
+    from core import topic as topic_module
+    known: dict[str, dict[str, Any]] = {}
+    try:
+        pile = topic_module.load(found.get("topic", ""))
+        known = {item["file"]: item for item in pile["sources"]["images"]
+                 if item.get("file")}
+    except (ValueError, FileNotFoundError):
+        pass
+    for line in measured["lines"]:
+        source = known.get(line.get("pic") or "")
+        if source:
+            line["caption"] = source.get("caption", "")
+            line["credit"] = source.get("credit", "")
+            line["said"] = source.get("said", "")
+    return {**found, "measured": measured}
 
 
 @app.get("/scripts")

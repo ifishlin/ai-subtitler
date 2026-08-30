@@ -47,7 +47,25 @@ def line_seconds(line: dict[str, Any]) -> float:
 
 REAL_AIM = 0.25          # photographs and footage, as a share of the running time
 REAL_MOST = 0.35         # above this the video starts reading as someone else's
+CLIP_LEAST = 0.5         # of that borrowed time, how much has to move
 DRAWN = "自製"
+
+
+def is_clip(line: dict[str, Any]) -> bool:
+    """Whether this line runs a piece of the source video rather than a still.
+
+    The first shorts were built entirely from cards and photographs -- five
+    videos were downloaded per topic and used only as a place to take
+    screenshots from. Nothing on screen ever moved. With no narration that is
+    the whole of the medium thrown away: a still of a crowd cannot say that
+    something is happening, and something happening is what holds anyone past
+    the third second.
+
+    So half the borrowed time has to move, and `measure` reports whether it
+    does.
+    """
+    clip = line.get("clip")
+    return bool(clip and clip.get("file"))
 
 
 def is_real(show: str | None) -> bool:
@@ -95,6 +113,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
     for item in lifted:
         where = min(2, int(item["at"] / max(clock, 1) * 3))
         thirds[where] += 1
+    moving = sum(item["seconds"] for item in lifted if is_clip(item))
     return {"lines": laid, "seconds": round(clock, 2), "characters": said,
             "over": round(max(0.0, clock - LIMIT), 2), "unsourced": unsourced,
             "opinion": opinion,
@@ -102,7 +121,11 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "borrowed_share": round(borrowed / clock * 100) if clock else 0,
             "spread": thirds,
             "even": all(thirds) and borrowed <= clock * REAL_MOST,
-            "unpicked": missing_pictures(script)}
+            "clip_seconds": round(moving, 2),
+            "clip_share": round(moving / borrowed * 100) if borrowed else 0,
+            "still_enough": borrowed > 0 and moving >= borrowed * CLIP_LEAST,
+            "unpicked": missing_pictures(script),
+            "unchecked": unchecked(script)}
 
 
 PER_ROW = 13        # characters that fit across a 1080-wide frame at 64px
@@ -176,14 +199,49 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
     for index, line in enumerate(script.get("lines") or [], start=1):
         if not is_real(line.get("show")):
             continue
+        note = {"line": index, "say": line.get("say", ""),
+                "show": line.get("show", "")}
+        if is_clip(line):
+            clip = line["clip"]
+            if not (ROOT / clip["file"]).is_file():
+                lack.append({**note, "why": f"找不到 {clip['file']}"})
+            elif float(clip.get("end", 0)) <= float(clip.get("start", 0)):
+                lack.append({**note, "why": "段落的起訖時間不對"})
+            continue
         pic = line.get("pic")
         if not pic:
-            lack.append({"line": index, "say": line.get("say", ""),
-                         "show": line.get("show", ""), "why": "沒指定圖片"})
+            lack.append({**note, "why": "沒指定圖片"})
         elif not (ROOT / pic).is_file():
-            lack.append({"line": index, "say": line.get("say", ""),
-                         "show": line.get("show", ""), "why": f"找不到 {pic}"})
+            lack.append({**note, "why": f"找不到 {pic}"})
     return lack
+
+
+def unchecked(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Lines whose picture nobody has looked at.
+
+    `missing_pictures` passes a line that names a file which exists. Both of
+    those were true of a photograph labelled 示意：帳單特寫 that showed a fuse
+    box on a wall: it was chosen from the search term `electricity bill`, and
+    Pexels matches word by word, so `bill` found `billing` in a caption about
+    an electricity meter. Nobody opened it.
+
+    The program can check that a file exists. It cannot check that the picture
+    is of the thing the line claims, and the page was showing those two states
+    identically. So a picture carries `seen`, set by whoever looked -- a person
+    now, a vision model once one is wired in -- and until then the line is
+    listed here.
+    """
+    out = []
+    for index, line in enumerate(script.get("lines") or [], start=1):
+        if not is_real(line.get("show")):
+            continue
+        if not (line.get("pic") or is_clip(line)):
+            continue                      # already reported as unpicked
+        if not line.get("seen"):
+            out.append({"line": index, "say": line.get("say", ""),
+                        "show": line.get("show", ""),
+                        "why": "還沒有人看過這張圖"})
+    return out
 
 
 def too_long(script: dict[str, Any]) -> list[dict[str, Any]]:

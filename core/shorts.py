@@ -227,6 +227,61 @@ def interlude(cards: list[Path], target: Path, each: float = 5.0) -> Path:
     return target
 
 
+def clip_cut(video: Path, start: float, end: float, seconds: float,
+             target: Path, overlay: Path | None = None,
+             credit: str = "") -> Path:
+    """One moving shot, cut to length, silent, in the tall frame.
+
+    This is what was missing. A short built only from cards and stills has
+    nothing on screen that moves, and without narration that is the whole of
+    the medium given away: a photograph of a crowd cannot say that something
+    is happening. Five videos were being downloaded per topic and used only as
+    a place to take screenshots from.
+
+    Silent on purpose, not by omission. Content ID matches the audio, and
+    these run without narration anyway, so the sound is the one part of a
+    borrowed clip there is no reason to keep and every reason not to.
+
+    `overlay` is the line's caption drawn by the same code that draws it on a
+    still, so the type does not change when the picture starts moving. The
+    broadcaster's name goes on our frame, above the picture, where no crop can
+    take it off.
+    """
+    target.parent.mkdir(parents=True, exist_ok=True)
+    span = max(0.1, end - start)
+    # A clip held longer than it lasts freezes on its last frame. Slow it
+    # instead: a line needs its own duration, and a shot that stops moving
+    # halfway through is worse than one that moves a little too slowly.
+    rate = min(1.0, span / seconds) if seconds > 0 else 1.0
+    steps = [f"[0:v]scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,"
+             f"crop={WIDTH}:{HEIGHT},boxblur=44:3,eq=brightness=-0.14[bg]",
+             f"[0:v]scale={WIDTH}:-2,setpts={1 / rate:.4f}*PTS[fg]",
+             f"[bg][fg]overlay=(W-w)/2:{PICTURE_TOP}[under]"]
+    last = "under"
+    if credit:
+        steps.append(f"[{last}]{_credit_filter(credit)[1:]}[marked]")
+        last = "marked"
+    if overlay:
+        steps.append(f"[{last}][1:v]overlay=0:0[out]")
+        last = "out"
+    steps.append(f"[{last}]fps={FPS},trim=duration={seconds:.2f},"
+                 f"setpts=PTS-STARTPTS,fade=in:0:6[v]")
+
+    command = ["ffmpeg", "-v", "error",
+               "-ss", f"{start:.3f}", "-to", f"{end:.3f}", "-i", str(video)]
+    if overlay:
+        command += ["-i", str(overlay)]
+    command += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+                "-filter_complex", ";".join(steps),
+                "-map", "[v]", "-map", f"{2 if overlay else 1}:a",
+                "-t", f"{seconds:.2f}",
+                "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
+                "-shortest", str(target), "-y"]
+    subprocess.run(command, check=True)
+    return target
+
+
 def render(video: Path, passage: Passage, target: Path,
            subtitles: Path | None = None, box: tuple[int, int, int, int] | None = None,
            card: Path | None = None, card_seconds: float = 10.0,

@@ -55,8 +55,16 @@
     border-radius:8px;overflow:hidden}
   .shelf img{width:100%;height:88px;object-fit:cover;display:block;
     background:#0d1014}
-  .shelf figcaption{font:10px var(--mono);color:var(--faint);padding:4px 6px;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .shelf figcaption{font:10px var(--mono);padding:3px 6px;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  /* What we asked for, and what actually came back. Side by side because the
+     mistake is invisible any other way: the search said `electricity bill`,
+     the picture's own caption said `fuse box`, and only the first was ever
+     shown. */
+  .shelf figcaption.asked{color:#7fd4ff;padding-top:5px}
+  .shelf figcaption.got{color:var(--faint);white-space:normal;line-height:1.35;
+    max-height:2.7em;border-top:1px solid var(--line);padding-top:4px}
+  .shelf figcaption.who{color:#9a8; font-size:9px}
   .who-for{display:flex;align-items:baseline;gap:12px;padding:10px 15px;
     margin-bottom:12px;background:#12212e;border:1px solid #244055;
     border-radius:9px}
@@ -127,6 +135,15 @@
   /* The picture beside the line it belongs to: the two were chosen together
      and should be read together. */
   td.show{font-size:12px;color:var(--dim);width:30%}
+  /* The picture's own words, under the label the writer typed. When they
+     disagree the label is the one that is wrong, and this is where that
+     shows. */
+  td.show .grabbed{display:block;font:10px var(--mono);color:var(--faint);
+    line-height:1.4;margin-top:3px}
+  td.show .unseen{font-style:normal;font-size:10px;color:#e2a33c;
+    border:1px solid #6b4d17;border-radius:4px;padding:0 4px}
+  td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
+    display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
   td.show img.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
   td.from{font-size:11px;color:var(--faint);width:11em}
@@ -347,7 +364,11 @@ async function open(name) {
           <img src="/media/photo/${encodeURIComponent(name)}/${
             encodeURIComponent((one.file || "").split("/").pop())}"
             alt="" loading="lazy">
-          <figcaption>${escapeHTML(one.term || "")}</figcaption>
+          <figcaption class="asked">${escapeHTML(
+            one.at != null ? `${Math.round(one.at)}s　${one.outlet || ""}`
+                           : one.term || "")}</figcaption>
+          <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
+          ${one.credit ? `<figcaption class="who">${escapeHTML(one.credit)}</figcaption>` : ""}
         </figure>`).join("")}</div>`
         : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}`;
     }).join("")}
@@ -468,6 +489,10 @@ async function showScript(name) {
         sums.unsourced.length}</b></div>
       <div>沒指定圖<b class="${(sums.unpicked || []).length ? "short" : "good"}">${
         (sums.unpicked || []).length}</b></div>
+      <div>沒看過<b class="${(sums.unchecked || []).length ? "short" : "good"}">${
+        (sums.unchecked || []).length}</b></div>
+      <div title="影片段落佔實拍時間的比例，至少一半">會動的<b class="${
+        sums.still_enough ? "good" : "short"}">${sums.clip_share || 0}%</b></div>
     </div>
     <div class="ruler">${sums.lines.map((line) =>
       `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
@@ -479,10 +504,19 @@ async function showScript(name) {
           <td class="at">${clock(line.at)}</td>
           <td class="say">${escapeHTML(line.say || "")}</td>
           <td class="show">
-            ${line.pic ? `<img class="pic" src="/media/pic/${
+            ${line.clip ? `<video class="pic" preload="metadata" muted
+              controls src="/media/pic/${
+              line.clip.file.split("/").map(encodeURIComponent).join("/")}#t=${
+              line.clip.start},${line.clip.end}"></video>`
+             : line.pic ? `<img class="pic" src="/media/pic/${
               line.pic.split("/").map(encodeURIComponent).join("/")}"
               alt="" loading="lazy">` : ""}
-            <span>${escapeHTML(line.show || "")}</span>
+            <span>${escapeHTML(line.show || "")}${
+              line.seen ? "" : ` <em class="unseen">沒看過</em>`}</span>
+            ${line.clip ? `<span class="grabbed">段落 ${
+              Math.round(line.clip.start)}–${Math.round(line.clip.end)}s</span>` : ""}
+            ${line.caption ? `<span class="grabbed">${
+              escapeHTML(line.caption)}</span>` : ""}
           </td>
           <td class="from ${line.from === "觀點" ? "ours" : ""}">${
             escapeHTML(line.from || "")}</td>

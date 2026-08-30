@@ -194,7 +194,10 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
     if not target.is_file():
         subprocess.run(
             [str(ROOT / ".venv/bin/yt-dlp"), video["url"], "--no-playlist",
-             "-f", "bv*[height<=1080]+ba/b[height<=1080]",
+             # 720p, not 1080p. The short is 1080 wide, so a 1280-wide source
+             # is still being scaled down -- and a 27-minute programme we take
+             # five seconds out of was arriving as 1.5 GB at the higher size.
+             "-f", "bv*[height<=720]+ba/b[height<=720]/bv*+ba/b",
              "--merge-output-format", "mp4", "--write-auto-subs",
              "--sub-langs", "en.*", "--convert-subs", "vtt", "--no-warnings",
              "-o", str(here / f"{stem}.%(ext)s")],
@@ -207,13 +210,80 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
             "size": target.stat().st_size}
 
 
-def cut_frames(name: str, video: dict[str, Any], at: list[float]) -> list[dict[str, Any]]:
+def keywords(pile: dict[str, Any]) -> list[str]:
+    """The words to look for in a video's captions.
+
+    Taken from what the collection already knows in English -- the video and
+    report titles -- because the captions are English and the topic name is
+    not. Common words are dropped: every caption on earth contains "the".
+    """
+    dull = {"the", "and", "for", "are", "but", "not", "you", "with", "that",
+            "this", "from", "have", "has", "how", "why", "what", "who", "will",
+            "new", "news", "says", "said", "here", "than", "その"}
+    seen: dict[str, int] = {}
+    for kind in ("videos", "reports"):
+        for item in pile.get("sources", {}).get(kind) or []:
+            for word in re.findall(r"[A-Za-z][A-Za-z'-]{2,}", item.get("title", "")):
+                low = word.lower()
+                if low not in dull:
+                    seen[low] = seen.get(low, 0) + 1
+    ranked = sorted(seen.items(), key=lambda one: (-one[1], one[0]))
+    return [word for word, _ in ranked[:12]]
+
+
+def cues_of(video: dict[str, Any]) -> list[dict[str, Any]]:
+    """This video's subtitles, or nothing if it was published without any."""
+    from core import captions as caption_module
+    track = video.get("captions")
+    return caption_module.read(ROOT / track) if track else []
+
+
+def frame_moments(video: dict[str, Any], words: list[str],
+                  most: int = 4) -> list[dict[str, Any]]:
+    """When to take a still from this video, and why that second.
+
+    Evenly spaced sampling is what this replaces. It gave the titles, the
+    anchor's face, and two people sitting on stools, because a broadcast cuts
+    every few seconds and the shot that illustrates the story is not at 1/4,
+    2/4, 3/4. The captions say when the story is being told.
+
+    A video with no captions returns nothing: it is not a frame source. Most
+    topics have five videos and at least three of them are subtitled, which is
+    enough, and guessing is what got us here.
+    """
+    from core import captions as caption_module
+    cues = cues_of(video)
+    if not cues:
+        return []
+    return caption_module.moments(cues, words, most=most)
+
+
+def clip_passages(video: dict[str, Any], words: list[str],
+                  want: float = 5.0, most: int = 3) -> list[dict[str, Any]]:
+    """Stretches of this video worth cutting as moving pictures.
+
+    Half of the borrowed time is meant to move. A still is right when the
+    audience has to read something -- a bill, a meter, a graph -- and wrong
+    when the point is that something is happening, which a photograph of a
+    crowd cannot say. Cut on caption boundaries so it does not open or close
+    mid-sentence.
+    """
+    from core import captions as caption_module
+    cues = cues_of(video)
+    if not cues:
+        return []
+    return caption_module.passages(cues, words, want=want, most=most)
+
+
+def cut_frames(name: str, video: dict[str, Any],
+               at: list[float] | list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Stills from a topic's own video: the event as it was broadcast.
 
-    A frame is the cheapest kind of borrowed picture -- no seam, no audio, and
-    it can be held as long as the line needs -- so most of a short's borrowed
-    budget goes further as frames than as clips. It is still borrowed, and the
-    credit says so.
+    Each moment may be a bare second or a record from `frame_moments`, in
+    which case the caption being spoken is kept with the picture. That line is
+    the nearest thing a frame has to the caption a stock photograph arrives
+    with -- it says what was being talked about, which is not proof of what is
+    on screen but is a great deal better than the filename.
     """
     import subprocess
     source = ROOT / video["file"]
@@ -223,7 +293,9 @@ def cut_frames(name: str, video: dict[str, Any], at: list[float]) -> list[dict[s
     here.mkdir(parents=True, exist_ok=True)
     stem = Path(video["file"]).stem
     made = []
-    for moment in at:
+    for one in at:
+        moment = float(one["at"]) if isinstance(one, dict) else float(one)
+        said = one.get("said", "") if isinstance(one, dict) else ""
         target = here / f"frame_{stem}_{int(moment)}.jpg"
         if not target.is_file():
             subprocess.run(
@@ -236,7 +308,12 @@ def cut_frames(name: str, video: dict[str, Any], at: list[float]) -> list[dict[s
             "id": target.stem, "kind": "frame",
             "term": f"{video['outlet']} {int(moment)}s",
             "file": str(target.relative_to(ROOT)),
-            "caption": video.get("title", "")[:80],
+            # What was being said at that second, if we know. The title was
+            # standing in for this, and a title is the same for every frame in
+            # the video -- so it told you nothing about which one you had.
+            "caption": said[:160] or video.get("title", "")[:80],
+            "said": said, "at": round(moment, 2),
+            "source": video.get("file", ""),
             "outlet": video.get("outlet", ""), "author": "",
             "credit": f"畫面來源：{video.get('outlet', '')}",
             "page": video.get("url", "")})
