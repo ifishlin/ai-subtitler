@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI-Desk　AI 導演台</title>
+<link rel="stylesheet" href="/static/ask.css">
 <style>
 :root{
   --bg:#14161a; --panel:#1c1f25; --panel2:#22262e; --line:#2e333d;
@@ -514,6 +515,7 @@ main{display:flex;flex:1;min-height:0}
 #toast.on{opacity:1}
 #toast.err{border-color:var(--danger);color:#ffbdbd}
 </style>
+<script defer src="/static/ask.js"></script>
 </head>
 <body>
 <div id="app">
@@ -1264,12 +1266,14 @@ function selectAtTime(t) {
 
 let scrubbing = false;
 let marking = null;              // Shift-drag: the start of a stretch to cut
-tl.addEventListener("pointerdown", (event) => {
+tl.addEventListener("pointerdown", async (event) => {
   // A seam has no width, so it is offered as a target instead.
   const seam = seamNear(event.clientX);
   if (seam >= 0 && !event.shiftKey) {
     const [from, to] = sceneCuts()[seam];
-    if (confirm(`還原剪掉的 ${fmt(from)} – ${fmt(to)}（${(to - from).toFixed(1)} 秒）？`)) {
+    if (await confirmed("還原剪掉的這一段？", {
+      body: `${fmt(from)} – ${fmt(to)}，共 ${(to - from).toFixed(1)} 秒`,
+      yes: "還原"})) {
       restoreCut(seam);
       return;
     }
@@ -1657,7 +1661,8 @@ $("list").addEventListener("click", async (event) => {
   const del = pick("del");
   if (del !== undefined) {
     const s = S.segments[+del];
-    if (!confirm(`刪除 #${s.id}「${s.text}」？`)) return;
+    if (!await confirmed(`刪除第 ${s.id} 句？`, {
+      body: s.text, yes: "刪除"})) return;
     S.segments.splice(+del, 1); markDirty(); renderList(); drawTimeline(); return;
   }
 
@@ -1838,9 +1843,10 @@ $("btnFwd").onclick = () => seek(video.currentTime + 2);
    this video, not to the style. */
 $("btnSaveLayout").onclick = async () => {
   if (!SCENE.data) return;
-  const name = prompt("存成公版，取個名字：\n\n"
-    + "會留下畫面框、字幕樣式和頻道 icon；\n"
-    + "有時間範圍的圖卡不會跟著走，那是這支影片的東西。");
+  const name = await asked("存成公版", {
+    body: "會留下畫面框、字幕樣式和頻道 icon。有時間範圍的圖卡不會跟著走 —— "
+          + "那是這支影片自己的東西。",
+    placeholder: "公版的名字"});
   if (name === null) return;
   try {
     const kept = await api("POST", "/api/layout", {
@@ -1990,9 +1996,10 @@ $("projList").addEventListener("click", async (event) => {
   }
   if (!event.target.dataset.kill) return;
 
-  if (!confirm(`把專案 ${name} 移掉？\n\n`
-      + "整個目錄（影片、字幕、版面）會搬到 trash/，不會真的消失，"
-      + "要永久刪除得自己去清 trash/。")) return;
+  if (!await confirmed(`把專案「${name}」移掉？`, {
+    body: "搬到 trash/，不會真的消失 —— 要永久刪除得自己去清 trash/。",
+    lose: ["影片", "字幕和 sidecar", "版面 scene.json"],
+    yes: "移掉"})) return;
   try {
     const gone = await api("POST", "/api/project/remove", { name });
     PROJ.list = gone.projects.slice().sort((a, b) => b.modified - a.modified);
@@ -2111,7 +2118,10 @@ async function pollBurn() {
 
 $("btnBurn").onclick = async () => {
   const which = S.translated ? (S.bilingual ? "雙語" : "只有中文") : "";
-  if (!confirm(`用原片 + 目前字幕${which ? `（${which}）` : ""} + 既有圖卡，重新燒錄 final_reviewed.mp4？\n整支要壓幾分鐘，進度會顯示在按鈕旁邊。原有的 final.mp4 不會被覆蓋。`)) return;
+  if (!await confirmed("重新燒錄 final_reviewed.mp4？", {
+    body: `用原片 + 目前字幕${which ? `（${which}）` : ""} + 既有圖卡。`
+          + "整支要壓幾分鐘，進度會顯示在按鈕旁邊。原有的 final.mp4 不會被覆蓋。",
+    yes: "開始燒"})) return;
   try {
     await api("PUT", "/api/state", { segments: S.segments });
     S.dirty = false; renderStats();
@@ -2339,14 +2349,17 @@ async function loadProjects(active) {
 
 $("project").addEventListener("change", async (event) => {
   const name = event.target.value;
-  if (S.dirty && !confirm("這一份有未儲存的修改，切換後會留在原本的目錄但不會寫成 SRT。要繼續嗎？")) {
+  if (S.dirty && !await confirmed("這一份有未儲存的修改", {
+    body: "切換後會留在原本的目錄，但不會寫成 SRT。",
+    yes: "繼續切換", no: "留下"})) {
     event.target.value = S.project;
     return;
   }
   // Layout edits are lost the same way subtitle edits are, and were not asked
   // about -- so they were carried into the next project instead and could be
   // saved over its layout by mistake.
-  if (SCENE.dirty && !confirm("版面有未儲存的修改，切換專案會放棄它們。要繼續嗎？")) {
+  if (SCENE.dirty && !await confirmed("版面有未儲存的修改", {
+    body: "切換專案會放棄它們。", yes: "繼續切換", no: "留下"})) {
     event.target.value = S.project;
     return;
   }
@@ -2675,11 +2688,12 @@ function useTemplate(index) {
 /** Back to the template as it ships, throwing away this card's draft.
  *  A card is called 引言卡2, not 引言卡, so which template it came from has to
  *  be remembered rather than guessed from the name. */
-$("cardFresh").onclick = () => {
+$("cardFresh").onclick = async () => {
   const origin = CARD.from[CARD.key] || CARD.key;
   const template = CARD.templates.find((item) => item.name === origin);
   if (!template) { toast("這不是從模板開始的，沒有原版可以回去", true); return; }
-  if (!confirm(`把「${CARD.key}」丟掉，回到「${template.name}」模板原本的樣子？`)) return;
+  if (!await confirmed(`把「${CARD.key}」丟掉？`, {
+    body: `回到「${template.name}」模板原本的樣子。`, yes: "回到模板"})) return;
   replaceCardHtml(template.html);
   markCardText();
   drawCard();
@@ -3006,7 +3020,8 @@ $("cardRevert").onclick = async () => {
     return;
   }
   if ($("cardHtml").value === saved.html) { toast("已經是存檔的內容"); return; }
-  if (!confirm(`回到「${name}」上次存成 PNG 時的內容？（可以按 ⌘Z 復原）`)) return;
+  if (!await confirmed(`回到「${name}」上次存檔的內容？`, {
+    body: "上次存成 PNG 時的那一版。可以按 ⌘Z 復原。", yes: "回到存檔"})) return;
   replaceCardHtml(saved.html);
   markCardText();
   drawCard();
@@ -3025,7 +3040,8 @@ async function saveCard(render) {
   // editing one means, and what losing one looks like, so it is asked about
   // exactly when the name was not the one being edited.
   if (name !== CARD.key && CARD.made.some((item) => item.name === name)
-      && !confirm(`已經有一張叫「${name}」的卡片，要覆蓋它嗎？`)) {
+      && !await confirmed(`已經有一張叫「${name}」的卡片`, {
+        body: "存下去會覆蓋它。", yes: "覆蓋"})) {
     return;
   }
   const button = render ? $("cardSave") : $("cardStore");
@@ -3769,15 +3785,17 @@ $("propDel").onclick = () => {
 // Two kinds of undo, because "reset" means two different things: throw away
 // this session's dragging, or throw away the layout entirely.
 $("btnRevertScene").onclick = async () => {
-  if (SCENE.dirty && !confirm("丟掉還沒儲存的版面修改，回到 scene.json 存的樣子？")) return;
+  if (SCENE.dirty && !await confirmed("丟掉還沒儲存的版面修改？", {
+    body: "回到 scene.json 存的樣子。", yes: "丟掉"})) return;
   await loadScene();
   toast("已回到存檔的版面");
 };
 
 $("btnResetScene").onclick = async () => {
-  if (!confirm("回到基本畫面：左上影片＋下方字幕＋右下 icon。\n" +
-               "放上去的圖全部移除，還沒儲存的修改一併放棄，並立刻寫進 scene.json。\n" +
-               "這一步無法復原。")) return;
+  if (!await confirmed("回到基本畫面？", {
+    body: "左上影片、下方字幕、右下 icon。立刻寫進 scene.json，無法復原。",
+    lose: ["放上去的圖全部移除", "還沒儲存的修改一併放棄"],
+    yes: "重設"})) return;
   try {
     // A reset that leaves unsaved changes behind is not a reset, so this
     // writes the default out and comes back clean.

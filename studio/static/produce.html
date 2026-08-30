@@ -1,6 +1,7 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>新影片　AI-Desk</title>
+<link rel="stylesheet" href="/static/ask.css">
 <style>
   :root{
     --bg:#0b0e12; --panel:#141a21; --panel2:#1b232c; --line:#26313d;
@@ -82,6 +83,7 @@
   #siteHits b{color:var(--ok)}
   #siteHits .none{color:var(--warn)}
 </style>
+<script defer src="/static/ask.js"></script>
 
 <header>
   <h1>新影片</h1>
@@ -252,7 +254,9 @@ $("go").onclick = async () => {
 };
 
 $("stop").onclick = async () => {
-  if (!confirm("停止這次製作？已經下載和辨識的東西會留著。")) return;
+  if (!await confirmed("停止這次製作？", {
+    body: "已經下載和辨識的東西會留著，下次從那裡接著跑。",
+    yes: "停止", no: "繼續跑"})) return;
   try { await api("POST", "/api/produce/stop"); } catch (error) { /* gone already */ }
 };
 

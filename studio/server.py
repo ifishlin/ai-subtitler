@@ -27,6 +27,7 @@ import json                                                       # noqa: E402
 
 from fastapi import Body, FastAPI, HTTPException                      # noqa: E402
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse  # noqa: E402
+from fastapi.staticfiles import StaticFiles                             # noqa: E402
 from opencc import OpenCC                                            # noqa: E402
 from PIL import Image                                               # noqa: E402
 
@@ -97,6 +98,11 @@ def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
     }
 
 app = FastAPI(title="Subtitle Review")
+# Shared between the four pages. Everything else here is served by hand, but
+# the dialog is one file used four times and copying it four times is how four
+# slightly different dialogs happen.
+app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"),
+          name="static")
 config: dict[str, Any] = {}
 _whisper_models: dict[str, Any] = {}
 _burn: dict[str, Any] = {"state": "idle", "message": "", "output": None,

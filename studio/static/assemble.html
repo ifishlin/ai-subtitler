@@ -1,6 +1,7 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>Splice　AI-Desk</title>
+<link rel="stylesheet" href="/static/ask.css">
 <style>
   :root{
     --bg:#0f1216; --panel:#161b22; --panel2:#1c222b; --line:#2a323d;
@@ -104,6 +105,7 @@
   #peek{width:100%;display:block;border-radius:6px;background:#000}
   #peekAt{font:11px var(--mono);color:var(--dim);margin-top:6px;text-align:center}
 </style>
+<script defer src="/static/ask.js"></script>
 
 <header>
   <h1>Splice</h1>
@@ -232,9 +234,12 @@ $("sources").addEventListener("click", async (event) => {
   const source = STATE.sources[Number(row.dataset.source)];
 
   if (event.target.dataset.bin !== undefined) {
-    const what = source.kind === "run" ? "整個 run（影片和字幕）" : "這支素材";
-    if (!confirm(`把 ${source.name} 移掉？\n\n${what}會搬到 trash/，`
-                 + "不會真的消失，要永久刪除得自己去清 trash/。")) return;
+    if (!await confirmed(`把「${source.name}」移掉？`, {
+      body: "搬到 trash/，不會真的消失 —— 要永久刪除得自己去清 trash/。",
+      lose: source.kind === "run"
+        ? ["整個 run 的資料夾", "影片", "字幕和 sidecar"]
+        : ["這一支素材檔"],
+      yes: "移掉"})) return;
     try {
       const gone = await api("POST", "/api/source/remove", { name: source.name });
       STATE.sources = STATE.sources.filter((item) => item.name !== source.name);
