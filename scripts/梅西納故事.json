@@ -30,7 +30,7 @@
         "note": "資料：The Guardian"
       },
       "from": "The Guardian",
-      "seconds": 2.05
+      "seconds": 2.03
     },
     {
       "say": "數百名警察，道路全封。",
@@ -47,7 +47,7 @@
         "note": "資料：The Guardian"
       },
       "from": "The Guardian",
-      "seconds": 2.27
+      "seconds": 2.25
     },
     {
       "say": "北邊幾公里，市郊。",
@@ -111,7 +111,7 @@
         "note": "資料：The Guardian"
       },
       "from": "The Guardian",
-      "seconds": 2.05
+      "seconds": 2.03
     },
     {
       "say": "櫃子裡是安托內羅的多聯畫。",
@@ -151,7 +151,7 @@
         "note": "資料：The Guardian"
       },
       "from": "The Guardian",
-      "seconds": 2.05
+      "seconds": 2.03
     },
     {
       "say": "那扇側門沒裝警報。",
@@ -190,7 +190,7 @@
         "note": "資料：La Sicilia"
       },
       "from": "La Sicilia",
-      "seconds": 2.92
+      "seconds": 2.9
     },
     {
       "say": "警衛聽到了。",
@@ -245,7 +245,7 @@
         "note": "資料：The Guardian"
       },
       "from": "The Guardian",
-      "seconds": 2.49
+      "seconds": 2.48
     },
     {
       "say": "五片裡有兩片留在矮牆上。",
@@ -272,7 +272,7 @@
         "note": "資料：The Guardian"
       },
       "from": "The Guardian",
-      "seconds": 2.49
+      "seconds": 2.48
     },
     {
       "say": "小心地靠著，不是摔在地上。",
@@ -285,7 +285,7 @@
         "tone": "light"
       },
       "from": "The Guardian",
-      "seconds": 2.71
+      "seconds": 2.69
     },
     {
       "say": "然後丟下兩片。",
@@ -315,7 +315,7 @@
         "note": "資料：Rai"
       },
       "from": "Rai",
-      "seconds": 2.27
+      "seconds": 2.25
     },
     {
       "say": "追討專家說當地人不會這樣做。",
@@ -328,7 +328,7 @@
         "note": "資料：Art Recovery International"
       },
       "from": "Art Recovery International",
-      "seconds": 2.92
+      "seconds": 2.9
     },
     {
       "say": "這不是第一次了。",
@@ -367,7 +367,7 @@
         "ghost": "？"
       },
       "from": "The Guardian",
-      "seconds": 2.05
+      "seconds": 2.03
     },
     {
       "say": "鐵絲網擋不住。門也擋不住。",
@@ -384,7 +384,7 @@
         "tone": "warm"
       },
       "from": "觀點",
-      "seconds": 2.71
+      "seconds": 2.69
     },
     {
       "say": "只有警報做對了它該做的事。",
@@ -396,7 +396,7 @@
         "tone": "warm"
       },
       "from": "觀點",
-      "seconds": 2.71
+      "seconds": 2.69
     },
     {
       "say": "然後一個人把它關掉。",
@@ -409,7 +409,7 @@
         "colour": "#ff7a4d"
       },
       "from": "觀點",
-      "seconds": 2.05
+      "seconds": 2.03
     },
     {
       "say": "因為前面每一次都是誤報。",
@@ -427,7 +427,7 @@
       "role": "懸念",
       "show": "自製：兩個量比大小",
       "from": "觀點",
-      "seconds": 2.48,
+      "seconds": 2.46,
       "card": {
         "kind": "bars",
         "title": "一年響幾次",
@@ -458,7 +458,7 @@
         "tone": "warm"
       },
       "from": "觀點",
-      "seconds": 2.27
+      "seconds": 2.25
     },
     {
       "say": "整件事是這樣的。",

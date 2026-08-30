@@ -661,6 +661,12 @@ def listing() -> list[dict[str, Any]]:
         found.append({
             "name": name,
             "topic": script.get("topic", ""),
+            # Which shape it is. Listed, not only shown once a script is open:
+            # the difference between an argument and a story is the first thing
+            # anybody needs to know about one, and it decides what every other
+            # number on the card means.
+            "format": script.get("format", "argue"),
+            "house": sums.get("house", ""),
             "seconds": sums["seconds"],
             "characters": sums["characters"],
             "over": sums["over"],

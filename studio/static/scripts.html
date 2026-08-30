@@ -108,6 +108,16 @@
   /* Unsaved edits are visible and countable. Saving on every keystroke meant
      there was no such state, so nothing could be discarded and nothing had to
      be confirmed. */
+  /* Which shape a script is, on its card. Not only inside the script view:
+     it decides what every other number on that card means -- 38% borrowed is
+     over the ceiling for an argument and comfortable for a story. */
+  .src.written .house{display:inline-block;margin-left:8px;padding:1px 8px;
+    border-radius:99px;font:11px var(--mono)}
+  .src.written .house.argue{background:#12212e;color:#7fd4ff;
+    border:1px solid #244055}
+  .src.written .house.story{background:#2a1a12;color:#ffb347;
+    border:1px solid #5c3325}
+
   /* Two decisions about the whole film, made once and never revisited until
      they were put here: which shape it is, and who it is for. */
   .about{display:flex;align-items:center;gap:14px;margin:10px 0 14px;
@@ -440,9 +450,14 @@ async function open(name) {
     ${(pile.scripts || []).length ? `
       <h3>寫好的文案 <span class="count">${pile.scripts.length} 份</span></h3>
       ${pile.scripts.map((one) => `
-        <div class="src written" data-script="${escapeHTML(one)}">
-          <b>${escapeHTML(one)}</b>
-          <div class="who">點開來看逐句台詞</div>
+        <div class="src written" data-script="${escapeHTML(one.name || one)}">
+          <b>${escapeHTML(one.name || one)}</b>
+          ${one.house ? `<span class="house ${
+            one.format === "story" ? "story" : "argue"}">${
+            escapeHTML(one.house)}</span>` : ""}
+          <div class="who">${one.seconds
+            ? `${one.seconds}s　${one.lines} 句　點開來看逐句台詞`
+            : "點開來看逐句台詞"}</div>
         </div>`).join("")}` : ""}
 
     ${(pile.leads || []).length ? `

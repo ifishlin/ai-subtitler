@@ -379,7 +379,8 @@ def get_topic(name: str) -> dict[str, Any]:
             "balance": topic_module.balance(pile), "ready": enough, "why": why,
             # Read off the scripts, not out of the topic file: the copy stored
             # there was never written to, so finished scripts did not appear.
-            "scripts": script_module.for_topic(name),
+            "scripts": [one for one in script_module.listing()
+                        if one["topic"] == name],
             "audience": topic_module.audience(pile)}
 
 
