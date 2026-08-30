@@ -83,6 +83,26 @@ def sheet(name: str) -> dict[str, Any]:
             "passages": passages_for(pile)}
 
 
+def pick(name: str) -> dict[str, str]:
+    """The topic's pictures, keyed the way the brief numbers them.
+
+    A script names a file, and three times now I have named one from memory --
+    twice a picture from a different topic entirely, which exists, so the path
+    looks plausible right up until the gate reports it missing. The gate does
+    catch it, before anything is encoded, and it keeps happening anyway.
+
+    So the writing step takes `pick(topic)["P17"]` instead of typing a path.
+    A wrong key raises immediately, at the line being written, rather than
+    resolving to a file that belongs to another film.
+    """
+    found = sheet(name)
+    out = {f"P{index}": one["file"]
+           for index, one in enumerate(found["pictures"], start=1)}
+    out.update({f"C{index}": one["file"]
+                for index, one in enumerate(found["passages"], start=1)})
+    return out
+
+
 def as_text(name: str) -> str:
     """The same, written out for a prompt.
 
