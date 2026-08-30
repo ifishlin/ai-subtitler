@@ -47,3 +47,7 @@ assets/shorts/
 # 隨時可以重畫。templates/ 是手寫的，留著。
 assets/cards/*/
 !assets/cards/templates/
+
+# 本機設定：選哪個模型、通道開在哪。可能會被塞進金鑰，所以不進版控。
+# config.example.toml 才是版控裡的那份，它只寫金鑰「在哪個檔案」。
+config.toml

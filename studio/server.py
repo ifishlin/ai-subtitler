@@ -552,8 +552,22 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         from core import stock as stock_module
         from core import writer as writer_module
 
-        # 1. What each outlet broadcast.
+        # Warnings live on the pile, not only in the job log. The log is in
+        # memory and dies with a restart: a round that never judged relevance
+        # said so once, into a buffer that was gone ten minutes later, and the
+        # topic then looked exactly like one that had been judged clean.
+        trouble: list[str] = []
+
+        # 1. What each outlet broadcast -- and whether it is about this.
+        # Videos were never sifted, only reports, so a search for "Ellison"
+        # filed a segment about the DNC's Keith Ellison under a story about
+        # Larry Ellison, and it voted in the balance like any other source.
         found = topic_module.hunt(name, queries, say=say)
+        try:
+            found = writer_module.sift(name, found, say)
+        except Exception as error:                                # noqa: BLE001
+            trouble.append(f"影片沒判斷相關性（{error}）")
+            say(0, 1, f"⚠ 影片沒判斷相關性（{error}），全部留著")
         pile = topic_module.load(name)
         pile["sources"]["videos"] = pile["sources"]["videos"] + found
         topic_module.save(name, pile)
@@ -567,6 +581,7 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             # Kept, but said so. Swallowing this is how twenty-eight reports
             # including an airport malaria story were filed as relevant while
             # the job reported 完成.
+            trouble.append(f"報導沒判斷相關性（{error}）")
             say(0, 1, f"⚠ 沒判斷相關性（{error}），全部留著")
         pile = topic_module.load(name)
         pile["sources"]["reports"] = (pile["sources"].get("reports") or []) + wrote
@@ -705,9 +720,14 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         # comments turned off and a bug that reads every comment as empty
         # produce the same silence, and the job reported 完成 for both.
         if asked and not added:
+            trouble.append(f"問了 {len(asked)} 支影片，一則留言都沒有")
             say(len(asked), len(asked),
                 f"⚠ 問了 {len(asked)} 支影片，一則留言都沒有"
                 "（可能是頻道關閉留言，也可能是抓取壞了）")
+
+        pile = topic_module.load(name)
+        pile["gathered"] = {"when": int(time_module.time()), "trouble": trouble}
+        topic_module.save(name, pile)
 
     _job_run(f"收集：{name}", name, work)
     return {"started": name}

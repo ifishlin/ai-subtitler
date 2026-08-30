@@ -163,7 +163,7 @@ def suggest_terms(topic: str, say=None) -> dict[str, Any]:
 
 
 def sift(topic: str, found: list[dict[str, Any]], say=None) -> list[dict[str, Any]]:
-    """Ask which of these are actually about this.
+    """Ask which of these are not actually about this.
 
     The division of labour the report round makes obvious: finding is
     mechanical -- ask each outlet's own domain and take what comes -- and
@@ -172,48 +172,72 @@ def sift(topic: str, found: list[dict[str, Any]], say=None) -> list[dict[str, An
     section index called 「art」 alongside four direct hits, and no rule
     separates those without reading them.
 
-    A model that cannot answer leaves everything in: keeping a wrong report is
-    a fact nobody cites, and dropping a right one is a fact that never existed.
+    Asked the other way round on purpose. "Which of these thirty-six are
+    relevant" makes the model produce a long list of numbers, and a 30B model
+    asked exactly that kept twelve at random -- discarding `Warner Bros
+    rejects Paramount's hostile bid` from a topic about Paramount bidding for
+    Warner Bros. "Which are not about this" asks for the short list, and a
+    model that loses its place drops nothing instead of dropping everything.
+    That is the right way for this to fail: keeping a wrong report costs a
+    line in a list, dropping a right one costs a fact that never existed.
+
+    In batches, because the mistakes above all appeared once the list got long
+    enough that the model stopped reading it.
     """
     if not found:
         return []
     from core import topic as topic_module
     pile = topic_module.load(topic)
-    rows = "\n".join(f"{index}. [{one['outlet']}] {one['title']}"
-                     for index, one in enumerate(found, start=1))
-    asking = (
-        f"題目：{topic}\n"
-        f"說給誰聽：{topic_module.audience(pile) or '（還沒決定）'}\n\n"
-        "底下是逐家搜到的標題。**哪幾篇是在講這個題目本身？**\n\n"
-        "留下：直接報導這件事的、以及直接相關的背景分析\n"
-        "剔除：同類但不同事件的、分類索引頁、完全無關的\n\n"
-        f"{rows}\n\n"
-        '只輸出 JSON：{"keep": [1, 4, 7]}')
-    if say:
-        say(0, 1, f"判斷 {len(found)} 篇哪些相關")
-    try:
-        said, _ = ask(asking, None)
-    except Exception as error:                                    # noqa: BLE001
-        # Not the same as "it kept everything". The tunnel died during a run
-        # and every one of twenty-eight reports was kept, including an
-        # architecture review and a story about malaria at an airport -- and
-        # the job reported 完成. A step that did not happen must not look like
-        # a step that decided nothing needed doing.
-        raise RuntimeError(f"問不到模型，沒辦法判斷相關性：{error}") from error
-    try:
-        keep = {int(one) for one in read(said).get("keep") or []}
-    except Exception:                                             # noqa: BLE001
-        return found        # asked, could not answer: keep everything
+    who = topic_module.audience(pile) or "（還沒決定）"
+    size = rules_module.at("collect.judge_batch", 12)
+    doubted: set[int] = set()
+
+    for base in range(0, len(found), size):
+        batch = found[base:base + size]
+        rows = "\n".join(f"{index}. [{one.get('outlet', '')}] {one.get('title', '')}"
+                          for index, one in enumerate(batch, start=1))
+        asking = (
+            f"題目：{topic}\n"
+            f"說給誰聽：{who}\n\n"
+            "底下每一筆是某家媒體的標題。**哪幾筆跟這個題目無關？**\n\n"
+            "無關的意思是：講的是別的事件、是分類索引頁、或完全另一個主題。\n"
+            "同一件事的不同進展、不同角度、反方說法，全部都算相關，不要剔除。\n"
+            "如果每一筆都相關，就回空陣列。\n\n"
+            f"{rows}\n\n"
+            # No example indices. `{"keep": [1, 4, 7]}` was copied back
+            # verbatim by a 30B model as its answer for thirty-six headlines.
+            f"只輸出 JSON，drop 裡放無關的編號（1 到 {len(batch)}）："
+            '{"drop": [...]}')
+        if say:
+            say(base // size + 1, (len(found) + size - 1) // size,
+                f"判斷相關性 {base + 1}-{base + len(batch)} / {len(found)}")
+        try:
+            said, _ = ask(asking, None)
+        except Exception as error:                                # noqa: BLE001
+            # Not the same as "it kept everything". The tunnel died during a
+            # run and every one of twenty-eight reports was kept, including an
+            # architecture review and a story about malaria at an airport --
+            # and the job reported 完成. A step that did not happen must not
+            # look like a step that decided nothing needed doing.
+            raise RuntimeError(f"問不到模型，沒辦法判斷相關性：{error}") from error
+        try:
+            drop = {int(one) for one in read(said).get("drop") or []}
+        except Exception:                                         # noqa: BLE001
+            continue        # asked, could not answer: this batch all stays
+        # An answer out of range is not an answer about these headlines.
+        if any(one < 1 or one > len(batch) for one in drop):
+            continue
+        # Everything in a batch is not a judgement about the batch.
+        if len(drop) == len(batch):
+            continue
+        doubted.update(base + one for one in drop)
+
     # Marked, not removed. Asked which of twenty-eight reports were about the
     # theft, a 7B model kept four and threw away six that plainly were --
     # including the Guardian piece this topic started from. Deleting on that
     # judgement loses the article and the fact that anything was judged: the
     # count simply reads lower and looks like a search that found less.
-    #
-    # Keeping a wrong report costs a line in a list. Dropping a right one costs
-    # a fact that no longer exists, so the doubt is recorded and somebody
-    # decides.
-    return [{**one, "doubt": index not in keep}
+    return [{**one, "doubt": index in doubted}
             for index, one in enumerate(found, start=1)]
 
 
