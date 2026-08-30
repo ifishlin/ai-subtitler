@@ -866,6 +866,49 @@ def get_formats() -> dict[str, Any]:
     return {"formats": [{"key": key, **spec} for key, spec in known.items()]}
 
 
+@app.post("/api/format")
+def save_format(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Create or change a house style.
+
+    The thresholds a format does not name fall through to rules.json, so a new
+    shape says only what makes it different -- and the two cannot drift apart,
+    which is the fault this whole file arrangement exists to avoid.
+    """
+    from core import rules as rules_module
+    key = str(payload.get("key") or "").strip()
+    spec = payload.get("spec")
+    if not isinstance(spec, dict):
+        raise HTTPException(400, "沒有內容")
+    try:
+        rules_module.save_house(key, spec)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    return {"saved": key, "formats": [{"key": k, **one}
+                                      for k, one in rules_module.formats().items()]}
+
+
+@app.delete("/api/format")
+def delete_format(key: str) -> dict[str, Any]:
+    """Remove a house style, unless scripts are written in it.
+
+    Refused rather than cascaded: deleting the shape a script was written in
+    turns every one of its roles into a word the checks do not recognise, and
+    nothing here can guess what they should become instead.
+    """
+    from core import rules as rules_module
+    using = rules_module.used_by(key)
+    if using:
+        raise HTTPException(400, f"還有 {len(using)} 份文案在用："
+                                 + "、".join(using))
+    try:
+        gone = rules_module.drop_house(key)
+    except ValueError as error:
+        raise HTTPException(400, str(error)) from error
+    if not gone:
+        raise HTTPException(404, f"沒有這個公版：{key}")
+    return {"deleted": key}
+
+
 @app.post("/api/script/format")
 def set_format(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Change which house style a script is written in.

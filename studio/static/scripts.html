@@ -108,6 +108,35 @@
   /* Unsaved edits are visible and countable. Saving on every keystroke meant
      there was no such state, so nothing could be discarded and nothing had to
      be confirmed. */
+  /* The house styles, edited as what they are: data. Every field was a
+     constant somewhere, and `why` is the field that matters -- a number with
+     no reason attached gets changed by whoever finds it inconvenient. */
+  #houses{position:fixed;inset:0;background:#000d;z-index:70;display:flex;
+    align-items:flex-start;justify-content:center;padding:32px 24px;overflow:auto}
+  #houses[hidden]{display:none}
+  .houses-inner{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px 16px;width:min(96vw,880px)}
+  .houses-bar{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+  .houses-bar b{font-size:14px}
+  .houses-bar .hint{font-size:11px;color:var(--faint);flex:1;line-height:1.5}
+  .house-card{border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+    margin-bottom:10px;background:var(--bg)}
+  .house-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+  .house-head code{font:11px var(--mono);color:var(--faint)}
+  .house-head .grow{flex:1}
+  .house-card label{display:block;font-size:11px;color:var(--faint);
+    margin-bottom:7px}
+  .house-card label.wide{grid-column:1/-1}
+  .house-card input,.house-card textarea{width:100%;margin-top:3px;
+    font:13px inherit;color:var(--ink);background:#0d1014;
+    border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+  .house-card textarea{font-size:12px;line-height:1.6;resize:vertical}
+  .house-card .h-name{font-size:14px;font-weight:600;width:auto;margin:0}
+  .house-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:8px 12px}
+  .houses-new{display:flex;gap:8px;align-items:center;margin-top:6px;
+    padding-top:11px;border-top:1px solid var(--line)}
+
   .pick-house{display:flex;align-items:center;gap:7px;font-size:12px;
     color:var(--faint)}
   .pick-house select{font:13px inherit;color:var(--ink);background:#0d1014;
@@ -288,8 +317,29 @@
   <span class="grow"></span>
   <input id="newName" placeholder="新題目…" size="16">
   <button id="btnNew" class="tiny">新增</button>
+  <button id="btnHouses" class="tiny">公版</button>
   <button id="btnBack" class="tiny">← 回編輯器</button>
 </header>
+
+<!-- The house styles themselves. They began as two files I wrote by hand,
+     which makes "what shapes a short can be" something only somebody editing
+     the repository can change. They are data. -->
+<div id="houses" hidden>
+  <div class="houses-inner">
+    <div class="houses-bar">
+      <b>公版</b>
+      <span class="hint">一個公版說的是「這種片子長什麼形狀」。
+        沒寫的項目會掉回 rules.json 的共用值</span>
+      <button id="housesClose" class="tiny">關閉</button>
+    </div>
+    <div id="housesList"></div>
+    <div class="houses-new">
+      <input id="newHouseKey" placeholder="代號（英文，如 explain）" size="18">
+      <input id="newHouseName" placeholder="名稱（如 拆解說明）" size="14">
+      <button id="btnNewHouse" class="tiny primary">新增公版</button>
+    </div>
+  </div>
+</div>
 
 <main>
   <div id="list"></div>
@@ -659,6 +709,127 @@ const RIGHT_NOTE = {
    refused by the server with the whole set in hand, because a role moved on
    its own looks fine and the sequence it lands in does not. */
 const PENDING = {name: null, changes: new Map()};
+
+/* Editing the house styles.
+
+   Every field here is a threshold that used to be a constant somewhere, and
+   the one that matters most is `why`. A number without its reason gets
+   changed by whoever finds it inconvenient; with the reason attached, the
+   next person at least knows what they are trading away. The tone-run limit
+   of twelve was written for an argument's short sections and reported a story
+   as broken by design -- that is the kind of thing `why` is for. */
+function houseRow(one) {
+  const s = one.structure || {}, b = one.borrowed || {},
+        c = one.cards || {}, e = one.ending || {};
+  const roles = (s.roles || []).join("、");
+  return `
+  <div class="house-card" data-key="${escapeHTML(one.key)}">
+    <div class="house-head">
+      <input class="h-name" value="${escapeHTML(one.name || "")}" size="10">
+      <code>${escapeHTML(one.key)}</code>
+      <span class="grow"></span>
+      <button class="tiny h-save">儲存</button>
+      ${one.key === "argue" ? "" : `<button class="tiny h-drop">刪除</button>`}
+    </div>
+    <label class="wide">為什麼有這個公版
+      <textarea class="h-why" rows="3">${escapeHTML(one.why || "")}</textarea></label>
+    <div class="house-grid">
+      <label class="wide">角色（照順序，用、分隔）
+        <input class="h-roles" value="${escapeHTML(roles)}"></label>
+      <label>每段最少幾句
+        <input class="h-least" value="${escapeHTML(
+          Object.values(s.least_per_role || {}).join("、"))}"
+          placeholder="照角色順序"></label>
+      <label>第三個角色要在幾成之前
+        <input class="h-turn" value="${s.turn_before ?? 0}"
+          placeholder="0 = 不限"></label>
+      <label>實拍目標
+        <input class="h-aim" value="${b.aim ?? 0.25}"></label>
+      <label>實拍上限
+        <input class="h-most" value="${b.most ?? 0.35}"></label>
+      <label>會動的至少佔實拍
+        <input class="h-clip" value="${b.clip_least ?? 0.5}"></label>
+      <label>同一種卡片連幾張
+        <input class="h-kind" value="${c.same_kind_run ?? 3}"></label>
+      <label>同一色調連幾張
+        <input class="h-tone" value="${c.same_tone_run ?? 12}"></label>
+      <label>結尾摘要幾條
+        <input class="h-points" value="${(e.points || [3, 4]).join("、")}"></label>
+      <label>結尾落在
+        <input class="h-landing" value="${escapeHTML(e.landing || "")}"
+          placeholder="市井小民 / 懸念"></label>
+      <label>用哪一份 prompt
+        <input class="h-prompt" value="${escapeHTML(one.prompt || "script.md")}"></label>
+    </div>
+  </div>`;
+}
+
+function readHouse(card) {
+  const get = (cls) => card.querySelector("." + cls).value.trim();
+  const nums = (text) => text.split(/[、,\s]+/).filter(Boolean).map(Number);
+  const roles = get("h-roles").split(/[、,\s]+/).filter(Boolean);
+  const least = nums(get("h-least"));
+  return {
+    name: get("h-name"), why: get("h-why"),
+    structure: {
+      roles,
+      turn_before: Number(get("h-turn")) || 0,
+      least_per_role: Object.fromEntries(
+        roles.map((role, index) => [role, least[index] ?? 2])),
+    },
+    borrowed: {aim: Number(get("h-aim")), most: Number(get("h-most")),
+               clip_least: Number(get("h-clip"))},
+    cards: {same_kind_run: Number(get("h-kind")),
+            same_tone_run: Number(get("h-tone"))},
+    ending: {kind: "outro", points: nums(get("h-points")),
+             landing: get("h-landing")},
+    prompt: get("h-prompt"),
+  };
+}
+
+async function drawHouses() {
+  try { FORMATS = (await api("GET", "/api/formats")).formats || []; }
+  catch (error) { alert(error.message); return; }
+  $("housesList").innerHTML = FORMATS.map(houseRow).join("");
+  $("housesList").querySelectorAll(".house-card").forEach((card) => {
+    const key = card.dataset.key;
+    card.querySelector(".h-save").onclick = async () => {
+      try {
+        await api("POST", "/api/format", {key, spec: readHouse(card)});
+        drawHouses();
+      } catch (error) { alert(error.message); }
+    };
+    const drop = card.querySelector(".h-drop");
+    if (drop) drop.onclick = async () => {
+      if (!confirm(`刪掉「${key}」？`)) return;
+      try {
+        await api("DELETE", `/api/format?key=${encodeURIComponent(key)}`);
+        drawHouses();
+      } catch (error) { alert(error.message); }
+    };
+  });
+}
+
+$("btnHouses").onclick = () => { $("houses").hidden = false; drawHouses(); };
+$("housesClose").onclick = () => { $("houses").hidden = true; };
+$("houses").addEventListener("click", (event) => {
+  if (event.target.id === "houses") $("houses").hidden = true;
+});
+$("btnNewHouse").onclick = async () => {
+  const key = $("newHouseKey").value.trim();
+  const name = $("newHouseName").value.trim();
+  if (!key || !name) { alert("代號和名稱都要填"); return; }
+  // A new shape starts as a copy of the argument, because starting from blank
+  // means filling in eleven numbers before anything can be checked at all.
+  const base = FORMATS.find((one) => one.key === "argue") || {};
+  try {
+    await api("POST", "/api/format",
+              {key, spec: {...JSON.parse(JSON.stringify(base)), key: undefined,
+                           name, why: "（還沒寫為什麼有這個公版）"}});
+    $("newHouseKey").value = ""; $("newHouseName").value = "";
+    drawHouses();
+  } catch (error) { alert(error.message); }
+};
 
 /* The house styles, fetched once. A short is not one shape, and which shape
    this one is decides what the checks even mean -- an argument's roles are

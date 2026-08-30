@@ -168,6 +168,61 @@ def formats() -> dict[str, dict[str, Any]]:
     return found
 
 
+SAFE_KEY = re.compile(r"[a-z][a-z0-9_-]{0,31}")
+
+
+def save_house(key: str, spec: dict[str, Any]) -> Path:
+    """Write a house style.
+
+    Formats were two files I wrote by hand, which makes "what shapes exist"
+    a thing only somebody editing the repository can change. They are data --
+    a name, a role vocabulary, a few thresholds and the reason each one is
+    what it is -- and the reason is the part worth keeping: `why` is the only
+    field that survives being read six months later.
+    """
+    if not SAFE_KEY.fullmatch(key):
+        raise ValueError("公版代號只能用小寫英數、底線、減號，開頭是英文字母")
+    if not str(spec.get("name") or "").strip():
+        raise ValueError("公版要有名字")
+    roles = [str(one).strip() for one in (spec.get("structure") or {}).get("roles") or []]
+    if len(roles) < 3 or len(set(roles)) != len(roles):
+        raise ValueError("角色至少三個，而且不能重複")
+    FORMATS.mkdir(parents=True, exist_ok=True)
+    path = FORMATS / f"{key}.json"
+    path.write_text(json.dumps(spec, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    _cache.pop(str(path), None)
+    return path
+
+
+def drop_house(key: str) -> bool:
+    """Remove one. The fallback shape cannot go -- a script with no format is
+    an argument, and nothing would be left to fall back to."""
+    if key == FALLBACK:
+        raise ValueError(f"{FALLBACK} 是預設公版，不能刪")
+    path = FORMATS / f"{key}.json"
+    if not path.is_file():
+        return False
+    path.unlink()
+    _cache.pop(str(path), None)
+    return True
+
+
+def used_by(key: str) -> list[str]:
+    """Scripts written in this shape. Asked before deleting one, because
+    removing a format silently turns every script written in it into an
+    argument with unreadable roles."""
+    from core import script as script_module
+    out = []
+    for name in script_module.names():
+        try:
+            if script_module.load(name).get("format") == key:
+                out.append(name)
+        except Exception:                                         # noqa: BLE001
+            continue
+    return out
+
+
 def house(which: str | None = None) -> dict[str, Any]:
     """One house style, falling back to the argument shape.
 
