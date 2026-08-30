@@ -15,6 +15,7 @@ what this returns is a candidate, to be looked at before it is used.
 """
 from __future__ import annotations
 
+import html
 import re
 from pathlib import Path
 from typing import Any
@@ -51,7 +52,10 @@ def read(path: Path | str) -> list[dict[str, Any]]:
             start = _seconds(*found.group(1, 2, 3, 4))
             end = _seconds(*found.group(5, 6, 7, 8))
             continue
-        line = TAGS.sub("", raw).strip()
+        # Broadcast captions arrive HTML-escaped -- `&nbsp;` between every
+        # word on some channels, `&gt;&gt;` for a change of speaker. Left in,
+        # they reach the page and any prompt built from it.
+        line = html.unescape(TAGS.sub("", raw)).replace("\xa0", " ").strip()
         if line.startswith(("WEBVTT", "Kind:", "Language:", "NOTE")):
             continue
         if line and not line.isdigit():

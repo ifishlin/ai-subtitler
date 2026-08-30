@@ -9,7 +9,10 @@
         "url": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
         "outlet": "Fox Business",
         "lean": "right",
-        "seconds": 466.0
+        "seconds": 466.0,
+        "file": "assets/footage/AI資料中心推高電費/uQ3Qc2gi2RQ.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/uQ3Qc2gi2RQ.en-orig.vtt",
+        "size": 32079360
       },
       {
         "title": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
@@ -26,21 +29,30 @@
         "url": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
         "outlet": "PBS NewsHour",
         "lean": "centre-left",
-        "seconds": 1607.0
+        "seconds": 1607.0,
+        "file": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.en-US.vtt",
+        "size": 90596100
       },
       {
         "title": "Lifelong TX Republicans pledge to vote Dem over data centers",
         "url": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
         "outlet": "CNN",
         "lean": "left",
-        "seconds": 857.0
+        "seconds": 857.0,
+        "file": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.en-en.vtt",
+        "size": 52263571
       },
       {
         "title": "Inside ETFs: Is AI's power problem an opportunity?",
         "url": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
         "outlet": "Reuters",
         "lean": "neutral",
-        "seconds": 316.0
+        "seconds": 316.0,
+        "file": "assets/footage/AI資料中心推高電費/j7yZ5vrIASw.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/j7yZ5vrIASw.en-orig.vtt",
+        "size": 25483178
       },
       {
         "title": "David Icke talks conspiracy theories - BBC News",

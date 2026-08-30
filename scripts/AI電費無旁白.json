@@ -1,196 +1,251 @@
 {
   "topic": "AI資料中心推高電費",
-  "angle": "影響民眾生活",
-  "audience": "每個要付帳單的人",
-  "view": "兩邊都有數據，因為算的不是同一件事——全州平均會稀釋掉，資料中心不是平均分布的",
+  "view": "大家吵的是電夠不夠，沒有人在吵線夠不夠——而線的錢是照人頭分攤的。",
   "tone": "詼諧",
-  "voice": "無旁白",
-  "note": "每一句實拍都在寫的時候就指定了圖檔。",
-  "sources": {
-    "video": [
-      {
-        "title": "We solve the 'power problem' AI data centers are facing: Onsemi CEO",
-        "url": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "outlet": "Fox Business",
-        "lean": "right",
-        "seconds": 466.0
-      },
-      {
-        "title": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
-        "url": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "seconds": 225.0,
-        "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "captions": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.en-en.vtt",
-        "size": 108353541
-      }
-    ],
-    "reports": [
-      {
-        "title": "AI data center 'frenzy' is pushing up your electric bill — here's why",
-        "url": "https://www.cnbc.com/2025/11/26/ai-data-center-frenzy-is-pushing-up-your-electric-bill-heres-why.html",
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "facts": [
-          "住宅電價 2025 年漲 7.1%，是通膨的兩倍多",
-          "部分州漲幅超過 20%"
-        ]
-      },
-      {
-        "title": "Who pays for AI's electricity? Data centers spark debate",
-        "url": "https://www.cnbc.com/2026/03/13/ai-data-centers-electricity-prices-backlash-ratepayer-protection.html",
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "facts": [
-          "俄亥俄、維吉尼亞開始對大型資料中心另訂費率",
-          "「公平分攤」主張成本應直接算給資料中心"
-        ]
-      },
-      {
-        "title": "AI Data Centers Are Sending Power Bills Soaring",
-        "url": "https://www.bloomberg.com/graphics/2025-ai-data-centers-electricity-prices/",
-        "outlet": "Bloomberg",
-        "lean": "neutral",
-        "facts": [
-          "資料中心密集區的電費，五個月費用比五年前高 267%"
-        ]
-      },
-      {
-        "title": "No, AI Data Centers Are Not Driving Up Electricity Costs",
-        "url": "https://reason.com/2025/12/23/the-data-center-price-myth/",
-        "outlet": "Reason",
-        "lean": "right",
-        "facts": [
-          "電網固定成本高，用電量增加反而攤薄單位成本",
-          "反方主張：漲價來自老化電網和天然氣價格"
-        ]
-      },
-      {
-        "title": "Have Data Centers Driven Up Electricity Prices? The State-Level Data Don't Support the Narrative",
-        "url": "https://www.instituteforenergyresearch.org/the-grid/have-data-centers-driven-up-electricity-prices-the-state-level-data-dont-support-the-narrative/",
-        "outlet": "Institute for Energy Research",
-        "lean": "right",
-        "facts": [
-          "州級資料顯示資料中心數量與電價無統計顯著相關",
-          "EPRI 研究：主因是電網汰換、天災重建、天然氣價格波動"
-        ]
-      }
-    ],
-    "images": []
-  },
+  "for": "每個要付帳單的人",
+  "narration": false,
   "lines": [
     {
       "say": "你的電費帳單，去年變貴了。",
-      "show": "示意：鈔票和帳單",
-      "pic": "assets/photos/AI資料中心推高電費/7680324.jpg",
-      "from": "觀點"
+      "show": "示意：信封上寫著 PAID 和 DUE",
+      "pic": "assets/photos/AI資料中心推高電費/7111490.jpg",
+      "seen": true,
+      "from": "CNBC",
+      "seconds": 2.83
     },
     {
-      "say": "全美住宅電價漲了百分之七點一。",
-      "show": "自製：折線圖 7.1%",
-      "from": "CNBC"
+      "say": "住宅電價漲了百分之七點一。",
+      "show": "自製：數字卡",
+      "from": "CNBC",
+      "seconds": 2.83
     },
     {
       "say": "是通膨的兩倍多。",
-      "show": "自製：兩根長條對比",
-      "from": "CNBC"
+      "show": "自製：兩根長短不一的柱子",
+      "from": "CNBC",
+      "seconds": 1.9
     },
     {
       "say": "有些州漲超過兩成。",
-      "show": "自製：地圖，幾個州亮起",
-      "from": "CNBC"
+      "show": "自製：地圖卡",
+      "from": "CNBC",
+      "seconds": 1.96
     },
     {
-      "say": "大家都說，是 AI 資料中心害的。",
-      "show": "新聞畫格：CNBC 發電機組",
-      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_90.jpg",
-      "from": "CNBC"
+      "say": "你沒有多開冷氣。",
+      "show": "自製：關著的冷氣遙控器",
+      "from": "觀點",
+      "seconds": 1.9
     },
     {
-      "say": "資料中心密集的地方，單月電費比五年前高兩倍半。",
-      "show": "自製：長條圖 267%",
-      "from": "Bloomberg"
+      "say": "帳單就是變厚了。",
+      "show": "自製：兩張疊起來的帳單",
+      "from": "觀點",
+      "seconds": 1.9
     },
     {
-      "say": "聽起來很清楚。但有研究說完全沒這回事。",
-      "show": "自製：標題卡",
-      "from": "觀點"
+      "say": "大家說，是資料中心害的。",
+      "show": "影片：PBS 走過機房的走道",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
+        "start": 387.2,
+        "end": 392.8
+      },
+      "seconds": 5.6,
+      "seen": true,
+      "from": "PBS NewsHour"
     },
     {
-      "say": "州級資料顯示，資料中心數量跟電價沒有統計關聯。",
-      "show": "自製：散點圖",
-      "from": "IER"
+      "say": "但研究說，不是它們。",
+      "show": "自製：問號卡",
+      "from": "Institute for Energy Research",
+      "seconds": 2.17
     },
     {
-      "say": "電力研究院說，主因是老電網要換、天災要重建。",
-      "show": "新聞畫格：CNBC 渦輪機廠全景",
-      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_56.jpg",
-      "from": "EPRI"
+      "say": "是電網老了，天然氣在漲。",
+      "show": "自製：清單卡",
+      "from": "Institute for Energy Research",
+      "seconds": 2.61
     },
     {
-      "say": "還有天然氣在漲。",
-      "show": "新聞畫格：CNBC 廠內訪談",
-      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_180.jpg",
-      "from": "EPRI"
+      "say": "電網有些線路四十年沒換。",
+      "show": "自製：年份卡",
+      "from": "Institute for Energy Research",
+      "seconds": 2.61
     },
     {
       "say": "兩邊都有數據。誰在說謊？",
-      "show": "自製：兩個數字對撞",
-      "from": "觀點"
+      "show": "自製：兩份報告並排",
+      "from": "觀點",
+      "seconds": 2.61
     },
     {
       "say": "都沒有。",
-      "show": "自製：標題卡",
-      "from": "觀點"
+      "show": "自製：兩個字",
+      "from": "觀點",
+      "seconds": 1.9
     },
     {
-      "say": "因為他們算的不是同一件事。",
-      "show": "自製：標題卡，黃字",
-      "from": "觀點"
+      "say": "他們算的不是同一件事。",
+      "show": "自製：一條線分岔成兩條",
+      "from": "觀點",
+      "seconds": 2.39
     },
     {
-      "say": "看全州平均，一個機房會被上千萬戶稀釋掉。",
-      "show": "自製：一滴墨滴進大水缸",
-      "from": "觀點"
+      "say": "一邊算的是發電夠不夠。",
+      "show": "自製：發電廠圖示",
+      "from": "觀點",
+      "seconds": 2.39
     },
     {
-      "say": "但資料中心不是平均分布的。",
-      "show": "新聞畫格：CNBC 全美資料中心分布圖",
-      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_112.jpg",
+      "say": "發電，是蓋一座電廠。",
+      "show": "自製：電廠圖示",
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "送電，是拉一條線。",
+      "show": "自製：一條線",
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "一邊算的是電線夠不夠。",
+      "show": "示意：低角度仰看高壓電塔的鋼架和電纜",
+      "pic": "assets/photos/AI資料中心推高電費/19686062.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "say": "美國其實不缺電。",
+      "show": "自製：字卡",
+      "from": "Reuters",
+      "seconds": 1.9
+    },
+    {
+      "say": "缺的是把電送過去的線。",
+      "show": "自製：字卡",
+      "from": "Reuters",
+      "seconds": 2.39
+    },
+    {
+      "say": "電廠兩三年蓋得完。",
+      "show": "自製：兩三年",
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "發電機造得出來。",
+      "show": "影片：CNBC 渦輪機工廠的產線",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
+        "start": 46.0,
+        "end": 51.6
+      },
+      "seconds": 5.6,
+      "seen": true,
       "from": "CNBC"
     },
     {
-      "say": "你家跟機房共用同一條線，你就會知道。",
-      "show": "示意：住家後面的高壓電塔",
+      "say": "接上電網要排七年。",
+      "show": "自製：七年",
+      "from": "Reuters",
+      "seconds": 1.96
+    },
+    {
+      "say": "今年一半的機房蓋不成。",
+      "show": "自製：一半",
+      "from": "Reuters",
+      "seconds": 2.39
+    },
+    {
+      "say": "不是沒錢，是沒線。",
+      "show": "自製：錢和線",
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "那條線，你家跟機房共用。",
+      "show": "示意：山坡上一座高壓電塔，下面是住家",
       "pic": "assets/photos/AI資料中心推高電費/38341668.jpg",
-      "from": "觀點"
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.61
     },
     {
-      "say": "所以「有沒有影響」這個問題，本來就問錯了。",
-      "show": "自製：問號被劃掉",
-      "from": "觀點"
+      "say": "而線的錢，照人頭分攤。",
+      "show": "自製：分攤圖",
+      "from": "觀點",
+      "seconds": 2.39
     },
     {
-      "say": "該問的是：你住在哪裡。",
-      "show": "自製：地圖上一個圖釘",
-      "from": "觀點"
+      "say": "你家、你鄰居、和機房。",
+      "show": "自製：三個點",
+      "from": "觀點",
+      "seconds": 2.39
     },
     {
-      "say": "俄亥俄和維吉尼亞已經動手，另外對資料中心收費。",
-      "show": "自製：兩州地圖",
-      "from": "CNBC"
+      "say": "掛在同一條線上。",
+      "show": "自製：一條線串起三個點",
+      "from": "觀點",
+      "seconds": 1.9
     },
     {
-      "say": "帳單上不會寫「這裡有 AI」。",
-      "show": "示意：電表特寫",
+      "say": "德州的共和黨員受不了了。",
+      "show": "影片：CNN 德州對機房的反彈",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
+        "start": 28.7,
+        "end": 34.1
+      },
+      "seconds": 5.4,
+      "seen": true,
+      "from": "CNN"
+    },
+    {
+      "say": "州長暫停了新的機房許可。",
+      "show": "自製：暫停",
+      "from": "CNN",
+      "seconds": 2.61
+    },
+    {
+      "say": "你付的不是他們用的電。",
+      "show": "示意：一排紅色的電表",
       "pic": "assets/photos/AI資料中心推高電費/11924298.jpg",
-      "from": "觀點"
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.39
     },
     {
-      "say": "但它已經算進去了。",
-      "show": "自製：結語卡",
-      "from": "觀點"
+      "say": "是他們插隊用的那條線。",
+      "show": "自製：結論卡",
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "say": "下個月打開帳單，",
+      "show": "自製：帳單",
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "多出來的那幾百塊，",
+      "show": "自製：數字",
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "不是電變貴了。",
+      "show": "自製：字卡",
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "是隊伍變長了。",
+      "show": "自製：一排排隊的人",
+      "from": "觀點",
+      "seconds": 1.8
     }
   ]
 }

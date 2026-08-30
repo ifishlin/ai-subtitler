@@ -199,7 +199,17 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
              # five seconds out of was arriving as 1.5 GB at the higher size.
              "-f", "bv*[height<=720]+ba/b[height<=720]/bv*+ba/b",
              "--merge-output-format", "mp4", "--write-auto-subs",
-             "--sub-langs", "en.*", "--convert-subs", "vtt", "--no-warnings",
+             # `en.*` looked harmless and was not: it matches every
+             # auto-translated track YouTube offers -- en-en-uYU..., en-en-JkeT...
+             # -- so a dozen subtitle requests go out in a row, the twelfth is
+             # refused with 429, and yt-dlp abandons the video it had not yet
+             # downloaded. Two names are wanted and both are English originals.
+             "--sub-langs", "en,en-orig",
+             "--convert-subs", "vtt", "--no-warnings",
+             # A missing caption track is not a reason to come back with no
+             # video: the frames are still worth having, the video simply
+             # stops being a source of chosen ones.
+             "--no-abort-on-error",
              "-o", str(here / f"{stem}.%(ext)s")],
             capture_output=True, text=True)
     if not target.is_file():
