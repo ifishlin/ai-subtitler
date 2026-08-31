@@ -65,7 +65,10 @@
         "seconds": 148,
         "outlet": "Fox News",
         "lean": "right",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/SvcrBh8cyt0.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/SvcrBh8cyt0.en.vtt",
+        "size": 14617235
       },
       {
         "title": "TRADE WAR EXPLODES: Trump DOUBLES DOWN on Canada tariffs",
@@ -73,7 +76,10 @@
         "seconds": 406,
         "outlet": "Fox Business",
         "lean": "right",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/wnmr-jUsv_Q.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/wnmr-jUsv_Q.en.vtt",
+        "size": 45185218
       },
       {
         "title": "Trump Renames Lake Ontario as Lake America, Says Canada Is Ripping Off the US",
@@ -81,7 +87,10 @@
         "seconds": 192,
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/3P8q6Fs0v3Y.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/3P8q6Fs0v3Y.en.vtt",
+        "size": 10946451
       },
       {
         "title": "US Canada Trade Fight Shows Few Signs of Easing",
@@ -89,7 +98,10 @@
         "seconds": 746,
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/JCAuxVQ3_Hg.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/JCAuxVQ3_Hg.en.vtt",
+        "size": 29758124
       },
       {
         "title": "Who is winning the US-Canada trade war? | BBC Americast",
@@ -97,7 +109,10 @@
         "seconds": 1678,
         "outlet": "BBC News",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/pZKWNEcJYnw.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/pZKWNEcJYnw.en.vtt",
+        "size": 76434020
       },
       {
         "title": "Carney stands up to Trump | The Global Story",
@@ -105,7 +120,10 @@
         "seconds": 1575,
         "outlet": "BBC News",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/vb1H7WoqUBM.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/vb1H7WoqUBM.en.vtt",
+        "size": 88351970
       },
       {
         "title": "Mark Carney on dealing with Donald Trump",
@@ -113,7 +131,10 @@
         "seconds": 418,
         "outlet": "The Economist",
         "lean": "market-liberal",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/g-GcmOYd8hc.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/g-GcmOYd8hc.en.vtt",
+        "size": 16025448
       },
       {
         "title": "Mark Carney tells Trump 'Canada will never be for sale'",
@@ -121,7 +142,10 @@
         "seconds": 160,
         "outlet": "The Guardian",
         "lean": "left",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/Da15Gth3jEI.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/Da15Gth3jEI.en.vtt",
+        "size": 10925349
       },
       {
         "title": "Canadians laugh off a lake name change - but what about an ocean? | DW News",
@@ -129,7 +153,10 @@
         "seconds": 766,
         "outlet": "Deutsche Welle",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.en.vtt",
+        "size": 43662524
       },
       {
         "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
@@ -137,7 +164,10 @@
         "seconds": 267,
         "outlet": "Al Jazeera English",
         "lean": "non-western",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/Dnmxudm7dK8.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/Dnmxudm7dK8.en.vtt",
+        "size": 16946741
       }
     ],
     "reports": [
@@ -453,7 +483,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
-        "look": 1080974369745041408
+        "look": 1080974369745041408,
+        "seen": true
       },
       {
         "id": "frame_S9NbJin7oCM_26",
@@ -468,7 +499,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
-        "look": 9295434032418356862
+        "look": 9295434032418356862,
+        "seen": true
       },
       {
         "id": "frame_S9NbJin7oCM_42",
@@ -483,7 +515,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
-        "look": 9495510064305813560
+        "look": 9495510064305813560,
+        "seen": true
       },
       {
         "id": "frame_S9NbJin7oCM_59",
@@ -498,7 +531,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
-        "look": 16787414668265599039
+        "look": 16787414668265599039,
+        "seen": true
       },
       {
         "id": "frame_mH6N-V7AHaE_297",
@@ -513,7 +547,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=mH6N-V7AHaE",
-        "look": 9482329021391511454
+        "look": 9482329021391511454,
+        "seen": true
       },
       {
         "id": "frame_mH6N-V7AHaE_135",
@@ -528,7 +563,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=mH6N-V7AHaE",
-        "look": 78840520351973118
+        "look": 78840520351973118,
+        "seen": true
       },
       {
         "id": "frame_NGrWxr7FVPE_359",
@@ -543,7 +579,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
-        "look": 14195280900563717316
+        "look": 14195280900563717316,
+        "seen": true
       },
       {
         "id": "frame_NGrWxr7FVPE_2",
@@ -558,7 +595,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
-        "look": 15852389214496956190
+        "look": 15852389214496956190,
+        "seen": true
       },
       {
         "id": "frame_NGrWxr7FVPE_28",
@@ -573,7 +611,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
-        "look": 14987707985238453870
+        "look": 14987707985238453870,
+        "seen": true
       },
       {
         "id": "frame_mprYW_i27FM_62",
@@ -588,7 +627,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
-        "look": 11284928018391514894
+        "look": 11284928018391514894,
+        "seen": true
       },
       {
         "id": "frame_mprYW_i27FM_17",
@@ -603,7 +643,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
-        "look": 17940916948310266041
+        "look": 17940916948310266041,
+        "seen": true
       },
       {
         "id": "frame_mprYW_i27FM_79",
@@ -618,7 +659,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
-        "look": 10145497866808115076
+        "look": 10145497866808115076,
+        "seen": true
       },
       {
         "id": "frame_mprYW_i27FM_111",
@@ -633,7 +675,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
-        "look": 10127501129641008517
+        "look": 10127501129641008517,
+        "seen": true
       },
       {
         "id": "frame_OciTiMiQerI_244",
@@ -648,7 +691,8 @@
         "author": "",
         "credit": "畫面來源：Fox News",
         "page": "https://www.youtube.com/watch?v=OciTiMiQerI",
-        "look": 9151035175696489596
+        "look": 9151035175696489596,
+        "seen": true
       },
       {
         "id": "frame_OciTiMiQerI_672",
@@ -663,7 +707,8 @@
         "author": "",
         "credit": "畫面來源：Fox News",
         "page": "https://www.youtube.com/watch?v=OciTiMiQerI",
-        "look": 18446181123771661821
+        "look": 18446181123771661821,
+        "seen": true
       },
       {
         "id": "37260512",
@@ -680,7 +725,8 @@
         "size": [
           4000,
           2250
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "1685778",
@@ -697,7 +743,8 @@
         "size": [
           4032,
           3024
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "19784153",
@@ -714,7 +761,8 @@
         "size": [
           4000,
           3000
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "32272512",
@@ -731,7 +779,8 @@
         "size": [
           5973,
           3982
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "32272511",
@@ -748,7 +797,8 @@
         "size": [
           4636,
           3091
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "38645978",
@@ -765,7 +815,8 @@
         "size": [
           6192,
           4125
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "10075823",
@@ -782,7 +833,8 @@
         "size": [
           5184,
           3456
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "5663229",
@@ -799,7 +851,8 @@
         "size": [
           5184,
           3456
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "31805295",
@@ -816,7 +869,8 @@
         "size": [
           4032,
           3024
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "6814526",
@@ -833,7 +887,8 @@
         "size": [
           4023,
           2682
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "8730998",
@@ -850,7 +905,8 @@
         "size": [
           3147,
           2101
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "618158",
@@ -867,7 +923,8 @@
         "size": [
           4896,
           2760
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "27697309",
@@ -884,7 +941,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "39246449",
@@ -901,7 +959,8 @@
         "size": [
           4592,
           3448
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "13398906",
@@ -918,7 +977,8 @@
         "size": [
           4080,
           3072
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "ISS-36_Lake_Ontario_(horizontal).jpg",
@@ -935,7 +995,8 @@
         "size": [
           4256,
           2832
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg",
@@ -952,7 +1013,8 @@
         "size": [
           2534,
           3379
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg",
@@ -969,7 +1031,8 @@
         "size": [
           1594,
           2048
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg",
@@ -986,7 +1049,8 @@
         "size": [
           5200,
           4000
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "3Falls_Niagara.jpg",
@@ -1003,7 +1067,8 @@
         "size": [
           3008,
           2000
-        ]
+        ],
+        "seen": true
       }
     ],
     "data": []

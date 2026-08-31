@@ -514,6 +514,20 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
     thing, the street it happened on, and the graphic the broadcaster put up
     are only available where they were broadcast.
     """
+    return bring_in_why(name, video)[0]
+
+
+def bring_in_why(name: str, video: dict[str, Any]
+                 ) -> tuple[dict[str, Any], str]:
+    """同上，但抓不到的時候說得出為什麼。
+
+    `bring_in()` 失敗回一個空字典，理由丟掉。於是「被 429 擋了、等一下就好」
+    和「這支影片被下架了」在畫面上一模一樣，而它們該做的事完全相反 ——
+    一個要重試，一個要放棄。
+
+    yt-dlp 的錯誤在 stderr 的最後幾行，原樣帶出來。認得出 429 是因為那一種
+    值得重試，其餘的不值得。
+    """
     import subprocess
     here = footage(name)
     here.mkdir(parents=True, exist_ok=True)
@@ -527,8 +541,9 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
     #
     # Captions are optional; the film is not. So the optional step goes
     # second, where failing costs only the chosen frames.
+    trouble = ""
     if not target.is_file():
-        subprocess.run(
+        done = subprocess.run(
             [str(ROOT / ".venv/bin/yt-dlp"), video["url"], "--no-playlist",
              # 720p, not 1080p. The short is 1080 wide, so a 1280-wide source
              # is still being scaled down -- and a 27-minute programme we take
@@ -537,8 +552,10 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
              "--merge-output-format", "mp4", "--no-warnings",
              "-o", str(here / f"{stem}.%(ext)s")],
             capture_output=True, text=True)
+        trouble = (done.stderr or done.stdout or "").strip().splitlines()
+        trouble = trouble[-1][:150] if trouble else "yt-dlp 沒有說原因"
     if not target.is_file():
-        return {}
+        return {}, trouble
     if not sorted(here.glob(f"{stem}*.vtt")):
         # One name at a time. `en.*` looked harmless and was not: it matches
         # every auto-translated track YouTube offers -- en-en-uYU...,
@@ -554,9 +571,9 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
             if sorted(here.glob(f"{stem}*.vtt")):
                 break
     subs = sorted(here.glob(f"{stem}*.vtt"))
-    return {"file": str(target.relative_to(ROOT)),
-            "captions": str(subs[0].relative_to(ROOT)) if subs else None,
-            "size": target.stat().st_size}
+    return ({"file": str(target.relative_to(ROOT)),
+             "captions": str(subs[0].relative_to(ROOT)) if subs else None,
+             "size": target.stat().st_size}, "")
 
 
 def keywords(pile: dict[str, Any]) -> list[str]:
@@ -740,6 +757,10 @@ def cut_frames(name: str, video: dict[str, Any],
             continue
         made.append({
             "id": target.stem, "kind": "frame",
+            # 預設看過。畫格是從我們自己收的影片截的，而它的 caption 就是
+            # 那一刻說的話 —— 那比任何一張搜尋來的圖都清楚。
+            # 覺得不對的在素材頁標成沒看過。
+            "seen": True,
             "term": f"{video['outlet']} {int(moment)}s",
             "file": str(target.relative_to(ROOT)),
             # What was being said at that second, if we know. The title was

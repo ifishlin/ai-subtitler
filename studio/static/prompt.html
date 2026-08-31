@@ -10,6 +10,14 @@
   .pickrow select{font:14px inherit;color:var(--ink);background:var(--panel);
     border:1px solid var(--line);border-radius:8px;padding:7px 10px;
     cursor:pointer;max-width:100%}
+  .pickrow button{font:13px inherit;color:var(--ink);background:var(--panel2);
+    border:1px solid var(--line);border-radius:8px;padding:7px 12px;
+    cursor:pointer}
+  .pickrow button:hover{border-color:var(--accent)}
+  .sec .grab{float:right;font:12px inherit;color:var(--ink);
+    background:var(--panel2);border:1px solid var(--line);border-radius:7px;
+    padding:3px 10px;cursor:pointer}
+  .sec .grab:hover{border-color:var(--accent)}
 
   .sec{background:var(--panel);border:1px solid var(--line);
     border-radius:12px;padding:16px 18px;margin-bottom:11px;
@@ -51,6 +59,7 @@
   <p class="under">模型收到的就是一份文字。這是<b>真的那一份</b>。</p>
 
   <div class="pickrow"><select id="pick"></select>
+    <button id="grab">下載整份 request</button>
     <span class="note" id="size"></span></div>
 
   <div id="callout"></div>
@@ -80,6 +89,19 @@
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
   (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const $ = (id) => document.getElementById(id);
+
+/* 存成檔案。用 Blob 而不是 data: 網址 —— 兩萬多字的 request 塞進網址裡，
+   有些瀏覽器會直接拒絕。 */
+function save(filename, text, kind) {
+  const url = URL.createObjectURL(new Blob([text], {type: kind}));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
 
 /* 一句話講「這一節是什麼」。 */
 const LEAD = {
@@ -130,6 +152,21 @@ async function load() {
   const what = d.what || [];
   const total = d.chars || 1;
   $("size").textContent = `整份 ${d.chars} 字`;
+
+  /* 下載的是 /api/prompt-raw 的原文，不是這一頁切好的分節 —— 分節是我整理過
+     的版本，而要拿去比對的必須是真的送出去那一串。 */
+  $("grab").onclick = async () => {
+    $("grab").disabled = true;
+    try {
+      const got = await (await fetch("/api/prompt-raw?name="
+        + encodeURIComponent(d.topic) + "&house="
+        + encodeURIComponent(d.house || "argue"))).json();
+      save(`${d.topic}-request.txt`, got.text, "text/plain;charset=utf-8");
+    } catch (error) {
+      $("size").textContent = "下載不了：" + error.message;
+    }
+    $("grab").disabled = false;
+  };
 
   const blank = what.filter((one) => one.chars === 0);
   $("callout").innerHTML = blank.length
@@ -191,9 +228,16 @@ async function showAnswer(name) {
       : "<b>這一份沒有留下原文。</b>它是在「留原文」這件事做出來之前寫的 —— "
         + "底下是存起來的文案，那是 fasten() 之後的：編號已經換成路徑、"
         + "秒數已經填好。看得出寫了什麼，看不出模型當初交的長什麼樣。"}</p>
+    <button class="grab" id="grabReply">下載這份 JSON</button>
     <details><summary>${raw ? "看模型交回來的原文" : "看存起來的那一份"}</summary>
       <pre>${esc(raw || d.kept || "")}</pre></details>
   </div>`;
+
+  /* 有原文就下載原文，沒有就下載存起來的那一份 —— 檔名說得出是哪一種，
+     不然兩個檔案長得一樣，而它們的內容差很多。 */
+  $("grabReply").onclick = () => save(
+    raw ? `${d.script}-reply.json` : `${d.script}-kept.json`,
+    raw || d.kept || "", "application/json;charset=utf-8");
 }
 </script>
 </body>

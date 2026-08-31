@@ -102,6 +102,13 @@
   .shelf figcaption.got{color:var(--faint);white-space:normal;line-height:1.35;
     max-height:2.7em;border-top:1px solid var(--line);padding-top:4px}
   .shelf figcaption.who{color:#9a8; font-size:9px}
+  /* 這張圖信不信。安靜地待在角落 —— 大部分時候不用動它，而要動的時候
+     它就在那張圖旁邊，不必去別的地方找。 */
+  .shelf .eye{display:block;width:100%;border:none;border-top:1px solid
+    var(--line);border-radius:0;padding:3px 6px;font:10px var(--mono);
+    color:var(--faint);background:none;text-align:left}
+  .shelf .eye:hover{color:var(--accent);background:#00000033}
+  .shelf .eye.no{color:var(--warn);background:#241f12}
   /* A shot at the size it will be seen. The row thumbnails are 82px tall
      and a card's own type is 76px on a 1920 frame -- legible in the finished
      video, illegible in the list -- so the list is for finding a shot and
@@ -782,6 +789,14 @@ async function openTopic(name) {
                            : one.term || "")}</figcaption>
           <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
           ${one.credit ? `<figcaption class="who">${escapeHTML(one.credit)}</figcaption>` : ""}
+          <!-- 這張圖信不信。收回來預設「看過」—— 一律不信直到有人打勾，
+               等於每寫一份文案都要重看一次同一批圖。標成沒看過的，
+               unchecked 那道門會擋掉用到它的句子。 -->
+          <button class="eye${one.seen === false ? " no" : ""}"
+            data-file="${escapeHTML(one.file || "")}"
+            title="${one.seen === false ? "標成沒看過了，用到它的句子會被擋"
+                                        : "看過了。按一下標成沒看過"}"
+            >${one.seen === false ? "沒看過" : "看過"}</button>
         </figure>`).join("")}</div>`
         : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}
       </section>`;
@@ -1187,6 +1202,24 @@ $("paper").addEventListener("click", (event) => {
   const card = event.target.closest("[data-script]");
   if (card) { leaveTo("/scripts?name="
     + encodeURIComponent(card.dataset.script)); return; }
+
+  /* 「看過／沒看過」要在放大之前攔下來 —— 它在那張圖的框裡面，
+     不攔的話按它會順便把圖打開。 */
+  const eye = event.target.closest(".shelf .eye");
+  if (eye) {
+    event.stopPropagation();
+    const now = !eye.classList.contains("no");   // 現在是看過 → 改成沒看過
+    api("POST", "/api/topic/picture-seen",
+        {name: STATE.chosen, file: eye.dataset.file, seen: !now})
+      .then((back) => {
+        eye.classList.toggle("no", !back.seen);
+        eye.textContent = back.seen ? "看過" : "沒看過";
+        eye.title = back.seen ? "看過了。按一下標成沒看過"
+                              : "標成沒看過了，用到它的句子會被擋";
+      })
+      .catch((error) => told("改不了", error.message));
+    return;
+  }
 
   const shelf = event.target.closest(".shelf [data-shot]");
   if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }

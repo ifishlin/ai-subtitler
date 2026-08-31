@@ -126,7 +126,8 @@
           6000,
           4000
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "7680324",
@@ -141,7 +142,8 @@
           6720,
           4480
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "7111490",
@@ -156,7 +158,8 @@
           5909,
           3939
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "11924298",
@@ -171,7 +174,8 @@
           6000,
           4000
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "10065200",
@@ -186,7 +190,8 @@
           6488,
           4328
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "30144993",
@@ -201,7 +206,8 @@
           7728,
           5152
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "37730212",
@@ -216,7 +222,8 @@
           4108,
           2734
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "17489151",
@@ -231,7 +238,8 @@
           3872,
           2592
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "17489160",
@@ -246,7 +254,8 @@
           6016,
           4016
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "11166543",
@@ -261,7 +270,8 @@
           7952,
           5304
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "19686062",
@@ -276,7 +286,8 @@
           6000,
           4000
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "13216331",
@@ -291,7 +302,8 @@
           6960,
           4640
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "12551266",
@@ -306,7 +318,8 @@
           5472,
           3648
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "27275324",
@@ -321,7 +334,8 @@
           5688,
           3792
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "38341668",
@@ -336,7 +350,8 @@
           6129,
           3992
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "11368700",
@@ -351,7 +366,8 @@
           6240,
           4160
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "3171295",
@@ -366,7 +382,8 @@
           4069,
           2718
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "11369060",
@@ -381,7 +398,8 @@
           6199,
           4133
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "17489157",
@@ -396,7 +414,8 @@
           6016,
           4016
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "5480781",
@@ -411,7 +430,8 @@
           6048,
           4024
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "37605910",
@@ -426,7 +446,8 @@
           4256,
           2832
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "34610699",
@@ -441,7 +462,8 @@
           3000,
           2000
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "33217702",
@@ -456,7 +478,8 @@
           4806,
           2700
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "17018102",
@@ -471,7 +494,8 @@
           6000,
           4000
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "7616651",
@@ -486,7 +510,8 @@
           5472,
           3648
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "36730582",
@@ -501,7 +526,8 @@
           3800,
           2138
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "271614",
@@ -516,7 +542,8 @@
           5616,
           3868
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "5466795",
@@ -531,7 +558,8 @@
           6000,
           4000
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "7735796",
@@ -546,7 +574,8 @@
           3751,
           2737
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "5900233",
@@ -561,7 +590,8 @@
           6720,
           4480
         ],
-        "kind": "stock"
+        "kind": "stock",
+        "seen": true
       },
       {
         "id": "141680753",
@@ -578,7 +608,8 @@
           3264,
           1836
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "26575836",
@@ -595,7 +626,8 @@
           2048,
           1360
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "165776581",
@@ -612,7 +644,8 @@
           4000,
           3000
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "152346043",
@@ -629,7 +662,8 @@
           6016,
           4016
         ],
-        "answers": 1.0
+        "answers": 1.0,
+        "seen": true
       },
       {
         "id": "131774185",
@@ -646,7 +680,8 @@
           3106,
           4096
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "197834157",
@@ -663,7 +698,8 @@
           6554,
           4369
         ],
-        "answers": 0.5
+        "answers": 0.5,
+        "seen": true
       },
       {
         "id": "103494974",
@@ -680,7 +716,8 @@
           4150,
           2790
         ],
-        "answers": 1.0
+        "answers": 1.0,
+        "seen": true
       },
       {
         "id": "121140343",
@@ -697,7 +734,8 @@
           6720,
           4480
         ],
-        "answers": 0.5
+        "answers": 0.5,
+        "seen": true
       },
       {
         "id": "56720546",
@@ -714,7 +752,8 @@
           4119,
           3199
         ],
-        "answers": 1.0
+        "answers": 1.0,
+        "seen": true
       },
       {
         "id": "36433653",
@@ -731,7 +770,8 @@
           2337,
           3208
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "38708143",
@@ -748,7 +788,8 @@
           4509,
           3553
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "110102516",
@@ -765,7 +806,8 @@
           4608,
           3456
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "65122033",
@@ -782,7 +824,8 @@
           3264,
           2448
         ],
-        "answers": 1.0
+        "answers": 1.0,
+        "seen": true
       },
       {
         "id": "66391416",
@@ -799,7 +842,8 @@
           923,
           645
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "16886979",
@@ -816,7 +860,8 @@
           3600,
           2100
         ],
-        "answers": 1.0
+        "answers": 1.0,
+        "seen": true
       },
       {
         "id": "138554678",
@@ -833,7 +878,8 @@
           3000,
           1500
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "29153949",
@@ -850,7 +896,8 @@
           2592,
           3456
         ],
-        "answers": 0.5
+        "answers": 0.5,
+        "seen": true
       },
       {
         "id": "110732208",
@@ -867,7 +914,8 @@
           5472,
           3648
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "117569941",
@@ -884,7 +932,8 @@
           3456,
           2304
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "117569947",
@@ -901,7 +950,8 @@
           3456,
           2304
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "95617449",
@@ -918,7 +968,8 @@
           4160,
           2340
         ],
-        "answers": 0.0
+        "answers": 0.0,
+        "seen": true
       },
       {
         "id": "frame_uQ3Qc2gi2RQ_24",
@@ -933,7 +984,8 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "look": 13636898436874805375
+        "look": 13636898436874805375,
+        "seen": true
       },
       {
         "id": "frame_uQ3Qc2gi2RQ_135",
@@ -948,7 +1000,8 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "look": 80069283640563964
+        "look": 80069283640563964,
+        "seen": true
       },
       {
         "id": "frame_uQ3Qc2gi2RQ_239",
@@ -963,7 +1016,8 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "look": 3836924688511198780
+        "look": 3836924688511198780,
+        "seen": true
       },
       {
         "id": "frame_gk8ziQCWK1w_44",
@@ -978,7 +1032,8 @@
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "look": 4575656199240204516
+        "look": 4575656199240204516,
+        "seen": true
       },
       {
         "id": "frame_gk8ziQCWK1w_12",
@@ -993,7 +1048,8 @@
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "look": 504417447722418175
+        "look": 504417447722418175,
+        "seen": true
       },
       {
         "id": "frame_gk8ziQCWK1w_91",
@@ -1008,7 +1064,8 @@
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "look": 72339877479202732
+        "look": 72339877479202732,
+        "seen": true
       },
       {
         "id": "frame_fkB8mt1DEVw_3",
@@ -1023,7 +1080,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
-        "look": 11278131665705631999
+        "look": 11278131665705631999,
+        "seen": true
       },
       {
         "id": "frame_fkB8mt1DEVw_20",
@@ -1038,7 +1096,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
-        "look": 8866599221462032576
+        "look": 8866599221462032576,
+        "seen": true
       },
       {
         "id": "frame_RF6OMq1NHuE_18",
@@ -1053,7 +1112,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
-        "look": 9151169833851584000
+        "look": 9151169833851584000,
+        "seen": true
       },
       {
         "id": "frame_RF6OMq1NHuE_31",
@@ -1068,7 +1128,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
-        "look": 13618674170307083464
+        "look": 13618674170307083464,
+        "seen": true
       },
       {
         "id": "frame_RF6OMq1NHuE_58",
@@ -1083,7 +1144,8 @@
         "author": "",
         "credit": "畫面來源：CNN",
         "page": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
-        "look": 18446517574448971776
+        "look": 18446517574448971776,
+        "seen": true
       },
       {
         "id": "frame_j7yZ5vrIASw_18",
@@ -1098,7 +1160,8 @@
         "author": "",
         "credit": "畫面來源：Reuters",
         "page": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
-        "look": 11013579380512259997
+        "look": 11013579380512259997,
+        "seen": true
       },
       {
         "id": "frame_j7yZ5vrIASw_163",
@@ -1113,7 +1176,8 @@
         "author": "",
         "credit": "畫面來源：Reuters",
         "page": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
-        "look": 10484876782453589947
+        "look": 10484876782453589947,
+        "seen": true
       }
     ],
     "data": []

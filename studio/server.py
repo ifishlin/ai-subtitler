@@ -933,14 +933,40 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         topic_module.save(name, pile)
 
         # Download only what the balance actually needs, newest search first.
-        want = topic_module.WANT["videos"]
-        todo = [v for v in pile["sources"]["videos"] if not v.get("file")][:want]
+        # 下載留下來的每一支，不是只下載「夠用的支數」。
+        #
+        # 這裡本來寫 `[:WANT["videos"]]`，而那個 5 同時是「幾支才算素材夠了」。
+        # 一個數字回答兩個問題，結果是裁決後留下十五支、只下載五支，另外十支
+        # 被算進 counts、參與平衡檢查、然後一個字都沒進 prompt —— 能擋你，
+        # 不能幫你。兩個問題現在有兩個數字。
+        #
+        # 被存疑的不下載：它們不算數，載了也只是佔硬碟。
+        most = topic_module.rules_module.at("collect.download_most", 20)
+        tries = topic_module.rules_module.at("collect.download_tries", 3)
+        pause = topic_module.rules_module.at("collect.download_pause", 20)
+        todo = [v for v in topic_module.settled(pile, "videos")
+                if not v.get("file")][:most]
+        missed = []
         for index, video in enumerate(todo, start=1):
-            say(index, len(todo), f"下載 {video.get('outlet', '')}")
-            got = topic_module.bring_in(name, video)
-            if got:
-                video.update(got)
-                topic_module.save(name, pile)
+            who = video.get("outlet", "")
+            for attempt in range(1, tries + 1):
+                say(index, len(todo),
+                    f"下載 {who}" + (f"（第 {attempt} 次）" if attempt > 1 else ""))
+                got, why = topic_module.bring_in_why(name, video)
+                if got:
+                    video.update(got)
+                    topic_module.save(name, pile)
+                    break
+                # 429 是「等一下再來」，其餘多半是白等。間隔往後拉，
+                # 立刻重試只會被擋更久。
+                again = "429" in why or "rate" in why.lower()
+                if not again or attempt == tries:
+                    missed.append(f"{who}：{why[:60]}")
+                    say(index, len(todo), f"⚠ {who} 下載不到：{why[:60]}")
+                    break
+                time.sleep(pause * attempt)
+        if missed:
+            trouble.append(f"下載不到 {len(missed)} 支影片：{'；'.join(missed)}")
 
         pile = topic_module.load(name)
         words = topic_module.keywords(pile)
@@ -996,7 +1022,7 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 fresh.append({
                     "id": picture.id, "term": term, "kind": "stock",
                     "file": str(target.relative_to(ROOT)),
-                    "caption": picture.about, "outlet": "Pexels",
+                    "seen": True, "caption": picture.about, "outlet": "Pexels",
                     "author": picture.author, "credit": "",
                     "answers": stock_module.answers(term, picture.about or ""),
                     "page": picture.page, "look": mark,
@@ -1031,7 +1057,7 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 fresh.append({
                     "id": picture.id, "term": title, "kind": "real",
                     "file": str(target.relative_to(ROOT)),
-                    "caption": picture.about, "outlet": "維基百科",
+                    "seen": True, "caption": picture.about, "outlet": "維基百科",
                     "author": picture.author,
                     "credit": f"{picture.author}／{picture.licence or '見檔案頁'}",
                     "answers": stock_module.answers(title, picture.about or ""),
@@ -1228,6 +1254,35 @@ def read_facts(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
     _job_run(f"整理事實：{name}", name, work)
     return {"started": name}
+
+
+@app.post("/api/topic/picture-seen")
+def picture_seen(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """把一張圖標成看過／沒看過。
+
+    判斷屬於那張圖，不屬於用到它的句子：一張確認過的圖不該每寫一份文案就要
+    再確認一次，而一張可疑的圖在每一份文案裡都一樣可疑。
+
+    收回來預設是看過的。本來的預設是「一律不信」，而那讓每一份文案的每一句
+    都要人動手 —— 代價是沒有人真的看過的圖現在會通過，這一點在
+    `script.unchecked()` 的註解裡寫著。
+    """
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    where = str(payload.get("file") or "")
+    try:
+        pile = topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    found = next((one for one in pile["sources"]["images"]
+                  if one.get("file") == where), None)
+    if found is None:
+        raise HTTPException(404, f"這個題目裡沒有 {where}")
+    found["seen"] = bool(payload.get("seen"))
+    topic_module.save(name, pile)
+    return {"file": where, "seen": found["seen"],
+            "unseen": sum(1 for one in pile["sources"]["images"]
+                          if one.get("seen") is False)}
 
 
 @app.post("/api/topics/purge")
@@ -1435,7 +1490,7 @@ def find_pictures(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                     "kind": where, "id": picture.id, "url": picture.url,
                     "outlet": "Wikimedia Commons" if where == "real" else "Pexels",
                     "author": picture.author, "page": picture.page,
-                    "caption": picture.about,
+                    "seen": True, "caption": picture.about,
                     "credit": (f"{picture.author}／{picture.about.split('　')[-1]}"
                                if where == "real" else ""),
                     "size": [picture.width, picture.height]})
@@ -1542,7 +1597,7 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             pile["sources"]["images"].append({
                 "id": picture.id, "term": term,
                 "file": str(target.relative_to(ROOT)),
-                "caption": picture.about,
+                "seen": True, "caption": picture.about,
                 "kind": "stock" if where == "stock" else "real",
                 "outlet": ("Pexels" if where == "stock"
                            else "維基百科" if where == "wiki"

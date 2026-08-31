@@ -369,16 +369,28 @@ def unchecked(script: dict[str, Any]) -> list[dict[str, Any]]:
     now, a vision model once one is wired in -- and until then the line is
     listed here.
     """
+    # 素材那邊的判斷也算數。一張圖被打上「沒看過」是**針對那張圖**，跟哪一句
+    # 用它無關；而確認過的圖不該每寫一份文案就要再確認一次。
+    #
+    # 現在收回來的照片預設是看過的，所以這道門實際上變成「擋掉被標為可疑的
+    # 那幾張」。那是刻意的取捨：本來的預設是「一律不信，直到有人打勾」，
+    # 而那讓每一份文案的每一句都要人動手。取捨的代價要說清楚 ——
+    # 沒有人真的看過的圖，現在會通過。
+    pictures, _ = gathered(script)
     out = []
     for index, line in enumerate(script.get("lines") or [], start=1):
         if not is_real(line.get("show")):
             continue
         if not (line.get("pic") or is_clip(line)):
             continue                      # already reported as unpicked
+        held = pictures.get(str(line.get("pic") or ""))
+        if held is not None and held.get("seen"):
+            continue
         if not line.get("seen"):
             out.append({"line": index, "say": line.get("say", ""),
                         "show": line.get("show", ""),
-                        "why": "還沒有人看過這張圖"})
+                        "why": "這張圖被標成沒看過" if held is not None
+                               else "還沒有人看過這張圖"})
     return out
 
 

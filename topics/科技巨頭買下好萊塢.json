@@ -492,7 +492,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=12g9HaRI7UU",
-        "look": 1012833271395792390
+        "look": 1012833271395792390,
+        "seen": true
       },
       {
         "id": "frame_12g9HaRI7UU_9",
@@ -507,7 +508,8 @@
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
         "page": "https://www.youtube.com/watch?v=12g9HaRI7UU",
-        "look": 17922216308886652614
+        "look": 17922216308886652614,
+        "seen": true
       },
       {
         "id": "7865064",
@@ -524,7 +526,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "35755252",
@@ -541,7 +544,8 @@
         "size": [
           3078,
           2048
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "33317197",
@@ -558,7 +562,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "32215665",
@@ -575,7 +580,8 @@
         "size": [
           3648,
           2736
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "13627258",
@@ -592,7 +598,8 @@
         "size": [
           3847,
           2565
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "14699396",
@@ -609,7 +616,8 @@
         "size": [
           4032,
           2268
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "7991579",
@@ -626,7 +634,8 @@
         "size": [
           5982,
           3988
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "7991318",
@@ -643,7 +652,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "7991486",
@@ -660,7 +670,8 @@
         "size": [
           6000,
           4000
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "8476867",
@@ -677,7 +688,8 @@
         "size": [
           6240,
           4160
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "12898227",
@@ -694,7 +706,8 @@
         "size": [
           6240,
           4160
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "5790645",
@@ -711,7 +724,8 @@
         "size": [
           5184,
           3456
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "37726669",
@@ -728,7 +742,8 @@
         "size": [
           5184,
           3888
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "37726665",
@@ -745,7 +760,8 @@
         "size": [
           5184,
           3888
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "30483132",
@@ -762,7 +778,8 @@
         "size": [
           8192,
           5464
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "21792101",
@@ -779,7 +796,8 @@
         "size": [
           5760,
           3840
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "5202957",
@@ -796,7 +814,8 @@
         "size": [
           6640,
           4427
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "4777979",
@@ -813,7 +832,8 @@
         "size": [
           5847,
           3899
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "Larry_Ellison_picture_(cropped).png",
@@ -830,7 +850,8 @@
         "size": [
           1288,
           1717
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "frame_mEy6dWIrJd0_86",
@@ -845,7 +866,8 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
-        "look": 1387107589476614399
+        "look": 1387107589476614399,
+        "seen": true
       },
       {
         "id": "frame_mEy6dWIrJd0_4",
@@ -860,7 +882,8 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
-        "look": 233908733143875390
+        "look": 233908733143875390,
+        "seen": true
       },
       {
         "id": "frame_mEy6dWIrJd0_183",
@@ -875,7 +898,8 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
-        "look": 1242851669920580348
+        "look": 1242851669920580348,
+        "seen": true
       },
       {
         "id": "frame_NPvyaz3BCw0_1",
@@ -890,7 +914,8 @@
         "author": "",
         "credit": "畫面來源：Bloomberg",
         "page": "https://www.youtube.com/watch?v=NPvyaz3BCw0",
-        "look": 17744184778367696895
+        "look": 17744184778367696895,
+        "seen": true
       },
       {
         "id": "frame_viwG_sFgu_0_482",
@@ -905,7 +930,8 @@
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
-        "look": 17877210261964845029
+        "look": 17877210261964845029,
+        "seen": true
       },
       {
         "id": "frame_viwG_sFgu_0_64",
@@ -920,7 +946,8 @@
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
-        "look": 2305892732214439919
+        "look": 2305892732214439919,
+        "seen": true
       },
       {
         "id": "frame_lGsc338MTSk_59",
@@ -935,7 +962,8 @@
         "author": "",
         "credit": "畫面來源：The Economist",
         "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
-        "look": 13787905877016320
+        "look": 13787905877016320,
+        "seen": true
       },
       {
         "id": "frame_lGsc338MTSk_25",
@@ -950,7 +978,8 @@
         "author": "",
         "credit": "畫面來源：The Economist",
         "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
-        "look": 104268038143
+        "look": 104268038143,
+        "seen": true
       },
       {
         "id": "frame_lGsc338MTSk_100",
@@ -965,7 +994,8 @@
         "author": "",
         "credit": "畫面來源：The Economist",
         "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
-        "look": 557942556671
+        "look": 557942556671,
+        "seen": true
       },
       {
         "id": "Gate_4_Warner_Bros._Studios.jpg",
@@ -982,7 +1012,8 @@
         "size": [
           5184,
           3456
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "Brendan_Carr,_official_portrait_2025_(cropped)(b).jpg",
@@ -999,7 +1030,8 @@
         "size": [
           3674,
           4583
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "David_Zaslav_LQ_2026.jpg",
@@ -1016,7 +1048,8 @@
         "size": [
           237,
           344
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "CBS_Broadcast_Center_(55282653632).jpg",
@@ -1033,7 +1066,8 @@
         "size": [
           8457,
           4757
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "7155738",
@@ -1050,7 +1084,8 @@
         "size": [
           4000,
           2666
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "7283715",
@@ -1067,7 +1102,8 @@
         "size": [
           6426,
           4284
-        ]
+        ],
+        "seen": true
       },
       {
         "id": "3811851",
@@ -1084,7 +1120,8 @@
         "size": [
           5760,
           3840
-        ]
+        ],
+        "seen": true
       }
     ],
     "data": []
