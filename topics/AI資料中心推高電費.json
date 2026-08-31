@@ -567,7 +567,7 @@
         "id": "141680753",
         "term": "data center",
         "file": "assets/photos/AI資料中心推高電費/141680753.jpg",
-        "caption": "BT Italia Settimo Milanese.jpg　CC0",
+        "caption": "BF2 Settimo Milanese",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Davide Alotto",
@@ -577,13 +577,14 @@
         "size": [
           3264,
           1836
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "26575836",
         "term": "data center",
         "file": "assets/photos/AI資料中心推高電費/26575836.jpg",
-        "caption": "BalticServers data center.jpg　CC BY-SA 3.0",
+        "caption": "Server room of BalticServers",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "BalticServers.com",
@@ -593,13 +594,14 @@
         "size": [
           2048,
           1360
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "165776581",
         "term": "data center",
         "file": "assets/photos/AI資料中心推高電費/165776581.jpg",
-        "caption": "Centre de donnees MTL8-S - 2025-04-09 - 01.jpg　CC BY-SA 4.0",
+        "caption": "Centre de données MTL8-S, 7350 rue Frederick-Banting, dans le Technoparc de Montréal",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Jeangagnon",
@@ -609,13 +611,14 @@
         "size": [
           4000,
           3000
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "152346043",
         "term": "electrical substation",
         "file": "assets/photos/AI資料中心推高電費/152346043.jpg",
-        "caption": "20240407 Kraftwerk Mühltal.jpg　CC BY 4.0",
+        "caption": "The power station Mühltal with an electrical substation in front of it.",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Flocci Nivis",
@@ -625,13 +628,14 @@
         "size": [
           6016,
           4016
-        ]
+        ],
+        "answers": 1.0
       },
       {
         "id": "131774185",
         "term": "electrical substation",
         "file": "assets/photos/AI資料中心推高電費/131774185.jpg",
-        "caption": "Albenga stazione ferroviaria.jpg　CC BY-SA 4.0",
+        "caption": "sottostazione 3kV",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Al*from*Lig",
@@ -641,13 +645,14 @@
         "size": [
           3106,
           4096
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "197834157",
         "term": "electrical substation",
         "file": "assets/photos/AI資料中心推高電費/197834157.jpg",
-        "caption": "DSC04737 APG Leoben Substation, Leoben-Donawitz, 2026-04.jpg　CC BY-SA 4.0",
+        "caption": "The newly built substation of APG in Leoben-Donawitz (Austria).",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Aciarium",
@@ -657,13 +662,14 @@
         "size": [
           6554,
           4369
-        ]
+        ],
+        "answers": 0.5
       },
       {
         "id": "103494974",
         "term": "power station",
         "file": "assets/photos/AI資料中心推高電費/103494974.jpg",
-        "caption": "Andasol Guadix 4.jpg　CC BY-SA 4.0",
+        "caption": "Andasol Solar Power Station",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "kallerna",
@@ -673,13 +679,14 @@
         "size": [
           4150,
           2790
-        ]
+        ],
+        "answers": 1.0
       },
       {
         "id": "121140343",
         "term": "power station",
         "file": "assets/photos/AI資料中心推高電費/121140343.jpg",
-        "caption": "Banff National Park (AB, Canada), Bankhead, Lower Bankhead, Powerhouse -- 2022 -- 2253.jpg　CC BY-SA 4.0",
+        "caption": "Powerhouse, Lower Bankhead , Bankhead, Banff National Park , Alberta , Canada Banff National Park in the Canadian province of Alberta was founded in 1885 and is Canada’s oldest national park. Its creation dates back to the discovery of hot springs on Sulphur Mountain, after which the area was placed",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Dietmar Rabich",
@@ -689,13 +696,14 @@
         "size": [
           6720,
           4480
-        ]
+        ],
+        "answers": 0.5
       },
       {
         "id": "56720546",
         "term": "power station",
         "file": "assets/photos/AI資料中心推高電費/56720546.jpg",
-        "caption": "Bergtocht van parkeerplaats bij centrale Malga Mare naar Lago Lungo 44.jpg　CC BY-SA 4.0",
+        "caption": "Administration building of Hydro Dolomiti Energia in power station Malga Mare (Italy).",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Agnes Monkelbaan",
@@ -705,13 +713,14 @@
         "size": [
           4119,
           3199
-        ]
+        ],
+        "answers": 1.0
       },
       {
         "id": "36433653",
         "term": "transmission tower",
         "file": "assets/photos/AI資料中心推高電費/36433653.jpg",
-        "caption": "2014 Kłodzko, ul. Drzymały 01.JPG　CC BY-SA 4.0",
+        "caption": "Kłodzko, ul. Drzymały",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Jacek Halicki",
@@ -721,13 +730,14 @@
         "size": [
           2337,
           3208
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "38708143",
         "term": "transmission tower",
         "file": "assets/photos/AI資料中心推高電費/38708143.jpg",
-        "caption": "2015 Freileitungen bei Marxheim.jpg　CC BY-SA 3.0",
+        "caption": "Power lines near Marxheim, Germany. The insulators are inclined due to crosswind from the left.",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Kreuzschnabel",
@@ -737,13 +747,14 @@
         "size": [
           4509,
           3553
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "110102516",
         "term": "transmission tower",
         "file": "assets/photos/AI資料中心推高電費/110102516.jpg",
-        "caption": "Ada Bridge pylon (Sava river, Belgrade).jpg　CC BY-SA 4.0",
+        "caption": "Ada Bridge pylon, Belgrade, Serbia",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Petar Milošević",
@@ -753,13 +764,14 @@
         "size": [
           4608,
           3456
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "65122033",
         "term": "server room",
         "file": "assets/photos/AI資料中心推高電費/65122033.jpg",
-        "caption": "139 Server Room 01.jpg　CC BY-SA 3.0",
+        "caption": "Indian Railway 139 Server Room.",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Indrajit Das",
@@ -769,13 +781,14 @@
         "size": [
           3264,
           2448
-        ]
+        ],
+        "answers": 1.0
       },
       {
         "id": "66391416",
         "term": "server room",
         "file": "assets/photos/AI資料中心推高電費/66391416.jpg",
-        "caption": "3 intel NUC mini pc rack mount rack shelf.jpg　CC BY-SA 3.0",
+        "caption": "this is rack shelf which can install to short depth 19\" rack with 3 NUC mini PC",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Truenetworks",
@@ -785,13 +798,14 @@
         "size": [
           923,
           645
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "16886979",
         "term": "server room",
         "file": "assets/photos/AI資料中心推高電費/16886979.jpg",
-        "caption": "A view of the server room at The National Archives.jpg　CC BY 3.0",
+        "caption": "The server room at The National Archives",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "The National Archives (UK)",
@@ -801,13 +815,14 @@
         "size": [
           3600,
           2100
-        ]
+        ],
+        "answers": 1.0
       },
       {
         "id": "138554678",
         "term": "computer server",
         "file": "assets/photos/AI資料中心推高電費/138554678.jpg",
-        "caption": "3-2-1 backup 01.png　CC BY-SA 4.0",
+        "caption": "Scematic of a 3-2-1 backup strategy.",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Olaf Pichler",
@@ -817,13 +832,14 @@
         "size": [
           3000,
           1500
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "29153949",
         "term": "computer server",
         "file": "assets/photos/AI資料中心推高電費/29153949.jpg",
-        "caption": "Cabinet Network Rear Close.jpg　CC BY-SA 3.0",
+        "caption": "Server Cabinet Networking Cross Connect Panels",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Robert.Harker",
@@ -833,13 +849,14 @@
         "size": [
           2592,
           3456
-        ]
+        ],
+        "answers": 0.5
       },
       {
         "id": "110732208",
         "term": "computer server",
         "file": "assets/photos/AI資料中心推高電費/110732208.jpg",
-        "caption": "Cisco ESA IronPort C670.jpg　CC BY 2.0",
+        "caption": "In fact: Dell PowerEdge R710",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Johannes Weber",
@@ -849,13 +866,14 @@
         "size": [
           5472,
           3648
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "117569941",
         "term": "electricity meter",
         "file": "assets/photos/AI資料中心推高電費/117569941.jpg",
-        "caption": "23--MG 0377.jpg　CC BY-SA 4.0",
+        "caption": "This is an image with the theme \" Home + Habitat in Africa \" from:",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Prof OJ",
@@ -865,13 +883,14 @@
         "size": [
           3456,
           2304
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "117569947",
         "term": "electricity meter",
         "file": "assets/photos/AI資料中心推高電費/117569947.jpg",
-        "caption": "31--MG 0456.jpg　CC BY-SA 4.0",
+        "caption": "This is an image with the theme \" Home + Habitat in Africa \" from:",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Prof OJ",
@@ -881,13 +900,14 @@
         "size": [
           3456,
           2304
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "95617449",
         "term": "electricity meter",
         "file": "assets/photos/AI資料中心推高電費/95617449.jpg",
-        "caption": "Carlton County History and Heritage Center-North.jpg　CC BY-SA 4.0",
+        "caption": "Carlton County History and Heritage Center - back, Cloquet, Minnesota, USA.",
         "kind": "real",
         "outlet": "Wikimedia Commons",
         "author": "Myotus",
@@ -897,7 +917,8 @@
         "size": [
           4160,
           2340
-        ]
+        ],
+        "answers": 0.0
       },
       {
         "id": "frame_uQ3Qc2gi2RQ_24",

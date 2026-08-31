@@ -912,7 +912,7 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 fresh.append({
                     "id": picture.id, "term": term, "kind": "stock",
                     "file": str(target.relative_to(ROOT)),
-                    "caption": picture.about or term, "outlet": "Pexels",
+                    "caption": picture.about, "outlet": "Pexels",
                     "author": picture.author, "credit": "",
                     "answers": stock_module.answers(term, picture.about or ""),
                     "page": picture.page, "look": mark,
@@ -947,7 +947,7 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                 fresh.append({
                     "id": picture.id, "term": title, "kind": "real",
                     "file": str(target.relative_to(ROOT)),
-                    "caption": picture.about or title, "outlet": "維基百科",
+                    "caption": picture.about, "outlet": "維基百科",
                     "author": picture.author,
                     "credit": f"{picture.author}／{picture.licence or '見檔案頁'}",
                     "answers": stock_module.answers(title, picture.about or ""),
@@ -1351,7 +1351,7 @@ def find_pictures(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                     "kind": where, "id": picture.id, "url": picture.url,
                     "outlet": "Wikimedia Commons" if where == "real" else "Pexels",
                     "author": picture.author, "page": picture.page,
-                    "caption": picture.about or want,
+                    "caption": picture.about,
                     "credit": (f"{picture.author}／{picture.about.split('　')[-1]}"
                                if where == "real" else ""),
                     "size": [picture.width, picture.height]})
@@ -1458,7 +1458,7 @@ def gather_images(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             pile["sources"]["images"].append({
                 "id": picture.id, "term": term,
                 "file": str(target.relative_to(ROOT)),
-                "caption": picture.about or term,
+                "caption": picture.about,
                 "kind": "stock" if where == "stock" else "real",
                 "outlet": ("Pexels" if where == "stock"
                            else "維基百科" if where == "wiki"

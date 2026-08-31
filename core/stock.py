@@ -370,11 +370,43 @@ def search_commons(query: str, count: int = 6, least_wide: int = 900
             author=(author or "Wikimedia Commons")[:80],
             page=info.get("descriptionurl") or "",
             licence=licence or "見檔案頁",
-            about=_strip_tags(str((meta.get("ImageDescription") or {}).get("value") or ""))[:300]
-                  or page.get("title", "")[5:]))
+            about=_described(meta, page.get("title", ""))))
         if len(found) >= count:
             break
     return found
+
+
+# 上傳的人填了什麼就用什麼，但**檔名不算說明**。這一欄是「來源自己說這張圖
+# 是什麼」，而 `門.jpg` 回答不了那個問題 —— 而且它會讓 ⚠ 在每一張真實照片上
+# 都亮，一個永遠亮的警告跟沒有警告一樣。
+#
+# 這些分類是上傳流程加的，跟圖的內容無關。留著它們會讓說明變成
+# 「CC-Zero｜Self-published work｜Files with coordinates missing」。
+_NOT_ABOUT = ("CC-", "PD-", "PD ", "GFDL", "License", "Licence", "Self-published",
+              "Uploaded with", "Taken with", "Files with", "Images by",
+              "Flickr", "reviewed", "CC BY", "Public domain")
+
+
+def _described(meta: dict, title: str) -> str:
+    """這張圖，來源自己怎麼說的。
+
+    三層後備，都在同一個 API 回應裡，不用多打一次：上傳者寫的說明、作品名、
+    看起來像在講內容的分類。全都沒有就回空字串 —— **空的要看得出是空的**，
+    退回檔名或退回搜尋詞都會讓它看起來像有說明。
+    """
+    def field(key: str) -> str:
+        return _strip_tags(str((meta.get(key) or {}).get("value") or "")).strip()
+
+    said = field("ImageDescription")
+    if said and said.lower() != title[5:].lower():
+        return said[:300]
+    named = field("ObjectName")
+    if named and named.lower() != title[5:].lower():
+        return named[:300]
+    groups = [one.strip() for one in field("Categories").split("|")]
+    groups = [one for one in groups
+              if one and not any(skip in one for skip in _NOT_ABOUT)]
+    return "、".join(groups[:3])[:300]
 
 
 def looks_like(path: Path) -> int:
