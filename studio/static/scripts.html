@@ -176,7 +176,10 @@
     display:flex;align-items:center;gap:10px;
     margin:14px 0 0;padding:11px 15px;
     background:var(--panel);border:1px solid var(--line);
-    border-radius:10px 10px 0 0;border-bottom:none}
+    border-radius:10px 10px 0 0;border-bottom:none;
+    /* 貼底的東西下面還有內容在捲，所以底色要不透明，而且要蓋掉自己下緣以外
+       的那一條 —— 圓角外面那兩個小三角會漏出下面的字。 */
+    box-shadow:0 -8px 16px -8px #0008, 0 12px 0 0 var(--panel)}
   .film .grow{flex:1}
   .film .hint{font:11px var(--mono);color:var(--faint)}
   #paper{padding-bottom:0}

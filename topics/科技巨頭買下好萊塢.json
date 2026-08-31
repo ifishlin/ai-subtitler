@@ -190,15 +190,6 @@
         "doubt": false
       },
       {
-        "title": "Reuters | Breaking International News & Views",
-        "url": "https://news.google.com/rss/articles/CBMiPEFVX3lxTE8tZ2hNa2FhcURvbGFUZGY4clA5d1FnWlJWbnIzV2dfOFVDdDRNQ25lY2s2dzFLV2ZYRHBldA?oc=5",
-        "outlet": "Reuters",
-        "lean": "neutral",
-        "when": "Sat, 10 Sep 2005",
-        "paywall": false,
-        "doubt": true
-      },
-      {
         "title": "Warner Bros' lack of response fueled Paramount's hostile bid, filing says",
         "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQOFk3bHNXNVdxY2tPenVjd2JKNFRSZVJZYmRqRUxZdkVPa3R6QVVLZ05zT05FOWc4NEk4Mk5zbjNtYXN2RVBjSEE3ZTgyLTdVTWFodVJKaEVDeWRTMDFLUDUyc2tkR3RZNzFpWks5RUEta0NVclNibkVJX3d5UUx1eko5Y0xkLTBrZ0RGcHRHQXg3Q1RjVEtDYlgwNVZyc2hJNGxVWjloS0M2RUJFRjZ5dGw0bW5wOW4zWEZNQmhuYTZOMHZU?oc=5",
         "outlet": "Reuters",
@@ -296,15 +287,6 @@
         "when": "Thu, 26 Mar 2026",
         "paywall": false,
         "doubt": false
-      },
-      {
-        "title": "The Heirs to Jack Daniel’s Are Fighting to Keep Control | The 10-Point for August 23",
-        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNS0F3RHJzcTJzTUl5WTRVRWE0cUxlMk04UDhXLXFEOU9oajRiUG1ReERqZ2U4RjFxbDVpdno4aXYzUzBNWEpGdzBwTldlTWJIM3VTSmtyLVRrcUlCN0FhLTNOV0RxZVRTZXU1N0FMMm90RkgtOXgwdG9OWGVBdk9ndnVURE9waWE4eTdlV3VrNWtxYkpSTW9Z?oc=5",
-        "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "when": "Sun, 23 Aug 2026",
-        "paywall": true,
-        "doubt": true
       },
       {
         "title": "Warner Reopens Talks With Paramount After Sweetened Offer",
@@ -1051,6 +1033,57 @@
         "size": [
           8457,
           4757
+        ]
+      },
+      {
+        "id": "7155738",
+        "term": "person watching tv sofa",
+        "file": "assets/photos/科技巨頭買下好萊塢/7155738.jpg",
+        "caption": "Bearded man in casual wear relaxing on a sofa, enjoying coffee while watching TV indoors.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "Gustavo Fring",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/man-sitting-on-couch-holding-a-remote-control-7155738/",
+        "look": 1152922662361599951,
+        "size": [
+          4000,
+          2666
+        ]
+      },
+      {
+        "id": "7283715",
+        "term": "person watching tv sofa",
+        "file": "assets/photos/科技巨頭買下好萊塢/7283715.jpg",
+        "caption": "Woman lounging comfortably on a sofa with a remote control, enjoying leisure time indoors.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/woman-in-black-top-lying-on-sofa-7283715/",
+        "look": 506100563700613119,
+        "size": [
+          6426,
+          4284
+        ]
+      },
+      {
+        "id": "3811851",
+        "term": "person watching tv sofa",
+        "file": "assets/photos/科技巨頭買下好萊塢/3811851.jpg",
+        "caption": "Smiling male wearing casual shirt sitting with crossed legs on cozy sofa and enjoying TV series while resting in dark room with garland during weekend",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "Andrea Piacquadio",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/young-man-watching-tv-in-the-living-room-3811851/",
+        "look": 13889119104939130108,
+        "size": [
+          5760,
+          3840
         ]
       }
     ],

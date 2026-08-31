@@ -224,21 +224,29 @@
     padding:11px 15px;font-size:13px}
   .doing.ok .verdict{background:#12291f;color:var(--ok)}
   .doing.no .verdict{background:#241a14;color:var(--warn)}
-  .doing .acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-    padding:11px 15px}
-  .doing .acts input{flex:1;min-width:220px}
-  .doing .acts .gap{flex:1 0 12px}
-  .doing select{font:13px inherit;color:var(--ink);background:#0b1017;
+  /* 動作列貼在畫面底部，跟短影音那邊的「壓片」同一個處置。這一頁的素材堆
+     很長，滑到一半決定要寫不該先捲回頂端。
+     #jobBar 跑起來的時候在它下面（fixed、z-index 50），所以讓開。 */
+  body:has(#jobBar:not([hidden])) .acts{bottom:46px}
+  .acts{position:sticky;bottom:0;z-index:15;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    margin:16px 0 0;padding:11px 15px;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px 10px 0 0;border-bottom:none;
+    /* 貼底的東西下面還有內容在捲，所以底色要不透明，而且要蓋掉自己下緣以外
+       的那一條 —— 圓角外面那兩個小三角會漏出下面的字。 */
+    box-shadow:0 -8px 16px -8px #0008, 0 12px 0 0 var(--panel)}
+  .acts input{flex:1;min-width:220px}
+  .acts .gap{flex:1 0 12px}
+  .acts select{font:13px inherit;color:var(--ink);background:#0b1017;
     border:1px solid var(--line);border-radius:7px;padding:5px 9px;
     cursor:pointer}
-  .doing select:hover{border-color:var(--accent)}
-  /* 公版說明一行，全文在 title。三四句話攤開會把這一塊撐成一個段落，而它要
-     回答的問題只在選公版的那一刻問一次。 */
-  .doing .why{padding:0 15px 10px;font-size:11px;color:var(--faint);
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .doing .why:empty{display:none}
-  .doing .hint:empty,.doing #note:empty{display:none}
-  .doing .hint,.doing #note{padding:0 15px 10px;font-size:11px}
+  .acts select:hover{border-color:var(--accent)}
+  /* 公版說明和訊息各佔一整行，空的時候不佔位。 */
+  .acts .why,.acts .hint,.acts #note{flex:1 0 100%;font-size:11px;
+    color:var(--faint);margin:0}
+  .acts .why{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .acts .why:empty,.acts .hint:empty,.acts #note:empty{display:none}
 
   /* Who has been heard. The point is not the count -- it is whether the
      other side is in there at all, so an empty one is coloured, not just
@@ -584,29 +592,6 @@ async function open(name) {
         ).join("")}</span>
       </div>
 
-      <!-- 逐家問十九家媒體、下載、依字幕抽畫格。這是整個專案的論點所在，而
-           它一度只能從終端機跑。 -->
-      <div class="acts">
-        <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
-          spellcheck="false">
-        <button id="btnTerms" class="tiny">想幾個</button>
-        <button id="btnGather" class="${pile.ready ? "tiny" : "primary"}">${
-          pile.ready ? "再收集" : "逐家問（影片＋報導＋圖＋留言）"}</button>
-        <span class="gap"></span>
-        <!-- 公版在寫之前選，不是寫完再改：它決定角色、節奏、實拍上限和送哪
-             一份 prompt，事後換等於每一句都要重貼標籤 —— 梅西納就是這樣。 -->
-        <select id="writeAs" title="寫成哪一種">
-          ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
-            .map((one) => `<option value="${escapeHTML(one.key)}">${
-              escapeHTML(one.name || one.key)}</option>`).join("")}
-        </select>
-        <button id="btnWrite" class="${pile.ready ? "primary" : "tiny"}"
-          ${pile.ready ? "" : "disabled"}>產生文案</button>
-        ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">不齊也要寫</button>'}
-      </div>
-      <div id="whyHouse" class="why"></div>
-      <div id="termsNote" class="hint"></div>
-      <div id="note"></div>
     </div>
 
     <!-- 還沒處理的事，一區。本來是兩個一模一樣的黃框上下疊著，再加一列
@@ -732,7 +717,33 @@ async function open(name) {
             <div class="src">${escapeHTML(fact.say)}
               <div class="who">${escapeHTML(fact.from || "")}</div></div>`).join("")
         : '<div class="empty">還沒有整理</div>'}
-    </section>`;
+    </section>
+
+    <!-- 動作列貼在畫面底部，跟短影音那邊的「壓片」同一個處置。
+         這一頁比文案還長 —— 十支影片、三十四篇報導、三十四張圖、六十則留言
+         —— 滑到一半決定「夠了，來寫」，不該先捲回頂端按一顆鈕。
+         判定句留在上面：那是結論，這裡是動作。 -->
+    <div class="acts">
+      <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
+        spellcheck="false">
+      <button id="btnTerms" class="tiny">想幾個</button>
+      <button id="btnGather" class="${pile.ready ? "tiny" : "primary"}">${
+        pile.ready ? "再收集" : "逐家問（影片＋報導＋圖＋留言）"}</button>
+      <span class="gap"></span>
+      <!-- 公版在寫之前選，不是寫完再改：它決定角色、節奏、實拍上限和送哪一
+           份 prompt，事後換等於每一句都要重貼標籤 —— 梅西納就是這樣。 -->
+      <select id="writeAs" title="寫成哪一種">
+        ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
+          .map((one) => `<option value="${escapeHTML(one.key)}">${
+            escapeHTML(one.name || one.key)}</option>`).join("")}
+      </select>
+      <button id="btnWrite" class="${pile.ready ? "primary" : "tiny"}"
+        ${pile.ready ? "" : "disabled"}>產生文案</button>
+      ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">不齊也要寫</button>'}
+      <div id="whyHouse" class="why"></div>
+      <div id="termsNote" class="hint"></div>
+      <div id="note"></div>
+    </div>`;
 
   const write = async (anyway) => {
     $("note").className = "";
