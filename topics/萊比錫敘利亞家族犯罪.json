@@ -51,7 +51,7 @@
         "seconds": 149,
         "outlet": "FAZ",
         "lean": "centre-right",
-        "doubt": false,
+        "doubt": true,
         "file": "assets/footage/萊比錫敘利亞家族犯罪/Qtu_Y7YbJRk.mp4",
         "captions": "assets/footage/萊比錫敘利亞家族犯罪/Qtu_Y7YbJRk.de-orig.vtt",
         "size": 22512127
@@ -130,6 +130,24 @@
         "lean": "neutral",
         "when": "Mon, 04 Mar 2019",
         "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "BKA: Organisierte Kriminalität rekrutiert gezielt Kinder - Dobrindt verurteilt Cannabisgesetz",
+        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNRktYV1dyaGhnd21reUg3NUN4am1BYUJTSjdmdnE3N3k3RUo4VXdqS29LNVBua0NiYjBOYzA3REJVT3E1YllWRndpMnh5d1oyWVRacGxFZXBOcnp3U0M4TGFNQ2ZQMWZ4N1ZROHZlTkVCYU1yeFgwZjRxVnZZeFg3WHlCOFVDQmtWSGdEanltaE9SOHprWlZhVHJ5ekFCZ3huWUZJeW9rdWg3OVJ5U1BNOU9Hc2k1QXotaWxFZ2p0eERyMXFOZWc?oc=5",
+        "outlet": "Süddeutsche Zeitung",
+        "lean": "centre-left",
+        "when": "Fri, 24 Oct 2025",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "EVP-Vorsitzender Manfred Weber: Welche Schlüsse aus Ceuta gezogen werden müssen",
+        "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxNTTFKeXNUWVV3a2lrVUpCSGdzY19Rc3VhMk12QUxldFBDTXA2THEzTEdidVdjUGRycmVOT3RHbXRrTGU4TFZzVkJvQjRQdG1MMFhVNm9wWlBnUGZKc3RudkRnVmw5bHlOekdQVEJlcW55SlFmZGdGbkkxdmVkeU1JZmZZMm5Ib0lvT2Y5SmNhb2R1X25FY3hFcFU5NC0zOUtZdjNNbXdpbzJfUl84Sko2Qi1aZE5xelRkcWxsbFVFRnpQVEE1Wm9lS3hvNG55QzFmaEFFQldBVEdZWjQ?oc=5",
+        "outlet": "FAZ",
+        "lean": "centre-right",
+        "when": "Mon, 10 Aug 2026",
+        "paywall": true,
         "doubt": false
       }
     ],
@@ -439,11 +457,308 @@
           5234,
           2944
         ]
+      },
+      {
+        "id": "frame_TnXbZWDBBB4_118",
+        "kind": "frame",
+        "term": "tagesschau 118s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_TnXbZWDBBB4_118.jpg",
+        "caption": "in welchem Bereich hat die organisierte",
+        "said": "in welchem Bereich hat die organisierte",
+        "at": 118.89,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/TnXbZWDBBB4.mp4",
+        "outlet": "tagesschau",
+        "author": "",
+        "credit": "畫面來源：tagesschau",
+        "page": "https://www.youtube.com/watch?v=TnXbZWDBBB4",
+        "look": 18446181124026015519
+      },
+      {
+        "id": "frame_TnXbZWDBBB4_258",
+        "kind": "frame",
+        "term": "tagesschau 258s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_TnXbZWDBBB4_258.jpg",
+        "caption": "auch die Botschaft des in diesem Bereich",
+        "said": "auch die Botschaft des in diesem Bereich",
+        "at": 258.03,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/TnXbZWDBBB4.mp4",
+        "outlet": "tagesschau",
+        "author": "",
+        "credit": "畫面來源：tagesschau",
+        "page": "https://www.youtube.com/watch?v=TnXbZWDBBB4",
+        "look": 18428870964799668223
+      },
+      {
+        "id": "frame_VJHdLOT5y8E_148",
+        "kind": "frame",
+        "term": "DER SPIEGEL 148s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_VJHdLOT5y8E_148.jpg",
+        "caption": "Die Folgen sind nicht zu übersehen, denn",
+        "said": "Die Folgen sind nicht zu übersehen, denn",
+        "at": 148.24,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/VJHdLOT5y8E.mp4",
+        "outlet": "DER SPIEGEL",
+        "author": "",
+        "credit": "畫面來源：DER SPIEGEL",
+        "page": "https://www.youtube.com/watch?v=VJHdLOT5y8E",
+        "look": 6375724740111278075
+      },
+      {
+        "id": "frame_VJHdLOT5y8E_176",
+        "kind": "frame",
+        "term": "DER SPIEGEL 176s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_VJHdLOT5y8E_176.jpg",
+        "caption": "Mann war Teil des Gomann und kennt die",
+        "said": "Mann war Teil des Gomann und kennt die",
+        "at": 176.32,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/VJHdLOT5y8E.mp4",
+        "outlet": "DER SPIEGEL",
+        "author": "",
+        "credit": "畫面來源：DER SPIEGEL",
+        "page": "https://www.youtube.com/watch?v=VJHdLOT5y8E",
+        "look": 3689345296852103344
+      },
+      {
+        "id": "frame_VJHdLOT5y8E_560",
+        "kind": "frame",
+        "term": "DER SPIEGEL 560s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_VJHdLOT5y8E_560.jpg",
+        "caption": "Übergriffen. Die Gomans eine schrecklich",
+        "said": "Übergriffen. Die Gomans eine schrecklich",
+        "at": 560.92,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/VJHdLOT5y8E.mp4",
+        "outlet": "DER SPIEGEL",
+        "author": "",
+        "credit": "畫面來源：DER SPIEGEL",
+        "page": "https://www.youtube.com/watch?v=VJHdLOT5y8E",
+        "look": 5226587814911
+      },
+      {
+        "id": "frame_6gBFF9rHFP8_787",
+        "kind": "frame",
+        "term": "DER SPIEGEL 787s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_6gBFF9rHFP8_787.jpg",
+        "caption": "Ordnung der trappenhaus war sauber die",
+        "said": "Ordnung der trappenhaus war sauber die",
+        "at": 787.14,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/6gBFF9rHFP8.mp4",
+        "outlet": "DER SPIEGEL",
+        "author": "",
+        "credit": "畫面來源：DER SPIEGEL",
+        "page": "https://www.youtube.com/watch?v=6gBFF9rHFP8",
+        "look": 944921431531789071
+      },
+      {
+        "id": "frame_6gBFF9rHFP8_117",
+        "kind": "frame",
+        "term": "DER SPIEGEL 117s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_6gBFF9rHFP8_117.jpg",
+        "caption": "war ehrlich nicht da in das bei die",
+        "said": "war ehrlich nicht da in das bei die",
+        "at": 117.66,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/6gBFF9rHFP8.mp4",
+        "outlet": "DER SPIEGEL",
+        "author": "",
+        "credit": "畫面來源：DER SPIEGEL",
+        "page": "https://www.youtube.com/watch?v=6gBFF9rHFP8",
+        "look": 216879561123549183
+      },
+      {
+        "id": "frame_6gBFF9rHFP8_265",
+        "kind": "frame",
+        "term": "DER SPIEGEL 265s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_6gBFF9rHFP8_265.jpg",
+        "caption": "überlassen die Betrüger außerdem",
+        "said": "überlassen die Betrüger außerdem",
+        "at": 265.86,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/6gBFF9rHFP8.mp4",
+        "outlet": "DER SPIEGEL",
+        "author": "",
+        "credit": "畫面來源：DER SPIEGEL",
+        "page": "https://www.youtube.com/watch?v=6gBFF9rHFP8",
+        "look": 15979327828671987199
+      },
+      {
+        "id": "frame_rUmBFAzS4Ig_10",
+        "kind": "frame",
+        "term": "WELT 10s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_rUmBFAzS4Ig_10.jpg",
+        "caption": "berichtet, habe dieser Patriarchest",
+        "said": "berichtet, habe dieser Patriarchest",
+        "at": 10.76,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/rUmBFAzS4Ig.mp4",
+        "outlet": "WELT",
+        "author": "",
+        "credit": "畫面來源：WELT",
+        "page": "https://www.youtube.com/watch?v=rUmBFAzS4Ig",
+        "look": 14194220127682985822
+      },
+      {
+        "id": "frame_rUmBFAzS4Ig_41",
+        "kind": "frame",
+        "term": "WELT 41s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_rUmBFAzS4Ig_41.jpg",
+        "caption": "Bericht rum, einer dieser Oberhäupter",
+        "said": "Bericht rum, einer dieser Oberhäupter",
+        "at": 41.12,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/rUmBFAzS4Ig.mp4",
+        "outlet": "WELT",
+        "author": "",
+        "credit": "畫面來源：WELT",
+        "page": "https://www.youtube.com/watch?v=rUmBFAzS4Ig",
+        "look": 18445724140852764922
+      },
+      {
+        "id": "frame_y923LN82ekQ_1",
+        "kind": "frame",
+        "term": "WELT 1s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_y923LN82ekQ_1.jpg",
+        "caption": "Die Klan Kriminalität in Berlin nimmt",
+        "said": "Die Klan Kriminalität in Berlin nimmt",
+        "at": 1.52,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/y923LN82ekQ.mp4",
+        "outlet": "WELT",
+        "author": "",
+        "credit": "畫面來源：WELT",
+        "page": "https://www.youtube.com/watch?v=y923LN82ekQ",
+        "look": 18445899653074411102
+      },
+      {
+        "id": "frame_y923LN82ekQ_34",
+        "kind": "frame",
+        "term": "WELT 34s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_y923LN82ekQ_34.jpg",
+        "caption": "berüchtigten Remoclans. Niemand wird",
+        "said": "berüchtigten Remoclans. Niemand wird",
+        "at": 34.32,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/y923LN82ekQ.mp4",
+        "outlet": "WELT",
+        "author": "",
+        "credit": "畫面來源：WELT",
+        "page": "https://www.youtube.com/watch?v=y923LN82ekQ",
+        "look": 18446471394826322688
+      },
+      {
+        "id": "frame_y923LN82ekQ_54",
+        "kind": "frame",
+        "term": "WELT 54s",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/frame_y923LN82ekQ_54.jpg",
+        "caption": "Mitglieder des Remoclans auf die des",
+        "said": "Mitglieder des Remoclans auf die des",
+        "at": 54.88,
+        "source": "assets/footage/萊比錫敘利亞家族犯罪/y923LN82ekQ.mp4",
+        "outlet": "WELT",
+        "author": "",
+        "credit": "畫面來源：WELT",
+        "page": "https://www.youtube.com/watch?v=y923LN82ekQ",
+        "look": 9006636545709970192
+      },
+      {
+        "id": "LE_Hauptbahnhof-4.jpg",
+        "term": "Leipzig Hauptbahnhof",
+        "kind": "real",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/LE_Hauptbahnhof-4.jpg.jpg",
+        "caption": "Leipzig Hauptbahnhof is the central railway terminus in Leipzig, Germany, in the district Mitte. At 83,460 square metres (898,400 sq ft), it is Europe's largest railway station measured by floor area. It has 21 overground platforms housed in six iron train sheds, a multi-level concourse with towerin",
+        "outlet": "維基百科",
+        "author": "Appaloosa",
+        "credit": "Appaloosa／CC BY-SA 3.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:LE_Hauptbahnhof-4.jpg",
+        "look": 1808260647577844988,
+        "size": [
+          3791,
+          1723
+        ]
+      },
+      {
+        "id": "Susanne_Schröter_-_Buch_Wien_2025.JPG",
+        "term": "Susanne Schröter",
+        "kind": "real",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/Susanne_Schröter_-_Buch_Wien_2025.JPG.jpg",
+        "caption": "Susanne Schröter is a contemporary Social Anthropologist focusing primarily on Islam, Gender and Conflict Studies.",
+        "outlet": "維基百科",
+        "author": "C.Stadler/Bwag",
+        "credit": "C.Stadler/Bwag／CC BY-SA 4.0",
+        "answers": 0.67,
+        "page": "https://commons.wikimedia.org/wiki/File:Susanne_Schr%C3%B6ter_-_Buch_Wien_2025.JPG",
+        "look": 38588996942495488,
+        "size": [
+          4800,
+          3600
+        ]
+      },
+      {
+        "id": "Portrait_of_Nancy_Faeser_2023_(3x4_cropped).jpg",
+        "term": "Nancy Faeser",
+        "kind": "real",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/Portrait_of_Nancy_Faeser_2023_(3x4_cropped).jpg.jpg",
+        "caption": "Nancy Faeser is a German lawyer and politician of the Social Democratic Party (SPD), served as Federal Minister of the Interior and Community in Chancellor Olaf Scholz's cabinet from 2021 to 2025. She was a member of the State Parliament of Hesse from the 2003 elections until 2021. In 2019, she beca",
+        "outlet": "維基百科",
+        "author": "BerthasEnkel",
+        "credit": "BerthasEnkel／CC BY-SA 4.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_Nancy_Faeser_2023_(3x4_cropped).jpg",
+        "look": 2034506094928976879,
+        "size": [
+          2681,
+          3571
+        ]
+      },
+      {
+        "id": "DD-Schloss-gp.jpg",
+        "term": "Dresden",
+        "kind": "real",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/DD-Schloss-gp.jpg.jpg",
+        "caption": "Dresden is the capital city of the German state of Saxony and its second most populous city after Leipzig. It is the 12th most populous city of Germany, the fourth largest by area, and the third-most populous city in the area of former East Germany, after Berlin and Leipzig. Dresden's urban area com",
+        "outlet": "維基百科",
+        "author": "User:Kolossos",
+        "credit": "User:Kolossos／CC BY-SA 3.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:DD-Schloss-gp.jpg",
+        "look": 120731530690552,
+        "size": [
+          7231,
+          4294
+        ]
+      },
+      {
+        "id": "Völkerschlachtdenkmal_Leipzig_beim_Nacht.jpg",
+        "term": "Völkerschlachtdenkmal",
+        "kind": "real",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/Völkerschlachtdenkmal_Leipzig_beim_Nacht.jpg.jpg",
+        "caption": "The Monument to the Battle of the Nations is a monument in Leipzig, Germany, to the 1813 Battle of Leipzig, also known as the Battle of the Nations. Paid for mostly by donations and the city of Leipzig, it was completed in 1913 for the 100th anniversary of the battle at a cost of six million gold ma",
+        "outlet": "維基百科",
+        "author": "Stein53",
+        "credit": "Stein53／CC BY-SA 4.0",
+        "answers": 0.0,
+        "page": "https://commons.wikimedia.org/wiki/File:V%C3%B6lkerschlachtdenkmal_Leipzig_beim_Nacht.jpg",
+        "look": 17852014788607,
+        "size": [
+          4145,
+          6217
+        ]
       }
     ],
     "data": []
   },
-  "facts": [],
+  "facts": [
+    "薩克森邦刑事警察局（LKA）把萊比錫一帶 700–1000 人歸入敘利亞「clan 圈」（Focus online 專訪）",
+    "其中約 130 人有案底；其餘是因為「支援家族的行為」被計入（Focus online）",
+    "核心是四個大家族，警方不公布姓氏，因為並非所有成員都犯罪（Focus online）",
+    "受訪者是 LKA 組織犯罪科長 Raiko Märtins，「Clan 專案小組」領導人（Focus online）",
+    "專案小組 2023 年 10 月 1 日成立，跨 LKA、聯邦警察、稅務、海關（Focus online）",
+    "2025 年底薩克森約有 36300 名敘利亞人；阿富汗 15000、伊拉克 6250（Focus online）",
+    "萊比錫人口約 62 萬，德國第七大城（Focus online）",
+    "WELT 報導同一件事時引用的是 BILD 引用的 LKA 說法（WELT 影片）",
+    "WELT 加上一個 Focus 沒有的數字：32 個孩子每年約 10 萬歐元兒童津貼（WELT 影片）",
+    "聯邦刑事警察局年報：有組織犯罪去年在德國造成 20 億歐元損失（tagesschau 影片）",
+    "同一份年報顯示偵辦案件數明顯上升（tagesschau 影片）",
+    "德國最有名的家族犯罪案件在北威州：Goman 家族，波鴻地方法院審理中（DER SPIEGEL 影片）",
+    "Goman 案的罪名是地毯詐欺、詐領社會給付、可疑不動產交易、洗錢（DER SPIEGEL 影片）",
+    "柏林 Kreuzberg 兩個家族械鬥導致多起槍擊，沒有人向警方作證（WELT 影片）",
+    "BKA：有組織犯罪集團有針對性地招募兒少（Süddeutsche Zeitung）",
+    "薩克森不是德國的家族犯罪重鎮，柏林、不來梅、下薩克森、北威州才是（Focus online）"
+  ],
   "voices": [],
   "regions": [
     "DE"
@@ -452,5 +767,6 @@
   "gathered": {
     "when": 1788133424,
     "trouble": []
-  }
+  },
+  "view": "所有人在傳「萊比錫有一千個人」。沒有人問那個一千是怎麼數出來的 —— 130 個有案底，其餘是「因為支援家族」被算進去的，而算的人是同一個受訪者。"
 }
