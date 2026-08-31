@@ -1,0 +1,54 @@
+{
+  "view": "川普要改名，但安大略湖的水位你會注意到？",
+  "tone": "詼諧",
+  "lines": [
+    {
+      "say": "川普又要搞事情了，這次要改湖名！",
+      "role": "起",
+      "show": "P18",
+      "card": {
+        "kind": "word",
+        "title": "川普又要改名了"
+      },
+      "from": "P24",
+      "seconds": 3.48
+    },
+    {
+      "say": "說安大略湖改名為湖美利達？",
+      "role": "承",
+      "show": "P14",
+      "card": {
+        "kind": "word",
+        "title": "湖美利達"
+      },
+      "from": "P24",
+      "seconds": 2.83
+    },
+    {
+      "say": "但安大略湖的水位，你會注意到？",
+      "role": "轉",
+      "show": "P16",
+      "card": {
+        "kind": "word",
+        "title": "安大略湖"
+      },
+      "from": "P16",
+      "seconds": 3.26
+    },
+    {
+      "say": "還是每天看新聞的人最關心？",
+      "role": "合",
+      "show": "P27",
+      "card": {
+        "kind": "word",
+        "title": "新聞"
+      },
+      "from": "P27",
+      "seconds": 2.83
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人"
+}

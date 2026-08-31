@@ -640,6 +640,24 @@ async function open(name) {
           </label>`).join("")}</div>
       </div>` : ""}
 
+      <!-- 整理事實。收集把標題和檔案抓回來，寫作要的是可以引用的句子 ——
+           中間本來沒有任何東西把內容讀出來，所以那一節永遠是空的。
+           三個模型在一個 0 條事實的題目上都只寫出四到八句而不是三十三句。 -->
+      ${(() => {
+        const have = (pile.facts || []).length;
+        const readable = pile.readable || 0;
+        if (have >= (pile.facts_least || 8) || !readable) return "";
+        return `
+        <div class="row want">
+          <div class="what">
+            <b>${have ? `只有 ${have} 條事實` : "還沒整理出事實"}</b>
+            <span>寫作的每一句都要指得回某一篇。${readable}
+              支影片的字幕讀得到 —— 沒有事實，模型只有標題可用，寫不出九十秒</span>
+          </div>
+          <button id="btnFacts" class="tiny">讀字幕整理</button>
+        </div>`;
+      })()}
+
       ${(pile.wanted || []).length ? `
       <!-- 受眾要求的、素材堆沒有的。計數說圖夠了；計數看不出「結尾沒有東西
            可以落」，因為結尾是講給一群人聽的，而三十張講主題的圖在數字上一
@@ -1004,6 +1022,12 @@ async function open(name) {
     } catch (error) {
       $("note").className = "warn"; $("note").textContent = error.message;
     }
+  };
+  if ($("btnFacts")) $("btnFacts").onclick = async () => {
+    try {
+      await api("POST", "/api/topic/facts", {name});
+      watchJob(() => open(name));
+    } catch (error) { told('出錯了', error.message); }
   };
   if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
   if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);

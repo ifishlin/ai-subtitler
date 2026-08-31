@@ -289,6 +289,13 @@ def ready(pile: dict[str, Any]) -> tuple[bool, str]:
     gaps += [f"還缺 {n} 張{spec['label']}"
              for spec in picture_mix(pile).values() if (n := spec["short"])]
     gaps += ([f"沒有{'、'.join(even['missing'])}的說法"] if even["missing"] else [])
+    # 事實。這一項是最後補上的，因為它本來根本不在流程裡：收集抓回標題和
+    # 檔案，寫作要的是可以引用的句子，中間沒有東西把內容讀出來。三個模型在
+    # 一個 0 條事實的題目上都只寫了四到八句，而畫面上寫著「可以寫了」。
+    least = rules_module.at("facts.least", 8)
+    if (have := len(facts_of(pile))) < least:
+        gaps.append(f"只有 {have} 條事實，要 {least} 條"
+                    if have else "還沒整理出事實")
     return (not gaps), "；".join(gaps)
 
 

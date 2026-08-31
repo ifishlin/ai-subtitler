@@ -605,6 +605,8 @@ def get_topic(name: str) -> dict[str, Any]:
     except FileNotFoundError as error:
         raise HTTPException(404, str(error)) from error
     from core import script as script_module
+    from core import facts as facts_module
+    from core import rules as rules_module
     enough, why = topic_module.ready(pile)
     return {**pile, "counts": topic_module.counts(pile),
             "balance": topic_module.balance(pile), "ready": enough, "why": why,
@@ -621,7 +623,12 @@ def get_topic(name: str) -> dict[str, Any]:
             "wanted": topic_module.wanted_shots(pile),
             # Kept, but flagged. A decision waiting for somebody, not a
             # deletion already carried out on a model's say-so.
-            "doubted": topic_module.doubted(pile)}
+            "doubted": topic_module.doubted(pile),
+            # 幾支影片的字幕讀得到。算在這裡而不是在頁面上，因為它要看磁碟
+            # —— 紀錄裡的 `captions` 欄從來沒被填，能不能讀只有檔案知道。
+            "readable": len([one for one in topic_module.settled(pile, "videos")
+                             if facts_module.captions_of(one)]),
+            "facts_least": rules_module.at("facts.least", 8)}
 
 
 @app.post("/api/topic")
@@ -959,6 +966,36 @@ def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             pile["sources"][kind] = [one for one in rows
                                      if one.get("url") not in urls]
     topic_module.save(name, pile)
+
+    # 裁決之後，留下來的影片要補下載。
+    #
+    # 下載只在收集那一輪跑一次，而那時候它只抓「還沒被判掉的前幾支」—— 裁決
+    # 是之後才發生的事。結果：五支被撿回來的影片一支都沒有檔案，也就沒有字
+    # 幕，而字幕是這條路上唯一拿得到完整句子的地方。整理事實那一步於是無事
+    # 可讀，寫文案的模型手上只有標題，三個模型都只寫出四到八句。
+    #
+    # 在背景跑，因為裁決是一次點擊，而下載是分鐘級的。
+    if keep:
+        missing = [one for one in topic_module.settled(pile, "videos")
+                   if not one.get("file")][:topic_module.WANT["videos"]]
+        if missing:
+            def work(say) -> None:
+                fresh = topic_module.load(name)
+                rows = fresh["sources"]["videos"]
+                for index, video in enumerate(missing, start=1):
+                    say(index, len(missing), f"下載 {video.get('outlet', '')}")
+                    got = topic_module.bring_in(name, video)
+                    if not got:
+                        continue
+                    for one in rows:
+                        if one.get("url") == video.get("url"):
+                            one.update(got)
+                    topic_module.save(name, fresh)
+            try:
+                _job_run(f"補下載：{name}", name, work)
+            except HTTPException:
+                pass          # 已經有工作在跑，下一次裁決會再試
+
     return {"kept" if keep else "dropped": len(urls),
             "left": len(topic_module.doubted(pile))}
 
@@ -1004,6 +1041,39 @@ def mark_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         found.pop("pinned", None)
     script_module.save(name, found)
     return {"name": name, "pinned": bool(found.get("pinned"))}
+
+
+@app.post("/api/topic/facts")
+def read_facts(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """讀影片字幕，整理成一句一句帶出處的事實。
+
+    這一步本來不存在。收集抓回標題和檔案，寫作的 prompt 有一節「## 事實」，
+    中間沒有東西把內容讀出來 —— 前兩支成片的事實是人手打的，而那件事沒有被
+    記進流程，於是 TESTED.md 把第 ⑤ 步記成通過。
+
+    三個模型在一個 0 條事實的題目上都只寫出四到八句而不是三十三句。它們手上
+    只有二十三個標題，那不是能力問題。
+    """
+    from core import facts as facts_module
+    from core import topic as topic_module
+    name = str(payload.get("name") or "")
+    try:
+        topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+    def work(say) -> None:
+        got = facts_module.gather(name, say=say)
+        bits = [f"{got['added']} 條新的，共 {got['total']} 條"]
+        # 讀了 N 支、拿回 0 條要說出來，那是這個專案最貴的失敗形狀。
+        if got["nothing_from"]:
+            bits.append(f"⚠ {'、'.join(got['nothing_from'])} 讀不出東西")
+        if got["without_captions"]:
+            bits.append(f"⚠ {'、'.join(got['without_captions'])} 沒有字幕")
+        say(got["asked"], got["asked"], "　".join(bits))
+
+    _job_run(f"整理事實：{name}", name, work)
+    return {"started": name}
 
 
 @app.post("/api/topics/purge")

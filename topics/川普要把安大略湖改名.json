@@ -10,14 +10,20 @@
         "seconds": 486,
         "outlet": "CNN",
         "lean": "left",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.en.vtt",
+        "size": 35344123
       },
       {
         "title": "Trump SLAMS Canada after signing order renaming Lake Ontario",
         "url": "https://www.youtube.com/watch?v=OciTiMiQerI",
         "seconds": 747,
         "outlet": "Fox News",
-        "lean": "right"
+        "lean": "right",
+        "file": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.en.vtt",
+        "size": 78546139
       },
       {
         "title": "Trump Renames Lake Ontario as Lake America, Says Canada Is Ripping Off the US",
@@ -25,7 +31,10 @@
         "seconds": 192,
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/3P8q6Fs0v3Y.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/3P8q6Fs0v3Y.en.vtt",
+        "size": 10946451
       },
       {
         "title": "US Canada Trade Fight Shows Few Signs of Easing",
@@ -33,7 +42,10 @@
         "seconds": 746,
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/JCAuxVQ3_Hg.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/JCAuxVQ3_Hg.en.vtt",
+        "size": 29758124
       },
       {
         "title": "Canadians laugh off a lake name change - but what about an ocean? | DW News",
@@ -41,7 +53,10 @@
         "seconds": 766,
         "outlet": "Deutsche Welle",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.en.vtt",
+        "size": 43662524
       }
     ],
     "reports": [
@@ -728,7 +743,88 @@
     ],
     "data": []
   },
-  "facts": [],
+  "facts": [
+    {
+      "say": "川普要將安大略湖改名為湖美利達。",
+      "from": "CNN 第 0 秒"
+    },
+    {
+      "say": "這項命令要求內閣部內政部部長更新地理名稱資訊服務。",
+      "from": "CNN 第 21 秒"
+    },
+    {
+      "say": "安大略湖大部分水域位於美國。",
+      "from": "CNN 第 41 秒"
+    },
+    {
+      "say": "川普認為加拿大一直在貿易上佔美國便宜。",
+      "from": "CNN 第 104 秒"
+    },
+    {
+      "say": "川普宣佈要把安大略湖改名為湖美利堅",
+      "from": "Fox News 第 123 秒"
+    },
+    {
+      "say": "這項名稱變更將即時生效",
+      "from": "Fox News 第 121 秒"
+    },
+    {
+      "say": "川普認為加拿大長期佔便宜",
+      "from": "Fox News 第 165 秒"
+    },
+    {
+      "say": "加拿大未支付防務費用",
+      "from": "Fox News 第 187 秒"
+    },
+    {
+      "say": "川普期望加拿大停止佔便宜行為",
+      "from": "Fox News 第 207 秒"
+    },
+    {
+      "say": "將對加拿大進口汽車徵收高額關稅。",
+      "from": "Bloomberg 第 110 秒"
+    },
+    {
+      "say": "川普欲將安大略湖改名為湖泊美利加",
+      "from": "Bloomberg 第 20 秒"
+    },
+    {
+      "say": "此舉可能是為了在貿易談判中對抗加拿大",
+      "from": "Bloomberg 第 42 秒"
+    },
+    {
+      "say": "加拿大方面認為這只是川普的 trolling",
+      "from": "Bloomberg 第 134 秒"
+    },
+    {
+      "say": "加拿大政府不認為會有新的貿易談判直到美國中選後",
+      "from": "Bloomberg 第 247 秒"
+    },
+    {
+      "say": "加拿大希望降低關稅以保護汽車產業",
+      "from": "Bloomberg 第 271 秒"
+    },
+    {
+      "say": "川普將安大略湖改名為湖美利達。",
+      "from": "Deutsche Welle 第 12 秒"
+    },
+    {
+      "say": "加拿大總理馬克·卡尼回應稱湖名不會改變。",
+      "from": "Deutsche Welle 第 193 秒"
+    },
+    {
+      "say": "馬克·卡尼被視為反對川普的不正式領袖。",
+      "from": "Deutsche Welle 第 235 秒"
+    },
+    {
+      "say": "大多數加拿大人支持卡尼對待川普的方式。",
+      "from": "Deutsche Welle 第 322 秒"
+    },
+    {
+      "say": "卡尼在達沃斯世界經濟論壇演講中未直接提到川普。",
+      "from": "Deutsche Welle 第 368 秒"
+    }
+  ],
   "voices": [
     {
       "url": "https://www.youtube.com/watch?v=oOn5XUnycT0",
