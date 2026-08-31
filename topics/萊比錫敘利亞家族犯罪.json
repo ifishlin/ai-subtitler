@@ -742,22 +742,70 @@
     "data": []
   },
   "facts": [
-    "薩克森邦刑事警察局（LKA）把萊比錫一帶 700–1000 人歸入敘利亞「clan 圈」（Focus online 專訪）",
-    "其中約 130 人有案底；其餘是因為「支援家族的行為」被計入（Focus online）",
-    "核心是四個大家族，警方不公布姓氏，因為並非所有成員都犯罪（Focus online）",
-    "受訪者是 LKA 組織犯罪科長 Raiko Märtins，「Clan 專案小組」領導人（Focus online）",
-    "專案小組 2023 年 10 月 1 日成立，跨 LKA、聯邦警察、稅務、海關（Focus online）",
-    "2025 年底薩克森約有 36300 名敘利亞人；阿富汗 15000、伊拉克 6250（Focus online）",
-    "萊比錫人口約 62 萬，德國第七大城（Focus online）",
-    "WELT 報導同一件事時引用的是 BILD 引用的 LKA 說法（WELT 影片）",
-    "WELT 加上一個 Focus 沒有的數字：32 個孩子每年約 10 萬歐元兒童津貼（WELT 影片）",
-    "聯邦刑事警察局年報：有組織犯罪去年在德國造成 20 億歐元損失（tagesschau 影片）",
-    "同一份年報顯示偵辦案件數明顯上升（tagesschau 影片）",
-    "德國最有名的家族犯罪案件在北威州：Goman 家族，波鴻地方法院審理中（DER SPIEGEL 影片）",
-    "Goman 案的罪名是地毯詐欺、詐領社會給付、可疑不動產交易、洗錢（DER SPIEGEL 影片）",
-    "柏林 Kreuzberg 兩個家族械鬥導致多起槍擊，沒有人向警方作證（WELT 影片）",
-    "BKA：有組織犯罪集團有針對性地招募兒少（Süddeutsche Zeitung）",
-    "薩克森不是德國的家族犯罪重鎮，柏林、不來梅、下薩克森、北威州才是（Focus online）"
+    {
+      "say": "薩克森邦刑事警察局（LKA）把萊比錫一帶 700–1000 人歸入敘利亞「clan 圈」",
+      "from": "Focus online 專訪"
+    },
+    {
+      "say": "其中約 130 人有案底；其餘是因為「支援家族的行為」被計入",
+      "from": "Focus online"
+    },
+    {
+      "say": "核心是四個大家族，警方不公布姓氏，因為並非所有成員都犯罪",
+      "from": "Focus online"
+    },
+    {
+      "say": "受訪者是 LKA 組織犯罪科長 Raiko Märtins，「Clan 專案小組」領導人",
+      "from": "Focus online"
+    },
+    {
+      "say": "專案小組 2023 年 10 月 1 日成立，跨 LKA、聯邦警察、稅務、海關",
+      "from": "Focus online"
+    },
+    {
+      "say": "2025 年底薩克森約有 36300 名敘利亞人；阿富汗 15000、伊拉克 6250",
+      "from": "Focus online"
+    },
+    {
+      "say": "萊比錫人口約 62 萬，德國第七大城",
+      "from": "Focus online"
+    },
+    {
+      "say": "WELT 報導同一件事時引用的是 BILD 引用的 LKA 說法",
+      "from": "WELT 影片"
+    },
+    {
+      "say": "WELT 加上一個 Focus 沒有的數字：32 個孩子每年約 10 萬歐元兒童津貼",
+      "from": "WELT 影片"
+    },
+    {
+      "say": "聯邦刑事警察局年報：有組織犯罪去年在德國造成 20 億歐元損失",
+      "from": "tagesschau 影片"
+    },
+    {
+      "say": "同一份年報顯示偵辦案件數明顯上升",
+      "from": "tagesschau 影片"
+    },
+    {
+      "say": "德國最有名的家族犯罪案件在北威州：Goman 家族，波鴻地方法院審理中",
+      "from": "DER SPIEGEL 影片"
+    },
+    {
+      "say": "Goman 案的罪名是地毯詐欺、詐領社會給付、可疑不動產交易、洗錢",
+      "from": "DER SPIEGEL 影片"
+    },
+    {
+      "say": "柏林 Kreuzberg 兩個家族械鬥導致多起槍擊，沒有人向警方作證",
+      "from": "WELT 影片"
+    },
+    {
+      "say": "BKA：有組織犯罪集團有針對性地招募兒少",
+      "from": "Süddeutsche Zeitung"
+    },
+    {
+      "say": "薩克森不是德國的家族犯罪重鎮，柏林、不來梅、下薩克森、北威州才是",
+      "from": "Focus online"
+    }
   ],
   "voices": [
     {

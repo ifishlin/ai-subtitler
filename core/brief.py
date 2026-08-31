@@ -73,7 +73,7 @@ def sheet(name: str) -> dict[str, Any]:
     return {"topic": name,
             "note": pile.get("note", ""),
             "audience": topic_module.audience(pile),
-            "facts": pile.get("facts") or [],
+            "facts": topic_module.facts_of(pile),
             "voices": (pile.get("voices") or [])[:20],
             # Doubted sources do not go to the writer. They were excluded from
             # the count already, and letting them into the prompt would be the

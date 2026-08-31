@@ -170,6 +170,39 @@ def balance(pile: dict[str, Any]) -> dict[str, Any]:
     return {"sides": sides, "missing": missing, "balanced": not missing}
 
 
+def facts_of(pile: dict[str, Any]) -> list[dict[str, Any]]:
+    """The topic's facts, always as {say, from}.
+
+    Third time a field name has been written from memory in this project:
+    `text` for `say` when reading comments, `comments` for a loose list when
+    storing them, and facts written as plain strings with the source in
+    brackets. Every one of them failed the same way -- the page rendered
+    `undefined` or counted 0, and nothing raised.
+
+    So the shape is enforced where it is read rather than trusted where it is
+    written. A bare string keeps its words and loses nothing: whatever is in
+    the trailing brackets is the source, which is how they were written.
+    """
+    import re as re_module
+    tail = re_module.compile(r"[（(]([^（）()]+)[）)]\s*$")
+    out = []
+    for one in pile.get("facts") or []:
+        if isinstance(one, dict):
+            out.append({"say": str(one.get("say") or ""),
+                        "from": str(one.get("from") or "")})
+            continue
+        said = str(one)
+        found = tail.search(said)
+        out.append({"say": said[:found.start()].strip() if found else said.strip(),
+                    "from": found.group(1).strip() if found else ""})
+    return [one for one in out if one["say"]]
+
+
+def unsourced_facts(pile: dict[str, Any]) -> list[dict[str, Any]]:
+    """Facts with nothing to point back at. The whole promise of the pile."""
+    return [one for one in facts_of(pile) if not one["from"]]
+
+
 def picture_mix(pile: dict[str, Any]) -> dict[str, dict[str, Any]]:
     """How many of each kind of picture, and how many are still wanted."""
     images = pile.get("sources", {}).get("images") or []
@@ -817,7 +850,7 @@ def listing() -> list[dict[str, Any]]:
             "counts": counts(pile)["got"], "balance": balance(pile),
             "ready": enough, "why": why,
             "scripts": written,
-            "facts": len(pile.get("facts") or []),
+            "facts": len(facts_of(pile)),
             "leads": len(pile.get("leads") or []),
             "audience": audience(pile),
             # Out of the way rather than gone. A topic that came to nothing is
