@@ -582,7 +582,13 @@ async function open(name) {
   renderList();
   let pile;
   try { pile = await api("GET", `/api/topic?name=${encodeURIComponent(name)}`); }
-  catch (error) { $("paper").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`; return; }
+  catch (error) {
+    // 離開中就別畫。中止的 fetch 不是這個題目讀不到。
+    if (!goneQuiet(error)) {
+      $("paper").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`;
+    }
+    return;
+  }
 
   const got = pile.counts.got, want = pile.counts.want, sides = pile.balance.sides;
   const columns = [["left", "左"], ["neutral", "中立"], ["right", "右"],
@@ -1140,21 +1146,9 @@ async function boot() {
   else if (STATE.list.length) await open(STATE.list[0].name);
 }
 
-/* 壞了就說出來。一個 JavaScript 例外會讓右半邊停在「左邊選一個題目」，而
-   伺服器回 200 —— 這個專案已經有過一次整頁空白而看起來正常的紀錄。 */
-boot().catch((error) => {
-  $("paper").innerHTML =
-    `<div class="empty" style="color:var(--warn);text-align:left;
-        white-space:pre-wrap;font:12px var(--mono)">頁面出錯了：
-${escapeHTML(error && error.stack || error)}</div>`;
-});
-window.addEventListener("error", (event) => {
-  const paper = $("paper");
-  if (paper && paper.querySelector(".empty")) {
-    paper.innerHTML = `<div class="empty" style="color:var(--warn);text-align:left;
-      font:12px var(--mono)">${escapeHTML(event.message)}
-${escapeHTML(event.filename || "")}:${event.lineno}</div>`;
-  }
-});
+/* 報錯的規矩在 shared.js：壞了要說，但離開中不要說。 */
+boot().catch(reportFault);
+window.addEventListener("unhandledrejection",
+  (event) => reportFault(event.reason));
 </script>
 <script src="/static/nav.js"></script>

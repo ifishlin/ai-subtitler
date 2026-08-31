@@ -1218,20 +1218,9 @@ async function boot() {
   if (pick) { STATE.chosen = pick; renderList(); await showScript(pick); }
 }
 
-/* 壞了就說出來。一個例外會讓右半邊停在「左邊選一份文案」，而伺服器回 200。 */
-boot().catch((error) => {
-  $("paper").innerHTML =
-    `<div class="empty" style="color:var(--warn);text-align:left;
-        white-space:pre-wrap;font:12px var(--mono)">頁面出錯了：
-${escapeHTML(error && error.stack || error)}</div>`;
-});
-window.addEventListener("error", (event) => {
-  const paper = $("paper");
-  if (paper && paper.querySelector(".empty")) {
-    paper.innerHTML = `<div class="empty" style="color:var(--warn);text-align:left;
-      font:12px var(--mono)">${escapeHTML(event.message)}
-${escapeHTML(event.filename || "")}:${event.lineno}</div>`;
-  }
-});
+/* 報錯的規矩在 shared.js：壞了要說，但離開中不要說。 */
+boot().catch(reportFault);
+window.addEventListener("unhandledrejection",
+  (event) => reportFault(event.reason));
 </script>
 <script src="/static/nav.js"></script>

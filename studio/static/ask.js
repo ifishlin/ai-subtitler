@@ -61,6 +61,11 @@ function asked(title, {body = "", value = "", placeholder = "",
 }
 
 function told(title, body = "") {
+  /* 離開這一頁的時候不要彈。點選單切換頁面會中止還在等的 fetch，二十個
+     catch 於是各自叫一次 told()，而使用者看到的是一個在新頁面蓋上來之前
+     閃過的錯誤對話框 —— 那個錯誤屬於他正要離開的那一頁，而且什麼事都沒
+     發生過。goneQuiet() 在 shared.js，這裡容許它不存在（有些頁面沒載）。 */
+  if (typeof goneQuiet === "function" && goneQuiet(body)) return Promise.resolve(true);
   return showAsk(title, body ? `<p>${escapeHTML(body)}</p>` : "", "好", "");
 }
 

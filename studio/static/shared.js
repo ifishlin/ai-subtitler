@@ -137,3 +137,40 @@ if (document.readyState === "loading") {
 } else {
   shotBox();
 }
+
+
+/* ---------------------------------------------------------------- 報錯
+ *
+ * 一個 JavaScript 例外會讓右半邊停在「左邊選一個」，而伺服器回 200 —— 這個
+ * 專案有過一次整頁空白而看起來正常的紀錄，所以壞了要說出來。
+ *
+ * 但不是每個例外都值得說。點選單離開時，這一頁還在等的 fetch 會被瀏覽器中
+ * 止，promise 拒絕，於是錯誤面板在新頁面蓋上來之前閃一下 —— 那個錯誤屬於
+ * 你正在離開的那一頁，而且什麼事都沒發生。
+ *
+ * 所以離開中就閉嘴，中止造成的 fetch 失敗也閉嘴。 */
+
+let LEAVING = false;
+for (const when of ["pagehide", "beforeunload"]) {
+  window.addEventListener(when, () => { LEAVING = true; });
+}
+/* 點到同源連結就算開始離開了 —— pagehide 有時候晚於 fetch 被中止。 */
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a[href]");
+  if (link && link.origin === location.origin && !link.target) LEAVING = true;
+}, true);
+
+function goneQuiet(error) {
+  if (LEAVING) return true;
+  const said = String((error && error.message) || error || "");
+  return /Failed to fetch|NetworkError|aborted|Load failed/i.test(said);
+}
+
+function reportFault(error) {
+  if (goneQuiet(error)) return;
+  const paper = $("paper");
+  if (!paper) { console.error(error); return; }
+  paper.innerHTML = `<div class="empty" style="color:var(--warn);text-align:left;
+      white-space:pre-wrap;font:12px var(--mono)">頁面出錯了：
+${escapeHTML((error && error.stack) || error)}</div>`;
+}
