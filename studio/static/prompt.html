@@ -70,6 +70,9 @@
  "pic":  "P18"　或　"clip": "C3"</pre>
     <p class="lead">畫面用<b>編號</b>指定，不寫檔名。</p>
   </div>
+
+  <h2>它實際交回來的</h2>
+  <div id="answer"></div>
 </div>
 
 <script src="/static/nav.js"></script>
@@ -138,6 +141,15 @@ async function load() {
 
   $("what").innerHTML = what.map((one) =>
     section(one, one.chars / total)).join("");
+
+  /* 它實際交回來的。跟上面那個骨架擺在一起，因為唯一有意思的比較是
+     「要它交什麼」對「它交了什麼」—— 而骨架是手寫的，會過期。
+
+     用 d.topic 而不是網址上那個：沒有指定的時候是伺服器挑的那一題。
+     （這裡本來寫 `showAnswer(name)`，而這個檔案裡沒有 name 這個變數 ——
+     它讀到的是 window.name，空字串，然後畫面說「還沒有文案」。沒有錯誤，
+     因為那個東西真的存在。） */
+  showAnswer(d.topic);
   $("how").innerHTML = section(
     {title: "公版的寫法規定", chars: d.how.chars, items: 0, text: d.how.text},
     d.how.chars / total);
@@ -147,6 +159,42 @@ load().catch((error) => {
   $("callout").innerHTML = '<div class="callout"><b>讀不到</b><p>'
     + esc(error.message) + "</p></div>";
 });
+
+async function showAnswer(name) {
+  const back = await fetch("/api/prompt-answer?name=" + encodeURIComponent(name));
+  if (!back.ok) { $("answer").innerHTML = ""; return; }
+  const d = await back.json();
+
+  if (!d.script) {
+    $("answer").innerHTML = '<div class="sec zero"><div class="top">'
+      + '<span class="name">還沒有文案</span></div>'
+      + '<p class="lead">這個題目還沒有人（或模型）寫過。</p></div>';
+    return;
+  }
+  /* 三種狀態要分得開：沒有文案、有文案但沒留原文（那是在「留原文」做出來之前
+     寫的）、有原文。第二種最容易被誤讀成第三種。 */
+  const answered = d.answered || {};
+  const raw = answered.raw;
+  const when = answered.when
+    ? new Date(answered.when * 1000).toLocaleString("zh-TW") : "";
+  const took = answered.took ? `　${answered.took}s` : "";
+
+  $("answer").innerHTML = `
+  <div class="sec ${raw ? "" : "zero"}">
+    <div class="top">
+      <span class="name">${esc(d.script)}</span>
+      <span class="cnt">${d.lines} 句${raw
+        ? `　·　${raw.length.toLocaleString()} 字元` : ""}</span>
+    </div>
+    <p class="lead">${raw
+      ? `${esc(answered.model || "")}${esc(took)}　${esc(when)}`
+      : "<b>這一份沒有留下原文。</b>它是在「留原文」這件事做出來之前寫的 —— "
+        + "底下是存起來的文案，那是 fasten() 之後的：編號已經換成路徑、"
+        + "秒數已經填好。看得出寫了什麼，看不出模型當初交的長什麼樣。"}</p>
+    <details><summary>${raw ? "看模型交回來的原文" : "看存起來的那一份"}</summary>
+      <pre>${esc(raw || d.kept || "")}</pre></details>
+  </div>`;
+}
 </script>
 </body>
 </html>

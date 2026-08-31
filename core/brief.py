@@ -265,10 +265,19 @@ def prompt(name: str, house: str = "argue") -> str:
     """
     spec = rules_module.house(house)
     which = str(spec.get("prompt") or "script.md").removesuffix(".md")
-    body = (ROOT / "assets" / "prompts" / f"{which}.md").read_text(
-        encoding="utf-8")
-    missing = rules_module.unfilled(body, house)
-    if missing:
-        raise RuntimeError(f"{which}.md 要的名字在 rules／theme／{house} 裡沒有："
-                           f"{missing}")
-    return (rules_module.fill(body, house) + "\n\n---\n\n" + as_text(name))
+    # `visual.md` 也要送。script.md 第八行寫著「畫面怎麼配、卡片怎麼畫，在
+    # visual.md」—— 而那個檔案**從來沒有被放進 prompt 裡**。模型讀到的是一句
+    # 指向它打不開的檔案的話，然後只好自己編卡片的欄位。
+    #
+    # `card_wrong` 那道門就是為此存在的：`bars` 的長度被寫成「超過 1/3」，
+    # 八道門過了，四分鐘後死在 ImageDraw。當時記成「模型亂寫欄位」，
+    # 實際上是沒有人告訴過它欄位長什麼樣。
+    out = []
+    for part in (f"{which}.md", "visual.md"):
+        body = (ROOT / "assets" / "prompts" / part).read_text(encoding="utf-8")
+        missing = rules_module.unfilled(body, house)
+        if missing:
+            raise RuntimeError(f"{part} 要的名字在 rules／theme／{house} 裡沒有："
+                               f"{missing}")
+        out.append(rules_module.fill(body, house))
+    return "\n\n---\n\n".join(out) + "\n\n---\n\n" + as_text(name)

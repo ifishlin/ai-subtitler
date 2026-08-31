@@ -29,6 +29,7 @@ for the video, and a card can never look different in the two places.
 """
 from __future__ import annotations
 
+import functools
 import hashlib
 import json
 import math
@@ -157,11 +158,35 @@ def _base(spec: dict[str, Any]) -> tuple[Image.Image, ImageDraw.ImageDraw]:
 
 def _mid(draw: ImageDraw.ImageDraw, y: float, text: str, size: int,
          fill: str, bold: bool = True) -> None:
+    """置中一行字。**`size` 是上限，不是命令。**
+
+    十幾個地方用固定字級呼叫這裡，而其中任何一個遇到長一點的字就會畫出畫面。
+    `chain` 的 `under` 寫「我們有灣，也有湖，現在只差一個海洋」，左右各被切掉
+    一個字 —— 而那是這個專案第四次把字畫出去（前三次是字幕、bars 的列名、
+    卡片標題）。
+
+    前三次都是在各自的位置補上量測，所以第四次還是發生了。這次補在共用的這一支：
+    放得下就照原本的字級，放不下才縮。改一個地方，十幾個呼叫點一起好。
+    """
+    size = fits([text], size, bold, room=W - 2 * MARGIN)
     draw.text((W // 2, y), text, font=face(size, bold), fill=fill, anchor="ma")
 
 
 def fits(rows: list[str], want: int, bold: bool = True,
          room: int | None = None) -> int:
+    """（快取的入口，真正的計算在 `_fits` 裡。）"""
+    return _fits(tuple(rows), want, bold, room)
+
+
+@functools.lru_cache(maxsize=4096)
+def _fits(rows: tuple[str, ...], want: int, bold: bool,
+          room: int | None) -> int:
+    """同樣的字問同樣的寬度，答案一定一樣，所以只算一次。
+
+    `_mid()` 改成會量寬度之後，這一支變成**每一格畫面都跑一次** —— 一張卡
+    七十五格、一支片三十四張卡，壓片時間從兩分半變成十幾分鐘。量測是對的，
+    重算七十五次不是。
+    """
     """The largest size at or below `want` that leaves a margin on both sides.
 
     Sizes used to come from a table of character counts -- three characters
@@ -377,6 +402,10 @@ def _chain(spec: dict[str, Any], t: float) -> Image.Image:
     y = top + 250
     run = ease(min(1.0, t * 1.3))
     draw.line([(150, y), (150 + (W - 300) * run, y)], fill=tone["rule"], width=9)
+    # 每個名字置中在自己那個點上，所以它左右各只有「到畫面邊」那麼多空間 ——
+    # 頭尾兩個點離邊 150px，於是一個六個字的標籤會兩邊各被切掉一個字。
+    # 這是這個專案第四次把字畫出畫面（前三次是字幕、bars 的列名、卡片標題），
+    # 而每一次的答案都一樣：**量寬度決定字級，不要用固定值**。
     for index, name in enumerate(names):
         x = 150 + (W - 300) * (index / max(1, len(names) - 1))
         if 150 + (W - 300) * run < x - 10:
@@ -384,10 +413,14 @@ def _chain(spec: dict[str, Any], t: float) -> Image.Image:
         last = index == len(names) - 1
         colour = tone["hot"] if last else tone["cold"]
         draw.ellipse([x - 30, y - 30, x + 30, y + 30], fill=colour)
-        draw.text((x, y + 74), str(name), font=face(52),
+        # 置中的字左右對稱地長出去，所以放得下的寬度是「離最近的邊」的兩倍。
+        room = int(min(x, W - x) * 2) - 16
+        draw.text((x, y + 74), str(name), font=face(fits([str(name)], 52,
+                                                         room=room)),
                   fill=colour if last else tone["dim"], anchor="ma")
     if spec.get("under") and t > 0.7:
-        _mid(draw, y + 260, spec["under"], 66, tone["lead"])
+        _mid(draw, y + 260, spec["under"],
+             fits([str(spec["under"])], 66, room=W - 2 * MARGIN), tone["lead"])
     _note(draw, spec, t)
     return card
 

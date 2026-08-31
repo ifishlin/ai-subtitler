@@ -354,6 +354,34 @@ def prompt_raw(name: str, house: str = "argue") -> dict[str, Any]:
     return {"topic": name, "house": house, "text": text, "chars": len(text)}
 
 
+@app.get("/api/prompt-answer")
+def prompt_answer(name: str, house: str = "argue") -> dict[str, Any]:
+    """這個題目最近一份文案，以及模型當初交回來的原文。
+
+    /prompt 那一頁本來只畫得出「模型**應該**交回什麼」——一個手寫的骨架。
+    骨架會過期，而且它回答不了唯一重要的問題：**這一次它到底交了什麼。**
+
+    原文和存下來的文案是兩份東西：存下來的是 `fasten()` 之後的，P18 已經
+    變成路徑、秒數已經填好。那是對的，但那不是模型寫的。
+    """
+    from core import script as script_module
+
+    made = [one for one in script_module.listing() if one["topic"] == name]
+    if not made:
+        return {"topic": name, "script": "", "answered": None, "lines": 0}
+    latest = sorted(made, key=lambda one: one.get("modified") or 0)[-1]["name"]
+    got = script_module.load(latest)
+    answered = got.get("answered") or None
+    return {"topic": name, "script": latest,
+            "lines": len(got.get("lines") or []),
+            "answered": answered,
+            # 沒有原文的時候給存下來的那一份，並且說清楚它是哪一種。
+            # 「沒有原文」和「沒有文案」在畫面上要分得開。
+            "kept": json.dumps(
+                {k: v for k, v in got.items() if k != "answered"},
+                ensure_ascii=False, indent=1)}
+
+
 @app.get("/api/gates")
 def list_gates() -> dict[str, Any]:
     """Every gate, its docstring, and how each script stands against it.

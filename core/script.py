@@ -924,4 +924,37 @@ def card_wrong(script: dict[str, Any]) -> list[dict[str, Any]]:
                 elif not _is_number(row[1]):
                     faults.append({"line": index, "say": line.get("say", ""),
                                    "why": f"bars 的長度要是數字，寫的是「{row[1]}」"})
+                elif len(row) > 2 and (why := _not_a_colour(row[2])):
+                    faults.append({"line": index, "say": line.get("say", ""),
+                                   "why": f"bars 的顏色{why}"})
+        if (why := _not_a_colour(spec.get("colour"))):
+            faults.append({"line": index, "say": line.get("say", ""),
+                           "why": f"{kind} 卡的 colour{why}"})
     return faults
+
+
+def _not_a_colour(value: Any) -> str:
+    """這個值 Pillow 畫不畫得出來。空的不算錯 —— 沒填就用該段 tone 的顏色。
+
+    這一項是這道門的第二次補課，而兩次都是同一種卡、同一個地方炸的。第一次
+    是 `bars` 的長度寫成「超過 1/3」；這一次是顏色寫成 `ok` 和 `warn`，
+    十四道門全過，四分鐘後死在 ImageDraw 的
+    `ValueError: unknown color specifier: 'ok'`。
+
+    問 Pillow 而不是自己列一張合法名單：最後要畫的是它，而它認得的東西
+    （`#ff7a4d`、`red`、`rgb(20,30,40)`）比任何一張手寫的表都多。一張自己維護
+    的名單會漏掉合法的值，而那種誤報最後會讓人把門關掉。
+
+    `visual.md` 也補了一行說顏色要寫什麼 —— 門擋得住，但擋下來的代價是整份
+    退回重寫，而那一行的成本是零。
+    """
+    if value in (None, ""):
+        return ""
+    if not isinstance(value, str):
+        return f"要是顏色字串，寫的是「{value}」"
+    from PIL import ImageColor
+    try:
+        ImageColor.getrgb(value)
+    except ValueError:
+        return f"「{value}」不是顏色，要寫 #ff7a4d 這種，或者留空用該段的色調"
+    return ""

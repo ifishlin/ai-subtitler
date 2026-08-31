@@ -241,6 +241,14 @@ def sift(topic: str, found: list[dict[str, Any]], say=None) -> list[dict[str, An
             for index, one in enumerate(found, start=1)]
 
 
+def _which_model() -> str:
+    """哪一個模型回答的。設定會改，而一份三個月前的文案要看得出是誰寫的。"""
+    config = settings_module.load()
+    llm = config.get("llm", {})
+    which = llm.get("provider", "qwen")
+    return str((llm.get(which) or {}).get("model") or which)
+
+
 def write(topic: str, house: str = "argue", name: str | None = None,
           say=None) -> dict[str, Any]:
     """Ask for a script, keep it, and report what the gates say about it."""
@@ -252,8 +260,20 @@ def write(topic: str, house: str = "argue", name: str | None = None,
         say(1, 3, f"回來了（{took:.0f}s，{len(said)} 字元），解析中")
 
     draft = read(said)
+    # 模型交回來的原文，原樣留著。
+    #
+    # 存下來的文案是 `fasten()` 之後的：P18 已經變成檔案路徑、秒數已經填好、
+    # 出處已經對過。那是好事，但它**不是模型寫的東西** —— 要回答「模型到底
+    # 交了什麼」，只能看這一份。
+    #
+    # 留原文而不是留解析後的結果，因為解析會失敗，而失敗的時候最想看的正是
+    # 原文。`read()` 拒絕過抄回範例的答案、拒絕過 `why` 照抄 prompt 的答案，
+    # 那兩次都只在工作日誌裡留下一句「解析不了」。
+    answered = {"when": int(time.time()), "took": round(took, 1),
+                "model": _which_model(), "raw": said}
     draft = fasten(topic, draft)
     draft.update(topic=topic, format=house, narration=False)
+    draft["answered"] = answered
     draft.setdefault("for", topic_module.audience(pile))
 
     name = name or f"{topic[:10]}-{house}"

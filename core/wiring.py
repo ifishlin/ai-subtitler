@@ -263,8 +263,10 @@ def parts(name: str, house: str = "argue") -> dict[str, Any]:
     from core import brief as brief_module
 
     whole = brief_module.prompt(name, house)
-    # brief.prompt() 用 `\n\n---\n\n` 把「怎麼寫」和「有什麼」接起來。
-    how, split, what = whole.partition("\n\n---\n\n")
+    # brief.prompt() 用 `\n\n---\n\n` 分段，而前面有兩份 md（script 和
+    # visual），所以切的是**最後一個**分隔線 —— 用第一個的話 visual.md 的
+    # 十節會被當成素材，而那一頁就會說「卡片要指定怎麼畫」是一種素材。
+    how, split, what = whole.rpartition("\n\n---\n\n")
     if not split:                                    # 接法改了就不要猜
         how, what = "", whole
 
