@@ -159,36 +159,30 @@ def as_text(name: str) -> str:
     # 舊的標題寫「兩行不一致就是選錯了」，而那句話是錯的：
     # 「Server room of BalticServers」對「data center」字面上完全不一致，
     # 圖卻完全正確。caption 是拿來讀的，不是拿來比對的。
-    out.append("## 照片　—— term 是我們要的，caption 是來源自己的說明。"
-               "**照 caption 判斷這張圖是什麼**，不要照 term")
-    kinds = {"stock": "示意", "real": "真實", "frame": "新聞畫格"}
+    # 一張圖一行。之前是四行：編號＋種類＋term、caption、（畫格才有的）
+    # 第幾秒、file 路徑。四行乘以六十四張吃掉整份 prompt 的六成，而其中三行
+    # 沒有人在讀：
+    #
+    #   file      `fasten()` 拿 P18 去 `pick()` 查，prompt 裡那行沒人用，
+    #             而 script.md 明寫「寫檔名一定會錯」—— 送了等於在邀請
+    #   term      我們搜什麼，不是圖是什麼。標題自己都寫著「照 caption 判斷」，
+    #             叫模型忽略的東西就不該送。而且重複得厲害（data center ×3）
+    #   種類      真實／示意／新聞畫格，沒有任何門在讀 —— `is_real()` 只分
+    #             「自製」和「不是自製」，而這裡每一張都不是自製；credit 由
+    #             `build()` 從紀錄燒，不靠模型寫的字
+    #
+    # 留下來的只有兩樣：圖自己的說明，以及畫格的「誰在第幾秒說了什麼」——
+    # 那是唯一指得回事件本身的一種。
+    out.append("## 照片　—— 這是來源自己對每張圖的說明。挑的時候照這句判斷")
     for index, one in enumerate(found["pictures"], start=1):
-        # Only meaningful for a picture that was searched for. A frame's
-        # "term" is a timestamp, so scoring it against its caption compares
-        # two unrelated things and warns about every frame in the pile.
-        # 記號短一個字都好：這一行會出現六十四次。為什麼要看它，標題那一行
-        # 已經說了（term 是我們要的，caption 是實際拿到的）。
-        # ⚠ 只留給「根本沒有說明」—— 那件事沒有歧義，而且真的擋人：
-        # 沒有說明就沒有任何人知道那張圖是什麼。
-        #
-        # 字面對不上**不是**同一件事。`answers()` 比的是共同的字，而
-        # 「Server room of BalticServers」對上搜尋詞「data center」得 0 分，
-        # 那是一張完全正確的機房照片；說明還有義大利文、法文、波蘭文的。
-        # 這樣算下來 ⚠ 在 62% 的真實照片上亮，包含好的那些 ——
-        # 而 MISTAKES.md 第一條就寫著：分不開的檢查比沒有檢查更糟，
-        # 因為它會被相信。所以它降級成一句敘述，講它真的量到的事。
-        if not (one["caption"] or "").strip():
-            mark = "　⚠ 沒有說明"
-        elif one["kind"] != "frame" and one["answers"] < 0.5:
-            mark = "　（字面沒對上，看說明）"
-        else:
-            mark = ""
-        out.append(f"[P{index}] {kinds.get(one['kind'], one['kind'])}"
-                   f"　term: {one['term']}{mark}")
-        # 空的要寫出來是空的。一行 `caption:` 後面什麼都沒有，讀起來像
-        # 「說明很短」；寫「沒有說明」它才知道自己是在瞎猜。
-        said = one["caption"][:70] or "（來源沒有寫說明，這張圖的內容不明）"
-        out.append(f"      caption: {said}")
+        said = one["caption"][:70] or "（來源沒有寫說明，這張圖的內容不明"
+        if not one["caption"].strip() and one["term"]:
+            # 沒有說明的時候，搜尋詞是僅剩的線索。只有這時候才給 ——
+            # 它是查錯用的來源資訊，不是圖的內容。
+            said = f"（沒有說明。我們搜的是：{one['term'][:40]}）"
+        elif not one["caption"].strip():
+            said += "）"
+        out.append(f"[P{index}] {said}")
         if one.get("at") is not None:
             out.append(f"      {one['outlet']} 第 {one['at']:.0f} 秒"
                        f"：{one['said'][:70]}")
