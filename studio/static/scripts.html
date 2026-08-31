@@ -415,7 +415,6 @@
   <span class="where">選公版、寫、看圖、壓片</span>
   <span class="grow"></span>
   <button id="btnHouses" class="tiny">公版</button>
-  <button id="btnBack" class="tiny">← 回編輯器</button>
 </header>
 
 <!-- The house styles themselves. They began as two files I wrote by hand,
@@ -1175,7 +1174,6 @@ function saveLine(cell, name) {
 
 
 
-$("btnBack").onclick = () => leaveTo("/");
 /* 空狀態裡那顆「素材」。綁在頂層而不是畫的時候綁，因為 #paper 每次重畫都
    換掉內容，而這一顆只在還沒選文案的時候存在。 */
 $("paper").addEventListener("click", (event) => {
@@ -1201,7 +1199,6 @@ $("paper").addEventListener("click", (event) => {
   }
 });
 
-$("btnBack").onclick = () => leaveTo("/");
 
 async function reload() {
   try {

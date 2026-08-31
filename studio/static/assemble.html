@@ -11,9 +11,6 @@
   h1{font-size:14px;margin:0;font-weight:600}
   header .where{font-size:12px;color:var(--faint)}
   button.tiny{padding:3px 9px;font-size:12px}
-  #btnBack{font-size:12px;color:var(--ink);background:var(--panel);
-    border:1px solid var(--line);border-radius:7px;padding:5px 10px;cursor:pointer}
-  #btnBack:hover{border-color:var(--accent)}
   button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel2);
     border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer}
   button:hover{border-color:var(--accent)}
@@ -105,7 +102,6 @@
   <h1>Splice</h1>
   <span class="where">把幾段接成一支，字幕跟著接</span>
   <div style="flex:1"></div>
-  <button id="btnBack" class="tiny">← 回編輯器</button>
 </header>
 
 <main>
@@ -220,7 +216,6 @@ function renderPieces() {
 
 // Buttons rather than links: a link offers a menu of things nobody wants
 // here, and looks unlike every other control that does something.
-$("btnBack").onclick = () => { location.href = "/"; };
 
 $("sources").addEventListener("click", async (event) => {
   const row = event.target.closest("[data-source]");
