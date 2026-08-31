@@ -748,6 +748,164 @@ def _split(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
+def _swap_slide(spec: dict[str, Any], t: float) -> Image.Image:
+    """舊的往左滑出去，新的從右邊滑進來，同一條線上。
+
+    劃掉是「這個錯了」，滑走是「這個過去了」—— 用在名字、政策、版本更迭，
+    那種沒有對錯只有先後的替換。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    was, now = str(spec.get("was", "")), str(spec.get("now", ""))
+    y = top + 190
+    room = W - 2 * MARGIN
+    go = ease(max(0.0, (t - 0.3) / 0.7))
+    # 舊的滑走：一路淡出，滑到左邊界之前就消失，不會撞到邊。
+    if go < 0.98:
+        size = fits([was], 120, room=room)
+        shade = _fade(tone["dim"], max(0.0, 1 - go * 1.3), tone["top"])
+        draw.text((W // 2 - go * (W // 2 - MARGIN) * 0.7, y), was,
+                  font=face(size), fill="#" + "".join(f"{v:02x}" for v in shade),
+                  anchor="ma")
+    if go > 0.25:
+        part = ease((go - 0.25) / 0.75)
+        size = fits([now], 150, room=room)
+        at(draw, W // 2 + (1 - part) * (W // 2 - MARGIN) * 0.7, y + 190, now,
+           size, "#" + "".join(f"{v:02x}" for v in
+                               _fade(tone["lead"], part, tone["top"])),
+           room=room)
+    # 一條軌道，說明那兩個在同一條線上。
+    draw.line([(MARGIN, y + 150), (W - MARGIN, y + 150)],
+              fill=tone["rule"], width=5)
+    if spec.get("under"):
+        _mid(draw, y + 430, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _swap_stack(spec: dict[str, Any], t: float) -> Image.Image:
+    """新的疊在舊的上面，蓋住它。
+
+    上下疊而不是左右換：**舊的還在下面**。用在「official 版本改了，
+    但大家還是用舊的」那種句子。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    was, now = str(spec.get("was", "")), str(spec.get("now", ""))
+    # 兩張面板一張右移 22、一張左移 18，所以可用寬度要各讓出兩倍的偏移量 ——
+    # 只扣邊界不扣偏移的話，右邊那張剛好壓在留白上。
+    room = W - 2 * MARGIN - 120 - 44
+    was_size = fits([was], 110, room=room)
+    now_size = fits([now], 140, room=room)
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    y = top + 150
+    # 底下那張：灰的，稍微歪一點，看得出是被蓋住的那個。
+    wide = ruler.textlength(was, font=face(was_size)) + 90
+    draw.rounded_rectangle([W // 2 - wide / 2 + 22, y + 26,
+                            W // 2 + wide / 2 + 22, y + was_size + 86], 18,
+                           fill=_fade(tone["rule"], 0.5, tone["bottom"]))
+    at(draw, W // 2 + 22, y + 52, was, was_size,
+       "#" + "".join(f"{v:02x}" for v in _fade(tone["dim"], 0.7, tone["bottom"])),
+       room=room)
+    drop = ease(max(0.0, (t - 0.35) / 0.65))
+    if drop > 0.02:
+        wide = ruler.textlength(now, font=face(now_size)) + 110
+        oy = y - 40 - (1 - drop) * 70
+        draw.rounded_rectangle([W // 2 - wide / 2 - 18, oy,
+                                W // 2 + wide / 2 - 18, oy + now_size + 76], 20,
+                               fill=spec.get("colour") or tone["hot"])
+        if drop > 0.4:
+            at(draw, W // 2 - 18, oy + 40, now, now_size,
+               tone["top"] if isinstance(tone["top"], str) else "#0d1b2a",
+               room=room)
+    if spec.get("under"):
+        _mid(draw, y + 330, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _swap_arrow(spec: dict[str, Any], t: float) -> Image.Image:
+    """舊的在左、新的在右，中間一支箭。
+
+    最直白的一種：A → B。用在需要一眼看懂、不需要態度的替換上。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    was, now = str(spec.get("was", "")), str(spec.get("now", ""))
+    y = top + 220
+    # 左右各一半，中間留 150 給箭。
+    half = (W - 2 * MARGIN - 150) / 2
+    # 兩邊各只有一半的寬度，長標籤縮字級縮不下去（fits 的下限是 24），
+    # 所以折行。
+    shade = "#" + "".join(f"{v:02x}" for v in _fade(tone["dim"], 1, tone["top"]))
+    step, rows = wrap_at(was, 88, int(half))
+    for i, row in enumerate(rows):
+        draw.text((MARGIN + half / 2, y + i * (step + 10)), row,
+                  font=face(step), fill=shade, anchor="ma")
+    fly = ease(max(0.0, (t - 0.3) / 0.4))
+    if fly > 0.02:
+        x0, x1 = W // 2 - 62, W // 2 - 62 + 124 * fly
+        draw.line([(x0, y + 52), (x1, y + 52)], fill=tone["hot"], width=10)
+        if fly > 0.8:
+            draw.polygon([(x1 + 30, y + 52), (x1 - 4, y + 30), (x1 - 4, y + 74)],
+                         fill=tone["hot"])
+    land = ease(max(0.0, (t - 0.55) / 0.45))
+    if land > 0.02:
+        lit = "#" + "".join(f"{v:02x}" for v in
+                            _fade(spec.get("colour") or tone["lead"], land,
+                                  tone["top"]))
+        step, rows = wrap_at(now, 104, int(half))
+        for i, row in enumerate(rows):
+            draw.text((W - MARGIN - half / 2,
+                       y - (1 - land) * 20 + i * (step + 10)), row,
+                      font=face(step), fill=lit, anchor="ma")
+    if spec.get("under"):
+        _mid(draw, y + 260, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _swap_tear(spec: dict[str, Any], t: float) -> Image.Image:
+    """舊的被一道裂縫從中間撕開，新的在下面露出來。
+
+    最用力的一種。用在「這件事被推翻了」而不是「這件事更新了」。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    was, now = str(spec.get("was", "")), str(spec.get("now", ""))
+    room = W - 2 * MARGIN
+    y = top + 170
+    at(draw, W // 2, y, was, 120,
+       "#" + "".join(f"{v:02x}" for v in
+                     _fade(tone["dim"], max(0.25, 1 - ease(t) * 0.8),
+                           tone["top"])), room=room)
+    tear = ease(max(0.0, (t - 0.3) / 0.5))
+    if tear > 0.02:
+        # 一條參差的裂縫，從中間往兩邊裂開。直線是切割，參差才是撕。
+        mid, points = y + 78, []
+        for step in range(0, 41):
+            part = step / 40
+            # 線寬 7，兩端各長出 3.5 —— 拉到留白邊上就會超出去。
+            x = W // 2 + (part - 0.5) * (W - 2 * MARGIN - 16) \
+                * min(1.0, tear * 1.2)
+            points.append((x, mid + math.sin(step * 1.7) * 9))
+        draw.line(points, fill=tone["hot"], width=7, joint="curve")
+    show = ease(max(0.0, (t - 0.5) / 0.5))
+    if show > 0.02:
+        at(draw, W // 2, y + 220 + (1 - show) * 30, now, 150,
+           "#" + "".join(f"{v:02x}" for v in
+                         _fade(spec.get("colour") or tone["lead"], show,
+                               tone["top"])), room=room)
+    if spec.get("under"):
+        _mid(draw, y + 420, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
 def _chain(spec: dict[str, Any], t: float) -> Image.Image:
     """Points on one wire, lighting up along it. Drawn because the argument
     is that they share it."""
@@ -895,6 +1053,150 @@ def _ring(spec: dict[str, Any], t: float) -> Image.Image:
                       joint="curve")
     if spec.get("under"):
         _mid(draw, 720 + size + 190, spec["under"], 54, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _ring_box(spec: dict[str, Any], t: float) -> Image.Image:
+    """方框，四個角先出現，然後四條邊補起來。
+
+    圈是手畫的、隨性的；方框是有人蓋章的。同一個詞，兩種態度。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 520, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    size = fits([text], 250, room=W - 2 * MARGIN - 180)
+    _mid(draw, 720, text, size, tone["ink"])
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    wide = ruler.textlength(text, font=face(size)) + 130
+    box = [W // 2 - wide / 2, 690, W // 2 + wide / 2, 690 + size + 90]
+    edge = spec.get("colour") or tone["hot"]
+    corner = min(90.0, wide / 3)
+    grow = ease(min(1.0, t * 1.6))
+    # 先四個角，再往中間長 —— 一次畫完整個框就只是個邊界。
+    for x0, y0, dx, dy in ((box[0], box[1], 1, 1), (box[2], box[1], -1, 1),
+                           (box[0], box[3], 1, -1), (box[2], box[3], -1, -1)):
+        draw.line([(x0, y0), (x0 + dx * corner * grow, y0)], fill=edge, width=9)
+        draw.line([(x0, y0), (x0, y0 + dy * corner * grow)], fill=edge, width=9)
+    if grow > 0.9:
+        rest = ease((t - 0.6) / 0.4) if t > 0.6 else 0
+        high = box[3] - box[1]
+        # 四條邊都要補。本來只補了上下，於是框在 t=1 還是缺左右兩段 ——
+        # 而那不是「還在畫」，是「畫不完」。
+        for y in (box[1], box[3]):
+            draw.line([(box[0] + corner, y),
+                       (box[0] + corner + (wide - 2 * corner) * rest, y)],
+                      fill=edge, width=9)
+        for x in (box[0], box[2]):
+            draw.line([(x, box[1] + corner),
+                       (x, box[1] + corner + (high - 2 * corner) * rest)],
+                      fill=edge, width=9)
+    if spec.get("under"):
+        _mid(draw, box[3] + 70, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _ring_under(spec: dict[str, Any], t: float) -> Image.Image:
+    """底線，從左往右畫過去，尾巴甩出去一點。
+
+    最輕的一種強調 —— 用在「這個詞值得注意」而不是「這個詞是答案」。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 540, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    size = fits([text], 280, room=W - 2 * MARGIN - 60)
+    _mid(draw, 740, text, size, tone["ink"])
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    wide = ruler.textlength(text, font=face(size))
+    run = ease(max(0.0, (t - 0.3) / 0.7))
+    if run > 0.02:
+        left = W // 2 - wide / 2 - 14
+        # 1.02 倍剛好是字的底線，線會壓在筆畫上。往下讓 12%。
+        y = 740 + size * 1.14
+        # 兩筆，粗細不同，尾端多甩 30px —— 一筆到底看起來是印上去的。
+        draw.line([(left, y), (left + (wide + 28) * run, y)],
+                  fill=spec.get("colour") or tone["hot"], width=13)
+        if run > 0.8:
+            draw.line([(left + wide * 0.6, y + 12),
+                       (left + (wide + 58) * run, y + 6)],
+                      fill=spec.get("colour") or tone["hot"], width=6)
+    if spec.get("under"):
+        _mid(draw, 740 + size + 130, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _ring_arrow(spec: dict[str, Any], t: float) -> Image.Image:
+    """一支箭從旁邊指過來。
+
+    圈和框都是「把它框住」，箭是「有人在指」—— 多一個方向，也多一個
+    「這是被挑出來的」的暗示。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 520, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    # 右邊留給箭，所以字能用的寬度少 260。
+    size = fits([text], 240, room=W - 2 * MARGIN - 300)
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    wide = ruler.textlength(text, font=face(size))
+    at(draw, W // 2 - 110, 730, text, size, tone["ink"],
+       room=int(W - 2 * MARGIN - 300))
+    fly = ease(max(0.0, (t - 0.35) / 0.65))
+    if fly > 0.02:
+        colour = spec.get("colour") or tone["hot"]
+        tip = W // 2 - 110 + wide / 2 + 40
+        tail = min(W - MARGIN, tip + 300)
+        now = tail - (tail - tip) * fly
+        y = 730 + size * 0.5
+        draw.line([(tail, y), (now, y)], fill=colour, width=11)
+        if fly > 0.7:
+            draw.polygon([(now, y), (now + 34, y - 22), (now + 34, y + 22)],
+                         fill=colour)
+    if spec.get("under"):
+        _mid(draw, 730 + size + 120, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _ring_burst(spec: dict[str, Any], t: float) -> Image.Image:
+    """字的四周射出短線，像漫畫裡的「叮」。
+
+    最吵的一種。用在荒謬、意外、好笑的那一句上 —— 圈和框都太正經。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 500, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    size = fits([text], 250, room=W - 2 * MARGIN - 260)
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    wide = ruler.textlength(text, font=face(size))
+    centre = (W // 2, 760 + size * 0.45)
+    pop = ease(max(0.0, (t - 0.25) / 0.75))
+    if pop > 0.02:
+        colour = spec.get("colour") or tone["hot"]
+        # 起點要在字的外面。0.62 倍字高還在字身上，於是短線從筆畫中間
+        # 長出來，看起來像畫壞了。
+        near_x, near_y = wide / 2 + 46, size * 0.86
+        for step in range(12):
+            angle = math.radians(step * 30 + 15)
+            # 橢圓形排開，長短交錯 —— 一樣長的話看起來像時鐘。
+            far = 1.0 + 0.42 * (step % 2)
+            x0 = centre[0] + near_x * math.cos(angle)
+            y0 = centre[1] + near_y * math.sin(angle)
+            x1 = centre[0] + near_x * far * math.cos(angle) * pop
+            y1 = centre[1] + near_y * far * math.sin(angle) * pop
+            draw.line([(x0, y0), (x1, y1)], fill=colour, width=9)
+    _mid(draw, 760, text, size, tone["ink"])
+    if spec.get("under"):
+        _mid(draw, 760 + size + 150, spec["under"], 52, tone["dim"], bold=False)
     _note(draw, spec, t)
     return card
 
@@ -1057,8 +1359,12 @@ def _outro(spec: dict[str, Any], t: float) -> Image.Image:
 
 # 每一種卡有哪些畫法。放在函式都定義完之後 —— 在上面填的話，名字還不存在。
 WAYS.update({
-    "word":  [_word, _word_left, _word_boxed, _word_mark, _word_quote],
-    "title": [_word, _word_left, _word_boxed, _word_mark, _word_quote],
+    "word":   [_word, _word_left, _word_boxed, _word_mark, _word_quote],
+    "title":  [_word, _word_left, _word_boxed, _word_mark, _word_quote],
+    "number": [_number, _number_dial, _number_unit, _number_stamp,
+               _number_ghost],
+    "ring":   [_ring, _ring_box, _ring_under, _ring_arrow, _ring_burst],
+    "swap":   [_swap, _swap_slide, _swap_stack, _swap_arrow, _swap_tear],
 })
 
 KINDS = {"title": _title, "outro": _outro, "word": _word, "number": _number, "bars": _bars,
