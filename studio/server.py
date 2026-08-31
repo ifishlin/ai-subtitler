@@ -944,18 +944,23 @@ def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     except (ValueError, FileNotFoundError) as error:
         raise HTTPException(404, str(error)) from error
 
-    kind = str(payload.get("kind") or "reports")
-    rows = pile["sources"].get(kind) or []
-    if keep:
-        for one in rows:
-            if one.get("url") in urls:
-                one.pop("doubt", None)
-    else:
-        rows = [one for one in rows if one.get("url") not in urls]
-        pile["sources"][kind] = rows
+    # Both lists unless told otherwise. It defaulted to reports, so 「其餘全部
+    # 丟」 pressed on a panel full of judged-out videos rewrote a report list
+    # that had nothing wrong with it: the request succeeded and changed
+    # nothing, which is the worst shape a button can have.
+    kinds = [str(payload["kind"])] if payload.get("kind") else ["videos", "reports"]
+    for kind in kinds:
+        rows = pile["sources"].get(kind) or []
+        if keep:
+            for one in rows:
+                if one.get("url") in urls:
+                    one.pop("doubt", None)
+        else:
+            pile["sources"][kind] = [one for one in rows
+                                     if one.get("url") not in urls]
     topic_module.save(name, pile)
     return {"kept" if keep else "dropped": len(urls),
-            "left": len(topic_module.doubted(pile, kind))}
+            "left": len(topic_module.doubted(pile))}
 
 
 @app.post("/api/topic/mark")

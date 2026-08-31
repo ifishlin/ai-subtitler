@@ -226,10 +226,26 @@ def settled(pile: dict[str, Any], kind: str) -> list[dict[str, Any]]:
             if not one.get("doubt")]
 
 
-def doubted(pile: dict[str, Any], kind: str = "reports") -> list[dict[str, Any]]:
-    """Sources something judged irrelevant and nobody has ruled on yet."""
-    return [one for one in pile.get("sources", {}).get(kind) or []
-            if one.get("doubt")]
+def doubted(pile: dict[str, Any],
+             kind: str | None = None) -> list[dict[str, Any]]:
+    """Sources something judged irrelevant and nobody has ruled on yet.
+
+    Both kinds by default. It used to default to reports alone, from the days
+    when only reports were judged; videos were added this morning and this was
+    not. So twenty-nine judged-out videos never appeared in the panel that
+    exists to rule on them, and 「其餘全部丟」 emptied a list of reports that
+    had nothing in it -- the button worked and did nothing.
+
+    Each row carries `kind` so whoever rules on it knows which list to write
+    back to.
+    """
+    kinds = [kind] if kind else ["videos", "reports"]
+    out = []
+    for one in kinds:
+        out += [{**item, "kind": one}
+                for item in pile.get("sources", {}).get(one) or []
+                if item.get("doubt")]
+    return out
 
 
 def counts(pile: dict[str, Any]) -> dict[str, Any]:

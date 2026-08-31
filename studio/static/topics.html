@@ -622,14 +622,17 @@ async function open(name) {
       ${(pile.doubted || []).length ? `
       <div class="row doubt">
         <div class="what">
-          <b>模型覺得這 ${pile.doubted.length} 篇跟題目無關</b>
-          <span>還留著，也還沒算進計數。撿回判錯的，其餘丟掉</span>
+          <b>模型判這 ${pile.doubted.length} 筆跟題目無關</b>
+          <span>沒算進計數、不進寫作 prompt。它會判錯 ——
+            撿回該留的，其餘按「全部丟掉」</span>
         </div>
-        <button id="btnDropAll" class="tiny">其餘全部丟</button>
+        <button id="btnDropAll" class="tiny">剩下的全部丟掉</button>
         <div class="rows">${pile.doubted.map((one) => `
-          <div class="doubt-row" data-url="${escapeHTML(one.url || "")}">
+          <div class="doubt-row" data-url="${escapeHTML(one.url || "")}"
+               data-kind="${escapeHTML(one.kind || "reports")}">
             <button class="tiny keep">其實有關</button>
-            <span class="who">${escapeHTML(one.outlet || "")}</span>
+            <span class="who">${one.kind === "videos" ? "影片" : "報導"}　${
+              escapeHTML(one.outlet || "")}</span>
             <span class="txt">${escapeHTML(one.title || "")}</span>
           </div>`).join("")}</div>
       </div>` : ""}
