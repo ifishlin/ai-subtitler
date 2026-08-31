@@ -280,7 +280,10 @@
      部，計數只算沒被判掉的，而畫面本來沒有任何線索說明差別。 */
   .src.doubted{opacity:.5;border-left:3px solid #5c4a2a}
   .src.doubted:hover{opacity:.85}
-  .src .keep{float:right;margin-left:10px}
+  /* 「模型判無關」＋「其實有關」。本來只寫「算進來」—— 那說了動作，沒說是
+     誰判的，於是讀的人以為是自己剛剛丟掉的。 */
+  .src .judged{float:right;margin-left:12px;display:flex;align-items:center;
+    gap:7px;font:11px var(--mono);color:#e2a33c}
   .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin-bottom:7px;font-size:13px}
   .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
@@ -532,9 +535,8 @@ function sourceRows(items, kind) {
      那些一模一樣。 */
   return items.map((item) => `
     <div class="src${item.doubt ? " doubted" : ""}">
-      ${item.doubt ? `<button class="tiny keep" data-url="${
-        escapeHTML(item.url || "")}" title="模型判它跟題目無關，沒算進計數。按一下撿回來"
-        >算進來</button>` : ""}
+      ${item.doubt ? `<span class="judged">模型判無關<button class="tiny keep"
+        data-url="${escapeHTML(item.url || "")}">其實有關</button></span>` : ""}
       ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
         escapeHTML(item.title || item.url)}</a>` : escapeHTML(item.title || "")}
       ${leanTag(item.lean || "")}
@@ -626,7 +628,7 @@ async function open(name) {
         <button id="btnDropAll" class="tiny">其餘全部丟</button>
         <div class="rows">${pile.doubted.map((one) => `
           <div class="doubt-row" data-url="${escapeHTML(one.url || "")}">
-            <button class="tiny keep">留</button>
+            <button class="tiny keep">其實有關</button>
             <span class="who">${escapeHTML(one.outlet || "")}</span>
             <span class="txt">${escapeHTML(one.title || "")}</span>
           </div>`).join("")}</div>
