@@ -123,6 +123,44 @@ if not faults:
 sys.exit(1 if faults else 0)
 PY
 
+# 頂層宣告一個跟 window 內建同名的東西，就把那個內建蓋掉了。
+#
+# topics.html 有 `async function open(name)`，於是 show 那顆鈕呼叫的
+# `window.open(網址)` 進到了那一支，把整個網址當成題目名稱 —— 畫面上寫
+# 「打不開『/raw?name=…&house=argue』」。函式宣告在腳本開始跑之前就掛上
+# window，所以連「先存一份原生的」都辦不到；只能不要取那個名字。
+#
+# 而這種錯測不出來的原因特別壞：我驗證的時候把 window.open 換成假的來記
+# 參數，換掉的正好就是壞掉的那一個，所以測起來完全正常。
+echo "檢查有沒有蓋掉瀏覽器內建的名字…"
+python3 - <<'PY' || bad=1
+import re, sys, pathlib
+
+# 只列真的會被當成函式名、而且蓋掉會出事的。`name`、`length`、`status`
+# 這種當變數名太常見，另外處理才有意義 —— 一條會誤報的規則會被關掉。
+TAKEN = ("open", "close", "print", "focus", "blur", "stop", "find",
+         "alert", "confirm", "prompt", "scroll", "scrollTo", "scrollBy",
+         "postMessage", "getSelection", "matchMedia", "history", "location",
+         "navigator", "screen")
+faults = 0
+for path in sorted(pathlib.Path("studio/static").glob("*.html")) + \
+            sorted(pathlib.Path("studio/static").glob("*.js")):
+    text = path.read_text(encoding="utf-8")
+    for kind in TAKEN:
+        # 頂層（行首沒有縮排）的宣告才會掛到 window 上。
+        hit = re.search(rf"^(?:async\s+)?function\s+{kind}\s*\(", text, re.M)
+        if not hit:
+            hit = re.search(rf"^(?:var|let|const)\s+{kind}\s*=", text, re.M)
+        if hit:
+            line = text[:hit.start()].count("\n") + 1
+            print(f"  ❌ {path.name}:{line}　頂層的 {kind} 蓋掉了 window.{kind}"
+                  f"　—— 改個名字")
+            faults += 1
+if not faults:
+    print("  ✅ 沒有")
+sys.exit(1 if faults else 0)
+PY
+
 # 每一頁都要有導覽列和共用配色，不然它會長得像另一個系統。
 echo "檢查每一頁有沒有接上共用的東西…"
 python3 - <<'PY' || bad=1

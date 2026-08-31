@@ -561,7 +561,14 @@ function sourceRows(items, kind) {
     </div>`).join("");
 }
 
-async function open(name) {
+/* 名字不能叫 open。
+   頂層宣告一個叫那個名字的函式會蓋掉 `window.open` —— 函式宣告在腳本跑之前
+   就掛上 window，所以連事先存一份原生的都做不到。show 那顆鈕於是把
+   「/raw?name=…&house=argue」當成題目名稱送進這裡，而畫面上是
+   「打不開『/raw?name=…』」。
+   我驗證的時候把 window.open 換成假的來記參數 —— 換掉的正好就是壞的那一個，
+   所以測起來完全正常。**替身會遮住它要驗的東西。** */
+async function openTopic(name) {
   /* 空名字不要送出去。API 會回「題目名稱只能用中英文、數字、底線、減號、
      空白」，而那句話單獨出現在畫面中央看起來像整頁壞了 —— 它其實是在說
      「我收到一個空字串」。 */
@@ -909,7 +916,7 @@ async function open(name) {
     $("btnVoices").textContent = "抓取中…";
     try {
       const got = await api("POST", "/api/topic/voices", { name });
-      open(name);
+      openTopic(name);
       $("note").textContent = `抓了 ${got.added} 則，共 ${got.total} 則`;
     } catch (error) {
       $("btnVoices").disabled = false;
@@ -950,7 +957,7 @@ async function open(name) {
                "接觸表"]})) return;
       try {
         await api("DELETE", `/api/script?name=${encodeURIComponent(which)}`);
-        open(name);
+        openTopic(name);
       } catch (error) { told('出錯了', error.message); }
     };
   });
@@ -993,7 +1000,7 @@ async function open(name) {
         await api("POST", "/api/topic/audience",
                   {name, audience: who.value.trim()});
         who.dataset.was = who.value.trim();
-        open(name);
+        openTopic(name);
       } catch (error) { told('出錯了', error.message); who.value = who.dataset.was; }
     };
     who.addEventListener("blur", saveWho);
@@ -1006,7 +1013,7 @@ async function open(name) {
     try {
       await api("POST", "/api/topic/audience",
                 {name, audience: pile.audience_guess});
-      open(name);
+      openTopic(name);
     } catch (error) { told('出錯了', error.message); }
   };
 
@@ -1052,7 +1059,7 @@ async function open(name) {
         await api("POST", "/api/topic/judge",
                   {name, urls: drop.map((row) => row.dataset.url), keep: false});
       }
-      open(name);
+      openTopic(name);
     } catch (error) { told('出錯了', error.message); }
   };
   if ($("btnGather")) $("btnGather").onclick = async () => {
@@ -1062,7 +1069,7 @@ async function open(name) {
       await api("POST", "/api/topic/gather",
                 {name, queries, pictures: TERMS.pictures.join(", "),
                  named: TERMS.named.join(", ")});
-      watchJob(() => open(name));
+      watchJob(() => openTopic(name));
     } catch (error) { told('出錯了', error.message); }
   };
   if ($("btnWanted")) $("btnWanted").onclick = async () => {
@@ -1071,7 +1078,7 @@ async function open(name) {
       const back = await api("POST", "/api/topic/images",
                              {name, terms: pile.wanted, where: "stock"});
       $("note").textContent = `收了 ${back.added} 張`;
-      open(name);
+      openTopic(name);
     } catch (error) {
       $("note").className = "warn"; $("note").textContent = error.message;
     }
@@ -1079,7 +1086,7 @@ async function open(name) {
   if ($("btnFacts")) $("btnFacts").onclick = async () => {
     try {
       await api("POST", "/api/topic/facts", {name});
-      watchJob(() => open(name));
+      watchJob(() => openTopic(name));
     } catch (error) { told('出錯了', error.message); }
   };
   /* 獨立視窗，不是覆蓋層。一萬五千字要跟素材對照著看 —— 蓋在上面的時候
@@ -1149,7 +1156,7 @@ async function reload(openFirst) {
     STATE.want = found.want;
   } catch (error) { /* nothing yet */ }
   renderList();
-  if (openFirst && STATE.list.length) open(STATE.list[0].name);
+  if (openFirst && STATE.list.length) openTopic(STATE.list[0].name);
 }
 
 /* ---------------------------------------------------------------- 綁事件
@@ -1172,7 +1179,7 @@ $("list").addEventListener("click", async (event) => {
     return;
   }
   const row = event.target.closest("[data-name]");
-  if (row) open(row.dataset.name);
+  if (row) openTopic(row.dataset.name);
 });
 
 $("paper").addEventListener("click", (event) => {
@@ -1193,7 +1200,7 @@ $("btnNew").onclick = async () => {
     STATE.list = made.topics.sort((a, b) => b.modified - a.modified);
     $("newName").value = "";
     renderList();
-    open(name);
+    openTopic(name);
   } catch (error) { told('出錯了', error.message); }
 };
 $("newName").addEventListener("keydown", (event) => {
@@ -1218,7 +1225,7 @@ async function boot() {
     ? wanted : (STATE.list[0] && STATE.list[0].name);
   renderList();
   settle();
-  if (pick) await open(pick);
+  if (pick) await openTopic(pick);
 }
 
 /* 報錯的規矩在 shared.js：壞了要說，但離開中不要說。 */
