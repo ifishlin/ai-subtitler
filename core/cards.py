@@ -172,6 +172,67 @@ def _mid(draw: ImageDraw.ImageDraw, y: float, text: str, size: int,
     draw.text((W // 2, y), text, font=face(size, bold), fill=fill, anchor="ma")
 
 
+def room_at(x: float, limit: float | None = None) -> int:
+    """一段置中在 x 的字，最寬可以多寬。
+
+    界線是**留白**，不是畫布邊緣。`_chain` 本來用 `min(x, W-x)*2` 算，
+    那給的是「畫得進畫布」的寬度 —— 最右邊那個點在 x=930，算出來 284px，
+    而它實際可以用的只有 152px（右邊界 1006 減 930，再乘二）。
+    所以那個標籤縮到 28px 之後仍然壓在邊上，而我看了一眼說「修好了」。
+
+    `limit` 是另一個上限，通常是「不要撞到隔壁那個點」。
+    """
+    room = min(x - MARGIN, (W - MARGIN) - x) * 2
+    return int(max(24, min(room, limit if limit is not None else room)))
+
+
+def wrap_at(text: str, size: int, room: int, bold: bool = True,
+            most_rows: int = 3) -> tuple[int, list[str]]:
+    """把一段字折成幾行，並回報該用多大的字級。
+
+    `fits()` 只會縮字級，而它有下限 24px —— 再放不下就回 24，然後畫出界。
+    二十五個字擠進 352px 的空間，24px 還要 600px 寬。
+
+    再小的字不是解法，是把「不出界」換成「看不清楚」。長標籤該做的是折行：
+    先試最大的字級，折得完就用；折出來超過三行就縮一級再試。
+
+    中文哪裡都能斷，英文盡量斷在空格 —— 不然 `Bloomberg` 會被切成兩半。
+    """
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    for step in range(size, 23, -4):
+        font = face(step, bold)
+        rows, now = [], ""
+        for char in str(text):
+            if ruler.textlength(now + char, font=font) <= room:
+                now += char
+                continue
+            # 這一行滿了。英文的話往回找最近的空格，不要切在字中間。
+            cut = now.rfind(" ")
+            if cut > len(now) * 0.4:
+                rows.append(now[:cut])
+                now = now[cut + 1:] + char
+            else:
+                rows.append(now)
+                now = char
+        if now:
+            rows.append(now)
+        if len(rows) <= most_rows:
+            return step, rows
+    return 24, [str(text)]
+
+
+def at(draw: ImageDraw.ImageDraw, x: float, y: float, text: str, size: int,
+       fill, room: int, bold: bool = True, anchor: str = "ma") -> None:
+    """在 x 畫一行字，放不下就縮。`size` 是上限，不是命令。
+
+    `_mid()` 的兄弟：那一支只處理「置中在畫面正中間」，而卡片上還有一堆
+    字置中在別的地方 —— 節點的標籤、分岔的兩端。它們各自寫死字級，
+    於是各自會爆版。
+    """
+    draw.text((x, y), text, font=face(fits([text], size, bold, room=room), bold),
+              fill=fill, anchor=anchor)
+
+
 def fits(rows: list[str], want: int, bold: bool = True,
          room: int | None = None) -> int:
     """（快取的入口，真正的計算在 `_fits` 裡。）"""
@@ -322,7 +383,12 @@ def _bars(spec: dict[str, Any], t: float) -> Image.Image:
     widest, left = W - 420, 260
     for index, row in enumerate(rows):
         label, value = row[0], float(row[1])
-        colour = row[2] if len(row) > 2 else (tone["hot"] if index else tone["rule"])
+        # 空字串也要退回預設。`card_wrong` 那道門明寫「空的不算錯」，於是
+        # `["名稱", 50, "", "標籤"]` 過得了門，然後 Pillow 說
+        # `unknown color specifier: ''`。跟顏色寫成 `ok` 那次是同一個形狀，
+        # 只差在那次是有值但不合法，這次是「有欄位但空的」。
+        colour = (row[2] if len(row) > 2 else "") \
+            or (tone["hot"] if index else tone["rule"])
         part = stagger(t, index, len(rows))
         y = top + 80 + index * 190
         length = max(10, widest * (value / biggest) * part)
@@ -359,9 +425,14 @@ def _bars(spec: dict[str, Any], t: float) -> Image.Image:
                 draw.text((outside, y + 30), label, font=font, fill=colour,
                           anchor="la")
             else:
-                draw.text((left + length - 24, y + 30), label, font=font,
-                          fill=tone["top"] if isinstance(tone["top"], str)
-                               else "#0d1b2a", anchor="ra")
+                # 塞進條子裡靠右。這裡本來不量左邊 —— 而一根短條子配一個
+                # 長標籤，往左長出去的正是畫面外：值 3 的那根從 x=280 起算，
+                # 十個字 62px 要 620px，落在 -340。
+                # 外面放不下的時候，裡面的空間只會更小，所以一定要量。
+                spot = left + length - 24
+                at(draw, spot, y + 30, label, 62,
+                   tone["top"] if isinstance(tone["top"], str) else "#0d1b2a",
+                   room=int(spot - MARGIN), anchor="ra")
     _note(draw, spec, t)
     return card
 
@@ -385,9 +456,17 @@ def _split(spec: dict[str, Any], t: float) -> Image.Image:
         if arm > 0.6:
             draw.ellipse([end[0] - 20, end[1] - 20, end[0] + 20, end[1] + 20],
                          fill=colour)
-            for row_index, row in enumerate(str(text).split("\n")):
-                draw.text((x, fork + row_index * 72), row, font=face(58),
-                          fill=colour, anchor="ma")
+            # 兩端的標籤置中在自己那條臂上，而它們只有到畫面中線的一半
+            # 空間 —— 再寬就跟對面那個撞在一起。
+            room = room_at(x, abs(x - W // 2) * 2 - 40)
+            # 文案自己寫的換行優先，剩下的長度不夠就再折。
+            step, rows = 58, []
+            for part in str(text).split("\n"):
+                step, more = wrap_at(part, min(step, 58), room)
+                rows += more
+            for row_index, row in enumerate(rows):
+                draw.text((x, fork + row_index * (step + 14)), row,
+                          font=face(step), fill=colour, anchor="ma")
     _note(draw, spec, t)
     return card
 
@@ -413,11 +492,22 @@ def _chain(spec: dict[str, Any], t: float) -> Image.Image:
         last = index == len(names) - 1
         colour = tone["hot"] if last else tone["cold"]
         draw.ellipse([x - 30, y - 30, x + 30, y + 30], fill=colour)
-        # 置中的字左右對稱地長出去，所以放得下的寬度是「離最近的邊」的兩倍。
-        room = int(min(x, W - x) * 2) - 16
-        draw.text((x, y + 74), str(name), font=face(fits([str(name)], 52,
-                                                         room=room)),
-                  fill=colour if last else tone["dim"], anchor="ma")
+        # 頭尾兩個靠邊對齊，中間的置中。
+        #
+        # 全部置中在自己那個點上的話，頭尾兩個各只有 152px 可用（點在
+        # x=930，右邊界 1006），六個字得縮到 24px 才進得去 —— 而那已經
+        # 小到看不清楚，等於為了不出界把字犧牲掉。
+        # 靠邊對齊之後，最後那個標籤從 1006 往左長，空間變成到隔壁點的中間，
+        # 四倍有餘。
+        gap = (W - 300) / max(1, len(names) - 1)
+        if index == 0:
+            spot, anchor, room = MARGIN, "la", int(gap * 0.9)
+        elif last:
+            spot, anchor, room = W - MARGIN, "ra", int(gap * 0.9)
+        else:
+            spot, anchor, room = x, "ma", room_at(x, gap * 0.9)
+        at(draw, spot, y + 74, str(name), 52,
+           colour if last else tone["dim"], room, anchor=anchor)
     if spec.get("under") and t > 0.7:
         _mid(draw, y + 260, spec["under"],
              fits([str(spec["under"])], 66, room=W - 2 * MARGIN), tone["lead"])
@@ -465,10 +555,12 @@ def _stack(spec: dict[str, Any], t: float) -> Image.Image:
         y = top + 110 + index * 150 - (1 - part) * 40
         panel = _fade(tone["rule"], 0.55 * part, tone["bottom"])
         draw.rounded_rectangle([200, y, W - 200, y + 118], 18, fill=panel)
-        draw.text((W // 2, y + 30), str(item), font=face(58),
-                  fill="#" + "".join(f"{v:02x}" for v in
-                                     _fade(tone["ink"], part, tone["bottom"])),
-                  anchor="ma")
+        # 字要待在那個面板裡，不是待在畫面裡 —— 面板從 200 到 W-200，
+        # 所以可用寬度是 W-400 再扣左右的內縮，比留白窄得多。
+        at(draw, W // 2, y + 30, str(item), 58,
+           "#" + "".join(f"{v:02x}" for v in
+                         _fade(tone["ink"], part, tone["bottom"])),
+           room=W - 400 - 60)
     _note(draw, spec, t)
     return card
 
