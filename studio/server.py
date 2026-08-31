@@ -107,6 +107,27 @@ app = FastAPI(title="影片流水線", docs_url="/api-browser", redoc_url=None)
 # slightly different dialogs happen.
 app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"),
           name="static")
+
+
+@app.middleware("http")
+async def never_stale(request, call_next):
+    """頁面和它的 js／css 一律重新確認過才用。
+
+    這件事咬過兩次，而兩次的樣子都是「你看到的畫面不是現在的程式」：導覽列
+    加了兩項但瀏覽器上沒有，show 那顆鈕按了完全沒反應。兩次我都先去查伺服
+    器，兩次伺服器都是對的。
+
+    這是本機的開發用伺服器，檔案就在旁邊，重新讀一次的成本是零；而看著舊
+    程式除錯的成本是剛剛那兩輪。`no-cache` 不是不准存，是**每次都要回來問
+    一聲**，所以沒變的東西還是回 304，不會變慢。
+
+    影片和圖片不在此列：那些是幾十 MB 而且不會改，重新抓一次才是真的慢。
+    """
+    answer = await call_next(request)
+    kind = answer.headers.get("content-type", "")
+    if kind.startswith("text/html") or "javascript" in kind or "css" in kind:
+        answer.headers["Cache-Control"] = "no-cache"
+    return answer
 config: dict[str, Any] = {}
 _whisper_models: dict[str, Any] = {}
 _burn: dict[str, Any] = {"state": "idle", "message": "", "output": None,
