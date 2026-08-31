@@ -139,9 +139,10 @@
 
   /* Two decisions about the whole film, made once and never revisited until
      they were put here: which shape it is, and who it is for. */
-  /* 標題和「回素材」一行。 */
-  .head{display:flex;align-items:baseline;gap:12px;margin:0 0 10px}
-  .head h2{margin:0}
+  /* 標題和「回素材」一行。這一頁上最該一眼認出的東西是「這是哪一支」，
+     所以它比別的都大。 */
+  .head{display:flex;align-items:baseline;gap:14px;margin:0 0 12px}
+  .head h2{margin:0;font-size:24px;letter-spacing:.5px}
 
   /* 這支片是什麼：觀點、公版、語氣、受眾。四樣一塊。
      觀點最長，自己一行；另外三個短的並排。本來是三條分開的橫列，中間隔著
@@ -152,7 +153,10 @@
   .about label{display:block;font-size:11px;color:var(--faint);
     letter-spacing:.4px;min-width:0}
   .about label.wide{grid-column:1 / -1}
+  /* 觀點是這支片在講什麼 —— 整份文案就是為了它寫的，所以它是這一塊裡最大
+     的字。旁邊三個（公版、語氣、受眾）是設定，不是內容。 */
   .about .said{margin-top:4px;font:14px/1.55 inherit;color:var(--ink)}
+  .about label.wide .said{font-size:17px;line-height:1.6}
   .about label:not(.wide) .said{font-size:14px;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .about select,.about input{display:block;width:100%;margin-top:4px;
@@ -183,35 +187,7 @@
   #pending[hidden]{display:none}
   #pendingCount{font:12px var(--mono);color:#e2a33c}
   #pending .hint{font-size:11px;color:var(--faint);flex:1}
-  .shape{background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    margin:12px 0}
-  .shape summary{display:flex;align-items:baseline;gap:12px;padding:10px 14px;
-    cursor:pointer;list-style:none;user-select:none}
-  .shape summary::-webkit-details-marker{display:none}
-  .shape summary b{font-size:13px}
-  .shape summary .quick{font:12px var(--mono);color:var(--dim)}
-  .shape summary .more{margin-left:auto;font:11px var(--mono);color:var(--faint)}
-  .shape summary .more:before{content:"▸ "}
   .shape[open] summary .more:before{content:"▾ "}
-  .shape summary:hover .more{color:var(--accent)}
-  .shape > *:not(summary){margin:0 14px 12px}
-  .shape-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;
-    background:#0d1014}
-  .shape-bar i{display:flex;align-items:center;justify-content:center;
-    height:100%;min-width:0}
-  .shape-bar b{font:11px var(--mono);color:#0d1014;opacity:.85}
-  .turn{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}
-  .turn-head{font-size:12px;display:flex;align-items:baseline;gap:10px;
-    flex-wrap:wrap}
-  .turn-lines{margin:8px 0;display:flex;flex-direction:column;gap:3px}
-  .turn-lines div{font-size:13px;padding:4px 10px;border-radius:6px;
-    border-left:3px solid transparent}
-  .turn-lines .was{color:var(--faint);border-left-color:#3f9e73}
-  .turn-lines .now{color:var(--ink);border-left-color:#c8543f;
-    background:#2a1512}
-  .turn-lines .now.next{background:transparent;color:var(--faint)}
-  .turn-ask{font-size:11px;color:var(--faint);line-height:1.6}
-  .turn-ask b{color:#ff8a72}
   /* 權利那一段在「細節」裡，所以樣式跟著那一格走。 */
   .checked .grid > .wide{grid-column:1 / -1}
   .checked .bar{display:flex;height:12px;border-radius:6px;overflow:hidden;
@@ -710,67 +686,14 @@ async function savePending() {
   } catch (error) { told('出錯了', error.message); }
 }
 
-/* 起承轉合, laid out so it can be judged rather than counted.
-
-   The program can prove a line is labelled 轉 and sits in the first third; it
-   cannot tell whether anything was reversed. Restating the setup more loudly
-   passes every check. So the page shows the turn on its own, with the belief
-   it is supposed to overturn directly above it, which is the only form in
-   which the question "did the understanding change" can actually be asked. */
-const ROLE_COLOUR = {起: "#4f8ef0", 承: "#3f9e73", 轉: "#c8543f", 合: "#c9973a"};
-
-function shapePanel(sums) {
-  const lines = sums.lines || [];
-  if (!lines.some((line) => line.role)) return "";
-  const clock = sums.seconds || 1;
-  const runs = [];
-  lines.forEach((line) => {
-    const last = runs[runs.length - 1];
-    if (last && last.role === line.role) { last.seconds += line.seconds; last.n += 1; }
-    else runs.push({role: line.role, seconds: line.seconds, n: 1, at: line.at});
-  });
-  // The third role is the one nothing can check: the reversal in an argument,
-  // the doubts in a story. Named from the format rather than written in, since
-  // the two vocabularies share no words.
-  const roles = sums.roles || ["起", "承", "轉", "合"];
-  const pivot = roles[2];
-  const turn = lines.find((line) => line.role === pivot);
-  const before = lines.filter((line) => line.at < (turn ? turn.at : 0)).slice(-2);
-  const after = turn ? lines.slice(lines.indexOf(turn), lines.indexOf(turn) + 2) : [];
-  const story = pivot === "疑點";
-  /* 收著。上面那一行已經說了結構過不過；這一塊是「那個轉到底翻轉了什麼」
-     —— 一個要坐下來讀的問題，不是每次打開文案都要看的東西。 */
-  return `
-  <details class="shape">
-    <summary><b>起承轉合</b>
-      <span class="quick">${runs.map((run) => run.role).join(" · ")}</span>
-      <span class="more">看那個轉</span></summary>
-    <div class="shape-bar">${runs.map((run) => `
-      <i style="width:${(run.seconds / clock) * 100}%;background:${
-        ROLE_COLOUR[run.role] || "#555"}"
-        title="${escapeHTML(run.role)}　${run.n} 句　${run.seconds.toFixed(1)}s">
-        <b>${escapeHTML(run.role || "")}</b></i>`).join("")}</div>
-    ${turn ? `
-    <div class="turn">
-      <div class="turn-head">${story
-        ? "這個「疑點」有替觀眾想完嗎？" : "這個「轉」翻轉了什麼？"}
-        <span class="hint">${story
-          ? "程式只證明它被標成疑點。有沒有留白給觀眾，只有讀的人知道"
-          : "程式只證明它被標成轉、而且在前三分之一。有沒有翻轉只有讀的人知道"}</span></div>
-      <div class="turn-lines">
-        ${before.map((line) => `<div class="was">${escapeHTML(line.role)}　${
-          escapeHTML(line.say)}</div>`).join("")}
-        ${after.map((line, index) => `<div class="now${index ? " next" : ""}">${
-          escapeHTML(line.role)}　${escapeHTML(line.say)}</div>`).join("")}
-      </div>
-      <div class="turn-ask">${story
-        ? `這一句是<b>擺出一個矛盾</b>，還是替觀眾下了結論？
-           出現「顯示」「代表」「可見」通常就是想完了。`
-        : `看完上面兩句，再看下面兩句——<b>對同一批事實的理解變了嗎？</b>
-           沒變的話，那是補充或換句話說，不是轉。`}</div>
-    </div>` : ""}
-  </details>`;
-}
+/* 起承轉合那一塊拿掉了。
+   它不是警告，是一個永遠存在的提問：程式證明得了「有一句標成轉、落在前三分
+   之一」，證明不了那一句真的翻轉了什麼，所以它把轉和前兩句並排，請人自己
+   讀。用意是對的，做法不是 —— 一個每次都長一樣的提示，第三次之後就是壁紙，
+   而且它看起來像警告，於是每次都要重新確認「是不是出事了」。
+   結構過不過在「細節」裡有（結構 ✓）。要把這個問題問回來，得等它有理由才
+   出現：轉的用詞跟前一句高度重疊、轉之後沒有新的來源、整段都標觀點 —— 那
+   幾個都算得出來，算出來再問。 */
 
 /* 畫面的權利，放進「細節」裡。
    它本來是獨立一塊，而它跟上面那一區講的是同一批鏡頭：「實拍 32%」和「有版
@@ -921,7 +844,6 @@ async function showScript(name) {
       <button id="btnSaveLines" class="primary tiny">儲存</button>
       <button id="btnDropLines" class="tiny">放棄</button>
     </div>
-    ${shapePanel(sums)}
     <!-- 一句一格，寬度是它佔的秒數。本來就浮在表格上面，沒有標題也沒有說明
          —— 一條看不懂的藍色橫條。它是這張表的時間軸，所以現在跟表頭黏在
          一起，而且說出自己是什麼。 -->
