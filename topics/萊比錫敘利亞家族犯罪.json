@@ -759,7 +759,754 @@
     "BKA：有組織犯罪集團有針對性地招募兒少（Süddeutsche Zeitung）",
     "薩克森不是德國的家族犯罪重鎮，柏林、不來梅、下薩克森、北威州才是（Focus online）"
   ],
-  "voices": [],
+  "voices": [
+    {
+      "url": "https://www.youtube.com/watch?v=TnXbZWDBBB4",
+      "title": "Jahresbericht des Bundeskriminalamts: Mehr Verfahren gegen Banden",
+      "outlet": "tagesschau",
+      "comments": []
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=VJHdLOT5y8E",
+      "title": "Clan-Kriminalität: Die Gomans vor Gericht | SPIEGEL TV",
+      "outlet": "DER SPIEGEL",
+      "comments": [
+        {
+          "say": "Es scheint noch ein weiteres, ungeschriebenes Gesetz zu geben in der Familie: unter 120 Kilo bist du nichts. Props an den Aufzug am Ende.",
+          "likes": 16000,
+          "when": "9 months ago",
+          "reply": false
+        },
+        {
+          "say": "Wie oft die wohl schon im Fahrstuhl stecken geblieben sind? :P",
+          "likes": 313,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Habe gehört, bei Familientreffen mit mehr als 200 Gomans an einem Ort, gerät die Erdrotation in Unwucht. \n\nUns bleibt zumindest die Gewissheit, diese ganze Mischpoke wird zum größten Teil an Diabetes sterben. Vorher zahlen wir zwar noch ein paar Beinamputationen und Rollstühle, aber was solls.",
+          "likes": 191,
+          "when": "9 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Schaue auch unsere Doku über die Baseballschlägerjahre:\nDie Baseballschlägerjahre: »Wende nach rechts« https://youtu.be/ZnEuy-PhCgM\r\nDie Baseballschlägerjahre: »Deutschland brennt« https://youtu.be/RrXcjSu6ECI\r\nDie Baseballschlägerjahre: »Rechts gegen Links« https://youtu.be/yC_3A9kH5sw",
+          "likes": 148,
+          "when": "9 months ago",
+          "reply": false
+        },
+        {
+          "say": "Der Bauer würde sagen, die Gomans stehen gut im Futter!",
+          "likes": 134,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Bei Reportagen wie dieser hier ist es mir ein Rätsel woher der Rechtsruck kommt 🙃",
+          "likes": 66,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Hauptsache \"zu schön für euch\". Welche Wahrnehmungsstörung haben die.",
+          "likes": 65,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Alles in Essen investiert 🎉",
+          "likes": 43,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Direkt Geld vom Jobcenter streichen sobald sie einmal auffällig wurden.😊",
+          "likes": 24,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​​ @Suggmabellz  oder in der Luft 😂😂",
+          "likes": 23,
+          "when": "9 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Z-Promis kommentieren uraltes, mittlerweile verpixeltes Zeug!",
+          "likes": 21,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@Suggmabellz nicht schlimm- wir zahlen das schon",
+          "likes": 21,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@ViruX42  Das Ding ist, ich bin absolut dafür dass solche Clans/Leute mit der vollen Härte des Gesetzes bestraft werden - nur ist es mir egal ob die Goman, Müller oder Ling Long heißen. Das hat wenig mit Rechts sein tu tun, eher mit dem (noch) vorhanden Glauben an den Rechtsstaat.",
+          "likes": 20,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Denen geht's hier ganz offensichtlich zu gut. Sie können sich benehmen wie die Axt im Walde. Können unbehelligt Straftaten begehen. Klar wird man da \"Fett\"... 🤷🏻‍♂️",
+          "likes": 19,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Und keine Festnahme. Die machen lustig weiter weil der Staat nichts unternimmt.",
+          "likes": 18,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Danke für die unerwartete AFD Wahlwerbung am Donnerstag 🫶",
+          "likes": 16,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@alexanderwestphal1569  Du meinst jeder Schweinebauer wäre bei dem Bauchspeck happy? 🫣",
+          "likes": 16,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Na ja, wir machen Sie mit unseren Steuern fett. Und die Politik liefert mit den \"1000 Nadelstichen\" (Zitat Minister Reul) noch die Akupunktur dazu.",
+          "likes": 15,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Die Antwort auf solche Auswüchse wie in dieser Doku ? Ich frage für besorgte Bürger.",
+          "likes": 11,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Das ganze Justizsystem muss komplett reformiert werden !:face-blue-wide-eyes:",
+          "likes": 10,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "0:28 Was für ein Wahnsinn in DE, wenn selbst Innenminister von NRW schon kapituliert. DE/ Europa ist ein Pulverfass.\nUnd RUS ist nicht der Feind, der ist viel näher als man denkt.",
+          "likes": 10,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Mir hat jemand mal gesagt, alles unter 100kg ist ein Krüppel 😂😂",
+          "likes": 10,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Ist Herr Merz wohl noch nicht aufgefallen... Sowas aber auch",
+          "likes": 10,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @Darkcroos Auch in Bochum.😊",
+          "likes": 9,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @derbengel0759  habe ich mir auch gedacht",
+          "likes": 7,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @atzewellblech5789 Auf den Friedhöfen sind Grabsteine, die ihres Gleichen suchen.",
+          "likes": 7,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Vielen Dank für die Berichte trotz der Umstände 👍",
+          "likes": 5,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Rääääächts darf nicht fehlen.",
+          "likes": 5,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@derbengel0759 haben nicht nur Übergewichtige.\nIch denke jeder 2. ist Diabetiker und zu oft unterzuckert.",
+          "likes": 5,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​@HK-ev7siWürde mich nicht wundern wenn da auch Politiker mit involviert sind, in den USA oder anderen europäischen Ländern ist doch Korruption ein Alltagsgrschäft.",
+          "likes": 5,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Zu der sog. Wendung nach rechts hat auch der Spiegel kräftig beigetragen und macht es immer noch.",
+          "likes": 4,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@atzewellblech5789  😂",
+          "likes": 4,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@atzewellblech5789  Rolls-Roycestühle müssen es dann schon sein.",
+          "likes": 4,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Armes Deutschland 😂",
+          "likes": 3,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@anosvoldigoad8184  Sehe ich auch so. Und dass sowohl SPD als auch CDU immer nur große Reden schwingen, während gleichzeitig z.B. Stellen in Justiz und Polizei abgebaut werden und Beamte vor Überstunden kaum noch gucken können, ist halt ein Grund dafür, dass solche Leute - unabhängig davon, wie sie heißen oder woher sie kommen - seit Jahren damit durch kommen. Und dieses doppelte Spiel der Volksparteien ist meiner Meinung leider auch ein Grund für den Aufschwung der AfD.",
+          "likes": 3,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @ViruX42 naja man muss nicht zwangsläufig sehr rechts konservativ ausgerichtet sein um solche Strukturen als untragbar zu erkennen. Gesunder Menschenverstand wäre ausreichend denke ich und die politische Lagerspalterei in rechts/links halte ich für reine Ablenkungstaktik um zu verschleiern warum man strafrechtlich mehr als  30 Jahre nix  dagegen getan hat.",
+          "likes": 3,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Netter versuchbaber Sozialleistungen zu missbrauchen ist nicht vergleichbar mit Steuerhinterziehung..  bürgergeldreform bringt schaffe 80mio im Vergleich zu ner reichen/erbschafts Steuer die Milliarden freischalten würden aber läuft ja und die idioten glauben euch das noch",
+          "likes": 2,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Naja, hätte bei 1:10 vielleicht auch fragen sollen ,ob es ein Lastengurt ist😂😂",
+          "likes": 2,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Liegt Leverkusen nicht in NRW ? Ist Herbert Reul nicht Innenminister von NRW ?  Seit 2017 sogar ?",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Seit Jahren immer die gleichen Videos. Gleichen Autos.👎👎👎👎👎",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@Leo-nt1fn  es wird nicht mehr lange dauern...die Menschen durchschauen langsam aber sicher die Probaganda 🙂",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @Leo-nt1fn ja in Berlin im Bundestag",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​​ @Klatschi493 😮",
+          "likes": 1,
+          "when": "9 months ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "@Suggmabellz  Danke, dass sie mich heute zum lachen gebracht haben. :)",
+          "likes": 1,
+          "when": "2 weeks ago",
+          "reply": true
+        },
+        {
+          "say": "​@Ebitenor-ke5ll😂👍",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @mitchellknipping4753 Müsste man mal in der Politik vorschlagen",
+          "likes": 1,
+          "when": "7 months ago",
+          "reply": true
+        },
+        {
+          "say": "@P @Polly_77  Klar! Alles in Gold und Steinchen gehalten. Kitsch muss sein",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @atzewellblech5789  😂 du bist der beste mir diesem Spruch 😂 hätte es nicht besser sagen können props an dich❤",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@anosvoldigoad8184  vergiss es...das blicken die beim Spiegel nicht! Die machen schön brav das für was sie bezahlt werden! Neutrale Medien in Deutschland bleibt wohl so lange eine Traum so lange es gez gibt! Traurig aber wahr!",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@ViruX42  Hilft sicher die Realität nicht zu zeigen. Ehrlich ist aber was anderes.",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​@w.lf404es würde schon reichen alle nicht arbeitenden Clans, Verbrecher  Flüchtlinge auszuweisen. Das spart Milliarden jährlich und unsere Kinder könnten wieder sicher ins Freibad😢❤",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Das muss doch auch eine Mitarbeiter vom Jobcenter sehen.\nMachen die 50/50",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Wo sind diese Adressen genau in Leverkusen?",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "@bahast788 und dann ?",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Woher hatte die Patrizia das Geld um soo viele Immobilien zu kaufen???:face-blue-question-mark:",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Das sollte eine Empathie für eure Berichterstattung sein ❤",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "Das ist alles Gelogen totale lüge😅😅😅😅😅😅😅",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​ @Niclas-r1p  prächtig bruder",
+          "likes": 0,
+          "when": "2 weeks ago",
+          "reply": true
+        },
+        {
+          "say": "​ Zu 100 % sind die damit in involviert",
+          "likes": 0,
+          "when": "3 weeks ago",
+          "reply": true
+        },
+        {
+          "say": "​ @atzewellblech5789 🤣🤣🤣👍",
+          "likes": 0,
+          "when": "9 months ago",
+          "reply": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=6gBFF9rHFP8",
+      "title": "Clankriminalität in Deutschland: Der Goman-Clan und sein Millionen-Imperium | SPIEGEL TV Classic",
+      "outlet": "DER SPIEGEL",
+      "comments": [
+        {
+          "say": "Wie viele ,,Clans\" gibt es eigentlich in Deutschland haha einfach Clash of Clans geworden",
+          "likes": 8800,
+          "when": "1 year ago",
+          "reply": false
+        },
+        {
+          "say": "Aldi Brüder",
+          "likes": 154,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Die Mocro-Mafia aus Holland, jetzt hier: Der brutale Bandenkrieg der »Mocro-Mafia« | SPIEGEL TV\nhttps://youtu.be/fqPV8iPnS-0",
+          "likes": 145,
+          "when": "1 year ago",
+          "reply": false
+        },
+        {
+          "say": "Aber reinheiraten ist nicht. Die nöken alle nur ihre Cousinen 🤣🤣🤣",
+          "likes": 96,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Wie unglaublich lustig",
+          "likes": 86,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Zuviele, einfach zuviele...",
+          "likes": 61,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Die meisten sind doch verwandt. Hier ist der Stammbaum ein Kreis",
+          "likes": 50,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Clash of clans 😂😂😂",
+          "likes": 26,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Remmo, Omeirat und Al-Zein haben noch eine gewisse Berühmtheit.",
+          "likes": 22,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@derspiegel  arte schreibt wenigstens reupload",
+          "likes": 21,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Einfach Naruto",
+          "likes": 21,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Kann ich leider nicht drüber lachen.",
+          "likes": 19,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Die sind mittlerweile auch in fast jedem Dorf vertreten . In Norddeutschland ganz Schlimm.",
+          "likes": 17,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "✈️🇩🇪✈️🔵😡🔵😡🔵",
+          "likes": 9,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂😂😂😂",
+          "likes": 7,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Was sollen denn diese ollen Kamellen?",
+          "likes": 6,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@first4880  keiner hat nach deinen Emoji-Meinungen gefragt.",
+          "likes": 6,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Ach was, das sind die Fachkräfte die Deutschland so dringend braucht. Täglich kommen tausende.",
+          "likes": 6,
+          "when": "1 year ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Sind seit den 70'ern hier!\nAlso nichts neues+lange bekannt alles!!\nVor allem-wie viele!",
+          "likes": 6,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "ja, echt sau witzig die ganzen waffen drogen und menschenhändler... fragwürdige auffassung",
+          "likes": 5,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂😂😂😂😂",
+          "likes": 5,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Wow, es gibt auch Talahone, die Florian heißen..",
+          "likes": 4,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "kommen ja jedes jahr millionen weitere",
+          "likes": 4,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@saschatube1517  Titel lesen ! Dort steht hier explizit \"Spiegel TV Classic\". Was heißt das wohl ?!",
+          "likes": 3,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@stlaut2758  die dritte fraktion is ganz groß in der Stadt in der ich groß geworden hab, ging zur schule mit einen von denen weiß noch wie er immer mit fetten geldbündeln geflext hat, wenn man gefragt hat woher er die kohle hat sagte er immer family buisness ^^",
+          "likes": 3,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@eliaskemper56 Und trotzdem hat er recht! 😂",
+          "likes": 3,
+          "when": "5 months ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂😂😂😂😂",
+          "likes": 3,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Genug da die sich ja alles erlauben können",
+          "likes": 3,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@saschatube1517 steht ,,TV Classic“ also gemeint als re-upload",
+          "likes": 2,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Fr habe ich mir auch gerade gedacht",
+          "likes": 2,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Wir arbeiten für diese Clans",
+          "likes": 2,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Zu viele definitiv",
+          "likes": 2,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "...KA, aber es werden mehr... für jedes Kind bekomm´st du xxx €!!! Hast du 120 brauch´st du nicht mehr arbeiten (10 eigene + 10 x5 von den eigenen, Enkelkinder)... da bekommt man nicht nur Spass in der Buxe... alleine Krankenversicherung (kommt noch oben drauf)!!!",
+          "likes": 2,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "4:10 🤣 die haben sogar rechtschreibfehler ohne ende drauf",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@Nomad_111  sehr weak. Sollte demonatusiert werden",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "​ @einreaktionskanal 😂😂😂😂😂😂👀💀🔫",
+          "likes": 1,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "Ungelogen du hast Recht man 😅",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "jede größere stadt ab 30k einwohner hat mindestens einen",
+          "likes": 1,
+          "when": "1 year ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Dann noch die von Berlin,\nEs gibt knapp formuliert und geschätzt, pro Gross Stadt in Deutschlands Westen (Nord und Zentral), sowie Berlin, Dresden und der Süd Osten, um die 4 Gross Clans und zwischen 3 bis 19 klein Clans, also hoch gerechnet schon ein paar frei berufliche Familien mit mehr Geld als Verstand",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Nur ohne Mauern und ganz viele Goldlager.",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂😂😂😂😂",
+          "likes": 1,
+          "when": "10 months ago",
+          "reply": true
+        },
+        {
+          "say": "Ein ehemaliger Ermittler sagte einmal in einer Dokumentation \" das Problem kriegen wir nicht mehr in den Griff",
+          "likes": 1,
+          "when": "9 months ago",
+          "reply": true
+        },
+        {
+          "say": "​@Sameolgyo😂😂😂",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@Sameolgyo aus welchen kreisen du kommst weiß man direkt",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@Sameolgyo🙈👎🤯🤮🥶💩😔",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "@bedauerlichereinzelfall4043 fande clash of clans schon etwas lustig",
+          "likes": 1,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Irgendwas mit \"SPON liefert\", \"Wochenende gerettet\".",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Es geht um Teppichbetrug. 🤣🤣🤣\n\nKannste dir nicht ausdenken. 🤣🤣🤣",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Zählt alles zur roten Mafia. \nWie Antifa und Spiegel . 👹🚩",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Ein Papier",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Die mocro mafia 😢",
+          "likes": 0,
+          "when": "3 months ago",
+          "reply": true
+        },
+        {
+          "say": "@danny-veteren Deutsche sind super. Ich liebe es wenn der deutsche wählen geht und ich liebe es wie er mit Ausländern umgeht. Er macht seine Ausländer zum Bundeskanzler und obersten Richter und folgt ihm in den Tod.",
+          "likes": 0,
+          "when": "9 days ago",
+          "reply": true
+        },
+        {
+          "say": "Aber echt",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂😂😂",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "😂",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "😂😂😂",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Wir haben hier 80+ Millionen Menschen. Da werden schon ein paar dabei sein 😂",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        },
+        {
+          "say": "Noch nicht genug. Göring Eckardt freut sich doch so sehr über jedes Verbrechen. Sie meinte ja diese Veränderungen werden Großartig und sie freut sich drauf. Vermutlich eine Perverse Neigung. Erregung durch das Leid das verursacht wird. Anders kann ich mir diese Freude von der sie sprach nicht erklären",
+          "likes": 0,
+          "when": "8 months ago",
+          "reply": true
+        },
+        {
+          "say": "Ich liebe deutsche Land",
+          "likes": 0,
+          "when": "9 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Nayef1406  😂",
+          "likes": 0,
+          "when": "1 year ago",
+          "reply": true
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=rUmBFAzS4Ig",
+      "title": "CLAN CRIME IN LEIPZIG: \"Someone should have noticed that!\" – Clan patriarch reportedly has 32 chi...",
+      "outlet": "WELT",
+      "comments": []
+    }
+  ],
   "regions": [
     "DE"
   ],
