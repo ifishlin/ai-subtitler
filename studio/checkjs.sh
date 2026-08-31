@@ -77,4 +77,61 @@ if not faults:
 sys.exit(1 if faults else 0)
 PY
 
+# 沒有人用的 CSS 選擇器。
+#
+# 拆一頁變兩頁之後，兩邊各留下二十幾條對方才用的規則 —— 素材頁帶著 .rights、
+# .shape、.turn 的樣式，短影音頁帶著 .doubted、.wanted、.shelf。全部沒有害，
+# 全部讓下一個讀的人以為那些東西還在這一頁上。
+#
+# 只看 `  .x{` 這種兩格縮排的頂層規則，不看巢狀和組合選擇器 —— 寧可漏抓，
+# 不要誤報，誤報的門會被關掉。
+echo "檢查有沒有沒人用的 CSS…"
+python3 - <<'PY' || bad=1
+import re, sys, pathlib
+# shared.js 注入的東西、leanTag 產生的 class：不在 HTML 裡但活著
+BORN_IN_JS = {"#big", "#bigNote", "#bigStage", ".big-bar", ".big-inner",
+              ".lean", ".topnav", ".ask-inner", ".ask-buttons", ".ask-lose",
+              "#ask", "#askTitle", "#askBody", "#askText", "#askYes", "#askNo"}
+faults = 0
+for path in sorted(pathlib.Path("studio/static").glob("*.html")):
+    text = path.read_text(encoding="utf-8")
+    if "<style>" not in text:
+        continue
+    css = text[text.index("<style>") + 7:text.index("</style>")]
+    rest = text.replace(css, "")
+    dead = []
+    for found in re.finditer(r"^\s{2}([.#][\w-]+)(?=[\s,{:>])", css, re.M):
+        sel, key = found.group(1), found.group(1)[1:]
+        if sel in BORN_IN_JS:
+            continue
+        want = (rf'class="[^"]*\b{re.escape(key)}\b' if sel[0] == "."
+                else rf'id="{re.escape(key)}"')
+        if re.search(want, rest) or f'"{key}"' in rest or f"'{key}'" in rest:
+            continue
+        dead.append(sel)
+    for sel in sorted(set(dead)):
+        print(f"  ❌ {path.name}　{sel} 沒有人用")
+        faults += 1
+if not faults:
+    print("  ✅ 沒有")
+sys.exit(1 if faults else 0)
+PY
+
+# 每一頁都要有導覽列和共用配色，不然它會長得像另一個系統。
+echo "檢查每一頁有沒有接上共用的東西…"
+python3 - <<'PY' || bad=1
+import sys, pathlib
+faults = 0
+for path in sorted(pathlib.Path("studio/static").glob("*.html")):
+    text = path.read_text(encoding="utf-8")
+    for need, why in (("/static/theme.css", "共用配色"),
+                      ("/static/nav.js", "導覽列")):
+        if need not in text:
+            print(f"  ❌ {path.name}　沒有載 {need}（{why}）")
+            faults += 1
+if not faults:
+    print("  ✅ 都有")
+sys.exit(1 if faults else 0)
+PY
+
 exit $bad

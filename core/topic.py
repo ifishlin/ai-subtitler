@@ -358,6 +358,27 @@ def photos(name: str) -> Path:
     return ROOT / "assets" / "photos" / name
 
 
+def mark(name: str, **flags: bool) -> dict[str, Any]:
+    """Set the human judgements a list needs: pinned, put away.
+
+    Both are decisions nobody can compute -- which topic matters this week,
+    which one is finished with -- so they are stored, unlike everything else
+    the list shows.
+
+    One function for both because they are the same kind of thing and were
+    heading for two endpoints that would have drifted apart.
+    """
+    pile = load(name)
+    for key in ("pinned", "archived"):
+        if key in flags:
+            if flags[key]:
+                pile[key] = True
+            else:
+                pile.pop(key, None)      # absent rather than false: no noise
+    save(name, pile)
+    return pile
+
+
 def everything_for(name: str) -> list[Path]:
     """Every file this topic owns, including through its scripts.
 
@@ -899,6 +920,7 @@ def listing() -> list[dict[str, Any]]:
             # far it got, why it stopped -- and that is worth more than the
             # room it takes in a list.
             "archived": bool(pile.get("archived")),
+            "pinned": bool(pile.get("pinned")),
             "films": films,
             "voices": voice_count(pile),
             "modified": int(path_for(name).stat().st_mtime),

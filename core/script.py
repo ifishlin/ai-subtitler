@@ -840,6 +840,9 @@ def listing() -> list[dict[str, Any]]:
             "sources": sum(len(script.get("sources", {}).get(kind) or [])
                            for kind in ("video", "reports", "images")),
             "archived": script.get("topic", "") in filed,
+            # Pinned is the script's own -- the one being worked on this hour
+            # is not the same question as which topic matters this week.
+            "pinned": bool(script.get("pinned")),
             "modified": int(path_for(name).stat().st_mtime),
         })
     return found

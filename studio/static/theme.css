@@ -143,13 +143,31 @@ table.sheet td a{color:var(--accent);text-decoration:none}
 table.sheet td a:hover{text-decoration:underline}
 
 
-/* 清單卡片上的封存鈕。放在右上角，因為那是「對這一列做一件事」的位置，而
-   卡片本身是「打開它」。淡到選中或滑過才明顯 —— 整理清單是偶爾的事。 */
+/* 清單卡片右上角的動作。滑過去才顯出來（釘住的和收起來的一直顯示），因為
+   整理清單是偶爾的事，而清單本身是天天看的。 */
 .item{position:relative}
-.item .file{position:absolute;top:8px;right:8px;opacity:0;
-  transition:opacity .12s;z-index:2}
-.item:hover .file,.item.on .file,.item.archived .file{opacity:.75}
-.item .file:hover{opacity:1}
+.item .row-acts{position:absolute;top:7px;right:7px;display:flex;gap:4px;
+  opacity:0;transition:opacity .12s;z-index:2}
+.item:hover .row-acts,.item.on .row-acts,
+.item.archived .row-acts,.item.pinned .row-acts{opacity:.8}
+.item .row-acts:hover{opacity:1}
+.item .act{padding:2px 7px;font-size:11px}
+
+/* 釘住的：左邊一道，看得出它為什麼在最上面。 */
+.item.pinned{border-left:3px solid var(--accent)}
+
+/* 兩區之間的一道線。比留白清楚，比標題安靜。 */
+.split{height:1px;background:var(--line);margin:10px 2px}
+
+/* 收起來的那一區：標題和「清空」在一行。清空是唯一真的不可逆的動作，所以
+   只有它是紅的。 */
+.filed-head{display:flex;align-items:center;gap:8px}
+.filed-head > button{font:11px var(--mono);color:var(--faint);
+  background:none;border:none;padding:4px 2px;cursor:pointer}
+.filed-head > button:hover{color:var(--accent)}
+.filed-head .purge{margin-left:auto;color:var(--faint);
+  border:1px solid var(--line);border-radius:7px;padding:2px 8px}
+.filed-head .purge:hover{color:#ff8a72;border-color:#5b2a22}
 
 /* 清單的搜尋列、封存區的摺疊標題、封存項目的淡化。素材和短影音兩頁一樣，
    因為那是同一件事的兩半：題目被收起來，它的文案跟著收起來。 */

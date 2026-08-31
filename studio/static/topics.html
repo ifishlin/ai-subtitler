@@ -41,7 +41,6 @@
     font-weight:400}
 
   h2{margin:0 0 4px;font-size:19px}
-  .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
 
   /* ---- what has been gathered ---- */
   /* A pile to choose from, so it is browsed rather than read: small, dense,
@@ -72,14 +71,6 @@
     color:#7fd4ff;background:#0d1014;border:1px solid var(--line);
     border-radius:5px;padding:2px 4px;cursor:pointer}
   td.at select.role:hover{border-color:var(--accent)}
-  .say-edit{outline:none;border-radius:6px;padding:3px 6px;margin:-3px -6px;
-    border:1px solid transparent;cursor:text;white-space:pre-wrap}
-  .say-edit:hover{border-color:var(--line)}
-  .say-edit:focus{border-color:var(--accent);background:#0d1014}
-  .say-meter{margin-top:4px;font:10px var(--mono);color:var(--faint);
-    display:flex;gap:9px;flex-wrap:wrap}
-  .say-meter .warn{color:#e2a33c}
-  .say-meter .hint{opacity:.62}
   #big{position:fixed;inset:0;background:#000d;z-index:60;display:flex;
     align-items:center;justify-content:center;padding:24px}
   /* `display:flex` on the element itself outranks the browser's own
@@ -116,21 +107,6 @@
   .houses-bar{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
   .houses-bar b{font-size:14px}
   .houses-bar .hint{font-size:11px;color:var(--faint);flex:1;line-height:1.5}
-  .house-card{border:1px solid var(--line);border-radius:9px;padding:11px 13px;
-    margin-bottom:10px;background:var(--bg)}
-  .house-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-  .house-head code{font:11px var(--mono);color:var(--faint)}
-  .house-head .grow{flex:1}
-  .house-card label{display:block;font-size:11px;color:var(--faint);
-    margin-bottom:7px}
-  .house-card label.wide{grid-column:1/-1}
-  .house-card input,.house-card textarea{width:100%;margin-top:3px;
-    font:13px inherit;color:var(--ink);background:#0d1014;
-    border:1px solid var(--line);border-radius:6px;padding:4px 8px}
-  .house-card textarea{font-size:12px;line-height:1.6;resize:vertical}
-  .house-card .h-name{font-size:14px;font-weight:600;width:auto;margin:0}
-  .house-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-    gap:8px 12px}
   .houses-new{display:flex;gap:8px;align-items:center;margin-top:6px;
     padding-top:11px;border-top:1px solid var(--line)}
 
@@ -158,67 +134,8 @@
 
   /* Two decisions about the whole film, made once and never revisited until
      they were put here: which shape it is, and who it is for. */
-  .about{display:flex;align-items:center;gap:14px;margin:10px 0 14px;
-    padding:9px 14px;border-radius:9px;background:var(--panel);
-    border:1px solid var(--line);flex-wrap:wrap}
-  .about label{display:flex;align-items:center;gap:7px;font-size:12px;
-    color:var(--faint)}
-  .about label.grow{flex:1;min-width:240px}
-  .about select,.about input{font:13px inherit;color:var(--ink);
-    background:#0d1014;border:1px solid var(--line);border-radius:6px;
-    padding:4px 9px}
-  .about input{flex:1}
-  .about select:hover,.about input:focus{border-color:var(--accent)}
-  .about .hint{font-size:11px;color:var(--faint)}
-  .film{display:flex;align-items:center;gap:10px;margin:12px 0}
-  .film .grow{flex:1}
-  .film .hint{font:11px var(--mono);color:var(--faint)}
 
-  #pending{display:flex;align-items:center;gap:12px;margin:12px 0;
-    padding:9px 14px;border-radius:9px;background:#2a2415;
-    border:1px solid #5b4a22}
   #pending[hidden]{display:none}
-  #pendingCount{font:12px var(--mono);color:#e2a33c}
-  #pending .hint{font-size:11px;color:var(--faint);flex:1}
-  .shape{background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    padding:11px 14px;margin:12px 0}
-  .shape-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;
-    background:#0d1014}
-  .shape-bar i{display:flex;align-items:center;justify-content:center;
-    height:100%;min-width:0}
-  .shape-bar b{font:11px var(--mono);color:#0d1014;opacity:.85}
-  .turn{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}
-  .turn-head{font-size:12px;display:flex;align-items:baseline;gap:10px;
-    flex-wrap:wrap}
-  .turn-lines{margin:8px 0;display:flex;flex-direction:column;gap:3px}
-  .turn-lines div{font-size:13px;padding:4px 10px;border-radius:6px;
-    border-left:3px solid transparent}
-  .turn-lines .was{color:var(--faint);border-left-color:#3f9e73}
-  .turn-lines .now{color:var(--ink);border-left-color:#c8543f;
-    background:#2a1512}
-  .turn-lines .now.next{background:transparent;color:var(--faint)}
-  .turn-ask{font-size:11px;color:var(--faint);line-height:1.6}
-  .turn-ask b{color:#ff8a72}
-  .rights{background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    padding:11px 14px;margin:12px 0}
-  .rights-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
-  .rights-head b{font-size:13px}
-  .rights-head .lead{font:13px var(--mono)}
-  .rights-head .lead.good{color:#5fcf9b}
-  .rights-head .lead.short{color:#ff8a72}
-  .rights .bar{display:flex;height:13px;border-radius:7px;overflow:hidden;
-    background:#0d1014}
-  .rights .bar i{display:block;height:100%}
-  .rights-keys{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;
-    font:11px var(--mono);color:var(--faint)}
-  .rights-keys i{display:inline-block;width:9px;height:9px;border-radius:2px;
-    margin-right:5px}
-  .rights-keys b{color:var(--ink);margin-left:5px}
-  .rights-keys em{font-style:normal;margin-left:4px}
-  .holders{margin-top:7px;font:11px var(--mono);color:var(--faint)}
-  .holders span{margin-right:12px}
-  .holders b{color:#e0a; color:#e2a33c}
-  .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
   #jobBar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
     align-items:center;gap:12px;padding:9px 18px;background:var(--panel);
     border-top:1px solid var(--line)}
@@ -275,35 +192,22 @@
   .jump button b{color:var(--ink);margin-left:3px}
   .jump button.lacking b{color:var(--warn)}
 
-  .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .note-line span{font-size:11px;color:var(--faint);flex:none}
-  #btnDropTopic{color:var(--faint);flex:none}
-  #btnDropTopic:hover{color:#ff8a72;border-color:#5b2a22}
-  .note-line input{flex:1;font:13px inherit;color:var(--dim);
-    background:transparent;border:1px solid transparent;border-radius:6px;
-    padding:3px 8px}
-  .note-line input:hover{border-color:var(--line)}
-  .note-line input:focus{border-color:var(--accent);background:#0d1014;
-    color:var(--ink);outline:none}
-  .who-for{display:flex;align-items:baseline;gap:12px;padding:10px 15px;
-    margin-bottom:12px;background:#12212e;border:1px solid #244055;
-    border-radius:9px}
-  .who-for span{font-size:11px;color:var(--faint)}
-  .who-for input{flex:1;font:15px inherit;color:#7fd4ff;background:transparent;
-    border:1px solid transparent;border-radius:6px;padding:2px 8px}
-  .who-for input:hover{border-color:#244055}
-  .who-for input:focus{border-color:var(--accent);background:#0d1014;outline:none}
-  .who-for input::placeholder{color:var(--faint);font-size:13px}
-  /* The measured script: length, shares, and every gate's count. Still two
-     rows of tiles because that is a readout of twelve independent numbers,
-     none of which is printed anywhere else on the page. */
-  .gauge{display:flex;gap:16px;flex-wrap:wrap;padding:12px 15px;margin-bottom:8px;
-    background:var(--panel);border:1px solid var(--line);border-radius:9px}
-  .gauge div{font-size:12px;color:var(--dim)}
-  .gauge b{display:block;font:18px var(--mono);font-variant-numeric:tabular-nums;
-    color:var(--ink)}
-  .gauge b.short{color:var(--warn)}
-  .gauge b.good{color:var(--ok)}
+  /* 理由和受眾，一塊兩行。標籤在上、欄位在下，因為兩者的長度差很多 ——
+     並排會讓短的那個看起來是附註。 */
+  .decide{display:grid;gap:9px;padding:12px 15px;margin-bottom:12px;
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    grid-template-columns:1fr 1fr;align-items:end}
+  .decide label{display:block;font-size:11px;color:var(--faint);
+    letter-spacing:.4px}
+  .decide input{display:block;width:100%;margin-top:4px;font:14px inherit;
+    color:var(--ink);background:#0b1017;border:1px solid var(--line);
+    border-radius:7px;padding:6px 9px}
+  .decide input:hover{border-color:#244055}
+  .decide input:focus{border-color:var(--accent);outline:none}
+  .decide input::placeholder{color:var(--faint);font-size:13px}
+  .decide > button{grid-column:1 / -1;justify-self:start}
+  @media (max-width:900px){ .decide{grid-template-columns:1fr} }
+
 
   /* Who has been heard. The point is not the count -- it is whether the
      other side is in there at all, so an empty one is coloured, not just
@@ -372,11 +276,7 @@
      shows. */
   td.show .grabbed{display:block;font:10px var(--mono);color:var(--faint);
     line-height:1.4;margin-top:3px}
-  .seen-box{display:inline-flex;align-items:center;gap:5px;margin-top:5px;
-    font:11px var(--mono);color:#e2a33c;border:1px solid #6b4d17;
-    border-radius:5px;padding:1px 7px;cursor:pointer;user-select:none}
   .seen-box.on{color:#5fcf9b;border-color:#2c5a45}
-  .seen-box input{margin:0;accent-color:#5fcf9b}
   td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
   td.show{cursor:zoom-in}
@@ -388,11 +288,6 @@
     border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
   td.from{font-size:11px;color:var(--faint);width:11em}
   td.from.ours{color:var(--accent)}
-  .ruler{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;
-    margin:14px 0 4px;border:1px solid var(--line);display:flex}
-  .ruler i{display:block;height:100%;border-right:1px solid #0b0e12}
-  .ruler i:nth-child(odd){background:var(--accent)}
-  .ruler i:nth-child(even){background:#4a86cc}
   #note{font-size:13px;margin-top:14px}
   #note.bad{color:var(--danger)}
   #note.warn{color:var(--warn)}
@@ -459,17 +354,24 @@ const STATE = { list: [], want: { videos: 5, reports: 5 }, chosen: null };
 const SIFT = {find: "", sort: "recent", showArchived: false};
 
 function topicCard(item) {
-  /* 封存鈕在卡片上，不在右邊那一頁。封存是「這個先擺一邊」—— 一個整理清單
-     的動作，而清單就在這裡；要先點開一個題目、滑到它的標題列、才能把它收起
-     來，等於為了整理而必須先閱讀。 */
+  /* 兩顆，右上角。滑過去才顯出來（釘住的和收起來的一直顯示），因為整理清單
+     是偶爾的事，而清單本身是天天看的。
+     沒有「刪除」：封存和刪除本來都可逆、都不釋放空間，差別只有多難還原 ——
+     那不是兩個功能。要真的清掉在封存區的標題那裡，一次一批。 */
   return `
     <div class="item ${item.name === STATE.chosen ? "on" : ""}${
-      item.archived ? " archived" : ""}"
+      item.archived ? " archived" : ""}${item.pinned ? " pinned" : ""}"
          data-name="${escapeHTML(item.name)}">
-      <button class="tiny file" data-file="${escapeHTML(item.name)}"
-        data-to="${item.archived ? "0" : "1"}"
-        title="${item.archived ? "放回清單" : "收起來，資料不會刪"}"
-        >${item.archived ? "取出" : "封存"}</button>
+      <span class="row-acts">
+        <button class="tiny act" data-mark="pinned" data-on="${
+          item.pinned ? "0" : "1"}" data-name="${escapeHTML(item.name)}"
+          title="${item.pinned ? "取消置頂" : "釘在最前面"}"
+          >${item.pinned ? "📌" : "📍"}</button>
+        <button class="tiny act" data-mark="archived" data-on="${
+          item.archived ? "0" : "1"}" data-name="${escapeHTML(item.name)}"
+          title="${item.archived ? "放回清單" : "收起來，隨時放回來"}"
+          >${item.archived ? "放回" : "收起"}</button>
+      </span>
       <b>${escapeHTML(item.name)}${
         item.films ? `<span class="films">🎬 ${item.films}</span>` : ""}</b>
       <span class="facts">影片 ${item.counts.videos}/${STATE.want.videos}　`
@@ -499,8 +401,11 @@ function renderList() {
     name: (a, b) => a.name.localeCompare(b.name, "zh-Hant"),
   }[SIFT.sort];
 
+  /* 三區：釘住的、進行中的、收起來的。釘住的不參與排序 —— 釘住就是「不管
+     什麼規則，我要它在最上面」，再排一次就等於沒釘。 */
   const all = STATE.list.filter(matches);
-  const live = all.filter((one) => !one.archived).sort(rank);
+  const pinned = all.filter((one) => one.pinned && !one.archived);
+  const live = all.filter((one) => !one.pinned && !one.archived).sort(rank);
   const filed = all.filter((one) => one.archived).sort(rank);
 
   $("list").innerHTML = `
@@ -513,10 +418,16 @@ function renderList() {
         <option value="name"${SIFT.sort === "name" ? " selected" : ""}>名稱</option>
       </select>
     </div>
-    ${live.map(topicCard).join("") || '<div class="empty">沒有符合的題目</div>'}
+    ${pinned.map(topicCard).join("")}
+    ${pinned.length && live.length ? '<div class="split"></div>' : ""}
+    ${live.map(topicCard).join("")
+      || (pinned.length ? "" : '<div class="empty">沒有符合的題目</div>')}
     ${filed.length ? `
-      <div class="filed-head" id="showFiled">
-        ${SIFT.showArchived ? "▾" : "▸"} 封存的 ${filed.length} 個
+      <div class="filed-head">
+        <button class="tiny" id="showFiled">${
+          SIFT.showArchived ? "▾" : "▸"} 收起來的 ${filed.length} 個</button>
+        ${SIFT.showArchived
+          ? '<button class="tiny purge" id="btnPurge">清空</button>' : ""}
       </div>
       ${SIFT.showArchived ? filed.map(topicCard).join("") : ""}` : ""}`;
 
@@ -531,6 +442,20 @@ function renderList() {
   if ($("showFiled")) $("showFiled").onclick = () => {
     SIFT.showArchived = !SIFT.showArchived;
     renderList();
+  };
+  /* 唯一真的不可逆的動作，所以是唯一問一句的。而它一次處理一批已經看不見一
+     段時間的東西 —— 破壞性的步驟自然落在最後，不用刻意安排。 */
+  if ($("btnPurge")) $("btnPurge").onclick = async () => {
+    const n = STATE.list.filter((one) => one.archived).length;
+    if (!await confirmed(`清空收起來的 ${n} 個題目？`, {
+      body: "素材、文案、成片都會移走。這一步不像「收起來」，放不回來。",
+      yes: "清空", no: "算了"})) return;
+    try {
+      const back = await api("POST", "/api/topics/purge");
+      await reload(false);
+      told("清空了", `${back.purged.length} 個題目、`
+                   + `${(back.bytes / 1048576).toFixed(0)} MB`);
+    } catch (error) { told("出錯了", error.message); }
   };
 }
 
@@ -591,28 +516,22 @@ async function open(name) {
 
   $("paper").innerHTML = `
     <h2>${escapeHTML(pile.topic || name)}</h2>
-    <!-- Why this topic, and what to watch for. The one thing here nothing can
-         compute: whether the opposition is easy to find is in the balance
-         panel; that a medical topic cannot be monetised with an AI voice is
-         not anywhere else, and it decides whether the film gets made. -->
-    <div class="note-line">
-      <button id="btnArchive" class="tiny">${
-        pile.archived ? "取出" : "封存"}</button>
-      <button id="btnDropTopic" class="tiny" title="刪掉這個題目">刪題目</button>
-      <span>挑這題的理由</span>
-      <input id="topicNote" value="${escapeHTML(pile.note || "")}"
-        placeholder="為什麼值得花九十秒？有什麼坑？" spellcheck="false">
-    </div>
-    <!-- Who the ending has to land on. Not always everyone: for a market
-         story it is a shareholder, and his contact point is a balance. -->
-    <!-- Decided, not guessed. The keyword table is offered as a button; it
-         used to be printed here as though it were the answer, and it said a
-         piece about studios being bought was for people whose jobs AI might
-         take. A field that arrives filled in is a field nobody reads. -->
-    <div class="who-for">
-      <span>說給誰聽</span>
-      <input id="topicWho" value="${escapeHTML(pile.audience || "")}"
-        placeholder="還沒決定 —— 結尾整段會寫給這群人聽" spellcheck="false">
+    <!-- 兩個欄位，一塊。它們回答同一個問題的兩半：為什麼做（理由）、做給誰
+         （受眾）—— 而後者決定結尾整段怎麼寫、甚至決定收哪些圖。分成上下兩
+         條的時候，中間隔著一整條邊界，看起來像兩件不相干的事。
+
+         這裡的兩樣是這一頁上唯一算不出來的東西。素材夠不夠、平衡不平衡、
+         有幾張圖，程式全部算得出來；「醫療題目不能用 AI 配音變現」不在任何
+         地方，而它決定這支片做不做。 -->
+    <div class="decide">
+      <label>挑這題的理由
+        <input id="topicNote" value="${escapeHTML(pile.note || "")}"
+          placeholder="為什麼值得花九十秒？有什麼坑？" spellcheck="false">
+      </label>
+      <label>說給誰聽
+        <input id="topicWho" value="${escapeHTML(pile.audience || "")}"
+          placeholder="還沒決定 —— 結尾整段會寫給這群人聽" spellcheck="false">
+      </label>
       ${pile.audience_guess && pile.audience !== pile.audience_guess
         ? `<button id="btnGuessWho" class="tiny"
              title="從題目關鍵字猜的，不一定對">用「${
@@ -903,47 +822,10 @@ async function open(name) {
     };
   });
 
-  // Out of the way, not gone. A topic that came to nothing still records
-  // having asked -- Messina was covered by four outlets and by nobody on the
-  // right, so it cannot become a short, and that is worth knowing later.
-  if ($("btnArchive")) $("btnArchive").onclick = async () => {
-    try {
-      await api("POST", "/api/topic/archive",
-                {name, archived: !pile.archived});
-      await reload(false);
-      open(name);
-    } catch (error) { told("出錯了", error.message); }
-  };
 
   // Deleting a topic. Refused while a script is written from it: a script
   // names pictures by path, so taking the pile away turns a script that was
   // fine yesterday into one missing every shot.
-  /* 問一句，一句就好。
-     四行清單太囉唆，不問又會誤刪 —— 這一則就發生過，265 MB 按錯了。所以問
-     的是「這一下會帶走什麼」，一行講完：幾份文案、幾支成片。不列每個檔案，
-     因為那是刪完的收據該說的事，不是決定要不要刪的依據。
-     數字用畫面上已經有的，不多跑一趟伺服器。 */
-  if ($("btnDropTopic")) $("btnDropTopic").onclick = async () => {
-    const inList = STATE.list.find((one) => one.name === name) || {};
-    const made = (pile.scripts || []).length;
-    const films = inList.films || 0;
-    const also = made
-      ? `連 ${made} 份文案${films ? `和 ${films} 支成片` : ""}一起。`
-      : "";
-    if (!await confirmed(`刪掉「${name}」？`, {
-      body: `${also}素材、文案、成片整份搬到 trash/，救得回來。`,
-      yes: "刪掉", no: "算了"})) return;
-    try {
-      const back = await api("DELETE",
-                             `/api/topic?name=${encodeURIComponent(name)}`);
-      STATE.chosen = null;
-      $("paper").innerHTML = `<div class="empty">刪了「${escapeHTML(name)}」　·　`
-        + `${back.items.length} 項、${(back.bytes / 1048576).toFixed(0)} MB 在 `
-        + `<code>${escapeHTML(back.moved_to)}/</code></div>`;
-      reload(false);
-    } catch (error) { told('出錯了', error.message); }
-  };
-
   const noteBox = $("topicNote");
   if (noteBox) {
     noteBox.dataset.was = noteBox.value;
@@ -1112,19 +994,19 @@ async function reload(openFirst) {
  * 委派給 #list 和 #paper，因為兩邊的內容每次重畫都換掉，綁在元素上會掉。 */
 
 $("list").addEventListener("click", async (event) => {
-  const file = event.target.closest("[data-file]");
-  if (file) {
-    // 封存不是「打開」。不阻止的話點一下會順便把它開起來，而封存的意思正好
-    // 是不想看它。
-    event.stopPropagation();
-    file.disabled = true;
+  /* 置頂和收起來走同一條路。它們是同一種東西（人對這一列的判斷），所以
+     data-mark 說改哪個欄位，data-on 說改成什麼。 */
+  const act = event.target.closest("[data-mark]");
+  if (act) {
+    event.stopPropagation();     // 標記不是「打開」
+    act.disabled = true;
     try {
-      await api("POST", "/api/topic/archive",
-                {name: file.dataset.file, archived: file.dataset.to === "1"});
+      await api("POST", "/api/topic/mark",
+                {name: act.dataset.name, [act.dataset.mark]: act.dataset.on === "1"});
       const found = await api("GET", "/api/topics");
       STATE.list = (found.topics || []).sort((a, b) => b.modified - a.modified);
       renderList();
-    } catch (error) { told("出錯了", error.message); file.disabled = false; }
+    } catch (error) { told("出錯了", error.message); act.disabled = false; }
     return;
   }
   const row = event.target.closest("[data-name]");

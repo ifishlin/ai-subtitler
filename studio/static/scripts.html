@@ -41,27 +41,14 @@
     font-weight:400}
 
   h2{margin:0 0 4px;font-size:19px}
-  .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
 
   /* ---- what has been gathered ---- */
   /* A pile to choose from, so it is browsed rather than read: small, dense,
      and every one says which search found it. */
-  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
-    gap:8px}
-  .shelf figure{margin:0;background:var(--panel);border:1px solid var(--line);
-    border-radius:8px;overflow:hidden}
-  .shelf img{width:100%;height:88px;object-fit:cover;display:block;
-    background:#0d1014}
-  .shelf figcaption{font:10px var(--mono);padding:3px 6px;overflow:hidden;
-    text-overflow:ellipsis;white-space:nowrap}
   /* What we asked for, and what actually came back. Side by side because the
      mistake is invisible any other way: the search said `electricity bill`,
      the picture's own caption said `fuse box`, and only the first was ever
      shown. */
-  .shelf figcaption.asked{color:#7fd4ff;padding-top:5px}
-  .shelf figcaption.got{color:var(--faint);white-space:normal;line-height:1.35;
-    max-height:2.7em;border-top:1px solid var(--line);padding-top:4px}
-  .shelf figcaption.who{color:#9a8; font-size:9px}
   /* A shot at the size it will be seen. The row thumbnails are 82px tall
      and a card's own type is 76px on a 1920 frame -- legible in the finished
      video, illegible in the list -- so the list is for finding a shot and
@@ -134,12 +121,6 @@
   .houses-new{display:flex;gap:8px;align-items:center;margin-top:6px;
     padding-top:11px;border-top:1px solid var(--line)}
 
-  .pick-house{display:flex;align-items:center;gap:7px;font-size:12px;
-    color:var(--faint)}
-  .pick-house select{font:13px inherit;color:var(--ink);background:#0d1014;
-    border:1px solid var(--line);border-radius:6px;padding:4px 9px;cursor:pointer}
-  .pick-house select:hover{border-color:var(--accent)}
-  #whyHouse{font-size:11px;color:var(--faint);flex:1;line-height:1.5}
 
   /* Which shape a script is, on its card. Not only inside the script view:
      it decides what every other number on that card means -- 38% borrowed is
@@ -158,18 +139,30 @@
 
   /* Two decisions about the whole film, made once and never revisited until
      they were put here: which shape it is, and who it is for. */
-  .about{display:flex;align-items:center;gap:14px;margin:10px 0 14px;
-    padding:9px 14px;border-radius:9px;background:var(--panel);
-    border:1px solid var(--line);flex-wrap:wrap}
-  .about label{display:flex;align-items:center;gap:7px;font-size:12px;
-    color:var(--faint)}
-  .about label.grow{flex:1;min-width:240px}
-  .about select,.about input{font:13px inherit;color:var(--ink);
-    background:#0d1014;border:1px solid var(--line);border-radius:6px;
-    padding:4px 9px}
-  .about input{flex:1}
-  .about select:hover,.about input:focus{border-color:var(--accent)}
-  .about .hint{font-size:11px;color:var(--faint)}
+  /* 標題和「回素材」一行。 */
+  .head{display:flex;align-items:baseline;gap:12px;margin:0 0 10px}
+  .head h2{margin:0}
+
+  /* 這支片是什麼：觀點、公版、語氣、受眾。四樣一塊。
+     觀點最長，自己一行；另外三個短的並排。本來是三條分開的橫列，中間隔著
+     邊界 —— 而它們講的是同一件事。 */
+  .about{display:grid;gap:9px 14px;margin:0 0 14px;padding:11px 15px;
+    border-radius:10px;background:var(--panel);border:1px solid var(--line);
+    grid-template-columns:1.4fr 1fr 1.6fr}
+  .about label{display:block;font-size:11px;color:var(--faint);
+    letter-spacing:.4px;min-width:0}
+  .about label.wide{grid-column:1 / -1}
+  .about .said{margin-top:4px;font:14px/1.55 inherit;color:var(--ink)}
+  .about label:not(.wide) .said{font-size:14px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .about select,.about input{display:block;width:100%;margin-top:4px;
+    font:14px inherit;color:var(--ink);background:#0b1017;
+    border:1px solid var(--line);border-radius:7px;padding:5px 9px}
+  .about select{cursor:pointer}
+  .about select:hover,.about input:hover{border-color:#244055}
+  .about input:focus,.about select:focus{border-color:var(--accent);outline:none}
+  .about input::placeholder{color:var(--faint);font-size:13px}
+  @media (max-width:900px){ .about{grid-template-columns:1fr} }
   .film{display:flex;align-items:center;gap:10px;margin:12px 0}
   .film .grow{flex:1}
   .film .hint{font:11px var(--mono);color:var(--faint)}
@@ -234,32 +227,8 @@
   #jobBar.failed{background:#2a1512;border-top-color:#5b2a22}
   #jobBar.failed .job-track i{background:#ef6b6b}
 
-  .gather{display:flex;align-items:center;gap:10px;margin:10px 0}
-  .gather > span{font-size:11px;color:var(--faint);flex:none}
-  .gather input{flex:1}
 
-  .doubted{margin:10px 0;padding:9px 14px;border-radius:9px;background:#2a2415;
-    border:1px solid #5b4a22}
-  .doubted-head{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
-  .doubted-head b{font-size:12px;color:#e2a33c}
-  .doubted-head .hint{font-size:11px;color:var(--faint)}
-  .doubted-head .grow{flex:1}
-  .doubt-row{display:flex;align-items:center;gap:9px;padding:2px 0;
-    font-size:12px}
-  .doubt-row .who{color:var(--faint);font:11px var(--mono);flex:none;
-    width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .doubt-row .what{color:var(--dim);overflow:hidden;text-overflow:ellipsis;
-    white-space:nowrap}
 
-  .wanted{display:flex;align-items:center;gap:11px;margin:10px 0;
-    padding:8px 14px;border-radius:9px;background:#2a2415;
-    border:1px solid #5b4a22;flex-wrap:wrap}
-  .wanted > span{font-size:12px;color:#e2a33c;flex:none}
-  .wanted > span b{color:#ffd76a}
-  .wanted .why{font-size:11px;color:var(--faint);flex:1 0 100%;order:9}
-  .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-  .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
-    border:1px solid var(--line);border-radius:5px;padding:1px 7px}
   /* A rule between piles, so one section ends visibly before the next
      begins. Everything stays open: a pile you have to unfold is a pile you
      forget is there. */
@@ -275,25 +244,6 @@
   .jump button b{color:var(--ink);margin-left:3px}
   .jump button.lacking b{color:var(--warn)}
 
-  .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .note-line span{font-size:11px;color:var(--faint);flex:none}
-  #btnDropTopic{color:var(--faint);flex:none}
-  #btnDropTopic:hover{color:#ff8a72;border-color:#5b2a22}
-  .note-line input{flex:1;font:13px inherit;color:var(--dim);
-    background:transparent;border:1px solid transparent;border-radius:6px;
-    padding:3px 8px}
-  .note-line input:hover{border-color:var(--line)}
-  .note-line input:focus{border-color:var(--accent);background:#0d1014;
-    color:var(--ink);outline:none}
-  .who-for{display:flex;align-items:baseline;gap:12px;padding:10px 15px;
-    margin-bottom:12px;background:#12212e;border:1px solid #244055;
-    border-radius:9px}
-  .who-for span{font-size:11px;color:var(--faint)}
-  .who-for input{flex:1;font:15px inherit;color:#7fd4ff;background:transparent;
-    border:1px solid transparent;border-radius:6px;padding:2px 8px}
-  .who-for input:hover{border-color:#244055}
-  .who-for input:focus{border-color:var(--accent);background:#0d1014;outline:none}
-  .who-for input::placeholder{color:var(--faint);font-size:13px}
   /* The measured script: length, shares, and every gate's count. Still two
      rows of tiles because that is a readout of twelve independent numbers,
      none of which is printed anywhere else on the page. */
@@ -309,18 +259,7 @@
      other side is in there at all, so an empty one is coloured, not just
      small. Riding along on the verdict line because it answers the same
      question: is this writable yet. */
-  .sides{display:flex;gap:5px;flex-shrink:0}
-  .sides i{font-style:normal;font-size:11px;color:var(--faint);
-    padding:2px 7px;border-radius:11px;background:#00000033;
-    border:1px solid transparent}
-  .sides i b{font:12px var(--mono);font-variant-numeric:tabular-nums;
-    color:var(--ink);margin-left:4px}
-  .sides i.none{border-color:#5c3a2a;background:#241a14}
-  .sides i.none b{color:var(--warn)}
 
-  #verdict{display:flex;align-items:center;justify-content:space-between;
-    gap:14px;flex-wrap:wrap;
-    padding:11px 15px;border-radius:9px;margin:14px 0 18px;font-size:13px}
   #verdict.ok{background:#12291f;border:1px solid #2c5a45;color:var(--ok)}
   #verdict.no{background:#241a14;border:1px solid #5c3a2a;color:var(--warn)}
 
@@ -329,16 +268,7 @@
   h3 .count{font:11px var(--mono);color:var(--faint)}
   h3 .count.lacking{color:var(--warn)}
   h3 .hint{font-size:11px;color:var(--faint);font-weight:400;margin-left:auto}
-  .hunt{display:flex;gap:8px;margin-bottom:10px}
-  .hunt input{flex:1;font-size:13px}
   /* Candidates, not material: clicking one is what keeps it. */
-  #caught .shelf figure{cursor:pointer}
-  #caught .shelf figure:hover{border-color:var(--ok)}
-  #caught .shelf figure.taken{opacity:.4;pointer-events:none}
-  .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    padding:11px 14px;margin-bottom:7px;font-size:13px}
-  .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
-  .src .fact{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.7}
   .lean{font-size:10px;padding:1px 7px;border-radius:99px;margin-left:6px;
     border:1px solid var(--line);color:var(--dim)}
   .lean.left{color:#7fb4ff;border-color:#2d4a70}
@@ -351,9 +281,6 @@
   .src.written:hover{border-color:var(--ok)}
   .src.written b{font-size:15px;pointer-events:none}
   .src.written .who{pointer-events:none}
-  .voice{font-size:12px;color:var(--dim);padding:6px 0;line-height:1.6;
-    border-top:1px solid #1c242e}
-  .voice .likes{font:11px var(--mono);color:var(--faint);margin-right:9px}
   .empty{color:var(--faint);font-size:13px;padding:14px;text-align:center;
     border:1px dashed var(--line);border-radius:9px}
   /* ---- one script, laid out as it will be spoken ---- */
@@ -380,7 +307,6 @@
   td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
   td.show{cursor:zoom-in}
-  .shelf figure{cursor:zoom-in}
   td.show img.pic.drawn{object-fit:contain;background:#0d1b2a;
     border:1px solid #22405c}
   td.show .grabbed.bad{color:#ff8a72}
@@ -393,7 +319,6 @@
   .ruler i{display:block;height:100%;border-right:1px solid #0b0e12}
   .ruler i:nth-child(odd){background:var(--accent)}
   .ruler i:nth-child(even){background:#4a86cc}
-  #note{font-size:13px;margin-top:14px}
   #note.bad{color:var(--danger)}
   #note.warn{color:var(--warn)}
 </style>
@@ -848,15 +773,21 @@ async function showScript(name) {
   const share = 100 - (sums.borrowed_share || 0);
 
   $("paper").innerHTML = `
-    <h2>${escapeHTML(name)}　<button class="tiny" id="btnBackTopic">← 回素材</button></h2>
-    <div class="angle">觀點：${escapeHTML(made.view || "")}${
-      made.tone ? `　語氣：${escapeHTML(made.tone)}` : ""}</div>
-    <!-- Which house style, and who it is for. Both are decisions about the
-         whole film that were being made once and then never revisited: the
-         format silently defaulted to the argument shape, and the audience came
-         from a lookup table that cannot know a piece about studios being bought
-         is for people paying for streaming. -->
+    <!-- 一塊，四樣東西。本來是：標題一行、觀點和語氣擠成一長條、公版和受眾
+         另外一條加一句提示 —— 三條邊界切開四個其實在講同一件事的欄位（這支
+         片是什麼形狀、要說什麼、給誰聽）。
+
+         「觀點」是最長的，所以它自己一行；公版、語氣、受眾是三個短的，並排。
+         那句「結尾整段是寫給這群人聽的」拿掉了：受眾欄的 placeholder 已經
+         說了同一件事，而一個永遠都在的提示等於沒有提示。 -->
+    <div class="head">
+      <h2>${escapeHTML(name)}</h2>
+      <button class="tiny" id="btnBackTopic">← 回素材</button>
+    </div>
     <div class="about">
+      <label class="wide">觀點
+        <div class="said">${escapeHTML(made.view || "（還沒寫）")}</div>
+      </label>
       <label>公版
         <select id="pickFormat">
           ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
@@ -865,11 +796,13 @@ async function showScript(name) {
             }>${escapeHTML(one.name || one.key)}</option>`).join("")}
         </select>
       </label>
-      <label class="grow">說給誰聽
+      <label>語氣
+        <div class="said">${escapeHTML(made.tone || "—")}</div>
+      </label>
+      <label>說給誰聽
         <input id="forWhom" value="${escapeHTML(made["for"] || "")}"
           placeholder="例如：每個要付帳單的人" spellcheck="false">
       </label>
-      <span class="hint">結尾整段是寫給這群人聽的</span>
     </div>
     <div class="gauge">
       <div>長度<b class="${sums.over ? "short" : "good"}">${clock(sums.seconds)}</b></div>

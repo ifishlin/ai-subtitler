@@ -958,25 +958,88 @@ def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "left": len(topic_module.doubted(pile, kind))}
 
 
-@app.post("/api/topic/archive")
-def archive_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
-    """Put a topic out of the way, or bring it back.
+@app.post("/api/topic/mark")
+def mark_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Pin a topic, or put it away. The two judgements a list cannot compute.
 
-    Not the same as deleting. A topic that came to nothing still records having
-    asked -- which of the nineteen covered it, how far the balance got, why it
-    stopped -- and that record is worth more than the row it occupies. Messina
-    is the case in point: four outlets ran it and nobody on the right did, so it
-    cannot become a short, and knowing that is worth keeping.
+    One endpoint, because 封存 and 刪除 were two actions doing nearly the same
+    thing: both reversible, neither freeing a byte -- trash/ is the same disk.
+    They differed only in how hard they were to undo, which is not a feature.
+    So there is one 收起來 that is always reversible, and 清空封存 further down
+    that actually removes. Tidying and disposing are different jobs and now
+    look it.
     """
     from core import topic as topic_module
     name = str(payload.get("name") or "")
+    flags = {key: bool(payload[key]) for key in ("pinned", "archived")
+             if key in payload}
+    if not flags:
+        raise HTTPException(400, "要說 pinned 或 archived")
     try:
-        pile = topic_module.load(name)
+        pile = topic_module.mark(name, **flags)
     except (ValueError, FileNotFoundError) as error:
         raise HTTPException(404, str(error)) from error
-    pile["archived"] = bool(payload.get("archived"))
-    topic_module.save(name, pile)
-    return {"name": name, "archived": pile["archived"]}
+    return {"name": name, "pinned": bool(pile.get("pinned")),
+            "archived": bool(pile.get("archived"))}
+
+
+@app.post("/api/script/mark")
+def mark_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Pin a script. Archived is not here: it follows the topic, and a second
+    switch for it would be a second answer to one question."""
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    try:
+        found = script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    if payload.get("pinned"):
+        found["pinned"] = True
+    else:
+        found.pop("pinned", None)
+    script_module.save(name, found)
+    return {"name": name, "pinned": bool(found.get("pinned"))}
+
+
+@app.post("/api/topics/purge")
+def purge_archived() -> dict[str, Any]:
+    """Really remove every archived topic, with everything it owns.
+
+    The destructive step, batched and last -- which is this project's rule and
+    here it falls out of the design rather than being imposed: everything in
+    here has already been out of sight for a while, so nobody is deciding in
+    a hurry.
+
+    Still to trash/, because 253 MB of re-downloadable footage is cheap to
+    keep for a week and a topic's judgements are not re-derivable at all. What
+    this frees is the list, and that was the actual complaint.
+    """
+    import shutil
+    import time as time_module
+    from core import script as script_module
+    from core import topic as topic_module
+
+    stamp = time_module.strftime("%Y%m%d-%H%M%S")
+    went = []
+    for name in topic_module.names():
+        try:
+            pile = topic_module.load(name)
+        except (ValueError, FileNotFoundError):
+            continue
+        if not pile.get("archived"):
+            continue
+        owned = topic_module.everything_for(name)
+        size = topic_module.weight(owned)
+        made = script_module.for_topic(name)
+        bin_here = ROOT / "trash" / f"{name}-{stamp}"
+        for one in owned:
+            where = bin_here / one.relative_to(ROOT)
+            where.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(one), str(where))
+        went.append({"name": name, "scripts": made, "bytes": size,
+                     "items": len(owned),
+                     "moved_to": str(bin_here.relative_to(ROOT))})
+    return {"purged": went, "bytes": sum(one["bytes"] for one in went)}
 
 
 @app.post("/api/topic/note")
