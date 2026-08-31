@@ -145,7 +145,9 @@ def as_text(name: str) -> str:
         out.append(f"[C{index}] {one['outlet']}　{one['start']}–{one['end']}s"
                    f"（{one['seconds']}s）")
         out.append(f"      {one['said'][:88]}")
-        out.append(f"      file: {one['file']}")
+        # 沒有 file 那一行。編號才是介面：`fasten()` 拿 C3 去 `sheet()` 查
+        # 檔案，prompt 裡那行路徑從來沒有人讀。而它不只是浪費 —— script.md
+        # 明寫「寫檔名一定會錯」，送檔名進去正好在邀請那個錯。
     out.append("")
 
     out.append("## 照片　—— term 是我們要的，caption 是實際拿到的。"
@@ -155,15 +157,16 @@ def as_text(name: str) -> str:
         # Only meaningful for a picture that was searched for. A frame's
         # "term" is a timestamp, so scoring it against its caption compares
         # two unrelated things and warns about every frame in the pile.
-        mark = ("　⚠ 說明對不上搜尋詞"
+        # 記號短一個字都好：這一行會出現六十四次。為什麼要看它，標題那一行
+        # 已經說了（term 是我們要的，caption 是實際拿到的）。
+        mark = ("　⚠對不上"
                 if one["kind"] != "frame" and one["answers"] < 0.5 else "")
         out.append(f"[P{index}] {kinds.get(one['kind'], one['kind'])}"
                    f"　term: {one['term']}{mark}")
-        out.append(f"      caption: {one['caption'][:100]}")
+        out.append(f"      caption: {one['caption'][:70]}")
         if one.get("at") is not None:
             out.append(f"      {one['outlet']} 第 {one['at']:.0f} 秒"
                        f"：{one['said'][:70]}")
-        out.append(f"      file: {one['file']}")
     out.append("")
 
     out.append("## 鄉民反應")
