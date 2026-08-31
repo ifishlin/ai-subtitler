@@ -33,7 +33,7 @@ header .src{font:12px var(--mono);color:var(--faint)}
 header select{font:12px var(--mono);color:var(--ink);background:var(--panel2);
   border:1px solid var(--line);border-radius:6px;padding:4px 8px;max-width:22em}
 #viewer{position:fixed;inset:0;background:#000d;display:none;align-items:center;
-  justify-content:center;z-index:40;flex-direction:column;gap:10px}
+  justify-content:center;z-index:9500;flex-direction:column;gap:10px}
 #viewer.on{display:flex}
 #viewer video{max-width:92vw;max-height:82vh;background:#000;border-radius:8px}
 #viewer .bar{display:flex;gap:10px;align-items:center;color:var(--dim);font-size:13px}
@@ -170,7 +170,7 @@ main{display:flex;flex:1;min-height:0}
 /* A panel rather than a modal: making a card is something you do while
    looking at the frame it is going onto, so it does not dim the page and it
    can be dragged out of the way. Where you leave it is remembered. */
-#card{display:none;position:fixed;inset:0;z-index:60;pointer-events:none}
+#card{display:none;position:fixed;inset:0;z-index:9500;pointer-events:none}
 #card.on{display:block}
 #card .card{pointer-events:auto;position:absolute;
   background:var(--panel);border:1px solid var(--line);border-radius:12px;
@@ -254,7 +254,7 @@ main{display:flex;flex:1;min-height:0}
 .cardFoot{font-size:12px;color:var(--faint)}
 
 /* ---------- scene.json viewer ---------- */
-#json{display:none;position:fixed;inset:0;background:#000a;z-index:60;
+#json{display:none;position:fixed;inset:0;background:#000a;z-index:9500;
   align-items:center;justify-content:center;padding:30px}
 #json.on{display:flex}
 #json .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
@@ -384,7 +384,7 @@ main{display:flex;flex:1;min-height:0}
    this is for finding the one thing that does not. */
 /* The runs on disk, with what each one is and a way to be rid of it. */
 #projects{position:fixed;inset:0;background:#0009;display:none;align-items:center;
-  justify-content:center;z-index:30}
+  justify-content:center;z-index:9500}
 #projects.on{display:flex}
 #projects .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
   padding:16px 20px 18px;width:min(760px,92vw);max-height:84vh;display:flex;
@@ -418,7 +418,7 @@ main{display:flex;flex:1;min-height:0}
 #trayMore:hover .more{border-color:var(--accent);color:var(--accent)}
 
 #library{position:fixed;inset:0;background:#0009;display:none;align-items:center;
-  justify-content:center;z-index:30}
+  justify-content:center;z-index:9500}
 #library.on{display:flex}
 #library .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
   padding:16px 20px 18px;width:min(1080px,92vw);max-height:86vh;display:flex;
@@ -446,7 +446,7 @@ main{display:flex;flex:1;min-height:0}
 #libEmpty{color:var(--faint);font-size:13px;padding:26px;text-align:center}
 
 #help{position:fixed;inset:0;background:#0009;display:none;align-items:center;
-  justify-content:center;z-index:20}
+  justify-content:center;z-index:9500}
 #help.on{display:flex}
 #help .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
   padding:18px 24px 20px;max-width:640px;max-height:82vh;overflow:auto;
@@ -609,7 +609,7 @@ main{display:flex;flex:1;min-height:0}
           <button id="btnResetScene" class="tiny" title="回到影片＋字幕＋頻道 icon 的基本畫面">回預設版面</button>
           <button id="btnSaveScene" class="tiny">儲存版面</button>
           <button id="btnSaveLayout" class="tiny"
-                  title="把現在的排法存成公版，第一階段就能直接用">存成公版</button>
+                  title="把現在的排法存成片型，第一階段就能直接用">存成片型</button>
           <button id="btnPreviewScene" class="tiny">壓 10 秒看成品</button>
           <button id="btnShowJson" class="tiny">看 JSON</button>
           <label id="pngBox" title="用壓片會用的那張字幕圖，而不是瀏覽器畫的字">
@@ -1832,16 +1832,16 @@ $("btnFwd").onclick = () => seek(video.currentTime + 2);
    this video, not to the style. */
 $("btnSaveLayout").onclick = async () => {
   if (!SCENE.data) return;
-  const name = await asked("存成公版", {
+  const name = await asked("存成片型", {
     body: "會留下畫面框、字幕樣式和頻道 icon。有時間範圍的圖卡不會跟著走 —— "
           + "那是這支影片自己的東西。",
-    placeholder: "公版的名字"});
+    placeholder: "片型的名字"});
   if (name === null) return;
   try {
     const kept = await api("POST", "/api/layout", {
       name: name.trim(), scene: SCENE.data,
     });
-    toast(`存成公版「${kept.saved}」　留下 ${kept.kept} 個元件`
+    toast(`存成片型「${kept.saved}」　留下 ${kept.kept} 個元件`
       + (kept.dropped ? `，${kept.dropped} 個有時間的沒帶走` : ""));
   } catch (error) {
     toast(error.message, true);

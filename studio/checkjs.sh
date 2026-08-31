@@ -161,6 +161,37 @@ if not faults:
 sys.exit(1 if faults else 0)
 PY
 
+# 蓋住整個畫面的東西，要蓋過導覽列。
+#
+# 導覽列是 sticky、z-index 9000，貼在畫面上緣。一個 `position:fixed; inset:0`
+# 的覆蓋層如果 z-index 比它小，頂端那一排就被壓住 —— 而那一排通常就是
+# 「關閉」。片型編輯器的關閉鈕在真的瀏覽器裡從來按不到，就是這樣：它 70，
+# 導覽列 9000。載入時的畫面完全正常，點下去才知道。
+echo "檢查覆蓋層有沒有蓋過導覽列…"
+python3 - <<'PY' || bad=1
+import re, sys, pathlib
+NAV = 9000
+faults = 0
+for path in sorted(pathlib.Path("studio/static").glob("*.html")):
+    text = path.read_text(encoding="utf-8")
+    if "<style>" not in text:
+        continue
+    css = text[text.index("<style>") + 7:text.index("</style>")]
+    # `position:fixed` 加 `inset:0` 就是蓋住整個畫面。
+    for found in re.finditer(
+            r"([#.][\w-]+)\{[^}]*position:fixed[^}]*inset:0[^}]*\}", css):
+        block = found.group(0)
+        layer = re.search(r"z-index:\s*(\d+)", block)
+        if not layer or int(layer.group(1)) <= NAV:
+            print(f"  ❌ {path.name}　{found.group(1)} 是覆蓋層，"
+                  f"z-index {layer.group(1) if layer else '沒寫'}"
+                  f"　—— 要大於導覽列的 {NAV}，不然頂端那一排按不到")
+            faults += 1
+if not faults:
+    print("  ✅ 都蓋過")
+sys.exit(1 if faults else 0)
+PY
+
 # 每一頁都要有導覽列和共用配色，不然它會長得像另一個系統。
 echo "檢查每一頁有沒有接上共用的東西…"
 python3 - <<'PY' || bad=1

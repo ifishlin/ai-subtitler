@@ -181,9 +181,9 @@ def save_house(key: str, spec: dict[str, Any]) -> Path:
     field that survives being read six months later.
     """
     if not SAFE_KEY.fullmatch(key):
-        raise ValueError("公版代號只能用小寫英數、底線、減號，開頭是英文字母")
+        raise ValueError("片型代號只能用小寫英數、底線、減號，開頭是英文字母")
     if not str(spec.get("name") or "").strip():
-        raise ValueError("公版要有名字")
+        raise ValueError("片型要有名字")
     roles = [str(one).strip() for one in (spec.get("structure") or {}).get("roles") or []]
     if len(roles) < 3 or len(set(roles)) != len(roles):
         raise ValueError("角色至少三個，而且不能重複")
@@ -199,7 +199,7 @@ def drop_house(key: str) -> bool:
     """Remove one. The fallback shape cannot go -- a script with no format is
     an argument, and nothing would be left to fall back to."""
     if key == FALLBACK:
-        raise ValueError(f"{FALLBACK} 是預設公版，不能刪")
+        raise ValueError(f"{FALLBACK} 是預設片型，不能刪")
     path = FORMATS / f"{key}.json"
     if not path.is_file():
         return False

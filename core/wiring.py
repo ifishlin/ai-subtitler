@@ -288,7 +288,7 @@ def parts(name: str, house: str = "argue") -> dict[str, Any]:
         out.append({"title": one["title"], "text": body,
                     "chars": len(body), "items": items})
     return {"topic": name, "house": house,
-            "how": {"title": "怎麼寫（公版的 prompt）", "text": how,
+            "how": {"title": "怎麼寫（片型的 prompt）", "text": how,
                     "chars": len(how)},
             "what": out,
             "chars": len(whole),

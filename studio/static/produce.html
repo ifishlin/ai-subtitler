@@ -97,7 +97,7 @@
       <div class="row" style="align-items:flex-start">
         <div class="grow">
           <select id="layout"></select>
-          <div class="say" id="layoutNote">畫面怎麼排。在編輯器裡排好一個，按「存成公版」就會出現在這裡。</div>
+          <div class="say" id="layoutNote">畫面怎麼排。在編輯器裡排好一個，按「存成片型」就會出現在這裡。</div>
         </div>
         <!-- The boxes to scale. A layout is nothing but where things sit, so
              this shows all of it -- no video needed, nothing to render. -->
@@ -291,7 +291,7 @@ async function loadLayouts() {
 function sayLayout() {
   const chosen = $("layout").selectedOptions[0];
   $("layoutNote").textContent = (chosen && chosen.dataset.note)
-    || "畫面怎麼排。在編輯器裡排好一個，按「存成公版」就會出現在這裡。";
+    || "畫面怎麼排。在編輯器裡排好一個，按「存成片型」就會出現在這裡。";
   drawLayout(chosen && chosen.value);
 }
 

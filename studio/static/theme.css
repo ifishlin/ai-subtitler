@@ -52,6 +52,10 @@ a{color:var(--accent)}
   background:var(--panel);
   border-bottom:1px solid var(--line);
   font:13px var(--sans);
+  /* 導覽列在頁面所有東西之上，但在覆蓋層之下 —— 一片蓋住整個畫面的東西，
+     頂端如果被導覽列壓住，那一排（通常就是「關閉」）按不到。
+     `#houses` 的關閉鈕在真的瀏覽器裡從來按不到，就是這樣：它 z-index 70，
+     而導覽列 9000，兩個都貼齊上緣。 */
   position:sticky;top:0;z-index:9000;
 }
 .topnav a{

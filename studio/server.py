@@ -266,6 +266,12 @@ def prompt_page() -> str:
     return (STATIC / "prompt.html").read_text(encoding="utf-8")
 
 
+@app.get("/prompts", response_class=HTMLResponse)
+def prompts_page() -> str:
+    """那幾份 md 的編輯器。它們是這個系統裡唯一一份沒有畫面的設定。"""
+    return (STATIC / "prompts.html").read_text(encoding="utf-8")
+
+
 @app.get("/raw", response_class=HTMLResponse)
 def raw_page() -> str:
     """整份原文，一個字都沒切過。素材頁的 show 開一個獨立視窗指到這裡。
@@ -340,7 +346,7 @@ def prompt_raw(name: str, house: str = "argue") -> dict[str, Any]:
     回接起來的原文，因為要確認「模型到底收到什麼」的時候，看的必須是那一串
     本身，不是任何人切過的樣子。
 
-    公版是參數而不是預設，因為 prompt 的前半整份由它決定（argue 送
+    片型是參數而不是預設，因為 prompt 的前半整份由它決定（argue 送
     script.md，story 送另一份）。用畫面上當下選的那一個，否則看到的不是
     按下去會送出的。
     """
@@ -1689,7 +1695,7 @@ def make_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     from core import rules as rules_module
     house = str(payload.get("format") or rules_module.FALLBACK)
     if house not in rules_module.formats():
-        raise HTTPException(400, f"沒有這個公版：{house}")
+        raise HTTPException(400, f"沒有這個片型：{house}")
 
     reachable, complaint = _model_reachable()
     if not reachable:
@@ -1828,6 +1834,112 @@ def edit_line(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "measured": script_module.measure(found)}
 
 
+PROMPTS = ROOT / "assets" / "prompts"
+ORIGINAL = PROMPTS / "original"
+
+
+@app.get("/api/prompt-files")
+def prompt_files(house: str = "argue") -> dict[str, Any]:
+    """每一份 prompt 的原文、出廠版本，以及裡面每個空格會被填成什麼。
+
+    這幾份 md 一直只能用編輯器改。它們是這個系統裡**唯一一份沒有畫面的
+    設定** —— 門的數字在 rules.json、外觀在 theme.json、形狀在 formats/，
+    全部都看得到、改得動，只有「話怎麼說」要開檔案。
+    """
+    from core import rules as rules_module
+    # 哪一份 md 屬於哪一個片型。story.md 的 `{structure.least_per_role.疑點}`
+    # 只有 story 那個片型有 —— 一律拿 argue 去問，會把每一份別的片型的 md
+    # 都報成「有錯的名字」，而那種誤報會讓人不敢改。
+    owner = {str(spec.get("prompt") or ""): key
+             for key, spec in rules_module.formats().items()}
+    # 呼叫端自己填的名字。`{search.language}` 由 `brief.to_collect()` 換掉，
+    # 因為它跟題目的地區有關，不是一個固定值。
+    BY_CALLER = {"collect.md": {"search.language"}}
+    # 什麼時候送出去。這幾份不是同一次呼叫 —— 一份 request 只會用到其中
+    # 一到兩份，而 `look.md` 目前一次都沒用到。
+    #
+    # `who` 是真的去讀那個檔的地方；`grep` 得到的，不是我記的。改名了會在
+    # 畫面上看得出來，因為那一行會指不到東西。
+    WHEN = {
+        "script.md":  ("寫文案", "argue 片型用這一份，跟 visual.md 一起送",
+                       "core/brief.py:prompt()"),
+        "story.md":   ("寫文案", "story 片型用這一份，跟 visual.md 一起送",
+                       "core/brief.py:prompt()"),
+        "visual.md":  ("寫文案", "畫面怎麼配。兩個片型都會送這一份",
+                       "core/brief.py:prompt()"),
+        "collect.md": ("收集素材", "按「想幾個」的時候，要它回搜尋詞",
+                       "core/brief.py:to_collect()"),
+        "review.md":  ("文案寫完之後", "第二次呼叫，只問程式算不出來的四件事",
+                       "core/critic.py:read()"),
+        "look.md":    ("還沒有人用", "看一張圖判斷是不是那句話要的 ——"
+                       "等一個看得到圖的模型", ""),
+    }
+    out = []
+    for path in sorted(PROMPTS.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        mine = owner.get(path.name, house)
+        was = ORIGINAL / path.name
+        original = was.read_text(encoding="utf-8") if was.is_file() else ""
+        # 每個空格填成什麼，一起送過去 —— 畫面要標色，而「填成什麼」只有
+        # 這裡算得出來。算一次，不要讓頁面自己去猜。
+        filled = {}
+        for name, how in rules_module.NAMED.findall(text):
+            key = "{" + name + (f":{how}" if how else "") + "}"
+            got = rules_module.fill(key, mine)
+            filled[key] = got if got != key else "（由呼叫端填）"
+        unknown = [one for one in rules_module.unfilled(text, mine)
+                   if one not in BY_CALLER.get(path.name, ())]
+        group, why, who = WHEN.get(path.name, ("其他", "", ""))
+        out.append({
+            "name": path.name, "text": text, "house": mine,
+            "group": group, "why": why, "who": who,
+            "original": original,
+            "changed": original != "" and original != text,
+            "filled": filled,
+            # 填不出來的名字。存的時候會擋，這裡先讓畫面標紅。
+            "unknown": unknown,
+        })
+    return {"files": out, "house": house}
+
+
+@app.post("/api/prompt-file")
+def save_prompt_file(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """存一份 prompt。填不出來的空格會被擋下來。
+
+    擋而不是存下去：一個打錯的 `{caption.per_line}` 不會報錯，它會原樣
+    出現在送給模型的文字裡，變成一對大括號。而那種錯只有在成品上才看得見。
+    """
+    from core import rules as rules_module
+    name = str(payload.get("name") or "")
+    text = str(payload.get("text") or "")
+    house = str(payload.get("house") or "argue")
+    if not re.fullmatch(r"[\w-]+\.md", name) or not (PROMPTS / name).is_file():
+        raise HTTPException(404, f"沒有這一份：{name}")
+    if not text.strip():
+        raise HTTPException(400, "內容是空的")
+    owner = {str(spec.get("prompt") or ""): key
+             for key, spec in rules_module.formats().items()}
+    unknown = [one for one in rules_module.unfilled(text, owner.get(name, house))
+               if one not in {"search.language"}]
+    if unknown:
+        raise HTTPException(400, "這幾個名字在 rules／theme／片型裡都沒有："
+                                 + "、".join(f"{{{one}}}" for one in unknown))
+    (PROMPTS / name).write_text(text, encoding="utf-8")
+    return {"saved": name, "chars": len(text)}
+
+
+@app.post("/api/prompt-file/reset")
+def reset_prompt_file(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """換回出廠版本。"""
+    name = str(payload.get("name") or "")
+    was = ORIGINAL / name
+    if not re.fullmatch(r"[\w-]+\.md", name) or not was.is_file():
+        raise HTTPException(404, f"沒有出廠版本：{name}")
+    text = was.read_text(encoding="utf-8")
+    (PROMPTS / name).write_text(text, encoding="utf-8")
+    return {"reset": name, "text": text}
+
+
 @app.get("/api/formats")
 def get_formats() -> dict[str, Any]:
     """The house styles a script can be written in, with why each exists."""
@@ -1875,7 +1987,7 @@ def delete_format(key: str) -> dict[str, Any]:
     except ValueError as error:
         raise HTTPException(400, str(error)) from error
     if not gone:
-        raise HTTPException(404, f"沒有這個公版：{key}")
+        raise HTTPException(404, f"沒有這個片型：{key}")
     return {"deleted": key}
 
 
@@ -1894,7 +2006,7 @@ def set_format(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     name = str(payload.get("name") or "")
     house = str(payload.get("format") or "")
     if house not in rules_module.formats():
-        raise HTTPException(400, f"沒有這個公版：{house}")
+        raise HTTPException(400, f"沒有這個片型：{house}")
     try:
         found = script_module.load(name)
     except (ValueError, FileNotFoundError) as error:

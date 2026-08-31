@@ -67,7 +67,7 @@
     display:flex;gap:9px;flex-wrap:wrap}
   .say-meter .warn{color:#e2a33c}
   .say-meter .hint{opacity:.62}
-  #big{position:fixed;inset:0;background:#000d;z-index:60;display:flex;
+  #big{position:fixed;inset:0;background:#000d;z-index:9500;display:flex;
     align-items:center;justify-content:center;padding:24px}
   /* `display:flex` on the element itself outranks the browser's own
      `[hidden]{display:none}`, so the overlay came up on load and covered the
@@ -95,7 +95,7 @@
   /* The house styles, edited as what they are: data. Every field was a
      constant somewhere, and `why` is the field that matters -- a number with
      no reason attached gets changed by whoever finds it inconvenient. */
-  #houses{position:fixed;inset:0;background:#000d;z-index:70;display:flex;
+  #houses{position:fixed;inset:0;background:#000d;z-index:9500;display:flex;
     align-items:flex-start;justify-content:center;padding:32px 24px;overflow:auto}
   #houses[hidden]{display:none}
   .houses-inner{background:var(--panel);border:1px solid var(--line);
@@ -144,7 +144,7 @@
   .head{display:flex;align-items:baseline;gap:14px;margin:0 0 12px}
   .head h2{margin:0;font-size:24px;letter-spacing:.5px}
 
-  /* 這支片是什麼：觀點、公版、語氣、受眾。四樣一塊。
+  /* 這支片是什麼：觀點、片型、語氣、受眾。四樣一塊。
      觀點最長，自己一行；另外三個短的並排。本來是三條分開的橫列，中間隔著
      邊界 —— 而它們講的是同一件事。 */
   .about{display:grid;gap:9px 14px;margin:0 0 14px;padding:11px 15px;
@@ -154,7 +154,7 @@
     letter-spacing:.4px;min-width:0}
   .about label.wide{grid-column:1 / -1}
   /* 觀點是這支片在講什麼 —— 整份文案就是為了它寫的，所以它是這一塊裡最大
-     的字。旁邊三個（公版、語氣、受眾）是設定，不是內容。 */
+     的字。旁邊三個（片型、語氣、受眾）是設定，不是內容。 */
   .about .said{margin-top:4px;font:14px/1.55 inherit;color:var(--ink)}
   .about label.wide .said{font-size:17px;line-height:1.6}
   .about label:not(.wide) .said{font-size:14px;
@@ -345,9 +345,9 @@
 
 <header>
   <h1>短影音</h1>
-  <span class="where">選公版、寫、看圖、壓片</span>
+  <span class="where">選片型、寫、看圖、壓片</span>
   <span class="grow"></span>
-  <button id="btnHouses" class="tiny">公版</button>
+  <button id="btnHouses" class="tiny">片型</button>
 </header>
 
 <!-- The house styles themselves. They began as two files I wrote by hand,
@@ -366,8 +366,8 @@
 <div id="houses" hidden>
   <div class="houses-inner">
     <div class="houses-bar">
-      <b>公版</b>
-      <span class="hint">一個公版說的是「這種片子長什麼形狀」。
+      <b>片型</b>
+      <span class="hint">一個片型說的是「這種片子長什麼形狀」。
         沒寫的項目會掉回 rules.json 的共用值</span>
       <button id="housesClose" class="tiny">關閉</button>
     </div>
@@ -375,7 +375,7 @@
     <div class="houses-new">
       <input id="newHouseKey" placeholder="代號（英文，如 explain）" size="18">
       <input id="newHouseName" placeholder="名稱（如 拆解說明）" size="14">
-      <button id="btnNewHouse" class="tiny primary">新增公版</button>
+      <button id="btnNewHouse" class="tiny primary">新增片型</button>
     </div>
   </div>
 </div>
@@ -550,7 +550,7 @@ function houseRow(one) {
       <button class="tiny h-save">儲存</button>
       ${one.key === "argue" ? "" : `<button class="tiny h-drop">刪除</button>`}
     </div>
-    <label class="wide">為什麼有這個公版
+    <label class="wide">為什麼有這個片型
       <textarea class="h-why" rows="3">${escapeHTML(one.why || "")}</textarea></label>
     <div class="house-grid">
       <label class="wide">角色（照順序，用、分隔）
@@ -620,7 +620,7 @@ async function drawHouses() {
     };
     const drop = card.querySelector(".h-drop");
     if (drop) drop.onclick = async () => {
-      if (!await confirmed(`刪掉公版「${key}」？`)) return;
+      if (!await confirmed(`刪掉片型「${key}」？`)) return;
       try {
         await api("DELETE", `/api/format?key=${encodeURIComponent(key)}`);
         drawHouses();
@@ -644,7 +644,7 @@ $("btnNewHouse").onclick = async () => {
   try {
     await api("POST", "/api/format",
               {key, spec: {...JSON.parse(JSON.stringify(base)), key: undefined,
-                           name, why: "（還沒寫為什麼有這個公版）"}});
+                           name, why: "（還沒寫為什麼有這個片型）"}});
     $("newHouseKey").value = ""; $("newHouseName").value = "";
     drawHouses();
   } catch (error) { told('出錯了', error.message); }
@@ -755,11 +755,11 @@ async function showScript(name) {
     + (sums.still_enough ? 0 : 1);
 
   $("paper").innerHTML = `
-    <!-- 一塊，四樣東西。本來是：標題一行、觀點和語氣擠成一長條、公版和受眾
+    <!-- 一塊，四樣東西。本來是：標題一行、觀點和語氣擠成一長條、片型和受眾
          另外一條加一句提示 —— 三條邊界切開四個其實在講同一件事的欄位（這支
          片是什麼形狀、要說什麼、給誰聽）。
 
-         「觀點」是最長的，所以它自己一行；公版、語氣、受眾是三個短的，並排。
+         「觀點」是最長的，所以它自己一行；片型、語氣、受眾是三個短的，並排。
          那句「結尾整段是寫給這群人聽的」拿掉了：受眾欄的 placeholder 已經
          說了同一件事，而一個永遠都在的提示等於沒有提示。 -->
     <div class="head">
@@ -770,7 +770,7 @@ async function showScript(name) {
       <label class="wide">觀點
         <div class="said">${escapeHTML(made.view || "（還沒寫）")}</div>
       </label>
-      <label>公版
+      <label>片型
         <select id="pickFormat">
           ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
             .map((one) => `<option value="${escapeHTML(one.key)}"${
@@ -996,7 +996,7 @@ async function showScript(name) {
     const spec = FORMATS.find((one) => one.key === house) || {};
     const roles = (spec.structure || {}).roles || [];
     if (!await confirmed(`改成「${spec.name || house}」？`, {
-      body: "換公版會用另一組門檻重新檢查，而且角色通常會全部失效。",
+      body: "換片型會用另一組門檻重新檢查，而且角色通常會全部失效。",
       lose: [`角色變成 ${roles.join("／")}，每一句都要重標`,
              "實拍上限也會跟著改"]})) {
       event.target.value = made.format || "argue";
@@ -1155,7 +1155,7 @@ async function boot() {
   const settle = holdOff();
   const wanted = new URLSearchParams(location.search).get("name");
 
-  /* 三個呼叫並行。它們本來串著跑 —— 公版 140ms、清單 402ms、那一份 62ms ——
+  /* 三個呼叫並行。它們本來串著跑 —— 片型 140ms、清單 402ms、那一份 62ms ——
      六百毫秒是切換頁面時看得到的一閃。而它們不互相依賴：網址帶了名字，那一
      份就不必等清單回來。 */
   const [formats, listed] = await Promise.all([
