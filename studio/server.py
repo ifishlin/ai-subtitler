@@ -661,16 +661,21 @@ def suggest_terms(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
 @app.delete("/api/topic")
 def drop_topic(name: str) -> dict[str, Any]:
-    """Remove a topic and everything gathered for it.
+    """Remove a topic, everything gathered for it, and everything made from it.
 
-    Refused while a script is written from it. A script names pictures and
-    passages by path; taking the pile away leaves it pointing at files that no
-    longer exist, and the checks would report a script that was fine yesterday
-    as missing every shot. Delete the scripts first, deliberately.
+    It used to refuse while a script existed and say 「先刪文案」. That was the
+    right instinct -- a script names pictures by path, so taking the pile away
+    leaves it pointing at files that are gone -- but the wrong conclusion:
+    deleting one topic became several deletions in an order nobody was told,
+    and the pieces it did remove (footage, photographs) were exactly the ones
+    the remaining scripts still needed.
 
-    The record goes to trash/, the footage and photographs are removed. Both
-    are downloadable again from what the record holds -- which is why the
-    record is the part worth keeping.
+    So it takes the lot, and says what the lot was. `everything_for()` derives
+    the paths from each module's own constant, because I did this by hand once
+    and guessed three of eight wrong -- 14 MB stayed behind and nothing said so.
+
+    Moved, not deleted, and the tree under trash/ keeps each file's own path,
+    so putting something back is a move rather than a reconstruction.
     """
     import shutil
     import time as time_module
@@ -683,23 +688,31 @@ def drop_topic(name: str) -> dict[str, Any]:
     if not path.is_file():
         raise HTTPException(404, f"找不到題目 {name}")
 
+    # Everything, in one place, from each module's own constant. It used to
+    # refuse while a script existed and told you to delete those first, which
+    # meant deleting one topic was several deletions in a required order and
+    # nobody was told the order.
     written = script_module.for_topic(name)
-    if written:
-        raise HTTPException(400, f"還有 {len(written)} 份文案在用："
-                                 + "、".join(written) + "。先刪文案。")
+    owned = topic_module.everything_for(name)
+    bytes_going = topic_module.weight(owned)
 
-    bin_here = ROOT / "trash"
-    bin_here.mkdir(exist_ok=True)
-    shutil.move(str(path), bin_here / f"{name}.{int(time_module.time())}.json")
+    # The destructive step goes last. A directory is moved, not removed: the
+    # tree under trash/ keeps each file's own path, so putting one back is a
+    # move rather than a reconstruction. A failure halfway costs the rest of
+    # the move, never the files themselves.
+    stamp = time_module.strftime("%Y%m%d-%H%M%S")
+    bin_here = ROOT / "trash" / f"{name}-{stamp}"
     gone = []
-    for folder in (ROOT / "assets" / "footage" / name,
-                   ROOT / "assets" / "photos" / name):
-        if folder.is_dir():
-            size = sum(one.stat().st_size for one in folder.rglob("*")
-                       if one.is_file())
-            shutil.rmtree(folder)
-            gone.append(f"{folder.parent.name}/{name}　{size / 1048576:.0f} MB")
-    return {"deleted": name, "moved_to": "trash/", "also_removed": gone}
+    for one in owned:
+        where = bin_here / one.relative_to(ROOT)
+        where.parent.mkdir(parents=True, exist_ok=True)
+        size = topic_module.weight([one])
+        shutil.move(str(one), str(where))
+        gone.append({"path": str(one.relative_to(ROOT)), "bytes": size})
+
+    return {"deleted": name, "moved_to": str(bin_here.relative_to(ROOT)),
+            "scripts": written,
+            "items": gone, "bytes": bytes_going}
 
 
 @app.post("/api/topic/gather")
@@ -943,6 +956,34 @@ def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     topic_module.save(name, pile)
     return {"kept" if keep else "dropped": len(urls),
             "left": len(topic_module.doubted(pile, kind))}
+
+
+@app.get("/api/topic/owns")
+def topic_owns(name: str) -> dict[str, Any]:
+    """What deleting this topic would take, before anybody presses anything.
+
+    The dialog used to list three things from memory -- downloaded videos,
+    photographs, cut frames -- and that list was written when a topic could
+    not own a script. 「刪掉？」 without the actual contents is a question
+    nobody can answer, which is the whole reason `confirmed()` takes a `lose`.
+    """
+    from core import script as script_module
+    from core import topic as topic_module
+    try:
+        topic_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    owned = topic_module.everything_for(name)
+    return {
+        "name": name,
+        "scripts": script_module.for_topic(name),
+        "films": [one for one in script_module.for_topic(name)
+                  if (build_dir := ROOT / "assets" / "shorts" / f"{one}.mp4")
+                  and build_dir.is_file()],
+        "bytes": topic_module.weight(owned),
+        "items": [{"path": str(one.relative_to(ROOT)),
+                   "bytes": topic_module.weight([one])} for one in owned],
+    }
 
 
 @app.post("/api/topic/archive")

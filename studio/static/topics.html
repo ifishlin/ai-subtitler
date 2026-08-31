@@ -919,14 +919,35 @@ async function open(name) {
   // names pictures by path, so taking the pile away turns a script that was
   // fine yesterday into one missing every shot.
   if ($("btnDropTopic")) $("btnDropTopic").onclick = async () => {
+    /* 先去問伺服器真正會刪什麼，再問人。這個對話框本來列三樣寫死的東西
+       （下載的影片、照片、畫格），而那份清單是在「一個題目不能擁有文案」的
+       年代寫的 —— 現在它會連文案和成片一起帶走，而舊的問法不會提到。 */
+    let owns;
+    try { owns = await api("GET",
+      `/api/topic/owns?name=${encodeURIComponent(name)}`); }
+    catch (error) { told('出錯了', error.message); return; }
+
+    const megs = (n) => `${(n / 1048576).toFixed(n > 10485760 ? 0 : 1)} MB`;
+    const lose = [];
+    if (owns.scripts.length) {
+      lose.push(`${owns.scripts.length} 份文案：${owns.scripts.join("、")}`);
+    }
+    if (owns.films.length) {
+      lose.push(`${owns.films.length} 支成片（要重新壓片，一支約四分鐘）`);
+    }
+    lose.push("下載的影片和照片、抽出來的新聞畫格（可以重抓，要時間）");
+    lose.push(`合計 ${megs(owns.bytes)}，${owns.items.length} 項`);
+
     if (!await confirmed(`刪掉題目「${name}」？`, {
-      body: "紀錄移到 trash/，可以救回來。",
-      lose: ["下載的影片（可以重抓）", "下載的照片（可以重抓）",
-             "抽出來的新聞畫格"]})) return;
+      body: owns.scripts.length
+        ? "整份移到 trash/，連文案和成片一起。可以救回來。"
+        : "整份移到 trash/，可以救回來。",
+      lose, yes: "刪掉", no: "算了"})) return;
     try {
       const back = await api("DELETE",
                              `/api/topic?name=${encodeURIComponent(name)}`);
-      told(`刪了。也清掉：${(back.also_removed || []).join("、") || "（沒有素材）"}`);
+      told("刪了", `${back.items.length} 項、${megs(back.bytes)} 移到 `
+                   + `${back.moved_to}／`);
       STATE.chosen = null;
       $("paper").innerHTML = "";
       reload(true);

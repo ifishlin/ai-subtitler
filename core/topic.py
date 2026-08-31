@@ -352,6 +352,47 @@ def footage(name: str) -> Path:
     return ROOT / "assets" / "footage" / name
 
 
+def photos(name: str) -> Path:
+    """Where this topic's pictures live. Spelled out in five places before
+    this existed, which is four chances to spell it differently."""
+    return ROOT / "assets" / "photos" / name
+
+
+def everything_for(name: str) -> list[Path]:
+    """Every file this topic owns, including through its scripts.
+
+    Derived from each module's own constant rather than typed out. I removed
+    one topic by hand and guessed eight paths: three were wrong -- there is no
+    `assets/shots/`, the contact sheet sits beside the film rather than in its
+    own directory, and I had not thought of the hidden working directory at
+    all. 14 MB stayed behind and nothing said so.
+    """
+    from core import build as build_module
+    from core import cards as cards_module
+    from core import script as script_module
+
+    owned = [path_for(name), footage(name), photos(name)]
+    for one in script_module.for_topic(name):
+        owned += [script_module.path_for(one),
+                  build_module.OUT_DIR / f"{one}.mp4",
+                  build_module.OUT_DIR / f"{one}.contact.jpg",
+                  build_module.OUT_DIR / f".{one}",      # rendered shots
+                  cards_module.CARD_DIR / one]
+    return [one for one in owned if one.exists()]
+
+
+def weight(paths: list[Path]) -> int:
+    """Bytes, following directories. Shown before deleting, because 「刪掉？」
+    without a size is a question nobody can answer."""
+    total = 0
+    for one in paths:
+        if one.is_dir():
+            total += sum(f.stat().st_size for f in one.rglob("*") if f.is_file())
+        elif one.is_file():
+            total += one.stat().st_size
+    return total
+
+
 def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
     """Download one of a topic's videos, with its captions.
 
