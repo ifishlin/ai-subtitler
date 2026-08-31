@@ -918,11 +918,21 @@ async function open(name) {
   // Deleting a topic. Refused while a script is written from it: a script
   // names pictures by path, so taking the pile away turns a script that was
   // fine yesterday into one missing every shot.
-  /* 直接砍。不問，因為沒有真的刪掉 —— 整份搬到 trash/，目錄結構原樣保留，
-     救回來是搬回去。要在一個可復原的動作前面攤開四行清單，那是拿確認框當
-     儀式用，只會讓人學會不看就按。
-     刪完給一行收據，那才是有用的：東西去哪了。 */
+  /* 問一句，一句就好。
+     四行清單太囉唆，不問又會誤刪 —— 這一則就發生過，265 MB 按錯了。所以問
+     的是「這一下會帶走什麼」，一行講完：幾份文案、幾支成片。不列每個檔案，
+     因為那是刪完的收據該說的事，不是決定要不要刪的依據。
+     數字用畫面上已經有的，不多跑一趟伺服器。 */
   if ($("btnDropTopic")) $("btnDropTopic").onclick = async () => {
+    const inList = STATE.list.find((one) => one.name === name) || {};
+    const made = (pile.scripts || []).length;
+    const films = inList.films || 0;
+    const also = made
+      ? `連 ${made} 份文案${films ? `和 ${films} 支成片` : ""}一起。`
+      : "";
+    if (!await confirmed(`刪掉「${name}」？`, {
+      body: `${also}素材、文案、成片整份搬到 trash/，救得回來。`,
+      yes: "刪掉", no: "算了"})) return;
     try {
       const back = await api("DELETE",
                              `/api/topic?name=${encodeURIComponent(name)}`);
