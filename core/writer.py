@@ -107,13 +107,27 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
     lines = []
     for index, line in enumerate(draft.get("lines") or [], start=1):
         line = dict(line)
-        key = str(line.get("pic") or "")
-        if key.startswith("P"):
+        # 編號是唯一的介面。`startswith` 不夠 —— 它只處理「寫對的那種」，
+        # 而寫錯的那種（一個 dict、一個檔名、一段秒數）從旁邊走過去，
+        # 一路到成品。`unpicked` 只檢查檔案在不在，而記錯的檔名往往真的存在，
+        # 是別的題目的。
+        #
+        # visual.md 的範例本來就寫著 `{"file": …, "start": 46.0}`，跟
+        # script.md 的「寫檔名一定會錯」正面衝突。那份檔案以前沒有被送進
+        # prompt，所以沒有人發現；送了之後，模型會照著範例寫。
+        if line.get("pic") is not None:
+            key = line["pic"]
+            if not (isinstance(key, str) and key.startswith("P")):
+                raise ValueError(f"第 {index} 句的 pic 要寫編號（P18 這種），"
+                                 f"寫的是 {key!r}")
             if key not in picks:
                 raise ValueError(f"第 {index} 句的圖片編號 {key} 不在素材裡")
             line["pic"] = picks[key]
-        cut = str(line.get("clip") or "")
-        if cut.startswith("C"):
+        if line.get("clip") is not None:
+            cut = line["clip"]
+            if not (isinstance(cut, str) and cut.startswith("C")):
+                raise ValueError(f"第 {index} 句的 clip 要寫編號（C3 這種），"
+                                 f"起訖由程式填，寫的是 {cut!r}")
             if cut not in cuts:
                 raise ValueError(f"第 {index} 句的段落編號 {cut} 不在候選裡")
             one = cuts[cut]
