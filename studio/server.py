@@ -245,6 +245,15 @@ def prompt_page() -> str:
     return (STATIC / "prompt.html").read_text(encoding="utf-8")
 
 
+@app.get("/raw", response_class=HTMLResponse)
+def raw_page() -> str:
+    """整份原文，一個字都沒切過。素材頁的 show 開一個獨立視窗指到這裡。
+
+    沒有導覽列：它不是一個服務，是從別的頁面開出來的一扇窗。
+    """
+    return (STATIC / "raw.html").read_text(encoding="utf-8")
+
+
 # ---------------------------------------------------------------- 門與文件
 #
 # Both read their source at request time rather than being written out. A page

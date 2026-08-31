@@ -127,11 +127,17 @@ PY
 echo "檢查每一頁有沒有接上共用的東西…"
 python3 - <<'PY' || bad=1
 import sys, pathlib
+# 從別的頁面彈出來的視窗。它不是一個服務，沒有人會直接走到它 —— 這條規則
+# 是為了「每一頁都到得了別頁」而存在的，而一扇窗的回去就是關掉它。
+# 配色還是要共用：那一條沒有例外。
+POPUPS = {"raw.html"}
 faults = 0
 for path in sorted(pathlib.Path("studio/static").glob("*.html")):
     text = path.read_text(encoding="utf-8")
     for need, why in (("/static/theme.css", "共用配色"),
                       ("/static/nav.js", "導覽列")):
+        if need == "/static/nav.js" and path.name in POPUPS:
+            continue
         if need not in text:
             print(f"  ❌ {path.name}　沒有載 {need}（{why}）")
             faults += 1

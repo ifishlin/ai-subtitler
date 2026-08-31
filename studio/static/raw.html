@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>送出去的原文</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  /* 一整頁就是那一份文字，所以版面只有兩塊：頂上一條，底下全部給它。
+     這一頁沒有導覽列 —— 它是從素材頁開出來的獨立視窗，不是一個服務。 */
+  html,body{height:100%}
+  body{display:flex;flex-direction:column;margin:0}
+
+  .bar{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;flex:none;
+    padding:10px 16px;background:var(--panel);
+    border-bottom:1px solid var(--line)}
+  .bar b{font-size:14px}
+  .bar .n{font:11.5px var(--mono);color:var(--faint)}
+  .bar .gap{flex:1}
+  .bar a{font:11.5px var(--mono);color:var(--accent);text-decoration:none}
+  .bar a:hover{text-decoration:underline}
+  .bar button{font:inherit;font-size:12px;color:var(--ink);
+    background:var(--panel2);border:1px solid var(--line);border-radius:7px;
+    padding:3px 10px;cursor:pointer}
+  .bar button:hover{border-color:var(--accent)}
+
+  /* 跳點。那幾行 ## 是真的送出去的字，所以拿它們當目錄不用另外編一份 ——
+     而六十四行照片清單就不會把別的東西擠出畫面。 */
+  .jump{display:flex;gap:5px;flex-wrap:wrap;flex:none;padding:7px 16px;
+    background:var(--panel);border-bottom:1px solid var(--line)}
+  .jump button{font:11px var(--mono);color:var(--dim);background:none;
+    border:1px solid var(--line);border-radius:11px;padding:2px 9px;
+    cursor:pointer;white-space:nowrap}
+  .jump button:hover{color:var(--accent);border-color:var(--accent)}
+  .jump button.how{color:var(--faint)}
+
+  pre{flex:1;min-height:0;overflow:auto;margin:0;white-space:pre-wrap;
+    font:12.5px/1.8 var(--mono);color:var(--dim);padding:16px 18px}
+  /* 標題染色。摺疊會讓它不再是原文，染色不會。 */
+  pre b.h{color:#7fd4ff;font-weight:600}
+  pre b.h.top{color:var(--warn)}
+</style>
+</head>
+<body>
+<div class="bar">
+  <b id="what">組裝中…</b>
+  <span class="n" id="size"></span>
+  <span class="gap"></span>
+  <a id="parts" href="/prompt">看分節和佔比</a>
+  <button id="copy">複製</button>
+</div>
+<div class="jump" id="jump"></div>
+<pre id="text">組裝中…</pre>
+
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+async function load() {
+  const args = new URLSearchParams(location.search);
+  const name = args.get("name") || "";
+  const house = args.get("house") || "argue";
+  if (!name) { $("text").textContent = "沒有指定題目"; return; }
+
+  const back = await fetch("/api/prompt-raw?name=" + encodeURIComponent(name)
+    + "&house=" + encodeURIComponent(house));
+  if (!back.ok) {
+    $("what").textContent = "組不出來";
+    $("text").textContent = (await back.text()).slice(0, 500);
+    return;
+  }
+  const got = await back.json();
+
+  document.title = name + "　送出去的原文";
+  $("what").textContent = name + "　·　" + house;
+  $("size").textContent = got.chars.toLocaleString() + " 字";
+  $("parts").href = "/prompt?name=" + encodeURIComponent(name);
+
+  /* 前半是「怎麼寫」，後半是「有什麼素材」，中間一條 --- 分開。前半的標題
+     用暗一點的顏色 —— 兩半的標題並排一樣亮，看起來像同一份東西的十四節。 */
+  const split = got.text.indexOf("\n\n---\n\n");
+  const heads = [];
+  $("text").innerHTML = got.text.split("\n").map((line, index) => {
+    if (line.startsWith("#")) {
+      const at = got.text.split("\n").slice(0, index).join("\n").length;
+      const material = split >= 0 && at > split;
+      heads.push({at: index, material,
+                  name: line.replace(/^#+\s*/, "").split("　")[0]});
+      return `<b class="h ${material ? "top" : ""}" id="h${index}">${
+        esc(line)}</b>`;
+    }
+    return esc(line);
+  }).join("\n");
+
+  $("jump").innerHTML = heads.map((one) =>
+    `<button data-to="h${one.at}" class="${one.material ? "" : "how"}">${
+      esc(one.name)}</button>`).join("");
+  $("jump").querySelectorAll("button").forEach((button) => {
+    button.onclick = () => {
+      const target = $(button.dataset.to);
+      if (target) target.scrollIntoView({block: "start", behavior: "smooth"});
+    };
+  });
+}
+
+$("copy").onclick = async () => {
+  try {
+    await navigator.clipboard.writeText($("text").textContent);
+    $("copy").textContent = "複製好了";
+  } catch (error) {
+    // 剪貼簿在非 https 的來源會被拒。說出來，不要靜靜地什麼都沒發生。
+    $("copy").textContent = "複製不了（" + error.name + "）";
+  }
+  setTimeout(() => { $("copy").textContent = "複製"; }, 1600);
+};
+
+load().catch((error) => { $("text").textContent = "讀不到：" + error.message; });
+</script>
+</body>
+</html>
