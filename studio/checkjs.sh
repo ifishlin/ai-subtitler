@@ -38,5 +38,43 @@ PY
     echo "     ⚠ 還有 $native 個瀏覽器原生對話框，改用 confirmed()／asked()／told()"; bad=1
   fi
 done
-node --check studio/static/ask.js && echo "  ✅ ask.js" || bad=1
+for f in studio/static/*.js; do
+  node --check "$f" && echo "  ✅ $(basename "$f")" || bad=1
+done
+
+# 頂層去摸一個「頁面裡沒有」的元素。
+#
+# ask.js 把對話框標記從各頁 HTML 搬進自己注入之後，舊的那份頂層綁定留在原地：
+# $("askYes").onclick 在注入之前執行，askYes 是 null，null.onclick 當場拋錯，
+# 於是底下真正要注入標記的那一段永遠沒跑到。五個頁面都載了 ask.js、showAsk 和
+# confirmed 都定義好了，而 #ask 從來不存在 —— 任何一次確認框都會失敗，而且不
+# 會顯示成錯誤，只會顯示成「按了刪除，什麼都沒發生」。
+#
+# 只有「頁面的靜態標記裡找不到那個 id」才算錯。頂層綁一個本來就寫在 HTML 裡的
+# 元素完全正常，那是這幾頁上百處的做法。而 .js 檔沒有自己的標記，所以它在頂層
+# 摸任何 id 都是在賭別人已經畫好了。
+echo "檢查頂層有沒有摸到不存在的元素…"
+python3 - <<'PY' || bad=1
+import re, sys, pathlib
+faults = 0
+for path in sorted(pathlib.Path("studio/static").glob("*.js")) + \
+            sorted(pathlib.Path("studio/static").glob("*.html")):
+    text = path.read_text(encoding="utf-8")
+    if path.suffix == ".html":
+        code = "\n;\n".join(re.findall(r"<script>(.*?)</script>", text, re.S))
+        markup = re.sub(r"<script>.*?</script>", "", text, flags=re.S)
+        owns = set(re.findall(r'id="([^"{}]+)"', markup))
+    else:
+        code, owns = text, set()
+    for number, line in enumerate(code.splitlines(), start=1):
+        found = re.match(r'^\$\("([a-zA-Z][\w-]*)"\)', line)
+        if found and found.group(1) not in owns:
+            print(f"  ❌ {path.name}　第 {number} 行：$(\"{found.group(1)}\") "
+                  f"在頂層，而 {'這個檔案沒有標記' if not owns else 'HTML 裡沒有這個 id'}")
+            faults += 1
+if not faults:
+    print("  ✅ 沒有")
+sys.exit(1 if faults else 0)
+PY
+
 exit $bad

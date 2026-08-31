@@ -69,17 +69,13 @@ function told(title, body = "") {
   return showAsk(title, body ? `<p>${escapeHTML(body)}</p>` : "", "好", "");
 }
 
-$("askYes").onclick = () => closeAsk(true);
-$("askNo").onclick = () => closeAsk(false);
-$("ask").addEventListener("click", (event) => {
-  if (event.target.id === "ask") closeAsk(false);
-});
-document.addEventListener("keydown", (event) => {
-  if ($("ask").hidden) return;
-  if (event.key === "Escape") closeAsk(false);
-  if (event.key === "Enter") closeAsk(true);
-});
-
+/* 綁定只在標記注入之後做一次。這裡本來還有一份一模一樣的，寫在頂層 ——
+   那是標記還在各頁 HTML 裡的年代留下的。標記改成由這個檔案注入之後，頂層那
+   份就在注入之前執行，$("askYes") 是 null，null.onclick 當場拋錯，於是底下
+   真正要注入標記的那一段永遠沒跑到。
+   結果：五個頁面都載了 ask.js，showAsk 和 confirmed 都定義好了，而 #ask 從
+   來不存在 —— 任何一次 confirmed() 都會失敗。而它不會顯示成錯誤，只會顯示
+   成「按了刪除，什麼都沒發生」。 */
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("ask")) return;
   document.body.insertAdjacentHTML("beforeend", `<!-- The page's own asking and telling. The browser's confirm() and alert()

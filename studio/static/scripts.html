@@ -1180,9 +1180,7 @@ function saveLine(cell, name) {
 
 /* 空狀態裡那顆「素材」。綁在頂層而不是畫的時候綁，因為 #paper 每次重畫都
    換掉內容，而這一顆只在還沒選文案的時候存在。 */
-$("paper").addEventListener("click", (event) => {
-  if (event.target.id === "btnGoTopics") leaveTo("/topics");
-});
+
 
 /* ---------------------------------------------------------------- 綁事件 */
 
@@ -1191,7 +1189,11 @@ $("list").addEventListener("click", (event) => {
   if (row) { STATE.chosen = row.dataset.name; renderList(); showScript(row.dataset.name); }
 });
 
+/* 一個委派管完 #paper。兩個監聽器各自對付一半的時候，下一個人要讀兩處才知
+   道點一下會發生什麼。 */
 $("paper").addEventListener("click", (event) => {
+  // 空狀態裡那顆「素材」。只在還沒選文案的時候存在，所以委派而不是直接綁。
+  if (event.target.id === "btnGoTopics") { leaveTo("/topics"); return; }
   if (event.target.closest(".say-edit")) return;   // editing, not opening
   if (event.target.closest(".seen-box")) return;   // ticking, not opening
   const row = event.target.closest("tr[data-shot]");
