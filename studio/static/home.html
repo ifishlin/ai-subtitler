@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>影片流水線</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#111820; --line:#1d2836; --ink:#e8eef4;
+    --dim:#9db4c6; --faint:#5f7383; --accent:#5aa9e6; --ok:#4ec98f;
+    --warn:#e8975a; --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:light){
+    :root{--bg:#f7f8fa; --panel:#fff; --line:#dde3e9; --ink:#16232e;
+          --dim:#4a5a6a; --faint:#8296a8; --accent:#1f6f9f;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang TC",
+      "Noto Sans TC",sans-serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:34px 22px 70px}
+  h1{margin:0 0 6px;font-size:26px;letter-spacing:.5px}
+  .under{color:var(--dim);margin:0 0 30px;font-size:14px}
+
+  h2{font-size:13px;color:var(--faint);font-weight:600;letter-spacing:1px;
+    margin:34px 0 12px;text-transform:uppercase}
+
+  .cards{display:grid;gap:12px;
+    grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
+  a.card{display:block;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;text-decoration:none;color:inherit;
+    transition:border-color .12s,transform .12s}
+  a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
+  a.card b{display:block;font-size:16px;margin-bottom:5px}
+  a.card b .icon{margin-right:7px}
+  a.card span{display:block;color:var(--dim);font-size:13px;line-height:1.55}
+  a.card .step{font:11px var(--mono);color:var(--faint);margin-bottom:7px;
+    display:block;letter-spacing:.5px}
+
+  .strip{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 4px}
+  .tile{flex:1;min-width:120px;background:var(--panel);
+    border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+  .tile b{display:block;font:24px var(--mono);font-variant-numeric:tabular-nums;
+    line-height:1.25}
+  .tile span{font-size:12px;color:var(--dim)}
+  .tile.good b{color:var(--ok)}
+  .tile.warn b{color:var(--warn)}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;
+    background:var(--panel);border:1px solid var(--line);border-radius:11px;
+    overflow:hidden}
+  th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line)}
+  th{color:var(--faint);font-weight:600;font-size:11px;letter-spacing:.6px}
+  tr:last-child td{border-bottom:none}
+  td.num{font:13px var(--mono);font-variant-numeric:tabular-nums;
+    color:var(--dim);text-align:right;white-space:nowrap}
+  td a{color:var(--accent);text-decoration:none}
+  td a:hover{text-decoration:underline}
+  .pill{font:11px var(--mono);padding:2px 8px;border-radius:11px;
+    border:1px solid var(--line);color:var(--dim)}
+  .pill.ok{color:var(--ok);border-color:#2c5a45}
+  .pill.no{color:var(--warn);border-color:#5c3a2a}
+  .empty{color:var(--faint);padding:14px;font-size:13px}
+  .note{color:var(--faint);font-size:12px;margin-top:8px}
+  .scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>影片流水線</h1>
+  <p class="under">從一則新聞到一支九十秒的短片。每一步都在網頁上，
+    每一道檢查都是程式在算。</p>
+
+  <h2>現況</h2>
+  <div class="strip" id="strip"></div>
+  <p class="note" id="stripNote"></p>
+
+  <h2>照順序走</h2>
+  <div class="cards">
+    <a class="card" href="/scripts">
+      <span class="step">① – ⑦</span>
+      <b><span class="icon">📝</span>題目與文案</b>
+      <span>開題目、逐家問十九家媒體、看素材、選公版、產生或修改文案。
+        大部分時間都在這一頁。</span>
+    </a>
+    <a class="card" href="/produce">
+      <span class="step">⑧</span>
+      <b><span class="icon">⚙️</span>產製</b>
+      <span>把文案壓成影片。九道門在編碼開始之前全部跑完 ——
+        過不去的文案不會浪費四分鐘。</span>
+    </a>
+    <a class="card" href="/assemble">
+      <span class="step">⑨</span>
+      <b><span class="icon">🧩</span>組裝</b>
+      <span>版面、卡片、鏡頭的細節。</span>
+    </a>
+    <a class="card" href="/desk">
+      <span class="step">長片</span>
+      <b><span class="icon">🎬</span>AI 導演台</b>
+      <span>原本的工作台：辨識、翻譯、校對、字幕、資訊卡。
+        處理既有影片，不是從新聞做起。</span>
+    </a>
+  </div>
+
+  <h2>這套系統怎麼想事情</h2>
+  <div class="cards">
+    <a class="card" href="/gates">
+      <b><span class="icon">🚦</span>所有的門</b>
+      <span>十五道檢查，每一道測什麼、為了哪一次錯誤而做、
+        現在有幾處沒過。直接從程式抽出來，不會過期。</span>
+    </a>
+    <a class="card" href="/docs?name=MISTAKES">
+      <b><span class="icon">📓</span>犯過的錯</b>
+      <span>每一個錯、擋住它的是什麼、以及擋不住的那八項。
+        那份比擋得住的重要。</span>
+    </a>
+    <a class="card" href="/docs?name=TESTED">
+      <b><span class="icon">✅</span>測到哪裡</b>
+      <span>十個步驟，哪些通了、哪些有條件、哪些還沒有。</span>
+    </a>
+    <a class="card" href="/docs?name=USING">
+      <b><span class="icon">📖</span>怎麼用</b>
+      <span>從新增題目到決定發不發，一步一步。</span>
+    </a>
+  </div>
+
+  <h2>題目</h2>
+  <div class="scroll"><table id="topics"><tbody>
+    <tr><td class="empty">讀取中…</td></tr>
+  </tbody></table></div>
+
+  <h2>做出來的片</h2>
+  <div class="scroll"><table id="films"><tbody>
+    <tr><td class="empty">讀取中…</td></tr>
+  </tbody></table></div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+async function get(path) {
+  const answer = await fetch(path);
+  if (!answer.ok) throw new Error(await answer.text());
+  return answer.json();
+}
+
+/* 首頁不自己算任何東西。每個數字都是別的地方已經在算的那一份 —— 首頁再算
+   一次，就是這個專案吃過三次苦頭的「兩份不同步的邏輯」。 */
+async function load() {
+  let topics = [], gates = null;
+  // /api/topics 回的是 {topics: [...]}，不是陣列本身。
+  try { topics = (await get("/api/topics")).topics || []; } catch (e) {}
+  try { gates = await get("/api/gates"); } catch (e) {}
+
+  const films = (gates && gates.scripts) || [];
+  const ready = topics.filter((one) => one.ready).length;
+  const filed = topics.filter((one) => one.archived).length;
+  const failing = films.filter((one) =>
+    Object.values(one.faults).some((n) => n > 0)
+    || one.sums.too_long || !one.sums.even || !one.sums.still_enough).length;
+  const made = topics.reduce((sum, one) => sum + (one.films || 0), 0);
+
+  $("strip").innerHTML = [
+    [`${topics.length - filed}`, "個題目在進行", ""],
+    [`${ready}`, "個素材夠了，可以寫", ready ? "good" : ""],
+    [`${films.length}`, "份文案", ""],
+    [`${made}`, "支成片", made ? "good" : ""],
+    [`${failing}`, "份文案有門沒過", failing ? "warn" : "good"],
+  ].map(([n, label, cls]) =>
+    `<div class="tile ${cls}"><b>${esc(n)}</b><span>${esc(label)}</span></div>`
+  ).join("");
+  $("stripNote").textContent = gates
+    ? `門的數量：${gates.gates.length} 道逐句檢查 ＋ ${gates.sums.length} 個整片數字 ＋ ${gates.extra.length} 道在文案之外`
+    : "門的資料讀不到 —— 伺服器可能沒重啟";
+
+  const rows = topics
+    .slice()
+    .sort((a, b) => (b.films - a.films) || (b.modified - a.modified))
+    .map((one) => `
+      <tr>
+        <td><a href="/scripts">${esc(one.name)}</a>
+          ${one.archived ? '<span class="pill">封存</span>' : ""}</td>
+        <td>${one.ready ? '<span class="pill ok">素材夠了</span>'
+                        : `<span class="pill no">${esc(one.why)}</span>`}</td>
+        <td class="num">影片 ${one.counts.videos}</td>
+        <td class="num">報導 ${one.counts.reports}</td>
+        <td class="num">圖 ${one.counts.images}</td>
+        <td class="num">留言 ${one.voices}</td>
+        <td class="num">事實 ${one.facts}</td>
+        <td class="num">文案 ${one.scripts.length}</td>
+        <td class="num">成片 ${one.films}</td>
+      </tr>`).join("");
+  $("topics").querySelector("tbody").innerHTML =
+    rows || '<tr><td class="empty">還沒有題目</td></tr>';
+
+  const filmRows = films.map((one) => {
+    const bad = Object.entries(one.faults).filter(([, n]) => n > 0);
+    const shape = [one.sums.too_long ? `超長 ${one.sums.over}s` : "",
+                   one.sums.even ? "" : "實拍比例或分布不對",
+                   one.sums.still_enough ? "" : "會動的畫面不夠"].filter(Boolean);
+    const trouble = bad.map(([k, n]) => `${k} ${n}`).concat(shape);
+    return `
+      <tr>
+        <td><a href="/produce">${esc(one.name)}</a></td>
+        <td>${trouble.length
+              ? `<span class="pill no">${esc(trouble.join("　·　"))}</span>`
+              : '<span class="pill ok">全部通過</span>'}</td>
+      </tr>`;
+  }).join("");
+  $("films").querySelector("tbody").innerHTML =
+    filmRows || '<tr><td class="empty">還沒有文案</td></tr>';
+}
+
+function $(id) { return document.getElementById(id); }
+load().catch((error) => {
+  $("stripNote").textContent = "讀不到：" + error.message;
+});
+</script>
+</body>
+</html>

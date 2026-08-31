@@ -23,6 +23,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+import inspect                                                    # noqa: E402
 import json                                                       # noqa: E402
 
 from fastapi import Body, FastAPI, HTTPException                      # noqa: E402
@@ -97,7 +98,10 @@ def paths_for(output: Path, source: Path | None = None) -> dict[str, Path]:
         "preview_clip": PREVIEWS / f"{output.name}_clip.mp4",
     }
 
-app = FastAPI(title="Subtitle Review")
+# Swagger moves out of the way. FastAPI claims /docs for its own API browser
+# and claimed it first, so the project's own documentation was served the
+# OpenAPI page instead -- a route that looks registered and is shadowed.
+app = FastAPI(title="影片流水線", docs_url="/api-browser", redoc_url=None)
 # Shared between the four pages. Everything else here is served by hand, but
 # the dialog is one file used four times and copying it four times is how four
 # slightly different dialogs happen.
@@ -192,8 +196,163 @@ def find_source(output: Path) -> Path:
 # ---------------------------------------------------------------- pages
 
 @app.get("/", response_class=HTMLResponse)
-def index() -> str:
+def home() -> str:
+    """The way in.
+
+    `/` used to be the AI-Desk itself, and no page linked to any other -- to
+    change service you edited the address bar, which means anyone who does not
+    already know the paths cannot get there. The desk is still one of the
+    services and now lives at /desk.
+    """
+    return (STATIC / "home.html").read_text(encoding="utf-8")
+
+
+@app.get("/desk", response_class=HTMLResponse)
+def desk() -> str:
     return (STATIC / "index.html").read_text(encoding="utf-8")
+
+
+@app.get("/gates", response_class=HTMLResponse)
+def gates_page() -> str:
+    return (STATIC / "gates.html").read_text(encoding="utf-8")
+
+
+@app.get("/docs", response_class=HTMLResponse)
+def docs_page() -> str:
+    return (STATIC / "docs.html").read_text(encoding="utf-8")
+
+
+# ---------------------------------------------------------------- 門與文件
+#
+# Both read their source at request time rather than being written out. A page
+# that describes the checks is worthless the moment it disagrees with them,
+# and this project has already shipped two copies of one rule that drifted.
+
+
+@app.get("/api/gates")
+def list_gates() -> dict[str, Any]:
+    """Every gate, its docstring, and how each script stands against it.
+
+    Assembled from `script.GATES` and the functions themselves, so a gate
+    added to the code appears here without anyone editing a page, and a
+    docstring that explains which mistake it was built for is the description.
+    """
+    from core import script as script_module
+    from core import topic as topic_module
+
+    def spelled(fn) -> str:
+        return inspect.getdoc(fn) or ""
+
+    scripts = []
+    for name in script_module.names():
+        try:
+            measured = script_module.measure(script_module.load(name))
+        except Exception:                                         # noqa: BLE001
+            continue
+        scripts.append({
+            "name": name,
+            "faults": {one[0]: len(measured.get(one[0]) or [])
+                       for one in script_module.GATES},
+            "sums": {"over": measured["over"],
+                     # The verdict, not the number, so the page cannot decide
+                     # differently from the builder. It did: a shipped 90.01s
+                     # film showed as too long here and had been accepted there.
+                     "too_long": script_module.too_long(measured),
+                     "even": measured["even"],
+                     "still_enough": measured["still_enough"]},
+        })
+
+    gates = []
+    for key, label, kind, blocks, why in script_module.GATES:
+        # Two gates are not functions of their own name: `shapeless` is what
+        # `structure()` returns and `unsourced` is computed inside measure().
+        # Named here rather than left blank, because a gate with no
+        # explanation is the one nobody understands well enough to trust.
+        fn = getattr(script_module,
+                     {"unpicked": "missing_pictures",
+                      "shapeless": "structure",
+                      "unsourced": "measure"}.get(key, key), None)
+        gates.append({"key": key, "label": label, "kind": kind,
+                      "blocks": blocks, "why": why,
+                      "doc": spelled(fn) if fn else "",
+                      "hits": sum(one["faults"].get(key, 0) for one in scripts)})
+
+    sums = [{"key": key, "label": label, "kind": kind, "why": why}
+            for key, label, kind, why in script_module.SUMS]
+
+    piles = []
+    for name in topic_module.names():
+        try:
+            pile = topic_module.load(name)
+        except Exception:                                         # noqa: BLE001
+            continue
+        enough, missing = topic_module.ready(pile)
+        piles.append({"name": name, "ready": enough, "why": missing})
+
+    return {
+        "gates": gates, "sums": sums, "scripts": scripts, "piles": piles,
+        "kinds": {
+            "frame": ["會出現在畫面上的東西",
+                      "測的就是觀眾會看到的那個東西本身，中間沒有人。最紮實的一類"],
+            "script": ["文案這個資料結構自己",
+                       "只看那一個檔案就能判，跟畫面和素材都無關"],
+            "join": ["文案和素材堆之間的接縫",
+                     "兩份資料的 join。抓到過把別的題目的照片寫進來 —— 檔案確實存在"],
+            "declared": ["一個宣告，不是東西本身",
+                         "它測不到那張圖對不對，只測有沒有人聲稱看過。"
+                         "說謊就會過 —— 這一類明顯弱於其他三類"],
+            "sequence": ["成片是一連串鏡頭",
+                         "唯一不是逐句判斷的一類。每張單獨看都好，排在一起是投影片"],
+        },
+        # The numbers the gates compare against. Straight from the file the
+        # checks and the prompts both read, so the page cannot quote a stale
+        # threshold.
+        "thresholds": json.loads(
+            (ROOT / "assets" / "rules.json").read_text(encoding="utf-8")),
+        "extra": [
+            {"key": "ready", "label": "素材夠不夠", "kind": "join", "blocks": True,
+             "where": "core/topic.py　ready()",
+             "why": "影片 5、報導 5、三種圖各 5，而且左中右都要有。"
+                    "「左中右都要有」是這個專案唯一一道測觀點平衡的門",
+             "doc": spelled(topic_module.ready)},
+            {"key": "checkjs", "label": "網頁的 JavaScript 語法",
+             "kind": "script", "blocks": True,
+             "where": "studio/checkjs.sh　+ .git/hooks/pre-commit",
+             "why": "三個 handler 忘了寫 async，整頁空白而伺服器回 200。"
+                    "commit 時自動跑，--no-verify 可以跳過",
+             "doc": ""},
+        ],
+    }
+
+
+DOCS = {
+    "MISTAKES": "犯過的錯",
+    "TESTED": "測到哪裡",
+    "USING": "怎麼用",
+    "PROGRESS": "進度",
+    "COLLECTING": "怎麼收集",
+}
+
+
+@app.get("/api/doc")
+def read_doc(name: str = "MISTAKES") -> dict[str, Any]:
+    """One of docs/*.md, rendered. Whitelisted, and read fresh every time."""
+    if name not in DOCS:
+        raise HTTPException(404, f"沒有這份文件：{name}")
+    import markdown as markdown_module
+    path = ROOT / "docs" / f"{name}.md"
+    if not path.is_file():
+        raise HTTPException(404, f"找不到 docs/{name}.md")
+    body = path.read_text(encoding="utf-8")
+    return {
+        "name": name, "title": DOCS[name],
+        "html": markdown_module.markdown(
+            body, extensions=["tables", "fenced_code", "toc", "sane_lists"]),
+        "words": len(body),
+        "changed": int(path.stat().st_mtime),
+        "all": [{"name": key, "title": label} for key, label in DOCS.items()
+                if (ROOT / "docs" / f"{key}.md").is_file()],
+    }
 
 
 @app.get("/media/proxy.mp4")

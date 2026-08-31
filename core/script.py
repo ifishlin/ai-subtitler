@@ -114,6 +114,67 @@ def gathered(script: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
              if item.get("file")})
 
 
+# Every gate, in one place, with what it is actually testing.
+#
+# `kind` is the part worth writing down, because the gates are not all the
+# same kind of check and their reliability differs accordingly:
+#
+#   frame     the thing the viewer will see. Nothing in between -- strongest
+#   script    the script's own internal consistency; needs no other file
+#   join      the seam between the script and the pile it was written from
+#   declared  a claim the writer made. Cannot see the thing itself -- weakest
+#   sequence  the film as an ordered run of shots rather than line by line
+#
+# The page at /gates reads this, so there is one list rather than one per
+# reader. `blocks` says whether build() refuses; build() reads it too.
+GATES = [
+    ("shapeless",  "結構不對",           "script",   True,
+     "起承轉合四個都要在、順序不能亂、轉要落在前 34%"),
+    ("unsourced",  "陳述事實沒標來源",     "script",   False,
+     "有 say 就要有 from。標「觀點」的不算 —— 那是我們的判斷，不是事實"),
+    ("unpicked",   "沒有畫面",           "join",     True,
+     "指的檔案要存在，而且要是這個題目收的。別題的照片檔案也存在"),
+    ("unchecked",  "沒有人看過那張圖",     "declared", True,
+     "seen 欄位。它測不到那張圖對不對，只測有沒有人聲稱看過"),
+    ("undrawn",    "沒說卡片怎麼畫",       "script",   True,
+     "show 寫「自製」就一定要有 card"),
+    ("uncredited", "引用的畫面沒有出處",    "frame",    True,
+     "借來的每一格都要能燒上「畫面來源：某家」"),
+    ("samey",      "連續太多張長一樣",     "sequence", True,
+     "同一種卡連續超過 3 張、同一色調超過 12 張。單張都好，排在一起是投影片"),
+    ("unsigned",   "沒有結尾頁",          "frame",    True,
+     "最後一句要是 outro：帶得走的一句話 + 回顧 + 頻道標記"),
+    ("simplified", "簡體字",             "frame",    True,
+     "say／show／note 三個欄位逐字判。OpenCC 兩次轉換交叉比對"),
+    ("card_wrong", "卡片畫不出來",         "script",   True,
+     "每種卡需要的欄位。bars 的長度要是數字，不能是「超過 1/3」"),
+]
+
+# One frame of slack on the length, and it is not a fudge: a film cannot be
+# shorter than its own frames, so an overrun below that is arithmetic rather
+# than length. It lives here because two readers needed it and only build()
+# had it -- the page listing every script reported a shipped 90.01s film as
+# too long while the builder had accepted it, which is how a gate loses its
+# authority.
+SLACK_SECONDS = round(1 / 30, 4)
+
+
+def too_long(measured: dict[str, Any]) -> bool:
+    """Whether this really runs over, as opposed to rounding over."""
+    return measured.get("over", 0.0) > SLACK_SECONDS
+
+
+# The three that are a number plus a verdict rather than a list of faults.
+SUMS = [
+    ("over",         "超過 90 秒",   "frame",
+     "成片長度。上限在 rules.json 的 length.limit_seconds"),
+    ("even",         "實拍比例與分布", "frame",
+     "借來的畫面 ≤35%，而且三段都要有。一整團擠在一起看起來像別人的片"),
+    ("still_enough", "會動的畫面夠",   "frame",
+     "借來的時間至少一半要是會動的片段，不能全是靜照"),
+]
+
+
 def measure(script: dict[str, Any]) -> dict[str, Any]:
     """The script's own arithmetic: length, and whether it fits."""
     lines = script.get("lines") or []
@@ -759,7 +820,10 @@ CARD_NEEDS: dict[str, dict[str, Any]] = {
     "stack":  {"items": "list"},
     "chain":  {"points": "list"},
     "queue":  {"count": "number"},
-    "clock":  {"value": "number"},
+    # `part` is the one that becomes an angle. `value` is drawn as text --
+    # 「3 分」 is a perfectly good dial label, and requiring a number here
+    # would have refused to rebuild two films that have been fine for weeks.
+    "clock":  {"part": "number", "value": "any"},
     "ring":   {"value": "any"},
     "swap":   {"was": "any", "now": "any"},
     "number": {"value": "any"},

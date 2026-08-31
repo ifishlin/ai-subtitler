@@ -11,9 +11,17 @@ cd "$(dirname "$0")/.." || exit 1
 bad=0
 for f in studio/static/*.html; do
   python3 - "$f" > /tmp/_page.mjs <<'PY'
-import sys, pathlib
-p = pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")
-sys.stdout.write(p[p.index("<script>") + 8: p.rindex("</script>")] if "<script>" in p else "")
+import re, sys, pathlib
+# Every inline block, each on its own, joined. It used to take everything
+# between the first <script> and the *last* </script>, so adding a single
+# <script src="..."></script> at the end swallowed the closing tag of the
+# real block and node reported a syntax error in code that was fine.
+#
+# Blocks with attributes are skipped: a src= block is a file, and files are
+# checked as files.
+page = pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")
+blocks = re.findall(r"<script>(.*?)</script>", page, re.S)
+sys.stdout.write("\n;\n".join(blocks))
 PY
   if node --check /tmp/_page.mjs 2>/tmp/_err; then
     echo "  ✅ $(basename "$f")"

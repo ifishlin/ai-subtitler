@@ -262,14 +262,12 @@ def build(name: str, target: Path | None = None,
     # The gates, all of them, before a single frame is encoded. A film that
     # takes four minutes to build should not spend them on a script that was
     # never going to be publishable.
-    for fault, complaint in (("unpicked", "沒有畫面"), ("undrawn", "沒說卡片怎麼畫"),
-                             ("unchecked", "沒有人看過那張圖"),
-                             ("uncredited", "引用的畫面沒有出處"),
-                             ("samey", "連續太多張長一樣"),
-                             ("unsigned", "沒有結尾頁"),
-                             ("simplified", "簡體字"),
-                             ("card_wrong", "卡片畫不出來"),
-                             ("shapeless", "結構不對")):
+    # From script.GATES, so this list and the one the page shows cannot drift
+    # apart. They were two copies for a while and that is how the tone check
+    # ended up counting something the renderer did not draw.
+    for fault, complaint, _kind, blocks, _why in script_module.GATES:
+        if not blocks:
+            continue
         if measured.get(fault):
             faults = measured[fault]
             why = "、".join(item.get("say") or item.get("why", "")
@@ -279,11 +277,9 @@ def build(name: str, target: Path | None = None,
     # went to the encoder anyway. A number that is computed, shown on the page,
     # and cannot stop anything is a number that will be ignored.
     #
-    # The tolerance is one frame, and it is not a fudge: a film cannot be
-    # shorter than its own frames, so an overrun below that is arithmetic
-    # rather than length. Without it the gate refused a 90.01s film, which is
-    # the kind of correctness that teaches people to work around the gate.
-    if measured["over"] > 1 / FPS:
+    # The one frame of slack lives in script.py, because the page that lists
+    # every script needs the same answer this does.
+    if script_module.too_long(measured):
         raise RuntimeError(f"{name} 長 {measured['seconds']}s，"
                            f"超出上限 {measured['over']}s")
     if not measured["still_enough"]:
