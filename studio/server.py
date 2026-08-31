@@ -958,34 +958,6 @@ def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             "left": len(topic_module.doubted(pile, kind))}
 
 
-@app.get("/api/topic/owns")
-def topic_owns(name: str) -> dict[str, Any]:
-    """What deleting this topic would take, before anybody presses anything.
-
-    The dialog used to list three things from memory -- downloaded videos,
-    photographs, cut frames -- and that list was written when a topic could
-    not own a script. 「刪掉？」 without the actual contents is a question
-    nobody can answer, which is the whole reason `confirmed()` takes a `lose`.
-    """
-    from core import script as script_module
-    from core import topic as topic_module
-    try:
-        topic_module.load(name)
-    except (ValueError, FileNotFoundError) as error:
-        raise HTTPException(404, str(error)) from error
-    owned = topic_module.everything_for(name)
-    return {
-        "name": name,
-        "scripts": script_module.for_topic(name),
-        "films": [one for one in script_module.for_topic(name)
-                  if (build_dir := ROOT / "assets" / "shorts" / f"{one}.mp4")
-                  and build_dir.is_file()],
-        "bytes": topic_module.weight(owned),
-        "items": [{"path": str(one.relative_to(ROOT)),
-                   "bytes": topic_module.weight([one])} for one in owned],
-    }
-
-
 @app.post("/api/topic/archive")
 def archive_topic(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Put a topic out of the way, or bring it back.
