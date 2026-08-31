@@ -58,8 +58,8 @@
   .todo .write .what b{color:var(--ink)}
   .todo .what span{display:block;font-size:11px;color:var(--faint);
     line-height:1.55;margin-top:2px}
-  /* 片型的說明只留一行，全文在 title。它是三四句話，整段攤開會把這一列撐成
-     一個段落，而它要回答的問題只在選片型的那一刻問一次。 */
+  /* 公版的說明只留一行，全文在 title。它是三四句話，整段攤開會把這一列撐成
+     一個段落，而它要回答的問題只在選公版的那一刻問一次。 */
   .todo .write .what span{overflow:hidden;text-overflow:ellipsis;
     white-space:nowrap}
   .todo .rows{grid-column:1 / -1;margin-top:6px;display:flex;
@@ -144,7 +144,200 @@
   /* Unsaved edits are visible and countable. Saving on every keystroke meant
      there was no such state, so nothing could be discarded and nothing had to
      be confirmed. */
+  .src.written{position:relative}
+  .src.written .drop-script{position:absolute;right:10px;top:9px;opacity:0;
+    color:var(--faint)}
+  .src.written:hover .drop-script{opacity:1}
+  .src.written .drop-script:hover{color:#ff8a72;border-color:#5b2a22}
+  .src.written .house{display:inline-block;margin-left:8px;padding:1px 8px;
+    border-radius:99px;font:11px var(--mono)}
+  .src.written .house.argue{background:#12212e;color:#7fd4ff;
+    border:1px solid #244055}
+  .src.written .house.story{background:#2a1a12;color:#ffb347;
+    border:1px solid #5c3325}
 
+  /* Two decisions about the whole film, made once and never revisited until
+     they were put here: which shape it is, and who it is for. */
+
+  #pending[hidden]{display:none}
+  #jobBar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
+    align-items:center;gap:12px;padding:9px 18px;background:var(--panel);
+    border-top:1px solid var(--line)}
+  #jobBar[hidden]{display:none}
+  #jobBar b{font-size:13px;flex:none}
+  #jobNote{font:12px var(--mono);color:var(--faint);flex:none;
+    max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .job-track{flex:1;height:6px;border-radius:3px;background:#0d1014;
+    overflow:hidden}
+  .job-track i{display:block;height:100%;background:var(--accent);
+    transition:width .3s}
+  #jobClock{font:12px var(--mono);color:var(--faint);flex:none}
+  #jobBar.failed{background:#2a1512;border-top-color:#5b2a22}
+  #jobBar.failed .job-track i{background:#ef6b6b}
+
+
+  /* A rule between piles, so one section ends visibly before the next
+     begins. Everything stays open: a pile you have to unfold is a pile you
+     forget is there. */
+  .pile{border-top:1px solid var(--line);margin-top:16px;
+    scroll-margin-top:12px}
+  .pile:first-of-type{border-top:none}
+  .pile h3{display:flex;align-items:baseline;gap:9px;margin:14px 0 8px}
+  .pile h3 .hint{font-size:11px;color:var(--faint);font-weight:400}
+
+  .jump{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px;
+    position:sticky;top:0;z-index:20;padding:8px 0;background:var(--bg)}
+  .jump button{color:var(--faint)}
+  .jump button b{color:var(--ink);margin-left:3px}
+  .jump button.lacking b{color:var(--warn)}
+
+  /* 理由和受眾，一塊兩行。標籤在上、欄位在下，因為兩者的長度差很多 ——
+     並排會讓短的那個看起來是附註。 */
+  .decide{display:grid;gap:9px;padding:12px 15px;margin-bottom:12px;
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    grid-template-columns:1fr 1fr;align-items:end}
+  .decide label{display:block;font-size:11px;color:var(--faint);
+    letter-spacing:.4px}
+  .decide input{display:block;width:100%;margin-top:4px;font:14px inherit;
+    color:var(--ink);background:#0b1017;border:1px solid var(--line);
+    border-radius:7px;padding:6px 9px}
+  .decide input:hover{border-color:#244055}
+  .decide input:focus{border-color:var(--accent);outline:none}
+  .decide input::placeholder{color:var(--faint);font-size:13px}
+  .decide > button{grid-column:1 / -1;justify-self:start}
+  @media (max-width:900px){ .decide{grid-template-columns:1fr} }
+
+
+  /* 狀態和動作，一塊。這一頁只有兩個真正的動作，而它們互斥 —— 素材不夠就
+     收集，夠了就寫。所以由 pile.ready 決定哪一顆是 primary，另一顆退成
+     tiny：兩顆一樣顯眼，等於沒有指出現在該做什麼。 */
+  .doing{border-radius:10px;margin:0 0 14px;overflow:hidden;
+    border:1px solid var(--line);background:var(--panel)}
+  .doing.ok{border-color:#2c5a45}
+  .doing.no{border-color:#5c4a2a}
+  .doing .verdict{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:11px 15px;font-size:13px}
+  .doing.ok .verdict{background:#12291f;color:var(--ok)}
+  .doing.no .verdict{background:#241a14;color:var(--warn)}
+  /* 收集留下的警告。在判定那一行底下，同一個框裡 —— 它們講的是同一件事
+     （這堆素材的狀況），分成兩個框會讀成兩個警報。 */
+  .doing .trouble{border-top:1px solid var(--line);padding:9px 15px;
+    font-size:12px;color:var(--dim);line-height:1.7}
+  .doing .trouble div{overflow-wrap:anywhere}
+  /* 動作列貼在畫面底部，跟短影音那邊的「壓片」同一個處置。這一頁的素材堆
+     很長，滑到一半決定要寫不該先捲回頂端。
+     #jobBar 跑起來的時候在它下面（fixed、z-index 50），所以讓開。 */
+  /* #paper 是 overflow:auto，所以 sticky 貼的是它的底部而不是視窗底部 ——
+     而它有 padding-bottom:60px，那 60px 就把動作列頂上去了。短影音那邊能
+     work 是因為順手加了這一行，這裡漏了。 */
+  #paper{padding-bottom:0}
+  body:has(#jobBar:not([hidden])) .acts{bottom:46px}
+  .acts{position:sticky;bottom:0;z-index:15;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    margin:16px 0 0;padding:11px 15px;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px 10px 0 0;border-bottom:none;
+    /* 貼底的東西下面還有內容在捲，所以底色要不透明，而且要蓋掉自己下緣以外
+       的那一條 —— 圓角外面那兩個小三角會漏出下面的字。 */
+    box-shadow:0 -8px 16px -8px #0008, 0 12px 0 0 var(--panel)}
+  .acts input{flex:1;min-width:220px}
+  .acts .gap{flex:1 0 12px}
+  .acts select{font:13px inherit;color:var(--ink);background:#0b1017;
+    border:1px solid var(--line);border-radius:7px;padding:5px 9px;
+    cursor:pointer}
+  .acts select:hover{border-color:var(--accent)}
+  /* 公版說明和訊息各佔一整行，空的時候不佔位。 */
+  .acts .why,.acts .hint,.acts #note{flex:1 0 100%;font-size:11px;
+    color:var(--faint);margin:0}
+  .acts .why{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .acts .why:empty,.acts .hint:empty,.acts #note:empty{display:none}
+
+  /* Who has been heard. The point is not the count -- it is whether the
+     other side is in there at all, so an empty one is coloured, not just
+     small. Riding along on the verdict line because it answers the same
+     question: is this writable yet. */
+  .sides{display:flex;gap:5px;flex-shrink:0}
+  .sides i{font-style:normal;font-size:11px;color:var(--faint);
+    padding:2px 7px;border-radius:11px;background:#00000033;
+    border:1px solid transparent}
+  .sides i b{font:12px var(--mono);font-variant-numeric:tabular-nums;
+    color:var(--ink);margin-left:4px}
+  .sides i.none{border-color:#5c3a2a;background:#241a14}
+  .sides i.none b{color:var(--warn)}
+
+  h3{margin:24px 0 8px;font-size:13px;color:var(--dim);
+    display:flex;align-items:center;gap:8px}
+  h3 .count{font:11px var(--mono);color:var(--faint)}
+  h3 .count.lacking{color:var(--warn)}
+  h3 .hint{font-size:11px;color:var(--faint);font-weight:400;margin-left:auto}
+  .hunt{display:flex;gap:8px;margin-bottom:10px}
+  .hunt input{flex:1;font-size:13px}
+  /* Candidates, not material: clicking one is what keeps it. */
+  #caught .shelf figure{cursor:pointer}
+  #caught .shelf figure:hover{border-color:var(--ok)}
+  #caught .shelf figure.taken{opacity:.4;pointer-events:none}
+  /* 被判成無關的那幾列。淡掉、加一道橘邊、放一顆「算進來」—— 因為清單畫全
+     部，計數只算沒被判掉的，而畫面本來沒有任何線索說明差別。 */
+  .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;margin-bottom:7px;font-size:13px}
+  .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
+  /* 這一條是哪一種素材讀出來的。只在畫面上 —— prompt 裡靠出處自己的形狀
+     （「第 104 秒」對「〈標題〉」），不多送兩個字乘以四十二條。 */
+  .src .kind{display:inline-block;font-style:normal;margin-right:7px;
+    padding:0 6px;border-radius:9px;border:1px solid var(--line);
+    font-size:10px;line-height:16px}
+  .src .kind.vid{color:#7fd4ff;border-color:#2b4a5e}
+  .src .kind.rep{color:var(--ok);border-color:#2c5a45}
+  .src .kind.hmm{color:var(--warn);border-color:#5c4a2a}
+  .src .fact{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.7}
+  .lean{font-size:10px;padding:1px 7px;border-radius:99px;margin-left:6px;
+    border:1px solid var(--line);color:var(--dim)}
+  .lean.left{color:#7fb4ff;border-color:#2d4a70}
+  .lean.right{color:#ff9d7f;border-color:#6b3f2e}
+  .lean.neutral{color:var(--ok);border-color:#2c5a45}
+  /* A lead is something seen in a channel listing: known to exist, not yet
+     fetched or read. Dashed, so it never reads as material already in hand. */
+  .src.lead{border-style:dashed;background:transparent}
+  .src.written{cursor:pointer;border-color:#2c5a45;background:#12291f}
+  .src.written:hover{border-color:var(--ok)}
+  .src.written b{font-size:15px;pointer-events:none}
+  .src.written .who{pointer-events:none}
+  .voice{font-size:12px;color:var(--dim);padding:6px 0;line-height:1.6;
+    border-top:1px solid #1c242e}
+  .voice .likes{font:11px var(--mono);color:var(--faint);margin-right:9px}
+  .empty{color:var(--faint);font-size:13px;padding:14px;text-align:center;
+    border:1px dashed var(--line);border-radius:9px}
+  /* ---- one script, laid out as it will be spoken ---- */
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th{text-align:left;font-size:11px;color:var(--faint);font-weight:500;
+    padding:0 10px 7px;border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;vertical-align:top;border-bottom:1px solid var(--line)}
+  tr:hover td{background:#161d25}
+  td.at{font:11px var(--mono);color:var(--faint);white-space:nowrap;width:5.4em}
+  td.say{font-size:15px;line-height:1.55}
+  /* The picture beside the line it belongs to: the two were chosen together
+     and should be read together. */
+  td.show{font-size:12px;color:var(--dim);width:30%}
+  /* The picture's own words, under the label the writer typed. When they
+     disagree the label is the one that is wrong, and this is where that
+     shows. */
+  td.show .grabbed{display:block;font:10px var(--mono);color:var(--faint);
+    line-height:1.4;margin-top:3px}
+  .seen-box.on{color:#5fcf9b;border-color:#2c5a45}
+  td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
+    display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
+  td.show{cursor:zoom-in}
+  .shelf figure{cursor:zoom-in}
+  td.show img.pic.drawn{object-fit:contain;background:#0d1b2a;
+    border:1px solid #22405c}
+  td.show .grabbed.bad{color:#ff8a72}
+  td.show img.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
+    border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
+  td.from{font-size:11px;color:var(--faint);width:11em}
+  td.from.ours{color:var(--accent)}
+  #note{font-size:13px;margin-top:14px}
+  #note.bad{color:var(--danger)}
+  #note.warn{color:var(--warn)}
 </style>
 <script defer src="/static/ask.js"></script>
 
