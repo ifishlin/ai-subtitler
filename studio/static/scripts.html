@@ -163,9 +163,19 @@
   .about input:focus,.about select:focus{border-color:var(--accent);outline:none}
   .about input::placeholder{color:var(--faint);font-size:13px}
   @media (max-width:900px){ .about{grid-template-columns:1fr} }
-  .film{display:flex;align-items:center;gap:10px;margin:12px 0}
+  /* 貼在畫面底部。逐句表有三十七列，而壓片是讀完之後才做的事 —— 讀到一半
+     想壓片不該先捲回頂端。#jobBar 跑起來的時候在它下面，所以留出空間。 */
+  /* 工作列在跑的時候，壓片那一列讓開。#jobBar 是 fixed 貼在視窗底、z-index
+     50，會整條蓋住它 —— 而那正好是最需要看到「壓片中」旁邊那行字的時候。 */
+  body:has(#jobBar:not([hidden])) .film{bottom:46px}
+  .film{position:sticky;bottom:0;z-index:15;
+    display:flex;align-items:center;gap:10px;
+    margin:14px 0 0;padding:11px 15px;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px 10px 0 0;border-bottom:none}
   .film .grow{flex:1}
   .film .hint{font:11px var(--mono);color:var(--faint)}
+  #paper{padding-bottom:0}
 
   #pending{display:flex;align-items:center;gap:12px;margin:12px 0;
     padding:9px 14px;border-radius:9px;background:#2a2415;
@@ -905,14 +915,6 @@ async function showScript(name) {
          rendered is the one check nothing else can do: two of the faults in
          this project were only ever visible with all the shots laid out at
          once. -->
-    <div class="film">
-      <button id="btnBuild" class="tiny primary">壓片</button>
-      <span id="filmWhere" class="hint">還沒壓</span>
-      <span class="grow"></span>
-      <button id="btnSheet" class="tiny" hidden>看接觸表</button>
-      <button id="btnWatch" class="tiny" hidden>看片</button>
-    </div>
-
     <div id="pending" hidden>
       <span id="pendingCount"></span>
       <span class="hint">切換到別的文案或回題目，這些改動會被丟掉</span>
@@ -984,7 +986,19 @@ async function showScript(name) {
           <td class="from ${line.from === "觀點" ? "ours" : ""}">${
             escapeHTML(line.from || "")}</td>
         </tr>`).join("")}</tbody>
-    </table>`;
+    </table>
+
+    <!-- 壓片在最後，因為它是最後做的事。本來夾在「量出來的東西」和逐句表中
+         間 —— 出口擺在還沒讀完的地方。
+         貼在畫面底部，因為這張表有三十七列：讀到第二十列想壓片，不該為了按
+         一顆鈕先捲回去。 -->
+    <div class="film">
+      <button id="btnBuild" class="primary">壓片</button>
+      <span id="filmWhere" class="hint">還沒壓</span>
+      <span class="grow"></span>
+      <button id="btnSheet" class="tiny" hidden>看接觸表</button>
+      <button id="btnWatch" class="tiny" hidden>看片</button>
+    </div>`;
   // 回素材是換一頁了，所以沒存的修改一定會丟 —— 先問。
   STATE.topic = made.topic || null;
   $("btnBackTopic").onclick = async () => {
