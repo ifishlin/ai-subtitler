@@ -302,6 +302,28 @@ def prompt_parts(name: str = "", house: str = "argue") -> dict[str, Any]:
     return {**got, "topics": [one["name"] for one in known]}
 
 
+@app.get("/api/prompt-raw")
+def prompt_raw(name: str, house: str = "argue") -> dict[str, Any]:
+    """送去寫文案的那一整串文字，原樣。
+
+    `/api/prompt-parts` 回的是拆好的一節一節 —— 那是我整理過的版本。這一支
+    回接起來的原文，因為要確認「模型到底收到什麼」的時候，看的必須是那一串
+    本身，不是任何人切過的樣子。
+
+    公版是參數而不是預設，因為 prompt 的前半整份由它決定（argue 送
+    script.md，story 送另一份）。用畫面上當下選的那一個，否則看到的不是
+    按下去會送出的。
+    """
+    from core import brief as brief_module
+    try:
+        text = brief_module.prompt(name, house)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    except RuntimeError as error:            # prompt 裡有 rules 填不出來的名字
+        raise HTTPException(400, str(error)) from error
+    return {"topic": name, "house": house, "text": text, "chars": len(text)}
+
+
 @app.get("/api/gates")
 def list_gates() -> dict[str, Any]:
     """Every gate, its docstring, and how each script stands against it.

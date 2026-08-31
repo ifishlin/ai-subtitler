@@ -140,6 +140,29 @@
   /* The house styles, edited as what they are: data. Every field was a
      constant somewhere, and `why` is the field that matters -- a number with
      no reason attached gets changed by whoever finds it inconvenient. */
+  /* 送出去的原文。一萬五千字，所以是一整片可滾動的覆蓋層 —— 塞在版面裡
+     會把素材堆推到看不見的地方。 */
+  #raw{position:fixed;inset:0;background:#000d;z-index:70;display:flex;
+    align-items:stretch;justify-content:center;padding:24px}
+  #raw[hidden]{display:none}
+  .raw-inner{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:12px 14px 14px;width:min(96vw,1060px);
+    display:flex;flex-direction:column;gap:9px;min-height:0}
+  .raw-bar{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+  .raw-bar b{font-size:14px}
+  .raw-bar .gap{flex:1}
+  .raw-bar a{font:11px var(--mono);color:var(--accent);text-decoration:none}
+  .raw-bar a:hover{text-decoration:underline}
+  /* 跳點。六十四行照片清單會把別的東西擋在螢幕外，而那幾行 ## 標題是真的
+     送出去的字，所以拿它們當目錄不用另外編一份。 */
+  .raw-jump{display:flex;gap:6px;flex-wrap:wrap}
+  .raw-jump button{font:11px var(--mono);padding:2px 9px;color:var(--dim)}
+  #rawText{flex:1;min-height:0;overflow:auto;margin:0;white-space:pre-wrap;
+    font:12px/1.75 var(--mono);color:var(--dim);background:#00000030;
+    border-radius:9px;padding:13px 15px}
+  /* 標題染色。摺疊會讓它不再是原文，染色不會。 */
+  #rawText b.h{color:#7fd4ff;font-weight:600}
+
   #houses{position:fixed;inset:0;background:#000d;z-index:70;display:flex;
     align-items:flex-start;justify-content:center;padding:32px 24px;overflow:auto}
   #houses[hidden]{display:none}
@@ -363,6 +386,24 @@
   <span id="jobNote"></span>
   <div class="job-track"><i id="jobFill"></i></div>
   <span id="jobClock"></span>
+</div>
+
+<!-- 送出去的那一整串文字，原樣。
+     markup 放在靜態這裡而不是由 render 產生，因為 checkjs 的規則是對的：
+     頂層 $("id") 只能摸這一頁真的有的元素。 -->
+<div id="raw" hidden>
+  <div class="raw-inner">
+    <div class="raw-bar">
+      <b id="rawWhat">送去寫文案的東西</b>
+      <span class="hint" id="rawSize"></span>
+      <span class="gap"></span>
+      <a id="rawParts" href="/prompt">看分節和佔比</a>
+      <button id="rawCopy" class="tiny">複製</button>
+      <button id="rawClose" class="tiny">關閉</button>
+    </div>
+    <div class="raw-jump" id="rawJump"></div>
+    <pre id="rawText"></pre>
+  </div>
 </div>
 
 <div id="houses" hidden>
@@ -798,11 +839,55 @@ async function open(name) {
       </select>
       <button id="btnWrite" class="${pile.ready ? "primary" : "tiny"}"
         ${pile.ready ? "" : "disabled"}>產生文案</button>
+      <!-- 按下去之前先看得到會送什麼。它不受 ready 影響 —— 素材不齊的時候
+           最需要看的就是那一份缺什麼。 -->
+      <button id="btnShow" class="tiny" title="看送去給模型的那一整串文字"
+        >show</button>
       ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">不齊也要寫</button>'}
       <div id="whyHouse" class="why"></div>
       <div id="termsNote" class="hint"></div>
       <div id="note"></div>
     </div>`;
+
+  /* 送去給模型的那一整串文字，原樣攤開。
+     公版讀畫面上當下選的那一個，跟 write() 同一個來源 —— 看到的必須是按
+     下去會送出的那一份，不然這顆鈕反而會騙人。 */
+  const showRaw = async (topic) => {
+    const house = $("writeAs") ? $("writeAs").value : "argue";
+    $("rawText").textContent = "組裝中…";
+    $("rawJump").innerHTML = "";
+    $("raw").hidden = false;
+    let got;
+    try {
+      got = await api("GET", "/api/prompt-raw?name="
+        + encodeURIComponent(topic) + "&house=" + encodeURIComponent(house));
+    } catch (error) {
+      $("rawText").textContent = "組不出來：" + error.message;
+      return;
+    }
+    $("rawWhat").textContent = topic + "　·　" + house;
+    $("rawSize").textContent = got.chars.toLocaleString() + " 字";
+    $("rawParts").href = "/prompt?name=" + encodeURIComponent(topic);
+
+    /* 標題染色 + 當目錄。那幾行 ## 是真的送出去的字，所以不用另外編一份
+       目錄；六十四行照片清單也就不會把別的東西擋在螢幕外。 */
+    const heads = [];
+    $("rawText").innerHTML = got.text.split("\n").map((line, index) => {
+      if (line.startsWith("## ") || line.startsWith("# ")) {
+        heads.push({at: index, name: line.replace(/^#+\s*/, "").split("　")[0]});
+        return `<b class="h" id="rawH${index}">${escapeHTML(line)}</b>`;
+      }
+      return escapeHTML(line);
+    }).join("\n");
+    $("rawJump").innerHTML = heads.map((one) =>
+      `<button data-to="rawH${one.at}">${escapeHTML(one.name)}</button>`).join("");
+    $("rawJump").querySelectorAll("button").forEach((button) => {
+      button.onclick = () => {
+        const target = $(button.dataset.to);
+        if (target) target.scrollIntoView({block: "start", behavior: "smooth"});
+      };
+    });
+  };
 
   const write = async (anyway) => {
     $("note").className = "";
@@ -1044,6 +1129,7 @@ async function open(name) {
       watchJob(() => open(name));
     } catch (error) { told('出錯了', error.message); }
   };
+  if ($("btnShow")) $("btnShow").onclick = () => showRaw(name);
   if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
   if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
 }
@@ -1130,6 +1216,24 @@ $("paper").addEventListener("click", (event) => {
   const shelf = event.target.closest(".shelf [data-shot]");
   if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }
 });
+
+/* 原文那一片的關閉和複製。這三個元素都在靜態 markup 裡，所以頂層摸得到。 */
+$("rawClose").onclick = () => { $("raw").hidden = true; };
+/* 背景點一下也關。一萬五千字的覆蓋層蓋滿整個畫面，找不到那顆鈕的時候
+   點旁邊是本能。 */
+$("raw").onclick = (event) => {
+  if (event.target === $("raw")) $("raw").hidden = true;
+};
+$("rawCopy").onclick = async () => {
+  try {
+    await navigator.clipboard.writeText($("rawText").textContent);
+    $("rawCopy").textContent = "複製好了";
+  } catch (error) {
+    // 剪貼簿在非 https 的來源上會被拒。說出來，不要靜靜地什麼都沒發生。
+    $("rawCopy").textContent = "複製不了（" + error.name + "）";
+  }
+  setTimeout(() => { $("rawCopy").textContent = "複製"; }, 1600);
+};
 
 $("btnNew").onclick = async () => {
   const name = $("newName").value.trim();
