@@ -314,7 +314,17 @@ def build(name: str, target: Path | None = None,
                            or rules_module.look("still_fit.default", "blur"),
                        tone=line.get("tone") or "cool")
             else:
-                _card(line["card"], seconds, piece, plate)
+                # The line's tone, unless the card names its own. Without this
+                # the two halves disagreed: `samey` counts tone runs as
+                # `card.tone or line.tone`, and the renderer read only
+                # `card.tone` -- so a script written cool → light → warm
+                # passed the gate as three sections and came out of the
+                # encoder as one. The still above has taken the line's tone
+                # all along, which is how the photographs and the cards ended
+                # up in different palettes in the same film.
+                _card({**line["card"],
+                       "tone": script_module.tone_of_line(line)},
+                      seconds, piece, plate)
         pieces.append(piece)
         if say:
             say(index + 1, len(measured["lines"]), line["say"])

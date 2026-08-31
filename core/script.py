@@ -442,6 +442,23 @@ def simplified(script: dict[str, Any]) -> list[dict[str, Any]]:
     return wrong
 
 
+def tone_of_line(line: dict[str, Any]) -> str:
+    """Which palette this shot is drawn in.
+
+    One expression, because there were two. `samey` counted tone runs as
+    `card.tone or line.tone`; the renderer read only `card.tone`. A script
+    written cool → light → warm passed the gate as three sections and came out
+    of the encoder as one flat blue, and nothing could have reported it: both
+    halves were behaving exactly as written.
+
+    A card may still name its own tone -- the ending sometimes wants to sit
+    apart from the section it is in -- but the line is the default and the
+    line is what the checks count.
+    """
+    card = line.get("card") or {}
+    return str(card.get("tone") or line.get("tone") or "cool")
+
+
 def samey(script: dict[str, Any]) -> list[dict[str, Any]]:
     """Runs of identical-looking shots.
 
@@ -475,7 +492,7 @@ def samey(script: dict[str, Any]) -> list[dict[str, Any]]:
         else:
             close(run, most, "卡片")
             run = [(index, kind)] if kind else []
-        tone = str(card.get("tone") or line.get("tone") or "cool")
+        tone = tone_of_line(line)
         if tone_run and tone_run[-1][1] == tone:
             tone_run.append((index, tone))
         else:

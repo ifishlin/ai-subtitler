@@ -10,7 +10,10 @@
         "seconds": 444,
         "outlet": "tagesschau",
         "lean": "neutral",
-        "doubt": true
+        "doubt": false,
+        "file": "assets/footage/萊比錫敘利亞家族犯罪/TnXbZWDBBB4.mp4",
+        "captions": "assets/footage/萊比錫敘利亞家族犯罪/TnXbZWDBBB4.de-orig.vtt",
+        "size": 14302397
       },
       {
         "title": "Russland ohne Putin? Militärexperte über Szenarien für mögliches Kriegsende ",
@@ -42,7 +45,7 @@
         "seconds": 149,
         "outlet": "FAZ",
         "lean": "centre-right",
-        "doubt": true
+        "doubt": false
       },
       {
         "title": "CLAN CRIME IN LEIPZIG: \"Someone should have noticed that!\" – Clan patriarch reportedly has 32 chi...",
@@ -50,7 +53,10 @@
         "seconds": 442,
         "outlet": "WELT",
         "lean": "right",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/萊比錫敘利亞家族犯罪/rUmBFAzS4Ig.mp4",
+        "captions": "assets/footage/萊比錫敘利亞家族犯罪/rUmBFAzS4Ig.de-orig.vtt",
+        "size": 25664666
       },
       {
         "title": "BERLIN: War between crime families – Clan violence escalates! Call for peace goes unheeded",
@@ -58,7 +64,10 @@
         "seconds": 166,
         "outlet": "WELT",
         "lean": "right",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/萊比錫敘利亞家族犯罪/y923LN82ekQ.mp4",
+        "captions": "assets/footage/萊比錫敘利亞家族犯罪/y923LN82ekQ.de.vtt",
+        "size": 14155242
       },
       {
         "title": "Corona: Intensivmediziner schweigen über die Intensivbetten ",

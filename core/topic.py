@@ -75,6 +75,30 @@ def media() -> dict[str, Any]:
 
 HOME = ("US", "EU")
 
+# Which caption tracks to ask YouTube for, per region. Not cosmetic: captions
+# are how frames and passages get chosen, so a video with none is a video this
+# project cannot cut. Nine German outlets were added and every download of
+# theirs reported 沒字幕 -- because the request said `en,en-orig` and the
+# videos are in German. They all had German auto-captions, and English machine
+# translations of them as well.
+#
+# Two names, never more. The comment further down explains why `en.*` was a
+# disaster: every extra track is another request, the rate limit arrives, and
+# yt-dlp abandons the video it had not downloaded yet. Asking for four German
+# tracks reproduced it exactly -- the captions arrived and the film did not.
+SUBTITLES = {
+    "DE": "de,en-de",
+}
+DEFAULT_SUBTITLES = "en,en-orig"
+
+
+def subtitle_langs(pile: dict[str, Any]) -> str:
+    """The caption tracks worth asking for, given where this topic is."""
+    for region in pile.get("regions") or ():
+        if region in SUBTITLES:
+            return SUBTITLES[region]
+    return DEFAULT_SUBTITLES
+
 
 def asked_of(pile: dict[str, Any], how: str) -> list[dict[str, Any]]:
     """Which outlets to ask about this topic, and why not always all of them.
@@ -309,7 +333,7 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
              # -- so a dozen subtitle requests go out in a row, the twelfth is
              # refused with 429, and yt-dlp abandons the video it had not yet
              # downloaded. Two names are wanted and both are English originals.
-             "--sub-langs", "en,en-orig",
+             "--sub-langs", subtitle_langs(load(name)),
              "--convert-subs", "vtt", "--no-warnings",
              # A missing caption track is not a reason to come back with no
              # video: the frames are still worth having, the video simply
