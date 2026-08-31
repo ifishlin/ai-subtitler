@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>送去寫文案的東西</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .pickrow{display:flex;gap:8px;align-items:center;margin:0 0 26px}
+  .pickrow select{font:14px inherit;color:var(--ink);background:var(--panel);
+    border:1px solid var(--line);border-radius:8px;padding:7px 10px;
+    cursor:pointer;max-width:100%}
+
+  .sec{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;margin-bottom:11px;
+    border-left:4px solid var(--accent)}
+  .sec.zero{border-left-color:var(--warn)}
+  .sec .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .sec .name{font-size:17px;font-weight:600}
+  .sec .cnt{font:12.5px var(--mono);color:var(--faint);margin-left:auto;
+    white-space:nowrap}
+  .sec .lead{color:var(--dim);font-size:13.5px;margin:8px 0 0;line-height:1.65}
+
+  /* 一條線表示這一節佔整份多少。數字看不出比例，線看得出。 */
+  .share{height:6px;background:#00000033;border-radius:4px;margin:11px 0 0}
+  .share i{display:block;height:100%;border-radius:4px;background:var(--accent)}
+  .sec.zero .share i{background:var(--warn)}
+
+  .sec details{margin-top:11px}
+  .sec summary{cursor:pointer;color:var(--faint);font-size:12.5px;
+    user-select:none;list-style:none}
+  .sec summary::-webkit-details-marker{display:none}
+  .sec summary:before{content:"▸ ";color:var(--accent)}
+  .sec details[open] summary:before{content:"▾ "}
+  .sec summary:hover{color:var(--accent)}
+  .sec pre{white-space:pre-wrap;font:12.5px/1.75 var(--mono);
+    color:var(--dim);background:#00000026;border-radius:9px;
+    padding:13px 15px;margin:10px 0 0;overflow-x:auto;
+    max-height:440px;overflow-y:auto}
+
+  .callout{background:var(--panel);border:1px solid var(--line);
+    border-left:4px solid var(--warn);border-radius:12px;
+    padding:15px 18px;margin:0 0 26px}
+  .callout b{display:block;font-size:16px;margin-bottom:6px}
+  .callout p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.65}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>送去寫文案的東西</h1>
+  <p class="under">模型收到的就是一份文字。這是<b>真的那一份</b>。</p>
+
+  <div class="pickrow"><select id="pick"></select>
+    <span class="note" id="size"></span></div>
+
+  <div id="callout"></div>
+
+  <h2>素材</h2>
+  <div id="what"></div>
+
+  <h2>寫法的規定</h2>
+  <div id="how"></div>
+
+  <h2>模型要交回來的</h2>
+  <div class="sec">
+    <div class="top"><span class="name">一份 JSON，每句一列</span></div>
+    <pre>{"say":  "台詞"
+ "role": "起｜承｜轉｜合"
+ "from": "出處　或　觀點"
+ "pic":  "P18"　或　"clip": "C3"</pre>
+    <p class="lead">畫面用<b>編號</b>指定，不寫檔名。</p>
+  </div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+/* 一句話講「這一節是什麼」。 */
+const LEAD = {
+  "（開頭）": "題目、說給誰聽、挑這題的理由。",
+  "事實（每一條都要指得回出處）":
+    "讀影片字幕整理出來的。文案每一句話的根據。",
+  "影片段落　—— 起訖只能從這裡挑，它們已經落在句子邊界上":
+    "挑過的，不是整份字幕。每支最多 4 段、每段約 5 秒。"
+    + "給的是那段說了什麼，不是那段畫面長什麼樣。",
+  "照片　—— term 是我們要的，caption 是實際拿到的。兩行不一致就是選錯了":
+    "模型沒看過任何一張圖，只看得到兩行字：我們搜什麼、來源說這是什麼。",
+  "鄉民反應": "受眾自己的講法。語氣從這裡來。",
+  "這幾支影片不能用字幕挑畫面": "沒有字幕的那幾支，不能拿來截圖。",
+};
+
+function section(one, share) {
+  const zero = one.chars === 0;
+  return `
+  <div class="sec ${zero ? "zero" : ""}">
+    <div class="top">
+      <span class="name">${esc(one.title.split("　")[0])}</span>
+      <span class="cnt">${one.items ? one.items + " 項　·　" : ""}佔 ${
+        (share * 100).toFixed(0)}%</span>
+    </div>
+    ${LEAD[one.title] ? `<p class="lead">${esc(LEAD[one.title])}</p>` : ""}
+    <div class="share"><i style="width:${(share * 100).toFixed(1)}%"></i></div>
+    ${zero
+      ? '<p class="lead"><b>這一節是空的。</b></p>'
+      : `<details><summary>看真正送出去的字</summary>
+          <pre>${esc(one.text)}</pre></details>`}
+  </div>`;
+}
+
+async function load() {
+  const wanted = new URLSearchParams(location.search).get("name") || "";
+  const back = await fetch("/api/prompt-parts"
+    + (wanted ? "?name=" + encodeURIComponent(wanted) : ""));
+  if (!back.ok) throw new Error((await back.text()).slice(0, 200));
+  const d = await back.json();
+
+  $("pick").innerHTML = (d.topics || []).map((one) =>
+    `<option value="${esc(one)}"${one === d.topic ? " selected" : ""}>${
+      esc(one)}</option>`).join("");
+  $("pick").onchange = () => {
+    location.search = "?name=" + encodeURIComponent($("pick").value);
+  };
+
+  const what = d.what || [];
+  const total = d.chars || 1;
+  $("size").textContent = `整份 ${d.chars} 字`;
+
+  const blank = what.filter((one) => one.chars === 0);
+  $("callout").innerHTML = blank.length
+    ? `<div class="callout"><b>${blank.length} 節是空的：${
+        blank.map((one) => esc(one.title.split("　")[0])).join("、")}</b>
+       <p>模型看到標題底下什麼都沒有。它照樣會寫，只是會寫得很短，
+          或者靠自己的記憶補。</p></div>`
+    : "";
+
+  $("what").innerHTML = what.map((one) =>
+    section(one, one.chars / total)).join("");
+  $("how").innerHTML = section(
+    {title: "公版的寫法規定", chars: d.how.chars, items: 0, text: d.how.text},
+    d.how.chars / total);
+}
+
+load().catch((error) => {
+  $("callout").innerHTML = '<div class="callout"><b>讀不到</b><p>'
+    + esc(error.message) + "</p></div>";
+});
+</script>
+</body>
+</html>

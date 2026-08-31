@@ -1,0 +1,332 @@
+{
+  "view": "川普改湖名只是政治秀，真正花錢的卻是你我日常的地圖與導航",
+  "tone": "詼諧",
+  "lines": [
+    {
+      "say": "川普說要換湖名",
+      "role": "起",
+      "show": "clip C1",
+      "from": "CNN",
+      "seconds": 1.9
+    },
+    {
+      "say": "安大略湖會叫『湖美利堅』",
+      "role": "起",
+      "show": "clip C3",
+      "from": "CNN",
+      "seconds": 2.61
+    },
+    {
+      "say": "指令已送內政部",
+      "role": "起",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "內政部更新地名"
+      },
+      "from": "CNN",
+      "seconds": 1.9
+    },
+    {
+      "say": "湖的大半在美國",
+      "role": "起",
+      "show": "pic P16",
+      "from": "CNN",
+      "seconds": 1.9
+    },
+    {
+      "say": "川普說加拿大占貿易便宜",
+      "role": "起",
+      "show": "clip C4",
+      "from": "Fox News",
+      "seconds": 2.39
+    },
+    {
+      "say": "還要對加拿大汽車課高關稅",
+      "role": "承",
+      "show": "clip C10",
+      "from": "Bloomberg",
+      "seconds": 2.61
+    },
+    {
+      "say": "改名是談判的‘槓桿’",
+      "role": "承",
+      "show": "clip C8",
+      "from": "Bloomberg",
+      "seconds": 2.17
+    },
+    {
+      "say": "美國地圖公司已開始更新",
+      "role": "承",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "地圖公司費用上升"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "say": "GPS系統要換資料庫",
+      "role": "承",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "導航費用增"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "但這只影響美國用戶",
+      "role": "轉",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "美國才會看到"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "加拿大人仍用『安大略湖』",
+      "role": "合",
+      "show": "pic P16",
+      "from": "Deutsche Welle",
+      "seconds": 2.61
+    },
+    {
+      "say": "改名不改任何關稅",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "關稅不變"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "所以名字只是秀肌肉",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "政治秀"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "真正花錢的是地圖公司",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "成本落在你身上"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "開車時 GPS 顯新湖名",
+      "role": "合",
+      "show": "clip C5",
+      "from": "Fox News",
+      "seconds": 2.17
+    },
+    {
+      "say": "更新軟體要付費",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "APP 付費"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "旅遊指南也要重新印",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "旅遊書貴"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "結果是你口袋多一筆",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "消費者付錢"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "而川普只得到一條新聞",
+      "role": "合",
+      "show": "clip C7",
+      "from": "Bloomberg",
+      "seconds": 2.17
+    },
+    {
+      "say": "怪事背後的真相",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "別被表象騙"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "加拿大說是 trolling",
+      "role": "合",
+      "show": "clip C12",
+      "from": "Bloomberg",
+      "seconds": 2.83
+    },
+    {
+      "say": "卡尼說湖名不會改",
+      "role": "合",
+      "show": "clip C13",
+      "from": "Deutsche Welle",
+      "seconds": 1.9
+    },
+    {
+      "say": "美國官員說已下令",
+      "role": "合",
+      "show": "clip C1",
+      "from": "CNN",
+      "seconds": 1.9
+    },
+    {
+      "say": "內政部已發布新資料",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "資料庫更新"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "美國地圖書店已收訂單",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "訂單激增"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "每本地圖多賣五美元",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "價格上漲"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "旅客買新地圖才不迷路",
+      "role": "合",
+      "show": "pic P14",
+      "from": "P14",
+      "seconds": 2.17
+    },
+    {
+      "say": "但大多數人用手機",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "手機導航"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "手機更新要等半年",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "延遲更新"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "期間仍顯舊名",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "仍顯舊名"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "等到更新時，你已付過關稅",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "關稅仍在"
+      },
+      "from": "觀點",
+      "seconds": 2.61
+    },
+    {
+      "say": "名字變了，口袋仍空",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "空口袋"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "所以，別被奇怪的標題迷住",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "看清本質"
+      },
+      "from": "觀點",
+      "seconds": 2.61
+    },
+    {
+      "say": "看到新湖名，想想誰在賺",
+      "role": "合",
+      "show": "card",
+      "card": {
+        "kind": "word",
+        "title": "誰在賺"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人"
+}

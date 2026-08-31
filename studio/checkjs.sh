@@ -33,7 +33,13 @@ PY
     sed -n '2,6p' /tmp/_err | sed 's/^/       /'
     bad=1
   fi
-  native=$(grep -o '\balert(\|\bconfirm(\|\bprompt(' /tmp/_page.mjs | wc -l | tr -d ' ')
+  # `\bprompt(` 也會咬到 `brief.prompt()` —— `.` 是非字元，所以 `\b` 在它
+  # 後面成立。/material 那一頁在說明文字裡提到 brief.prompt()，就被報成一個
+  # 原生對話框。誤判的檢查最後會被關掉，所以規則要準：前面不能是點或字元，
+  # 但 `window.alert(` 那種真的要抓。
+  native=$( { grep -oE '(^|[^.[:alnum:]_$])(alert|confirm|prompt)\(' /tmp/_page.mjs
+              grep -oE '\bwindow\.(alert|confirm|prompt)\(' /tmp/_page.mjs
+            } | wc -l | tr -d ' ')
   if [ "$native" != "0" ]; then
     echo "     ⚠ 還有 $native 個瀏覽器原生對話框，改用 confirmed()／asked()／told()"; bad=1
   fi

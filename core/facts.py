@@ -11,12 +11,27 @@
 三個模型（30B、32B、117B）在同一個題目上都只寫出四到八句而不是三十三句，
 因為它們手上只有二十三個標題。不是能力問題，是**沒有東西可寫**。
 
-## 為什麼讀字幕，不讀報導內文
+## 兩種素材，兩種讀法
 
-報導從 Google News RSS 回來只有標題和一個轉址，沒有內文。影片字幕是這條
-路上唯一拿得到的**完整句子**，而且它帶著兩樣寫作需要的東西：說話的是哪一家、
-第幾秒說的。所以事實的出處指得回「The Economist 第 66 秒」，而不只是
-「The Economist」。
+```
+影片   字幕      出處是「CNN 第 104 秒」      回得去看那一刻
+報導   正文      出處是「CNBC〈標題〉」        回得去看那一篇
+```
+
+一開始只讀字幕，因為報導從 Google News RSS 回來只有標題和一個轉址。
+後來 `core/wiring.py` 那一頁把結果算出來：**收了二十三篇，一個字都沒有進到
+prompt 裡** —— 報導能擋你（篇數、平衡檢查），不能幫你。所以 `core/article.py`
+去把正文抓回來，這裡多了一支 `ask_report()`。
+
+報導比影片重要的地方在**立場**：二十三篇的分布是左 6、中立 16、右 5，而影片
+只有五支。事實全部來自五支影片的時候，同一件事會重複四次而不會互相矛盾，
+於是 `script.md` 要的「找出他們彼此矛盾、或都沒提的地方」沒有材料可用。
+
+## 一支一支問
+
+不管字幕還是正文，都是一個來源一次呼叫。混在一起問，模型會把 CNN 說的話掛
+在 Reuters 名下 —— 而**假出處沒有任何門攔得住**，成品上就是一行看起來完全
+合理的字。
 """
 from __future__ import annotations
 
@@ -31,6 +46,9 @@ from core import rules as rules_module
 # 的量，而且長了它就開始跳著讀。一支一支問，答案短、可歸屬、可重試。
 MOST_CHARS = rules_module.at("facts.most_chars", 6000)
 MOST_PER_VIDEO = rules_module.at("facts.most_per_video", 6)
+# 報導可以多一點：一篇文章比一支新聞影片講得完整，而且報導的價值在立場，
+# 一家的說法常常要兩三條才說得清楚。
+MOST_PER_REPORT = rules_module.at("facts.most_per_report", 5)
 
 
 def captions_of(video: dict[str, Any]) -> Path | None:
@@ -72,23 +90,42 @@ def said_in(video: dict[str, Any]) -> str:
 
 
 def in_traditional(words: str) -> str:
-    """把簡體字換成繁體。
+    """把簡體字換成繁體，**一個字一個字換**。
 
     prompt 已經要求繁體，而二十條裡還是有一條夾著「经济」。要求是機率，換字
-    是必然 —— 能用程式做完的事不要留給模型。只換字不換詞（`s2t` 而不是
-    `s2twp`），因為詞彙表會動到人名和機構名。
+    是必然 —— 能用程式做完的事不要留給模型。
+
+    ## 為什麼不整句丟給 opencc
+
+    第一版就是那樣寫的，而它**弄壞了本來正確的繁體**：
+
+    ```
+    進去   電價的上漲並非由需求引起，而是由供應側的限制造成
+    出來   ……由供應側的限製造成
+    ```
+
+    opencc 的詞彙規則看到「制造」就換成「製造」，不管那個「制」屬於前面的
+    「限制」。s2t、s2tw、s2twp 三個都一樣，而且**對已經是繁體的輸入也會做**。
+
+    所以改成逐字：先用 `script._is_simplified()` 問這個字是不是簡體寫法，
+    只有是的才換，而且單獨換一個字 —— 一個字沒有上下文，詞彙規則咬不到。
+    判斷簡體用的是既有那一支，`simplified` 門和這裡叫同一個函式，不會有
+    兩套說法。
 
     這一步在這裡而不是在文案那一關：`simplified` 門擋得住簡體的台詞，但它
     退回的是整份文案，而錯是在事實進來的時候發生的。
     """
     try:
-        import opencc
+        import opencc                         # noqa: F401
     except ImportError:                       # 沒裝就原樣過，門還在後面
         return words
+    from core import script as script_module
     global _CONVERT
     if _CONVERT is None:
         _CONVERT = opencc.OpenCC("s2t")
-    return _CONVERT.convert(words)
+    return "".join(_CONVERT.convert(char)
+                   if script_module._is_simplified(char) else char
+                   for char in words)
 
 
 _CONVERT = None
@@ -157,11 +194,98 @@ def ask_one(topic: str, video: dict[str, Any], say=None) -> list[dict[str, str]]
     return out
 
 
+_SAYS = "指出|認為|報導|表示|寫道|提到|說"
+
+
+def without_self_attribution(said: str, outlet: str, where: str) -> str:
+    """把句首「CNBC指出，」這種自我指涉剝掉。
+
+    出處已經有一整欄了，句子裡再寫一次是重複；而模型有時候會把整個
+    「CNBC〈AI data center 'frenzy' 〉指出，」搬到句首，那一串在畫面上就是噪音。
+
+    只剝**這一篇自己的**媒體名。「SemiAnalysis認為，」、「Counterpoint
+    Research 的研究員 Marc Einstein 認為，」要留著 —— 那是文章裡引述的別人，
+    也正是報導最有價值的部分（誰在反駁誰、誰的算法不同）。剝掉它們會把立場
+    變成沒有主人的斷言。
+    """
+    import re
+    for head in (where, outlet):
+        if not head:
+            continue
+        pattern = rf"^{re.escape(head)}\s*(?:{_SAYS})?\s*[，,：:]\s*"
+        trimmed = re.sub(pattern, "", said)
+        if trimmed != said and trimmed:
+            return trimmed
+    return said
+
+
+def ask_report(topic: str, report: dict[str, Any],
+               say=None) -> tuple[list[dict[str, str]], str]:
+    """問一篇報導說了哪幾件事。回傳（事實, 抓不到的原因）。
+
+    跟 `ask_one()` 幾乎一樣，差別只在兩件事：素材是正文而不是字幕，出處寫成
+    「CNBC〈標題〉」而不是「CNBC 第 104 秒」—— 一篇文章沒有秒數，硬編一個
+    出來就是假的，而假出處沒有任何門攔得住。
+
+    報導比影片重要的地方在**立場**。二十三篇的分布是左 6、中立 16、右 5，
+    而影片只有五支 —— `script.md` 要的「找出他們彼此矛盾的地方」只有在這裡
+    才有材料。事實全部來自五支影片的時候，同一件事會重複四次，不會矛盾。
+    """
+    from core import article as article_module
+    from core import writer as writer_module
+
+    words, why, _ = article_module.text_of(topic, report)
+    if not words:
+        return [], why
+
+    outlet = report.get("outlet", "")
+    title = str(report.get("title") or "")[:24]
+    where = f"{outlet}〈{title}〉" if title else outlet
+    language = rules_module.at("language.name", "繁體中文（台灣用語）")
+    asking = (
+        f"題目：{topic}\n"
+        f"這是 {outlet} 的一篇報導，標題是〈{report.get('title', '')}〉。\n\n"
+        f"{words}\n\n"
+        f"**這篇報導講了哪幾件跟題目有關的事？**\n\n"
+        f"一條一句話，最多 {MOST_PER_REPORT} 條。要求：\n"
+        f"- **一律用{language}**。原文是英文就翻譯，不要照抄，一個簡體字都不行\n"
+        "- 只寫這篇文章裡真的寫過的。**不要補你知道的事**，也不要推論\n"
+        "- 有數字就把數字寫進去\n"
+        "- 這一家的**立場和說法**比事件本身有用："
+        "如果它跟別人算法不同、或它在反駁什麼，那一條要寫出來\n"
+        "- 跟題目無關的段落跳過，寧可少寫\n"
+        f'- `from` 一律寫「{where}」\n\n'
+        '只輸出 JSON：{"facts": [{"say": "…", "from": "…"}]}')
+    if say:
+        say(0, 1, f"讀 {outlet} 的報導")
+    said, _ = writer_module.ask(asking, None)
+    got = writer_module.read(said)
+
+    out = []
+    for one in (got.get("facts") or [])[:MOST_PER_REPORT]:
+        if not isinstance(one, dict):
+            continue
+        words_said = str(one.get("say") or "").strip()
+        if not words_said:
+            continue
+        # 出處一律用程式組的那一份，不用模型回的。它會把標題抄錯、抄長、或
+        # 只寫媒體名 —— 而這一欄要指得回一篇真的文章。
+        out.append({"say": without_self_attribution(
+            in_traditional(words_said), outlet, where), "from": where})
+    return out, ""
+
+
 def gather(name: str, say=None) -> dict[str, Any]:
-    """讀完這個題目所有有字幕的影片，把事實加進去。
+    """讀完影片的字幕和報導的正文，把事實加進去。
 
     加而不是換：既有的事實可能是人寫的，而人寫的那幾條通常是最重要的。
     重複用 `say` 比對 —— 同一句話兩家都說過的時候，留先來的那一條。
+
+    影片和報導在同一支函式裡，因為對用的人來說那是一件事：**把素材讀成
+    可以寫的東西**。分成兩顆按鈕就變成他要記得兩件事都要按，而這個專案
+    違反過的規則全部是「要記得去做某個動作」那一類。
+
+    破壞性的動作放最後：全部讀完、收齊、才寫進紀錄。中途失敗只損失時間。
     """
     from core import topic as topic_module
     pile = topic_module.load(name)
@@ -170,9 +294,14 @@ def gather(name: str, say=None) -> dict[str, Any]:
 
     videos = [one for one in topic_module.settled(pile, "videos")
               if captions_of(one)]
-    for index, video in enumerate(videos, start=1):
+    reports = topic_module.settled(pile, "reports")
+    steps = len(videos) + len(reports)
+    step = 0
+
+    for video in videos:
+        step += 1
         if say:
-            say(index, len(videos), f"讀 {video.get('outlet', '')} 的字幕")
+            say(step, steps, f"讀 {video.get('outlet', '')} 的字幕")
         try:
             got = ask_one(name, video, None)
         except Exception as error:                                # noqa: BLE001
@@ -186,13 +315,49 @@ def gather(name: str, say=None) -> dict[str, Any]:
                 have.add(one["say"])
                 fresh.append(one)
 
+    # 報導。抓不到正文是常態（付費牆、擋機器人），所以它不讓整輪停下來 ——
+    # 但每一篇為什麼抓不到都要說出來，而且要寫進檔案。上一次那句 ⚠ 只活在
+    # 記憶體裡，重啟伺服器就沒了。
+    unread, read_ok = [], 0
+    for report in reports:
+        step += 1
+        if say:
+            say(step, steps, f"讀 {report.get('outlet', '')} 的報導")
+        try:
+            got, why = ask_report(name, report, None)
+        except Exception as error:                                # noqa: BLE001
+            raise RuntimeError(f"問不到模型：{error}") from error
+        if why:
+            unread.append(f"{report.get('outlet', '')}：{why}")
+            continue
+        read_ok += 1
+        asked += 1
+        if not got:
+            empty.append(f"{report.get('outlet', '')}（報導）")
+        for one in got:
+            if one["say"] not in have:
+                have.add(one["say"])
+                fresh.append(one)
+
     pile = topic_module.load(name)
     pile["facts"] = topic_module.facts_of(pile) + fresh
+    # 警告寫進檔案，不只寫進工作日誌。看得到的地方才算報告過。
+    trouble = list((pile.get("gathered") or {}).get("trouble") or [])
+    trouble = [one for one in trouble if not one.startswith("讀不到正文")]
+    if unread:
+        trouble.append(f"讀不到正文 {len(unread)} 篇：{'；'.join(unread)}")
+    if reports and not read_ok:
+        trouble.append(f"{len(reports)} 篇報導一篇都讀不到正文")
+    pile.setdefault("gathered", {})["trouble"] = trouble
     topic_module.save(name, pile)
+
     return {"asked": asked, "added": len(fresh),
             "total": len(pile["facts"]),
-            # 讀了 N 支、拿回 0 條要說出來。這個專案最貴的失敗就是靜靜回報零。
+            "videos_read": len(videos),
+            "reports_read": read_ok,
+            # 讀了 N 個、拿回 0 條要說出來。這個專案最貴的失敗就是靜靜回報零。
             "nothing_from": empty,
+            "without_text": unread,
             "without_captions": [one.get("outlet", "") for one
                                  in topic_module.settled(pile, "videos")
                                  if not captions_of(one)]}

@@ -1125,6 +1125,146 @@
     {
       "say": "俄亥俄、維吉尼亞已對大型資料中心另訂費率",
       "from": "CNBC"
+    },
+    {
+      "say": "AI 資料中心需要大量的電力來運行。",
+      "from": "Fox Business 第 21 秒"
+    },
+    {
+      "say": "Onsemi 的股價在今年達到 52 周新高，漲幅高達 84.8%。",
+      "from": "Fox Business 第 41 秒"
+    },
+    {
+      "say": "Onsemi 的產品可以將資料中心的電力損失降低 50%。",
+      "from": "Fox Business 第 125 秒"
+    },
+    {
+      "say": "目前全球在計算力方面存在短缺。",
+      "from": "Fox Business 第 189 秒"
+    },
+    {
+      "say": "Onsemi 正在努力解決電力問題，從資料中心進電的那頭開始。",
+      "from": "Fox Business 第 319 秒"
+    },
+    {
+      "say": "AI 資料中心需要大量電力，以應付客戶需求並保持競爭力。",
+      "from": "CNBC 第 123 秒"
+    },
+    {
+      "say": "這些資料中心正在購買天然氣渦輪機，因為當地電力公司無法提供足夠的電力。",
+      "from": "CNBC 第 21 秒"
+    },
+    {
+      "say": "GE 是天然氣渦輪機的主要供應商，正在南卡羅來納州擴建其生產線。",
+      "from": "CNBC 第 43 秒"
+    },
+    {
+      "say": "GE 的渦輪機已被多家大科技公司採用，用於資料中心。",
+      "from": "CNBC 第 64 秒"
+    },
+    {
+      "say": "GE 正努力應對環境關注，使其渦輪機更高效，減少污染。",
+      "from": "CNBC 第 172 秒"
+    },
+    {
+      "say": "AI資料中心的建造興起，引起電費上漲的反彈。",
+      "from": "PBS NewsHour 第 123 秒"
+    },
+    {
+      "say": "70%的美國人反對在社區內建造資料中心。",
+      "from": "PBS NewsHour 第 172 秒"
+    },
+    {
+      "say": "65%的民眾反對資料中心建設，其中64%的人擔心水耗。",
+      "from": "PBS NewsHour 第 321 秒"
+    },
+    {
+      "say": "資料中心需要大量電力，擔心會增加居民電費。",
+      "from": "PBS NewsHour 第 343 秒"
+    },
+    {
+      "say": "共和黨 governor Greg Abbott 稱德州為 AI 資料中心的發源地。",
+      "from": "CNN 第 123 秒"
+    },
+    {
+      "say": "Abbott 改變主張，暫停新資料中心的許可證。",
+      "from": "CNN 第 41 秒"
+    },
+    {
+      "say": "退休者 Tom Weekes 與護理師 Nikki Meador 因資料中心問題轉而支持民主黨。",
+      "from": "CNN 第 93 秒"
+    },
+    {
+      "say": "Tom Weekes 認為共和黨未顧及當地社區。",
+      "from": "CNN 第 120 秒"
+    },
+    {
+      "say": "Nikki Meador 認為暫停資料中心對德州不利。",
+      "from": "CNN 第 189 秒"
+    },
+    {
+      "say": "美國2035年數據中心電力需求可能佔全國幾乎9%。",
+      "from": "Reuters 第 123 秒"
+    },
+    {
+      "say": "數據中心需要更多電力，但傳輸能力不足。",
+      "from": "Reuters 第 43 秒"
+    },
+    {
+      "say": "數據中心投資機會主要在電力傳輸和分配技術。",
+      "from": "Reuters 第 86 秒"
+    },
+    {
+      "say": "美國數據中心可能轉向太陽能、風能和儲電。",
+      "from": "Reuters 第 213 秒"
+    },
+    {
+      "say": "數據中心驅動的電力需求增長正在推高家庭電費。",
+      "from": "CNBC〈AI data center 'frenzy' 〉"
+    },
+    {
+      "say": "數據中心可能會佔據美國總電力消耗的6.7%至12%，2028年將比2023年的4.4%增加。",
+      "from": "CNBC〈AI data center 'frenzy' 〉"
+    },
+    {
+      "say": "數據中心的電力需求預計到2030年將增長超過四倍。",
+      "from": "CNBC〈AI data center 'frenzy' 〉"
+    },
+    {
+      "say": "在美國，數據中心預計將佔總體電力需求增長的一半。",
+      "from": "CNBC〈AI data center 'frenzy' 〉"
+    },
+    {
+      "say": "自2020年起，美國住宅電價上漲超過36%，預計到2027年9月將達到每千瓦時19.01美分。",
+      "from": "CNBC〈Who pays for AI's electr〉"
+    },
+    {
+      "say": "SemiAnalysis認為， PJMInterconnection區域的電價上漲主要是因為預測需求過於保守。",
+      "from": "CNBC〈Who pays for AI's electr〉"
+    },
+    {
+      "say": "拜登政府召見了AI巨頭公司，促請他們簽署保護消費者電費的承諾。",
+      "from": "CNBC〈Who pays for AI's electr〉"
+    },
+    {
+      "say": "Counterpoint Research的研究員Marc Einstein認為，AI巨頭公司不盈利的問題，增加了他們處理電力成本壓力的難度。",
+      "from": "CNBC〈Who pays for AI's electr〉"
+    },
+    {
+      "say": "Data-center 項目被阻止或拖延，社區認定自己將面臨電費上漲的威脅。",
+      "from": "Reason〈No, AI Data Centers Are 〉"
+    },
+    {
+      "say": "參議院華倫（D-麻薩諸塞州）展開調查，指控 AI 資料中心推高了美國家庭的電費。",
+      "from": "Reason〈No, AI Data Centers Are 〉"
+    },
+    {
+      "say": "研究發現，電價的上漲並非由需求引起，而是由供應側的限制造成。",
+      "from": "Reason〈No, AI Data Centers Are 〉"
+    },
+    {
+      "say": "數據中心的需求實際上有助於降低電價，因為它可以分攤固定成本。",
+      "from": "Reason〈No, AI Data Centers Are 〉"
     }
   ],
   "voices": [
@@ -1629,5 +1769,10 @@
     "AI電費無旁白"
   ],
   "note": "電費帳單直接有感。左右都在報，但結論相反——右派說是成長，左派說是轉嫁。",
-  "audience": "每個要付帳單的人"
+  "audience": "每個要付帳單的人",
+  "gathered": {
+    "trouble": [
+      "讀不到正文 2 篇：Bloomberg：拿不到頁面（擋機器人或付費牆）；Institute for Energy Research：拿不到頁面（擋機器人或付費牆）"
+    ]
+  }
 }

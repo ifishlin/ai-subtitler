@@ -233,11 +233,73 @@ def docs_page() -> str:
     return (STATIC / "docs.html").read_text(encoding="utf-8")
 
 
+@app.get("/material", response_class=HTMLResponse)
+def material_page() -> str:
+    """收集回來的每一種資料，最後被誰用掉 —— 包含沒有人用的那幾種。"""
+    return (STATIC / "material.html").read_text(encoding="utf-8")
+
+
+@app.get("/prompt", response_class=HTMLResponse)
+def prompt_page() -> str:
+    """送進模型寫文案的那份文字，就是它本身，不是它的描述。"""
+    return (STATIC / "prompt.html").read_text(encoding="utf-8")
+
+
 # ---------------------------------------------------------------- 門與文件
 #
 # Both read their source at request time rather than being written out. A page
 # that describes the checks is worthless the moment it disagrees with them,
 # and this project has already shipped two copies of one rule that drifted.
+
+
+@app.get("/api/material-map")
+def material_map(name: str = "", house: str = "argue") -> dict[str, Any]:
+    """每一種收集回來的資料，被誰用掉，以及**有沒有真的進到 prompt 裡**。
+
+    最後那一項是算出來的，不是寫上去的：組一次真正的 prompt，再拿每一種
+    素材的實際內容回去比對。報導那個洞（收了二十三篇、一篇都沒進去）就是
+    這樣才看得見 —— 一份手寫的對照表會說它們有用，而且不會有人發現。
+    """
+    from core import topic as topic_module
+    from core import wiring as wiring_module
+
+    known = topic_module.listing()
+    if not name:
+        # 沒指定就挑最近動過的那個。空白頁比錯的頁面好，但有東西可看更好。
+        alive = [one for one in known if not one.get("archived")]
+        name = (alive or known)[0]["name"] if (alive or known) else ""
+    if not name:
+        return {"topic": "", "rows": [], "topics": [], "material_chars": 0}
+    try:
+        got = wiring_module.traced(name, house)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    return {**got, "topics": [one["name"] for one in known]}
+
+
+@app.get("/api/prompt-parts")
+def prompt_parts(name: str = "", house: str = "argue") -> dict[str, Any]:
+    """送進模型的那份文字，拆成一節一節。
+
+    是真的那一份 —— `brief.prompt()` 的輸出，同一支函式，同一個時間點。
+    一頁描述 prompt 的網頁在它跟 prompt 不一致的那一刻就沒有價值了。
+    """
+    from core import topic as topic_module
+    from core import wiring as wiring_module
+
+    known = topic_module.listing()
+    if not name:
+        alive = [one for one in known if not one.get("archived")]
+        name = (alive or known)[0]["name"] if (alive or known) else ""
+    if not name:
+        return {"topic": "", "how": {}, "what": [], "chars": 0, "topics": []}
+    try:
+        got = wiring_module.parts(name, house)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    except RuntimeError as error:            # prompt 裡有 rules 填不出來的名字
+        raise HTTPException(400, str(error)) from error
+    return {**got, "topics": [one["name"] for one in known]}
 
 
 @app.get("/api/gates")
@@ -1045,7 +1107,7 @@ def mark_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
 @app.post("/api/topic/facts")
 def read_facts(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
-    """讀影片字幕，整理成一句一句帶出處的事實。
+    """讀影片字幕和報導正文，整理成一句一句帶出處的事實。
 
     這一步本來不存在。收集抓回標題和檔案，寫作的 prompt 有一節「## 事實」，
     中間沒有東西把內容讀出來 —— 前兩支成片的事實是人手打的，而那件事沒有被
@@ -1053,6 +1115,10 @@ def read_facts(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
     三個模型在一個 0 條事實的題目上都只寫出四到八句而不是三十三句。它們手上
     只有二十三個標題，那不是能力問題。
+
+    報導的正文是後來補的：/material 那一頁算出「收了二十三篇、一篇都沒進
+    prompt」。抓不到正文（付費牆、擋機器人）是常態，所以那不讓整輪停下來，
+    但每一篇為什麼抓不到都會寫進題目檔案。
     """
     from core import facts as facts_module
     from core import topic as topic_module
@@ -1064,12 +1130,16 @@ def read_facts(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
     def work(say) -> None:
         got = facts_module.gather(name, say=say)
-        bits = [f"{got['added']} 條新的，共 {got['total']} 條"]
-        # 讀了 N 支、拿回 0 條要說出來，那是這個專案最貴的失敗形狀。
+        bits = [f"讀了 {got['videos_read']} 支影片、{got['reports_read']} 篇報導",
+                f"{got['added']} 條新的，共 {got['total']} 條"]
+        # 讀了 N 個、拿回 0 條要說出來，那是這個專案最貴的失敗形狀。
         if got["nothing_from"]:
             bits.append(f"⚠ {'、'.join(got['nothing_from'])} 讀不出東西")
         if got["without_captions"]:
             bits.append(f"⚠ {'、'.join(got['without_captions'])} 沒有字幕")
+        if got["without_text"]:
+            bits.append(f"⚠ {len(got['without_text'])} 篇抓不到正文："
+                        f"{'；'.join(got['without_text'])}")
         say(got["asked"], got["asked"], "　".join(bits))
 
     _job_run(f"整理事實：{name}", name, work)

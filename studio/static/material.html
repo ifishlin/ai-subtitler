@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>素材去哪裡</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .pickrow{display:flex;gap:8px;align-items:center;margin:0 0 26px}
+  .pickrow select{font:14px inherit;color:var(--ink);background:var(--panel);
+    border:1px solid var(--line);border-radius:8px;padding:7px 10px;
+    cursor:pointer;max-width:100%}
+
+  /* 一條流程。看圖比看清單快。 */
+  .flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin:0 0 30px;font-size:14px}
+  .flow .box{background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:10px 14px;text-align:center;line-height:1.5}
+  .flow .box b{display:block;font-size:15px}
+  .flow .box span{color:var(--faint);font-size:11.5px}
+  .flow .arrow{color:var(--faint);font-size:18px}
+  .flow .box.out{border-color:#5c3a2a;opacity:.75}
+
+  .big{display:grid;gap:12px;margin:0 0 8px;
+    grid-template-columns:repeat(auto-fill,minmax(255px,1fr))}
+  .thing{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:15px 17px;border-top:3px solid var(--ok)}
+  .thing.no{border-top-color:var(--warn)}
+  .thing .n{font-size:17px;font-weight:600;display:block;margin-bottom:2px}
+  .thing .c{font:12px var(--mono);color:var(--faint);display:block;
+    margin-bottom:9px}
+  .thing .u{color:var(--dim);font-size:13.5px;line-height:1.6;margin:0}
+  .thing .tag{display:inline-block;margin-top:11px;font:11.5px var(--mono);
+    padding:3px 9px;border-radius:11px;border:1px solid #2c5a45;color:var(--ok)}
+  .thing.no .tag{border-color:#5c3a2a;color:var(--warn)}
+
+  .callout{background:var(--panel);border:1px solid var(--line);
+    border-left:4px solid var(--warn);border-radius:12px;
+    padding:15px 18px;margin:0 0 26px}
+  .callout b{display:block;font-size:16px;margin-bottom:6px}
+  .callout p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.65}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>素材去哪裡</h1>
+  <p class="under">收回來的東西，哪些真的被拿去寫文案。</p>
+
+  <div class="pickrow"><select id="pick"></select></div>
+
+  <div class="flow" id="flow"></div>
+  <div id="callout"></div>
+
+  <h2>有被拿去寫文案的</h2>
+  <div class="big" id="used"></div>
+
+  <h2>沒有</h2>
+  <div class="big" id="unused"></div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+/* 一句話，講「拿去做什麼」。用途講給人聽，不講函式名。 */
+const USE = {
+  video_file:     "剪成會動的片段，還有截圖當畫面",
+  video_captions: "整理成事實；也用來決定片段切在哪裡",
+  video_title:    "只是給你在畫面上認出這是哪一支",
+  reports:        "本來要用來比對各家說法不同的地方",
+  images:         "文案每一句配一張，用編號指定",
+  voices:         "決定語氣，還有「這件事在哪裡碰到你」",
+  facts:          "文案每一句話的根據和出處",
+  lean:           "確認有沒有哪一邊完全沒被聽到",
+  note:           "告訴模型這題為什麼值得做",
+  audience:       "結論要落在這群人身上",
+};
+
+function thing(one) {
+  const yes = one.reaches === true;
+  return `
+  <div class="thing ${yes ? "" : "no"}">
+    <span class="n">${esc(one.label)}</span>
+    <span class="c">${esc(one.count)}</span>
+    <p class="u">${esc(USE[one.key] || one.why)}</p>
+    <span class="tag">${yes ? "有進到文案" : "沒有進到文案"}</span>
+  </div>`;
+}
+
+async function load() {
+  const wanted = new URLSearchParams(location.search).get("name") || "";
+  const back = await fetch("/api/material-map"
+    + (wanted ? "?name=" + encodeURIComponent(wanted) : ""));
+  if (!back.ok) throw new Error(await back.text());
+  const d = await back.json();
+
+  $("pick").innerHTML = (d.topics || []).map((one) =>
+    `<option value="${esc(one)}"${one === d.topic ? " selected" : ""}>${
+      esc(one)}</option>`).join("");
+  $("pick").onchange = () => {
+    location.search = "?name=" + encodeURIComponent($("pick").value);
+  };
+
+  const rows = d.rows || [];
+  const of = (key) => rows.find((one) => one.key === key) || {};
+
+  /* 流程圖只放主線的四樣，因為那是「東西怎麼變成文案」。 */
+  $("flow").innerHTML = [
+    {label: "影片", count: of("video_file").count, ok: true},
+    {label: "字幕", count: of("video_captions").count, ok: true},
+    {label: "事實", count: of("facts").count, ok: true},
+    {label: "文案", count: "", ok: true},
+  ].map((one, i) =>
+    `${i ? '<span class="arrow">→</span>' : ""}
+     <div class="box"><b>${esc(one.label)}</b><span>${
+       esc(one.count || "")}</span></div>`).join("")
+   + `<span class="arrow">＋</span>
+      <div class="box"><b>照片</b><span>${esc(of("images").count)}</span></div>
+      <div class="box"><b>留言</b><span>${esc(of("voices").count)}</span></div>
+      <div class="box out"><b>報導</b><span>${
+        esc(of("reports").count)}<br>沒進文案</span></div>`;
+
+  const missed = rows.filter((one) => one.reaches === false
+                                   && (one.gates || []).length);
+  $("callout").innerHTML = missed.length
+    ? `<div class="callout"><b>${missed.map((o) => esc(o.label)).join("、")
+        }收回來了，但沒有進到文案裡</b>
+       <p>它還是會擋你 ——「還缺 N 篇報導」、「沒有某一邊的說法」都在算它。
+          所以現在的狀況是：<b>能擋你，不能幫你。</b></p></div>`
+    : "";
+
+  const yes = rows.filter((one) => one.reaches === true);
+  const no = rows.filter((one) => one.reaches !== true);
+  $("used").innerHTML = yes.map(thing).join("");
+  $("unused").innerHTML = no.map(thing).join("")
+    || '<p class="empty">沒有，全部都用到了。</p>';
+}
+
+load().catch((error) => {
+  $("callout").innerHTML = '<div class="callout"><b>讀不到</b><p>'
+    + esc(error.message) + "</p></div>";
+});
+</script>
+</body>
+</html>
