@@ -67,7 +67,7 @@
   <div class="cards">
     <a class="card" href="/gates">
       <b><span class="icon">🚦</span>所有的門</b>
-      <span>十五道檢查，每一道測什麼、為了哪一次錯誤而做、
+      <span id="gateCount">每一道測什麼、為了哪一次錯誤而做、
         現在有幾處沒過。直接從程式抽出來，不會過期。</span>
     </a>
     <a class="card" href="/docs?name=MISTAKES">
@@ -135,6 +135,13 @@ async function load() {
   $("stripNote").textContent = gates
     ? `門的數量：${gates.gates.length} 道逐句檢查 ＋ ${gates.sums.length} 個整片數字 ＋ ${gates.extra.length} 道在文案之外`
     : "門的資料讀不到 —— 伺服器可能沒重啟";
+  // 卡片上的道數也從 API 來。本來寫死「十五道」，加了 clipped 之後就過期了。
+  if (gates) {
+    const all = gates.gates.length + gates.sums.length + gates.extra.length;
+    $("gateCount").textContent =
+      `${all} 道檢查，每一道測什麼、為了哪一次錯誤而做、現在有幾處沒過。`
+      + "直接從程式抽出來，不會過期。";
+  }
 
   const rows = topics
     .slice()
