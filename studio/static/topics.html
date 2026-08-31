@@ -67,7 +67,13 @@
   .todo .rows.terms{flex-direction:row;flex-wrap:wrap;gap:6px}
   .todo .rows code{font:11px var(--mono);color:var(--dim);background:var(--bg);
     border:1px solid var(--line);border-radius:5px;padding:1px 7px}
-  .doubt-row{display:flex;align-items:center;gap:9px;font-size:12px;min-width:0}
+  .doubt-row{display:flex;align-items:center;gap:9px;font-size:12px;min-width:0;
+    cursor:pointer;padding:2px 4px;border-radius:5px}
+  .doubt-row:hover{background:#00000033}
+  .doubt-row input{margin:0;cursor:pointer;accent-color:var(--accent)}
+  /* 勾起來的那一列亮起來 —— 看得出「這一筆我要留」，不用回頭數勾了幾個。 */
+  .doubt-row:has(.keepBox:checked){background:#12291f}
+  .doubt-row:has(.keepBox:checked) .txt{color:var(--ok)}
   .doubt-row .who{color:var(--faint);font:11px var(--mono);flex:none;
     width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .doubt-row .txt{color:var(--dim);overflow:hidden;text-overflow:ellipsis;
@@ -278,12 +284,6 @@
   #caught .shelf figure.taken{opacity:.4;pointer-events:none}
   /* 被判成無關的那幾列。淡掉、加一道橘邊、放一顆「算進來」—— 因為清單畫全
      部，計數只算沒被判掉的，而畫面本來沒有任何線索說明差別。 */
-  .src.doubted{opacity:.5;border-left:3px solid #5c4a2a}
-  .src.doubted:hover{opacity:.85}
-  /* 「模型判無關」＋「其實有關」。本來只寫「算進來」—— 那說了動作，沒說是
-     誰判的，於是讀的人以為是自己剛剛丟掉的。 */
-  .src .judged{float:right;margin-left:12px;display:flex;align-items:center;
-    gap:7px;font:11px var(--mono);color:#e2a33c}
   .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin-bottom:7px;font-size:13px}
   .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
@@ -534,9 +534,7 @@ function sourceRows(items, kind) {
      一支寫著「Trump renames Lake Ontario」的影片被判成無關，看起來跟留下的
      那些一模一樣。 */
   return items.map((item) => `
-    <div class="src${item.doubt ? " doubted" : ""}">
-      ${item.doubt ? `<span class="judged">模型判無關<button class="tiny keep"
-        data-url="${escapeHTML(item.url || "")}">其實有關</button></span>` : ""}
+    <div class="src">
       ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
         escapeHTML(item.title || item.url)}</a>` : escapeHTML(item.title || "")}
       ${leanTag(item.lean || "")}
@@ -620,21 +618,26 @@ async function open(name) {
          順序就是做事的順序：先撿回判錯的，再補缺的圖，然後才寫。 -->
     <div class="todo">
       ${(pile.doubted || []).length ? `
+      <!-- 看一遍，決定一次，結束。
+           勾起來的留下，其餘按「丟掉」就真的刪了 —— 沒有淡色、沒有第二次機
+           會、清單上不留痕跡。本來是「留」一顆一顆按、剩下的變淡留在清單裡，
+           結果同一批東西在畫面上出現兩次，而使用者要花三四輪才問清楚哪一批
+           是誰判的、淡的又是什麼意思。
+           一個等你決定的東西，只該問一次。 -->
       <div class="row doubt">
         <div class="what">
           <b>模型判這 ${pile.doubted.length} 筆跟題目無關</b>
-          <span>沒算進計數、不進寫作 prompt。它會判錯 ——
-            撿回該留的，其餘按「全部丟掉」</span>
+          <span>它會判錯。勾起來的留下，其餘丟掉 —— 丟了就沒了</span>
         </div>
-        <button id="btnDropAll" class="tiny">剩下的全部丟掉</button>
-        <div class="rows">${pile.doubted.map((one) => `
-          <div class="doubt-row" data-url="${escapeHTML(one.url || "")}"
-               data-kind="${escapeHTML(one.kind || "reports")}">
-            <button class="tiny keep">其實有關</button>
+        <button id="btnDoubtDone" class="primary">丟掉沒勾的</button>
+        <div class="rows">${pile.doubted.map((one, index) => `
+          <label class="doubt-row" data-url="${escapeHTML(one.url || "")}"
+                 data-kind="${escapeHTML(one.kind || "reports")}">
+            <input type="checkbox" class="keepBox">
             <span class="who">${one.kind === "videos" ? "影片" : "報導"}　${
               escapeHTML(one.outlet || "")}</span>
             <span class="txt">${escapeHTML(one.title || "")}</span>
-          </div>`).join("")}</div>
+          </label>`).join("")}</div>
       </div>` : ""}
 
       ${(pile.wanted || []).length ? `
@@ -958,29 +961,26 @@ async function open(name) {
         ? `${extra.join("　｜　")}　${got.took}s` : `${got.took}s`;
     } catch (error) { $("termsNote").textContent = error.message; }
   };
-  // Ruling on what the model doubted. Keeping is one click each because that
-  // is the direction worth making easy -- a wrongly dropped source is a fact
-  // that stops existing, a wrongly kept one is a line in a list.
-  /* 撿回一筆，兩個地方都可以按：上面的待辦區、以及清單裡那一列。
-     網址在 .doubt-row 上或在按鈕自己身上，兩種都收 —— 一個委派，兩種來源。 */
-  $("paper").querySelectorAll(".keep").forEach((button) => {
-    button.onclick = async () => {
-      const row = button.closest(".doubt-row");
-      const url = (row && row.dataset.url) || button.dataset.url;
-      if (!url) return;
-      try {
-        await api("POST", "/api/topic/judge", {name, urls: [url], keep: true});
-        open(name);
-      } catch (error) { told('出錯了', error.message); }
-    };
-  });
-  if ($("btnDropAll")) $("btnDropAll").onclick = async () => {
-    const urls = [...$("paper").querySelectorAll(".doubt-row")]
-      .map((row) => row.dataset.url);
-    if (!await confirmed(`丟掉這 ${urls.length} 篇？`, {
-      body: "模型判定它們跟題目無關。丟掉之後就找不回來了。"})) return;
+  /* 一次決定，兩個方向一起送。
+     本來是「留」一顆一顆按（每按一下重畫整頁）加上「其餘全部丟」，而中間的
+     狀態會留在畫面上 —— 於是同一批東西看起來像兩批。
+     現在勾起來的留下、沒勾的刪掉，一次呼叫做完。丟了就沒了，所以問一句。 */
+  if ($("btnDoubtDone")) $("btnDoubtDone").onclick = async () => {
+    const rows = [...$("paper").querySelectorAll(".doubt-row")];
+    const keep = rows.filter((row) => row.querySelector(".keepBox").checked);
+    const drop = rows.filter((row) => !row.querySelector(".keepBox").checked);
+    if (!await confirmed(`丟掉 ${drop.length} 筆，留下 ${keep.length} 筆？`, {
+      body: "丟掉的直接刪除，找不回來。",
+      yes: "就這樣", no: "再看看"})) return;
     try {
-      await api("POST", "/api/topic/judge", {name, urls, keep: false});
+      if (keep.length) {
+        await api("POST", "/api/topic/judge",
+                  {name, urls: keep.map((row) => row.dataset.url), keep: true});
+      }
+      if (drop.length) {
+        await api("POST", "/api/topic/judge",
+                  {name, urls: drop.map((row) => row.dataset.url), keep: false});
+      }
       open(name);
     } catch (error) { told('出錯了', error.message); }
   };

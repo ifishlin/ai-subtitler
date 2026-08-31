@@ -5,77 +5,6 @@
   "sources": {
     "videos": [
       {
-        "title": "Jill Kargman, Abby Elliot Talk 'Odd Mom Out'",
-        "url": "https://www.youtube.com/watch?v=oOn5XUnycT0",
-        "seconds": 147,
-        "outlet": "AP News",
-        "lean": "neutral",
-        "doubt": true,
-        "file": "assets/footage/川普要把安大略湖改名/oOn5XUnycT0.mp4",
-        "captions": "assets/footage/川普要把安大略湖改名/oOn5XUnycT0.en.vtt",
-        "size": 14664148
-      },
-      {
-        "title": "Depeche Mode: 'Maybe mankind has lost its way'",
-        "url": "https://www.youtube.com/watch?v=NpMapNihY1s",
-        "seconds": 120,
-        "outlet": "AP News",
-        "lean": "neutral",
-        "doubt": true,
-        "file": "assets/footage/川普要把安大略湖改名/NpMapNihY1s.mp4",
-        "captions": "assets/footage/川普要把安大略湖改名/NpMapNihY1s.en.vtt",
-        "size": 11221042
-      },
-      {
-        "title": "Kimmel defends free speech in late-night TV return after suspension | REUTERS",
-        "url": "https://www.youtube.com/watch?v=-1JHTbCxAZM",
-        "seconds": 137,
-        "outlet": "Reuters",
-        "lean": "neutral",
-        "doubt": true,
-        "file": "assets/footage/川普要把安大略湖改名/-1JHTbCxAZM.mp4",
-        "captions": "assets/footage/川普要把安大略湖改名/-1JHTbCxAZM.en.vtt",
-        "size": 13044729
-      },
-      {
-        "title": "WATCH: Trump signs order changing Lake Ontario to 'Lake America'",
-        "url": "https://www.youtube.com/watch?v=mH6N-V7AHaE",
-        "seconds": 714,
-        "outlet": "PBS NewsHour",
-        "lean": "centre-left",
-        "doubt": true,
-        "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
-        "captions": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.en.vtt",
-        "size": 63458484
-      },
-      {
-        "title": "News Wrap: Trump signs order to rename Lake Ontario as Lake America",
-        "url": "https://www.youtube.com/watch?v=S9NbJin7oCM",
-        "seconds": 424,
-        "outlet": "PBS NewsHour",
-        "lean": "centre-left",
-        "doubt": true,
-        "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
-        "captions": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.en.vtt",
-        "size": 46436930
-      },
-      {
-        "title": "WSJ: Trump Was Told His Name Appeared In DOJ's Epstein Files | NPR News Now",
-        "url": "https://www.youtube.com/watch?v=Y3WV_J6Xkp8",
-        "seconds": 448,
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "doubt": true
-      },
-      {
-        "title": "Episode 3: Global Warming, It's All About Carbon | Krulwich Wonders | NPR",
-        "url": "https://www.youtube.com/watch?v=Q9u8vM8YjeU",
-        "seconds": 256,
-        "outlet": "NPR",
-        "lean": "centre-left",
-        "doubt": true
-      },
-      {
         "title": "Trump renames Lake Ontario to 'Lake America'",
         "url": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
         "seconds": 486,
@@ -84,60 +13,11 @@
         "doubt": false
       },
       {
-        "title": "The history of missing planes",
-        "url": "https://www.youtube.com/watch?v=zzowr7woZY8",
-        "seconds": 192,
-        "outlet": "CNN",
-        "lean": "left",
-        "doubt": true
-      },
-      {
-        "title": "Trump hints at 'LAKE AMERICA' name change amid Canada FEUD",
-        "url": "https://www.youtube.com/watch?v=T0k1fygSp50",
-        "seconds": 183,
-        "outlet": "Fox News",
-        "lean": "right",
-        "doubt": true
-      },
-      {
         "title": "Trump SLAMS Canada after signing order renaming Lake Ontario",
         "url": "https://www.youtube.com/watch?v=OciTiMiQerI",
         "seconds": 747,
         "outlet": "Fox News",
-        "lean": "right",
-        "doubt": true
-      },
-      {
-        "title": "TRADE WAR EXPLODES: Trump DOUBLES DOWN on Canada tariffs",
-        "url": "https://www.youtube.com/watch?v=wnmr-jUsv_Q",
-        "seconds": 406,
-        "outlet": "Fox Business",
-        "lean": "right",
-        "doubt": true
-      },
-      {
-        "title": "Data centers are a MIDTERM ISSUE and voters need FACTS",
-        "url": "https://www.youtube.com/watch?v=JldNPf6tI8s",
-        "seconds": 458,
-        "outlet": "Fox Business",
-        "lean": "right",
-        "doubt": true
-      },
-      {
-        "title": "Trump’s Big Beautiful Bill: The Tax and Spending Updates, Explained | WSJ",
-        "url": "https://www.youtube.com/watch?v=l-dy8SpX_50",
-        "seconds": 372,
-        "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "doubt": true
-      },
-      {
-        "title": "How Trump’s Policies Align With Project 2025: A Comparison | WSJ",
-        "url": "https://www.youtube.com/watch?v=8qaEDlu2NQg",
-        "seconds": 423,
-        "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "doubt": true
+        "lean": "right"
       },
       {
         "title": "Trump Renames Lake Ontario as Lake America, Says Canada Is Ripping Off the US",
@@ -156,132 +36,12 @@
         "doubt": false
       },
       {
-        "title": "How Water Bombers, Old Commercial Planes And Helicopters Battle Wildfires",
-        "url": "https://www.youtube.com/watch?v=0d-uc8p5GrE",
-        "seconds": 592,
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "Donald Trump Brand In Decline | CNBC",
-        "url": "https://www.youtube.com/watch?v=woXz1hzl_yk",
-        "seconds": 128,
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "New era for Apple as names new boss to replace Tim Cook after 15 years | BBC News",
-        "url": "https://www.youtube.com/watch?v=U3GIeY277fM",
-        "seconds": 351,
-        "outlet": "BBC News",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "School for tired teens - BBC News",
-        "url": "https://www.youtube.com/watch?v=pJY0mBWHPw4",
-        "seconds": 163,
-        "outlet": "BBC News",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "How hard conversations help women",
-        "url": "https://www.youtube.com/watch?v=wYzbbT3Z3uc",
-        "seconds": 311,
-        "outlet": "Financial Times",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "Sketchy Politics: Starmy weather | FT",
-        "url": "https://www.youtube.com/watch?v=kcylMwzo_Bw",
-        "seconds": 1185,
-        "outlet": "Financial Times",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "Donald Trump’s “Big Beautiful Bill” explained",
-        "url": "https://www.youtube.com/watch?v=0n_GcuOyzYM",
-        "seconds": 165,
-        "outlet": "The Economist",
-        "lean": "market-liberal",
-        "doubt": true
-      },
-      {
-        "title": "Vaping: what people are getting wrong | The Economist",
-        "url": "https://www.youtube.com/watch?v=O4_l-klxqCQ",
-        "seconds": 774,
-        "outlet": "The Economist",
-        "lean": "market-liberal",
-        "doubt": true
-      },
-      {
-        "title": "Odd ones out & the puzzle for Hong Kong six-year-olds | Did you solve it?",
-        "url": "https://www.youtube.com/watch?v=W4oEt4x5_HY",
-        "seconds": 138,
-        "outlet": "The Guardian",
-        "lean": "left",
-        "doubt": true
-      },
-      {
-        "title": "Water: the strangest chemical in the universe | Features",
-        "url": "https://www.youtube.com/watch?v=rJc7dP-oudQ",
-        "seconds": 191,
-        "outlet": "The Guardian",
-        "lean": "left",
-        "doubt": true
-      },
-      {
         "title": "Canadians laugh off a lake name change - but what about an ocean? | DW News",
         "url": "https://www.youtube.com/watch?v=Pb9WplyDJV4",
         "seconds": 766,
         "outlet": "Deutsche Welle",
         "lean": "neutral",
         "doubt": false
-      },
-      {
-        "title": "Russia cannot win in Ukraine: Yale historian Odd Arne Westad explains why | DW News",
-        "url": "https://www.youtube.com/watch?v=GoMeTjJD1eo",
-        "seconds": 2348,
-        "outlet": "Deutsche Welle",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "Is 'strongman' politics chipping away at women's rights? | Raw Politics",
-        "url": "https://www.youtube.com/watch?v=FRnxLyff3H0",
-        "seconds": 720,
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "The dying art of political satire: Winners of LIBEX 2022 cartoon competition announced",
-        "url": "https://www.youtube.com/watch?v=e97kWA0LZyg",
-        "seconds": 216,
-        "outlet": "Euronews",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
-        "url": "https://www.youtube.com/watch?v=Dnmxudm7dK8",
-        "seconds": 267,
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "doubt": true
-      },
-      {
-        "title": "Mamdani tells Trump: ‘Turn the volume up’",
-        "url": "https://www.youtube.com/watch?v=HTEglrjcsDQ",
-        "seconds": 807,
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "doubt": true
       }
     ],
     "reports": [
