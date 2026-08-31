@@ -87,7 +87,7 @@ HOME = ("US", "EU")
 # yt-dlp abandons the video it had not downloaded yet. Asking for four German
 # tracks reproduced it exactly -- the captions arrived and the film did not.
 SUBTITLES = {
-    "DE": "de,en-de",
+    "DE": "de,en-de,en",
 }
 DEFAULT_SUBTITLES = "en,en-orig"
 
@@ -320,6 +320,14 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
     here.mkdir(parents=True, exist_ok=True)
     stem = video["url"].rsplit("=", 1)[-1].rsplit("/", 1)[-1][:24]
     target = here / f"{stem}.mp4"
+    # Two calls, video first. They were one, and a subtitle track refused
+    # with 429 ended the run before the video had downloaded a single byte --
+    # `--no-abort-on-error` does not help, because the error is not in the
+    # video. Six German downloads reported 沒字幕 when what actually happened
+    # was 沒影片, and the topic looked like one nobody had covered.
+    #
+    # Captions are optional; the film is not. So the optional step goes
+    # second, where failing costs only the chosen frames.
     if not target.is_file():
         subprocess.run(
             [str(ROOT / ".venv/bin/yt-dlp"), video["url"], "--no-playlist",
@@ -327,22 +335,25 @@ def bring_in(name: str, video: dict[str, Any]) -> dict[str, Any]:
              # is still being scaled down -- and a 27-minute programme we take
              # five seconds out of was arriving as 1.5 GB at the higher size.
              "-f", "bv*[height<=720]+ba/b[height<=720]/bv*+ba/b",
-             "--merge-output-format", "mp4", "--write-auto-subs",
-             # `en.*` looked harmless and was not: it matches every
-             # auto-translated track YouTube offers -- en-en-uYU..., en-en-JkeT...
-             # -- so a dozen subtitle requests go out in a row, the twelfth is
-             # refused with 429, and yt-dlp abandons the video it had not yet
-             # downloaded. Two names are wanted and both are English originals.
-             "--sub-langs", subtitle_langs(load(name)),
-             "--convert-subs", "vtt", "--no-warnings",
-             # A missing caption track is not a reason to come back with no
-             # video: the frames are still worth having, the video simply
-             # stops being a source of chosen ones.
-             "--no-abort-on-error",
+             "--merge-output-format", "mp4", "--no-warnings",
              "-o", str(here / f"{stem}.%(ext)s")],
             capture_output=True, text=True)
     if not target.is_file():
         return {}
+    if not sorted(here.glob(f"{stem}*.vtt")):
+        # One name at a time. `en.*` looked harmless and was not: it matches
+        # every auto-translated track YouTube offers -- en-en-uYU...,
+        # en-en-JkeT... -- so a dozen requests go out in a row and the twelfth
+        # is refused. Even two in one call reproduced it.
+        for lang in subtitle_langs(load(name)).split(","):
+            subprocess.run(
+                [str(ROOT / ".venv/bin/yt-dlp"), video["url"], "--no-playlist",
+                 "--skip-download", "--write-auto-subs", "--write-subs",
+                 "--sub-langs", lang, "--convert-subs", "vtt", "--no-warnings",
+                 "-o", str(here / f"{stem}.%(ext)s")],
+                capture_output=True, text=True)
+            if sorted(here.glob(f"{stem}*.vtt")):
+                break
     subs = sorted(here.glob(f"{stem}*.vtt"))
     return {"file": str(target.relative_to(ROOT)),
             "captions": str(subs[0].relative_to(ROOT)) if subs else None,
@@ -578,10 +589,18 @@ def hunt(name: str, queries: list[str], most: int = 2,
             except Exception:                                     # noqa: BLE001
                 continue
             for row in said.strip().splitlines():
-                bits = row.split("|", 2)
-                if len(bits) != 3 or not bits[0].isdigit():
+                # The separator appears inside the field it separates. Titles
+                # routinely end 「… | SPIEGEL TV」, 「… - BBC News」, and
+                # splitting left to right handed the URL slot the string
+                # `SPIEGEL TV|https://…`, which then failed to download with
+                # `not a valid URL` -- reported to the page as a video nobody
+                # had. Duration is the first field and the URL is the last, so
+                # take them from the ends and let the title keep its pipes.
+                head, _, rest = row.partition("|")
+                title, _, url = rest.rpartition("|")
+                if not head.isdigit() or not title or not url:
                     continue
-                secs, title, url = int(bits[0]), bits[1], bits[2]
+                secs = int(head)
                 if not least <= secs <= ceiling or url in have or kept >= most:
                     continue
                 have.add(url)
