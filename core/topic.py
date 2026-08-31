@@ -92,6 +92,18 @@ SUBTITLES = {
 DEFAULT_SUBTITLES = "en,en-orig"
 
 
+# What the outlets of a region publish in. Search terms in the wrong language
+# come back empty, and an empty answer from tagesschau reads as 「沒有報」.
+SEARCH_LANGUAGE = {"DE": "德文"}
+
+
+def search_language(pile: dict[str, Any]) -> str:
+    for region in pile.get("regions") or ():
+        if region in SEARCH_LANGUAGE:
+            return SEARCH_LANGUAGE[region]
+    return "英文"
+
+
 def subtitle_langs(pile: dict[str, Any]) -> str:
     """The caption tracks worth asking for, given where this topic is."""
     for region in pile.get("regions") or ():

@@ -74,12 +74,15 @@ Commons 沒有「排隊」「帳單」這種讀得出意思的畫面，兩者都
 
 ## 輸出格式
 
-**所有搜尋詞一律用英文。** 這些詞要拿去 CNN、BBC、Reuters 的 YouTube 頻道搜，
-和 Pexels 的圖庫搜 —— 那些地方沒有中文內容，中文詞回來的是零筆。
+**影片和報導的搜尋詞用{search.language}。** 這些詞要拿去那幾家媒體自己的頻道
+和網站搜，語言不對回來的是零筆 —— 而且是安靜的零筆，看起來就像那家沒報。
+
+**圖庫和維基百科的詞一律用英文**（`pictures`、`named` 兩欄），Pexels 只有英文。
 
 ```
 不行   警报训练失误、误报系统、忽视警报
 可以   Messina museum theft、museum alarm ignored、Italy art heist
+德國題  Clankriminalität Leipzig、LKA Sachsen Task Force Clan
 ```
 
 只輸出 JSON，不要別的：

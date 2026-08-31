@@ -189,6 +189,10 @@ def to_collect(name: str) -> str:
     from core import topic as topic_module
     pile = topic_module.load(name)
     body = (ROOT / "assets" / "prompts" / "collect.md").read_text(encoding="utf-8")
+    # Which language the outlets publish in. A German local story searched in
+    # English returns nothing from tagesschau and MDR -- silently, and a silent
+    # nothing looks exactly like an outlet that did not cover it.
+    body = body.replace("{search.language}", topic_module.search_language(pile))
     missing = rules_module.unfilled(body)
     if missing:
         raise RuntimeError(f"collect.md 要的名字 rules／theme 裡沒有：{missing}")
