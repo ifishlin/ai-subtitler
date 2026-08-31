@@ -156,14 +156,29 @@ def as_text(name: str) -> str:
             out.append(f"  {one['why']}")
         out.append("")
 
+    # 按影片分組，每一組掛它自己的標題。
+    #
+    # 本來每一行只寫媒體名，而同一家常常有兩支完全不同的影片：PBS 的
+    # 〈News Wrap〉是主播在攝影棚念稿，〈WATCH: Trump signs order〉是橢圓形
+    # 辦公室的原始畫面；CNN 的〈Enten says opinion is clear〉是有人站在圖表
+    # 前面。畫面差得很遠，而 prompt 上兩者都只寫「PBS NewsHour」。
+    #
+    # 以前靠底下那行 `file:` 路徑勉強分得出來，而那一行今天被拿掉了 ——
+    # 拿掉是對的（檔名會誘發寫檔名），但拿掉資訊要補回去。標題本來就在這筆
+    # 資料裡，從來沒被用過，而且它比檔名有用：`xxx.mp4` 說不出畫面長什麼樣，
+    # 〈WATCH: Trump signs order〉說得出。
+    #
+    # 分組而不是每行掛標題：五支影片五行，比十五行便宜。
     out.append("## 影片段落　—— 起訖只能從這裡挑，它們已經落在句子邊界上")
+    seen_film = None
     for index, one in enumerate(found["passages"], start=1):
-        out.append(f"[C{index}] {one['outlet']}　{one['start']}–{one['end']}s"
-                   f"（{one['seconds']}s）")
+        which = (one.get("file"), one.get("title"))
+        if which != seen_film:
+            seen_film = which
+            out.append("")
+            out.append(f"{one['outlet']}〈{(one.get('title') or '')[:52]}〉")
+        out.append(f"[C{index}] {one['start']}–{one['end']}s（{one['seconds']}s）")
         out.append(f"      {one['said'][:88]}")
-        # 沒有 file 那一行。編號才是介面：`fasten()` 拿 C3 去 `sheet()` 查
-        # 檔案，prompt 裡那行路徑從來沒有人讀。而它不只是浪費 —— script.md
-        # 明寫「寫檔名一定會錯」，送檔名進去正好在邀請那個錯。
     out.append("")
 
     # 舊的標題寫「兩行不一致就是選錯了」，而那句話是錯的：
