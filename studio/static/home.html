@@ -121,7 +121,10 @@ async function load() {
   try { topics = (await get("/api/topics")).topics || []; } catch (e) {}
   try { gates = await get("/api/gates"); } catch (e) {}
 
-  const films = (gates && gates.scripts) || [];
+  // 題目被封存，它的文案也算封存 —— 算出來的，不是存的第二份旗子。首頁只
+  // 數還在進行的，不然「有門沒過」會一直被擺一邊的東西撐高。archived 由
+  // script.listing() 判斷，所以這裡不重算一次。
+  const films = ((gates && gates.scripts) || []).filter((one) => !one.archived);
   const ready = topics.filter((one) => one.ready).length;
   const filed = topics.filter((one) => one.archived).length;
   const failing = films.filter((one) =>

@@ -800,6 +800,22 @@ def for_topic(topic: str) -> list[str]:
 
 
 def listing() -> list[dict[str, Any]]:
+    # Archived follows the topic and is not stored on the script. A pile put
+    # out of the way takes its scripts with it -- and the one thing this
+    # project keeps relearning is that a second copy of a derivable fact
+    # drifts: `pile["scripts"]` sat at [] for weeks while ten scripts existed.
+    #
+    # Read once here rather than per script, because a topic file is JSON on
+    # disk and there can be hundreds of scripts.
+    from core import topic as topic_module
+    filed = set()
+    for one in topic_module.names():
+        try:
+            if topic_module.load(one).get("archived"):
+                filed.add(one)
+        except (ValueError, FileNotFoundError, json.JSONDecodeError):
+            continue
+
     found = []
     for name in names():
         try:
@@ -823,6 +839,7 @@ def listing() -> list[dict[str, Any]]:
             "lines": len(sums["lines"]),
             "sources": sum(len(script.get("sources", {}).get(kind) or [])
                            for kind in ("video", "reports", "images")),
+            "archived": script.get("topic", "") in filed,
             "modified": int(path_for(name).stat().st_mtime),
         })
     return found

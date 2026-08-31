@@ -254,6 +254,10 @@ def list_gates() -> dict[str, Any]:
     def spelled(fn) -> str:
         return inspect.getdoc(fn) or ""
 
+    listed = script_module.listing()
+    filed_by = {one["name"]: one["topic"] for one in listed}
+    filed_scripts = {one["name"] for one in listed if one["archived"]}
+
     scripts = []
     for name in script_module.names():
         try:
@@ -262,6 +266,11 @@ def list_gates() -> dict[str, Any]:
             continue
         scripts.append({
             "name": name,
+            # Which topic, and whether that topic is put away. Derived in
+            # script.listing() rather than stored, so the page cannot disagree
+            # with the list about what is archived.
+            "topic": filed_by.get(name, ""),
+            "archived": name in filed_scripts,
             "faults": {one[0]: len(measured.get(one[0]) or [])
                        for one in script_module.GATES},
             "sums": {"over": measured["over"],

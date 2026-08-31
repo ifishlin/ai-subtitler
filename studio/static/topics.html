@@ -39,17 +39,6 @@
   .item .bad{color:var(--warn)}
   .item b .films{float:right;font:11px var(--mono);color:var(--faint);
     font-weight:400}
-  .item.archived{opacity:.55}
-
-  .sift{display:flex;gap:6px;margin-bottom:10px}
-  .sift input{flex:1;min-width:0;font-size:12px;padding:5px 9px}
-  .sift select{font:12px inherit;color:var(--dim);background:var(--bg);
-    border:1px solid var(--line);border-radius:7px;padding:5px 7px;
-    cursor:pointer}
-  .filed-head{font:11px var(--mono);color:var(--faint);cursor:pointer;
-    padding:9px 4px 6px;border-top:1px solid var(--line);margin-top:8px;
-    user-select:none}
-  .filed-head:hover{color:var(--accent)}
 
   h2{margin:0 0 4px;font-size:19px}
   .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
@@ -470,10 +459,17 @@ const STATE = { list: [], want: { videos: 5, reports: 5 }, chosen: null };
 const SIFT = {find: "", sort: "recent", showArchived: false};
 
 function topicCard(item) {
+  /* 封存鈕在卡片上，不在右邊那一頁。封存是「這個先擺一邊」—— 一個整理清單
+     的動作，而清單就在這裡；要先點開一個題目、滑到它的標題列、才能把它收起
+     來，等於為了整理而必須先閱讀。 */
   return `
     <div class="item ${item.name === STATE.chosen ? "on" : ""}${
       item.archived ? " archived" : ""}"
          data-name="${escapeHTML(item.name)}">
+      <button class="tiny file" data-file="${escapeHTML(item.name)}"
+        data-to="${item.archived ? "0" : "1"}"
+        title="${item.archived ? "放回清單" : "收起來，資料不會刪"}"
+        >${item.archived ? "取出" : "封存"}</button>
       <b>${escapeHTML(item.name)}${
         item.films ? `<span class="films">🎬 ${item.films}</span>` : ""}</b>
       <span class="facts">影片 ${item.counts.videos}/${STATE.want.videos}　`
@@ -1104,7 +1100,22 @@ async function reload(openFirst) {
 /* ---------------------------------------------------------------- 綁事件
  * 委派給 #list 和 #paper，因為兩邊的內容每次重畫都換掉，綁在元素上會掉。 */
 
-$("list").addEventListener("click", (event) => {
+$("list").addEventListener("click", async (event) => {
+  const file = event.target.closest("[data-file]");
+  if (file) {
+    // 封存不是「打開」。不阻止的話點一下會順便把它開起來，而封存的意思正好
+    // 是不想看它。
+    event.stopPropagation();
+    file.disabled = true;
+    try {
+      await api("POST", "/api/topic/archive",
+                {name: file.dataset.file, archived: file.dataset.to === "1"});
+      const found = await api("GET", "/api/topics");
+      STATE.list = (found.topics || []).sort((a, b) => b.modified - a.modified);
+      renderList();
+    } catch (error) { told("出錯了", error.message); file.disabled = false; }
+    return;
+  }
   const row = event.target.closest("[data-name]");
   if (row) open(row.dataset.name);
 });

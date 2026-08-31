@@ -39,17 +39,6 @@
   .item .bad{color:var(--warn)}
   .item b .films{float:right;font:11px var(--mono);color:var(--faint);
     font-weight:400}
-  .item.archived{opacity:.55}
-
-  .sift{display:flex;gap:6px;margin-bottom:10px}
-  .sift input{flex:1;min-width:0;font-size:12px;padding:5px 9px}
-  .sift select{font:12px inherit;color:var(--dim);background:var(--bg);
-    border:1px solid var(--line);border-radius:7px;padding:5px 7px;
-    cursor:pointer}
-  .filed-head{font:11px var(--mono);color:var(--faint);cursor:pointer;
-    padding:9px 4px 6px;border-top:1px solid var(--line);margin-top:8px;
-    user-select:none}
-  .filed-head:hover{color:var(--accent)}
 
   h2{margin:0 0 4px;font-size:19px}
   .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
@@ -459,14 +448,17 @@ const STATE = { list: [], chosen: null, topic: null };
 
 /* 這一頁的清單是文案，不是題目。同一個題目可以有好幾份文案 —— 梅西納現在
    有兩份 —— 所以文案才是這一頁的主角，題目只是它的來源。 */
-const SIFT = {find: "", sort: "recent"};
+const SIFT = {find: "", sort: "recent", showArchived: false};
 
 function scriptCard(one) {
   const trouble = [];
   if (one.over > 0) trouble.push(`超長 ${one.over}s`);
   if (one.unsourced) trouble.push(`${one.unsourced} 句沒來源`);
+  /* 封存跟著題目走，這裡不存也不改 —— 題目被收起來，它的文案跟著收起來。
+     要放回清單就去素材那一頁把題目取出。 */
   return `
-    <div class="item ${one.name === STATE.chosen ? "on" : ""}"
+    <div class="item ${one.name === STATE.chosen ? "on" : ""}${
+      one.archived ? " archived" : ""}"
          data-name="${escapeHTML(one.name)}">
       <b>${escapeHTML(one.name)}</b>
       <span class="facts">${escapeHTML(one.house || one.format || "")}　`
@@ -486,10 +478,11 @@ function renderList() {
                      || b.modified - a.modified,
     name: (a, b) => a.name.localeCompare(b.name, "zh-Hant"),
   }[SIFT.sort];
-  const shown = STATE.list
+  const all = STATE.list
     .filter((one) => !find || one.name.toLowerCase().includes(find)
-                     || (one.topic || "").toLowerCase().includes(find))
-    .sort(rank);
+                     || (one.topic || "").toLowerCase().includes(find));
+  const live = all.filter((one) => !one.archived).sort(rank);
+  const filed = all.filter((one) => one.archived).sort(rank);
 
   $("list").innerHTML = `
     <div class="sift">
@@ -501,7 +494,18 @@ function renderList() {
         <option value="name"${SIFT.sort === "name" ? " selected" : ""}>名稱</option>
       </select>
     </div>
-    ${shown.map(scriptCard).join("") || '<div class="empty">還沒有文案</div>'}`;
+    ${live.map(scriptCard).join("")
+      || '<div class="empty">沒有符合的文案</div>'}
+    ${filed.length ? `
+      <div class="filed-head" id="showFiled">
+        ${SIFT.showArchived ? "▾" : "▸"} 題目被封存的 ${filed.length} 份
+      </div>
+      ${SIFT.showArchived ? filed.map(scriptCard).join("") : ""}` : ""}`;
+
+  if ($("showFiled")) $("showFiled").onclick = () => {
+    SIFT.showArchived = !SIFT.showArchived;
+    renderList();
+  };
 
   $("findScript").oninput = (event) => {
     SIFT.find = event.target.value;

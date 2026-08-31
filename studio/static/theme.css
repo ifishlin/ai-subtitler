@@ -141,3 +141,24 @@ table.sheet td.num{
 }
 table.sheet td a{color:var(--accent);text-decoration:none}
 table.sheet td a:hover{text-decoration:underline}
+
+
+/* 清單卡片上的封存鈕。放在右上角，因為那是「對這一列做一件事」的位置，而
+   卡片本身是「打開它」。淡到選中或滑過才明顯 —— 整理清單是偶爾的事。 */
+.item{position:relative}
+.item .file{position:absolute;top:8px;right:8px;opacity:0;
+  transition:opacity .12s;z-index:2}
+.item:hover .file,.item.on .file,.item.archived .file{opacity:.75}
+.item .file:hover{opacity:1}
+
+/* 清單的搜尋列、封存區的摺疊標題、封存項目的淡化。素材和短影音兩頁一樣，
+   因為那是同一件事的兩半：題目被收起來，它的文案跟著收起來。 */
+.sift{display:flex;gap:6px;margin-bottom:10px}
+.sift input{flex:1;min-width:0;font-size:12px;padding:5px 9px}
+.sift select{font:12px inherit;color:var(--dim);background:var(--bg);
+  border:1px solid var(--line);border-radius:7px;padding:5px 7px;cursor:pointer}
+.filed-head{font:11px var(--mono);color:var(--faint);cursor:pointer;
+  padding:9px 4px 6px;border-top:1px solid var(--line);margin-top:8px;
+  user-select:none}
+.filed-head:hover{color:var(--accent)}
+.item.archived{opacity:.55}
