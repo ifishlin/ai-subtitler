@@ -801,7 +801,7 @@ async function open(name) {
       // —— 改台詞、看圖打勾、壓片 —— 都在那一頁。印一行「寫好了」然後把人
       // 留在原地，等於要他自己猜下一步在哪。
       $("note").textContent = `寫好了：${made.script}　過去改…`;
-      location.href = "/scripts?name=" + encodeURIComponent(made.script);
+      leaveTo("/scripts?name=" + encodeURIComponent(made.script));
     } catch (error) {
       $("note").className = "warn";
       $("note").textContent = error.message;
@@ -1113,8 +1113,8 @@ $("list").addEventListener("click", (event) => {
 $("paper").addEventListener("click", (event) => {
   // 文案卡片現在連到另一頁，不是在這一頁展開。
   const card = event.target.closest("[data-script]");
-  if (card) { location.href = "/scripts?name="
-    + encodeURIComponent(card.dataset.script); return; }
+  if (card) { leaveTo("/scripts?name="
+    + encodeURIComponent(card.dataset.script)); return; }
 
   const shelf = event.target.closest(".shelf [data-shot]");
   if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }
@@ -1134,7 +1134,7 @@ $("btnNew").onclick = async () => {
 $("newName").addEventListener("keydown", (event) => {
   if (event.key === "Enter") $("btnNew").click();
 });
-$("btnBack").onclick = () => { location.href = "/"; };
+$("btnBack").onclick = () => leaveTo("/");
 
 /* 網址帶了名字就開那一個 —— 從文案頁按「回題目」會這樣過來。 */
 async function boot() {

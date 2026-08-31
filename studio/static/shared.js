@@ -160,6 +160,19 @@ document.addEventListener("click", (event) => {
   if (link && link.origin === location.origin && !link.target) LEAVING = true;
 }, true);
 
+/* 換頁一律走這裡，不要直接寫 location.href。
+ *
+ * 一，它會先立旗子，這樣還在等的 fetch 被中止時不會跳出一個屬於舊頁面的錯
+ * 誤（上面那個 click 監聽只看得到 <a>，按鈕看不到）。
+ *
+ * 二，操作用按鈕不用超連結：一個會檢查「有沒有沒存的修改」的動作，可能決定
+ * 不讓你走，而超連結承諾的是一定過去。瀏覽器也會給它右鍵選單、中鍵開新視
+ * 窗、狀態列網址 —— 全部都是對「連到某處」的承諾，不是對「執行某事」的。 */
+function leaveTo(url) {
+  LEAVING = true;
+  location.href = url;
+}
+
 function goneQuiet(error) {
   if (LEAVING) return true;
   const said = String((error && error.message) || error || "");
