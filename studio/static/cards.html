@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>卡片　AI-Reporters</title>
+<link rel="stylesheet" href="/static/ask.css">
 <link rel="stylesheet" href="/static/theme.css">
 <style>
   .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px}
@@ -14,6 +15,8 @@
   .bar button:hover{color:var(--ink);border-color:var(--accent)}
   .bar button.on{color:var(--bg);background:var(--accent);
     border-color:transparent;font-weight:600}
+  .bar button.reset{color:var(--faint)}
+  .bar button.reset:hover{color:#ff8a72;border-color:#5b2a22}
 
   .kind{margin:0 0 34px}
   .kind h3{display:flex;align-items:baseline;gap:10px;margin:0 0 4px;
@@ -34,9 +37,9 @@
   @media (max-width:1000px){.ways{grid-template-columns:repeat(2,1fr)}}
   .way{background:var(--panel);border:1px solid var(--line);border-radius:11px;
     overflow:hidden;display:flex;flex-direction:column}
-  .way img{width:100%;display:block;background:#0d1014;
-    transition:opacity .12s}
-  .way.off img{opacity:.22;filter:grayscale(1)}
+  .way video{width:100%;display:block;background:#0d1014;
+    transition:opacity .12s;cursor:pointer}
+  .way.off video{opacity:.22;filter:grayscale(1)}
   .way .foot{padding:7px 9px;display:flex;align-items:center;gap:7px}
   .way .foot b{font:11px var(--mono);color:var(--dim);font-weight:400;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
@@ -49,6 +52,17 @@
   .way .why{padding:0 9px 9px;font-size:11.5px;color:var(--faint);
     line-height:1.55}
   .way .keep{padding:0 9px 9px;font:10.5px var(--mono);color:#5c4a2a}
+  /* 建議欄。平常安靜，寫了字就亮起來 —— 一整頁六十個框都在喊，
+     就看不出哪幾個真的有話。 */
+  .way .note{padding:0 9px 9px;margin-top:auto}
+  .way .note textarea{width:100%;resize:vertical;min-height:46px;
+    font:11.5px/1.6 var(--sans);color:var(--ink);background:var(--bg);
+    border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+  .way .note textarea:focus{outline:none;border-color:var(--accent)}
+  .way .note textarea.has{border-color:#5c4a2a;background:#241f12}
+  .way .note .said{display:block;font:10.5px var(--mono);color:var(--ok);
+    height:14px;margin-top:2px}
+  .way .note .said.bad{color:var(--warn)}
 </style>
 </head>
 <body>
@@ -57,6 +71,11 @@
   <p class="under">十二種卡，每一種五個畫法。<b>哪一張卡用哪一個畫法，是從卡片
     自己的內容算出來的</b>——不是隨機，所以同一句話永遠畫成同一種，重壓的結果
     跟接觸表上看到的一致。</p>
+  <p class="under"><b>滑過去看它怎麼動。</b>一半的畫法是動作 ——
+    螢光筆刷過去、方框從角落長出來、印章掉下來 —— 停格看不出來。</p>
+  <p class="under"><b>每一個底下可以寫「這裡要改什麼」</b>，離開輸入框就存進
+    <code>assets/cards.json</code>。寫下來的意見我下次整批讀出來一起改 ——
+    講過就算的意見會被忘記。</p>
   <p class="under">關掉的畫法不會再被選到。<b>畫法本身是程式</b>，這一頁能做的
     是看、關掉、告訴我哪裡不好；要加一種新的形式得改
     <code>core/cards.py</code>。</p>
@@ -65,17 +84,24 @@
     <span class="n">色調</span>
     <span id="tones"></span>
     <span class="gap"></span>
+    <span class="n" id="notes"></span>
     <span class="n" id="count"></span>
+    <button id="reset" class="reset">全部重來</button>
   </div>
 
   <div id="list"></div>
 </div>
 
 <script src="/static/nav.js"></script>
+<script src="/static/ask.js"></script>
 <script>
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
   (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const $ = (id) => document.getElementById(id);
+/* ask.js 的檔頭寫著它要一個 `$` 和一個 `escapeHTML`。這一頁本來只有 `esc`，
+   於是 `confirmed()` 第一行就 ReferenceError —— 而畫面上的樣子是
+   「按了全部重來，什麼都沒發生」。跟那個從來沒出現過的確認框同一種錯。 */
+const escapeHTML = esc;
 
 let TONE = "cool";
 let KINDS = [];
@@ -85,6 +111,7 @@ function draw() {
     sum + one.ways.filter((w) => !w.off).length, 0);
   const all = KINDS.reduce((sum, one) => sum + one.ways.length, 0);
   $("count").textContent = `${KINDS.length} 種卡　${live}／${all} 個畫法開著`;
+  countNotes();
 
   $("list").innerHTML = KINDS.map((one) => {
     const on = one.ways.filter((w) => !w.off).length;
@@ -97,19 +124,94 @@ function draw() {
         <pre>${esc(one.spec)}</pre></details>
       <div class="ways">${one.ways.map((w) => `
         <div class="way${w.off ? " off" : ""}">
-          <img src="${esc(w.image)}" alt="${esc(w.name)}" loading="lazy">
+          <video src="${esc(w.image)}" muted loop playsinline
+            preload="auto" title="${esc(w.name)}"></video>
           <div class="foot">
             <b title="${esc(w.name)}">${esc(w.name.replace(/^_/, ""))}</b>
             <button data-key="${esc(w.key)}" data-off="${w.off ? 1 : 0}">${
               w.off ? "打開" : "關掉"}</button>
           </div>
           ${w.why ? `<div class="why">${esc(w.why)}</div>` : ""}
+          <div class="note">
+            <textarea data-key="${esc(w.key)}" rows="2" spellcheck="false"
+              placeholder="這一個哪裡要改？">${esc(w.note || "")}</textarea>
+            <span class="said"></span>
+          </div>
           ${on === 1 && !w.off
             ? '<div class="keep">每一種至少要留一個 —— 全部關掉那種卡就畫不出來</div>'
             : ""}
         </div>`).join("")}</div>
     </div>`;
   }).join("");
+  /* 停在最後一格 —— 卡片畫完的樣子。
+     沒有這一步，六十格全部是黑的：`<video>` 在播之前不會自己解出任何一格，
+     `preload="metadata"` 只拿長寬和長度。而黑色正好是 .way video 的底色，
+     所以它看起來不像壞掉，看起來像「卡片是黑的」。
+     這跟 credit 沒燒上、字被切掉是同一類：**畫面的錯不會報錯**。
+     檔案在、HTTP 200、JS 一個例外都沒有，只是沒有人叫它畫。 */
+  $("list").querySelectorAll("video").forEach((film) => {
+    const rest = () => { film.currentTime = Math.max(0, film.duration - 0.05); };
+    if (film.readyState >= 1) rest();
+    else film.addEventListener("loadedmetadata", rest, {once: true});
+  });
+  // 記下原值：離開輸入框的時候拿它比對，沒改就不打 API。
+  $("list").querySelectorAll("textarea[data-key]").forEach((box) => {
+    box.dataset.was = box.value.trim();
+    box.classList.toggle("has", !!box.value.trim());
+  });
+}
+
+/* 滑過去才播，移開就回到最後一格。
+   六十段一起自動播會吃掉整台機器，而且六十個東西同時在動的時候，
+   一個都看不清楚 —— 要比較畫法，得一次看一個。 */
+$("list").addEventListener("mouseover", (event) => {
+  const film = event.target.closest("video");
+  if (film) { film.currentTime = 0; film.play().catch(() => {}); }
+});
+$("list").addEventListener("mouseout", (event) => {
+  const film = event.target.closest("video");
+  if (film) { film.pause(); film.currentTime = film.duration || 0; }
+});
+/* 點一下也播 —— 觸控螢幕沒有滑過去這件事。 */
+$("list").addEventListener("click", (event) => {
+  const film = event.target.closest("video");
+  if (film) { film.currentTime = 0; film.play().catch(() => {}); }
+});
+
+/* 離開輸入框就存。一個「存」按鈕乘以六十個框，等於六十次「我按了嗎」；
+   而沒按到的那一次，寫的東西就沒了。 */
+$("list").addEventListener("focusout", async (event) => {
+  const box = event.target.closest("textarea[data-key]");
+  if (!box) return;
+  const note = box.value.trim();
+  if (note === (box.dataset.was || "")) return;      // 沒改就不要打 API
+  const said = box.parentElement.querySelector(".said");
+  try {
+    const back = await fetch("/api/card-note", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({key: box.dataset.key, note}),
+    });
+    const got = await back.json();
+    if (!back.ok) throw new Error(got.detail || "存不起來");
+    box.dataset.was = note;
+    box.classList.toggle("has", !!note);
+    KINDS.forEach((one) => one.ways.forEach((w) => {
+      if (w.key === box.dataset.key) w.note = note;
+    }));
+    said.className = "said";
+    said.textContent = note ? "存好了" : "清掉了";
+    countNotes();
+    setTimeout(() => { said.textContent = ""; }, 1600);
+  } catch (error) {
+    said.className = "said bad";
+    said.textContent = error.message;
+  }
+});
+
+function countNotes() {
+  const n = KINDS.reduce((sum, one) =>
+    sum + one.ways.filter((w) => (w.note || "").trim()).length, 0);
+  $("notes").textContent = n ? `${n} 則建議` : "";
 }
 
 $("list").addEventListener("click", async (event) => {
@@ -152,6 +254,27 @@ $("tones").addEventListener("click", (event) => {
   TONE = button.dataset.tone;
   load().catch(() => {});
 });
+
+/* 全部重來：每一個畫法打開，所有建議清掉。
+   先問，而且把「會消失什麼」數出來 —— 建議是寫過的東西，一個
+   「確定嗎？」問不出那件事有多重。 */
+$("reset").onclick = async () => {
+  const off = KINDS.reduce((sum, one) =>
+    sum + one.ways.filter((w) => w.off).length, 0);
+  const notes = KINDS.reduce((sum, one) =>
+    sum + one.ways.filter((w) => (w.note || "").trim()).length, 0);
+  if (!off && !notes) { told("本來就是出廠狀態", "沒有關掉的，也沒有建議。"); return; }
+  const lose = [];
+  if (notes) lose.push(`${notes} 則建議會被清掉`);
+  if (off) lose.push(`${off} 個關掉的畫法會被打開`);
+  if (!await confirmed("全部重來？", {body: "回到出廠狀態，救不回來。", lose,
+                                     yes: "全部重來"})) return;
+  try {
+    const back = await fetch("/api/card-reset", {method: "POST"});
+    if (!back.ok) throw new Error((await back.json()).detail || "重來不了");
+    await load();
+  } catch (error) { told("重來不了", error.message); }
+};
 
 load().catch((error) => {
   $("list").innerHTML = '<p class="under">讀不到：' + esc(error.message) + "</p>";

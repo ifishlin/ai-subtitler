@@ -2004,6 +2004,35 @@ def _demo_spec(kind: str, tone: str) -> dict[str, Any]:
     return {**base, "title": "示範"}
 
 
+def _demo_clip(way, spec: dict[str, Any], target: Path,
+               seconds: float = 2.2, fps: int = 24) -> None:
+    """一個畫法畫成一小段影片。
+
+    360×640、24fps、無聲 —— 這是給人在網頁上看的縮圖，不是成品。
+    整張 1080×1920 的話六十段要跑好幾分鐘，而看的人分辨不出差別。
+    """
+    from core import cards as cards_module
+    total = max(1, round(seconds * fps))
+    # 到達的節奏跟成片一樣：前面那一段在動，後面停住。停住的時間讓人看清楚
+    # 最後長什麼樣 —— 一路動到最後一格會看不到結果。
+    arrive = max(1, round(0.62 * total))
+    pipe = subprocess.Popen(
+        ["ffmpeg", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
+         "-s", "360x640", "-r", str(fps), "-i", "-",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "26",
+         "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+         str(target), "-y"], stdin=subprocess.PIPE)
+    try:
+        for index in range(total):
+            part = min(1.0, (index + 1) / arrive)
+            pipe.stdin.write(way(spec, part).resize((360, 640)).tobytes())
+        pipe.stdin.close()
+    except BrokenPipeError:
+        pass
+    if pipe.wait() != 0:
+        raise RuntimeError(f"ffmpeg 畫不出 {target.name}")
+
+
 @app.get("/api/card-ways")
 def card_ways(tone: str = "cool") -> dict[str, Any]:
     """每一種卡有哪些畫法，各畫一張示範。
@@ -2013,7 +2042,18 @@ def card_ways(tone: str = "cool") -> dict[str, Any]:
     """
     from core import cards as cards_module
     CARD_DEMO.mkdir(parents=True, exist_ok=True)
+    # 舊指紋的示範片掃掉。改一次 cards.py 就換一批檔名，而舊的沒有人會再看 ——
+    # 一小時改了十幾次之後那個資料夾有 279 個檔、7.4 MB。
+    # 破壞性的步驟放最後：先算出這一輪要哪些，留著它們，其餘才刪。
+    keep = {hashlib.sha1((f"{kind}.{one.__name__}" + tone
+                          + cards_module.how()).encode()).hexdigest()[:12] + ".mp4"
+            for kind, ways in cards_module.WAYS.items() for one in ways
+            for tone in rules_module_tones()}
+    for old_one in CARD_DEMO.glob("*.mp4"):
+        if old_one.name not in keep:
+            old_one.unlink(missing_ok=True)
     off = cards_module._off()
+    notes = _card_notes()
     out = []
     for kind in sorted(cards_module.WAYS):
         spec = _demo_spec(kind, tone)
@@ -2021,15 +2061,19 @@ def card_ways(tone: str = "cool") -> dict[str, Any]:
         for one in cards_module.WAYS[kind]:
             key = f"{kind}.{one.__name__}"
             # 檔名帶畫法名和程式指紋，改了畫法就換檔名 —— 舊圖自然找不到。
+            # 動的，不是靜的。卡片本來就是時間的函式，而**一半的畫法是
+            # 動作**：螢光筆刷過去、方框從角落長出來、印章掉下來過衝。
+            # 靜止的那一格看不到那些，於是五種畫法在頁面上看起來只有三種。
             target = CARD_DEMO / (
                 hashlib.sha1((key + tone + cards_module.how()).encode()
-                             ).hexdigest()[:12] + ".png")
+                             ).hexdigest()[:12] + ".mp4")
             if not target.is_file():
-                one(spec, 1.0).resize((360, 640)).save(target)
+                _demo_clip(one, spec, target)
             ways.append({"key": key, "name": one.__name__,
                          "off": key in off, "first": one is
                          cards_module.WAYS[kind][0],
                          "why": (inspect.getdoc(one) or "").split("\n")[0],
+                         "note": notes.get(key, ""),
                          "image": f"/media/card-demo/{target.name}"})
         out.append({"kind": kind, "ways": ways,
                     "spec": json.dumps(spec, ensure_ascii=False, indent=1)})
@@ -2047,12 +2091,78 @@ def rules_module_tones() -> list[str]:
 
 @app.get("/media/card-demo/{name}")
 def card_demo_image(name: str) -> FileResponse:
-    if not re.fullmatch(r"[0-9a-f]{6,32}\.png", name):
+    if not re.fullmatch(r"[0-9a-f]{6,32}\.mp4", name):
         raise HTTPException(404, "沒有這張")
     target = CARD_DEMO / name
     if not target.is_file():
         raise HTTPException(404, "沒有這張")
-    return FileResponse(target, media_type="image/png")
+    return FileResponse(target, media_type="video/mp4")
+
+
+CARDS_FILE = ROOT / "assets" / "cards.json"
+
+
+def _card_settings() -> dict[str, Any]:
+    if not CARDS_FILE.is_file():
+        return {}
+    try:
+        return json.loads(CARDS_FILE.read_text(encoding="utf-8"))
+    except Exception:                                             # noqa: BLE001
+        return {}
+
+
+def _card_notes() -> dict[str, str]:
+    got = _card_settings().get("notes")
+    return got if isinstance(got, dict) else {}
+
+
+def _save_card_settings(**changes: Any) -> None:
+    """關掉哪些、寫了什麼建議，存在同一個檔案裡。
+
+    分兩個檔的話，改一邊會蓋掉另一邊 —— 兩個端點各自 write_text，
+    後寫的贏。那是這個專案修過的「先讀再寫，中間有人改了」的形狀。
+    """
+    settings = _card_settings()
+    settings.update(changes)
+    CARDS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    CARDS_FILE.write_text(json.dumps(settings, ensure_ascii=False, indent=1)
+                          + "\n", encoding="utf-8")
+
+
+@app.post("/api/card-note")
+def card_note(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """寫下這個畫法哪裡要改。
+
+    存起來而不是講一次就算 —— 講完的意見會被忘記，寫在檔案裡的不會，
+    而且我下次可以整批讀出來一次改完。
+    """
+    from core import cards as cards_module
+    key = str(payload.get("key") or "")
+    note = str(payload.get("note") or "").strip()
+    kind = key.split(".")[0]
+    if kind not in cards_module.WAYS:
+        raise HTTPException(404, f"沒有這種卡：{kind}")
+    notes = _card_notes()
+    if note:
+        notes[key] = note[:2000]
+    else:
+        notes.pop(key, None)
+    _save_card_settings(notes=notes)
+    return {"key": key, "note": note, "count": len(notes)}
+
+
+@app.post("/api/card-reset")
+def card_reset() -> dict[str, Any]:
+    """全部回到出廠：每一個畫法都打開，所有建議清掉。
+
+    回報清掉了幾個 —— 一個什麼都沒說的「好了」，跟一個沒有真的執行的請求
+    在畫面上長得一樣。
+    """
+    was = _card_settings()
+    gone = {"off": len(was.get("off") or []),
+            "notes": len(was.get("notes") or {})}
+    _save_card_settings(off=[], notes={})
+    return {"reset": True, **gone}
 
 
 @app.post("/api/card-way")
@@ -2076,10 +2186,8 @@ def card_way_off(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             if f"{kind}.{one.__name__}" not in off]
     if not live:
         raise HTTPException(400, f"{kind} 至少要留一種畫法")
-    where = ROOT / "assets" / "cards.json"
-    where.parent.mkdir(parents=True, exist_ok=True)
-    where.write_text(json.dumps({"off": sorted(off)}, ensure_ascii=False,
-                                indent=1) + "\n", encoding="utf-8")
+    # 只改 `off`，不要整個蓋過去 —— 建議也在同一個檔裡。
+    _save_card_settings(off=sorted(off))
     return {"key": key, "off": want_off, "live": len(live)}
 
 

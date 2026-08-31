@@ -161,6 +161,33 @@ if not faults:
 sys.exit(1 if faults else 0)
 PY
 
+# 載了 ask.js 的頁面，要有它需要的東西。
+#
+# ask.js 的檔頭寫著「Needs: a $ (id lookup) and an escapeHTML in scope,
+# and ask.css」。/cards 定義了 `esc` 沒有定義 `escapeHTML`，於是 `confirmed()`
+# 第一行就 ReferenceError，而畫面上的樣子是**按了確認鈕什麼都沒發生** ——
+# 跟那個從來沒出現過的確認框一模一樣的症狀，隔了幾天又來一次。
+#
+# 一份寫在檔頭的依賴，是一份沒有人會在加新頁面時去讀的依賴。
+echo "檢查載了 ask.js 的頁面有沒有它要的東西…"
+python3 - <<'PY' || bad=1
+import re, sys, pathlib
+faults = 0
+for path in sorted(pathlib.Path("studio/static").glob("*.html")):
+    text = path.read_text(encoding="utf-8")
+    if "ask.js" not in text:
+        continue
+    for need, how in (("ask.css", "沒有載 ask.css，對話框會沒有樣子"),
+                      ("escapeHTML", "沒有 escapeHTML（自己定義或載 shared.js）"),
+                      ("$(", "沒有 $ 這個查元素的函式")):
+        if need not in text.replace('src="/static/ask.js"', ""):
+            print(f"  ❌ {path.name}　{how}")
+            faults += 1
+if not faults:
+    print("  ✅ 都有")
+sys.exit(1 if faults else 0)
+PY
+
 # 蓋住整個畫面的東西，要蓋過導覽列。
 #
 # 導覽列是 sticky、z-index 9000，貼在畫面上緣。一個 `position:fixed; inset:0`
@@ -210,6 +237,34 @@ for path in sorted(pathlib.Path("studio/static").glob("*.html")):
         if need not in text:
             print(f"  ❌ {path.name}　沒有載 {need}（{why}）")
             faults += 1
+if not faults:
+    print("  ✅ 都有")
+sys.exit(1 if faults else 0)
+PY
+
+# 影片標籤在播之前不會自己解出任何一格。六十張卡整頁全黑就是這樣來的：
+# 檔案在、HTTP 200、JS 零例外，只是沒有人叫它畫 —— 又一個不會報錯的畫面錯。
+echo "檢查影片停著的時候有沒有畫面…"
+python3 - <<'PY' || bad=1
+import sys, pathlib, re
+faults = 0
+for path in sorted(pathlib.Path("studio/static").glob("*.html")):
+    text = path.read_text(encoding="utf-8")
+    # 頁面自己跳一格。這是整頁共用的做法，不是逐個標籤寫的。
+    seeks = re.search(r"loadedmetadata[\s\S]{0,400}?currentTime"
+                      r"|currentTime[\s\S]{0,400}?loadedmetadata", text)
+    for tag in re.findall(r"<video\b[^>]*>", text):
+        # 管的是「畫面上的一格東西」。src 由 JS 灌進去的是播放器，空著是它
+        # 本來的樣子；有 controls 的也是播放器 —— 按下去之前黑的很正常。
+        if "src=" not in tag or "controls" in tag:
+            continue
+        # 停著也有畫面的三種辦法：poster、src 後面用 #t= 指定畫格、
+        # 或是頁面在 loadedmetadata 時自己跳一格。
+        if "poster" in tag or "#t=" in tag or "autoplay" in tag or seeks:
+            continue
+        print(f"  ❌ {path.name}　<video src=…> 沒有 poster、沒有 #t=、"
+              f"也沒有在 loadedmetadata 時跳一格 —— 它停著的時候是全黑的")
+        faults += 1
 if not faults:
     print("  ✅ 都有")
 sys.exit(1 if faults else 0)

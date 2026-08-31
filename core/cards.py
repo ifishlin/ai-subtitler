@@ -120,8 +120,28 @@ def _ground(spec: dict[str, Any]) -> Image.Image:
     nothing in it but the diagram, so two thirds of every card was an empty
     field. A photograph never has this problem -- it fills its frame whether
     or not the subject does.
+
+    ## 為什麼快取
+
+    這一支佔了畫一張卡的四分之三時間：一千九百二十行漸層、兩百多條格線、
+    一次高斯模糊 —— 而一張卡在影片裡有七十幾格，每一格都重畫一次完全一樣的
+    背景。六十段示範跑了兩分鐘還沒跑完。
+
+    key 用**色值本身**，不是 tone 的名字：改了 `theme.json` 的顏色，key 就
+    不一樣，下一格立刻是新的。「讀檔案所以改了馬上生效」那個設計沒有被
+    快取吃掉。
     """
     tone = tone_of(spec)
+    return _ground_for(tuple(sorted(tone.items())),
+                       str(spec.get("ghost") or "")[:2]).copy()
+
+
+@functools.lru_cache(maxsize=24)
+def _ground_for(marks: tuple, ghost: str) -> Image.Image:
+    """真正在畫的那一支。回傳的圖給 `_ground()` 複製 —— 呼叫端會在上面畫，
+    直接給快取裡那一張的話，第二格會疊在第一格上面。"""
+    tone = dict(marks)
+    spec = {"ghost": ghost}
     card = Image.new("RGB", (W, H), tone["top"])
     draw = ImageDraw.Draw(card)
     top, bottom = tone["top"], tone["bottom"]
