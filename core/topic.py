@@ -195,7 +195,40 @@ def facts_of(pile: dict[str, Any]) -> list[dict[str, Any]]:
         found = tail.search(said)
         out.append({"say": said[:found.start()].strip() if found else said.strip(),
                     "from": found.group(1).strip() if found else ""})
-    return [one for one in out if one["say"]]
+    return [{**one, "kind": fact_kind(one["from"])}
+            for one in out if one["say"]]
+
+
+_HAS_SECONDS = None
+
+
+def fact_kind(source: str) -> str:
+    """這一條事實是從哪一種素材讀出來的：影片、報導、還是不知道。
+
+    看出處的形狀，不另外存一個欄位 —— 存下來的東西會跟事實本身不同步，而
+    形狀是寫進去的時候就決定的：
+
+    ```
+    影片   CNN 第 104 秒            facts.source_line() 組的
+    報導   CNBC〈AI data center…〉   facts.ask_report() 組的
+    不明   CNBC                     沒有程式會寫成這樣 —— 是人手打的
+    ```
+
+    「不明」不是壞掉，是實話：那幾條是 `facts.gather()` 存在之前補的，指得回
+    一家媒體但指不回哪一則。分得出來才知道哪幾條該重讀一次。
+
+    這個欄位**不會進 prompt**：`brief.as_text()` 只印 say 和 from，多兩個字
+    乘以四十二條是白花的篇幅，而形狀本身已經在出處裡了。
+    """
+    global _HAS_SECONDS
+    if _HAS_SECONDS is None:
+        import re as re_module
+        _HAS_SECONDS = re_module.compile(r"第\s*\d+\s*秒")
+    if "〈" in source:
+        return "報導"
+    if _HAS_SECONDS.search(source):
+        return "影片"
+    return "不明"
 
 
 def unsourced_facts(pile: dict[str, Any]) -> list[dict[str, Any]]:

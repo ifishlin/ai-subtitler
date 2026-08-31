@@ -292,6 +292,14 @@
   .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin-bottom:7px;font-size:13px}
   .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
+  /* 這一條是哪一種素材讀出來的。只在畫面上 —— prompt 裡靠出處自己的形狀
+     （「第 104 秒」對「〈標題〉」），不多送兩個字乘以四十二條。 */
+  .src .kind{display:inline-block;font-style:normal;margin-right:7px;
+    padding:0 6px;border-radius:9px;border:1px solid var(--line);
+    font-size:10px;line-height:16px}
+  .src .kind.vid{color:#7fd4ff;border-color:#2b4a5e}
+  .src .kind.rep{color:var(--ok);border-color:#2c5a45}
+  .src .kind.hmm{color:var(--warn);border-color:#5c4a2a}
   .src .fact{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.7}
   .lean{font-size:10px;padding:1px 7px;border-radius:99px;margin-left:6px;
     border:1px solid var(--line);color:var(--dim)}
@@ -769,12 +777,27 @@ async function open(name) {
 
     <section class="pile" id="pile-整理出的事實">
       <h3>整理出的事實 <span class="count">${(pile.facts || []).length}</span>
-        <span class="hint">每一條都要指得回某一篇。還沒有程式在抽，
-          要手動加進 topics/*.json</span></h3>
+        <span class="hint">${(() => {
+          /* 哪一種素材讀出來的，佔比多少。看得出「全部來自影片」——
+             而那正是觀點寫不出來的原因：五支影片講同一件事，不會互相矛盾。
+             `kind` 由 topic.fact_kind() 從出處的形狀判定，
+             **不會進 prompt** —— 多兩個字乘以四十二條是白花的篇幅。 */
+          const all = pile.facts || [];
+          if (!all.length) return "每一條都要指得回某一篇";
+          const tally = {};
+          all.forEach((one) => {
+            tally[one.kind || "不明"] = (tally[one.kind || "不明"] || 0) + 1;
+          });
+          return Object.entries(tally).map(([kind, n]) =>
+            `${kind} ${n}（${Math.round(n / all.length * 100)}%）`).join("　·　");
+        })()}</span></h3>
       ${(pile.facts || []).length
         ? (pile.facts || []).map((fact) => `
             <div class="src">${escapeHTML(fact.say)}
-              <div class="who">${escapeHTML(fact.from || "")}</div></div>`).join("")
+              <div class="who"><i class="kind ${
+                fact.kind === "報導" ? "rep" : fact.kind === "影片" ? "vid" : "hmm"
+              }">${escapeHTML(fact.kind || "不明")}</i>${
+                escapeHTML(fact.from || "")}</div></div>`).join("")
         : '<div class="empty">還沒有整理</div>'}
     </section>
 

@@ -702,6 +702,10 @@ def get_topic(name: str) -> dict[str, Any]:
     from core import rules as rules_module
     enough, why = topic_module.ready(pile)
     return {**pile, "counts": topic_module.counts(pile),
+            # 事實走 facts_of() 而不是檔案裡那一份：形狀在讀的時候才規定
+            # （兩種寫法都收），而 `kind`（影片／報導／不明）也是在那裡算的。
+            # 直接送 pile["facts"] 的話畫面上每一條都會標成「不明」。
+            "facts": topic_module.facts_of(pile),
             "balance": topic_module.balance(pile), "ready": enough, "why": why,
             # Read off the scripts, not out of the topic file: the copy stored
             # there was never written to, so finished scripts did not appear.
