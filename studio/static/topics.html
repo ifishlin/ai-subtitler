@@ -1138,12 +1138,23 @@ $("btnBack").onclick = () => leaveTo("/");
 
 /* 網址帶了名字就開那一個 —— 從文案頁按「回題目」會這樣過來。 */
 async function boot() {
-  try { FORMATS = (await api("GET", "/api/formats")).formats || []; }
-  catch (error) { FORMATS = []; }   // 選單會掉回「新聞報導」
-  await reload(false);
+  const settle = holdOff();
+  /* 並行，理由同 scripts.html：串著跑的那幾百毫秒就是換頁時閃的那一下。
+     公版清單抓不到，「寫成」那個選單會掉回「新聞報導」，不影響其他事。 */
+  const [formats, listed] = await Promise.all([
+    api("GET", "/api/formats").catch(() => ({formats: []})),
+    api("GET", "/api/topics").catch(() => ({topics: [], want: STATE.want})),
+  ]);
+  FORMATS = formats.formats || [];
+  STATE.list = (listed.topics || []).sort((a, b) => b.modified - a.modified);
+  STATE.want = listed.want || STATE.want;
+
   const wanted = new URLSearchParams(location.search).get("name");
-  if (wanted && STATE.list.some((one) => one.name === wanted)) await open(wanted);
-  else if (STATE.list.length) await open(STATE.list[0].name);
+  const pick = (wanted && STATE.list.some((one) => one.name === wanted))
+    ? wanted : (STATE.list[0] && STATE.list[0].name);
+  renderList();
+  settle();
+  if (pick) await open(pick);
 }
 
 /* 報錯的規矩在 shared.js：壞了要說，但離開中不要說。 */

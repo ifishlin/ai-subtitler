@@ -1213,13 +1213,25 @@ async function reload() {
 
 /* 網址帶名字就開那一份 —— 素材頁的文案卡片這樣連過來。 */
 async function boot() {
-  try { FORMATS = (await api("GET", "/api/formats")).formats || []; }
-  catch (error) { FORMATS = []; }
-  await reload();
+  const settle = holdOff();
   const wanted = new URLSearchParams(location.search).get("name");
+
+  /* 三個呼叫並行。它們本來串著跑 —— 公版 140ms、清單 402ms、那一份 62ms ——
+     六百毫秒是切換頁面時看得到的一閃。而它們不互相依賴：網址帶了名字，那一
+     份就不必等清單回來。 */
+  const [formats, listed] = await Promise.all([
+    api("GET", "/api/formats").catch(() => ({formats: []})),
+    api("GET", "/api/scripts").catch(() => ({scripts: []})),
+  ]);
+  FORMATS = formats.formats || [];
+  STATE.list = listed.scripts || [];
+
   const pick = (wanted && STATE.list.some((one) => one.name === wanted))
     ? wanted : (STATE.list[0] && STATE.list[0].name);
-  if (pick) { STATE.chosen = pick; renderList(); await showScript(pick); }
+  STATE.chosen = pick || null;
+  renderList();
+  settle();
+  if (pick) await showScript(pick);
 }
 
 /* 報錯的規矩在 shared.js：壞了要說，但離開中不要說。 */

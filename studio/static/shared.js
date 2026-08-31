@@ -187,3 +187,22 @@ function reportFault(error) {
       white-space:pre-wrap;font:12px var(--mono)">頁面出錯了：
 ${escapeHTML((error && error.stack) || error)}</div>`;
 }
+
+
+/* ---------------------------------------------------------------- 佔位
+ *
+ * 「左邊選一份文案」那塊字是靜態標記，所以它一定先畫出來，然後才被真的內容
+ * 換掉。三個 API 串著跑要六百毫秒，那六百毫秒就是切換頁面時閃的那一下。
+ *
+ * 兩件事一起做：boot 裡的呼叫改成並行（在別處），還有這裡 —— 慢到一定程度
+ * 才顯示佔位，快的時候一次都不畫。180 毫秒是人開始覺得「沒反應」的量級，
+ * 比那快就不必解釋自己在做什麼。 */
+
+function holdOff(id = "paper", after = 180) {
+  const box = $(id);
+  if (!box) return () => {};
+  const was = box.innerHTML;
+  box.innerHTML = "";
+  const timer = setTimeout(() => { box.innerHTML = was; }, after);
+  return () => clearTimeout(timer);
+}
