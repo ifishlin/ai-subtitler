@@ -227,6 +227,10 @@
   /* 動作列貼在畫面底部，跟短影音那邊的「壓片」同一個處置。這一頁的素材堆
      很長，滑到一半決定要寫不該先捲回頂端。
      #jobBar 跑起來的時候在它下面（fixed、z-index 50），所以讓開。 */
+  /* #paper 是 overflow:auto，所以 sticky 貼的是它的底部而不是視窗底部 ——
+     而它有 padding-bottom:60px，那 60px 就把動作列頂上去了。短影音那邊能
+     work 是因為順手加了這一行，這裡漏了。 */
+  #paper{padding-bottom:0}
   body:has(#jobBar:not([hidden])) .acts{bottom:46px}
   .acts{position:sticky;bottom:0;z-index:15;
     display:flex;align-items:center;gap:8px;flex-wrap:wrap;
