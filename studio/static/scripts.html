@@ -174,7 +174,17 @@
   #pendingCount{font:12px var(--mono);color:#e2a33c}
   #pending .hint{font-size:11px;color:var(--faint);flex:1}
   .shape{background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    padding:11px 14px;margin:12px 0}
+    margin:12px 0}
+  .shape summary{display:flex;align-items:baseline;gap:12px;padding:10px 14px;
+    cursor:pointer;list-style:none;user-select:none}
+  .shape summary::-webkit-details-marker{display:none}
+  .shape summary b{font-size:13px}
+  .shape summary .quick{font:12px var(--mono);color:var(--dim)}
+  .shape summary .more{margin-left:auto;font:11px var(--mono);color:var(--faint)}
+  .shape summary .more:before{content:"▸ "}
+  .shape[open] summary .more:before{content:"▾ "}
+  .shape summary:hover .more{color:var(--accent)}
+  .shape > *:not(summary){margin:0 14px 12px}
   .shape-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;
     background:#0d1014}
   .shape-bar i{display:flex;align-items:center;justify-content:center;
@@ -328,9 +338,15 @@
     border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
   td.from{font-size:11px;color:var(--faint);width:11em}
   td.from.ours{color:var(--accent)}
-  .ruler{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;
-    margin:14px 0 4px;border:1px solid var(--line);display:flex}
-  .ruler i{display:block;height:100%;border-right:1px solid #0b0e12}
+  /* 逐句表的時間軸。本來是一條沒有標題、沒有說明的藍色橫條浮在表格上面 ——
+     看得到，看不懂。現在它自己說是什麼，而且跟表頭黏在一起。 */
+  .ruler{display:flex;align-items:center;gap:9px;margin:14px 0 0;
+    font:11px var(--mono);color:var(--faint)}
+  .ruler > span{flex:none}
+  .ruler .end{margin-left:0}
+  .ruler .ticks{flex:1;display:flex;height:9px;border-radius:99px;
+    background:var(--panel2);overflow:hidden}
+  .ruler i{display:block;height:100%;border-right:1px solid var(--bg)}
   .ruler i:nth-child(odd){background:var(--accent)}
   .ruler i:nth-child(even){background:#4a86cc}
   #note.bad{color:var(--danger)}
@@ -712,8 +728,13 @@ function shapePanel(sums) {
   const before = lines.filter((line) => line.at < (turn ? turn.at : 0)).slice(-2);
   const after = turn ? lines.slice(lines.indexOf(turn), lines.indexOf(turn) + 2) : [];
   const story = pivot === "疑點";
+  /* 收著。上面那一行已經說了結構過不過；這一塊是「那個轉到底翻轉了什麼」
+     —— 一個要坐下來讀的問題，不是每次打開文案都要看的東西。 */
   return `
-  <div class="shape">
+  <details class="shape">
+    <summary><b>起承轉合</b>
+      <span class="quick">${runs.map((run) => run.role).join(" · ")}</span>
+      <span class="more">看那個轉</span></summary>
     <div class="shape-bar">${runs.map((run) => `
       <i style="width:${(run.seconds / clock) * 100}%;background:${
         ROLE_COLOUR[run.role] || "#555"}"
@@ -738,7 +759,7 @@ function shapePanel(sums) {
         : `看完上面兩句，再看下面兩句——<b>對同一批事實的理解變了嗎？</b>
            沒變的話，那是補充或換句話說，不是轉。`}</div>
     </div>` : ""}
-  </div>`;
+  </details>`;
 }
 
 /* 畫面的權利，放進「細節」裡。
@@ -899,9 +920,16 @@ async function showScript(name) {
       <button id="btnDropLines" class="tiny">放棄</button>
     </div>
     ${shapePanel(sums)}
-    <div class="ruler">${sums.lines.map((line) =>
-      `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
-          title="${clock(line.at)}"></i>`).join("")}</div>
+    <!-- 一句一格，寬度是它佔的秒數。本來就浮在表格上面，沒有標題也沒有說明
+         —— 一條看不懂的藍色橫條。它是這張表的時間軸，所以現在跟表頭黏在
+         一起，而且說出自己是什麼。 -->
+    <div class="ruler" title="一句一格，寬度是它佔的秒數">
+      <span>每一句多長</span>
+      <div class="ticks">${sums.lines.map((line) =>
+        `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
+            title="${clock(line.at)}　${line.seconds}s"></i>`).join("")}</div>
+      <span class="end">${clock(sums.seconds)}</span>
+    </div>
     <table>
       <thead><tr><th>起</th><th>台詞</th><th>畫面</th><th>來源</th></tr></thead>
       <tbody>${sums.lines.map((line) => `
