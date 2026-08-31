@@ -4,65 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>影片流水線</title>
+<link rel="stylesheet" href="/static/theme.css">
 <style>
-  :root{
-    --bg:#0b0f14; --panel:#111820; --line:#1d2836; --ink:#e8eef4;
-    --dim:#9db4c6; --faint:#5f7383; --accent:#5aa9e6; --ok:#4ec98f;
-    --warn:#e8975a; --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
-  }
-  @media (prefers-color-scheme:light){
-    :root{--bg:#f7f8fa; --panel:#fff; --line:#dde3e9; --ink:#16232e;
-          --dim:#4a5a6a; --faint:#8296a8; --accent:#1f6f9f;}
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang TC",
-      "Noto Sans TC",sans-serif}
-  .wrap{max-width:1000px;margin:0 auto;padding:34px 22px 70px}
-  h1{margin:0 0 6px;font-size:26px;letter-spacing:.5px}
-  .under{color:var(--dim);margin:0 0 30px;font-size:14px}
 
-  h2{font-size:13px;color:var(--faint);font-weight:600;letter-spacing:1px;
-    margin:34px 0 12px;text-transform:uppercase}
 
-  .cards{display:grid;gap:12px;
-    grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
-  a.card{display:block;background:var(--panel);border:1px solid var(--line);
-    border-radius:12px;padding:16px 18px;text-decoration:none;color:inherit;
-    transition:border-color .12s,transform .12s}
-  a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
-  a.card b{display:block;font-size:16px;margin-bottom:5px}
-  a.card b .icon{margin-right:7px}
-  a.card span{display:block;color:var(--dim);font-size:13px;line-height:1.55}
-  a.card .step{font:11px var(--mono);color:var(--faint);margin-bottom:7px;
-    display:block;letter-spacing:.5px}
 
-  .strip{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 4px}
-  .tile{flex:1;min-width:120px;background:var(--panel);
-    border:1px solid var(--line);border-radius:11px;padding:13px 15px}
-  .tile b{display:block;font:24px var(--mono);font-variant-numeric:tabular-nums;
-    line-height:1.25}
-  .tile span{font-size:12px;color:var(--dim)}
-  .tile.good b{color:var(--ok)}
-  .tile.warn b{color:var(--warn)}
 
-  table{width:100%;border-collapse:collapse;font-size:13px;
-    background:var(--panel);border:1px solid var(--line);border-radius:11px;
-    overflow:hidden}
-  th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line)}
-  th{color:var(--faint);font-weight:600;font-size:11px;letter-spacing:.6px}
-  tr:last-child td{border-bottom:none}
-  td.num{font:13px var(--mono);font-variant-numeric:tabular-nums;
-    color:var(--dim);text-align:right;white-space:nowrap}
-  td a{color:var(--accent);text-decoration:none}
-  td a:hover{text-decoration:underline}
-  .pill{font:11px var(--mono);padding:2px 8px;border-radius:11px;
-    border:1px solid var(--line);color:var(--dim)}
-  .pill.ok{color:var(--ok);border-color:#2c5a45}
-  .pill.no{color:var(--warn);border-color:#5c3a2a}
-  .empty{color:var(--faint);padding:14px;font-size:13px}
-  .note{color:var(--faint);font-size:12px;margin-top:8px}
-  .scroll{overflow-x:auto}
+  /* 名稱不斷行，缺什麼的那一段可以斷。theme.css 的 .pill 是 nowrap，那對
+     「素材夠了」是對的，對「還缺 2 篇報導；還缺 4 張真實人事地…」是錯的 ——
+     它把名稱擠成三行，再把最後一欄推出畫面。名稱是這張表最該一眼認出的東
+     西，缺什麼是說明，說明可以換行。 */
+  table.sheet td:first-child{white-space:nowrap}
+  table.sheet td .pill.no{white-space:normal;display:inline-block;
+    line-height:1.5;max-width:340px}
+  table.sheet td.num{padding-left:8px;padding-right:8px}
 </style>
 </head>
 <body>
@@ -125,12 +80,12 @@
   </div>
 
   <h2>題目</h2>
-  <div class="scroll"><table id="topics"><tbody>
+  <div class="scroll"><table class="sheet" id="topics"><tbody>
     <tr><td class="empty">讀取中…</td></tr>
   </tbody></table></div>
 
   <h2>做出來的片</h2>
-  <div class="scroll"><table id="films"><tbody>
+  <div class="scroll"><table class="sheet" id="films"><tbody>
     <tr><td class="empty">讀取中…</td></tr>
   </tbody></table></div>
 </div>

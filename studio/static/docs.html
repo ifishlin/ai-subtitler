@@ -4,18 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>文件</title>
+<link rel="stylesheet" href="/static/theme.css">
 <style>
-  :root{
-    --bg:#0b0f14; --panel:#111820; --line:#1d2836; --ink:#e8eef4;
-    --dim:#9db4c6; --faint:#5f7383; --accent:#5aa9e6; --ok:#4ec98f;
-    --warn:#e8975a; --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
-    --code:#0d141c;
-  }
-  @media (prefers-color-scheme:light){
-    :root{--bg:#f7f8fa; --panel:#fff; --line:#dde3e9; --ink:#16232e;
-          --dim:#3f4e5c; --faint:#8296a8; --accent:#1f6f9f; --code:#f0f3f6;}
-  }
-  *{box-sizing:border-box}
+  :root{--code:#0d141c}   /* 只有這一頁用：程式碼區塊的底 */
   body{margin:0;background:var(--bg);color:var(--ink);
     font:15.5px/1.75 -apple-system,BlinkMacSystemFont,"PingFang TC",
       "Noto Sans TC",sans-serif}

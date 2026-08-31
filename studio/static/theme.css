@@ -1,0 +1,143 @@
+/* 整個系統的一份配色和一份基本元件。
+ *
+ * 七個頁面本來各寫一份 :root。名字幾乎一樣、值有微妙差異 —— accent 是
+ * #5aa9ff 還是 #5aa9e6、warn 是黃的還是橘的、bg 有四種深淺。單獨看每一頁
+ * 都沒問題，切換頁面就看得出來。這個專案已經為「兩份不同步的東西」修過三
+ * 次錯，配色是第四次。
+ *
+ * 值取自 scripts.html 和 produce.html —— 那兩頁本來就一模一樣，是實質上的
+ * 標準；index.html 和 assemble.html 各自漂了一點，新頁面漂得最多。
+ *
+ * 深色，只有深色。舊頁面在 :root 之外還寫死了一百五十多個深色值，加上淺色
+ * 模式只會讓那些值在淺底上變成看不見的字。要做淺色，得先把那些清掉。 */
+
+:root{
+  --bg:#0b0e12;
+  --panel:#141a21;
+  --panel2:#1b232c;
+  --line:#26313d;
+  --ink:#e6edf3;
+  --dim:#9fb0c0;
+  --faint:#6b7c8c;
+  --accent:#5aa9ff;
+  --ok:#4ec98b;
+  --warn:#f5b544;
+  --danger:#ef6b6b;
+  --sidecar:#a98bff;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",
+    "Helvetica Neue",sans-serif;
+  --radius:11px;
+}
+
+/* ---------------------------------------------------------------- 基本 */
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:15px/1.65 var(--sans);
+}
+
+a{color:var(--accent)}
+
+/* ---------------------------------------------------------------- 導覽列
+ * nav.js 注入的那一條。樣式放在這裡而不是 JS 裡，因為它就是配色的一部分。 */
+
+.topnav{
+  display:flex;gap:2px;align-items:center;flex-wrap:wrap;
+  padding:7px 12px;
+  background:var(--panel);
+  border-bottom:1px solid var(--line);
+  font:13px var(--sans);
+  position:sticky;top:0;z-index:9000;
+}
+.topnav a{
+  color:var(--dim);text-decoration:none;
+  padding:5px 11px;border-radius:7px;white-space:nowrap;
+}
+.topnav a:hover{color:var(--ink);background:var(--panel2)}
+.topnav a.here{color:var(--bg);background:var(--accent);font-weight:600}
+.topnav .gap{flex:1}
+.topnav .mark{color:var(--faint);font:11px var(--mono);padding-right:6px}
+
+/* ---------------------------------------------------------------- 版面 */
+
+.wrap{max-width:1020px;margin:0 auto;padding:30px 22px 80px}
+
+h1{margin:0 0 5px;font-size:24px;letter-spacing:.4px}
+h2{
+  font-size:13px;color:var(--faint);font-weight:600;letter-spacing:1px;
+  margin:32px 0 11px;text-transform:uppercase;
+}
+.under{color:var(--dim);margin:0 0 8px;font-size:14px}
+.note{color:var(--faint);font-size:12px;margin-top:8px}
+.empty{color:var(--faint);padding:14px;font-size:13px}
+.scroll{overflow-x:auto}
+
+/* ---------------------------------------------------------------- 元件
+ * 這幾樣在三個以上的頁面重複出現，所以放在這裡。只在這裡出現一次的東西留
+ * 在它自己那一頁 —— 共用檔裝滿只有一個地方用的規則，就不是共用檔了。 */
+
+/* 一格一格的入口卡 */
+.cards{display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
+a.card{
+  display:block;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:16px 18px;text-decoration:none;color:inherit;
+  transition:border-color .12s,transform .12s;
+}
+a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
+a.card b{display:block;font-size:16px;margin-bottom:5px;color:var(--ink)}
+a.card b .icon{margin-right:7px}
+a.card span{display:block;color:var(--dim);font-size:13px;line-height:1.55}
+a.card .step{
+  font:11px var(--mono);color:var(--faint);margin-bottom:7px;
+  display:block;letter-spacing:.5px;
+}
+
+/* 一排數字 */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 4px}
+.tile{
+  flex:1;min-width:120px;background:var(--panel);
+  border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;
+}
+.tile b{
+  display:block;font:24px var(--mono);font-variant-numeric:tabular-nums;
+  line-height:1.25;color:var(--ink);
+}
+.tile span{font-size:12px;color:var(--dim)}
+.tile.good b{color:var(--ok)}
+.tile.warn b{color:var(--warn)}
+
+/* 小標籤 */
+.pill{
+  font:11px var(--mono);padding:2px 8px;border-radius:11px;
+  border:1px solid var(--line);color:var(--dim);white-space:nowrap;
+}
+.pill.ok{color:var(--ok);border-color:#2c5a45}
+.pill.no{color:var(--warn);border-color:#5c4a2a}
+.pill.bad{color:var(--danger);border-color:#5c2a2a}
+
+/* 表格 */
+table.sheet{
+  width:100%;border-collapse:collapse;font-size:13px;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;
+}
+table.sheet th,table.sheet td{
+  text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);
+}
+table.sheet th{
+  color:var(--faint);font-weight:600;font-size:11px;letter-spacing:.6px;
+  white-space:nowrap;
+}
+table.sheet tr:last-child td{border-bottom:none}
+table.sheet td.num{
+  font:13px var(--mono);font-variant-numeric:tabular-nums;
+  color:var(--dim);text-align:right;white-space:nowrap;
+}
+table.sheet td a{color:var(--accent);text-decoration:none}
+table.sheet td a:hover{text-decoration:underline}

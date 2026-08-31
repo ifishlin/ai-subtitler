@@ -148,6 +148,8 @@ GATES = [
      "say／show／note 三個欄位逐字判。OpenCC 兩次轉換交叉比對"),
     ("card_wrong", "卡片畫不出來",         "script",   True,
      "每種卡需要的欄位。bars 的長度要是數字，不能是「超過 1/3」"),
+    ("clipped",    "台詞會被字幕區截掉",    "frame",    True,
+     "一句斷成三行還放不完，尾巴就會消失，而且只在燒上去的畫面裡看得到"),
 ]
 
 # One frame of slack on the length, and it is not a fudge: a film cannot be
@@ -159,8 +161,17 @@ GATES = [
 SLACK_SECONDS = round(1 / 30, 4)
 
 
-def too_long(measured: dict[str, Any]) -> bool:
-    """Whether this really runs over, as opposed to rounding over."""
+def runs_over(measured: dict[str, Any]) -> bool:
+    """Whether this really runs over, as opposed to rounding over.
+
+    Not called `too_long`: that name was already taken further down this same
+    file by a function about captions being clipped, and Python shadows
+    silently. Mine was defined first, so every caller got the other one --
+    build() passed a `measured` dict to a function expecting a script, and the
+    length gate stopped working. Nothing raised, because the wrong function
+    happily returned an empty list, and an empty list is a false in Python and
+    a true in JavaScript, so the page marked every film as too long.
+    """
     return measured.get("over", 0.0) > SLACK_SECONDS
 
 
@@ -225,6 +236,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "unsigned": unsigned(script),
             "simplified": simplified(script),
             "card_wrong": card_wrong(script),
+            "clipped": clipped(script),
             "house": rules_module.house(script.get("format")).get("name", ""),
             "roles": roles_of(script),
             "borrowed_most": most,
@@ -718,8 +730,16 @@ def structure(script: dict[str, Any],
     return faults
 
 
-def too_long(script: dict[str, Any]) -> list[dict[str, Any]]:
-    """Lines that will not fit, with what would be dropped."""
+def clipped(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Lines whose caption will not fit, with what would be dropped.
+
+    `wrap` breaks a line into at most three rows and returns those rows; a
+    line too long for three rows loses its tail, and the loss appears only in
+    the burnt-in frame. Nothing called this for months. It is a gate now --
+    currently zero across all nine scripts, because the thirteen-character
+    rule is enforced while the words are written, which is the whole argument
+    for putting rules where the writing happens.
+    """
     over = []
     for index, line in enumerate(script.get("lines") or [], start=1):
         rows = wrap(line.get("say", ""))

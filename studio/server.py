@@ -257,7 +257,7 @@ def list_gates() -> dict[str, Any]:
                      # The verdict, not the number, so the page cannot decide
                      # differently from the builder. It did: a shipped 90.01s
                      # film showed as too long here and had been accepted there.
-                     "too_long": script_module.too_long(measured),
+                     "too_long": script_module.runs_over(measured),
                      "even": measured["even"],
                      "still_enough": measured["still_enough"]},
         })

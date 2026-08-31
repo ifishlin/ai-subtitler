@@ -279,7 +279,7 @@ def build(name: str, target: Path | None = None,
     #
     # The one frame of slack lives in script.py, because the page that lists
     # every script needs the same answer this does.
-    if script_module.too_long(measured):
+    if script_module.runs_over(measured):
         raise RuntimeError(f"{name} 長 {measured['seconds']}s，"
                            f"超出上限 {measured['over']}s")
     if not measured["still_enough"]:
