@@ -412,7 +412,7 @@
 
 <header>
   <h1>素材</h1>
-  <span class="where">先收集，再寫</span>
+  <span class="where">收集、看過、裁決，然後交給短影音</span>
   <span class="grow"></span>
   <input id="newName" placeholder="新題目…" size="16">
   <button id="btnNew" class="tiny">新增</button>
@@ -791,7 +791,11 @@ async function open(name) {
     try {
       const made = await api("POST", "/api/topic/script",
                              { name, anyway, format: $("writeAs").value });
-      $("note").textContent = `寫好了：${made.script}`;
+      // 寫好就過去。這一頁的工作到「交出一份草稿」為止，而剩下的每一件事
+      // —— 改台詞、看圖打勾、壓片 —— 都在那一頁。印一行「寫好了」然後把人
+      // 留在原地，等於要他自己猜下一步在哪。
+      $("note").textContent = `寫好了：${made.script}　過去改…`;
+      location.href = "/scripts?name=" + encodeURIComponent(made.script);
     } catch (error) {
       $("note").className = "warn";
       $("note").textContent = error.message;
