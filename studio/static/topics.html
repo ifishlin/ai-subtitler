@@ -562,6 +562,13 @@ function sourceRows(items, kind) {
 }
 
 async function open(name) {
+  /* 空名字不要送出去。API 會回「題目名稱只能用中英文、數字、底線、減號、
+     空白」，而那句話單獨出現在畫面中央看起來像整頁壞了 —— 它其實是在說
+     「我收到一個空字串」。 */
+  if (!name) {
+    $("paper").innerHTML = '<div class="empty">左邊挑一個題目</div>';
+    return;
+  }
   STATE.chosen = name;
   renderList();
   let pile;
@@ -569,7 +576,11 @@ async function open(name) {
   catch (error) {
     // 離開中就別畫。中止的 fetch 不是這個題目讀不到。
     if (!goneQuiet(error)) {
-      $("paper").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`;
+      // 是哪一個打不開，要寫出來。只印錯誤訊息的話，畫面上就是一句沒有
+      // 主詞的話，而下一步（去左邊點另一個）也看不出來。
+      $("paper").innerHTML = `<div class="empty"><b>打不開「${
+        escapeHTML(name)}」</b><br>${escapeHTML(error.message)}
+        <br><br>左邊挑一個題目試試。</div>`;
     }
     return;
   }
