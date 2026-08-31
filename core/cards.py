@@ -301,8 +301,26 @@ def _bars(spec: dict[str, Any], t: float) -> Image.Image:
         part = stagger(t, index, len(rows))
         y = top + 80 + index * 190
         length = max(10, widest * (value / biggest) * part)
-        draw.text((left - 34, y + 34), str(label), font=face(50),
-                  fill=tone["dim"], anchor="ra")
+        # Beside the bar when it fits, above it when it does not. Measuring
+        # alone is not enough here: the gutter is 152 pixels and a fourteen
+        # character label cannot fit at any size worth reading, so shrinking
+        # only produced smaller clipped text. 「柏林、不來梅、下薩克森、北威州」
+        # reached the frame as 「森、北威州」.
+        #
+        # Third time words have been drawn off the frame in this project. The
+        # first two were solved by measuring; this one needed the layout to
+        # give way, which is the thing measuring is for -- it tells you when.
+        name = str(label)
+        room = left - 34 - MARGIN
+        size = fits([name], 50, bold=False, room=room)
+        if size >= 34:
+            draw.text((left - 34, y + 34), name, font=face(size, False),
+                      fill=tone["dim"], anchor="ra")
+        else:
+            draw.text((left, y - 52), name,
+                      font=face(fits([name], 44, bold=False,
+                                     room=W - left - MARGIN), False),
+                      fill=tone["dim"], anchor="la")
         draw.rounded_rectangle([left, y, left + length, y + 96], 14, fill=colour)
         if part > 0.25:
             label = row[3] if len(row) > 3 else f"{value:g}"
