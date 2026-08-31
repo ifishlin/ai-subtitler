@@ -498,6 +498,149 @@ def _number(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
+def _number_dial(spec: dict[str, Any], t: float) -> Image.Image:
+    """數字待在一個圓環裡，環跟著數字一起長。
+
+    環把「多少」變成「多滿」—— 同一個數字，多一個「相對於什麼」的暗示。
+    沒有刻度、沒有百分比：那會變成圖表，而這張卡要的是一個斷言。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 500, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    part = ease(t)
+    centre, radius = (W // 2, 860), 300
+    box = [centre[0] - radius, centre[1] - radius,
+           centre[0] + radius, centre[1] + radius]
+    draw.ellipse(box, outline=tone["rule"], width=16)
+    if part > 0.02:
+        draw.arc(box, -90, -90 + 360 * part,
+                 fill=spec.get("colour") or tone["lead"], width=16)
+    digits = "".join(ch for ch in text if ch.isdigit() or ch == ".")
+    shown = text
+    if digits and part < 1:
+        try:
+            shown = text.replace(digits, _counted(digits, part), 1)
+        except ValueError:
+            pass
+    at(draw, centre[0], centre[1] - 110, shown, 250, tone["ink"],
+       room=radius * 2 - 90)
+    if spec.get("under"):
+        _mid(draw, centre[1] + radius + 60, spec["under"], 54, tone["dim"],
+             bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _number_unit(spec: dict[str, Any], t: float) -> Image.Image:
+    """數字很大，單位掛在右下角，底下一條線把它托住。
+
+    「230」和「億美元」不是同一個東西 —— 一個是量，一個是尺。分開排，
+    眼睛先拿到量，再拿到尺，那是讀數字的自然順序。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 520, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    part = ease(t)
+    # 前面連續的數字是「量」，後面剩下的是「尺」。
+    cut = 0
+    while cut < len(text) and (text[cut].isdigit() or text[cut] in ".,:-"):
+        cut += 1
+    head, tail = (text[:cut], text[cut:]) if cut else (text, "")
+    if head and part < 1:
+        digits = "".join(ch for ch in head if ch.isdigit() or ch == ".")
+        if digits:
+            try:
+                head = head.replace(digits, _counted(digits, part), 1)
+            except ValueError:
+                pass
+    size = fits([head], 400, room=W - 2 * MARGIN - (200 if tail else 0))
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    wide = ruler.textlength(head, font=face(size))
+    left = (W - wide - (140 if tail else 0)) / 2
+    colour = "#" + "".join(f"{v:02x}" for v in
+                           _fade(spec.get("colour") or tone["lead"],
+                                 min(1, part * 1.6), tone["top"]))
+    draw.text((left, 680), head, font=face(size), fill=colour, anchor="la")
+    if tail:
+        at(draw, left + wide + 24, 680 + size * 0.62, tail, 92, tone["dim"],
+           room=int(W - MARGIN - (left + wide + 24)), anchor="la")
+    rule = ease(max(0.0, (t - 0.4) / 0.6))
+    if rule > 0.02:
+        draw.line([(left, 680 + size + 34),
+                   (left + (wide + (160 if tail else 0)) * rule, 680 + size + 34)],
+                  fill=tone["rule"], width=9)
+    if spec.get("under"):
+        _mid(draw, 680 + size + 90, spec["under"], 54, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _number_stamp(spec: dict[str, Any], t: float) -> Image.Image:
+    """數字蓋在一個方塊上，像一枚印章落下。
+
+    落下比淡入有份量：這一張用在「已經定了」那種數字上 —— 判決、日期、
+    生效的時刻。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 500, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    drop = ease(min(1.0, t * 1.5))
+    size = fits([text], 320, room=W - 2 * MARGIN - 160)
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    wide = min(W - 2 * MARGIN, ruler.textlength(text, font=face(size)) + 150)
+    high = size + 130
+    # 從上面掉下來，最後 8% 過衝一點再回位 —— 那一下就是「蓋」。
+    over = math.sin(min(1.0, t * 1.5) * math.pi) * 14
+    top = 700 - (1 - drop) * 90 + over
+    draw.rounded_rectangle([W // 2 - wide / 2, top, W // 2 + wide / 2, top + high],
+                           22, fill=spec.get("colour") or tone["hot"])
+    if drop > 0.35:
+        at(draw, W // 2, top + 52, text, size,
+           tone["top"] if isinstance(tone["top"], str) else "#0d1b2a",
+           room=int(wide) - 90)
+    if spec.get("under"):
+        _mid(draw, top + high + 60, spec["under"], 54, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _number_ghost(spec: dict[str, Any], t: float) -> Image.Image:
+    """數字巨大到出血，只露出中間那一段。
+
+    大到裝不下，本身就是那個數字的意思。用在「大到不像話」的量上。
+    上下各切掉一點，讀得出來，但看得出它裝不下。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    if spec.get("title"):
+        _mid(draw, 470, spec["title"], 58, tone["dim"], bold=False)
+    text = str(spec.get("value", ""))
+    part = ease(t)
+    digits = "".join(ch for ch in text if ch.isdigit() or ch == ".")
+    shown = text
+    if digits and part < 1:
+        try:
+            shown = text.replace(digits, _counted(digits, part), 1)
+        except ValueError:
+            pass
+    # 寬度照樣量 —— 出血是上下的事，左右出去就只是切掉字。
+    size = fits([shown], 560, room=W - 2 * MARGIN)
+    colour = "#" + "".join(f"{v:02x}" for v in
+                           _fade(spec.get("colour") or tone["lead"],
+                                 min(1, part * 1.6), tone["top"]))
+    _mid(draw, 700, shown, size, colour)
+    if spec.get("under"):
+        _mid(draw, 700 + size + 30, spec["under"], 54, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
 def _counted(digits: str, part: float) -> str:
     """The number on its way to itself, with the same number of decimals so
     the text does not change width as it counts."""

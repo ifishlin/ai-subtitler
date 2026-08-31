@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>怎麼寫的規定</title>
+<title>規定　AI-Reporters</title>
 <link rel="stylesheet" href="/static/theme.css">
 <style>
   .tabs{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 16px;align-items:flex-start}
@@ -60,32 +60,6 @@
   pre.view b.bad{color:var(--warn);background:#f5b54418;border-radius:4px;
     padding:0 3px}
 
-  /* 一個片型一張卡，內容就是它的 JSON。當資料編，因為它本來就是資料 ——
-     一個欄位配一個輸入框的做法，保證有一天欄位加了而畫面沒加。 */
-  .house-card{border:1px solid var(--line);border-radius:10px;padding:11px 13px;
-    margin-bottom:9px;background:var(--panel)}
-  .house-card .head{display:flex;align-items:baseline;gap:10px}
-  .house-card .head b{font-size:14px}
-  .house-card .head code{font:11px var(--mono);color:var(--faint)}
-  .house-card .head .used{font:11px var(--mono);color:#7fd4ff;margin-left:auto}
-  .house-card textarea{min-height:170px;margin-top:8px;font-size:12px}
-  .house-card .row{display:flex;gap:7px;align-items:center;margin-top:7px}
-  .house-card .row .said{font-size:11.5px;color:var(--faint);flex:1}
-  .house-card .row .said.bad{color:var(--warn)}
-  .house-card .row button{font:12px inherit;color:var(--ink);
-    background:var(--panel2);border:1px solid var(--line);border-radius:7px;
-    padding:3px 11px;cursor:pointer}
-  .house-card .row button.primary{background:var(--accent);color:#0b1017;
-    border-color:transparent;font-weight:600}
-  .house-card .row .drop{margin-left:auto;color:var(--faint)}
-  .house-card .row .drop:hover{color:#ff8a72;border-color:#5b2a22}
-  .houses-new{display:flex;gap:8px;align-items:center;margin-top:10px}
-  .houses-new input{background:var(--bg);border:1px solid var(--line);
-    border-radius:7px;color:var(--ink);padding:6px 10px;font-size:13px}
-  .houses-new button{font:13px inherit;color:#0b1017;background:var(--accent);
-    border:none;border-radius:8px;padding:6px 13px;cursor:pointer;
-    font-weight:600}
-
   .keys{margin-top:12px;font:11.5px var(--mono);color:var(--faint);
     line-height:1.9}
   .keys b{color:#7fd4ff;font-weight:600}
@@ -122,16 +96,6 @@
 
   <div class="keys" id="keys"></div>
 
-  <h2>片型　—— 上面那些空格的值從這裡來</h2>
-  <p class="under">一個片型說的是「這種片子長什麼形狀」：角色、轉要多前、
-    借來的畫面上限、以及<b>送哪一份 md</b>。沒寫的項目會掉回
-    <code>rules.json</code> 的共用值。</p>
-  <div id="housesList"></div>
-  <div class="houses-new">
-    <input id="newHouseKey" placeholder="代號（英文，如 explain）" size="18">
-    <input id="newHouseName" placeholder="名稱（如 拆解說明）" size="14">
-    <button id="btnNewHouse" class="tiny primary">新增片型</button>
-  </div>
 </div>
 
 <script src="/static/nav.js"></script>
@@ -272,120 +236,7 @@ async function load(keep) {
   drawAll();
 }
 
-/* ---------------------------------------------------------------- 片型
- * 從素材頁搬過來的。它跟上面那幾份 md 是同一件事的兩半：md 說話怎麼講，
- * 片型說那些話裡的數字是多少 —— 而它們原本在兩個相隔很遠的畫面上，
- * 中間沒有任何東西說明它們有關係。
- */
-let HOUSES = [];
-
-function drawHouses() {
-  $("housesList").innerHTML = HOUSES.map((one) => {
-    const {key, ...spec} = one;
-    return `
-    <div class="house-card" data-key="${esc(key)}">
-      <div class="head">
-        <b>${esc(spec.name || key)}</b>
-        <code>${esc(key)}</code>
-        <span class="used">送 ${esc(spec.prompt || "script.md")}</span>
-      </div>
-      <textarea spellcheck="false">${esc(JSON.stringify(spec, null, 1))}</textarea>
-      <div class="row">
-        <button class="primary save">存</button>
-        <span class="said"></span>
-        <button class="drop">刪掉</button>
-      </div>
-    </div>`;
-  }).join("") || '<p class="under">一個片型都沒有。</p>';
-}
-
-async function houseSave(card) {
-  const said = card.querySelector(".said");
-  let spec;
-  try {
-    spec = JSON.parse(card.querySelector("textarea").value);
-  } catch (error) {
-    // JSON 壞掉是最可能發生的事，錯誤要指得回哪裡壞。
-    said.className = "said bad";
-    said.textContent = "JSON 有問題：" + error.message;
-    return;
-  }
-  try {
-    const back = await fetch("/api/format", {
-      method: "POST", headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({key: card.dataset.key, spec}),
-    });
-    const got = await back.json();
-    if (!back.ok) throw new Error(got.detail || "存不起來");
-    HOUSES = got.formats || HOUSES;
-    said.className = "said";
-    said.textContent = "存好了";
-    // 片型的數字會填進上面那幾份 md，所以存完要重讀 —— 不然右邊那半
-    // 還顯示著舊的值。
-    await load(WHICH);
-    setTimeout(() => { said.textContent = ""; }, 1600);
-  } catch (error) {
-    said.className = "said bad";
-    said.textContent = error.message;
-  }
-}
-
-async function houseDrop(card) {
-  const key = card.dataset.key;
-  const said = card.querySelector(".said");
-  try {
-    const back = await fetch("/api/format?key=" + encodeURIComponent(key),
-                             {method: "DELETE"});
-    const got = await back.json();
-    if (!back.ok) throw new Error(got.detail || "刪不掉");
-    HOUSES = HOUSES.filter((one) => one.key !== key);
-    drawHouses();
-  } catch (error) {
-    said.className = "said bad";
-    said.textContent = error.message;
-  }
-}
-
-$("housesList").addEventListener("click", (event) => {
-  const card = event.target.closest(".house-card");
-  if (!card) return;
-  if (event.target.classList.contains("save")) houseSave(card);
-  if (event.target.classList.contains("drop")) houseDrop(card);
-});
-
-$("btnNewHouse").onclick = async () => {
-  const key = $("newHouseKey").value.trim();
-  const name = $("newHouseName").value.trim();
-  if (!key || !name) return;
-  /* 從預設那一份複製，不是空白開始 —— 一個只有名字的片型每一項都掉回
-     rules.json，那不是一種形狀。 */
-  const base = HOUSES.find((one) => one.key === "argue") || {};
-  const {key: _drop, ...spec} = base;
-  try {
-    const back = await fetch("/api/format", {
-      method: "POST", headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({key, spec: {...spec, name, why: ""}}),
-    });
-    const got = await back.json();
-    if (!back.ok) throw new Error(got.detail || "建不起來");
-    HOUSES = got.formats || HOUSES;
-    $("newHouseKey").value = "";
-    $("newHouseName").value = "";
-    drawHouses();
-  } catch (error) {
-    $("said").className = "said bad";
-    $("said").textContent = error.message;
-  }
-};
-
-async function loadHouses() {
-  const back = await fetch("/api/formats");
-  if (!back.ok) return;
-  HOUSES = (await back.json()).formats || [];
-  drawHouses();
-}
-
-load().then(loadHouses).catch((error) => {
+load().catch((error) => {
   $("view").textContent = "讀不到：" + error.message;
 });
 </script>

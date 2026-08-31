@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>送出去的原文</title>
+<title>送出去的原文　AI-Reporters</title>
 <link rel="stylesheet" href="/static/theme.css">
 <style>
   /* 一整頁就是那一份文字，所以版面只有兩塊：頂上一條，底下全部給它。
@@ -72,7 +72,7 @@ async function load() {
   }
   const got = await back.json();
 
-  document.title = name + "　送出去的原文";
+  document.title = name + "　送出去的原文　AI-Reporters";
   $("what").textContent = name + "　·　" + house;
   $("size").textContent = got.chars.toLocaleString() + " 字";
   $("parts").href = "/prompt?name=" + encodeURIComponent(name);

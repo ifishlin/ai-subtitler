@@ -272,6 +272,13 @@ def prompts_page() -> str:
     return (STATIC / "prompts.html").read_text(encoding="utf-8")
 
 
+@app.get("/houses", response_class=HTMLResponse)
+def houses_page() -> str:
+    """片型：這種片子長什麼形狀。跟 /prompts 是同一件事的兩半 ——
+    md 說話怎麼講，片型說那些話裡的數字是多少。"""
+    return (STATIC / "houses.html").read_text(encoding="utf-8")
+
+
 @app.get("/raw", response_class=HTMLResponse)
 def raw_page() -> str:
     """整份原文，一個字都沒切過。素材頁的 show 開一個獨立視窗指到這裡。
