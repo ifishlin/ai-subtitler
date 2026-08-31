@@ -192,26 +192,19 @@
   .turn-lines .now.next{background:transparent;color:var(--faint)}
   .turn-ask{font-size:11px;color:var(--faint);line-height:1.6}
   .turn-ask b{color:#ff8a72}
-  .rights{background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    padding:11px 14px;margin:12px 0}
-  .rights-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
-  .rights-head b{font-size:13px}
-  .rights-head .lead{font:13px var(--mono)}
-  .rights-head .lead.good{color:#5fcf9b}
-  .rights-head .lead.short{color:#ff8a72}
-  .rights .bar{display:flex;height:13px;border-radius:7px;overflow:hidden;
-    background:#0d1014}
-  .rights .bar i{display:block;height:100%}
-  .rights-keys{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;
+  /* 權利那一段在「細節」裡，所以樣式跟著那一格走。 */
+  .checked .grid > .wide{grid-column:1 / -1}
+  .checked .bar{display:flex;height:12px;border-radius:6px;overflow:hidden;
+    background:var(--bg)}
+  .checked .bar i{display:block;height:100%}
+  .checked .keys{display:flex;flex-wrap:wrap;gap:14px;margin-top:7px;
     font:11px var(--mono);color:var(--faint)}
-  .rights-keys i{display:inline-block;width:9px;height:9px;border-radius:2px;
+  .checked .keys i{display:inline-block;width:9px;height:9px;border-radius:2px;
     margin-right:5px}
-  .rights-keys b{color:var(--ink);margin-left:5px}
-  .rights-keys em{font-style:normal;margin-left:4px}
-  .holders{margin-top:7px;font:11px var(--mono);color:var(--faint)}
-  .holders span{margin-right:12px}
-  .holders b{color:#e0a; color:#e2a33c}
-  .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
+  .checked .keys b{float:none;font-size:11px;color:var(--ink);margin-left:4px}
+  .checked .keys em{font-style:normal;margin-left:4px}
+  .checked .say{font-size:11px;line-height:1.65;color:var(--faint)}
+
   #jobBar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
     align-items:center;gap:12px;padding:9px 18px;background:var(--panel);
     border-top:1px solid var(--line)}
@@ -748,37 +741,38 @@ function shapePanel(sums) {
   </div>`;
 }
 
-function rightsPanel(rights) {
+/* 畫面的權利，放進「細節」裡。
+   它本來是獨立一塊，而它跟上面那一區講的是同一批鏡頭：「實拍 32%」和「有版
+   權 30%」是同一件事的兩種問法 —— 一個問「這支片有多少是我們做的」，一個問
+   「借來的那些，誰的」。分成兩塊的時候，兩個數字對不起來也沒人會發現。 */
+function rightsRows(rights) {
   if (!rights) return "";
   const order = ["ours", "free", "credit", "claimed"];
   const risky = rights.share.claimed || 0;
   return `
-  <div class="rights">
-    <div class="rights-head">
-      <b>畫面的權利</b>
-      <span class="lead ${risky >= 25 ? "short" : "good"}">有版權 ${risky}%</span>
-      <span class="hint">最長一段引用 ${rights.longest} 秒</span>
+    <div class="band">畫面的權利</div>
+    <div class="wide">
+      <div class="bar">${order.map((key) => {
+        const share = rights.share[key] || 0;
+        return share ? `<i style="width:${share}%;background:${RIGHT_COLOUR[key]}"
+          title="${escapeHTML(rights.labels[key])} ${share}%　${
+          escapeHTML(RIGHT_NOTE[key])}"></i>` : "";
+      }).join("")}</div>
+      <div class="keys">${order.map((key) => `
+        <span><i style="background:${RIGHT_COLOUR[key]}"></i>${
+          escapeHTML(rights.labels[key])} <b>${rights.share[key] || 0}%</b>
+          <em>${rights.seconds[key] || 0}s</em></span>`).join("")}</div>
     </div>
-    <div class="bar">${order.map((key) => {
-      const share = rights.share[key] || 0;
-      return share ? `<i style="width:${share}%;background:${RIGHT_COLOUR[key]}"
-        title="${escapeHTML(rights.labels[key])} ${share}%　${
-        escapeHTML(RIGHT_NOTE[key])}"></i>` : "";
-    }).join("")}</div>
-    <div class="rights-keys">${order.map((key) => `
-      <span><i style="background:${RIGHT_COLOUR[key]}"></i>${
-        escapeHTML(rights.labels[key])}
-        <b>${rights.share[key] || 0}%</b>
-        <em>${rights.seconds[key] || 0}s</em></span>`).join("")}</div>
-    ${rights.holders.length ? `<div class="holders">引用了誰：${
-      rights.holders.map((one) => `<span>${escapeHTML(one.who)}
-        <b>${one.seconds}s</b>（${one.share}%）</span>`).join("")}</div>` : ""}
-    <p class="rights-why">${
+    <div>有版權<b class="${risky >= 25 ? "no" : "ok"}">${risky}%</b>
+      <i>最長一段引用 ${rights.longest} 秒</i></div>
+    ${rights.holders.map((one) => `<div>${escapeHTML(one.who)}`
+      + `<b>${one.share}%</b><i>${one.seconds} 秒</i></div>`).join("")}
+    <div class="wide say">${
       risky >= 25
         ? "引用比例偏高。合理使用沒有一條安全的百分比，但審查最先看的就是這個數字，超過四分之一很難主張整支片是我們的。"
-        : "引用的每一段都短、都有觀點、都標了來源。仍要注意 Content ID 連畫面一起比對，靜音躲得掉音軌、躲不掉畫面。"}</p>
-  </div>`;
+        : "引用的每一段都短、都有觀點、都標了來源。仍要注意 Content ID 連畫面一起比對，靜音躲得掉音軌、躲不掉畫面。"}</div>`;
 }
+
 
 async function showScript(name) {
   // Opening a different script drops whatever was pending on the last one.
@@ -882,6 +876,8 @@ async function showScript(name) {
               + `<b class="${n ? "no" : "ok"}">${n ? n : "✓"}</b>`
               + `<i>${escapeHTML(why)}</i></div>`;
           }).join("")}
+
+        ${rightsRows(sums.rights)}
       </div>
     </details>
     <!-- Rendering, and the sheet it produces. Looking at what was actually
@@ -903,7 +899,6 @@ async function showScript(name) {
       <button id="btnDropLines" class="tiny">放棄</button>
     </div>
     ${shapePanel(sums)}
-    ${rightsPanel(sums.rights)}
     <div class="ruler">${sums.lines.map((line) =>
       `<i style="width:${(line.seconds / Math.max(90, sums.seconds)) * 100}%"
           title="${clock(line.at)}"></i>`).join("")}</div>
