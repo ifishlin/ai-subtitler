@@ -180,10 +180,6 @@
   #jobBar.failed{background:#2a1512;border-top-color:#5b2a22}
   #jobBar.failed .job-track i{background:#ef6b6b}
 
-  .gather{display:flex;align-items:center;gap:10px;margin:10px 0}
-  .gather > span{font-size:11px;color:var(--faint);flex:none}
-  .gather input{flex:1}
-
 
   /* A rule between piles, so one section ends visibly before the next
      begins. Everything stays open: a pile you have to unfold is a pile you
@@ -217,6 +213,33 @@
   @media (max-width:900px){ .decide{grid-template-columns:1fr} }
 
 
+  /* 狀態和動作，一塊。這一頁只有兩個真正的動作，而它們互斥 —— 素材不夠就
+     收集，夠了就寫。所以由 pile.ready 決定哪一顆是 primary，另一顆退成
+     tiny：兩顆一樣顯眼，等於沒有指出現在該做什麼。 */
+  .doing{border-radius:10px;margin:0 0 14px;overflow:hidden;
+    border:1px solid var(--line);background:var(--panel)}
+  .doing.ok{border-color:#2c5a45}
+  .doing.no{border-color:#5c4a2a}
+  .doing .verdict{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:11px 15px;font-size:13px}
+  .doing.ok .verdict{background:#12291f;color:var(--ok)}
+  .doing.no .verdict{background:#241a14;color:var(--warn)}
+  .doing .acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    padding:11px 15px}
+  .doing .acts input{flex:1;min-width:220px}
+  .doing .acts .gap{flex:1 0 12px}
+  .doing select{font:13px inherit;color:var(--ink);background:#0b1017;
+    border:1px solid var(--line);border-radius:7px;padding:5px 9px;
+    cursor:pointer}
+  .doing select:hover{border-color:var(--accent)}
+  /* 公版說明一行，全文在 title。三四句話攤開會把這一塊撐成一個段落，而它要
+     回答的問題只在選公版的那一刻問一次。 */
+  .doing .why{padding:0 15px 10px;font-size:11px;color:var(--faint);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .doing .why:empty{display:none}
+  .doing .hint:empty,.doing #note:empty{display:none}
+  .doing .hint,.doing #note{padding:0 15px 10px;font-size:11px}
+
   /* Who has been heard. The point is not the count -- it is whether the
      other side is in there at all, so an empty one is coloured, not just
      small. Riding along on the verdict line because it answers the same
@@ -229,12 +252,6 @@
     color:var(--ink);margin-left:4px}
   .sides i.none{border-color:#5c3a2a;background:#241a14}
   .sides i.none b{color:var(--warn)}
-
-  #verdict{display:flex;align-items:center;justify-content:space-between;
-    gap:14px;flex-wrap:wrap;
-    padding:11px 15px;border-radius:9px;margin:14px 0 18px;font-size:13px}
-  #verdict.ok{background:#12291f;border:1px solid #2c5a45;color:var(--ok)}
-  #verdict.no{background:#241a14;border:1px solid #5c3a2a;color:var(--warn)}
 
   h3{margin:24px 0 8px;font-size:13px;color:var(--dim);
     display:flex;align-items:center;gap:8px}
@@ -552,26 +569,45 @@ async function open(name) {
          the page a table of contents for a table of contents. What is left
          is the one thing the jump bar cannot say: whether this is writable,
          and who has not been heard. -->
-    <div id="verdict" class="${pile.ready ? "ok" : "no"}">
-      <span>${pile.ready ? "素材夠了，可以寫文案。"
-                         : `還不能寫：${escapeHTML(pile.why)}`}</span>
-      <span class="sides">${columns.map(([key, label]) => `
-        <i class="${sides[key] ? "" : "none"}">${label}<b>${sides[key]}</b></i>`
-      ).join("")}</span>
-    </div>
+    <!-- 狀態和動作，一塊。
+         這一頁只有兩個真正的動作 —— 逐家問、產生文案 —— 其餘全是讀和判斷。
+         而它們互斥：素材不夠就去收集，夠了就去寫，中間沒有第三種情況。頁面
+         已經知道現在是哪一種（pile.ready），所以由它決定哪一顆是主要的。
+         本來一個在判定下面、一個在待辦最後一列，中間隔著兩個黃框 —— 兩個都
+         不像主要動作，而其中一個永遠是。 -->
+    <div class="doing ${pile.ready ? "ok" : "no"}">
+      <div class="verdict">
+        <span>${pile.ready ? "素材夠了，可以寫文案"
+                           : `還不能寫：${escapeHTML(pile.why)}`}</span>
+        <span class="sides">${columns.map(([key, label]) => `
+          <i class="${sides[key] ? "" : "none"}">${label}<b>${sides[key]}</b></i>`
+        ).join("")}</span>
+      </div>
 
-    <!-- The per-outlet round: ask nineteen named outlets what they said,
-         download what they gave, cut frames where the captions point. This is
-         the argument the whole project rests on and it ran only from a
-         terminal. -->
-    <div class="gather">
-      <span>收集</span>
-      <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
-        spellcheck="false">
-      <button id="btnTerms" class="tiny">想幾個</button>
-      <button id="btnGather" class="tiny primary">逐家問（影片＋報導＋圖＋留言）</button>
+      <!-- 逐家問十九家媒體、下載、依字幕抽畫格。這是整個專案的論點所在，而
+           它一度只能從終端機跑。 -->
+      <div class="acts">
+        <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
+          spellcheck="false">
+        <button id="btnTerms" class="tiny">想幾個</button>
+        <button id="btnGather" class="${pile.ready ? "tiny" : "primary"}">${
+          pile.ready ? "再收集" : "逐家問（影片＋報導＋圖＋留言）"}</button>
+        <span class="gap"></span>
+        <!-- 公版在寫之前選，不是寫完再改：它決定角色、節奏、實拍上限和送哪
+             一份 prompt，事後換等於每一句都要重貼標籤 —— 梅西納就是這樣。 -->
+        <select id="writeAs" title="寫成哪一種">
+          ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
+            .map((one) => `<option value="${escapeHTML(one.key)}">${
+              escapeHTML(one.name || one.key)}</option>`).join("")}
+        </select>
+        <button id="btnWrite" class="${pile.ready ? "primary" : "tiny"}"
+          ${pile.ready ? "" : "disabled"}>產生文案</button>
+        ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">不齊也要寫</button>'}
+      </div>
+      <div id="whyHouse" class="why"></div>
+      <div id="termsNote" class="hint"></div>
+      <div id="note"></div>
     </div>
-    <div id="termsNote" class="hint"></div>
 
     <!-- 還沒處理的事，一區。本來是兩個一模一樣的黃框上下疊著，再加一列
          「寫成／產生文案」—— 三條橫幅，讀起來像三個警報，而它們其實是同一
@@ -608,26 +644,6 @@ async function open(name) {
           `<code>${escapeHTML(one)}</code>`).join("")}</div>
       </div>` : ""}
 
-      <!-- 交接點。公版在寫之前選，不是寫完再改：它決定角色、節奏、實拍上限
-           和送哪一份 prompt，事後換等於每一句都要重貼標籤 —— 梅西納就是這樣。 -->
-      <div class="row write">
-        <div class="what">
-          <b>寫成哪一種</b>
-          <!-- 公版的 why，一行。它是三四句話，本來整段塞在按鈕旁邊 —— 跟短
-               影音那條超長 metadata 同一個毛病。滑上去看全文。
-               這一列本來寫「素材夠了，可以寫」，而上面那條綠色的已經說過
-               了；同一句話講兩次，第二次就沒有人讀。 -->
-          <span id="whyHouse"></span>
-        </div>
-        <select id="writeAs">
-          ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
-            .map((one) => `<option value="${escapeHTML(one.key)}">${
-              escapeHTML(one.name || one.key)}</option>`).join("")}
-        </select>
-        <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
-        ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">不齊也要寫</button>'}
-      </div>
-      <div id="note"></div>
     </div>
 
     ${(pile.scripts || []).length ? `
