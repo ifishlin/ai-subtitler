@@ -1,0 +1,1156 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>題目與文案　AI-Desk</title>
+<link rel="stylesheet" href="/static/ask.css">
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--ink);
+    font:14px/1.6 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;
+    display:flex;flex-direction:column;height:100vh}
+  button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel2);
+    border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer}
+  button:hover:not(:disabled){border-color:var(--accent)}
+  button:disabled{opacity:.45;cursor:default}
+  button.primary{background:var(--accent);color:#0b1017;border-color:transparent;
+    font-weight:600}
+  button.tiny{padding:3px 9px;font-size:12px}
+  input{background:var(--bg);border:1px solid var(--line);border-radius:7px;
+    color:var(--ink);padding:6px 10px;font-size:13px}
+  a{color:var(--accent)}
+
+  header{display:flex;align-items:center;gap:12px;padding:11px 18px;flex:none;
+    background:var(--panel);border-bottom:1px solid var(--line)}
+  header h1{margin:0;font-size:15px}
+  header .where{color:var(--faint);font-size:12px}
+  header .grow{flex:1}
+
+  main{flex:1;display:flex;min-height:0}
+  #list{width:300px;flex:none;overflow:auto;padding:12px;
+    border-right:1px solid var(--line)}
+  #paper{flex:1;overflow:auto;padding:20px 26px 60px}
+
+  .item{padding:10px;margin-bottom:6px;border-radius:8px;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line)}
+  .item:hover{border-color:var(--accent)}
+  .item.on{border-color:var(--accent);background:var(--panel2)}
+  .item b{display:block;font-weight:600}
+  .item .facts{font:11px var(--mono);color:var(--faint);margin-top:4px;display:block}
+  .item .bad{color:var(--warn)}
+  .item b .films{float:right;font:11px var(--mono);color:var(--faint);
+    font-weight:400}
+  .item.archived{opacity:.55}
+
+  .sift{display:flex;gap:6px;margin-bottom:10px}
+  .sift input{flex:1;min-width:0;font-size:12px;padding:5px 9px}
+  .sift select{font:12px inherit;color:var(--dim);background:var(--bg);
+    border:1px solid var(--line);border-radius:7px;padding:5px 7px;
+    cursor:pointer}
+  .filed-head{font:11px var(--mono);color:var(--faint);cursor:pointer;
+    padding:9px 4px 6px;border-top:1px solid var(--line);margin-top:8px;
+    user-select:none}
+  .filed-head:hover{color:var(--accent)}
+
+  h2{margin:0 0 4px;font-size:19px}
+  .angle{color:var(--dim);font-size:13px;margin-bottom:16px}
+
+  /* ---- what has been gathered ---- */
+  /* A pile to choose from, so it is browsed rather than read: small, dense,
+     and every one says which search found it. */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+    gap:8px}
+  .shelf figure{margin:0;background:var(--panel);border:1px solid var(--line);
+    border-radius:8px;overflow:hidden}
+  .shelf img{width:100%;height:88px;object-fit:cover;display:block;
+    background:#0d1014}
+  .shelf figcaption{font:10px var(--mono);padding:3px 6px;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  /* What we asked for, and what actually came back. Side by side because the
+     mistake is invisible any other way: the search said `electricity bill`,
+     the picture's own caption said `fuse box`, and only the first was ever
+     shown. */
+  .shelf figcaption.asked{color:#7fd4ff;padding-top:5px}
+  .shelf figcaption.got{color:var(--faint);white-space:normal;line-height:1.35;
+    max-height:2.7em;border-top:1px solid var(--line);padding-top:4px}
+  .shelf figcaption.who{color:#9a8; font-size:9px}
+  /* A shot at the size it will be seen. The row thumbnails are 82px tall
+     and a card's own type is 76px on a 1920 frame -- legible in the finished
+     video, illegible in the list -- so the list is for finding a shot and
+     this is for judging it. */
+  /* Which of 起承轉合 this line claims to be. Shown because it is a claim the
+     writer made and the program checks, not decoration. */
+  td.at select.role{display:block;margin-top:4px;font:11px var(--mono);
+    color:#7fd4ff;background:#0d1014;border:1px solid var(--line);
+    border-radius:5px;padding:2px 4px;cursor:pointer}
+  td.at select.role:hover{border-color:var(--accent)}
+  .say-edit{outline:none;border-radius:6px;padding:3px 6px;margin:-3px -6px;
+    border:1px solid transparent;cursor:text;white-space:pre-wrap}
+  .say-edit:hover{border-color:var(--line)}
+  .say-edit:focus{border-color:var(--accent);background:#0d1014}
+  .say-meter{margin-top:4px;font:10px var(--mono);color:var(--faint);
+    display:flex;gap:9px;flex-wrap:wrap}
+  .say-meter .warn{color:#e2a33c}
+  .say-meter .hint{opacity:.62}
+  #big{position:fixed;inset:0;background:#000d;z-index:60;display:flex;
+    align-items:center;justify-content:center;padding:24px}
+  /* `display:flex` on the element itself outranks the browser's own
+     `[hidden]{display:none}`, so the overlay came up on load and covered the
+     page -- a black sheet with one 關閉 button on it. The attribute has to be
+     given back its authority explicitly. */
+  #big[hidden]{display:none}
+  .big-inner{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:12px 14px 14px;max-width:min(94vw,760px);
+    max-height:94vh;display:flex;flex-direction:column;gap:10px}
+  .big-bar{display:flex;align-items:baseline;gap:10px}
+  .big-bar b{font-size:13px}
+  .big-bar span{font:11px var(--mono);color:var(--faint)}
+  /* Worded like every other panel's, because a ✕ is a symbol you have to
+     know and 關閉 is a word you can read. */
+  .big-bar button{margin-left:auto}
+  #bigStage{display:flex;align-items:center;justify-content:center;
+    min-height:0;overflow:auto}
+  #bigStage img,#bigStage video{max-width:100%;max-height:74vh;
+    border-radius:8px;display:block;background:#0d1014}
+  #bigNote{font:11px var(--mono);color:var(--faint);line-height:1.6}
+  #bigNote em{font-style:normal;color:#7fd4ff}
+  /* Unsaved edits are visible and countable. Saving on every keystroke meant
+     there was no such state, so nothing could be discarded and nothing had to
+     be confirmed. */
+  /* The house styles, edited as what they are: data. Every field was a
+     constant somewhere, and `why` is the field that matters -- a number with
+     no reason attached gets changed by whoever finds it inconvenient. */
+  #houses{position:fixed;inset:0;background:#000d;z-index:70;display:flex;
+    align-items:flex-start;justify-content:center;padding:32px 24px;overflow:auto}
+  #houses[hidden]{display:none}
+  .houses-inner{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px 16px;width:min(96vw,880px)}
+  .houses-bar{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+  .houses-bar b{font-size:14px}
+  .houses-bar .hint{font-size:11px;color:var(--faint);flex:1;line-height:1.5}
+  .house-card{border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+    margin-bottom:10px;background:var(--bg)}
+  .house-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+  .house-head code{font:11px var(--mono);color:var(--faint)}
+  .house-head .grow{flex:1}
+  .house-card label{display:block;font-size:11px;color:var(--faint);
+    margin-bottom:7px}
+  .house-card label.wide{grid-column:1/-1}
+  .house-card input,.house-card textarea{width:100%;margin-top:3px;
+    font:13px inherit;color:var(--ink);background:#0d1014;
+    border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+  .house-card textarea{font-size:12px;line-height:1.6;resize:vertical}
+  .house-card .h-name{font-size:14px;font-weight:600;width:auto;margin:0}
+  .house-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:8px 12px}
+  .houses-new{display:flex;gap:8px;align-items:center;margin-top:6px;
+    padding-top:11px;border-top:1px solid var(--line)}
+
+  .pick-house{display:flex;align-items:center;gap:7px;font-size:12px;
+    color:var(--faint)}
+  .pick-house select{font:13px inherit;color:var(--ink);background:#0d1014;
+    border:1px solid var(--line);border-radius:6px;padding:4px 9px;cursor:pointer}
+  .pick-house select:hover{border-color:var(--accent)}
+  #whyHouse{font-size:11px;color:var(--faint);flex:1;line-height:1.5}
+
+  /* Which shape a script is, on its card. Not only inside the script view:
+     it decides what every other number on that card means -- 38% borrowed is
+     over the ceiling for an argument and comfortable for a story. */
+  .src.written{position:relative}
+  .src.written .drop-script{position:absolute;right:10px;top:9px;opacity:0;
+    color:var(--faint)}
+  .src.written:hover .drop-script{opacity:1}
+  .src.written .drop-script:hover{color:#ff8a72;border-color:#5b2a22}
+  .src.written .house{display:inline-block;margin-left:8px;padding:1px 8px;
+    border-radius:99px;font:11px var(--mono)}
+  .src.written .house.argue{background:#12212e;color:#7fd4ff;
+    border:1px solid #244055}
+  .src.written .house.story{background:#2a1a12;color:#ffb347;
+    border:1px solid #5c3325}
+
+  /* Two decisions about the whole film, made once and never revisited until
+     they were put here: which shape it is, and who it is for. */
+  .about{display:flex;align-items:center;gap:14px;margin:10px 0 14px;
+    padding:9px 14px;border-radius:9px;background:var(--panel);
+    border:1px solid var(--line);flex-wrap:wrap}
+  .about label{display:flex;align-items:center;gap:7px;font-size:12px;
+    color:var(--faint)}
+  .about label.grow{flex:1;min-width:240px}
+  .about select,.about input{font:13px inherit;color:var(--ink);
+    background:#0d1014;border:1px solid var(--line);border-radius:6px;
+    padding:4px 9px}
+  .about input{flex:1}
+  .about select:hover,.about input:focus{border-color:var(--accent)}
+  .about .hint{font-size:11px;color:var(--faint)}
+  .film{display:flex;align-items:center;gap:10px;margin:12px 0}
+  .film .grow{flex:1}
+  .film .hint{font:11px var(--mono);color:var(--faint)}
+
+  #pending{display:flex;align-items:center;gap:12px;margin:12px 0;
+    padding:9px 14px;border-radius:9px;background:#2a2415;
+    border:1px solid #5b4a22}
+  #pending[hidden]{display:none}
+  #pendingCount{font:12px var(--mono);color:#e2a33c}
+  #pending .hint{font-size:11px;color:var(--faint);flex:1}
+  .shape{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;margin:12px 0}
+  .shape-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;
+    background:#0d1014}
+  .shape-bar i{display:flex;align-items:center;justify-content:center;
+    height:100%;min-width:0}
+  .shape-bar b{font:11px var(--mono);color:#0d1014;opacity:.85}
+  .turn{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}
+  .turn-head{font-size:12px;display:flex;align-items:baseline;gap:10px;
+    flex-wrap:wrap}
+  .turn-lines{margin:8px 0;display:flex;flex-direction:column;gap:3px}
+  .turn-lines div{font-size:13px;padding:4px 10px;border-radius:6px;
+    border-left:3px solid transparent}
+  .turn-lines .was{color:var(--faint);border-left-color:#3f9e73}
+  .turn-lines .now{color:var(--ink);border-left-color:#c8543f;
+    background:#2a1512}
+  .turn-lines .now.next{background:transparent;color:var(--faint)}
+  .turn-ask{font-size:11px;color:var(--faint);line-height:1.6}
+  .turn-ask b{color:#ff8a72}
+  .rights{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;margin:12px 0}
+  .rights-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .rights-head b{font-size:13px}
+  .rights-head .lead{font:13px var(--mono)}
+  .rights-head .lead.good{color:#5fcf9b}
+  .rights-head .lead.short{color:#ff8a72}
+  .rights .bar{display:flex;height:13px;border-radius:7px;overflow:hidden;
+    background:#0d1014}
+  .rights .bar i{display:block;height:100%}
+  .rights-keys{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;
+    font:11px var(--mono);color:var(--faint)}
+  .rights-keys i{display:inline-block;width:9px;height:9px;border-radius:2px;
+    margin-right:5px}
+  .rights-keys b{color:var(--ink);margin-left:5px}
+  .rights-keys em{font-style:normal;margin-left:4px}
+  .holders{margin-top:7px;font:11px var(--mono);color:var(--faint)}
+  .holders span{margin-right:12px}
+  .holders b{color:#e0a; color:#e2a33c}
+  .rights-why{margin:8px 0 0;font-size:11px;line-height:1.6;color:var(--faint)}
+  #jobBar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;
+    align-items:center;gap:12px;padding:9px 18px;background:var(--panel);
+    border-top:1px solid var(--line)}
+  #jobBar[hidden]{display:none}
+  #jobBar b{font-size:13px;flex:none}
+  #jobNote{font:12px var(--mono);color:var(--faint);flex:none;
+    max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .job-track{flex:1;height:6px;border-radius:3px;background:#0d1014;
+    overflow:hidden}
+  .job-track i{display:block;height:100%;background:var(--accent);
+    transition:width .3s}
+  #jobClock{font:12px var(--mono);color:var(--faint);flex:none}
+  #jobBar.failed{background:#2a1512;border-top-color:#5b2a22}
+  #jobBar.failed .job-track i{background:#ef6b6b}
+
+  .gather{display:flex;align-items:center;gap:10px;margin:10px 0}
+  .gather > span{font-size:11px;color:var(--faint);flex:none}
+  .gather input{flex:1}
+
+  .doubted{margin:10px 0;padding:9px 14px;border-radius:9px;background:#2a2415;
+    border:1px solid #5b4a22}
+  .doubted-head{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
+  .doubted-head b{font-size:12px;color:#e2a33c}
+  .doubted-head .hint{font-size:11px;color:var(--faint)}
+  .doubted-head .grow{flex:1}
+  .doubt-row{display:flex;align-items:center;gap:9px;padding:2px 0;
+    font-size:12px}
+  .doubt-row .who{color:var(--faint);font:11px var(--mono);flex:none;
+    width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .doubt-row .what{color:var(--dim);overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap}
+
+  .wanted{display:flex;align-items:center;gap:11px;margin:10px 0;
+    padding:8px 14px;border-radius:9px;background:#2a2415;
+    border:1px solid #5b4a22;flex-wrap:wrap}
+  .wanted > span{font-size:12px;color:#e2a33c;flex:none}
+  .wanted > span b{color:#ffd76a}
+  .wanted .why{font-size:11px;color:var(--faint);flex:1 0 100%;order:9}
+  .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
+    border:1px solid var(--line);border-radius:5px;padding:1px 7px}
+  /* A rule between piles, so one section ends visibly before the next
+     begins. Everything stays open: a pile you have to unfold is a pile you
+     forget is there. */
+  .pile{border-top:1px solid var(--line);margin-top:16px;
+    scroll-margin-top:12px}
+  .pile:first-of-type{border-top:none}
+  .pile h3{display:flex;align-items:baseline;gap:9px;margin:14px 0 8px}
+  .pile h3 .hint{font-size:11px;color:var(--faint);font-weight:400}
+
+  .jump{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px;
+    position:sticky;top:0;z-index:20;padding:8px 0;background:var(--bg)}
+  .jump button{color:var(--faint)}
+  .jump button b{color:var(--ink);margin-left:3px}
+  .jump button.lacking b{color:var(--warn)}
+
+  .note-line{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .note-line span{font-size:11px;color:var(--faint);flex:none}
+  #btnDropTopic{color:var(--faint);flex:none}
+  #btnDropTopic:hover{color:#ff8a72;border-color:#5b2a22}
+  .note-line input{flex:1;font:13px inherit;color:var(--dim);
+    background:transparent;border:1px solid transparent;border-radius:6px;
+    padding:3px 8px}
+  .note-line input:hover{border-color:var(--line)}
+  .note-line input:focus{border-color:var(--accent);background:#0d1014;
+    color:var(--ink);outline:none}
+  .who-for{display:flex;align-items:baseline;gap:12px;padding:10px 15px;
+    margin-bottom:12px;background:#12212e;border:1px solid #244055;
+    border-radius:9px}
+  .who-for span{font-size:11px;color:var(--faint)}
+  .who-for input{flex:1;font:15px inherit;color:#7fd4ff;background:transparent;
+    border:1px solid transparent;border-radius:6px;padding:2px 8px}
+  .who-for input:hover{border-color:#244055}
+  .who-for input:focus{border-color:var(--accent);background:#0d1014;outline:none}
+  .who-for input::placeholder{color:var(--faint);font-size:13px}
+  /* The measured script: length, shares, and every gate's count. Still two
+     rows of tiles because that is a readout of twelve independent numbers,
+     none of which is printed anywhere else on the page. */
+  .gauge{display:flex;gap:16px;flex-wrap:wrap;padding:12px 15px;margin-bottom:8px;
+    background:var(--panel);border:1px solid var(--line);border-radius:9px}
+  .gauge div{font-size:12px;color:var(--dim)}
+  .gauge b{display:block;font:18px var(--mono);font-variant-numeric:tabular-nums;
+    color:var(--ink)}
+  .gauge b.short{color:var(--warn)}
+  .gauge b.good{color:var(--ok)}
+
+  /* Who has been heard. The point is not the count -- it is whether the
+     other side is in there at all, so an empty one is coloured, not just
+     small. Riding along on the verdict line because it answers the same
+     question: is this writable yet. */
+  .sides{display:flex;gap:5px;flex-shrink:0}
+  .sides i{font-style:normal;font-size:11px;color:var(--faint);
+    padding:2px 7px;border-radius:11px;background:#00000033;
+    border:1px solid transparent}
+  .sides i b{font:12px var(--mono);font-variant-numeric:tabular-nums;
+    color:var(--ink);margin-left:4px}
+  .sides i.none{border-color:#5c3a2a;background:#241a14}
+  .sides i.none b{color:var(--warn)}
+
+  #verdict{display:flex;align-items:center;justify-content:space-between;
+    gap:14px;flex-wrap:wrap;
+    padding:11px 15px;border-radius:9px;margin:14px 0 18px;font-size:13px}
+  #verdict.ok{background:#12291f;border:1px solid #2c5a45;color:var(--ok)}
+  #verdict.no{background:#241a14;border:1px solid #5c3a2a;color:var(--warn)}
+
+  h3{margin:24px 0 8px;font-size:13px;color:var(--dim);
+    display:flex;align-items:center;gap:8px}
+  h3 .count{font:11px var(--mono);color:var(--faint)}
+  h3 .count.lacking{color:var(--warn)}
+  h3 .hint{font-size:11px;color:var(--faint);font-weight:400;margin-left:auto}
+  .hunt{display:flex;gap:8px;margin-bottom:10px}
+  .hunt input{flex:1;font-size:13px}
+  /* Candidates, not material: clicking one is what keeps it. */
+  #caught .shelf figure{cursor:pointer}
+  #caught .shelf figure:hover{border-color:var(--ok)}
+  #caught .shelf figure.taken{opacity:.4;pointer-events:none}
+  .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;margin-bottom:7px;font-size:13px}
+  .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
+  .src .fact{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.7}
+  .lean{font-size:10px;padding:1px 7px;border-radius:99px;margin-left:6px;
+    border:1px solid var(--line);color:var(--dim)}
+  .lean.left{color:#7fb4ff;border-color:#2d4a70}
+  .lean.right{color:#ff9d7f;border-color:#6b3f2e}
+  .lean.neutral{color:var(--ok);border-color:#2c5a45}
+  /* A lead is something seen in a channel listing: known to exist, not yet
+     fetched or read. Dashed, so it never reads as material already in hand. */
+  .src.lead{border-style:dashed;background:transparent}
+  .src.written{cursor:pointer;border-color:#2c5a45;background:#12291f}
+  .src.written:hover{border-color:var(--ok)}
+  .src.written b{font-size:15px;pointer-events:none}
+  .src.written .who{pointer-events:none}
+  .voice{font-size:12px;color:var(--dim);padding:6px 0;line-height:1.6;
+    border-top:1px solid #1c242e}
+  .voice .likes{font:11px var(--mono);color:var(--faint);margin-right:9px}
+  .empty{color:var(--faint);font-size:13px;padding:14px;text-align:center;
+    border:1px dashed var(--line);border-radius:9px}
+  /* ---- one script, laid out as it will be spoken ---- */
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th{text-align:left;font-size:11px;color:var(--faint);font-weight:500;
+    padding:0 10px 7px;border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;vertical-align:top;border-bottom:1px solid var(--line)}
+  tr:hover td{background:#161d25}
+  td.at{font:11px var(--mono);color:var(--faint);white-space:nowrap;width:5.4em}
+  td.say{font-size:15px;line-height:1.55}
+  /* The picture beside the line it belongs to: the two were chosen together
+     and should be read together. */
+  td.show{font-size:12px;color:var(--dim);width:30%}
+  /* The picture's own words, under the label the writer typed. When they
+     disagree the label is the one that is wrong, and this is where that
+     shows. */
+  td.show .grabbed{display:block;font:10px var(--mono);color:var(--faint);
+    line-height:1.4;margin-top:3px}
+  .seen-box{display:inline-flex;align-items:center;gap:5px;margin-top:5px;
+    font:11px var(--mono);color:#e2a33c;border:1px solid #6b4d17;
+    border-radius:5px;padding:1px 7px;cursor:pointer;user-select:none}
+  .seen-box.on{color:#5fcf9b;border-color:#2c5a45}
+  .seen-box input{margin:0;accent-color:#5fcf9b}
+  td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
+    display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
+  td.show{cursor:zoom-in}
+  .shelf figure{cursor:zoom-in}
+  td.show img.pic.drawn{object-fit:contain;background:#0d1b2a;
+    border:1px solid #22405c}
+  td.show .grabbed.bad{color:#ff8a72}
+  td.show img.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
+    border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
+  td.from{font-size:11px;color:var(--faint);width:11em}
+  td.from.ours{color:var(--accent)}
+  .ruler{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;
+    margin:14px 0 4px;border:1px solid var(--line);display:flex}
+  .ruler i{display:block;height:100%;border-right:1px solid #0b0e12}
+  .ruler i:nth-child(odd){background:var(--accent)}
+  .ruler i:nth-child(even){background:#4a86cc}
+  #note{font-size:13px;margin-top:14px}
+  #note.bad{color:var(--danger)}
+  #note.warn{color:var(--warn)}
+</style>
+<script defer src="/static/ask.js"></script>
+
+<header>
+  <h1>素材</h1>
+  <span class="where">先收集，再寫</span>
+  <span class="grow"></span>
+  <input id="newName" placeholder="新題目…" size="16">
+  <button id="btnNew" class="tiny">新增</button>
+    <button id="btnBack" class="tiny">← 回編輯器</button>
+</header>
+
+<!-- The house styles themselves. They began as two files I wrote by hand,
+     which makes "what shapes a short can be" something only somebody editing
+     the repository can change. They are data. -->
+<!-- One long task at a time, and it says what it is doing. Gathering and
+     rendering both took minutes and both ran only from the command line,
+     which meant the page could not do half of what the pipeline does. -->
+<div id="jobBar" hidden>
+  <b id="jobWhat"></b>
+  <span id="jobNote"></span>
+  <div class="job-track"><i id="jobFill"></i></div>
+  <span id="jobClock"></span>
+</div>
+
+<div id="houses" hidden>
+  <div class="houses-inner">
+    <div class="houses-bar">
+      <b>公版</b>
+      <span class="hint">一個公版說的是「這種片子長什麼形狀」。
+        沒寫的項目會掉回 rules.json 的共用值</span>
+      <button id="housesClose" class="tiny">關閉</button>
+    </div>
+    <div id="housesList"></div>
+    <div class="houses-new">
+      <input id="newHouseKey" placeholder="代號（英文，如 explain）" size="18">
+      <input id="newHouseName" placeholder="名稱（如 拆解說明）" size="14">
+      <button id="btnNewHouse" class="tiny primary">新增公版</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div id="list"></div>
+  <div id="paper"><div class="empty">左邊選一個題目</div></div>
+</main>
+
+
+<script src="/static/shared.js"></script>
+<script>
+const STATE = { list: [], want: { videos: 5, reports: 5 }, chosen: null };
+
+
+
+
+
+
+/* How the list is arranged. Sorted by when the file was last written, which
+   is what it always did and is worth saying out loud: editing an audience
+   moves a topic to the top. `state` sorts by how far each one got instead --
+   which is the question once there are more topics than fit on a screen. */
+const SIFT = {find: "", sort: "recent", showArchived: false};
+
+function topicCard(item) {
+  return `
+    <div class="item ${item.name === STATE.chosen ? "on" : ""}${
+      item.archived ? " archived" : ""}"
+         data-name="${escapeHTML(item.name)}">
+      <b>${escapeHTML(item.name)}${
+        item.films ? `<span class="films">🎬 ${item.films}</span>` : ""}</b>
+      <span class="facts">影片 ${item.counts.videos}/${STATE.want.videos}　`
+      + `報導 ${item.counts.reports}/${STATE.want.reports}　事實 ${item.facts} 條</span>
+      ${item.ready ? '<span class="facts" style="color:var(--ok)">素材夠了</span>'
+                   : `<span class="facts bad">${escapeHTML(item.why)}</span>`}
+      ${item.scripts.length
+        ? `<span class="facts">文案 ${item.scripts.length} 份</span>` : ""}
+    </div>`;
+}
+
+function renderList() {
+  const find = SIFT.find.trim().toLowerCase();
+  const matches = (one) => !find
+    || one.name.toLowerCase().includes(find)
+    || (one.note || "").toLowerCase().includes(find)
+    || (one.audience || "").toLowerCase().includes(find);
+
+  const rank = {
+    // Newest first: what the list has always done.
+    recent: (a, b) => b.modified - a.modified,
+    // By how far it got, so the ones waiting on something are together.
+    state: (a, b) => (b.films - a.films)
+      || (b.scripts.length - a.scripts.length)
+      || (Number(b.ready) - Number(a.ready))
+      || (b.modified - a.modified),
+    name: (a, b) => a.name.localeCompare(b.name, "zh-Hant"),
+  }[SIFT.sort];
+
+  const all = STATE.list.filter(matches);
+  const live = all.filter((one) => !one.archived).sort(rank);
+  const filed = all.filter((one) => one.archived).sort(rank);
+
+  $("list").innerHTML = `
+    <div class="sift">
+      <input id="findTopic" value="${escapeHTML(SIFT.find)}"
+        placeholder="找題目、理由、受眾…" spellcheck="false">
+      <select id="sortTopic">
+        <option value="recent"${SIFT.sort === "recent" ? " selected" : ""}>最近改過</option>
+        <option value="state"${SIFT.sort === "state" ? " selected" : ""}>做到哪</option>
+        <option value="name"${SIFT.sort === "name" ? " selected" : ""}>名稱</option>
+      </select>
+    </div>
+    ${live.map(topicCard).join("") || '<div class="empty">沒有符合的題目</div>'}
+    ${filed.length ? `
+      <div class="filed-head" id="showFiled">
+        ${SIFT.showArchived ? "▾" : "▸"} 封存的 ${filed.length} 個
+      </div>
+      ${SIFT.showArchived ? filed.map(topicCard).join("") : ""}` : ""}`;
+
+  $("findTopic").oninput = (event) => {
+    SIFT.find = event.target.value;
+    const where = event.target.selectionStart;
+    renderList();
+    $("findTopic").focus();
+    $("findTopic").setSelectionRange(where, where);
+  };
+  $("sortTopic").onchange = (event) => { SIFT.sort = event.target.value; renderList(); };
+  if ($("showFiled")) $("showFiled").onclick = () => {
+    SIFT.showArchived = !SIFT.showArchived;
+    renderList();
+  };
+}
+
+
+/** What people said underneath, loudest first. No names: we want what was
+ *  said, not who said it. */
+function voiceRows(voices) {
+  if (!voices || !voices.length) {
+    return '<div class="empty">還沒抓留言</div>';
+  }
+  return voices.map((one) => `
+    <div class="src">
+      <div class="who">${escapeHTML(one.outlet || "")}　${
+        escapeHTML(one.title || "")}　${(one.comments || []).length} 則</div>
+      ${(one.comments || []).slice(0, 12).map((said) => `
+        <div class="voice"><span class="likes">▲${said.likes}</span>${
+          escapeHTML(said.say)}</div>`).join("")}
+      ${(one.comments || []).length > 12
+        ? `<div class="who">…另外 ${one.comments.length - 12} 則</div>` : ""}
+    </div>`).join("");
+}
+
+function sourceRows(items, kind) {
+  if (!items || !items.length) {
+    return `<div class="empty">還沒有${kind}</div>`;
+  }
+  return items.map((item) => `
+    <div class="src">
+      ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
+        escapeHTML(item.title || item.url)}</a>` : escapeHTML(item.title || "")}
+      ${leanTag(item.lean || "")}
+      <div class="who">${escapeHTML(item.outlet || "")}${
+        item.seconds ? `　${Math.round(item.seconds / 60)} 分` : ""}${
+        item.captions ? "　有字幕" : ""}${
+        item.use ? `　用 ${item.use.map((w) => `${w[0]}–${w[1]}s`).join("、")}` : ""}${
+        item.note ? `　${escapeHTML(item.note)}` : ""}</div>
+      ${(item.facts || []).length
+        ? `<div class="fact">${item.facts.map(escapeHTML).join("　·　")}</div>` : ""}
+    </div>`).join("");
+}
+
+async function open(name) {
+  STATE.chosen = name;
+  renderList();
+  let pile;
+  try { pile = await api("GET", `/api/topic?name=${encodeURIComponent(name)}`); }
+  catch (error) { $("paper").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`; return; }
+
+  const got = pile.counts.got, want = pile.counts.want, sides = pile.balance.sides;
+  const columns = [["left", "左"], ["neutral", "中立"], ["right", "右"],
+                   ["other", "其他"]];
+
+  $("paper").innerHTML = `
+    <h2>${escapeHTML(pile.topic || name)}</h2>
+    <!-- Why this topic, and what to watch for. The one thing here nothing can
+         compute: whether the opposition is easy to find is in the balance
+         panel; that a medical topic cannot be monetised with an AI voice is
+         not anywhere else, and it decides whether the film gets made. -->
+    <div class="note-line">
+      <button id="btnArchive" class="tiny">${
+        pile.archived ? "取出" : "封存"}</button>
+      <button id="btnDropTopic" class="tiny" title="刪掉這個題目">刪題目</button>
+      <span>挑這題的理由</span>
+      <input id="topicNote" value="${escapeHTML(pile.note || "")}"
+        placeholder="為什麼值得花九十秒？有什麼坑？" spellcheck="false">
+    </div>
+    <!-- Who the ending has to land on. Not always everyone: for a market
+         story it is a shareholder, and his contact point is a balance. -->
+    <!-- Decided, not guessed. The keyword table is offered as a button; it
+         used to be printed here as though it were the answer, and it said a
+         piece about studios being bought was for people whose jobs AI might
+         take. A field that arrives filled in is a field nobody reads. -->
+    <div class="who-for">
+      <span>說給誰聽</span>
+      <input id="topicWho" value="${escapeHTML(pile.audience || "")}"
+        placeholder="還沒決定 —— 結尾整段會寫給這群人聽" spellcheck="false">
+      ${pile.audience_guess && pile.audience !== pile.audience_guess
+        ? `<button id="btnGuessWho" class="tiny"
+             title="從題目關鍵字猜的，不一定對">用「${
+             escapeHTML(pile.audience_guess)}」</button>` : ""}
+    </div>
+
+    <!-- One line, not two panels. The six counts that used to sit here are
+         on the sticky jump bar a little further down, where each one is also
+         the way to reach that pile -- printing them twice made the top of
+         the page a table of contents for a table of contents. What is left
+         is the one thing the jump bar cannot say: whether this is writable,
+         and who has not been heard. -->
+    <div id="verdict" class="${pile.ready ? "ok" : "no"}">
+      <span>${pile.ready ? "素材夠了，可以寫文案。"
+                         : `還不能寫：${escapeHTML(pile.why)}`}</span>
+      <span class="sides">${columns.map(([key, label]) => `
+        <i class="${sides[key] ? "" : "none"}">${label}<b>${sides[key]}</b></i>`
+      ).join("")}</span>
+    </div>
+
+    <!-- The per-outlet round: ask nineteen named outlets what they said,
+         download what they gave, cut frames where the captions point. This is
+         the argument the whole project rests on and it ran only from a
+         terminal. -->
+    <div class="gather">
+      <span>收集</span>
+      <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
+        spellcheck="false">
+      <button id="btnTerms" class="tiny">想幾個</button>
+      <button id="btnGather" class="tiny primary">逐家問（影片＋報導＋圖＋留言）</button>
+    </div>
+    <div id="termsNote" class="hint"></div>
+
+    ${(pile.doubted || []).length ? `
+    <!-- A model's opinion, held for a decision. Deleting on it loses both the
+         source and the fact that anything was judged: the count simply reads
+         lower and looks like a search that found less. -->
+    <div class="doubted">
+      <div class="doubted-head">
+        <b>模型覺得這 ${pile.doubted.length} 篇跟題目無關</b>
+        <span class="hint">還留著，也還沒算進計數。掃一遍，撿回判錯的</span>
+        <span class="grow"></span>
+        <button id="btnDropAll" class="tiny">其餘全部丟</button>
+      </div>
+      ${pile.doubted.map((one) => `
+        <div class="doubt-row" data-url="${escapeHTML(one.url || "")}">
+          <button class="tiny keep">留</button>
+          <span class="who">${escapeHTML(one.outlet || "")}</span>
+          <span class="what">${escapeHTML(one.title || "")}</span>
+        </div>`).join("")}
+    </div>` : ""}
+
+    ${(pile.wanted || []).length ? `
+    <!-- What the audience implies and the pile does not have. The counts say
+         this topic has enough pictures; they cannot say it has nothing to end
+         on, because the ending is aimed at a group of people and thirty
+         pictures of the subject satisfy a number either way. -->
+    <div class="wanted">
+      <span>結尾會需要的<b>示意圖</b>，還沒收到</span>
+      <span class="why">說給誰聽是「${escapeHTML(pile.audience || "")}」，
+        文案最後幾句要落在那群人的生活上</span>
+      <div class="wanted-terms">${pile.wanted.map((one) =>
+        `<code>${escapeHTML(one)}</code>`).join("")}</div>
+      <button id="btnWanted" class="tiny">去 Pexels 抓這幾個</button>
+    </div>` : ""}
+
+    <div style="display:flex;gap:8px;align-items:center">
+      <!-- Chosen before writing, not corrected afterwards. The shape decides
+           the roles, the pacing, the borrowed ceiling and which prompt is
+           sent, so picking it after the fact means every line has to be
+           relabelled -- which is what happened to Messina. -->
+      <label class="pick-house">寫成
+        <select id="writeAs">
+          ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
+            .map((one) => `<option value="${escapeHTML(one.key)}">${
+              escapeHTML(one.name || one.key)}</option>`).join("")}
+        </select>
+      </label>
+      <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
+      ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">素材不齊也要寫</button>'}
+      <span id="whyHouse" class="hint"></span>
+      <span style="flex:1"></span>
+    </div>
+    <div id="note"></div>
+
+    ${(pile.scripts || []).length ? `
+      <h3>寫好的文案 <span class="count">${pile.scripts.length} 份</span></h3>
+      ${pile.scripts.map((one) => `
+        <div class="src written" data-script="${escapeHTML(one.name || one)}">
+          <button class="tiny drop-script"
+            data-name="${escapeHTML(one.name || one)}" title="刪掉這份文案">刪</button>
+          <b>${escapeHTML(one.name || one)}</b>
+          ${one.house ? `<span class="house ${
+            one.format === "story" ? "story" : "argue"}">${
+            escapeHTML(one.house)}</span>` : ""}
+          <div class="who">${one.seconds
+            ? `${one.seconds}s　${one.lines} 句　點開來看逐句台詞`
+            : "點開來看逐句台詞"}</div>
+        </div>`).join("")}` : ""}
+
+    ${(pile.leads || []).length ? `
+      <h3>線索 <span class="count">${pile.leads.length} 條，還沒抓回來</span></h3>
+      ${pile.leads.map((lead) => `
+        <div class="src lead">
+          ${escapeHTML(lead.title || "")}${leanTag(lead.lean || "")}
+          <div class="who">${escapeHTML(lead.outlet || "")}</div>
+        </div>`).join("")}` : ""}
+
+    ${jumpBar(pile)}
+    ${fold("影片", `${got.videos} / ${want.videos}`,
+           sourceRows(pile.sources.videos, "影片"))}
+    ${fold("報導", `${got.reports} / ${want.reports}`,
+           sourceRows(pile.sources.reports, "報導"))}
+    ${fold("原始數據", `${got.data}`,
+           sourceRows(pile.sources.data, "數據"),
+           "能下載 CSV 的官方統計（財政部、CBO、FRED、Eurostat），用來自己畫圖表。"
+           + "還沒有程式在收，要手動加進 topics/*.json")}
+    <h3>臨時要找一張
+      <span class="hint">寫文案時想到什麼就打什麼，英文</span></h3>
+    <div class="hunt">
+      <input id="want" placeholder="例如：Trump wearing a hat" spellcheck="false">
+      <button id="btnFind" class="tiny">找</button>
+    </div>
+    <div id="caught"></div>
+
+    ${["stock", "real", "frame"].map((kind) => {
+      const spec = pile.counts.pictures[kind];
+      const shown = (pile.sources.images || []).filter(
+        (one) => (one.kind || "stock") === kind);
+      return `
+      <section class="pile" id="pile-${escapeHTML(spec.label)}">
+      <h3>${escapeHTML(spec.label)}
+        <span class="count ${spec.short ? "lacking" : ""}">${spec.have} / ${
+          spec.want}${spec.short ? `　還缺 ${spec.short}` : ""}</span>
+        <span class="hint">${WHERE_FROM[kind]}</span></h3>
+      ${shown.length ? `<div class="shelf">${shown.map((one) => `
+        <figure data-shot="${escapeHTML(JSON.stringify({
+            say: "", show: one.term || "",
+            pic: `/media/photo/${encodeURIComponent(name)}/${
+              encodeURIComponent((one.file || "").split("/").pop())}`,
+            caption: one.caption || "", credit: one.credit || "",
+            from: one.outlet || "",
+          }))}" title="點開來看">
+          <img src="/media/photo/${encodeURIComponent(name)}/${
+            encodeURIComponent((one.file || "").split("/").pop())}"
+            alt="" loading="lazy">
+          <figcaption class="asked">${escapeHTML(
+            one.at != null ? `${Math.round(one.at)}s　${one.outlet || ""}`
+                           : one.term || "")}</figcaption>
+          <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
+          ${one.credit ? `<figcaption class="who">${escapeHTML(one.credit)}</figcaption>` : ""}
+        </figure>`).join("")}</div>`
+        : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}
+      </section>`;
+    }).join("")}
+
+    <section class="pile" id="pile-鄉民反應">
+      <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
+        <button id="btnVoices" class="tiny">抓留言</button></h3>
+      ${voiceRows(pile.voices)}
+    </section>
+
+    <section class="pile" id="pile-整理出的事實">
+      <h3>整理出的事實 <span class="count">${(pile.facts || []).length}</span>
+        <span class="hint">每一條都要指得回某一篇。還沒有程式在抽，
+          要手動加進 topics/*.json</span></h3>
+      ${(pile.facts || []).length
+        ? (pile.facts || []).map((fact) => `
+            <div class="src">${escapeHTML(fact.say)}
+              <div class="who">${escapeHTML(fact.from || "")}</div></div>`).join("")
+        : '<div class="empty">還沒有整理</div>'}
+    </section>`;
+
+  const write = async (anyway) => {
+    $("note").className = "";
+    $("note").textContent = "寫稿中…";
+    try {
+      const made = await api("POST", "/api/topic/script",
+                             { name, anyway, format: $("writeAs").value });
+      $("note").textContent = `寫好了：${made.script}`;
+    } catch (error) {
+      $("note").className = "warn";
+      $("note").textContent = error.message;
+    }
+  };
+  /* Ask for one shot and look at what comes back. Nothing is kept until it is
+     clicked -- a specific request is usually specific about how it should look
+     as well as what is in it. */
+  const hunt = async () => {
+    const want = $("want").value.trim();
+    if (!want) return;
+    $("caught").innerHTML = '<div class="empty">找…</div>';
+    let got;
+    try { got = await api("POST", "/api/topic/find", { want }); }
+    catch (error) {
+      $("caught").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`;
+      return;
+    }
+    if (!got.found.length) {
+      $("caught").innerHTML = '<div class="empty">兩邊都沒有。換個說法試試</div>';
+      return;
+    }
+    $("caught").innerHTML = `
+      <div class="shelf">${got.found.map((one, index) => `
+        <figure data-catch="${index}" title="點一下收進來　${
+          escapeHTML(one.caption || "")}">
+          <img src="${escapeHTML(one.url)}" alt="" loading="lazy">
+          <figcaption>${one.kind === "real" ? "真實" : "示意"}　${
+            escapeHTML(one.author || one.outlet)}</figcaption>
+        </figure>`).join("")}</div>`;
+    $("caught").querySelectorAll("[data-catch]").forEach((card) => {
+      card.onclick = async () => {
+        card.classList.add("taken");
+        try {
+          await api("POST", "/api/topic/keep",
+                    { name, want, picture: got.found[Number(card.dataset.catch)] });
+          $("note").className = "";
+          $("note").textContent = "收下了。重新整理這一頁就會出現在下面";
+        } catch (error) {
+          card.classList.remove("taken");
+          $("note").className = "bad";
+          $("note").textContent = error.message;
+        }
+      };
+    });
+  };
+  if ($("btnFind")) $("btnFind").onclick = hunt;
+  if ($("want")) $("want").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") hunt();
+  });
+
+  if ($("btnVoices")) $("btnVoices").onclick = async () => {
+    $("btnVoices").disabled = true;
+    $("btnVoices").textContent = "抓取中…";
+    try {
+      const got = await api("POST", "/api/topic/voices", { name });
+      open(name);
+      $("note").textContent = `抓了 ${got.added} 則，共 ${got.total} 則`;
+    } catch (error) {
+      $("btnVoices").disabled = false;
+      $("btnVoices").textContent = "抓留言";
+      $("note").className = "bad";
+      $("note").textContent = error.message;
+    }
+  };
+  // Each shape says in its own file why it exists; show that beside the
+  // chooser, because "新聞報導 or 說故事" is not a choice anybody can make from
+  // the two words alone.
+  const writeAs = $("writeAs");
+  if (writeAs) {
+    const sayWhy = () => {
+      const spec = FORMATS.find((one) => one.key === writeAs.value) || {};
+      $("whyHouse").textContent = spec.why || "";
+    };
+    writeAs.onchange = sayWhy;
+    sayWhy();
+  }
+  // Who this topic is for. Stored on the topic, and copied into a script when
+  // one is written -- a topic can yield two shorts for two audiences, so the
+  // script keeps its own once it exists.
+  // Deleting a script. It goes to trash/ rather than away: a script is the
+  // only place a set of judgements lives -- which picture for which line,
+  // which passage, which card -- and each of those took looking at something.
+  // The film and the drawn cards do go, since both rebuild from it exactly.
+  $("paper").querySelectorAll(".drop-script").forEach((button) => {
+    button.onclick = async (event) => {
+      event.stopPropagation();          // the card itself opens the script
+      const which = button.dataset.name;
+      if (!await confirmed(`刪掉文案「${which}」？`, {
+        body: "文案移到 trash/，可以救回來。",
+        lose: ["壓好的影片（可以重壓）", "畫好的卡片（可以重畫）",
+               "接觸表"]})) return;
+      try {
+        await api("DELETE", `/api/script?name=${encodeURIComponent(which)}`);
+        open(name);
+      } catch (error) { told('出錯了', error.message); }
+    };
+  });
+
+  $("paper").querySelectorAll("[data-jump]").forEach((button) => {
+    button.onclick = () => {
+      const target = document.getElementById(`pile-${button.dataset.jump}`);
+      if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
+    };
+  });
+
+  // Out of the way, not gone. A topic that came to nothing still records
+  // having asked -- Messina was covered by four outlets and by nobody on the
+  // right, so it cannot become a short, and that is worth knowing later.
+  if ($("btnArchive")) $("btnArchive").onclick = async () => {
+    try {
+      await api("POST", "/api/topic/archive",
+                {name, archived: !pile.archived});
+      await reload(false);
+      open(name);
+    } catch (error) { told("出錯了", error.message); }
+  };
+
+  // Deleting a topic. Refused while a script is written from it: a script
+  // names pictures by path, so taking the pile away turns a script that was
+  // fine yesterday into one missing every shot.
+  if ($("btnDropTopic")) $("btnDropTopic").onclick = async () => {
+    if (!await confirmed(`刪掉題目「${name}」？`, {
+      body: "紀錄移到 trash/，可以救回來。",
+      lose: ["下載的影片（可以重抓）", "下載的照片（可以重抓）",
+             "抽出來的新聞畫格"]})) return;
+    try {
+      const back = await api("DELETE",
+                             `/api/topic?name=${encodeURIComponent(name)}`);
+      told(`刪了。也清掉：${(back.also_removed || []).join("、") || "（沒有素材）"}`);
+      STATE.chosen = null;
+      $("paper").innerHTML = "";
+      reload(true);
+    } catch (error) { told('出錯了', error.message); }
+  };
+
+  const noteBox = $("topicNote");
+  if (noteBox) {
+    noteBox.dataset.was = noteBox.value;
+    const saveNote = async () => {
+      if (noteBox.value.trim() === noteBox.dataset.was) return;
+      try {
+        await api("POST", "/api/topic/note",
+                  {name, note: noteBox.value.trim()});
+        noteBox.dataset.was = noteBox.value.trim();
+      } catch (error) { told('出錯了', error.message); noteBox.value = noteBox.dataset.was; }
+    };
+    noteBox.addEventListener("blur", saveNote);
+    noteBox.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); noteBox.blur(); }
+      if (event.key === "Escape") { noteBox.value = noteBox.dataset.was; noteBox.blur(); }
+    });
+  }
+
+  const who = $("topicWho");
+  if (who) {
+    who.dataset.was = who.value;
+    const saveWho = async () => {
+      if (who.value.trim() === who.dataset.was) return;
+      try {
+        await api("POST", "/api/topic/audience",
+                  {name, audience: who.value.trim()});
+        who.dataset.was = who.value.trim();
+        open(name);
+      } catch (error) { told('出錯了', error.message); who.value = who.dataset.was; }
+    };
+    who.addEventListener("blur", saveWho);
+    who.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); who.blur(); }
+      if (event.key === "Escape") { who.value = who.dataset.was; who.blur(); }
+    });
+  }
+  if ($("btnGuessWho")) $("btnGuessWho").onclick = async () => {
+    try {
+      await api("POST", "/api/topic/audience",
+                {name, audience: pile.audience_guess});
+      open(name);
+    } catch (error) { told('出錯了', error.message); }
+  };
+
+  // The picture terms ride along with the video ones: one suggestion, one
+  // gather. Kept here rather than in a second box because they are not a
+  // separate decision -- both come from the same reading of the topic.
+  TERMS.pictures = [];
+  // Suggested, then shown, then used. Putting the terms in the box rather
+  // than searching with them straight away is the difference between a
+  // suggestion and a decision somebody else made -- and these terms decide
+  // which nineteen answers come back.
+  if ($("btnTerms")) $("btnTerms").onclick = async () => {
+    $("termsNote").textContent = "想中…";
+    try {
+      const got = await api("POST", "/api/topic/terms", {name});
+      $("hunt").value = got.videos.join(", ");
+      TERMS.pictures = got.pictures || [];
+      TERMS.named = got.named || [];
+      const extra = [];
+      if (got.pictures.length) extra.push(`圖庫：${got.pictures.join("、")}`);
+      if ((got.named || []).length) extra.push(`維基：${got.named.join("、")}`);
+      $("termsNote").textContent = extra.length
+        ? `${extra.join("　｜　")}　${got.took}s` : `${got.took}s`;
+    } catch (error) { $("termsNote").textContent = error.message; }
+  };
+  // Ruling on what the model doubted. Keeping is one click each because that
+  // is the direction worth making easy -- a wrongly dropped source is a fact
+  // that stops existing, a wrongly kept one is a line in a list.
+  $("paper").querySelectorAll(".doubt-row .keep").forEach((button) => {
+    button.onclick = async () => {
+      const row = button.closest(".doubt-row");
+      try {
+        await api("POST", "/api/topic/judge",
+                  {name, urls: [row.dataset.url], keep: true});
+        open(name);
+      } catch (error) { told('出錯了', error.message); }
+    };
+  });
+  if ($("btnDropAll")) $("btnDropAll").onclick = async () => {
+    const urls = [...$("paper").querySelectorAll(".doubt-row")]
+      .map((row) => row.dataset.url);
+    if (!await confirmed(`丟掉這 ${urls.length} 篇？`, {
+      body: "模型判定它們跟題目無關。丟掉之後就找不回來了。"})) return;
+    try {
+      await api("POST", "/api/topic/judge", {name, urls, keep: false});
+      open(name);
+    } catch (error) { told('出錯了', error.message); }
+  };
+  if ($("btnGather")) $("btnGather").onclick = async () => {
+    const queries = $("hunt").value.trim();
+    if (!queries) { told("要給搜尋詞"); return; }
+    try {
+      await api("POST", "/api/topic/gather",
+                {name, queries, pictures: TERMS.pictures.join(", "),
+                 named: TERMS.named.join(", ")});
+      watchJob(() => open(name));
+    } catch (error) { told('出錯了', error.message); }
+  };
+  if ($("btnWanted")) $("btnWanted").onclick = async () => {
+    $("note").className = ""; $("note").textContent = "抓圖中…";
+    try {
+      const back = await api("POST", "/api/topic/images",
+                             {name, terms: pile.wanted, where: "stock"});
+      $("note").textContent = `收了 ${back.added} 張`;
+      open(name);
+    } catch (error) {
+      $("note").className = "warn"; $("note").textContent = error.message;
+    }
+  };
+  if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
+  if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
+}
+
+const TERMS = {pictures: [], named: []};
+
+/* 公版清單。這一頁只讀它 —— 「寫成 新聞報導／說故事」那個選單。
+   編輯公版在文案頁，因為那是改「片子長什麼形狀」，不是收集素材。 */
+let FORMATS = [];
+/* Which piles are open. A gathered topic is twenty-five videos, thirty-six
+   reports and forty-nine pictures -- right for something browsed once and
+   consulted later, wrong to scroll past on every visit. Remembered across
+   redraws so opening one and acting on it does not shut it again. */
+/* Getting to a pile without scrolling past the others. The counts are on the
+   buttons, so it doubles as the summary of what has been gathered -- which is
+   the thing you actually came to the page to find out. */
+function jumpBar(pile) {
+  const got = pile.counts.got, want = pile.counts.want;
+  const piles = [
+    ["影片", `${got.videos}/${want.videos}`],
+    ["報導", `${got.reports}/${want.reports}`],
+    ["原始數據", `${got.data}`],
+    ...Object.values(pile.counts.pictures).map(
+      (spec) => [spec.label, `${spec.have}/${spec.want}`, spec.short]),
+    ["鄉民反應", `${voiceCount(pile)}`],
+    ["整理出的事實", `${(pile.facts || []).length}`],
+  ];
+  return `<div class="jump">${piles.map(([title, count, short]) => `
+    <button class="tiny${short ? " lacking" : ""}" data-jump="${escapeHTML(title)}">
+      ${escapeHTML(title)} <b>${escapeHTML(count)}</b></button>`).join("")}</div>`;
+}
+/* Everything open, always. Folding was the wrong answer to a long page: a
+   pile you have to open is a pile you forget is there, and the point of
+   gathering is to see what you have. What was actually wanted is a way to get
+   to a section without scrolling past the others. */
+function fold(title, count, body, why) {
+  return `
+    <section class="pile" id="pile-${escapeHTML(title)}">
+      <h3>${escapeHTML(title)} <span class="count">${escapeHTML(count)}</span>
+        ${why ? `<span class="hint">${escapeHTML(why)}</span>` : ""}</h3>
+      ${body}
+    </section>`;
+}
+
+async function reload(openFirst) {
+  try {
+    const found = await api("GET", "/api/topics");
+    STATE.list = found.topics.sort((a, b) => b.modified - a.modified);
+    STATE.want = found.want;
+  } catch (error) { /* nothing yet */ }
+  renderList();
+  if (openFirst && STATE.list.length) open(STATE.list[0].name);
+}
+
+/* ---------------------------------------------------------------- 綁事件
+ * 委派給 #list 和 #paper，因為兩邊的內容每次重畫都換掉，綁在元素上會掉。 */
+
+$("list").addEventListener("click", (event) => {
+  const row = event.target.closest("[data-name]");
+  if (row) open(row.dataset.name);
+});
+
+$("paper").addEventListener("click", (event) => {
+  // 文案卡片現在連到另一頁，不是在這一頁展開。
+  const card = event.target.closest("[data-script]");
+  if (card) { location.href = "/scripts?name="
+    + encodeURIComponent(card.dataset.script); return; }
+
+  const shelf = event.target.closest(".shelf [data-shot]");
+  if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }
+});
+
+$("btnNew").onclick = async () => {
+  const name = $("newName").value.trim();
+  if (!name) return;
+  try {
+    const made = await api("POST", "/api/topic", { name });
+    STATE.list = made.topics.sort((a, b) => b.modified - a.modified);
+    $("newName").value = "";
+    renderList();
+    open(name);
+  } catch (error) { told('出錯了', error.message); }
+};
+$("newName").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") $("btnNew").click();
+});
+$("btnBack").onclick = () => { location.href = "/"; };
+
+/* 網址帶了名字就開那一個 —— 從文案頁按「回題目」會這樣過來。 */
+async function boot() {
+  try { FORMATS = (await api("GET", "/api/formats")).formats || []; }
+  catch (error) { FORMATS = []; }   // 選單會掉回「新聞報導」
+  await reload(false);
+  const wanted = new URLSearchParams(location.search).get("name");
+  if (wanted && STATE.list.some((one) => one.name === wanted)) await open(wanted);
+  else if (STATE.list.length) await open(STATE.list[0].name);
+}
+
+/* 壞了就說出來。一個 JavaScript 例外會讓右半邊停在「左邊選一個題目」，而
+   伺服器回 200 —— 這個專案已經有過一次整頁空白而看起來正常的紀錄。 */
+boot().catch((error) => {
+  $("paper").innerHTML =
+    `<div class="empty" style="color:var(--warn);text-align:left;
+        white-space:pre-wrap;font:12px var(--mono)">頁面出錯了：
+${escapeHTML(error && error.stack || error)}</div>`;
+});
+window.addEventListener("error", (event) => {
+  const paper = $("paper");
+  if (paper && paper.querySelector(".empty")) {
+    paper.innerHTML = `<div class="empty" style="color:var(--warn);text-align:left;
+      font:12px var(--mono)">${escapeHTML(event.message)}
+${escapeHTML(event.filename || "")}:${event.lineno}</div>`;
+  }
+});
+</script>
+<script src="/static/nav.js"></script>

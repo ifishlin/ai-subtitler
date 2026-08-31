@@ -212,6 +212,17 @@ def desk() -> str:
     return (STATIC / "index.html").read_text(encoding="utf-8")
 
 
+@app.get("/topics", response_class=HTMLResponse)
+def topics_page() -> str:
+    """Gathering: the pile, and whether it has heard both sides.
+
+    Split from /scripts, which was 86 KB doing two jobs with different
+    lifetimes -- a pile is gathered once and then mostly left alone, a script
+    is rewritten over and over, and one topic feeds several scripts.
+    """
+    return (STATIC / "topics.html").read_text(encoding="utf-8")
+
+
 @app.get("/gates", response_class=HTMLResponse)
 def gates_page() -> str:
     return (STATIC / "gates.html").read_text(encoding="utf-8")

@@ -34,11 +34,17 @@
        錯的：壓片按鈕在文案那一頁（/api/script/film），產製跟文案毫無關係。 -->
   <h2>做新的短片　—— 從一則新聞開始</h2>
   <div class="cards">
+    <a class="card" href="/topics">
+      <span class="step">① – ④</span>
+      <b><span class="icon">📚</span>素材</b>
+      <span>開題目、逐家問十九家媒體、看回來的影片報導圖片留言、
+        裁決模型覺得無關的那幾筆。素材夠了才能寫。</span>
+    </a>
     <a class="card" href="/scripts">
-      <span class="step">① – ⑨　全部在這一頁</span>
-      <b><span class="icon">📝</span>題目與文案</b>
-      <span>開題目、逐家問十九家媒體、看素材、選公版、寫文案、看圖打勾，
-        然後按「壓片」做出九十秒的成品。內容是我們寫的。</span>
+      <span class="step">⑤ – ⑨</span>
+      <b><span class="icon">📝</span>文案</b>
+      <span>選公版、寫、改台詞和角色、看圖打勾，然後壓成九十秒。
+        一個題目可以有好幾份文案。</span>
     </a>
   </div>
 
@@ -148,7 +154,7 @@ async function load() {
     .sort((a, b) => (b.films - a.films) || (b.modified - a.modified))
     .map((one) => `
       <tr>
-        <td><a href="/scripts">${esc(one.name)}</a>
+        <td><a href="/topics?name=${encodeURIComponent(one.name)}">${esc(one.name)}</a>
           ${one.archived ? '<span class="pill">封存</span>' : ""}</td>
         <td>${one.ready ? '<span class="pill ok">素材夠了</span>'
                         : `<span class="pill no">${esc(one.why)}</span>`}</td>
@@ -171,7 +177,7 @@ async function load() {
     const trouble = bad.map(([k, n]) => `${k} ${n}`).concat(shape);
     return `
       <tr>
-        <td><a href="/produce">${esc(one.name)}</a></td>
+        <td><a href="/scripts?name=${encodeURIComponent(one.name)}">${esc(one.name)}</a></td>
         <td>${trouble.length
               ? `<span class="pill no">${esc(trouble.join("　·　"))}</span>`
               : '<span class="pill ok">全部通過</span>'}</td>

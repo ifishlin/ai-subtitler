@@ -411,11 +411,9 @@
 <script defer src="/static/ask.js"></script>
 
 <header>
-  <h1>題目</h1>
-  <span class="where">先收集，再寫</span>
+  <h1>文案</h1>
+  <span class="where">寫、看圖、壓片</span>
   <span class="grow"></span>
-  <input id="newName" placeholder="新題目…" size="16">
-  <button id="btnNew" class="tiny">新增</button>
   <button id="btnHouses" class="tiny">公版</button>
   <button id="btnBack" class="tiny">← 回編輯器</button>
 </header>
@@ -452,666 +450,68 @@
 
 <main>
   <div id="list"></div>
-  <div id="paper"><div class="empty">左邊選一個題目</div></div>
+  <div id="paper"><div class="empty">左邊選一份文案</div></div>
 </main>
 
-<div id="big" hidden>
-  <div class="big-inner">
-    <div class="big-bar">
-      <b id="bigWho"></b><span id="bigWhat"></span>
-      <button id="bigClose" class="tiny">關閉</button>
-    </div>
-    <div id="bigStage"></div>
-    <div id="bigNote"></div>
-  </div>
-</div>
 
+<script src="/static/shared.js"></script>
 <script>
-"use strict";
-const $ = (id) => document.getElementById(id);
-const escapeHTML = (text) => String(text).replace(/[&<>"]/g,
-  (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const STATE = { list: [], chosen: null, topic: null };
 
-const STATE = { list: [], want: { videos: 5, reports: 5 }, chosen: null };
+/* 這一頁的清單是文案，不是題目。同一個題目可以有好幾份文案 —— 梅西納現在
+   有兩份 —— 所以文案才是這一頁的主角，題目只是它的來源。 */
+const SIFT = {find: "", sort: "recent"};
 
-/* Three kinds of picture because they cover different holes: stock stands in
-   for the abstract, Commons has the actual person and place, and a frame is
-   the event as it was broadcast. None substitutes for another. */
-const WHERE_FROM = {
-  stock: "Pexels，可商用免標示。用在抽象的東西——帳單、電表、排隊",
-  real: "Wikimedia Commons，多為 CC BY／BY-SA，出處要上畫面。用在有名字的人事地",
-  frame: "從這個題目自己的新聞影片剪的。算在 25% 的引用額度裡",
-};
-
-/* Watching a job. Asked for rather than pushed, because both tasks are minutes
-   long and a page that goes quiet for four minutes looks broken. */
-let JOB_TIMER = null;
-async function watchJob(whenDone) {
-  const tick = async () => {
-    let job;
-    try { job = await api("GET", "/api/job"); } catch (error) { return; }
-    const bar = $("jobBar");
-    bar.hidden = job.state !== "running" && job.state !== "failed";
-    $("jobWhat").textContent = job.what || "";
-    $("jobNote").textContent = job.note || "";
-    $("jobClock").textContent = job.seconds ? `${Math.round(job.seconds)}s` : "";
-    $("jobFill").style.width =
-      job.steps ? `${(job.step / job.steps) * 100}%` : "0%";
-    bar.classList.toggle("failed", job.state === "failed");
-    if (job.state === "running") return;
-    clearInterval(JOB_TIMER); JOB_TIMER = null;
-    if (job.state === "done" && whenDone) whenDone();
-  };
-  clearInterval(JOB_TIMER);
-  await tick();
-  JOB_TIMER = setInterval(tick, 1500);
-}
-
-async function api(method, path, body) {
-  const response = await fetch(path, {
-    method, headers: body ? { "Content-Type": "application/json" } : undefined,
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.detail || `${path} 失敗`);
-  return data;
-}
-
-function clock(seconds) {
-  seconds = Math.max(0, seconds || 0);
-  return `${Math.floor(seconds / 60)}:${(seconds % 60).toFixed(1).padStart(4, "0")}`;
-}
-
-function leanTag(lean) {
-  const which = /left/.test(lean) ? "left" : /right/.test(lean) ? "right"
-              : lean === "neutral" ? "neutral" : "";
-  return lean ? `<span class="lean ${which}">${escapeHTML(lean)}</span>` : "";
-}
-
-/* How the list is arranged. Sorted by when the file was last written, which
-   is what it always did and is worth saying out loud: editing an audience
-   moves a topic to the top. `state` sorts by how far each one got instead --
-   which is the question once there are more topics than fit on a screen. */
-const SIFT = {find: "", sort: "recent", showArchived: false};
-
-function topicCard(item) {
+function scriptCard(one) {
+  const trouble = [];
+  if (one.over > 0) trouble.push(`超長 ${one.over}s`);
+  if (one.unsourced) trouble.push(`${one.unsourced} 句沒來源`);
   return `
-    <div class="item ${item.name === STATE.chosen ? "on" : ""}${
-      item.archived ? " archived" : ""}"
-         data-name="${escapeHTML(item.name)}">
-      <b>${escapeHTML(item.name)}${
-        item.films ? `<span class="films">🎬 ${item.films}</span>` : ""}</b>
-      <span class="facts">影片 ${item.counts.videos}/${STATE.want.videos}　`
-      + `報導 ${item.counts.reports}/${STATE.want.reports}　事實 ${item.facts} 條</span>
-      ${item.ready ? '<span class="facts" style="color:var(--ok)">素材夠了</span>'
-                   : `<span class="facts bad">${escapeHTML(item.why)}</span>`}
-      ${item.scripts.length
-        ? `<span class="facts">文案 ${item.scripts.length} 份</span>` : ""}
+    <div class="item ${one.name === STATE.chosen ? "on" : ""}"
+         data-name="${escapeHTML(one.name)}">
+      <b>${escapeHTML(one.name)}</b>
+      <span class="facts">${escapeHTML(one.house || one.format || "")}　`
+      + `${one.lines} 句　${clock(one.seconds)}</span>
+      <span class="facts">從 ${escapeHTML(one.topic || "？")}</span>
+      ${trouble.length
+        ? `<span class="facts bad">${escapeHTML(trouble.join("　"))}</span>`
+        : '<span class="facts" style="color:var(--ok)">數字都在裡面</span>'}
     </div>`;
 }
 
 function renderList() {
   const find = SIFT.find.trim().toLowerCase();
-  const matches = (one) => !find
-    || one.name.toLowerCase().includes(find)
-    || (one.note || "").toLowerCase().includes(find)
-    || (one.audience || "").toLowerCase().includes(find);
-
   const rank = {
-    // Newest first: what the list has always done.
     recent: (a, b) => b.modified - a.modified,
-    // By how far it got, so the ones waiting on something are together.
-    state: (a, b) => (b.films - a.films)
-      || (b.scripts.length - a.scripts.length)
-      || (Number(b.ready) - Number(a.ready))
-      || (b.modified - a.modified),
+    topic: (a, b) => (a.topic || "").localeCompare(b.topic || "", "zh-Hant")
+                     || b.modified - a.modified,
     name: (a, b) => a.name.localeCompare(b.name, "zh-Hant"),
   }[SIFT.sort];
-
-  const all = STATE.list.filter(matches);
-  const live = all.filter((one) => !one.archived).sort(rank);
-  const filed = all.filter((one) => one.archived).sort(rank);
+  const shown = STATE.list
+    .filter((one) => !find || one.name.toLowerCase().includes(find)
+                     || (one.topic || "").toLowerCase().includes(find))
+    .sort(rank);
 
   $("list").innerHTML = `
     <div class="sift">
-      <input id="findTopic" value="${escapeHTML(SIFT.find)}"
-        placeholder="找題目、理由、受眾…" spellcheck="false">
-      <select id="sortTopic">
+      <input id="findScript" value="${escapeHTML(SIFT.find)}"
+        placeholder="找文案或題目…" spellcheck="false">
+      <select id="sortScript">
         <option value="recent"${SIFT.sort === "recent" ? " selected" : ""}>最近改過</option>
-        <option value="state"${SIFT.sort === "state" ? " selected" : ""}>做到哪</option>
+        <option value="topic"${SIFT.sort === "topic" ? " selected" : ""}>照題目</option>
         <option value="name"${SIFT.sort === "name" ? " selected" : ""}>名稱</option>
       </select>
     </div>
-    ${live.map(topicCard).join("") || '<div class="empty">沒有符合的題目</div>'}
-    ${filed.length ? `
-      <div class="filed-head" id="showFiled">
-        ${SIFT.showArchived ? "▾" : "▸"} 封存的 ${filed.length} 個
-      </div>
-      ${SIFT.showArchived ? filed.map(topicCard).join("") : ""}` : ""}`;
+    ${shown.map(scriptCard).join("") || '<div class="empty">還沒有文案</div>'}`;
 
-  $("findTopic").oninput = (event) => {
+  $("findScript").oninput = (event) => {
     SIFT.find = event.target.value;
     const where = event.target.selectionStart;
     renderList();
-    $("findTopic").focus();
-    $("findTopic").setSelectionRange(where, where);
+    $("findScript").focus();
+    $("findScript").setSelectionRange(where, where);
   };
-  $("sortTopic").onchange = (event) => { SIFT.sort = event.target.value; renderList(); };
-  if ($("showFiled")) $("showFiled").onclick = () => {
-    SIFT.showArchived = !SIFT.showArchived;
-    renderList();
-  };
-}
-
-/** Tolerant of both shapes, because files on disk hold both: the page's
- *  button stored comments grouped under their video, the gathering round
- *  stored them loose, and every count here read only the grouped one -- so
- *  sixty comments sat in a file while the page said 0. */
-function voiceCount(pile) {
-  return (pile.voices || []).reduce(
-    (sum, one) => sum + (Array.isArray(one.comments) ? one.comments.length : 1), 0);
-}
-
-/** What people said underneath, loudest first. No names: we want what was
- *  said, not who said it. */
-function voiceRows(voices) {
-  if (!voices || !voices.length) {
-    return '<div class="empty">還沒抓留言</div>';
-  }
-  return voices.map((one) => `
-    <div class="src">
-      <div class="who">${escapeHTML(one.outlet || "")}　${
-        escapeHTML(one.title || "")}　${(one.comments || []).length} 則</div>
-      ${(one.comments || []).slice(0, 12).map((said) => `
-        <div class="voice"><span class="likes">▲${said.likes}</span>${
-          escapeHTML(said.say)}</div>`).join("")}
-      ${(one.comments || []).length > 12
-        ? `<div class="who">…另外 ${one.comments.length - 12} 則</div>` : ""}
-    </div>`).join("");
-}
-
-function sourceRows(items, kind) {
-  if (!items || !items.length) {
-    return `<div class="empty">還沒有${kind}</div>`;
-  }
-  return items.map((item) => `
-    <div class="src">
-      ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
-        escapeHTML(item.title || item.url)}</a>` : escapeHTML(item.title || "")}
-      ${leanTag(item.lean || "")}
-      <div class="who">${escapeHTML(item.outlet || "")}${
-        item.seconds ? `　${Math.round(item.seconds / 60)} 分` : ""}${
-        item.captions ? "　有字幕" : ""}${
-        item.use ? `　用 ${item.use.map((w) => `${w[0]}–${w[1]}s`).join("、")}` : ""}${
-        item.note ? `　${escapeHTML(item.note)}` : ""}</div>
-      ${(item.facts || []).length
-        ? `<div class="fact">${item.facts.map(escapeHTML).join("　·　")}</div>` : ""}
-    </div>`).join("");
-}
-
-async function open(name) {
-  STATE.chosen = name;
-  renderList();
-  let pile;
-  try { pile = await api("GET", `/api/topic?name=${encodeURIComponent(name)}`); }
-  catch (error) { $("paper").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`; return; }
-
-  const got = pile.counts.got, want = pile.counts.want, sides = pile.balance.sides;
-  const columns = [["left", "左"], ["neutral", "中立"], ["right", "右"],
-                   ["other", "其他"]];
-
-  $("paper").innerHTML = `
-    <h2>${escapeHTML(pile.topic || name)}</h2>
-    <!-- Why this topic, and what to watch for. The one thing here nothing can
-         compute: whether the opposition is easy to find is in the balance
-         panel; that a medical topic cannot be monetised with an AI voice is
-         not anywhere else, and it decides whether the film gets made. -->
-    <div class="note-line">
-      <button id="btnArchive" class="tiny">${
-        pile.archived ? "取出" : "封存"}</button>
-      <button id="btnDropTopic" class="tiny" title="刪掉這個題目">刪題目</button>
-      <span>挑這題的理由</span>
-      <input id="topicNote" value="${escapeHTML(pile.note || "")}"
-        placeholder="為什麼值得花九十秒？有什麼坑？" spellcheck="false">
-    </div>
-    <!-- Who the ending has to land on. Not always everyone: for a market
-         story it is a shareholder, and his contact point is a balance. -->
-    <!-- Decided, not guessed. The keyword table is offered as a button; it
-         used to be printed here as though it were the answer, and it said a
-         piece about studios being bought was for people whose jobs AI might
-         take. A field that arrives filled in is a field nobody reads. -->
-    <div class="who-for">
-      <span>說給誰聽</span>
-      <input id="topicWho" value="${escapeHTML(pile.audience || "")}"
-        placeholder="還沒決定 —— 結尾整段會寫給這群人聽" spellcheck="false">
-      ${pile.audience_guess && pile.audience !== pile.audience_guess
-        ? `<button id="btnGuessWho" class="tiny"
-             title="從題目關鍵字猜的，不一定對">用「${
-             escapeHTML(pile.audience_guess)}」</button>` : ""}
-    </div>
-
-    <!-- One line, not two panels. The six counts that used to sit here are
-         on the sticky jump bar a little further down, where each one is also
-         the way to reach that pile -- printing them twice made the top of
-         the page a table of contents for a table of contents. What is left
-         is the one thing the jump bar cannot say: whether this is writable,
-         and who has not been heard. -->
-    <div id="verdict" class="${pile.ready ? "ok" : "no"}">
-      <span>${pile.ready ? "素材夠了，可以寫文案。"
-                         : `還不能寫：${escapeHTML(pile.why)}`}</span>
-      <span class="sides">${columns.map(([key, label]) => `
-        <i class="${sides[key] ? "" : "none"}">${label}<b>${sides[key]}</b></i>`
-      ).join("")}</span>
-    </div>
-
-    <!-- The per-outlet round: ask nineteen named outlets what they said,
-         download what they gave, cut frames where the captions point. This is
-         the argument the whole project rests on and it ran only from a
-         terminal. -->
-    <div class="gather">
-      <span>收集</span>
-      <input id="hunt" placeholder="英文搜尋詞，逗號分隔（如 museum theft, stolen painting）"
-        spellcheck="false">
-      <button id="btnTerms" class="tiny">想幾個</button>
-      <button id="btnGather" class="tiny primary">逐家問（影片＋報導＋圖＋留言）</button>
-    </div>
-    <div id="termsNote" class="hint"></div>
-
-    ${(pile.doubted || []).length ? `
-    <!-- A model's opinion, held for a decision. Deleting on it loses both the
-         source and the fact that anything was judged: the count simply reads
-         lower and looks like a search that found less. -->
-    <div class="doubted">
-      <div class="doubted-head">
-        <b>模型覺得這 ${pile.doubted.length} 篇跟題目無關</b>
-        <span class="hint">還留著，也還沒算進計數。掃一遍，撿回判錯的</span>
-        <span class="grow"></span>
-        <button id="btnDropAll" class="tiny">其餘全部丟</button>
-      </div>
-      ${pile.doubted.map((one) => `
-        <div class="doubt-row" data-url="${escapeHTML(one.url || "")}">
-          <button class="tiny keep">留</button>
-          <span class="who">${escapeHTML(one.outlet || "")}</span>
-          <span class="what">${escapeHTML(one.title || "")}</span>
-        </div>`).join("")}
-    </div>` : ""}
-
-    ${(pile.wanted || []).length ? `
-    <!-- What the audience implies and the pile does not have. The counts say
-         this topic has enough pictures; they cannot say it has nothing to end
-         on, because the ending is aimed at a group of people and thirty
-         pictures of the subject satisfy a number either way. -->
-    <div class="wanted">
-      <span>結尾會需要的<b>示意圖</b>，還沒收到</span>
-      <span class="why">說給誰聽是「${escapeHTML(pile.audience || "")}」，
-        文案最後幾句要落在那群人的生活上</span>
-      <div class="wanted-terms">${pile.wanted.map((one) =>
-        `<code>${escapeHTML(one)}</code>`).join("")}</div>
-      <button id="btnWanted" class="tiny">去 Pexels 抓這幾個</button>
-    </div>` : ""}
-
-    <div style="display:flex;gap:8px;align-items:center">
-      <!-- Chosen before writing, not corrected afterwards. The shape decides
-           the roles, the pacing, the borrowed ceiling and which prompt is
-           sent, so picking it after the fact means every line has to be
-           relabelled -- which is what happened to Messina. -->
-      <label class="pick-house">寫成
-        <select id="writeAs">
-          ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
-            .map((one) => `<option value="${escapeHTML(one.key)}">${
-              escapeHTML(one.name || one.key)}</option>`).join("")}
-        </select>
-      </label>
-      <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
-      ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">素材不齊也要寫</button>'}
-      <span id="whyHouse" class="hint"></span>
-      <span style="flex:1"></span>
-    </div>
-    <div id="note"></div>
-
-    ${(pile.scripts || []).length ? `
-      <h3>寫好的文案 <span class="count">${pile.scripts.length} 份</span></h3>
-      ${pile.scripts.map((one) => `
-        <div class="src written" data-script="${escapeHTML(one.name || one)}">
-          <button class="tiny drop-script"
-            data-name="${escapeHTML(one.name || one)}" title="刪掉這份文案">刪</button>
-          <b>${escapeHTML(one.name || one)}</b>
-          ${one.house ? `<span class="house ${
-            one.format === "story" ? "story" : "argue"}">${
-            escapeHTML(one.house)}</span>` : ""}
-          <div class="who">${one.seconds
-            ? `${one.seconds}s　${one.lines} 句　點開來看逐句台詞`
-            : "點開來看逐句台詞"}</div>
-        </div>`).join("")}` : ""}
-
-    ${(pile.leads || []).length ? `
-      <h3>線索 <span class="count">${pile.leads.length} 條，還沒抓回來</span></h3>
-      ${pile.leads.map((lead) => `
-        <div class="src lead">
-          ${escapeHTML(lead.title || "")}${leanTag(lead.lean || "")}
-          <div class="who">${escapeHTML(lead.outlet || "")}</div>
-        </div>`).join("")}` : ""}
-
-    ${jumpBar(pile)}
-    ${fold("影片", `${got.videos} / ${want.videos}`,
-           sourceRows(pile.sources.videos, "影片"))}
-    ${fold("報導", `${got.reports} / ${want.reports}`,
-           sourceRows(pile.sources.reports, "報導"))}
-    ${fold("原始數據", `${got.data}`,
-           sourceRows(pile.sources.data, "數據"),
-           "能下載 CSV 的官方統計（財政部、CBO、FRED、Eurostat），用來自己畫圖表。"
-           + "還沒有程式在收，要手動加進 topics/*.json")}
-    <h3>臨時要找一張
-      <span class="hint">寫文案時想到什麼就打什麼，英文</span></h3>
-    <div class="hunt">
-      <input id="want" placeholder="例如：Trump wearing a hat" spellcheck="false">
-      <button id="btnFind" class="tiny">找</button>
-    </div>
-    <div id="caught"></div>
-
-    ${["stock", "real", "frame"].map((kind) => {
-      const spec = pile.counts.pictures[kind];
-      const shown = (pile.sources.images || []).filter(
-        (one) => (one.kind || "stock") === kind);
-      return `
-      <section class="pile" id="pile-${escapeHTML(spec.label)}">
-      <h3>${escapeHTML(spec.label)}
-        <span class="count ${spec.short ? "lacking" : ""}">${spec.have} / ${
-          spec.want}${spec.short ? `　還缺 ${spec.short}` : ""}</span>
-        <span class="hint">${WHERE_FROM[kind]}</span></h3>
-      ${shown.length ? `<div class="shelf">${shown.map((one) => `
-        <figure data-shot="${escapeHTML(JSON.stringify({
-            say: "", show: one.term || "",
-            pic: `/media/photo/${encodeURIComponent(name)}/${
-              encodeURIComponent((one.file || "").split("/").pop())}`,
-            caption: one.caption || "", credit: one.credit || "",
-            from: one.outlet || "",
-          }))}" title="點開來看">
-          <img src="/media/photo/${encodeURIComponent(name)}/${
-            encodeURIComponent((one.file || "").split("/").pop())}"
-            alt="" loading="lazy">
-          <figcaption class="asked">${escapeHTML(
-            one.at != null ? `${Math.round(one.at)}s　${one.outlet || ""}`
-                           : one.term || "")}</figcaption>
-          <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
-          ${one.credit ? `<figcaption class="who">${escapeHTML(one.credit)}</figcaption>` : ""}
-        </figure>`).join("")}</div>`
-        : `<div class="empty">還沒有${escapeHTML(spec.label)}</div>`}
-      </section>`;
-    }).join("")}
-
-    <section class="pile" id="pile-鄉民反應">
-      <h3>鄉民反應 <span class="count">${voiceCount(pile)} 則</span>
-        <button id="btnVoices" class="tiny">抓留言</button></h3>
-      ${voiceRows(pile.voices)}
-    </section>
-
-    <section class="pile" id="pile-整理出的事實">
-      <h3>整理出的事實 <span class="count">${(pile.facts || []).length}</span>
-        <span class="hint">每一條都要指得回某一篇。還沒有程式在抽，
-          要手動加進 topics/*.json</span></h3>
-      ${(pile.facts || []).length
-        ? (pile.facts || []).map((fact) => `
-            <div class="src">${escapeHTML(fact.say)}
-              <div class="who">${escapeHTML(fact.from || "")}</div></div>`).join("")
-        : '<div class="empty">還沒有整理</div>'}
-    </section>`;
-
-  const write = async (anyway) => {
-    $("note").className = "";
-    $("note").textContent = "寫稿中…";
-    try {
-      const made = await api("POST", "/api/topic/script",
-                             { name, anyway, format: $("writeAs").value });
-      $("note").textContent = `寫好了：${made.script}`;
-    } catch (error) {
-      $("note").className = "warn";
-      $("note").textContent = error.message;
-    }
-  };
-  /* Ask for one shot and look at what comes back. Nothing is kept until it is
-     clicked -- a specific request is usually specific about how it should look
-     as well as what is in it. */
-  const hunt = async () => {
-    const want = $("want").value.trim();
-    if (!want) return;
-    $("caught").innerHTML = '<div class="empty">找…</div>';
-    let got;
-    try { got = await api("POST", "/api/topic/find", { want }); }
-    catch (error) {
-      $("caught").innerHTML = `<div class="empty">${escapeHTML(error.message)}</div>`;
-      return;
-    }
-    if (!got.found.length) {
-      $("caught").innerHTML = '<div class="empty">兩邊都沒有。換個說法試試</div>';
-      return;
-    }
-    $("caught").innerHTML = `
-      <div class="shelf">${got.found.map((one, index) => `
-        <figure data-catch="${index}" title="點一下收進來　${
-          escapeHTML(one.caption || "")}">
-          <img src="${escapeHTML(one.url)}" alt="" loading="lazy">
-          <figcaption>${one.kind === "real" ? "真實" : "示意"}　${
-            escapeHTML(one.author || one.outlet)}</figcaption>
-        </figure>`).join("")}</div>`;
-    $("caught").querySelectorAll("[data-catch]").forEach((card) => {
-      card.onclick = async () => {
-        card.classList.add("taken");
-        try {
-          await api("POST", "/api/topic/keep",
-                    { name, want, picture: got.found[Number(card.dataset.catch)] });
-          $("note").className = "";
-          $("note").textContent = "收下了。重新整理這一頁就會出現在下面";
-        } catch (error) {
-          card.classList.remove("taken");
-          $("note").className = "bad";
-          $("note").textContent = error.message;
-        }
-      };
-    });
-  };
-  if ($("btnFind")) $("btnFind").onclick = hunt;
-  if ($("want")) $("want").addEventListener("keydown", (event) => {
-    if (event.key === "Enter") hunt();
-  });
-
-  if ($("btnVoices")) $("btnVoices").onclick = async () => {
-    $("btnVoices").disabled = true;
-    $("btnVoices").textContent = "抓取中…";
-    try {
-      const got = await api("POST", "/api/topic/voices", { name });
-      open(name);
-      $("note").textContent = `抓了 ${got.added} 則，共 ${got.total} 則`;
-    } catch (error) {
-      $("btnVoices").disabled = false;
-      $("btnVoices").textContent = "抓留言";
-      $("note").className = "bad";
-      $("note").textContent = error.message;
-    }
-  };
-  // Each shape says in its own file why it exists; show that beside the
-  // chooser, because "新聞報導 or 說故事" is not a choice anybody can make from
-  // the two words alone.
-  const writeAs = $("writeAs");
-  if (writeAs) {
-    const sayWhy = () => {
-      const spec = FORMATS.find((one) => one.key === writeAs.value) || {};
-      $("whyHouse").textContent = spec.why || "";
-    };
-    writeAs.onchange = sayWhy;
-    sayWhy();
-  }
-  // Who this topic is for. Stored on the topic, and copied into a script when
-  // one is written -- a topic can yield two shorts for two audiences, so the
-  // script keeps its own once it exists.
-  // Deleting a script. It goes to trash/ rather than away: a script is the
-  // only place a set of judgements lives -- which picture for which line,
-  // which passage, which card -- and each of those took looking at something.
-  // The film and the drawn cards do go, since both rebuild from it exactly.
-  $("paper").querySelectorAll(".drop-script").forEach((button) => {
-    button.onclick = async (event) => {
-      event.stopPropagation();          // the card itself opens the script
-      const which = button.dataset.name;
-      if (!await confirmed(`刪掉文案「${which}」？`, {
-        body: "文案移到 trash/，可以救回來。",
-        lose: ["壓好的影片（可以重壓）", "畫好的卡片（可以重畫）",
-               "接觸表"]})) return;
-      try {
-        await api("DELETE", `/api/script?name=${encodeURIComponent(which)}`);
-        open(name);
-      } catch (error) { told('出錯了', error.message); }
-    };
-  });
-
-  $("paper").querySelectorAll("[data-jump]").forEach((button) => {
-    button.onclick = () => {
-      const target = document.getElementById(`pile-${button.dataset.jump}`);
-      if (target) target.scrollIntoView({behavior: "smooth", block: "start"});
-    };
-  });
-
-  // Out of the way, not gone. A topic that came to nothing still records
-  // having asked -- Messina was covered by four outlets and by nobody on the
-  // right, so it cannot become a short, and that is worth knowing later.
-  if ($("btnArchive")) $("btnArchive").onclick = async () => {
-    try {
-      await api("POST", "/api/topic/archive",
-                {name, archived: !pile.archived});
-      await reload(false);
-      open(name);
-    } catch (error) { told("出錯了", error.message); }
-  };
-
-  // Deleting a topic. Refused while a script is written from it: a script
-  // names pictures by path, so taking the pile away turns a script that was
-  // fine yesterday into one missing every shot.
-  if ($("btnDropTopic")) $("btnDropTopic").onclick = async () => {
-    if (!await confirmed(`刪掉題目「${name}」？`, {
-      body: "紀錄移到 trash/，可以救回來。",
-      lose: ["下載的影片（可以重抓）", "下載的照片（可以重抓）",
-             "抽出來的新聞畫格"]})) return;
-    try {
-      const back = await api("DELETE",
-                             `/api/topic?name=${encodeURIComponent(name)}`);
-      told(`刪了。也清掉：${(back.also_removed || []).join("、") || "（沒有素材）"}`);
-      STATE.chosen = null;
-      $("paper").innerHTML = "";
-      reload(true);
-    } catch (error) { told('出錯了', error.message); }
-  };
-
-  const noteBox = $("topicNote");
-  if (noteBox) {
-    noteBox.dataset.was = noteBox.value;
-    const saveNote = async () => {
-      if (noteBox.value.trim() === noteBox.dataset.was) return;
-      try {
-        await api("POST", "/api/topic/note",
-                  {name, note: noteBox.value.trim()});
-        noteBox.dataset.was = noteBox.value.trim();
-      } catch (error) { told('出錯了', error.message); noteBox.value = noteBox.dataset.was; }
-    };
-    noteBox.addEventListener("blur", saveNote);
-    noteBox.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") { event.preventDefault(); noteBox.blur(); }
-      if (event.key === "Escape") { noteBox.value = noteBox.dataset.was; noteBox.blur(); }
-    });
-  }
-
-  const who = $("topicWho");
-  if (who) {
-    who.dataset.was = who.value;
-    const saveWho = async () => {
-      if (who.value.trim() === who.dataset.was) return;
-      try {
-        await api("POST", "/api/topic/audience",
-                  {name, audience: who.value.trim()});
-        who.dataset.was = who.value.trim();
-        open(name);
-      } catch (error) { told('出錯了', error.message); who.value = who.dataset.was; }
-    };
-    who.addEventListener("blur", saveWho);
-    who.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") { event.preventDefault(); who.blur(); }
-      if (event.key === "Escape") { who.value = who.dataset.was; who.blur(); }
-    });
-  }
-  if ($("btnGuessWho")) $("btnGuessWho").onclick = async () => {
-    try {
-      await api("POST", "/api/topic/audience",
-                {name, audience: pile.audience_guess});
-      open(name);
-    } catch (error) { told('出錯了', error.message); }
-  };
-
-  // The picture terms ride along with the video ones: one suggestion, one
-  // gather. Kept here rather than in a second box because they are not a
-  // separate decision -- both come from the same reading of the topic.
-  TERMS.pictures = [];
-  // Suggested, then shown, then used. Putting the terms in the box rather
-  // than searching with them straight away is the difference between a
-  // suggestion and a decision somebody else made -- and these terms decide
-  // which nineteen answers come back.
-  if ($("btnTerms")) $("btnTerms").onclick = async () => {
-    $("termsNote").textContent = "想中…";
-    try {
-      const got = await api("POST", "/api/topic/terms", {name});
-      $("hunt").value = got.videos.join(", ");
-      TERMS.pictures = got.pictures || [];
-      TERMS.named = got.named || [];
-      const extra = [];
-      if (got.pictures.length) extra.push(`圖庫：${got.pictures.join("、")}`);
-      if ((got.named || []).length) extra.push(`維基：${got.named.join("、")}`);
-      $("termsNote").textContent = extra.length
-        ? `${extra.join("　｜　")}　${got.took}s` : `${got.took}s`;
-    } catch (error) { $("termsNote").textContent = error.message; }
-  };
-  // Ruling on what the model doubted. Keeping is one click each because that
-  // is the direction worth making easy -- a wrongly dropped source is a fact
-  // that stops existing, a wrongly kept one is a line in a list.
-  $("paper").querySelectorAll(".doubt-row .keep").forEach((button) => {
-    button.onclick = async () => {
-      const row = button.closest(".doubt-row");
-      try {
-        await api("POST", "/api/topic/judge",
-                  {name, urls: [row.dataset.url], keep: true});
-        open(name);
-      } catch (error) { told('出錯了', error.message); }
-    };
-  });
-  if ($("btnDropAll")) $("btnDropAll").onclick = async () => {
-    const urls = [...$("paper").querySelectorAll(".doubt-row")]
-      .map((row) => row.dataset.url);
-    if (!await confirmed(`丟掉這 ${urls.length} 篇？`, {
-      body: "模型判定它們跟題目無關。丟掉之後就找不回來了。"})) return;
-    try {
-      await api("POST", "/api/topic/judge", {name, urls, keep: false});
-      open(name);
-    } catch (error) { told('出錯了', error.message); }
-  };
-  if ($("btnGather")) $("btnGather").onclick = async () => {
-    const queries = $("hunt").value.trim();
-    if (!queries) { told("要給搜尋詞"); return; }
-    try {
-      await api("POST", "/api/topic/gather",
-                {name, queries, pictures: TERMS.pictures.join(", "),
-                 named: TERMS.named.join(", ")});
-      watchJob(() => open(name));
-    } catch (error) { told('出錯了', error.message); }
-  };
-  if ($("btnWanted")) $("btnWanted").onclick = async () => {
-    $("note").className = ""; $("note").textContent = "抓圖中…";
-    try {
-      const back = await api("POST", "/api/topic/images",
-                             {name, terms: pile.wanted, where: "stock"});
-      $("note").textContent = `收了 ${back.added} 張`;
-      open(name);
-    } catch (error) {
-      $("note").className = "warn"; $("note").textContent = error.message;
-    }
-  };
-  if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
-  if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
+  $("sortScript").onchange = (event) => { SIFT.sort = event.target.value; renderList(); };
 }
 
 /* ---------- one script ----------
@@ -1445,7 +845,7 @@ async function showScript(name) {
   const share = 100 - (sums.borrowed_share || 0);
 
   $("paper").innerHTML = `
-    <h2>${escapeHTML(name)}　<button id="btnBackTopic" class="tiny">← 回題目</button></h2>
+    <h2>${escapeHTML(name)}　<a class="tiny" id="btnBackTopic" href="#">← 回素材</a></h2>
     <div class="angle">觀點：${escapeHTML(made.view || "")}${
       made.tone ? `　語氣：${escapeHTML(made.tone)}` : ""}</div>
     <!-- Which house style, and who it is for. Both are decisions about the
@@ -1585,14 +985,17 @@ async function showScript(name) {
             escapeHTML(line.from || "")}</td>
         </tr>`).join("")}</tbody>
     </table>`;
-  // Leaving for the topic drops pending edits too, and says so first.
-  $("btnBackTopic").onclick = async () => {
+  // 回素材是換一頁了，所以沒存的修改一定會丟 —— 先問。
+  STATE.topic = made.topic || null;
+  $("btnBackTopic").onclick = async (event) => {
+    event.preventDefault();
     if (PENDING.changes.size &&
         !await confirmed(`有 ${PENDING.changes.size} 處還沒儲存`, {
           body: "離開就會丟掉。", yes: "離開", no: "留下"}))
       return;
     dropPending();
-    open(STATE.chosen);
+    location.href = STATE.topic
+      ? "/topics?name=" + encodeURIComponent(STATE.topic) : "/topics";
   };
   // The film, if there is one.
   api("GET", `/api/script/film?name=${encodeURIComponent(name)}`)
@@ -1768,49 +1171,23 @@ function saveLine(cell, name) {
    in the list -- so the list answers "which shot is this line" and this
    answers "is this shot any good", which is the question that was being
    answered by not looking. */
-function openShot(shot) {
-  const stage = $("bigStage");
-  $("bigWho").textContent = shot.show || shot.say;
-  $("bigWhat").textContent = shot.say;
-  if (shot.clip) {
-    stage.innerHTML = `<video controls autoplay muted playsinline
-      src="${shot.clip}#t=${shot.at[0]},${shot.at[1]}"></video>`;
-  } else {
-    stage.innerHTML = `<img src="${shot.card || shot.pic}" alt="">`;
-  }
-  const notes = [];
-  if (shot.at) notes.push(`段落 <em>${shot.at[0]}–${shot.at[1]}s</em>`);
-  if (shot.caption) notes.push(`圖說 <em>${escapeHTML(shot.caption)}</em>`);
-  if (shot.credit) notes.push(escapeHTML(shot.credit));
-  if (shot.from) notes.push(`出處 ${escapeHTML(shot.from)}`);
-  if (shot.card) notes.push("自製卡片");
-  $("bigNote").innerHTML = notes.join("　·　");
-  $("big").hidden = false;
-}
 
-function closeShot() {
-  $("bigStage").innerHTML = "";        // stops a clip that is still playing
-  $("big").hidden = true;
-}
 
-$("bigClose").onclick = closeShot;
-$("big").addEventListener("click", (event) => {
-  if (event.target.id === "big") closeShot();
-});
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !$("big").hidden) closeShot();
+
+
+
+$("btnBack").onclick = () => { location.href = "/"; };
+
+/* ---------------------------------------------------------------- 綁事件 */
+
+$("list").addEventListener("click", (event) => {
+  const row = event.target.closest("[data-name]");
+  if (row) { STATE.chosen = row.dataset.name; renderList(); showScript(row.dataset.name); }
 });
 
 $("paper").addEventListener("click", (event) => {
-  const card = event.target.closest("[data-script]");
-  if (card) { showScript(card.dataset.script); return; }
-
-  const shelf = event.target.closest(".shelf [data-shot]");
-  if (shelf) { openShot(JSON.parse(shelf.dataset.shot)); return; }
-
   if (event.target.closest(".say-edit")) return;   // editing, not opening
   if (event.target.closest(".seen-box")) return;   // ticking, not opening
-
   const row = event.target.closest("tr[data-shot]");
   if (row && event.target.closest("td.show")) {
     // The inline clip has its own controls; clicking those should scrub it,
@@ -1820,37 +1197,41 @@ $("paper").addEventListener("click", (event) => {
   }
 });
 
-$("list").addEventListener("click", (event) => {
-  const row = event.target.closest("[data-name]");
-  if (row) open(row.dataset.name);
-});
-
-$("btnNew").onclick = async () => {
-  const name = $("newName").value.trim();
-  if (!name) return;
-  try {
-    const made = await api("POST", "/api/topic", { name });
-    STATE.list = made.topics.sort((a, b) => b.modified - a.modified);
-    $("newName").value = "";
-    renderList();
-    open(name);
-  } catch (error) { told('出錯了', error.message); }
-};
-$("newName").addEventListener("keydown", (event) => {
-  if (event.key === "Enter") $("btnNew").click();
-});
 $("btnBack").onclick = () => { location.href = "/"; };
 
-async function reload(openFirst) {
+async function reload() {
   try {
-    const found = await api("GET", "/api/topics");
-    STATE.list = found.topics.sort((a, b) => b.modified - a.modified);
-    STATE.want = found.want;
-  } catch (error) { /* nothing yet */ }
+    const found = await api("GET", "/api/scripts");
+    STATE.list = found.scripts || [];
+  } catch (error) { STATE.list = []; }
   renderList();
-  if (openFirst && STATE.list.length) open(STATE.list[0].name);
 }
 
-reload(true);
+/* 網址帶名字就開那一份 —— 素材頁的文案卡片這樣連過來。 */
+async function boot() {
+  try { FORMATS = (await api("GET", "/api/formats")).formats || []; }
+  catch (error) { FORMATS = []; }
+  await reload();
+  const wanted = new URLSearchParams(location.search).get("name");
+  const pick = (wanted && STATE.list.some((one) => one.name === wanted))
+    ? wanted : (STATE.list[0] && STATE.list[0].name);
+  if (pick) { STATE.chosen = pick; renderList(); await showScript(pick); }
+}
+
+/* 壞了就說出來。一個例外會讓右半邊停在「左邊選一份文案」，而伺服器回 200。 */
+boot().catch((error) => {
+  $("paper").innerHTML =
+    `<div class="empty" style="color:var(--warn);text-align:left;
+        white-space:pre-wrap;font:12px var(--mono)">頁面出錯了：
+${escapeHTML(error && error.stack || error)}</div>`;
+});
+window.addEventListener("error", (event) => {
+  const paper = $("paper");
+  if (paper && paper.querySelector(".empty")) {
+    paper.innerHTML = `<div class="empty" style="color:var(--warn);text-align:left;
+      font:12px var(--mono)">${escapeHTML(event.message)}
+${escapeHTML(event.filename || "")}:${event.lineno}</div>`;
+  }
+});
 </script>
 <script src="/static/nav.js"></script>

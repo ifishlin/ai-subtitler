@@ -1,0 +1,139 @@
+/* 兩頁共用的東西。
+ *
+ * 素材那一頁和文案那一頁本來是同一個 86 KB 的檔案。拆開之後這些函式兩邊都
+ * 要用 —— 各留一份就是這個專案已經修過四次的那個錯（兩份會分岔的邏輯）。
+ *
+ * 只放「兩邊都真的在用」的。只有一頁用的留在那一頁：共用檔裝滿只有一個地方
+ * 用的東西，就不是共用檔了。 */
+"use strict";
+
+const $ = (id) => document.getElementById(id);
+const escapeHTML = (text) => String(text == null ? "" : text)
+  .replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+async function api(method, path, body) {
+  const response = await fetch(path, {
+    method, headers: body ? {"Content-Type": "application/json"} : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.detail || `${path} 失敗`);
+  return data;
+}
+
+function clock(seconds) {
+  seconds = Math.max(0, seconds || 0);
+  return `${Math.floor(seconds / 60)}:${(seconds % 60).toFixed(1).padStart(4, "0")}`;
+}
+
+function leanTag(lean) {
+  const which = /left/.test(lean) ? "left" : /right/.test(lean) ? "right"
+              : lean === "neutral" ? "neutral" : "";
+  return lean ? `<span class="lean ${which}">${escapeHTML(lean)}</span>` : "";
+}
+
+/* 留言的兩種存法都要讀得懂：網頁的按鈕存成分組，收集那一輪存成扁平。
+   六十則留言曾經因為只認一種而顯示成 0。 */
+function voiceCount(pile) {
+  return (pile.voices || []).reduce(
+    (sum, one) => sum + (Array.isArray(one.comments) ? one.comments.length : 1), 0);
+}
+
+/* 一次只有一個長工作在跑（收集、壓片都是分鐘級）。問而不是推，因為一個安靜
+   四分鐘的頁面看起來就是壞了。 */
+let JOB_TIMER = null;
+async function watchJob(whenDone) {
+  const tick = async () => {
+    let job;
+    try { job = await api("GET", "/api/job"); } catch (error) { return; }
+    const bar = $("jobBar");
+    if (!bar) return;
+    bar.hidden = job.state !== "running" && job.state !== "failed";
+    $("jobWhat").textContent = job.what || "";
+    $("jobNote").textContent = job.note || "";
+    $("jobClock").textContent = job.seconds ? `${Math.round(job.seconds)}s` : "";
+    $("jobFill").style.width =
+      job.steps ? `${(job.step / job.steps) * 100}%` : "0%";
+    bar.classList.toggle("failed", job.state === "failed");
+    if (job.state === "running") return;
+    clearInterval(JOB_TIMER); JOB_TIMER = null;
+    if (job.state === "done" && whenDone) whenDone();
+  };
+  clearInterval(JOB_TIMER);
+  await tick();
+  JOB_TIMER = setInterval(tick, 1500);
+}
+
+/* 三種圖片各補不同的洞，互相不能取代。兩頁都要說明這件事：素材頁在收集時
+   說，文案頁在挑圖時說。 */
+const WHERE_FROM = {
+  stock: "Pexels，可商用免標示。用在抽象的東西——帳單、電表、排隊",
+  real: "Wikimedia Commons，多為 CC BY／BY-SA，出處要上畫面。用在有名字的人事地",
+  frame: "從這個題目自己的新聞影片剪的。算在 25% 的引用額度裡",
+};
+
+
+/* ---------------------------------------------------------------- 燈箱
+ *
+ * 兩頁都用：素材頁點圖片架上的一張，文案頁點逐句表上的一格。使用者說過
+ * 「太小張了」，而挑圖這件事整個門（unchecked）的意義就在於真的看過。
+ *
+ * 標記自己注入，這樣兩個 HTML 不用各留一份 —— 那正是拆頁面時最容易產生的
+ * 第二份副本。 */
+
+function shotBox() {
+  if ($("big")) return;
+  const box = document.createElement("div");
+  box.id = "big";
+  box.hidden = true;
+  box.innerHTML = `
+    <div class="big-inner">
+      <div class="big-bar">
+        <b id="bigWho"></b><span id="bigWhat"></span>
+        <button id="bigClose" class="tiny">關閉</button>
+      </div>
+      <div id="bigStage"></div>
+      <div id="bigNote"></div>
+    </div>`;
+  document.body.appendChild(box);
+  $("bigClose").onclick = closeShot;
+  box.addEventListener("click", (event) => {
+    if (event.target.id === "big") closeShot();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !box.hidden) closeShot();
+  });
+}
+
+function openShot(shot) {
+  shotBox();
+  const stage = $("bigStage");
+  $("bigWho").textContent = shot.show || shot.say || "";
+  $("bigWhat").textContent = shot.say || "";
+  if (shot.clip) {
+    stage.innerHTML = `<video controls autoplay muted playsinline
+      src="${shot.clip}#t=${shot.at[0]},${shot.at[1]}"></video>`;
+  } else {
+    stage.innerHTML = `<img src="${shot.card || shot.pic}" alt="">`;
+  }
+  const notes = [];
+  if (shot.at) notes.push(`段落 <em>${shot.at[0]}–${shot.at[1]}s</em>`);
+  if (shot.caption) notes.push(`圖說 <em>${escapeHTML(shot.caption)}</em>`);
+  if (shot.credit) notes.push(escapeHTML(shot.credit));
+  if (shot.from) notes.push(`出處 ${escapeHTML(shot.from)}`);
+  if (shot.card) notes.push("自製卡片");
+  $("bigNote").innerHTML = notes.join("　·　");
+  $("big").hidden = false;
+}
+
+function closeShot() {
+  const stage = $("bigStage");
+  if (stage) stage.innerHTML = "";     // stops a clip that is still playing
+  if ($("big")) $("big").hidden = true;
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", shotBox);
+} else {
+  shotBox();
+}
