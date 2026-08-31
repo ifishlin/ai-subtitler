@@ -345,11 +345,47 @@ def voice_count(pile: dict[str, Any]) -> int:
     without the video it sits under has lost the one thing that says who was
     watching. This reads either, because the files already on disk are mixed.
     """
-    total = 0
-    for one in pile.get("voices") or []:
-        held = one.get("comments")
-        total += len(held) if isinstance(held, list) else 1
-    return total
+    return len(voices_of(pile))
+
+
+def voices_of(pile: dict[str, Any]) -> list[dict[str, Any]]:
+    """留言，攤平成一則一則，兩種存法都讀得懂。
+
+    跟 `facts_of()` 同一個道理：形狀在**讀的時候**規定，不指望寫的人記得。
+    留言有兩種存法 —— 分組的 `{url, outlet, comments: [...]}`，和早期直接
+    散在外面的那種 —— 而磁碟上兩種都有。
+
+    這一支是後來補的，因為 `voice_count()` 兩種都讀得懂，而 `brief.as_text()`
+    只讀散開的那一種：它對每一組取 `voice["text"]`，在群組那一層永遠是空的。
+    結果是題目上有六十則留言，送進模型的 prompt 裡是三行「- 」。八個字。
+
+    **同一份資料兩個讀法，就是這個專案修過五次的那個錯。** 所以現在只有一個
+    讀法，`voice_count()` 也改成數這一支的結果。
+    """
+    def words_of(one: Any) -> str:
+        # 欄位名叫 `say`。`facts_of()` 的註解裡就記著這個錯 —— 讀留言的時候
+        # 憑記憶寫成 `text`，而 `.get("text")` 不會拋錯，只會回空字串。
+        # 我寫這一支的時候又照抄了一次同一個錯，六十則變成零則。
+        if isinstance(one, str):
+            return one.strip()
+        if not isinstance(one, dict):
+            return ""
+        return str(one.get("say") or one.get("text") or "").strip()
+
+    out = []
+    for group in pile.get("voices") or []:
+        held = group.get("comments")
+        rows = held if isinstance(held, list) else [group]
+        for one in rows:
+            said = words_of(one)
+            if not said:
+                continue
+            keep = one if isinstance(one, dict) else {}
+            out.append({"say": said,
+                        "likes": keep.get("likes", 0),
+                        "reply": bool(keep.get("reply")),
+                        "outlet": group.get("outlet", "")})
+    return out
 
 
 def add_voices(pile: dict[str, Any], video: dict[str, Any],

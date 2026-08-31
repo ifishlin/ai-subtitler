@@ -76,30 +76,6 @@
         "doubt": false
       },
       {
-        "title": "Data centers are a MIDTERM ISSUE and voters need FACTS",
-        "url": "https://www.youtube.com/watch?v=JldNPf6tI8s",
-        "seconds": 458,
-        "outlet": "Fox Business",
-        "lean": "right",
-        "doubt": true
-      },
-      {
-        "title": "Hillary Clinton Attacks Trump's 'I Alone Can Fix It' Message",
-        "url": "https://www.youtube.com/watch?v=4mc__JMZw7A",
-        "seconds": 144,
-        "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "doubt": true
-      },
-      {
-        "title": "U.S. Intel Officials Withholding Information From Trump",
-        "url": "https://www.youtube.com/watch?v=5TqP2tLNfSE",
-        "seconds": 278,
-        "outlet": "Wall Street Journal",
-        "lean": "right-editorial",
-        "doubt": true
-      },
-      {
         "title": "Trump Renames Lake Ontario as Lake America, Says Canada Is Ripping Off the US",
         "url": "https://www.youtube.com/watch?v=3P8q6Fs0v3Y",
         "seconds": 192,
@@ -114,22 +90,6 @@
         "outlet": "Bloomberg",
         "lean": "neutral",
         "doubt": false
-      },
-      {
-        "title": "President Trump Participates In The Celebration Of America - June 5, 2018",
-        "url": "https://www.youtube.com/watch?v=Dz6rChhSCyI",
-        "seconds": 200,
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "Donald Trump Not Taking Hillary Clinton Matter Off Table | Power Lunch | CNBC",
-        "url": "https://www.youtube.com/watch?v=dXpXLK_tM1k",
-        "seconds": 172,
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "doubt": true
       },
       {
         "title": "Who is winning the US-Canada trade war? | BBC Americast",
@@ -148,44 +108,12 @@
         "doubt": false
       },
       {
-        "title": "Trump backs US intel agencies but keeps faith in Putin",
-        "url": "https://www.youtube.com/watch?v=7rJPYJlmy1w",
-        "seconds": 122,
-        "outlet": "Financial Times",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "Former CIA officer rattles Trump in Utah",
-        "url": "https://www.youtube.com/watch?v=_lV5RQNTeVc",
-        "seconds": 305,
-        "outlet": "Financial Times",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
-        "title": "How is AI helping Donald Trump’s mass deportations? | The Economist",
-        "url": "https://www.youtube.com/watch?v=jeiiTdNaYWg",
-        "seconds": 179,
-        "outlet": "The Economist",
-        "lean": "market-liberal",
-        "doubt": true
-      },
-      {
         "title": "Mark Carney on dealing with Donald Trump",
         "url": "https://www.youtube.com/watch?v=g-GcmOYd8hc",
         "seconds": 418,
         "outlet": "The Economist",
         "lean": "market-liberal",
         "doubt": false
-      },
-      {
-        "title": "Why is Venezuela's oil so important to Trump?",
-        "url": "https://www.youtube.com/watch?v=1WUX2-ToYE8",
-        "seconds": 130,
-        "outlet": "The Guardian",
-        "lean": "left",
-        "doubt": true
       },
       {
         "title": "Mark Carney tells Trump 'Canada will never be for sale'",
@@ -204,28 +132,12 @@
         "doubt": false
       },
       {
-        "title": "How Donald Trump is pulling the strings from Mar-A-Lago | DW News",
-        "url": "https://www.youtube.com/watch?v=ILdvbUOxHbU",
-        "seconds": 239,
-        "outlet": "Deutsche Welle",
-        "lean": "neutral",
-        "doubt": true
-      },
-      {
         "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
         "url": "https://www.youtube.com/watch?v=Dnmxudm7dK8",
         "seconds": 267,
         "outlet": "Al Jazeera English",
         "lean": "non-western",
         "doubt": false
-      },
-      {
-        "title": "Brexit: Boris Johnson in Northern Ireland for talks with parties",
-        "url": "https://www.youtube.com/watch?v=ykqpBOxEOFY",
-        "seconds": 152,
-        "outlet": "Al Jazeera English",
-        "lean": "non-western",
-        "doubt": true
       }
     ],
     "reports": [
@@ -320,24 +232,6 @@
         "doubt": false
       },
       {
-        "title": "Deadline: White House",
-        "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPNVVQWV8zNzRpMmUtdmRVVTAwajBGdXd6cURkd3pXSjRMY1BxRmE4SjFDZ0l6X25XNjh2a0R2a2V1dDdqOTd3c1dDSTZvS2FpOE9SbWxqT2tsa2R4eWRhTVpXWFlXWVE3dU9samJLMktjNW9vZ1h3SzdHdXNYenVXWk1uSkpseFZsMjlSUFhZSHpTZ2RkY3d4ZHRB?oc=5",
-        "outlet": "MS NOW",
-        "lean": "left",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
-        "title": "All In with Chris Hayes",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5SaDZmdVI4R295aWlaZTlBM1I2S0w3SHFjQlVBU0tLQ3VxeXBHT1FsaXJvZ1Jac3Nja3U2MlJZTTBhbUtWcmhpRWt2SEpJYm9qS2l0bEp2TnFjdnJOSWh4bE1WZ0JiYVNBOXV0YVBpRkx2V1Bw?oc=5",
-        "outlet": "MS NOW",
-        "lean": "left",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
         "title": "Seneca Nation leader calls Trump's Lake America renaming 'unpresidential,' demands reversal",
         "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOTVdQTks3VjU1MjJwUFFpR1VtWW92RUVWMXl0UFlTY0w0RzBlMWdtejRtcUs4ZXp4amd0UTdwa3hBV253SVE5RGJZcHVCZmM5amVBN3NfYTVNbEIzLWZ6R3UwakJQMUI1YnNuS3Q4SExhQmY1MERFSi1KVGg1b2JXMXFwOTUtSnlTMkNCSHM5R3AtY3I5QTBZeGVUUURnT1Q0LXlQS1JkcFBTZGczR2pPZFY5M3lmZ0pFNnc4Z9IBwgFBVV95cUxQWlFNRGdId29oYjFFMzBwREFTVklPYlc4bVAxUC14OE90Rlg1eUFoLTl1dnVfTGsyT04tSV9DTnQxUTlUS3lCSU4yQmloblozQ2dWWEh1cVFpT2Z3bnJiUTFSLXltNFQtYmJHSG0wb1BCaEREY01HcXJUV2hEdE5fNkNfZ0tLS3hoSHhSWlU4R1JGd21MeEhPOVJyVll6NHloVHlrS0tBQlBPVXpfdEw0R3hQRURycFZKWFNpY3RHYlN3Zw?oc=5",
         "outlet": "Fox News",
@@ -419,15 +313,6 @@
         "doubt": false
       },
       {
-        "title": "Warsh speaks from Wyoming, Old Navy's new CEO, how Taylor Farms became so massive and more in Morning Squawk",
-        "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOd0Z3M2x0a2RRc0M2TlZ6ckVRRTF1U1ozVjJ5eDJlaWFZWkdobHZ1NG8wV3dIQ0gxNm5QMk9kbkdPREZfUjRVaFVuRG40UG0zVzczYTRkVnp6REM5OHpaVTNFUDVJSXgweTF4Z2hJbUlTNGJsUTFYdXE4ZFBYX05vSGtia1gyeGw0VVlR0gGQAUFVX3lxTFBUS0lXLWRUeTZNZFc3OVdYTXV4ZDdObVRzeVM1OW9SSkFkUmQ3ZnhVTkllQjhlTzVmRHhWejF5WExfQUZocUl1UWhZdS05Sy1RbTVubGtwbnBzaGtZMUF0Q1dUNmY0QjllWnJrUkt2T1o2cG1ycS02aWlTcFptb0NUeTJWclJPaWNKOXdKUkxhSg?oc=5",
-        "outlet": "CNBC",
-        "lean": "neutral",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": false,
-        "doubt": true
-      },
-      {
         "title": "Trump pushes Apple to change 'Lake Ontario' to 'Lake America' on its maps",
         "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE15U0tGeWJWd0VQWlBhQ2ZFSmhZUzNNQktMSG1nLXF0NjdDUXU0eU9fSEhvX1N0cW9SbXBzZ2EwOGhoelFGQlo3TmY0ejEyU2Y4VlJJS2t3RFplZw?oc=5",
         "outlet": "BBC News",
@@ -462,15 +347,6 @@
         "when": "Sun, 30 Aug 2026",
         "paywall": true,
         "doubt": false
-      },
-      {
-        "title": "World in Brief: Fears of more flooding in Nepal and Tibet; court rules Anthropic blacklisting illegal",
-        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQd0hjODNFTjg1T1hMSFdxVFpzSWU0TUxWRlA0Ny0xSndYMU5fYS1naDBYYUViRVhGcS1hc0FTOWRpV3MtMFNCQy1yWGJON2xkVkwtWm9aUGI3OE5hZFYzbkYzM04xYko4SlRGbkF4NFIwcFc2c3lpMEZXcjFrQjU5ZHZ3bHdYRS10bFNjbnd4bkZOREtPdlZJ?oc=5",
-        "outlet": "The Economist",
-        "lean": "market-liberal",
-        "when": "Fri, 28 Aug 2026",
-        "paywall": true,
-        "doubt": true
       },
       {
         "title": "US in Brief: Troubled waters on the Canadian border",
@@ -525,15 +401,6 @@
         "when": "Thu, 27 Aug 2026",
         "paywall": false,
         "doubt": false
-      },
-      {
-        "title": "US and Venezuela seal 25-year oil deal",
-        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1sbGprSldwQVpUQ0owWVRwVkxybVNhV3JKX2VCUlZoVTdheEF6dC1reDBBcjNza29paEdCV29FMWZ1bkZfRURkVGtqcDJWYWRVa1Faa0IwM0NJRnNLWnBDaTIzbFdVblVLNnZYTGlrcGt2Z1hI?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Sun, 30 Aug 2026",
-        "paywall": false,
-        "doubt": true
       },
       {
         "title": "Trump signs order to rename Lake Ontario 'Lake America' amid rising trade tensions with Canada",

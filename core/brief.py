@@ -80,7 +80,17 @@ def sheet(name: str) -> dict[str, Any]:
             "note": pile.get("note", ""),
             "audience": topic_module.audience(pile),
             "facts": topic_module.facts_of(pile),
-            "voices": (pile.get("voices") or [])[:20],
+            # 攤平成一則一則，而且按讚數排序。存的是分組的形狀
+            # `{url, outlet, comments: [...]}`，直接送這一層出去的話，
+            # 每一組都沒有 `say`，as_text 印出來就是三行「- 」。
+            # 讚數排序是因為要的是「哪一句話讓很多人點頭」，不是前二十則。
+            # 帶網址的丟掉：那是機器人和自我推銷，不是觀眾的話。濾在這裡
+            # 而不是在 `voices_of()` 裡 —— 那一支要忠實，`voice_count()` 數的
+            # 是「收到幾則」，不是「幾則好用」，兩個數字不該互相牽動。
+            "voices": sorted(
+                (one for one in topic_module.voices_of(pile)
+                 if "http" not in one["say"]),
+                key=lambda one: -one["likes"])[:20],
             # Doubted sources do not go to the writer. They were excluded from
             # the count already, and letting them into the prompt would be the
             # same pile arriving by another door: twenty-five irrelevant
@@ -188,9 +198,16 @@ def as_text(name: str) -> str:
                        f"：{one['said'][:70]}")
     out.append("")
 
-    out.append("## 鄉民反應")
+    # 欄位名是 `say`。這裡本來寫 `text` —— 而 `.get("text")` 不會拋錯，只會
+    # 回空字串，所以六十則留言變成十二行「- 」，八個字。同一個欄位名這個專案
+    # 已經寫錯三次，所以現在只有 `topic.voices_of()` 一個讀法。
+    #
+    # 讚數帶著送：一則被按四十次讚的話，跟一則沒人理的話，對「觀眾在意什麼」
+    # 的意義完全不同，而那正是這一節存在的理由。
+    out.append("## 鄉民反應　—— 按讚數排的。語氣和「這件事在哪裡碰到你」從這裡來")
     for voice in found["voices"][:12]:
-        out.append(f"- {voice.get('text', '')[:90]}")
+        said = " ".join(voice["say"].split())[:90]
+        out.append(f"- {said}　（{voice['likes']} 讚）")
     return "\n".join(out)
 
 
