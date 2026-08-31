@@ -91,30 +91,40 @@ def settle(name: str, rewrite=None) -> dict[str, Any]:
 def read(name: str) -> dict[str, Any]:
     """Ask, and give back what came back.
 
-    Nothing is configured yet, so this says so rather than pretending: the
-    model is not connected, and the four questions are being answered by a
-    person reading them. Saying which is which matters more than the answer --
-    a review nobody ran should not look like a review that passed.
-    """
-    from core import settings as settings_module
-    config = settings_module.load()
-    spec = config.get("llm", {}).get("claude", {})
-    try:
-        key = settings_module.secret(spec, "claude")
-    except RuntimeError as error:
-        return {"asked": False, "why": str(error), "prompt": as_prompt(name)}
+    Through the same call every other step uses, so the reviewer runs on
+    whatever is configured -- which today is a model on cuba001 and costs
+    nothing. It was wired to the Anthropic client and to nothing else, so this
+    round had never once executed: the code path was finished and the only
+    thing that could reach it was a key nobody had bought. A step that cannot
+    run is not a step.
 
-    import anthropic
-    client = anthropic.Anthropic(api_key=key)
-    said = client.messages.create(
-        model=spec.get("model", "claude-opus-5"),
-        max_tokens=2000,
-        thinking={"type": "adaptive"},
-        messages=[{"role": "user", "content": as_prompt(name)}],
-    )
-    text = "".join(part.text for part in said.content
-                   if getattr(part, "type", "") == "text")
+    A fresh call every time, on purpose -- the reviewer must not know who
+    wrote this. And when it cannot be asked it says so, because a review
+    nobody ran must not look like a review that passed.
+    """
+    from core import writer as writer_module
+    try:
+        text, took = writer_module.ask(as_prompt(name), None)
+    except Exception as error:                                    # noqa: BLE001
+        return {"asked": False, "why": f"問不到模型：{error}",
+                "prompt": as_prompt(name)}
     start, end = text.find("{"), text.rfind("}")
     if start < 0 or end < start:
         return {"asked": True, "verdict": "unreadable", "said": text[:2000]}
-    return {"asked": True, **json.loads(text[start:end + 1])}
+    try:
+        said = json.loads(text[start:end + 1])
+    except json.JSONDecodeError:
+        return {"asked": True, "verdict": "unreadable", "said": text[:2000]}
+    # An answer copied out of the prompt's own example is not an answer. A 30B
+    # model handed `{"keep": [1, 4, 7]}` as an illustration returned exactly
+    # that for thirty-six headlines, and here the example's reasons are about
+    # a different topic entirely -- so if one comes back verbatim, the model
+    # read the format and not the script.
+    asked_for = as_prompt(name)
+    copied = [part.get("why") for part in said.values()
+              if isinstance(part, dict) and part.get("why")
+              and part["why"] in asked_for]
+    if copied:
+        return {"asked": True, "verdict": "unreadable",
+                "said": "照抄了 prompt 裡的範例：" + "、".join(copied[:3])}
+    return {"asked": True, "took": round(took, 1), **said}

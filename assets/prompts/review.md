@@ -37,13 +37,16 @@
 
 ```json
 {
-  "turn": {"real": true, "why": "把「電夠不夠」換成「線夠不夠」，同一批數字讀出不同結論"},
-  "view": {"fresh": true, "why": "五篇都沒有把併網排隊跟電費分攤連起來"},
-  "landing": {"lands": false, "why": "最後一句還在講電網，沒有講到你的帳單"},
-  "unsupported": [{"line": 14, "why": "「四十年沒換」在素材裡找不到"}],
+  "turn": {"real": true/false, "why": "＜那個轉把什麼變成了什麼，寫這一份的＞"},
+  "view": {"fresh": true/false, "why": "＜哪一篇素材已經這樣寫過，或都沒有＞"},
+  "landing": {"lands": true/false, "why": "＜最後一句停在哪裡，該停在哪裡＞"},
+  "unsupported": [{"line": 句號, "why": "＜哪一句的哪個說法指不回素材＞"}],
   "verdict": "pass" 或 "rewrite"
 }
 ```
+
+`＜＞` 裡是要你填的，不是要你抄的。每一句 `why` 都要指得到**這一份**文案的
+某一句話 —— 抄不動的東西才是判斷。
 
 **寧可 rewrite。** 挑出來的代價是重寫一次，放過去的代價是一支沒有觀點的片子，
 而那種片子 YouTube 的人工審查看得出來。
