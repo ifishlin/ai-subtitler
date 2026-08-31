@@ -62,6 +62,74 @@ def cached(topic: str, report: dict[str, Any]) -> Path:
     return WHERE / _safe(topic) / f"{_safe(report.get('outlet', ''))}-{stamp}.txt"
 
 
+UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/131.0 Safari/537.36")
+# 歐盟的同意牆。從德國連 Google，`news.google.com` 一律先轉到
+# consent.google.com，而那一頁沒有文章。這個 cookie 表示「已經回答過了」。
+CONSENT = "SOCS=CAESEwgDEgk0ODE3Nzk3MjQaAmVuIAEaBgiA_LyaBg"
+
+
+def _curl(url: str, data: str | None = None) -> str:
+    """用 curl 而不是 urllib：這台機器的 Python 沒有系統根憑證，
+    urllib 對 news.google.com 一律 CERTIFICATE_VERIFY_FAILED。"""
+    import subprocess
+    cmd = ["curl", "-sL", "-A", UA, "-H", f"Cookie: {CONSENT}",
+           "--max-time", "25"]
+    if data is not None:
+        cmd += ["--data-raw", data, "-H",
+                "Content-Type: application/x-www-form-urlencoded;charset=UTF-8"]
+    cmd.append(url)
+    return subprocess.run(cmd, capture_output=True, text=True).stdout
+
+
+def real_url(url: str) -> tuple[str, str]:
+    """Google News 的轉址 → 出版社真正的網址。回傳（網址, 失敗原因）。
+
+    ## 為什麼需要這一步
+
+    `hunt_reports()` 讀的是 Google News RSS，而那裡的每一個 link 都長
+    `news.google.com/rss/articles/CBMi…`。trafilatura 抓那個網址只會拿到
+    Google 的跳轉頁，所以三十三篇報導**一篇都讀不到正文**。
+
+    我在上一輪看 AI資料中心那題時說過「網址是真網址，不是轉址」—— 那句話是
+    錯的。那一題的網址之所以是真的，是因為它們不是這條路收來的。
+
+    ## 怎麼解
+
+    舊格式的 base64 裡直接藏著網址，新格式（`AU_yqL…`）沒有，要問 Google
+    自己。文章頁上有三個屬性：`data-n-a-id`、`data-n-a-ts`、`data-n-a-sg`
+    —— 最後一個網路上的文件多半寫成 `-sig`，實際上是 `-sg`，照文件寫會
+    永遠找不到。拿這三個去打 batchexecute 就換得到真網址。
+
+    這件事會壞：那是 Google 的內部介面，沒有任何承諾。所以失敗回原因而不是
+    丟例外，而 `text_of()` 會照樣往下試 —— 舊題目的網址本來就是真的。
+    """
+    if "news.google.com" not in url:
+        return url, ""
+    import json as json_module
+    import re as re_module
+    import urllib.parse as parse_module
+
+    page = _curl(url)
+    parts = {key: re_module.search(rf'data-n-a-{key}="([^"]+)"', page)
+             for key in ("id", "ts", "sg")}
+    if not all(parts.values()):
+        return "", "Google 的跳轉頁上沒有簽章"
+    inner = json_module.dumps([
+        "garturlreq",
+        [["X", "X", ["X", "X"], None, None, 1, 1, "US:en", None, 1, None,
+          None, None, None, None, 0, 1], "X", "X", 1, [1, 1, 1], 1, 1,
+         None, 0, 0, None, 0],
+        parts["id"].group(1), int(parts["ts"].group(1)), parts["sg"].group(1)])
+    body = "f.req=" + parse_module.quote(
+        json_module.dumps([[["Fbv4je", inner, None, "generic"]]]))
+    back = _curl("https://news.google.com/_/DotsSplashUi/data/batchexecute", body)
+    found = re_module.search(
+        r'"(https?://(?!news\.google)[^"\\]{16,300})"',
+        back.replace("\\\\", "\\").replace('\\"', '"'))
+    return (found.group(1), "") if found else ("", "Google 沒有換出網址")
+
+
 def fetch(url: str) -> tuple[str, str]:
     """抓一篇正文回來。回傳（正文, 抓不到的原因）。
 
@@ -108,6 +176,11 @@ def text_of(topic: str, report: dict[str, Any],
     url = str(report.get("url") or "")
     if not url:
         return "", "沒有網址", None
+    # Google News 的轉址要先換成出版社的網址，不然抓到的是跳轉頁。
+    if "news.google.com" in url:
+        url, why = real_url(url)
+        if not url:
+            return "", why, None
     words, why = fetch(url)
     time.sleep(PAUSE)
     if not words:

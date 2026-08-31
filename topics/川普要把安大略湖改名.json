@@ -3,12 +3,1763 @@
   "note": "有梗且荒謬有趣",
   "made": 1788192387,
   "sources": {
-    "videos": [],
-    "reports": [],
-    "images": [],
+    "videos": [
+      {
+        "title": "News Wrap: Trump signs order to rename Lake Ontario as Lake America",
+        "url": "https://www.youtube.com/watch?v=S9NbJin7oCM",
+        "seconds": 424,
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.en.vtt",
+        "size": 46436930,
+        "doubt": false
+      },
+      {
+        "title": "WATCH: Trump signs order changing Lake Ontario to 'Lake America'",
+        "url": "https://www.youtube.com/watch?v=mH6N-V7AHaE",
+        "seconds": 714,
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.en.vtt",
+        "size": 63458484,
+        "doubt": false
+      },
+      {
+        "title": "Trump renames Lake Ontario to 'Lake America'",
+        "url": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
+        "seconds": 486,
+        "outlet": "CNN",
+        "lean": "left",
+        "file": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.en.vtt",
+        "size": 35344123,
+        "doubt": false
+      },
+      {
+        "title": "Lake Ontario or Lake America? Enten says opinion is clear",
+        "url": "https://www.youtube.com/watch?v=mprYW_i27FM",
+        "seconds": 840,
+        "outlet": "CNN",
+        "lean": "left",
+        "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.en.vtt",
+        "size": 58772900,
+        "doubt": false
+      },
+      {
+        "title": "Trump SLAMS Canada after signing order renaming Lake Ontario",
+        "url": "https://www.youtube.com/watch?v=OciTiMiQerI",
+        "seconds": 747,
+        "outlet": "Fox News",
+        "lean": "right",
+        "file": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.mp4",
+        "captions": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.en.vtt",
+        "size": 78546139,
+        "doubt": false
+      },
+      {
+        "title": "Peter Doocy: This is the OFFICIAL new map",
+        "url": "https://www.youtube.com/watch?v=SvcrBh8cyt0",
+        "seconds": 148,
+        "outlet": "Fox News",
+        "lean": "right",
+        "doubt": false
+      },
+      {
+        "title": "TRADE WAR EXPLODES: Trump DOUBLES DOWN on Canada tariffs",
+        "url": "https://www.youtube.com/watch?v=wnmr-jUsv_Q",
+        "seconds": 406,
+        "outlet": "Fox Business",
+        "lean": "right",
+        "doubt": false
+      },
+      {
+        "title": "Data centers are a MIDTERM ISSUE and voters need FACTS",
+        "url": "https://www.youtube.com/watch?v=JldNPf6tI8s",
+        "seconds": 458,
+        "outlet": "Fox Business",
+        "lean": "right",
+        "doubt": true
+      },
+      {
+        "title": "Hillary Clinton Attacks Trump's 'I Alone Can Fix It' Message",
+        "url": "https://www.youtube.com/watch?v=4mc__JMZw7A",
+        "seconds": 144,
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "doubt": true
+      },
+      {
+        "title": "U.S. Intel Officials Withholding Information From Trump",
+        "url": "https://www.youtube.com/watch?v=5TqP2tLNfSE",
+        "seconds": 278,
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "doubt": true
+      },
+      {
+        "title": "Trump Renames Lake Ontario as Lake America, Says Canada Is Ripping Off the US",
+        "url": "https://www.youtube.com/watch?v=3P8q6Fs0v3Y",
+        "seconds": 192,
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "doubt": false
+      },
+      {
+        "title": "US Canada Trade Fight Shows Few Signs of Easing",
+        "url": "https://www.youtube.com/watch?v=JCAuxVQ3_Hg",
+        "seconds": 746,
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "doubt": false
+      },
+      {
+        "title": "President Trump Participates In The Celebration Of America - June 5, 2018",
+        "url": "https://www.youtube.com/watch?v=Dz6rChhSCyI",
+        "seconds": 200,
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Donald Trump Not Taking Hillary Clinton Matter Off Table | Power Lunch | CNBC",
+        "url": "https://www.youtube.com/watch?v=dXpXLK_tM1k",
+        "seconds": 172,
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Who is winning the US-Canada trade war? | BBC Americast",
+        "url": "https://www.youtube.com/watch?v=pZKWNEcJYnw",
+        "seconds": 1678,
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "doubt": false
+      },
+      {
+        "title": "Carney stands up to Trump | The Global Story",
+        "url": "https://www.youtube.com/watch?v=vb1H7WoqUBM",
+        "seconds": 1575,
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "doubt": false
+      },
+      {
+        "title": "Trump backs US intel agencies but keeps faith in Putin",
+        "url": "https://www.youtube.com/watch?v=7rJPYJlmy1w",
+        "seconds": 122,
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Former CIA officer rattles Trump in Utah",
+        "url": "https://www.youtube.com/watch?v=_lV5RQNTeVc",
+        "seconds": 305,
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "How is AI helping Donald Trump’s mass deportations? | The Economist",
+        "url": "https://www.youtube.com/watch?v=jeiiTdNaYWg",
+        "seconds": 179,
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "doubt": true
+      },
+      {
+        "title": "Mark Carney on dealing with Donald Trump",
+        "url": "https://www.youtube.com/watch?v=g-GcmOYd8hc",
+        "seconds": 418,
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "doubt": false
+      },
+      {
+        "title": "Why is Venezuela's oil so important to Trump?",
+        "url": "https://www.youtube.com/watch?v=1WUX2-ToYE8",
+        "seconds": 130,
+        "outlet": "The Guardian",
+        "lean": "left",
+        "doubt": true
+      },
+      {
+        "title": "Mark Carney tells Trump 'Canada will never be for sale'",
+        "url": "https://www.youtube.com/watch?v=Da15Gth3jEI",
+        "seconds": 160,
+        "outlet": "The Guardian",
+        "lean": "left",
+        "doubt": false
+      },
+      {
+        "title": "Canadians laugh off a lake name change - but what about an ocean? | DW News",
+        "url": "https://www.youtube.com/watch?v=Pb9WplyDJV4",
+        "seconds": 766,
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "doubt": false
+      },
+      {
+        "title": "How Donald Trump is pulling the strings from Mar-A-Lago | DW News",
+        "url": "https://www.youtube.com/watch?v=ILdvbUOxHbU",
+        "seconds": 239,
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
+        "url": "https://www.youtube.com/watch?v=Dnmxudm7dK8",
+        "seconds": 267,
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "doubt": false
+      },
+      {
+        "title": "Brexit: Boris Johnson in Northern Ireland for talks with parties",
+        "url": "https://www.youtube.com/watch?v=ykqpBOxEOFY",
+        "seconds": 152,
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "doubt": true
+      }
+    ],
+    "reports": [
+      {
+        "title": "Trump signs order renaming Lake Ontario as ‘Lake America’ in the United States",
+        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPX0gxNnZkbVNqbFIwejlNc1h0V19Cb3pzWF9NcXM0d1RRRFduNU1xWU9BVEpscUMtcEZoSWgzVUxFR3E3WnFub3NYRkNZOFJzY3J0S3JfMkszWDNYUkdOd243SlQzZnVfbEdDbnhQRGdya0RWRUJrbm1nekVUU016NTVLNXI0LUJvb0xmODdHc2hPbDlmLUtZR2xIQWlZY3o3YVVqOXJR?oc=5",
+        "outlet": "AP News",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Lake Ontario now called Lake America on Google Maps for US users after Trump ordered name change",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOWnhMZUl2X0dLWlh1LVY5UWM3b2l2WXRSd3RtY082NjMwV05leTZNczRWN3U2d2NSMHhGblVXeTlsczlWWDVaN3FQMURMUHV2Z3NoZGZUZWpsbHo4eE1qdFdXRGw1QWozV25ibVB0SnA5NWtaOXV0Y3NMWXJsc0ZUX2NRcE4yd1lQRGF5TXRJcw?oc=5",
+        "outlet": "AP News",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Google Maps now show 'Lake America' in US, not 'Lake Ontario'",
+        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOX3RKRnR5NHhzZERZZmNwYkVzSTZFVGdPZ0tlbjdGTUtxcjhMMWI1bGFTWVAtdy1Xd0tZdWpjOEoxN29BdnRsZE5UWl9oRXQzQ2QwNWFHaTRpaEJmdlFWOU9OR2lwZUNDdEpUQmZDaF9TZUhwR19CQk5RX05TdFdaT0I4VDlZeUlvQ0ZNelRxcWVRLVMtdjRkdzdCc0tfZFBI?oc=5",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Trump renames Lake Ontario as 'Lake America' amid Canada trade war",
+        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNSDBsNDZLOG1YRlpTLTNmdXpEZkhpTzh4NHB5RGh1MzMtQm8tUGFROC02SXFmN2szQ3VIOW14MFV3aENsQ2JJdTNxTFFGNy1BRDljWkh6NTUxd2piM3NLWXdLR3JKQ2RLWVkwU3dzRlV1ME9DS1JPSGNFblppeG05Nl9jdDV5LUI1RWdET3VBUzB1eUdCM0F3RXoySQ?oc=5",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Lake Ontario to 'Lake America': Who gets to decide what goes on maps?",
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOR1VwLThPS3pmanN1aFRCQ2NUbWpjR215Z2c2TFhNNzRUbm1QVHRNMmczeU90c3hwTU13TTFLcl9VcFdOblZLQXVqRDdaOEhGVmktR0gtLWVyY1FjTE1LTjUwRElWY0ZuQUotcjFVYjZKSzlYanpYTWVJRGhVQ0EwY29JRmp3UW1JNTE1Q0NyWTZCUkhqejZ0RkI2dlVzek1KNjhr?oc=5",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Lake Ontario now called Lake America on Google Maps for U.S. users after Trump ordered name change",
+        "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPdzNiemJfVUp0R1VSSWNwWUktTFgtYTBTM0hSTkhkRWF5QkhwcDF2Q241N1g0VjFJOWZnQ0hxVVpIcjVoNlZQOXhtVFFrMjdsOVpNQ2Z1Q2xCMnBHeWNLOWpEZE5rTTRlRVN6NmhiUm11NnNCcnEzSFBLbWtlcVdFV1YzU3c0cWlFLVh1TUJ4TTRCLXNOeWkwdWlqLWl3a25ic1I5c1U0SVRoVXJrQk9CZ2xDdUY1TmNfQnNfbDdGNGRITF90REtvZ2RXNE03QQ?oc=5",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Canada claps back at Trump’s efforts to rename Lake Ontario as ‘Lake America’",
+        "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPS1c5NXl1RUY0RkJueUF4TFI5ampLM2JqdDFaOWZ4UDBDSjdHVW5tN1RKUzd3RU5KY0hMTzc1LW00eXhtUlJTMFR1WTFDdV9hWC1TTFRmdlVWTV9zNUZ1ajl6RngwT0FZZFAzWS1xcnFjYWVuOTlKOUw1OG1zN3gxNDRNZWtNcFB6OUxHWGhHb2xyeFM5bWhYaw?oc=5",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Week in Politics: Trump renames Lake Ontario 'Lake America'; Fed chair signals hikes",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQbm1nVXVBb19DLVNhY1BDd3hIUWlNWFJKRkY2by1GelVDelNicHhSWTZsR3RqT1Mxd25kWC00dl9WSHl4cHpnSHlVOXhPZEpHLVJoaWwyYzZhZnByX1VQdElEXzBBWEVXVFhOYXdWVWVUY0kxVzkyTGtPQUxmN2N1bldDZXU4QUZiOFMxMmVLWldXQkh6SncyVmpDMXBKOE5mNG9pTUlfTlh1Yk9vU19IbHVpMXkzeG5uUG1QMmhURFZRdUk?oc=5",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "when": "Sat, 29 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Can Trump actually change Lake Ontario to ‘Lake America’? Here’s what to know",
+        "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBvcWdLXzZVQXJCVHBoaldtdzV0b3JHdkhSaXl1aS1UaE1jNzVtUHljYXpjRmRXUF9aUFpGbmlZMEo4TTB3YkRtaVlmTzcyakdMQ2lSU1Q2dFY0NjU5Q2lqNl9GV3hleS14c2lEQXZ5T0J2MDg?oc=5",
+        "outlet": "CNN",
+        "lean": "left",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Trump signs executive order to change Lake Ontario to ‘Lake America’",
+        "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5GUEFYWHAybnNhVkFyWklQZDhuQnpWckt4Y2VNb0syeDBCM19vZTBaaGVwNDZNNjhPbWhyT0JQQXZxa0ZTWnBoWk94bk9qclBGLWVGSE12Y1paWGEtZE52bkMwbzhnVkNOcjNfYm1HeVoxem8xd0M2N214WHZ6UQ?oc=5",
+        "outlet": "CNN",
+        "lean": "left",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Deadline: White House",
+        "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPNVVQWV8zNzRpMmUtdmRVVTAwajBGdXd6cURkd3pXSjRMY1BxRmE4SjFDZ0l6X25XNjh2a0R2a2V1dDdqOTd3c1dDSTZvS2FpOE9SbWxqT2tsa2R4eWRhTVpXWFlXWVE3dU9samJLMktjNW9vZ1h3SzdHdXNYenVXWk1uSkpseFZsMjlSUFhZSHpTZ2RkY3d4ZHRB?oc=5",
+        "outlet": "MS NOW",
+        "lean": "left",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "All In with Chris Hayes",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5SaDZmdVI4R295aWlaZTlBM1I2S0w3SHFjQlVBU0tLQ3VxeXBHT1FsaXJvZ1Jac3Nja3U2MlJZTTBhbUtWcmhpRWt2SEpJYm9qS2l0bEp2TnFjdnJOSWh4bE1WZ0JiYVNBOXV0YVBpRkx2V1Bw?oc=5",
+        "outlet": "MS NOW",
+        "lean": "left",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Seneca Nation leader calls Trump's Lake America renaming 'unpresidential,' demands reversal",
+        "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOTVdQTks3VjU1MjJwUFFpR1VtWW92RUVWMXl0UFlTY0w0RzBlMWdtejRtcUs4ZXp4amd0UTdwa3hBV253SVE5RGJZcHVCZmM5amVBN3NfYTVNbEIzLWZ6R3UwakJQMUI1YnNuS3Q4SExhQmY1MERFSi1KVGg1b2JXMXFwOTUtSnlTMkNCSHM5R3AtY3I5QTBZeGVUUURnT1Q0LXlQS1JkcFBTZGczR2pPZFY5M3lmZ0pFNnc4Z9IBwgFBVV95cUxQWlFNRGdId29oYjFFMzBwREFTVklPYlc4bVAxUC14OE90Rlg1eUFoLTl1dnVfTGsyT04tSV9DTnQxUTlUS3lCSU4yQmloblozQ2dWWEh1cVFpT2Z3bnJiUTFSLXltNFQtYmJHSG0wb1BCaEREY01HcXJUV2hEdE5fNkNfZ0tLS3hoSHhSWlU4R1JGd21MeEhPOVJyVll6NHloVHlrS0tBQlBPVXpfdEw0R3hQRURycFZKWFNpY3RHYlN3Zw?oc=5",
+        "outlet": "Fox News",
+        "lean": "right",
+        "when": "Sat, 29 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "House Dem Debbie Dingell places Trump's Lake Ontario name change in the crosshairs",
+        "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPRGFmUkFwZFRkOFdYa1ZOSVViTE1jQXJtOHM0NzdiaWlUSWFINTI0NmItY2ZSNGRZUDFaMzFSbTJrczNpVGliaHZUdlQxOTVvVzczdGNFX0Zyb1k3Z3NHX0I4WnBvNG8zRWgwdi13dG9kM2N4OFQ1RnZ2NUpObEJjc1QxRnpCQ0RqcUI2Y1YzRHBieWJUdWF3Yi0zY0RseFhmeVoyekc3ck9mZGvSAbABQVVfeXFMTUFHNmZRWlp3T09LY2JYR2c3a2FrS2Q5TmlCa2FXUy1MTE1iNXc2bTRmeDdnTFYxVENOLUVOWUllaXpaa1g1RnBra3ZlUGRwaGJIeFhuRHFKY1VxbHhuX3U5ZEhaS3E4Nmlma1d0WFVOeTJtUG9XZV9fcGhSS1dDYk9BdlZDa1ZDekNqTFJfbmxtSEZpN0tieTlzLXVWVEFCa0NYUDZQRE1XenZpRUpTc3Q?oc=5",
+        "outlet": "Fox News",
+        "lean": "right",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Google Maps changes Lake Ontario to ‘Lake America’ for US users after Trump order: 'It's official!'",
+        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOSno3T3hCcG5OME9TTTdkTjBZRDdIMW1xakJRT3lBV2xyQmlwLXhJMnl2a2w4S2tfNVpKTndKTnlWUVJsRExRT2t3ZXZPZlVZRWV1NzVwQzFGdGVmQWpzaFNmN1YwOFN6OExOc2VDRTVXUloyYUc2cW5wc2o0VV9kZENjRDQwQ0YyaE4yUUEwNktNTnJKdG1ZU0hNdnpzQkpGR09ncGVvckt1NjRBbjlhMF9pMUtRd09n0gG-AUFVX3lxTE9aYTBXTzFOVUhXeUFfRVJzeFlHUVZ4Q1c5WmNFblRZc0U0NHc0UmZJVW81d005WHpwelgyRmw2TDg5bW1jQ21vY09xaEViNWJObnVmVHBWeFI1UkRYYU9jaVNhaURQT3k4MXFfdEtUUVV1WHdlSnFFQWVZaEdCeFhrSHdISTdxWDREYnRnNGVhbFROamd5SXN4UnQ4NE0ta0pER2dVems1QU1hdW9SUlRTY0tCMjF2YWFDcGhOT0E?oc=5",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Donald Trump signs order renaming Lake Ontario to Lake America",
+        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE10UnhwWGNXNHpmSmtSN195WTJlQmRpSXRJOElrbUpUcE12ZnhBNDI2alV6WENXenFfX3hISVpXNlRETEd5UEp0SXJ4Xzh1d3NYRHhfMlJtczBmMlE?oc=5",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Trump Threatens to Rename Lake Ontario as Spat With Canada Escalates",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOMWs5d05oRTRrU0JENVBndV9uak1ENmJNQ1RJYW5IRU5MQ0RTb2ZLaWNwWFZmMEV5cS1aQ2dOUlVSNF92SW8tU1ZJYkJBNm9UenlwbnNRRGtGUDhsRTJ1YUYyMDVlZWlSd0lRbTZIb3RMRi1Cb3JTTTBYRW9QZjNLVzRFSl80Tk8yZ3N6T05pV0JrSXlLRXdhU0p4VHk0dlpBcTU2LVc3ajdUVWticGtZajBR?oc=5",
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "when": "Tue, 25 Aug 2026",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "Trump Signs Executive Order to Rename Lake Ontario ‘Lake America’",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNLUpkRXlwQkdXVzdmc2N3bDRtcmxEQ2Y1QWR4NnJ0Unh6b0hycGNHWmVyMjhhWm9BdU1CM2ppeWliNi11RWhNcnpRSmJ3Tm5WUC13SXpvQ1JDWmhwVjlobU9XSW1hNUJkNUJuSFNIbE9HaWQydEtnTlJfLUluMjY5UGpxbW9fUXctY3lxYXh3?oc=5",
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "Trump Renames Lake Ontario as ‘Lake America,’ Escalating Canada Spat",
+        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQTjdiSEp5S0lTSUI4dXA2TVBqVWRDWmJBYUU4d2UxeF9JMEhzX1FxVjBZNzZnYjZkSHhXd0hkNHhKVFlkOW9JbFhOX21RbmlWQjFQVFhYVk1PMnp1MmJmWkg4S2I5cllwcVJIWW0xWVI0UnotbUdFS1JDbWlTY1BOMU5ZUWg5eFNidmxpMGc4R2hSejAxcTZVbklOakpYMkdlUlNITWo4d19jR3ROVjlDcUVjbw?oc=5",
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "Canada’s Ford Likens Trump Move to Saturday Night Live Skit",
+        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQRkdwUk96Q2tPSlF6QU9yNnJ0RWhPVUpyd0QyejNFTkYza2VLek5Fd2otTWlnSXAzdUlHcllreVMyYkVRVnlRR3F6R09nUEh4alZGUjJxeWdEU0hsQ0ZqRmhpeHRWVXBub3JwVGIxUHQ5YUhnVGpoZDdtRTZ0YnMxeV94QTNrQUlUaXZwWWpKY3FtVXVQMTFGaXUxT0FzQmd6dXFGNjhWN3AwczRuWE5sZDljdHVyUQ?oc=5",
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "Trump signs order to rename Lake Ontario 'Lake America' amid Canada trade war",
+        "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5Rd1hPNkZYY1luOWY4WXo4N0tvalBINkpVOW1XbHV1VWZVb2VEX2tkc3VHc05IX3J4QXY4NF9KSkJ5eGxTVzdhVzdfbUI5VFJqNk1ndEQtSlRndGJ2Xy1ET1lFR2VsbXBmcWlYNlo1ODdENXFmMk1wT3pB0gF_QVVfeXFMUE5Eb2hPdDBlR0hBYnM4WWxITlR3cUdxbGFnVXBoQVg5djZSdUk2WHVoVy1rdzY1elA1Y2RuVjBJckJoLWZCVFZqQ2FwUUlvUm1iSjJPcFJfRDBtVjlMOEZValprYmliZkhhMDFyeE80M0ZjZVFwWHh0aXN6UUNXbw?oc=5",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Warsh speaks from Wyoming, Old Navy's new CEO, how Taylor Farms became so massive and more in Morning Squawk",
+        "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOd0Z3M2x0a2RRc0M2TlZ6ckVRRTF1U1ozVjJ5eDJlaWFZWkdobHZ1NG8wV3dIQ0gxNm5QMk9kbkdPREZfUjRVaFVuRG40UG0zVzczYTRkVnp6REM5OHpaVTNFUDVJSXgweTF4Z2hJbUlTNGJsUTFYdXE4ZFBYX05vSGtia1gyeGw0VVlR0gGQAUFVX3lxTFBUS0lXLWRUeTZNZFc3OVdYTXV4ZDdObVRzeVM1OW9SSkFkUmQ3ZnhVTkllQjhlTzVmRHhWejF5WExfQUZocUl1UWhZdS05Sy1RbTVubGtwbnBzaGtZMUF0Q1dUNmY0QjllWnJrUkt2T1o2cG1ycS02aWlTcFptb0NUeTJWclJPaWNKOXdKUkxhSg?oc=5",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Trump pushes Apple to change 'Lake Ontario' to 'Lake America' on its maps",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE15U0tGeWJWd0VQWlBhQ2ZFSmhZUzNNQktMSG1nLXF0NjdDUXU0eU9fSEhvX1N0cW9SbXBzZ2EwOGhoelFGQlo3TmY0ejEyU2Y4VlJJS2t3RFplZw?oc=5",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Canada installs large Lake Ontario sign in latest jab at US",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5xcGFSSWM1TWtMTlU2Mmh3X2RZZ3liWVA3UVpwMEpueUpYNHJzMGlyYW5sTXpkd3VraGJKenJfcHRGT2FvQnkxMGJJck1xVWFSUF9FV2N2VWJwdw?oc=5",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Donald Trump orders Lake Ontario to be renamed ‘Lake America’ in slight to Canada",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPaUNoRVhlV2RvczdYd21iejJXdEQ5elg3N1BlVmFtSUVJTzhjU0tSZ0ViSGNGMDhrelY0YzVPendZZDVoaGE5VnI0MVVncEhOdVRTNzlEUDhLVkpJU0M4Z2JQMmx5WnhiZjFNUVBYM0huUTRqbmw3Zmp4Q0RnQ3I3cjRqTFQ?oc=5",
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "‘New York loves Canada’: US cities want their Canadian tourists back",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5UTENYcnJjQU5jMWd1YV9zdEJldG1raWxKbXpWUWxVV2g2YV9aRF95ODdqc1FuZlBJd0pBYUdCZXVWQmUtYzNxVVpaQ291QUtjcVZkTGxqSkpfeXlEN1pxNlVFZXc2TzlhOTNTWnBmeW8?oc=5",
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "World in Brief: Fears of more flooding in Nepal and Tibet; court rules Anthropic blacklisting illegal",
+        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQd0hjODNFTjg1T1hMSFdxVFpzSWU0TUxWRlA0Ny0xSndYMU5fYS1naDBYYUViRVhGcS1hc0FTOWRpV3MtMFNCQy1yWGJON2xkVkwtWm9aUGI3OE5hZFYzbkYzM04xYko4SlRGbkF4NFIwcFc2c3lpMEZXcjFrQjU5ZHZ3bHdYRS10bFNjbnd4bkZOREtPdlZJ?oc=5",
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "US in Brief: Troubled waters on the Canadian border",
+        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxObWVGTjMzNUZPN0RvTmxvR2VIcEZlemYwbS11UW1rdUFkZVV4aVF4YzVlYml2Nkp6NW5jU1BYbkVRVm9kZktXdFVlUV96SUdMRk5MV1ZqTDItOVJxa1ZjUjNqU3R5RlVDaWJvUnFTNmNkNWloSmhoeGpNWGE1eEtnWnRFSXNVLTRWZzNUYXRzQ25vWmNvN0M0?oc=5",
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": true,
+        "doubt": false
+      },
+      {
+        "title": "Canada erects giant ‘Lake Ontario’ sign as spat with Trump over name escalates",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNaGtveUxaUkJUa0JkRGIzZzNsWnhYTjI1WE54TlB3SEx3RnBCUDBxTTFfTDdLZjlmZHppSDRDQUdhc1NVVWNXRzFZSnlZcjk4Zkx4dUhYbjFPVWdCdWR4WWlMMndoN3p0RmNHWlFSbzFUSk1kYmpoa3B5a2pZRndYVmtQMTA?oc=5",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Trump the renamer-in-chief keen to leave his mark – or his stain – on world",
+        "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1aaVE3SC1CcVFCek1ZN0xUcXdSeHdiVjdqcldGOHlzeHpzZWVWaWYtYU1nb0dDM2ItVFdXSjBneGtNcThqdTNUckZXWFcyQ3Buay1SWGV0ZTQzOGFESlNMcWljTG1TWV9pNlBQWW9KeW1mY05kUlczMHVsVnBjN2c?oc=5",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Trump signs order to rename Lake Ontario to Lake America",
+        "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE82YXpfcUJlMjRlVGV6SFNKVmhYbTVJOHJPbmJwNGtBZEJnb3hDcHpJWVdWWEtxek5SMHVmWjlmMVdKbHpicGhUMmIzODhNMVk2X3U2Qm44YUx5cDlOOVRBa211Sml5SmhMWlg2ZFhqQ0hvS2hNcWN6OUMweFDSAXxBVV95cUxQRXVuWDNxOHU1MHBGTXpqZElCcnlDSk90T3F5aFJkQnJzcU5nWXVlSFB4QWMyaHJBUk1iSG5VN1R6dk1iYTFXRWJ5bUJuOHBrbG4zR05ibVRXeE54d1A2SHZERG1OVGJyUzRCLXZhWTNjVENzaEpZdE1BcnJR?oc=5",
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Google Maps changes Lake Ontario to 'Lake America' in US",
+        "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQUlpINHJ3Y21uM2J1ZkVJRjFRR09INU9LSnFSd0hJZGdCTG5wc2NEcWtpdDUxUlZ3YnY4WnlEODBncnZPUWJxZlVQUnZaRmFqWTBQSWVLaW1CbE1ZSWVDNEV6ZjdhOVRjYkRQUHpYZkNyb1BJcUh3azREdXA3ejhtYklOZ9IBgwFBVV95cUxQRFNXaUJtaWZXaWtXV25xMEdyUWQtUzhlTE5Cd21OeEZWTFdoWGEtMFdTeVc1Y3B3SnIyS3lOQUZmN1lXVTVPWExFbEdCeTdnbEtzUGU5eV8wS1FPQnF0UHpUczBreFNjVXV5VXV2Y2hwaEtoNWYwVXp3SU9nc2ZzS3RWMA?oc=5",
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Trump signs order to rename Lake Ontario to 'Lake America' as Carney pushes back",
+        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNOEhLTEtEV2xCQ3dnSTJBNk5hWXQtOEUxV3NIWUllYjBYSUVFTzdsQlcxZDRBRGliMGNTN2hlTzVVRHYyVFI0bkZHZ2R5NU9UbHZSNmlIVXZEM1RGX0pQam9kd1Ffd3pXak85eTAwTG5TczY2NXRqdzJOZTdwcS1sRW1mOTV6OG5oV0t2VUR1alVpU1hSc2hJb00zY2Z2bHdJYWpzamR0TDdRNUdHc0JJZ3F2ZjJ6QS1STnhheTBLZTVLQQ?oc=5",
+        "outlet": "France 24",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "US and Venezuela seal 25-year oil deal",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1sbGprSldwQVpUQ0owWVRwVkxybVNhV3JKX2VCUlZoVTdheEF6dC1reDBBcjNza29paEdCV29FMWZ1bkZfRURkVGtqcDJWYWRVa1Faa0IwM0NJRnNLWnBDaTIzbFdVblVLNnZYTGlrcGt2Z1hI?oc=5",
+        "outlet": "France 24",
+        "lean": "neutral",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Trump signs order to rename Lake Ontario 'Lake America' amid rising trade tensions with Canada",
+        "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNY0lqc2xkQU5hMXR5T21HV3ZwQ1JHeTRKQ0VOVGNOZlBNV3hBS1F0ajh3OFZ2Z3ZENVB2Y0N5RDZ4TExfdk1mOUlubFZEQW5iVFBsWFZCeGdwMDdkMkFQbUtuN0hlbm9ZbmJNYU1ZekpoMjVOeUtJY1dJQW84Y2s4bk5lWEI3dHBpQlA1aUdYTU81c0JsNTVTT1RDNmVxWmVwVnpWYVY5c1BMRTlVdjVSS19QZVNNcmlSb3NXS2drZjRBZEE1?oc=5",
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Lake Ontario or Lake America? Google Maps plays both sides",
+        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPMjVrY0IzMTRiRVhyUU1kV3ZwbTkxdjl1YXV6MEFRb3RYZXF1dmh3UFNVU1VzLTJlSEZQc242S0hKZXZtMTV1R0dVczA4aFRvckZhRnBIbFcyZmVHV2ZOcHZZREpTUTdCMVJVVEItUjhFN3lNaGZjSS1TNVpSLXdEUFV5V2NHdjVsNTdPcXpUZ19oUFFGalItTDZMZTEyOHlaUTlXU01kZnB4TF9vdlU1VWNGTVRNei13NFhQakpOYUlLZjVENS1OVE5R?oc=5",
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Google Maps renames Lake Ontario after Trump’s decree on ‘Lake America’",
+        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPa3pCMEpzcFpYM3p6aVBiMnRZWWluMHd0d0EzX1U1YTNkeDVmdWhFbk4zUjlOb0JieTVYUmdFVDFidmkwQXl0SnRONmlwZmRmMmFVU0hGaXh4ZFl2eExfcVBqekdOSGMxd2RpWVhLQUJxNXZpTy1HWFpkNl85QXlJZUpsYlliQXU5ZjU0QmhmeG9pX09hX0VtX2JnNDNyYy1abUVOYnBhdzZnT3JuTmfSAbMBQVVfeXFMTTlwNGE1M0VDb0RiRldRM3JlVmlqdW96S2NoZlpXel9uaGpTU2EzNzJUSjByOFQzZmY4Um96cUxpemE5UWV3R09iaVlfXy13SzVvRGRnS1F6YUZCUXpZMmJMMHBublp5VXp1Y3c0bUFORVVQbC1GalJlSllSeldYX19wMVJqNDM5M2NmVlgySDJRTVNmRTdxZlVmaUpramphZXVmRE50UDRpbDIyS0hPeXBZZWc?oc=5",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "when": "Sun, 30 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Can Trump really rename Lake Ontario, ‘Lake America’?",
+        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNdXFkXzJqRDRSWXVCZ0QyeDVFMkw1Q0dBTExSTzNOWXhlRXR2alRlamhpSnNHai1OSDJZd01JUFRhU2o1T2RDc3FNaGE2SXB1VUttbGZpY1RTODU4eFRkYUlZVXRmZmU3emFMckRlZkZUSlBRbHMwa0t3dlhLNm4zd2xMN2tiMTE2VHJGeW5BZ2JPamt10gGaAUFVX3lxTE83TG1TdFF3d2RnZmpGR0FHc0EtcjZsZGl0NDRVWWZaMzlwWXFpTkRVTEt2MlAtM1o3ZkFVaEdNRkc4ZEpOOFI5ekdnVHJuOXNuUW5VaVQzWGl5TENveGxuVFJFcUNfZmdpbFVEUm8zMk9fSkp2TG83dGtPMTNKY2YzOG52ektqOVRuMzFqeUV4dFlrd2d0ME1ZdGc?oc=5",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      }
+    ],
+    "images": [
+      {
+        "id": "frame_S9NbJin7oCM_5",
+        "kind": "frame",
+        "term": "PBS NewsHour 5s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_5.jpg",
+        "caption": "order today renaming Lake Ontario as Lake America. It's part of his",
+        "said": "order today renaming Lake Ontario as Lake America. It's part of his",
+        "at": 5.83,
+        "source": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
+        "look": 1080974369745041408
+      },
+      {
+        "id": "frame_S9NbJin7oCM_26",
+        "kind": "frame",
+        "term": "PBS NewsHour 26s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_26.jpg",
+        "caption": "have to do so. Trump had threatened the change after talks broke",
+        "said": "have to do so. Trump had threatened the change after talks broke",
+        "at": 26.1,
+        "source": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
+        "look": 9295434032418356862
+      },
+      {
+        "id": "frame_S9NbJin7oCM_42",
+        "kind": "frame",
+        "term": "PBS NewsHour 42s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
+        "caption": "To call it Lake Ontario, quote, now and always.",
+        "said": "To call it Lake Ontario, quote, now and always.",
+        "at": 42.76,
+        "source": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
+        "look": 9495510064305813560
+      },
+      {
+        "id": "frame_S9NbJin7oCM_59",
+        "kind": "frame",
+        "term": "PBS NewsHour 59s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_59.jpg",
+        "caption": "sources. 2 pilots were killed and dozens injured when an Air Canada",
+        "said": "sources. 2 pilots were killed and dozens injured when an Air Canada",
+        "at": 59.06,
+        "source": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=S9NbJin7oCM",
+        "look": 16787414668265599039
+      },
+      {
+        "id": "frame_mH6N-V7AHaE_297",
+        "kind": "frame",
+        "term": "PBS NewsHour 297s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_297.jpg",
+        "caption": "the lake change lake of America was something I've been thinking",
+        "said": "the lake change lake of America was something I've been thinking",
+        "at": 297.7,
+        "source": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=mH6N-V7AHaE",
+        "look": 9482329021391511454
+      },
+      {
+        "id": "frame_mH6N-V7AHaE_135",
+        "kind": "frame",
+        "term": "PBS NewsHour 135s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
+        "caption": "Service to reflect that lake once known as Lake Ontario will, uh,",
+        "said": "Service to reflect that lake once known as Lake Ontario will, uh,",
+        "at": 135.94,
+        "source": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=mH6N-V7AHaE",
+        "look": 78840520351973118
+      },
+      {
+        "id": "frame_NGrWxr7FVPE_359",
+        "kind": "frame",
+        "term": "CNN 359s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_359.jpg",
+        "caption": "Lake Ontario or Lake America",
+        "said": "Lake Ontario or Lake America",
+        "at": 359.99,
+        "source": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
+        "look": 14195280900563717316
+      },
+      {
+        "id": "frame_NGrWxr7FVPE_2",
+        "kind": "frame",
+        "term": "CNN 2s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_2.jpg",
+        "caption": "changing the name of Lake Ontario,",
+        "said": "changing the name of Lake Ontario,",
+        "at": 2.6,
+        "source": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
+        "look": 15852389214496956190
+      },
+      {
+        "id": "frame_NGrWxr7FVPE_28",
+        "kind": "frame",
+        "term": "CNN 28s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_28.jpg",
+        "caption": "as Lake Ontario, will,",
+        "said": "as Lake Ontario, will,",
+        "at": 28.13,
+        "source": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
+        "look": 14987707985238453870
+      },
+      {
+        "id": "frame_mprYW_i27FM_62",
+        "kind": "frame",
+        "term": "CNN 62s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+        "caption": "calling Lake Ontario Lake America? No. Search more on Google in the last day. In all 50 states,",
+        "said": "calling Lake Ontario Lake America? No. Search more on Google in the last day. In all 50 states,",
+        "at": 62.12,
+        "source": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
+        "look": 11284928018391514894
+      },
+      {
+        "id": "frame_mprYW_i27FM_17",
+        "kind": "frame",
+        "term": "CNN 17s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_17.jpg",
+        "caption": "Lake Ontario to Lake America. Back we are now in Cleveland. That is Lake Erie. We think it is",
+        "said": "Lake Ontario to Lake America. Back we are now in Cleveland. That is Lake Erie. We think it is",
+        "at": 17.32,
+        "source": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
+        "look": 17940916948310266041
+      },
+      {
+        "id": "frame_mprYW_i27FM_79",
+        "kind": "frame",
+        "term": "CNN 79s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_79.jpg",
+        "caption": "single one of them, Americans were searching more for Lake Ontario than for Lake America. Breaking",
+        "said": "single one of them, Americans were searching more for Lake Ontario than for Lake America. Breaking",
+        "at": 79.32,
+        "source": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
+        "look": 10145497866808115076
+      },
+      {
+        "id": "frame_mprYW_i27FM_111",
+        "kind": "frame",
+        "term": "CNN 111s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_111.jpg",
+        "caption": "Net ratings among Americans confident in Trump on Canada US relations minus 15 points his net rating",
+        "said": "Net ratings among Americans confident in Trump on Canada US relations minus 15 points his net rating",
+        "at": 111.48,
+        "source": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=mprYW_i27FM",
+        "look": 10127501129641008517
+      },
+      {
+        "id": "frame_OciTiMiQerI_244",
+        "kind": "frame",
+        "term": "Fox News 244s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_OciTiMiQerI_244.jpg",
+        "caption": "the lake change in the lake of America",
+        "said": "the lake change in the lake of America",
+        "at": 244.26,
+        "source": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=OciTiMiQerI",
+        "look": 9151035175696489596
+      },
+      {
+        "id": "frame_OciTiMiQerI_672",
+        "kind": "frame",
+        "term": "Fox News 672s",
+        "file": "assets/photos/川普要把安大略湖改名/frame_OciTiMiQerI_672.jpg",
+        "caption": "Ontario, now Lake America, in what he",
+        "said": "Ontario, now Lake America, in what he",
+        "at": 672.76,
+        "source": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.mp4",
+        "outlet": "Fox News",
+        "author": "",
+        "credit": "畫面來源：Fox News",
+        "page": "https://www.youtube.com/watch?v=OciTiMiQerI",
+        "look": 18446181123771661821
+      },
+      {
+        "id": "37260512",
+        "term": "great lakes aerial",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/37260512.jpg",
+        "caption": "Drone shot of Michigan's coastal landscape with lush forests and clear waters in summer.",
+        "outlet": "Pexels",
+        "author": "Dear Outdoors",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/aerial-view-of-michigan-s-scenic-coastline-in-summer-37260512/",
+        "look": 54078397182967807,
+        "size": [
+          4000,
+          2250
+        ]
+      },
+      {
+        "id": "1685778",
+        "term": "great lakes aerial",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/1685778.jpg",
+        "caption": "A stunning aerial view of Chicago's coastline with its marina and urban sprawl under a clear sky.",
+        "outlet": "Pexels",
+        "author": "alvin watson",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/aerial-view-of-body-of-water-1685778/",
+        "look": 5368709119,
+        "size": [
+          4032,
+          3024
+        ]
+      },
+      {
+        "id": "19784153",
+        "term": "great lakes aerial",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/19784153.jpg",
+        "caption": "Drone shot of Wisconsin Point Lighthouse on Lake Superior in Superior, Wisconsin.",
+        "outlet": "Pexels",
+        "author": "Giant Asparagus",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/drone-shot-of-the-wisconsin-point-light-in-superior-on-wisconsin-point-in-douglas-county-wisconsin-19784153/",
+        "look": 4521295279357951,
+        "size": [
+          4000,
+          3000
+        ]
+      },
+      {
+        "id": "32272512",
+        "term": "lake shoreline waves",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/32272512.jpg",
+        "caption": "Dramatic scene of waves crashing against rocky Lake Superior shoreline.",
+        "outlet": "Pexels",
+        "author": "Andrew Patrick Photo",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/wild-waves-crashing-on-lake-superior-shoreline-32272512/",
+        "look": 18374561204167196479,
+        "size": [
+          5973,
+          3982
+        ]
+      },
+      {
+        "id": "32272511",
+        "term": "lake shoreline waves",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/32272511.jpg",
+        "caption": "Rugged waves crash against the rocky coastline of a serene lake, surrounded by dense evergreen forest.",
+        "outlet": "Pexels",
+        "author": "Andrew Patrick Photo",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/wild-waves-crashing-on-rocky-lakeshore-32272511/",
+        "look": 18392429303155859263,
+        "size": [
+          4636,
+          3091
+        ]
+      },
+      {
+        "id": "38645978",
+        "term": "lake shoreline waves",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/38645978.jpg",
+        "caption": "Dramatic scene of stormy waves hitting rocks with a distant pier in view under a cloudy sky.",
+        "outlet": "Pexels",
+        "author": "Jose Luis  Vanasco",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/stormy-waves-crashing-on-a-rocky-shoreline-38645978/",
+        "look": 69278883594047,
+        "size": [
+          6192,
+          4125
+        ]
+      },
+      {
+        "id": "10075823",
+        "term": "nautical chart",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/10075823.jpg",
+        "caption": "A vintage compass and magnifying glass on an old nautical map evoke a sense of adventure and discovery.",
+        "outlet": "Pexels",
+        "author": "52541231 dsadasdas",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/vintage-map-magnifying-glass-and-compass-10075823/",
+        "look": 1186977502870896640,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "5663229",
+        "term": "nautical chart",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/5663229.jpg",
+        "caption": "Old map and compass with book and ship model, evoking travel and exploration.",
+        "outlet": "Pexels",
+        "author": "Abdessalem BENYAHIA",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/black-compass-on-white-paper-5663229/",
+        "look": 7524649577672143090,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "31805295",
+        "term": "nautical chart",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/31805295.jpg",
+        "caption": "Flat lay of nautical chart with navigation tools including a compass, ruler, and pencil.",
+        "outlet": "Pexels",
+        "author": "Lea Guerette",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/nautical-chart-with-navigation-tools-flat-lay-31805295/",
+        "look": 18230288709025822776,
+        "size": [
+          4032,
+          3024
+        ]
+      },
+      {
+        "id": "6814526",
+        "term": "signing document desk",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/6814526.jpg",
+        "caption": "Person in business attire signing a document at a wooden table in an office setting.",
+        "outlet": "Pexels",
+        "author": "cottonbro studio",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/a-person-signing-contract-documents-6814526/",
+        "look": 18012421027475226624,
+        "size": [
+          4023,
+          2682
+        ]
+      },
+      {
+        "id": "8730998",
+        "term": "signing document desk",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/8730998.jpg",
+        "caption": "A professional individual signs legal documents at a desk in an office setting.",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/elegant-man-signing-documents-8730998/",
+        "look": 18229654363340015624,
+        "size": [
+          3147,
+          2101
+        ]
+      },
+      {
+        "id": "618158",
+        "term": "signing document desk",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/618158.jpg",
+        "caption": "Close-up of a senior adult signing a legal document with a focus on hand and gold ring.",
+        "outlet": "Pexels",
+        "author": "Matthias Zomer",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/person-signing-document-paper-618158/",
+        "look": 18410574534418759936,
+        "size": [
+          4896,
+          2760
+        ]
+      },
+      {
+        "id": "27697309",
+        "term": "border crossing sign",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/27697309.jpg",
+        "caption": "A weathered pedestrian crossing sign against a vivid blue sky, symbolizing caution and time.",
+        "outlet": "Pexels",
+        "author": "Jan van der Wolf",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/a-red-and-white-sign-with-a-woman-walking-on-it-27697309/",
+        "look": 17287000927454150848,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "39246449",
+        "term": "border crossing sign",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/39246449.jpg",
+        "caption": "A triangular pedestrian crossing sign with trees in the background, indicating caution for drivers.",
+        "outlet": "Pexels",
+        "author": "Lena Netkach",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/pedestrian-crossing-sign-in-forest-setting-39246449/",
+        "look": 18024481273646858,
+        "size": [
+          4592,
+          3448
+        ]
+      },
+      {
+        "id": "13398906",
+        "term": "border crossing sign",
+        "kind": "stock",
+        "file": "assets/photos/川普要把安大略湖改名/13398906.jpg",
+        "caption": "A warning sign prohibiting crossing near a desert border area with clear blue sky.",
+        "outlet": "Pexels",
+        "author": "Daniel Rosehill",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/signage-by-the-road-in-the-desert-13398906/",
+        "look": 9338513998120713987,
+        "size": [
+          4080,
+          3072
+        ]
+      },
+      {
+        "id": "ISS-36_Lake_Ontario_(horizontal).jpg",
+        "term": "Lake Ontario",
+        "kind": "real",
+        "file": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+        "caption": "Lake Ontario is one of the five Great Lakes of North America. It is bounded on the north, west, and southwest by the Canadian province of Ontario, and on the south and east by the U.S. state of New York. The Canada–United States border spans the centre of the lake. On the Canadian side, the major ci",
+        "outlet": "維基百科",
+        "author": "NASA",
+        "credit": "NASA／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:ISS-36_Lake_Ontario_(horizontal).jpg",
+        "look": 1408487812726290,
+        "size": [
+          4256,
+          2832
+        ]
+      },
+      {
+        "id": "2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg",
+        "term": "Mark Carney",
+        "kind": "real",
+        "file": "assets/photos/川普要把安大略湖改名/2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg.jpg",
+        "caption": "Mark Joseph Carney is a Canadian politician and economist who is the 24th prime minister of Canada and leader of the Liberal Party, serving since 2025. Carney is the member of Parliament (MP) for Nepean since his election in April 2025. He was previously Governor of the Bank of Canada from 2008 to 2",
+        "outlet": "維基百科",
+        "author": "Lea-Kim",
+        "credit": "Lea-Kim／CC BY-SA 4.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg",
+        "look": 6781911175233518,
+        "size": [
+          2534,
+          3379
+        ]
+      },
+      {
+        "id": "Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg",
+        "term": "Donald Trump",
+        "kind": "real",
+        "file": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+        "caption": "Donald John Trump is an American politician, media personality, and businessman who is the 47th president of the United States. A member of the Republican Party, he served as the 45th president from 2017 to 2021.",
+        "outlet": "維基百科",
+        "author": "Daniel Torok",
+        "credit": "Daniel Torok／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg",
+        "look": 4069055281416125448,
+        "size": [
+          1594,
+          2048
+        ]
+      },
+      {
+        "id": "Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg",
+        "term": "Great Lakes",
+        "kind": "real",
+        "file": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+        "caption": "The Great Lakes, also called the Great Lakes of North America, are a series of large interconnected freshwater lakes spanning the Canada–United States border. The five lakes are Superior, Michigan, Huron, Erie, and Ontario. The Great Lakes Waterway enables modern travel and shipping by water among t",
+        "outlet": "維基百科",
+        "author": "NASA",
+        "credit": "NASA／Public domain",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg",
+        "look": 13804654087028916449,
+        "size": [
+          5200,
+          4000
+        ]
+      },
+      {
+        "id": "3Falls_Niagara.jpg",
+        "term": "Niagara Falls",
+        "kind": "real",
+        "file": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+        "caption": "Niagara Falls is a group of three waterfalls at the southern end of Niagara Gorge, spanning the border between the Canadian province of Ontario and the U.S. state of New York. The largest of the three is Horseshoe Falls, which straddles the international border of the two countries. It is also known",
+        "outlet": "維基百科",
+        "author": "Saffron Blaze",
+        "credit": "Saffron Blaze／CC BY-SA 3.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:3Falls_Niagara.jpg",
+        "look": 6903102963711,
+        "size": [
+          3008,
+          2000
+        ]
+      }
+    ],
     "data": []
   },
-  "facts": [],
-  "voices": [],
-  "audience": "想看怪事的人"
+  "facts": [
+    {
+      "say": "川普簽署行政命令，把安大略湖改名為「美利堅湖」",
+      "from": "PBS NewsHour 第 0 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "命令要求聯邦機構承認新名稱，但別的國家沒有義務跟著改",
+      "from": "PBS NewsHour 第 20 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "改名之前，美加因為百分之五十的關稅談判破裂",
+      "from": "PBS NewsHour 第 20 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "關稅上週末生效，加拿大隨即反制",
+      "from": "PBS NewsHour 第 20 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "加拿大總理卡尼公開表示，加拿大人「現在和永遠」都叫它安大略湖",
+      "from": "PBS NewsHour 第 40 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "命令要內政部長柏根更新「地理名稱資訊系統」",
+      "from": "PBS NewsHour 第 113 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "官方理由是這座湖大部分水量在美國，最深處在美國領土",
+      "from": "PBS NewsHour 第 138 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "川普說美國白白保衛加拿大，加拿大一毛錢都沒付",
+      "from": "PBS NewsHour 第 219 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "川普說過去十五年平均每年因為加拿大損失六百億美元",
+      "from": "PBS NewsHour 第 243 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "川普說接下來要對加拿大進口的汽車課高額關稅",
+      "from": "PBS NewsHour 第 264 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "川普說先前把墨西哥灣改成美國灣，現在有了灣也有了湖，「只差一個海洋」，可能改大西洋或太平洋",
+      "from": "PBS NewsHour 第 309 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "川普前一天貼出自己把 Lake Ontario 塗掉改寫成 Lake America 的影片，被看了大約三千萬次",
+      "from": "CNN 第 84 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "川普說加拿大對美國農民課百分之四百的關稅",
+      "from": "CNN 第 333 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "美國五十州全部都是搜尋「安大略湖」多於「美利堅湖」，沒有一州例外",
+      "from": "CNN 第 70 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "美國人對川普處理美加關係的信心，淨值是負十五",
+      "from": "CNN 第 114 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "加拿大在美國人心中的好感度，淨值是正四十八",
+      "from": "CNN 第 114 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "職業美式足球季前賽的轉播主播拿改名開玩笑，說不確定旁邊那座還叫不叫伊利湖",
+      "from": "CNN 第 21 秒",
+      "kind": "影片"
+    },
+    {
+      "say": "美國地名由地質調查局底下的「地名委員會」統一，改名照慣例從地方發起、由當地居民提案並取得支持",
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉"
+    },
+    {
+      "say": "川普 2025 年已經把墨西哥灣改成美國灣，也把阿拉斯加的迪納利山改回麥金利山",
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉"
+    },
+    {
+      "say": "明尼蘇達 2018 年把一座湖改成達科塔語舊名，走的是公園局表決、郡議會同意、再往上送的程序",
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉"
+    },
+    {
+      "say": "安大略省長福特在美加邊界的大馬路旁豎起巨型看板，英法雙語寫著「安大略湖 —— 現在和永遠」",
+      "from": "NPR〈Canada claps back at Tru〉"
+    },
+    {
+      "say": "福特說：川普愛叫它什麼都行，但世界其他地方永遠會叫它安大略湖",
+      "from": "NPR〈Canada claps back at Tru〉"
+    },
+    {
+      "say": "川普被問到為什麼改名時說：常有人問我跟誰做貿易最難，答案很簡單，加拿大",
+      "from": "NPR〈Canada claps back at Tru〉"
+    },
+    {
+      "say": "卡尼承諾對美國關稅「一塊錢對一塊錢」反制",
+      "from": "NPR〈Canada claps back at Tru〉"
+    },
+    {
+      "say": "行政命令要求內政部長和地名委員會在三十天內完成改名，並把「安大略湖」從地名資訊系統裡全部移除",
+      "from": "CNN〈Can Trump actually chang〉"
+    },
+    {
+      "say": "五十趴關稅涵蓋大約兩百億美元的加拿大商品",
+      "from": "CNN〈Can Trump actually chang〉"
+    },
+    {
+      "say": "哥倫比亞大學研究員說：聯邦文件上的名字會改，除此之外沒有任何效果，對加拿大和世界其他地方都沒有",
+      "from": "CNN〈Can Trump actually chang〉"
+    },
+    {
+      "say": "川普簽署時旁邊立著一張地圖，標題寫「讓五大湖更偉大」",
+      "from": "CNN〈Can Trump actually chang〉"
+    },
+    {
+      "say": "塞內卡族領袖要求撤回命令，說總統不能宣稱擁有、也不能用政治行動抹去他們的文化",
+      "from": "Fox News〈Seneca Nation leader cal〉"
+    },
+    {
+      "say": "這座湖在塞內卡語裡叫 sga:nyodai:yoh，意思是「美麗的湖」",
+      "from": "Fox News〈Seneca Nation leader cal〉"
+    },
+    {
+      "say": "塞內卡族指出華盛頓 1794 年簽的坎南代瓜條約承諾與他們和平共處、並保證他們永遠自由使用自己的土地",
+      "from": "Fox News〈Seneca Nation leader cal〉"
+    },
+    {
+      "say": "內政部長柏根說川普已經直接聯絡蘋果，要求 Apple 地圖也改",
+      "from": "BBC News〈Trump pushes Apple to ch〉"
+    },
+    {
+      "say": "Google 週末為美國用戶改了名，加拿大用戶看到的仍是安大略湖，世界其他地方顯示為「Lake Ontario（Lake America）」",
+      "from": "BBC News〈Trump pushes Apple to ch〉"
+    },
+    {
+      "say": "多倫多的電力公司 Hydro One 為自家地圖出現「美利堅湖」道歉，說是third-party 地圖服務造成的",
+      "from": "BBC News〈Trump pushes Apple to ch〉"
+    },
+    {
+      "say": "渥太華水電和安大略省酒類管理局的地圖也一度顯示新名字",
+      "from": "BBC News〈Trump pushes Apple to ch〉"
+    },
+    {
+      "say": "加拿大 2025 年出口七百八十六億加幣的汽車產品，其中將近百分之九十五賣到美國",
+      "from": "Euronews〈Lake Ontario or Lake Ame〉"
+    },
+    {
+      "say": "零件在美加邊境常常來回好幾趟才組成一輛車，所以單一零件的關稅會被重複疊加",
+      "from": "Euronews〈Lake Ontario or Lake Ame〉"
+    },
+    {
+      "say": "美國自 2025 年 4 月對加拿大製車輛的非美國成分課百分之二十五關稅，2027 年 1 月起加倍到百分之五十",
+      "from": "Euronews〈Lake Ontario or Lake Ame〉"
+    },
+    {
+      "say": "川普在社群上寫：我不要加拿大的車、不要加拿大的零件、不要加拿大的任何東西",
+      "from": "Euronews〈Lake Ontario or Lake Ame〉"
+    },
+    {
+      "say": "美加貿易談判是 8 月 21 日破裂的",
+      "from": "Euronews〈Lake Ontario or Lake Ame〉"
+    },
+    {
+      "say": "川普第二任把美國和平研究所改名為「唐納·川普美國和平研究所」，還推出「川普帳戶」和「TrumpRx」，並計畫造「川普級」戰艦",
+      "from": "The Guardian〈Trump the renamer-in-chi〉"
+    },
+    {
+      "say": "墨西哥灣改名十八個月後，幾乎沒有正經媒體在用「美國灣」這個詞",
+      "from": "The Guardian〈Trump the renamer-in-chi〉"
+    },
+    {
+      "say": "2025 年 2 月美聯社因為拒用「美國灣」被白宮禁止進入橢圓形辦公室",
+      "from": "The Guardian〈Trump the renamer-in-chi〉"
+    },
+    {
+      "say": "行政命令本身沒有提到貿易爭端，只說要「表彰美國人民的非凡貢獻」",
+      "from": "The Guardian〈Trump the renamer-in-chi〉"
+    },
+    {
+      "say": "密西根州眾議員丁格爾要提「別碰我們的五大湖法案」，宣告川普那道命令「不具任何效力」",
+      "from": "Fox News〈House Dem Debbie Dingell〉"
+    },
+    {
+      "say": "美國地質調查局在命令當天下午四點半就把改名寫進所有官方電子文件",
+      "from": "Fox News〈House Dem Debbie Dingell〉"
+    },
+    {
+      "say": "紐約州長霍楚也公開拒絕這個新名字",
+      "from": "Fox News〈House Dem Debbie Dingell〉"
+    },
+    {
+      "say": "川普貼出一段影片：他推倒福特那面看板的虛擬版、換上「美利堅湖」，然後跳 YMCA",
+      "from": "The Guardian〈Canada erects giant ‘Lak〉"
+    },
+    {
+      "say": "卡尼指出安大略湖的名字來自四百多年前的溫達特語，意思是「這湖很美、這湖很大」",
+      "from": "The Guardian〈Canada erects giant ‘Lak〉"
+    },
+    {
+      "say": "Google 說它的做法是「反映官方政府來源的名稱變更」",
+      "from": "The Guardian〈Canada erects giant ‘Lak〉"
+    },
+    {
+      "say": "安大略湖的名字來自休倫族溫達特語的 oniatarí:io，意思是「閃亮之水的湖」「大湖」或「美麗的湖」",
+      "from": "Al Jazeera English〈Can Trump really rename 〉"
+    },
+    {
+      "say": "田納西大學地理學教授說這道命令是在把原住民文化從地圖上抹掉，是一種新殖民式的地理想像",
+      "from": "Al Jazeera English〈Can Trump really rename 〉"
+    },
+    {
+      "say": "安大略省 1867 年建省時，省名就是取自這座湖",
+      "from": "Al Jazeera English〈Can Trump really rename 〉"
+    },
+    {
+      "say": "這座湖在十七、十八世紀已經擋掉過法國人的改名嘗試",
+      "from": "Al Jazeera English〈Can Trump really rename 〉"
+    }
+  ],
+  "voices": [
+    {
+      "url": "https://www.youtube.com/watch?v=S9NbJin7oCM",
+      "title": "News Wrap: Trump signs order to rename Lake Ontario as Lake America",
+      "outlet": "PBS NewsHour",
+      "comments": []
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=mH6N-V7AHaE",
+      "title": "WATCH: Trump signs order changing Lake Ontario to 'Lake America'",
+      "outlet": "PBS NewsHour",
+      "comments": []
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=NGrWxr7FVPE",
+      "title": "Trump renames Lake Ontario to 'Lake America'",
+      "outlet": "CNN",
+      "comments": [
+        {
+          "say": "In losing a hot war to Iran, and a trade war to Canada, Trump is frustrated. When he is upset, he turns to vandalizing maps. \r\n\r\nToddlers sometimes write on the wall in crayon when they're angry.",
+          "likes": 39,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Trump signs executive order to change Lake Ontario to ‘Lake America’- https://bit.ly/4cfOgo3",
+          "likes": 38,
+          "when": "3 days ago",
+          "reply": false
+        },
+        {
+          "say": "Lake Epstein",
+          "likes": 21,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Steve-OhNo  🤣🤣🤣 Exactly. And don't forget those Epstein files where he's mentioned over 1,000,000 times which were the reason he started the war in Iran at all.",
+          "likes": 19,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "How sad that the Republican party GOP is reducing this once great nation to a joke. The US is going to collapse at any moment. Almost like Russia.",
+          "likes": 18,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "A real Joke like TRUMP!!! :)",
+          "likes": 17,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Why don't you have. psychiatrist or psychologist on to talk about the wounded ego/toddler-tantrum behavior the President of the United States of America is currently with this action. THIS IS NOT NORMAL ADULT BEHAVIOR CNN. Maybe you could cover it it like the insanity it really represents. Or ignore and watch the empire fall.",
+          "likes": 15,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Lol. That is so underrated. Somehow I am not offended by the change. We don’t have that much ego to feed. He can rename his side but Canada is still Canada. And we still call it Lake Ontario!",
+          "likes": 14,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@bakikountwa2192 Lake Ontario is the smallest of the Great Lakes. So it’s fitting Trump renamed it Lake America.",
+          "likes": 5,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Thanks for platforming him since 2016. You are complicit.",
+          "likes": 4,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "25th...\nLow prices/inflation, free sea waters, ending the war he began, Ukraine are much more important than golden triumph arches, golden ball rooms, renaming century-old names.",
+          "likes": 4,
+          "when": "3 days ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "トランプは世界の笑い者\nこの人の馬鹿さ加減には限界が無い！\nそれから、これから私はトイレットペーパーをトランプと呼ぶ事にしました。\nトランプでお尻吹きます（笑）",
+          "likes": 4,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "The most hilarious thing is that the only people in the world who will call it \"Lake America\" will be half of the US and Google 😂😂",
+          "likes": 4,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @Steve-OhNo  If we are naming a small thing, let's go for Trump Lake. 😅",
+          "likes": 3,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "​@bakikountwa2192 \nIt's not about being offended. It's about insanity.",
+          "likes": 3,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "25th Amendment",
+          "likes": 3,
+          "when": "3 days ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "Rose 🌹 are red violets are blue 🔵 trump is so stupid and the people who voted for him are to",
+          "likes": 3,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Steve-OhNo  yea and I haven't \"once\", not 1 time have i heard him even acknowledging his own American citizens in Nevada, Oregon, Washington St, etc going through a very real state of emergency.........literally having their entire lives completely devastated by violent out of control wildfires.  But he doesn't see them a priority.......but this is?  He's such f'n idiot.  Im surprised he knows how to spell his own name.",
+          "likes": 3,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Lake America sounds beautiful   :thanksdoc:",
+          "likes": 3,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Change the headline. He doesn’t change the name. Dont give him the deference and power to do things that are not in his power. Stop bending over for this crap",
+          "likes": 2,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Steve-OhNo  looooooool Vandalizing Maps 😂😂😂😂😂😂😂😂😂😂😂😂😮",
+          "likes": 2,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Jaileen-g2q  I'm doing fine. What kind of scam are you pulling?\n\nSorry, I'm not easily fooled.",
+          "likes": 1,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @bakikountwa2192  Under us  it's still LAKE ONTARIO.",
+          "likes": 1,
+          "when": "22 hours ago",
+          "reply": true
+        },
+        {
+          "say": "​@AllSpeed \nRatings matter in late stage capitalism.",
+          "likes": 1,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "​​ @KingVallejo-m5v  I voted for him and I have deep regrets.  My ass if I'm ever gonna vote for him again !  He is a disaster ! Americans who voted for him including me are sick n tired of  his dam lies. 🤥",
+          "likes": 1,
+          "when": "1 day ago (edited)",
+          "reply": true
+        },
+        {
+          "say": "​ @reymundagehart8720  good job 👏  dose  anyone else wants a medal 🏅",
+          "likes": 1,
+          "when": "1 day ago",
+          "reply": true
+        },
+        {
+          "say": "@23rdhalo  He probably renamed Lake Ontario because he can't spell \"Ontario\".",
+          "likes": 1,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "God has all power than Donald j trump and Satan",
+          "likes": 1,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Is this a joke ?",
+          "likes": 1,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Going rename the white house, circus tent",
+          "likes": 1,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Patrick-c7k7n  Oooo that's a good one. Question is who is the dancing bear?",
+          "likes": 1,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "I wish it was a funny joke i stead of an implied threat!",
+          "likes": 1,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Mushrombo You are so right. And when has Trump ever let a little truth get in the way of his \"big ideas\"?",
+          "likes": 1,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "@paulwhitesman2314 how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@Steve-OhNo how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@bakikountwa2192 \nUSA here, we love you Canada and yes very true Lake Ontario will still be the same on your side and ours for us who refuse to rename it. USA 🇺🇸 loves Canada 🇨🇦 ❤🥰💙💙💙💙💙💙💙💙💙💙💙💙💙💙",
+          "likes": 0,
+          "when": "7 hours ago",
+          "reply": true
+        },
+        {
+          "say": "@LadybugJ1913 Thank you very much!",
+          "likes": 0,
+          "when": "6 hours ago",
+          "reply": true
+        },
+        {
+          "say": "@AllSpeed  That said maybe if every insane or crazy thing he posted or said was platformed everywhere including here from 2020 to 2024 he would never have gotten elected....Because he was increasingly unhinged from the second he lost in 2020. But we'll never know because his spin doctor trolls like Candace Owen, Tucker Carlson, Joe Rogan, Matt Walsh, Alex Jones etc washed, dried and cleaned his insanity to the masses for the last almost 15 years.",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@errarehumanumest3810  Too bad 47 doesn't see it that way.",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@frsmith5069 how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @paulpattersonjr6841 that more people than Canada has!!! In case you haven't noticed Google is huge",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@paulpattersonjr6841 True",
+          "likes": 0,
+          "when": "6 hours ago",
+          "reply": true
+        },
+        {
+          "say": "@frsmith5069  while Trump doesn’t want to Free Puff Daddy Diddy Free Puff",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@frsmith5069 how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@DistantMuffins  It's basically Trump having a temper tantrum because he's played all his cards, and has nothing left. \n\nNotice he didn't add additional tariffs or do anything else that might have any impact. He renamed a lake, and no one is going to call it that. \n\nEpic failure, one of the worst in American history. Losing to Canada. Wow.",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@nicholasgarneau-f5w how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @Jaileen-g2q   👈  Big time bot.  Making this exact verbatim post everywhere.",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Actually there have been some serious discussions about Trump's mental health. \nApparently we don't have enough votes (yet) in the Senate to humanely relieve Trump of his Presidential Duties, and just give him a \"barn with a pond\" to play with until the end of his term!",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "not news. congress has to okay ut morons",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Chronologically, one must be at least 35 yrs old to run for President.\n\nEmotionally, one only needs to be 5 yrs old.  Apparently.",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@bryanconner9245 how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Out of all the important problems in the US that would need the attention of the president, this somehow made the list",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@aaronr.9644 how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Does he realize we HAD a free trade agreement that he brokered. He us acting like a 5 year old",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "@johngillespie7633 how are you doing?",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "Someone should tell Trump that international body IATA responsible for assigning the 3-letter code to the world's airports is located in Canada.  This means Carney could instruct the IATA to reassign Trump International Airport from TRP to ASS and there is nothing Trump can do about it.",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "\"Lake Ontario originally belonged to other nations long before the United States or Canada ever existed.\"",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "It’s violating the law sovereignty rights to territorial integrity invade by the President Trump’s greed and corruption.👊🏻👊🏻🥸🧐⚖✝🧙🏻‍♂🤵🏻‍♂☝🏻⚔",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        },
+        {
+          "say": "I speak for many Canadians when I say - &&ck off “America”. We don’t give a single $#it about you.",
+          "likes": 0,
+          "when": "2 days ago",
+          "reply": true
+        },
+        {
+          "say": "​ @dikjones-tb2xy rather call it Lake Hylia",
+          "likes": 0,
+          "when": "3 days ago",
+          "reply": true
+        }
+      ]
+    }
+  ],
+  "audience": "想看怪事的人",
+  "gathered": {
+    "when": 1788192788,
+    "trouble": []
+  }
 }
