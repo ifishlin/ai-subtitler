@@ -272,6 +272,12 @@ def prompts_page() -> str:
     return (STATIC / "prompts.html").read_text(encoding="utf-8")
 
 
+@app.get("/cards", response_class=HTMLResponse)
+def cards_page() -> str:
+    """十二種卡各五個畫法，攤開來看，可以關掉不喜歡的。"""
+    return (STATIC / "cards.html").read_text(encoding="utf-8")
+
+
 @app.get("/houses", response_class=HTMLResponse)
 def houses_page() -> str:
     """片型：這種片子長什麼形狀。跟 /prompts 是同一件事的兩半 ——
@@ -1945,6 +1951,136 @@ def reset_prompt_file(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     text = was.read_text(encoding="utf-8")
     (PROMPTS / name).write_text(text, encoding="utf-8")
     return {"reset": name, "text": text}
+
+
+CARD_DEMO = ROOT / "assets" / "cards" / "demo"
+
+
+def _demo_spec(kind: str, tone: str) -> dict[str, Any]:
+    """示範用的內容。
+
+    用真的文案裡出現過的句子，不是 Lorem ipsum —— 假資料看不出真實長度會不會
+    爆版，而「這一種畫法適不適合這種句子」正是這一頁要回答的問題。
+    """
+    base = {"kind": kind, "tone": tone, "note": "PBS NewsHour"}
+    if kind in ("word", "title"):
+        return {**base, "title": "地圖開始\n看你人在哪", "under": "同一座湖，三個名字"}
+    if kind == "number":
+        return {**base, "title": "命令簽下去那天", "value": "4:30",
+                "under": "美國地質調查局，全部官方電子文件", "ghost": "PM"}
+    if kind == "ring":
+        return {**base, "title": "這座湖", "value": "大半",
+                "under": "最深的地方也在美國領土"}
+    if kind == "swap":
+        return {**base, "title": "一道行政命令", "was": "Lake Ontario",
+                "now": "Lake America", "under": "聯邦文件當天下午就改完"}
+    if kind == "bars":
+        return {**base, "title": "昨天在 Google 上搜得比較多的",
+                "rows": [["Lake Ontario", 50, "", "五十州"],
+                         ["Lake America", 0, "", "零州"]]}
+    if kind == "split":
+        return {**base, "title": "同一個地方，兩張地圖",
+                "branches": ["你在美國\n看到的", "你在加拿大\n看到的"]}
+    if kind == "chain":
+        return {**base, "title": "他自己排的順序",
+                "points": ["墨西哥灣", "安大略湖", "接下來是海洋"],
+                "under": "「我們有灣，也有湖，現在只差一個海洋」"}
+    if kind == "queue":
+        return {**base, "title": "反對在社區裡蓋的人", "count": 7,
+                "under": "十個裡面有七個"}
+    if kind == "stack":
+        return {**base, "title": "打開 Google 地圖",
+                "items": ["在美國：Lake America", "在加拿大：Lake Ontario",
+                          "在別的地方：兩個都寫"]}
+    if kind == "clock":
+        return {**base, "title": "墨西哥灣改成美國灣", "value": "18",
+                "part": 0.5, "under": "幾乎沒有正經媒體在用新名字"}
+    if kind == "outro":
+        return {**base, "title": "改掉的不是湖的名字\n是你那張地圖",
+                "points": ["一道命令，聯邦文件當天下午就改完",
+                           "Google 照做，但只對美國用戶",
+                           "加拿大看到的還是安大略湖"],
+                "under": "川普把安大略湖改名為美利堅湖"}
+    return {**base, "title": "示範"}
+
+
+@app.get("/api/card-ways")
+def card_ways(tone: str = "cool") -> dict[str, Any]:
+    """每一種卡有哪些畫法，各畫一張示範。
+
+    畫法在程式裡，關不關掉在 `assets/cards.json` —— 這一頁能做的是「看、
+    關掉、指出哪裡不好」，加一種新的還是要改程式。
+    """
+    from core import cards as cards_module
+    CARD_DEMO.mkdir(parents=True, exist_ok=True)
+    off = cards_module._off()
+    out = []
+    for kind in sorted(cards_module.WAYS):
+        spec = _demo_spec(kind, tone)
+        ways = []
+        for one in cards_module.WAYS[kind]:
+            key = f"{kind}.{one.__name__}"
+            # 檔名帶畫法名和程式指紋，改了畫法就換檔名 —— 舊圖自然找不到。
+            target = CARD_DEMO / (
+                hashlib.sha1((key + tone + cards_module.how()).encode()
+                             ).hexdigest()[:12] + ".png")
+            if not target.is_file():
+                one(spec, 1.0).resize((360, 640)).save(target)
+            ways.append({"key": key, "name": one.__name__,
+                         "off": key in off, "first": one is
+                         cards_module.WAYS[kind][0],
+                         "why": (inspect.getdoc(one) or "").split("\n")[0],
+                         "image": f"/media/card-demo/{target.name}"})
+        out.append({"kind": kind, "ways": ways,
+                    "spec": json.dumps(spec, ensure_ascii=False, indent=1)})
+    return {"kinds": out, "tone": tone,
+            "tones": sorted(rules_module_tones())}
+
+
+def rules_module_tones() -> list[str]:
+    """theme.json 裡的色調名。`why` 是那一節的說明，不是一個色調 ——
+    這個專案的設定檔到處都放 `why`，濾掉是常態不是特例。"""
+    from core import rules as rules_module
+    return [key for key in (rules_module.look("tones", {}) or {})
+            if key != "why"]
+
+
+@app.get("/media/card-demo/{name}")
+def card_demo_image(name: str) -> FileResponse:
+    if not re.fullmatch(r"[0-9a-f]{6,32}\.png", name):
+        raise HTTPException(404, "沒有這張")
+    target = CARD_DEMO / name
+    if not target.is_file():
+        raise HTTPException(404, "沒有這張")
+    return FileResponse(target, media_type="image/png")
+
+
+@app.post("/api/card-way")
+def card_way_off(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """關掉或打開一個畫法。
+
+    每一種至少要留一個 —— 全部關掉的話那種卡就畫不出來了，而那個錯會在
+    壓片的時候才發生。
+    """
+    from core import cards as cards_module
+    key = str(payload.get("key") or "")
+    want_off = bool(payload.get("off"))
+    kind = key.split(".")[0]
+    if kind not in cards_module.WAYS:
+        raise HTTPException(404, f"沒有這種卡：{kind}")
+    off = cards_module._off()
+    off.discard(key)
+    if want_off:
+        off.add(key)
+    live = [one for one in cards_module.WAYS[kind]
+            if f"{kind}.{one.__name__}" not in off]
+    if not live:
+        raise HTTPException(400, f"{kind} 至少要留一種畫法")
+    where = ROOT / "assets" / "cards.json"
+    where.parent.mkdir(parents=True, exist_ok=True)
+    where.write_text(json.dumps({"off": sorted(off)}, ensure_ascii=False,
+                                indent=1) + "\n", encoding="utf-8")
+    return {"key": key, "off": want_off, "live": len(live)}
 
 
 @app.get("/api/formats")

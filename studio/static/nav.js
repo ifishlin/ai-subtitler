@@ -17,6 +17,7 @@ const WHERE = [
   ["/assemble",  "組裝",   "🧩"],
   ["/prompts",   "規定",   "📝"],
   ["/houses",    "片型",   "🎞"],
+  ["/cards",     "卡片",   "🃏"],
   ["/gates",     "門",     "🚦"],
   ["/material",  "素材去哪", "🔀"],
   ["/prompt",    "送去寫", "✉️"],

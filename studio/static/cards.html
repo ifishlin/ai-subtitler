@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>卡片　AI-Reporters</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px}
+  .bar span.n{font:11.5px var(--mono);color:var(--faint)}
+  .bar .gap{flex:1}
+  .bar button{font:12.5px var(--mono);color:var(--dim);background:var(--panel);
+    border:1px solid var(--line);border-radius:8px;padding:5px 12px;cursor:pointer}
+  .bar button:hover{color:var(--ink);border-color:var(--accent)}
+  .bar button.on{color:var(--bg);background:var(--accent);
+    border-color:transparent;font-weight:600}
+
+  .kind{margin:0 0 34px}
+  .kind h3{display:flex;align-items:baseline;gap:10px;margin:0 0 4px;
+    font-size:17px}
+  .kind h3 code{font:12px var(--mono);color:var(--faint)}
+  .kind h3 .live{margin-left:auto;font:11.5px var(--mono);color:var(--faint)}
+  .kind .spec{margin:0 0 10px}
+  .kind .spec summary{cursor:pointer;color:var(--faint);font-size:11.5px;
+    user-select:none;list-style:none}
+  .kind .spec summary::-webkit-details-marker{display:none}
+  .kind .spec summary:before{content:"▸ ";color:var(--accent)}
+  .kind .spec[open] summary:before{content:"▾ "}
+  .kind .spec pre{margin:8px 0 0;white-space:pre-wrap;font:11.5px/1.7 var(--mono);
+    color:var(--dim);background:#00000026;border-radius:9px;padding:10px 12px}
+
+  /* 五張並排。手機上換成兩張 —— 一張 180px 寬看不出畫法的差別。 */
+  .ways{display:grid;gap:10px;grid-template-columns:repeat(5,1fr)}
+  @media (max-width:1000px){.ways{grid-template-columns:repeat(2,1fr)}}
+  .way{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+    overflow:hidden;display:flex;flex-direction:column}
+  .way img{width:100%;display:block;background:#0d1014;
+    transition:opacity .12s}
+  .way.off img{opacity:.22;filter:grayscale(1)}
+  .way .foot{padding:7px 9px;display:flex;align-items:center;gap:7px}
+  .way .foot b{font:11px var(--mono);color:var(--dim);font-weight:400;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+  .way.off .foot b{color:var(--faint);text-decoration:line-through}
+  .way .foot button{font:10.5px var(--mono);color:var(--faint);
+    background:none;border:1px solid var(--line);border-radius:7px;
+    padding:2px 8px;cursor:pointer;white-space:nowrap}
+  .way .foot button:hover{color:var(--accent);border-color:var(--accent)}
+  .way.off .foot button{color:var(--warn);border-color:#5c4a2a}
+  .way .why{padding:0 9px 9px;font-size:11.5px;color:var(--faint);
+    line-height:1.55}
+  .way .keep{padding:0 9px 9px;font:10.5px var(--mono);color:#5c4a2a}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>卡片</h1>
+  <p class="under">十二種卡，每一種五個畫法。<b>哪一張卡用哪一個畫法，是從卡片
+    自己的內容算出來的</b>——不是隨機，所以同一句話永遠畫成同一種，重壓的結果
+    跟接觸表上看到的一致。</p>
+  <p class="under">關掉的畫法不會再被選到。<b>畫法本身是程式</b>，這一頁能做的
+    是看、關掉、告訴我哪裡不好；要加一種新的形式得改
+    <code>core/cards.py</code>。</p>
+
+  <div class="bar">
+    <span class="n">色調</span>
+    <span id="tones"></span>
+    <span class="gap"></span>
+    <span class="n" id="count"></span>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+let TONE = "cool";
+let KINDS = [];
+
+function draw() {
+  const live = KINDS.reduce((sum, one) =>
+    sum + one.ways.filter((w) => !w.off).length, 0);
+  const all = KINDS.reduce((sum, one) => sum + one.ways.length, 0);
+  $("count").textContent = `${KINDS.length} 種卡　${live}／${all} 個畫法開著`;
+
+  $("list").innerHTML = KINDS.map((one) => {
+    const on = one.ways.filter((w) => !w.off).length;
+    return `
+    <div class="kind">
+      <h3><span>${esc(one.kind)}</span>
+        <code>${one.ways.length} 個畫法</code>
+        <span class="live">${on === 1 ? "只剩一個開著" : `${on} 個開著`}</span></h3>
+      <details class="spec"><summary>示範用的內容</summary>
+        <pre>${esc(one.spec)}</pre></details>
+      <div class="ways">${one.ways.map((w) => `
+        <div class="way${w.off ? " off" : ""}">
+          <img src="${esc(w.image)}" alt="${esc(w.name)}" loading="lazy">
+          <div class="foot">
+            <b title="${esc(w.name)}">${esc(w.name.replace(/^_/, ""))}</b>
+            <button data-key="${esc(w.key)}" data-off="${w.off ? 1 : 0}">${
+              w.off ? "打開" : "關掉"}</button>
+          </div>
+          ${w.why ? `<div class="why">${esc(w.why)}</div>` : ""}
+          ${on === 1 && !w.off
+            ? '<div class="keep">每一種至少要留一個 —— 全部關掉那種卡就畫不出來</div>'
+            : ""}
+        </div>`).join("")}</div>
+    </div>`;
+  }).join("");
+}
+
+$("list").addEventListener("click", async (event) => {
+  const button = event.target.closest("button[data-key]");
+  if (!button) return;
+  const key = button.dataset.key;
+  const off = button.dataset.off !== "1";
+  button.disabled = true;
+  try {
+    const back = await fetch("/api/card-way", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({key, off}),
+    });
+    const got = await back.json();
+    if (!back.ok) throw new Error(got.detail || "改不了");
+    KINDS.forEach((one) => one.ways.forEach((w) => {
+      if (w.key === key) w.off = off;
+    }));
+    draw();
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = error.message.slice(0, 20);
+  }
+});
+
+async function load() {
+  const back = await fetch("/api/card-ways?tone=" + encodeURIComponent(TONE));
+  if (!back.ok) throw new Error(await back.text());
+  const d = await back.json();
+  KINDS = d.kinds || [];
+  $("tones").innerHTML = (d.tones || []).map((one) =>
+    `<button data-tone="${esc(one)}"${one === TONE ? ' class="on"' : ""}>${
+      esc(one)}</button>`).join("");
+  draw();
+}
+
+$("tones").addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-tone]");
+  if (!button) return;
+  TONE = button.dataset.tone;
+  load().catch(() => {});
+});
+
+load().catch((error) => {
+  $("list").innerHTML = '<p class="under">讀不到：' + esc(error.message) + "</p>";
+});
+</script>
+</body>
+</html>

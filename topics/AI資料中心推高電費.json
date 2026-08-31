@@ -1178,6 +1178,60 @@
         "page": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
         "look": 10484876782453589947,
         "seen": true
+      },
+      {
+        "id": "6862458",
+        "term": "person paying bills laptop",
+        "file": "assets/photos/AI資料中心推高電費/6862458.jpg",
+        "seen": true,
+        "caption": "Overhead view of woman organizing finances on bed with laptop and checks.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "cottonbro studio",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/overhead-shot-of-a-woman-holding-a-cheque-6862458/",
+        "look": 2251574652161769472,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "7191157",
+        "term": "person paying bills laptop",
+        "file": "assets/photos/AI資料中心推高電費/7191157.jpg",
+        "seen": true,
+        "caption": "Woman sitting on a couch, shopping online using a laptop and a credit card.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "Pavel Danilyuk",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/woman-in-white-sweater-entering-card-details-into-laptop-7191157/",
+        "look": 9286079141193646304,
+        "size": [
+          5925,
+          3955
+        ]
+      },
+      {
+        "id": "6964357",
+        "term": "person paying bills laptop",
+        "file": "assets/photos/AI資料中心推高電費/6964357.jpg",
+        "seen": true,
+        "caption": "Close-up of hands calculating finances with a laptop and paperwork.",
+        "kind": "stock",
+        "outlet": "Pexels",
+        "author": "Mikhail Nilov",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/couple-hands-people-dark-6964357/",
+        "look": 36170363385625405,
+        "size": [
+          4104,
+          2736
+        ]
       }
     ],
     "data": []
