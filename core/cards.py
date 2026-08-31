@@ -331,6 +331,174 @@ def _word(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
+def _bars_column(spec: dict[str, Any], t: float) -> Image.Image:
+    """直的柱子，從底下長上來，名字在柱子底下。
+
+    橫條讀的是「誰比較長」，直柱讀的是「誰比較高」—— 後者對「多／少」
+    更直覺，尤其只有兩三根的時候。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    rows = spec.get("rows") or []
+    if not rows:
+        _note(draw, spec, t)
+        return card
+    biggest = max([float(row[1]) for row in rows] or [1])
+    floor, tall = top + 620, 460
+    gap = (W - 2 * MARGIN - 40) / len(rows)
+    wide = min(gap * 0.62, 190)
+    for index, row in enumerate(rows):
+        part = stagger(t, index, len(rows))
+        x = MARGIN + 20 + gap * (index + 0.5)
+        high = tall * (float(row[1]) / biggest) * part
+        colour = (row[2] if len(row) > 2 else "") \
+            or (tone["hot"] if index == 0 else tone["cold"])
+        draw.rounded_rectangle([x - wide / 2, floor - high, x + wide / 2, floor],
+                               14, fill=colour)
+        # 值在柱子頂上，名字在底下 —— 兩個都置中在柱子上，各自量自己的寬度。
+        if part > 0.3:
+            label = str(row[3]) if len(row) > 3 else f"{float(row[1]):g}"
+            at(draw, x, floor - high - 78, label, 62, colour,
+               room=room_at(x, gap * 0.92))
+        step, names = wrap_at(str(row[0]), 46, int(min(gap * 0.92,
+                                                      room_at(x))), most_rows=2)
+        for row_index, name in enumerate(names):
+            draw.text((x, floor + 30 + row_index * (step + 6)), name,
+                      font=face(step, False), fill=tone["dim"], anchor="ma")
+    draw.line([(MARGIN, floor + 6), (W - MARGIN, floor + 6)],
+              fill=tone["rule"], width=5)
+    _note(draw, spec, t)
+    return card
+
+
+def _bars_dots(spec: dict[str, Any], t: float) -> Image.Image:
+    """每一列一排點，一個點一份量。
+
+    數得出來的量比長度更硬：「五十州」畫成五十個點，眼睛會去數。
+    量太大的時候一個點代表多個，底下寫明比例。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    rows = spec.get("rows") or []
+    if not rows:
+        _note(draw, spec, t)
+        return card
+    biggest = max([float(row[1]) for row in rows] or [1])
+    # 一列最多放 25 個點，超過就一個點代表好幾份。
+    per_dot = max(1.0, biggest / 25)
+    left = MARGIN + 30
+    for index, row in enumerate(rows):
+        part = stagger(t, index, len(rows))
+        y = top + 130 + index * 190
+        step, names = wrap_at(str(row[0]), 46, W - 2 * MARGIN - 60, most_rows=1)
+        draw.text((left, y), names[0], font=face(step, False),
+                  fill=tone["dim"], anchor="la")
+        colour = (row[2] if len(row) > 2 else "") \
+            or (tone["hot"] if index == 0 else tone["cold"])
+        count = int(round(float(row[1]) / per_dot))
+        room = W - 2 * MARGIN - 60
+        size = min(34, room / max(1, count) - 8)
+        for dot in range(count):
+            if dot / max(1, count) > part:
+                break
+            x = left + dot * (size + 8)
+            draw.ellipse([x, y + 70, x + size, y + 70 + size], fill=colour)
+        label = str(row[3]) if len(row) > 3 else f"{float(row[1]):g}"
+        at(draw, W - MARGIN - 4, y, label, 54, colour,
+           room=int(W - MARGIN - left - 40), anchor="ra")
+    if per_dot > 1:
+        _mid(draw, top + 130 + len(rows) * 190 + 20,
+             f"一點 = {per_dot:g}", 40, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _bars_split(spec: dict[str, Any], t: float) -> Image.Image:
+    """一整條，按比例分成幾段，接在一起。
+
+    橫條比的是「誰大」，這一種比的是「各佔多少」—— 分母是同一條，
+    所以它回答的是「怎麼分的」。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    rows = spec.get("rows") or []
+    total = sum(float(row[1]) for row in rows) or 1
+    left, right = MARGIN + 20, W - MARGIN - 20
+    y, high = top + 200, 130
+    run = ease(min(1.0, t * 1.3))
+    at_x = left
+    for index, row in enumerate(rows):
+        wide = (right - left) * (float(row[1]) / total) * run
+        colour = (row[2] if len(row) > 2 else "") \
+            or (tone["hot"] if index == 0 else
+                tone["cold"] if index == 1 else tone["rule"])
+        draw.rectangle([at_x, y, at_x + wide, y + high], fill=colour)
+        at_x += wide + 4
+    # 圖例在底下，一行一個 —— 塞進段落裡的話短的那幾段放不下字。
+    for index, row in enumerate(rows):
+        part = stagger(max(0.0, (t - 0.4) / 0.6), index, len(rows))
+        if part <= 0.02:
+            continue
+        ly = y + high + 60 + index * 86
+        colour = (row[2] if len(row) > 2 else "") \
+            or (tone["hot"] if index == 0 else
+                tone["cold"] if index == 1 else tone["rule"])
+        draw.rounded_rectangle([left, ly + 8, left + 44, ly + 52], 8, fill=colour)
+        label = str(row[3]) if len(row) > 3 else f"{float(row[1]):g}"
+        step, names = wrap_at(f"{row[0]}　{label}", 50,
+                              int(right - left - 70), most_rows=1)
+        draw.text((left + 70, ly), names[0], font=face(step, False),
+                  fill=tone["ink"], anchor="la")
+    _note(draw, spec, t)
+    return card
+
+
+def _bars_pair(spec: dict[str, Any], t: float) -> Image.Image:
+    """兩根從中線往左右長，像天平。
+
+    只有兩個量的時候最好用：中線在那裡，一眼看得出哪邊重、重多少。
+    第三根之後回到左邊起算。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    rows = (spec.get("rows") or [])[:2]
+    if not rows:
+        _note(draw, spec, t)
+        return card
+    biggest = max([float(row[1]) for row in rows] or [1])
+    mid, y = W // 2, top + 240
+    half = (W - 2 * MARGIN) / 2 - 30
+    for index, row in enumerate(rows):
+        part = stagger(t, index, len(rows))
+        wide = half * (float(row[1]) / biggest) * part
+        colour = (row[2] if len(row) > 2 else "") \
+            or (tone["cold"] if index == 0 else tone["hot"])
+        box = ([mid - 8 - wide, y, mid - 8, y + 120] if index == 0
+               else [mid + 8, y, mid + 8 + wide, y + 120])
+        draw.rounded_rectangle(box, 14, fill=colour)
+        # 名字在條子外側，值在裡面 —— 兩個都往中線的反方向排。
+        outer = box[0] - 24 if index == 0 else box[2] + 24
+        anchor = "ra" if index == 0 else "la"
+        room = int(outer - MARGIN) if index == 0 else int(W - MARGIN - outer)
+        step, names = wrap_at(str(row[0]), 50, max(80, room), most_rows=2)
+        for row_index, name in enumerate(names):
+            draw.text((outer, y + 8 + row_index * (step + 6)), name,
+                      font=face(step, False), fill=tone["dim"], anchor=anchor)
+        if part > 0.4 and wide > 90:
+            label = str(row[3]) if len(row) > 3 else f"{float(row[1]):g}"
+            spot = box[0] + 20 if index == 0 else box[2] - 20
+            at(draw, spot, y + 26, label, 58,
+               tone["top"] if isinstance(tone["top"], str) else "#0d1b2a",
+               room=int(wide) - 30, anchor="la" if index == 0 else "ra")
+    draw.line([(mid, y - 40), (mid, y + 170)], fill=tone["rule"], width=5)
+    _note(draw, spec, t)
+    return card
+
+
 def _word_left(spec: dict[str, Any], t: float) -> Image.Image:
     """靠左，一行一行從左邊推進來。
 
@@ -748,6 +916,130 @@ def _split(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
+def _split_scale(spec: dict[str, Any], t: float) -> Image.Image:
+    """一根橫桿掛在中間，兩端各吊一個。
+
+    分岔說的是「分成兩條路」，天平說的是「兩邊在比」—— 用在兩種說法互相
+    對立的時候，而不是兩件事各自發展。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    labels = (spec.get("branches") or ["", ""])[:2]
+    mid, beam = W // 2, top + 220
+    tilt = math.radians(7 * ease(max(0.0, (t - 0.4) / 0.6)))
+    half = (W - 2 * MARGIN) / 2 - 40
+    # 桿子傾斜，左低右高 —— 傾斜本身就是「不對等」。
+    left = (mid - half * math.cos(tilt), beam + half * math.sin(tilt))
+    right = (mid + half * math.cos(tilt), beam - half * math.sin(tilt))
+    draw.line([(mid, beam - 90), (mid, beam)], fill=tone["rule"], width=8)
+    draw.line([left, right], fill=tone["rule"], width=10)
+    for (spot, colour), text in zip(((left, tone["cold"]), (right, tone["hot"])),
+                                    labels):
+        draw.line([spot, (spot[0], spot[1] + 70)], fill=colour, width=6)
+        draw.ellipse([spot[0] - 16, spot[1] - 16, spot[0] + 16, spot[1] + 16],
+                     fill=colour)
+        room = room_at(spot[0], half * 0.95)
+        step, rows = wrap_at(str(text).replace("\n", ""), 56, room)
+        for index, row in enumerate(rows):
+            draw.text((spot[0], spot[1] + 100 + index * (step + 10)), row,
+                      font=face(step), fill=colour, anchor="ma")
+    _note(draw, spec, t)
+    return card
+
+
+def _split_two(spec: dict[str, Any], t: float) -> Image.Image:
+    """畫面從中間切成兩半，一邊一個。
+
+    最直接的對照：沒有線、沒有節點，就是兩塊並排。用在「你在美國看到的」
+    對「你在加拿大看到的」那種——兩邊平等，沒有誰分岔出誰。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    labels = (spec.get("branches") or ["", ""])[:2]
+    y, high = top + 130, 470
+    half = (W - 2 * MARGIN - 30) / 2
+    for index, text in enumerate(labels):
+        part = stagger(t, index, len(labels))
+        if part <= 0.02:
+            continue
+        x0 = MARGIN + index * (half + 30)
+        colour = tone["cold"] if index == 0 else tone["hot"]
+        draw.rounded_rectangle([x0, y, x0 + half, y + high * part], 20,
+                               outline=colour, width=6)
+        if part > 0.6:
+            room = int(half - 60)
+            step, rows = wrap_at(str(text).replace("\n", ""), 66, room)
+            start = y + high / 2 - len(rows) * (step + 12) / 2
+            for row_index, row in enumerate(rows):
+                draw.text((x0 + half / 2, start + row_index * (step + 12)), row,
+                          font=face(step), fill=colour, anchor="ma")
+    _note(draw, spec, t)
+    return card
+
+
+def _split_venn(spec: dict[str, Any], t: float) -> Image.Image:
+    """兩個圓，疊在一起。
+
+    分岔和並排都在說「兩個不同」，這一種說的是「有一塊是共通的」——
+    用在「兩邊其實在講同一件事的不同面」。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    labels = (spec.get("branches") or ["", ""])[:2]
+    radius = 210
+    centre_y = top + 300
+    grow = ease(min(1.0, t * 1.4))
+    for index, text in enumerate(labels):
+        colour = tone["cold"] if index == 0 else tone["hot"]
+        cx = W // 2 + (-1 if index == 0 else 1) * 130 * grow
+        draw.ellipse([cx - radius, centre_y - radius,
+                      cx + radius, centre_y + radius],
+                     outline=colour, width=8)
+        # 字放在圓的外側，不放在圓裡 —— 兩圓相疊的地方寫字會兩層疊在一起。
+        spot = cx + (-1 if index == 0 else 1) * (radius - 30)
+        room = room_at(spot, 420)
+        step, rows = wrap_at(str(text).replace("\n", ""), 52, room)
+        for row_index, row in enumerate(rows):
+            draw.text((spot, centre_y + radius + 40 + row_index * (step + 8)),
+                      row, font=face(step), fill=colour, anchor="ma")
+    _note(draw, spec, t)
+    return card
+
+
+def _split_road(spec: dict[str, Any], t: float) -> Image.Image:
+    """一條路走到底，分成兩條往上岔開。
+
+    原本那個分岔是往下開，這一種往上 —— 讀起來是「接下來會怎樣」，
+    而不是「它拆成什麼」。用在講未來的兩種可能。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    labels = (spec.get("branches") or ["", ""])[:2]
+    foot, fork = top + 620, top + 300
+    grow = ease(min(1.0, t * 1.5))
+    draw.line([(W // 2, foot), (W // 2, foot - (foot - fork) * grow)],
+              fill=tone["rule"], width=12)
+    arm = ease(max(0.0, (t - 0.4) / 0.6))
+    for index, text in enumerate(labels):
+        colour = tone["cold"] if index == 0 else tone["hot"]
+        end_x = W // 2 + (-1 if index == 0 else 1) * 290 * arm
+        end_y = fork - 150 * arm
+        draw.line([(W // 2, fork), (end_x, end_y)], fill=colour, width=10)
+        if arm > 0.6:
+            spot = W // 2 + (-1 if index == 0 else 1) * 290
+            room = room_at(spot, 420)
+            step, rows = wrap_at(str(text).replace("\n", ""), 54, room)
+            for row_index, row in enumerate(rows):
+                draw.text((spot, end_y - 40 - (len(rows) - row_index) * (step + 8)),
+                          row, font=face(step), fill=colour, anchor="ma")
+    _note(draw, spec, t)
+    return card
+
+
 def _swap_slide(spec: dict[str, Any], t: float) -> Image.Image:
     """舊的往左滑出去，新的從右邊滑進來，同一條線上。
 
@@ -946,6 +1238,521 @@ def _chain(spec: dict[str, Any], t: float) -> Image.Image:
     if spec.get("under") and t > 0.7:
         _mid(draw, y + 260, spec["under"],
              fits([str(spec["under"])], 66, room=W - 2 * MARGIN), tone["lead"])
+    _note(draw, spec, t)
+    return card
+
+
+def _queue_grid(spec: dict[str, Any], t: float) -> Image.Image:
+    """排成方陣，一個一個亮起來。
+
+    一排的隊伍講「很多人在等」；方陣講「總共有這麼多」—— 數得出來，
+    而且大量的時候一排放不下。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    count = max(1, int(spec.get("count") or 9))
+    across = min(10, max(3, math.ceil(math.sqrt(count))))
+    down = math.ceil(count / across)
+    cell = min(96, (W - 2 * MARGIN) / across, 460 / max(1, down))
+    left = W / 2 - across * cell / 2
+    y0 = top + 140
+    for index in range(count):
+        part = stagger(t, index, count, overlap=0.85)
+        if part <= 0.02:
+            continue
+        col, row = index % across, index // across
+        x = left + col * cell + cell / 2
+        y = y0 + row * cell
+        base = ImageColorRGB(spec.get("colour") or tone["ink"])
+        tint = tuple(round(one * (0.35 + 0.65 * part)) for one in base)
+        r = cell * 0.19
+        draw.ellipse([x - r, y, x + r, y + 2 * r], fill=tint)
+        draw.rounded_rectangle([x - r * 1.25, y + 2 * r + 6,
+                                x + r * 1.25, y + cell * 0.82], r, fill=tint)
+    if spec.get("under"):
+        _mid(draw, y0 + down * cell + 70, spec["under"], 60, tone["lead"])
+    _note(draw, spec, t)
+    return card
+
+
+def _queue_pile(spec: dict[str, Any], t: float) -> Image.Image:
+    """疊成一落，一個一個掉上去。
+
+    隊伍是「在等」，一落是「堆著」—— 用在案件、申請、未處理的東西上。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    count = max(1, int(spec.get("count") or 9))
+    floor = top + 620
+    high = min(46, 460 / count)
+    wide = W - 2 * MARGIN - 160
+    for index in range(count):
+        part = stagger(t, index, count, overlap=0.8)
+        if part <= 0.02:
+            continue
+        y = floor - index * (high + 5) - (1 - part) * 70
+        # 每一層左右錯開一點，像疊歪的紙 —— 對齊的話會讀成長條圖。
+        shift = math.sin(index * 2.1) * 26
+        colour = _fade(spec.get("colour") or tone["cold"],
+                       0.5 + 0.5 * part, tone["bottom"])
+        draw.rounded_rectangle([MARGIN + 80 + shift, y - high,
+                                MARGIN + 80 + shift + wide, y], 8, fill=colour)
+    if spec.get("under"):
+        _mid(draw, floor + 70, spec["under"], 60, tone["lead"])
+    _note(draw, spec, t)
+    return card
+
+
+def _queue_bar(spec: dict[str, Any], t: float) -> Image.Image:
+    """一條長格子，一格一格填滿，數字在旁邊跑。
+
+    人形講「誰」，格子講「多少」—— 用在數量本身就是重點的時候。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    count = max(1, int(spec.get("count") or 9))
+    y = top + 300
+    cell = min(70, (W - 2 * MARGIN) / count - 6)
+    left = W / 2 - (cell + 6) * count / 2
+    done = 0
+    for index in range(count):
+        part = stagger(t, index, count, overlap=0.86)
+        x = left + index * (cell + 6)
+        draw.rounded_rectangle([x, y, x + cell, y + cell], 10,
+                               outline=tone["rule"], width=4)
+        if part > 0.3:
+            done += 1
+            draw.rounded_rectangle([x + 6, y + 6, x + cell - 6, y + cell - 6], 7,
+                                   fill=spec.get("colour") or tone["hot"])
+    _mid(draw, y + cell + 70, str(done), 200, tone["lead"])
+    if spec.get("under"):
+        _mid(draw, y + cell + 300, spec["under"], 56, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _queue_crowd(spec: dict[str, Any], t: float) -> Image.Image:
+    """散開的一群，深淺不一，有遠有近。
+
+    整齊的隊伍是被安排的；散開的一群是自己聚過來的。用在「很多人都這樣」
+    而不是「排隊等著」。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    count = max(1, int(spec.get("count") or 9))
+    y0, span = top + 180, 430
+    base = ImageColorRGB(spec.get("colour") or tone["ink"])
+    for index in range(count):
+        part = stagger(t, index, count, overlap=0.88)
+        if part <= 0.02:
+            continue
+        # 位置用固定的三角函數散開 —— 亂數會讓同一張卡每次長得不一樣。
+        across = (math.sin(index * 2.399) + 1) / 2
+        down = (math.sin(index * 3.883) + 1) / 2
+        near = 0.55 + 0.45 * down
+        x = MARGIN + 60 + across * (W - 2 * MARGIN - 120)
+        y = y0 + down * span
+        r = 20 * near
+        tint = tuple(round(one * (0.3 + 0.7 * near) * part) for one in base)
+        draw.ellipse([x - r, y, x + r, y + 2 * r], fill=tint)
+        draw.rounded_rectangle([x - r * 1.3, y + 2 * r + 4,
+                                x + r * 1.3, y + 5.4 * r], r, fill=tint)
+    if spec.get("under"):
+        _mid(draw, y0 + span + 190, spec["under"], 60, tone["lead"])
+    _note(draw, spec, t)
+    return card
+
+
+def _clock_bar(spec: dict[str, Any], t: float) -> Image.Image:
+    """一條時間軸，填到某個位置停下來。
+
+    圓圈把「多久」畫成一個週期；直線畫成一段路 —— 用在「還要多久」而不是
+    「佔了多少」。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    part = float(spec.get("part") or 1) * ease(t)
+    y = top + 300
+    left, right = MARGIN + 30, W - MARGIN - 30
+    draw.rounded_rectangle([left, y, right, y + 78], 14, fill=tone["rule"])
+    draw.rounded_rectangle([left, y, left + (right - left) * min(1.0, part),
+                            y + 78], 14, fill=spec.get("colour") or tone["hot"])
+    at(draw, W // 2, y + 150, str(spec.get("value", "")), 210, tone["lead"],
+       room=W - 2 * MARGIN)
+    if spec.get("under"):
+        _mid(draw, y + 420, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _clock_sand(spec: dict[str, Any], t: float) -> Image.Image:
+    """沙漏：上面的沙掉到下面。
+
+    用在「時間在跑」的句子上 —— 圓圈是靜的，沙漏是動的，即使兩個都在
+    講同一段長度。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    part = float(spec.get("part") or 1) * ease(t)
+    cx, cy, half = W // 2, top + 320, 190
+    colour = spec.get("colour") or tone["hot"]
+    draw.line([(cx - half, cy - half), (cx + half, cy - half)],
+              fill=tone["rule"], width=10)
+    draw.line([(cx - half, cy + half), (cx + half, cy + half)],
+              fill=tone["rule"], width=10)
+    draw.line([(cx - half, cy - half), (cx + half, cy + half)],
+              fill=tone["rule"], width=8)
+    draw.line([(cx + half, cy - half), (cx - half, cy + half)],
+              fill=tone["rule"], width=8)
+    # 上面剩 1-part，下面積 part。
+    up = (1 - part) * half
+    if up > 4:
+        draw.polygon([(cx - up, cy - up), (cx + up, cy - up), (cx, cy)],
+                     fill=colour)
+    down = part * half
+    if down > 4:
+        draw.polygon([(cx, cy), (cx - down, cy + down), (cx + down, cy + down)],
+                     fill=colour)
+    at(draw, cx, cy + half + 50, str(spec.get("value", "")), 150, tone["lead"],
+       room=W - 2 * MARGIN)
+    if spec.get("under"):
+        _mid(draw, cy + half + 230, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _clock_dots(spec: dict[str, Any], t: float) -> Image.Image:
+    """一圈點，亮到某一個為止。
+
+    連續的弧看不出「幾個」；一圈點數得出來。用在年、次數、輪次上。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    part = float(spec.get("part") or 1) * ease(t)
+    centre, radius = (W // 2, top + 330), 220
+    count = 24
+    for index in range(count):
+        angle = math.radians(-90 + index * (360 / count))
+        x = centre[0] + radius * math.cos(angle)
+        y = centre[1] + radius * math.sin(angle)
+        lit = (index / count) < part
+        r = 15 if lit else 9
+        draw.ellipse([x - r, y - r, x + r, y + r],
+                     fill=(spec.get("colour") or tone["hot"]) if lit
+                          else tone["rule"])
+    at(draw, centre[0], centre[1] - 90, str(spec.get("value", "")), 180,
+       tone["lead"], room=radius * 2 - 60)
+    if spec.get("under"):
+        _mid(draw, centre[1] + radius + 80, spec["under"], 52, tone["dim"],
+             bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _clock_wait(spec: dict[str, Any], t: float) -> Image.Image:
+    """一整排的格子代表全部，填到某一格 —— 像月曆上劃掉的日子。
+
+    圓和條都是抽象的量；格子是「一格一天」，具體到可以想像。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    part = float(spec.get("part") or 1) * ease(t)
+    across, down = 10, 5
+    cell = min(78, (W - 2 * MARGIN) / across)
+    left = W / 2 - across * cell / 2
+    y0 = top + 150
+    total = across * down
+    for index in range(total):
+        col, row = index % across, index // across
+        x, y = left + col * cell, y0 + row * cell
+        lit = (index / total) < part
+        draw.rounded_rectangle([x + 5, y + 5, x + cell - 5, y + cell - 5], 8,
+                               fill=(spec.get("colour") or tone["hot"]) if lit
+                                    else _fade(tone["rule"], 0.5, tone["bottom"]))
+    at(draw, W // 2, y0 + down * cell + 50, str(spec.get("value", "")), 170,
+       tone["lead"], room=W - 2 * MARGIN)
+    if spec.get("under"):
+        _mid(draw, y0 + down * cell + 250, spec["under"], 52, tone["dim"],
+             bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _chain_down(spec: dict[str, Any], t: float) -> Image.Image:
+    """直的，一個點一個點往下走，字在點的右邊。
+
+    橫的線把「順序」壓成一排小字；直的給每一站一整行。
+    點多、或名字長的時候，這一種讀得完。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    names = spec.get("points") or []
+    x = MARGIN + 70
+    step_y = min(150, (H - 700 - top) / max(1, len(names)))
+    run = ease(min(1.0, t * 1.3))
+    draw.line([(x, top + 90), (x, top + 90 + step_y * (len(names) - 1) * run)],
+              fill=tone["rule"], width=8)
+    for index, name in enumerate(names):
+        y = top + 90 + index * step_y
+        if (index / max(1, len(names) - 1)) > run + 0.05:
+            continue
+        last = index == len(names) - 1
+        colour = tone["hot"] if last else tone["cold"]
+        draw.ellipse([x - 24, y - 24, x + 24, y + 24], fill=colour)
+        size, rows = wrap_at(str(name), 60, W - x - MARGIN - 60, most_rows=2)
+        for row_index, row in enumerate(rows):
+            draw.text((x + 60, y - size * 0.42 + row_index * (size + 8)), row,
+                      font=face(size), fill=colour if last else tone["ink"],
+                      anchor="la")
+    if spec.get("under"):
+        _mid(draw, top + 90 + step_y * len(names) + 60, spec["under"], 54,
+             tone["lead"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _chain_steps(spec: dict[str, Any], t: float) -> Image.Image:
+    """一階一階往上的台階，每一階一個名字。
+
+    線說的是「接下去」，台階說的是「一次比一次高」—— 用在升高、加碼、
+    越演越烈的那種順序上。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    names = spec.get("points") or []
+    floor = top + 640
+    wide = (W - 2 * MARGIN) / max(1, len(names))
+    for index, name in enumerate(names):
+        part = stagger(t, index, len(names))
+        if part <= 0.02:
+            continue
+        high = (index + 1) * 110 * part
+        x0 = MARGIN + index * wide
+        last = index == len(names) - 1
+        colour = tone["hot"] if last else tone["cold"]
+        draw.rectangle([x0, floor - high, x0 + wide - 8, floor],
+                       fill=_fade(colour, 0.45 + 0.55 * part, tone["bottom"]))
+        size, rows = wrap_at(str(name), 46, int(wide - 34), most_rows=2)
+        for row_index, row in enumerate(rows):
+            draw.text((x0 + wide / 2 - 4, floor - high + 22
+                       + row_index * (size + 6)), row, font=face(size),
+                      fill=tone["ink"] if part > 0.6 else tone["dim"],
+                      anchor="ma")
+    if spec.get("under"):
+        _mid(draw, floor + 60, spec["under"], 54, tone["lead"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _chain_arrows(spec: dict[str, Any], t: float) -> Image.Image:
+    """幾個方塊，中間用箭頭串起來。
+
+    點是「站」，方塊是「東西」—— 用在流程、經手的單位、一件事被誰接手過。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    names = spec.get("points") or []
+    y = top + 220
+    gap = 46
+    wide = (W - 2 * MARGIN - gap * max(0, len(names) - 1)) / max(1, len(names))
+    for index, name in enumerate(names):
+        part = stagger(t, index, len(names))
+        if part <= 0.02:
+            continue
+        x0 = MARGIN + index * (wide + gap)
+        last = index == len(names) - 1
+        colour = tone["hot"] if last else tone["cold"]
+        draw.rounded_rectangle([x0, y, x0 + wide, y + 190], 16,
+                               outline=colour, width=6)
+        size, rows = wrap_at(str(name), 48, int(wide - 30), most_rows=3)
+        start = y + 95 - len(rows) * (size + 8) / 2
+        for row_index, row in enumerate(rows):
+            draw.text((x0 + wide / 2, start + row_index * (size + 8)), row,
+                      font=face(size), fill=tone["ink"], anchor="ma")
+        if index and part > 0.3:
+            ax = x0 - gap + 8
+            draw.line([(ax, y + 95), (ax + gap - 22, y + 95)],
+                      fill=tone["rule"], width=6)
+            draw.polygon([(ax + gap - 12, y + 95), (ax + gap - 30, y + 84),
+                          (ax + gap - 30, y + 106)], fill=tone["rule"])
+    if spec.get("under"):
+        _mid(draw, y + 260, spec["under"], 54, tone["lead"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _chain_track(spec: dict[str, Any], t: float) -> Image.Image:
+    """一條粗軌道，名字交錯排在上下兩側。
+
+    交錯讓每一站有兩倍的橫向空間 —— 名字長的時候，這是唯一還能保持
+    「一條線」形狀的排法。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    names = spec.get("points") or []
+    y = top + 340
+    left, right = MARGIN + 40, W - MARGIN - 40
+    run = ease(min(1.0, t * 1.3))
+    draw.rounded_rectangle([left, y - 9, left + (right - left) * run, y + 9], 9,
+                           fill=tone["rule"])
+    gap = (right - left) / max(1, len(names) - 1)
+    for index, name in enumerate(names):
+        x = left + index * gap
+        if (index / max(1, len(names) - 1)) > run + 0.05:
+            continue
+        last = index == len(names) - 1
+        colour = tone["hot"] if last else tone["cold"]
+        draw.ellipse([x - 26, y - 26, x + 26, y + 26], fill=colour)
+        up = index % 2 == 0
+        # 交錯之後每一站可以用到左右兩個半格。
+        room = room_at(x, gap * 1.7)
+        size, rows = wrap_at(str(name), 54, room, most_rows=2)
+        for row_index, row in enumerate(rows):
+            oy = (y - 60 - (len(rows) - row_index) * (size + 8)) if up \
+                else (y + 60 + row_index * (size + 8))
+            draw.text((x, oy), row, font=face(size),
+                      fill=colour if last else tone["ink"], anchor="ma")
+    if spec.get("under"):
+        _mid(draw, y + 320, spec["under"], 54, tone["lead"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _stack_numbered(spec: dict[str, Any], t: float) -> Image.Image:
+    """編號的清單，號碼在左邊一個圓圈裡。
+
+    有編號就有順序。用在「三個步驟」「四個理由」那種本來就有先後的清單上；
+    沒有面板，行與行之間靠一條細線分開。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    items = spec.get("items") or []
+    for index, item in enumerate(items):
+        part = stagger(t, index, len(items))
+        if part <= 0.02:
+            continue
+        y = top + 120 + index * 150
+        colour = "#" + "".join(f"{v:02x}" for v in
+                               _fade(tone["ink"], part, tone["bottom"]))
+        draw.ellipse([MARGIN + 20, y, MARGIN + 96, y + 76],
+                     outline=spec.get("colour") or tone["hot"], width=6)
+        draw.text((MARGIN + 58, y + 12), str(index + 1), font=face(46),
+                  fill=spec.get("colour") or tone["hot"], anchor="ma")
+        step, rows = wrap_at(str(item), 58, W - MARGIN * 2 - 130, most_rows=2)
+        for row_index, row in enumerate(rows):
+            draw.text((MARGIN + 130, y + 8 + row_index * (step + 8)), row,
+                      font=face(step), fill=colour, anchor="la")
+        if index < len(items) - 1:
+            draw.line([(MARGIN + 130, y + 118), (W - MARGIN, y + 118)],
+                      fill=_fade(tone["rule"], 0.6 * part, tone["bottom"]),
+                      width=3)
+    _note(draw, spec, t)
+    return card
+
+
+def _stack_tick(spec: dict[str, Any], t: float) -> Image.Image:
+    """每一條前面打一個勾，勾是畫出來的。
+
+    勾是「這一項成立」。用在盤點、確認、條件都滿足了那種清單上 ——
+    面板是中性的，勾有立場。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    items = spec.get("items") or []
+    for index, item in enumerate(items):
+        part = stagger(t, index, len(items))
+        if part <= 0.02:
+            continue
+        y = top + 120 + index * 140
+        mark = spec.get("colour") or tone["hot"]
+        # 勾兩筆，第二筆比第一筆長 —— 一次畫完的勾看起來像符號，不像動作。
+        first = min(1.0, part * 2)
+        draw.line([(MARGIN + 24, y + 44), (MARGIN + 24 + 30 * first, y + 74)],
+                  fill=mark, width=10)
+        if part > 0.5:
+            second = (part - 0.5) * 2
+            draw.line([(MARGIN + 54, y + 74),
+                       (MARGIN + 54 + 58 * second, y + 74 - 62 * second)],
+                      fill=mark, width=10)
+        step, rows = wrap_at(str(item), 58, W - MARGIN * 2 - 150, most_rows=2)
+        colour = "#" + "".join(f"{v:02x}" for v in
+                               _fade(tone["ink"], part, tone["bottom"]))
+        for row_index, row in enumerate(rows):
+            draw.text((MARGIN + 150, y + 14 + row_index * (step + 8)), row,
+                      font=face(step), fill=colour, anchor="la")
+    _note(draw, spec, t)
+    return card
+
+
+def _stack_cascade(spec: dict[str, Any], t: float) -> Image.Image:
+    """一階一階往右下錯開，像疊在桌上的卡片。
+
+    錯開讓「先後」有厚度：第一張最上面、最左邊，後面的壓在下面。
+    用在「一層一層加上去」的清單上。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    items = spec.get("items") or []
+    step_x = min(46, (W - 2 * MARGIN - 420) / max(1, len(items)))
+    for index, item in enumerate(items):
+        part = stagger(t, index, len(items))
+        if part <= 0.02:
+            continue
+        # 往右下錯開，而寬度跟著縮 —— 不縮的話最後一張會壓在右邊界上。
+        left = MARGIN + 40 + index * step_x
+        right = W - MARGIN - 40
+        y = top + 110 + index * 128 - (1 - part) * 26
+        draw.rounded_rectangle([left, y, right, y + 108], 16,
+                               fill=_fade(tone["rule"], 0.5 * part,
+                                          tone["bottom"]))
+        step, rows = wrap_at(str(item), 54, int(right - left - 60), most_rows=1)
+        draw.text((left + 30, y + 24), rows[0], font=face(step),
+                  fill="#" + "".join(f"{v:02x}" for v in
+                                     _fade(tone["ink"], part, tone["bottom"])),
+                  anchor="la")
+    _note(draw, spec, t)
+    return card
+
+
+def _stack_quote(spec: dict[str, Any], t: float) -> Image.Image:
+    """每一條前面一道豎線，像引述。
+
+    用在「他們各自怎麼說」那種清單上 —— 豎線是引號的簡寫，讀起來是
+    好幾個人在講話，不是一份規格。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    top = _heading(draw, spec, t)
+    items = spec.get("items") or []
+    for index, item in enumerate(items):
+        part = stagger(t, index, len(items))
+        if part <= 0.02:
+            continue
+        y = top + 120 + index * 156
+        step, rows = wrap_at(str(item), 56, W - MARGIN * 2 - 120, most_rows=2)
+        high = len(rows) * (step + 10) + 16
+        draw.line([(MARGIN + 30, y), (MARGIN + 30, y + high * part)],
+                  fill=spec.get("colour") or tone["hot"], width=7)
+        colour = "#" + "".join(f"{v:02x}" for v in
+                               _fade(tone["ink"], part, tone["bottom"]))
+        for row_index, row in enumerate(rows):
+            draw.text((MARGIN + 70, y + row_index * (step + 10)), row,
+                      font=face(step), fill=colour, anchor="la")
     _note(draw, spec, t)
     return card
 
@@ -1357,6 +2164,180 @@ def _outro(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
+def _outro_ticks(spec: dict[str, Any], t: float) -> Image.Image:
+    """摘要每一條前面一個勾，結論落在下面。
+
+    豎線是「這是一串」，勾是「這幾件都成立」—— 用在論證是「檢查了幾件事」
+    的片子上。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    points = [str(one) for one in (spec.get("points") or []) if str(one).strip()]
+    span = 0.5 if points else 0.0
+    y = TOP + 30
+    for index, point in enumerate(points):
+        part = stagger(min(1.0, t / max(span, 0.01)), index, len(points))
+        if part <= 0.02:
+            continue
+        oy = y + index * 100 - (1 - part) * 24
+        mark = tone["lead"]
+        draw.line([(MARGIN + 34, oy + 34), (MARGIN + 34 + 22 * min(1, part * 2),
+                                            oy + 56)], fill=mark, width=8)
+        if part > 0.5:
+            grow = (part - 0.5) * 2
+            draw.line([(MARGIN + 56, oy + 56),
+                       (MARGIN + 56 + 44 * grow, oy + 56 - 48 * grow)],
+                      fill=mark, width=8)
+        size, rows = wrap_at(point, 56, W - 2 * MARGIN - 130, most_rows=1)
+        draw.text((MARGIN + 120, oy), rows[0], font=face(size, False),
+                  fill="#" + "".join(f"{v:02x}" for v in
+                                     _fade(tone["ink"], part * 0.9, tone["top"])),
+                  anchor="la")
+    after = ease(max(0.0, (t - span) / max(0.05, 1 - span)))
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 150)
+    top = y + len(points) * 100 + 60
+    for index, row in enumerate(rows):
+        part = stagger(after, index, len(rows))
+        _mid(draw, top + index * (size + 20) + (1 - part) * 32, row, size,
+             "#" + "".join(f"{v:02x}" for v in
+                           _fade(spec.get("colour") or tone["lead"], part,
+                                 tone["top"])))
+    if spec.get("under") and after > 0.5:
+        _mid(draw, top + len(rows) * (size + 20) + 34, spec["under"], 44,
+             tone["dim"], bold=False)
+    _brand(card, draw, tone, t)
+    _note(draw, spec, t)
+    return card
+
+
+def _outro_steps(spec: dict[str, Any], t: float) -> Image.Image:
+    """摘要編號，像一份說明書；結論在最下面一整條上。
+
+    編號讓摘要讀起來有順序，而不是四個並列的事實。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    points = [str(one) for one in (spec.get("points") or []) if str(one).strip()]
+    span = 0.5 if points else 0.0
+    y = TOP + 20
+    for index, point in enumerate(points):
+        part = stagger(min(1.0, t / max(span, 0.01)), index, len(points))
+        if part <= 0.02:
+            continue
+        oy = y + index * 104 - (1 - part) * 22
+        draw.text((MARGIN + 34, oy - 4), str(index + 1), font=face(64),
+                  fill=_fade(tone["lead"], part, tone["top"]), anchor="la")
+        size, rows = wrap_at(point, 54, W - 2 * MARGIN - 130, most_rows=1)
+        draw.text((MARGIN + 112, oy + 6), rows[0], font=face(size, False),
+                  fill="#" + "".join(f"{v:02x}" for v in
+                                     _fade(tone["ink"], part * 0.9, tone["top"])),
+                  anchor="la")
+    after = ease(max(0.0, (t - span) / max(0.05, 1 - span)))
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 140, room=W - 2 * MARGIN - 60)
+    top = y + len(points) * 104 + 70
+    if after > 0.05:
+        high = len(rows) * (size + 20) + 60
+        draw.rounded_rectangle([MARGIN, top - 30, W - MARGIN, top - 30 + high * after],
+                               20, fill=_fade(tone["rule"], 0.55, tone["bottom"]))
+    for index, row in enumerate(rows):
+        part = stagger(after, index, len(rows))
+        _mid(draw, top + index * (size + 20), row, size,
+             "#" + "".join(f"{v:02x}" for v in
+                           _fade(spec.get("colour") or tone["lead"], part,
+                                 tone["top"])))
+    if spec.get("under") and after > 0.5:
+        _mid(draw, top + len(rows) * (size + 20) + 50, spec["under"], 44,
+             tone["dim"], bold=False)
+    _brand(card, draw, tone, t)
+    _note(draw, spec, t)
+    return card
+
+
+def _outro_lead(spec: dict[str, Any], t: float) -> Image.Image:
+    """結論先落下，摘要在它底下小字排開。
+
+    順序顛倒：拿得走的那句話先到，理由在後面。用在結論本身夠強、
+    不需要鋪陳的片子上。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 170)
+    lead = ease(min(1.0, t * 1.8))
+    y = TOP + 40
+    for index, row in enumerate(rows):
+        part = stagger(lead, index, len(rows))
+        _mid(draw, y + index * (size + 22) + (1 - part) * 30, row, size,
+             "#" + "".join(f"{v:02x}" for v in
+                           _fade(spec.get("colour") or tone["lead"], part,
+                                 tone["top"])))
+    under = y + len(rows) * (size + 22) + 40
+    draw.line([(MARGIN + 40, under), (W - MARGIN - 40, under)],
+              fill=tone["rule"], width=5)
+    points = [str(one) for one in (spec.get("points") or []) if str(one).strip()]
+    for index, point in enumerate(points):
+        part = stagger(max(0.0, (t - 0.45) / 0.55), index, len(points))
+        if part <= 0.02:
+            continue
+        step, said = wrap_at(point, 48, W - 2 * MARGIN - 60, most_rows=1)
+        draw.text((W // 2, under + 46 + index * 84), said[0],
+                  font=face(step, False),
+                  fill="#" + "".join(f"{v:02x}" for v in
+                                     _fade(tone["dim"], part, tone["top"])),
+                  anchor="ma")
+    _brand(card, draw, tone, t)
+    _note(draw, spec, t)
+    return card
+
+
+def _outro_card(spec: dict[str, Any], t: float) -> Image.Image:
+    """整段收在一張卡片上，像遞出去的一張名片。
+
+    摘要和結論裝在同一個框裡 —— 邊界讓它看起來是可以拿走的一件東西，
+    而不是畫面上的最後一段字。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    points = [str(one) for one in (spec.get("points") or []) if str(one).strip()]
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 120, room=W - 2 * MARGIN - 120)
+    high = len(points) * 82 + len(rows) * (size + 18) + 150
+    top = TOP + 10
+    grow = ease(min(1.0, t * 1.5))
+    draw.rounded_rectangle([MARGIN, top, W - MARGIN, top + high * grow], 26,
+                           outline=tone["lead"], width=6)
+    if grow < 0.85:
+        _brand(card, draw, tone, t)
+        _note(draw, spec, t)
+        return card
+    for index, point in enumerate(points):
+        part = stagger(max(0.0, (t - 0.35) / 0.4), index, len(points))
+        if part <= 0.02:
+            continue
+        step, said = wrap_at(point, 48, W - 2 * MARGIN - 130, most_rows=1)
+        draw.text((MARGIN + 60, top + 50 + index * 82), said[0],
+                  font=face(step, False),
+                  fill="#" + "".join(f"{v:02x}" for v in
+                                     _fade(tone["ink"], part * 0.9, tone["top"])),
+                  anchor="la")
+    after = ease(max(0.0, (t - 0.72) / 0.28))
+    base = top + len(points) * 82 + 90
+    for index, row in enumerate(rows):
+        part = stagger(after, index, len(rows))
+        _mid(draw, base + index * (size + 18), row, size,
+             "#" + "".join(f"{v:02x}" for v in
+                           _fade(spec.get("colour") or tone["lead"], part,
+                                 tone["top"])))
+    if spec.get("under") and after > 0.5:
+        _mid(draw, base + len(rows) * (size + 18) + 30, spec["under"], 44,
+             tone["dim"], bold=False)
+    _brand(card, draw, tone, t)
+    _note(draw, spec, t)
+    return card
+
+
 # 每一種卡有哪些畫法。放在函式都定義完之後 —— 在上面填的話，名字還不存在。
 WAYS.update({
     "word":   [_word, _word_left, _word_boxed, _word_mark, _word_quote],
@@ -1365,6 +2346,14 @@ WAYS.update({
                _number_ghost],
     "ring":   [_ring, _ring_box, _ring_under, _ring_arrow, _ring_burst],
     "swap":   [_swap, _swap_slide, _swap_stack, _swap_arrow, _swap_tear],
+    "stack":  [_stack, _stack_numbered, _stack_tick, _stack_cascade,
+               _stack_quote],
+    "bars":   [_bars, _bars_column, _bars_dots, _bars_split, _bars_pair],
+    "split":  [_split, _split_scale, _split_two, _split_venn, _split_road],
+    "chain":  [_chain, _chain_down, _chain_steps, _chain_arrows, _chain_track],
+    "queue":  [_queue, _queue_grid, _queue_pile, _queue_bar, _queue_crowd],
+    "clock":  [_clock, _clock_bar, _clock_sand, _clock_dots, _clock_wait],
+    "outro":  [_outro, _outro_ticks, _outro_steps, _outro_lead, _outro_card],
 })
 
 KINDS = {"title": _title, "outro": _outro, "word": _word, "number": _number, "bars": _bars,
