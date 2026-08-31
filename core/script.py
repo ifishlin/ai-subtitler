@@ -241,6 +241,10 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "roles": roles_of(script),
             "borrowed_most": most,
             "shapeless": []}
+    # 真的超長，還是只是進位超長。門檻在 SLACK_SECONDS，一個地方。網頁本來
+    # 自己判斷 over > 0，於是把一支已經出片的 90.01 秒說成太長，而壓片那邊
+    # 早就收下了。
+    out["too_long"] = runs_over(out)
     out["shapeless"] = structure(script, out)
     out["rights"] = rights(script, gathered(script)[0], out)
     return out

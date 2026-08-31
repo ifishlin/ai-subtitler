@@ -244,16 +244,37 @@
   .jump button b{color:var(--ink);margin-left:3px}
   .jump button.lacking b{color:var(--warn)}
 
-  /* The measured script: length, shares, and every gate's count. Still two
-     rows of tiles because that is a readout of twelve independent numbers,
-     none of which is printed anywhere else on the page. */
-  .gauge{display:flex;gap:16px;flex-wrap:wrap;padding:12px 15px;margin-bottom:8px;
-    background:var(--panel);border:1px solid var(--line);border-radius:9px}
-  .gauge div{font-size:12px;color:var(--dim)}
-  .gauge b{display:block;font:18px var(--mono);font-variant-numeric:tabular-nums;
-    color:var(--ink)}
-  .gauge b.short{color:var(--warn)}
-  .gauge b.good{color:var(--ok)}
+  /* 量出來的東西：一行結論，細節收著。
+     本來是十六格平鋪，而十六個數字沒有主次，讀的人只能全部讀或全部不讀。 */
+  .checked{background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;margin:0 0 12px}
+  .checked summary{display:flex;align-items:baseline;gap:12px;
+    padding:11px 15px;cursor:pointer;list-style:none;user-select:none}
+  .checked summary::-webkit-details-marker{display:none}
+  .checked summary b{font-size:14px}
+  .checked summary b.ok{color:var(--ok)}
+  .checked summary b.no{color:var(--warn)}
+  .checked .quick{font:12px var(--mono);color:var(--dim);
+    font-variant-numeric:tabular-nums}
+  .checked .more{margin-left:auto;font:11px var(--mono);color:var(--faint)}
+  .checked .more:before{content:"▸ "}
+  .checked[open] .more:before{content:"▾ "}
+  .checked summary:hover .more{color:var(--accent)}
+
+  .checked .grid{display:grid;gap:1px;background:var(--line);
+    border-top:1px solid var(--line);
+    grid-template-columns:repeat(auto-fill,minmax(178px,1fr))}
+  .checked .grid > div{background:var(--panel);padding:9px 13px;
+    font-size:12px;color:var(--dim)}
+  .checked .grid b{float:right;font:14px var(--mono);color:var(--ink);
+    font-variant-numeric:tabular-nums;margin-left:8px}
+  .checked .grid b.ok{color:var(--ok)}
+  .checked .grid b.no{color:var(--warn)}
+  /* 每一格自己說它在測什麼。十六個沒有說明的數字，等於十六個看不懂的數字。 */
+  .checked .grid i{display:block;clear:both;font-style:normal;font-size:11px;
+    color:var(--faint);line-height:1.5;margin-top:3px}
+  .checked .band{grid-column:1 / -1;background:var(--bg);color:var(--faint);
+    font:11px var(--mono);letter-spacing:.6px;padding:7px 13px}
 
   /* Who has been heard. The point is not the count -- it is whether the
      other side is in there at all, so an empty one is coloured, not just
@@ -771,6 +792,16 @@ async function showScript(name) {
   const sums = made.measured;
   // One rule, and it lives in core/script.py: the share is measured there.
   const share = 100 - (sums.borrowed_share || 0);
+  /* 沒過幾處。門的清單長度加上三個是非題。
+     算在這裡而不是伺服器，因為 measure() 已經把每一項算好了 —— 再回傳一個
+     總數就是同一個事實的第二份，而這個專案為那件事修過四次錯。 */
+  const GATE_KEYS = ["shapeless", "unsourced", "unpicked", "unchecked",
+                     "undrawn", "uncredited", "samey", "unsigned",
+                     "simplified", "card_wrong", "clipped"];
+  sums.__bad = GATE_KEYS.reduce((n, key) => n + (sums[key] || []).length, 0)
+    + (sums.too_long ? 1 : 0)
+    + (sums.even ? 0 : 1)
+    + (sums.still_enough ? 0 : 1);
 
   $("paper").innerHTML = `
     <!-- 一塊，四樣東西。本來是：標題一行、觀點和語氣擠成一長條、公版和受眾
@@ -804,45 +835,55 @@ async function showScript(name) {
           placeholder="例如：每個要付帳單的人" spellcheck="false">
       </label>
     </div>
-    <div class="gauge">
-      <div>長度<b class="${sums.over ? "short" : "good"}">${clock(sums.seconds)}</b></div>
-      <div>上限 90 秒<b>${sums.over ? `超出 ${sums.over}s` : "在裡面"}</b></div>
-      <div>字數<b>${sums.characters}</b></div>
-      <div>句數<b>${sums.lines.length}</b></div>
-      <div>觀點<b class="${sums.opinion >= 6 ? "good" : ""}">${sums.opinion} 句</b></div>
-      <div>自製<b class="${share >= 60 ? "good" : "short"}">${share}%</b></div>
-      <div>實拍<b class="${(sums.borrowed_share || 0) <= 35 ? "good" : "short"}">${
-        sums.borrowed_share || 0}%</b></div>
-      <div>三段分布<b class="${sums.even ? "good" : "short"}">${
-        (sums.spread || []).join(" / ")}</b></div>
-      <div>沒標來源<b class="${sums.unsourced.length ? "short" : "good"}">${
-        sums.unsourced.length}</b></div>
-      <div>沒指定圖<b class="${(sums.unpicked || []).length ? "short" : "good"}">${
-        (sums.unpicked || []).length}</b></div>
-      <div>沒看過<b class="${(sums.unchecked || []).length ? "short" : "good"}">${
-        (sums.unchecked || []).length}</b></div>
-      <div title="自製的句子沒說這張卡怎麼畫">沒畫卡<b class="${
-        (sums.undrawn || []).length ? "short" : "good"}">${
-        (sums.undrawn || []).length}</b></div>
-      <div title="最後一句要是 outro：一句帶得走的話 + 頻道標記">結尾<b class="${
-        (sums.unsigned || []).length ? "short" : "good"}">${
-        (sums.unsigned || []).length ? "缺" : "有"}</b></div>
-      <div title="同一種卡片連續超過三張就是投影片">重複<b class="${
-        (sums.samey || []).length ? "short" : "good"}">${
-        (sums.samey || []).length}</b></div>
-      <div title="燒進畫面的簡體字。台灣兩種寫法都通行的字不算">簡體<b class="${
-        (sums.simplified || []).length ? "short" : "good"}">${
-        (sums.simplified || []).length}</b></div>
-      <div title="引用的畫面沒有出處，壓片會被擋下來">沒出處<b class="${
-        (sums.uncredited || []).length ? "short" : "good"}">${
-        (sums.uncredited || []).length}</b></div>
-      <div title="起承轉合：四種都在、順序沒亂、轉在前三分之一">結構<b class="${
-        (sums.shapeless || []).length ? "short" : "good"}">${
-        (sums.shapeless || []).length ? (sums.shapeless[0].why || "有問題")
-                                      : "過"}</b></div>
-      <div title="影片段落佔實拍時間的比例，至少一半">會動的<b class="${
-        sums.still_enough ? "good" : "short"}">${sums.clip_share || 0}%</b></div>
-    </div>
+    <!-- 一行結論，細節收起來。
+         這裡本來是十六格平鋪，而它混了兩種東西：九個是門（全過的時候是一整
+         排 0，等於把「沒事」講九遍），七個是描述（長度、字數、比例）。十六
+         個數字沒有主次，所以讀的人只能全部讀，或者全部不讀 —— 而實際發生的
+         是後者。
+         現在上面那行回答「這支能不能出」，下面收著的回答「為什麼」。 -->
+    <details class="checked"${sums.__bad ? " open" : ""}>
+      <summary>
+        <b class="${sums.__bad ? "no" : "ok"}">${
+          sums.__bad ? `${sums.__bad} 處沒過` : "全部通過"}</b>
+        <span class="quick">${clock(sums.seconds)}　${sums.lines.length} 句　`
+      + `自製 ${share}%　實拍 ${sums.borrowed_share || 0}%</span>
+        <span class="more">細節</span>
+      </summary>
+      <div class="grid">
+        <div class="band">這支片</div>
+        <div>長度<b class="${sums.over ? "no" : ""}">${clock(sums.seconds)}</b>
+          <i>上限 90 秒${sums.over ? `，超出 ${sums.over}s` : ""}</i></div>
+        <div>句數<b>${sums.lines.length}</b><i>${sums.characters} 字</i></div>
+        <div>觀點<b>${sums.opinion}</b><i>句，其餘要有出處</i></div>
+        <div>自製<b class="${share >= 60 ? "ok" : "no"}">${share}%</b>
+          <i>其餘是引用的畫面</i></div>
+        <div>實拍<b class="${(sums.borrowed_share || 0) <= 35 ? "ok" : "no"}">${
+          sums.borrowed_share || 0}%</b><i>上限 35%</i></div>
+        <div>會動的<b class="${sums.still_enough ? "ok" : "no"}">${
+          sums.clip_share || 0}%</b><i>實拍裡至少一半要是影片</i></div>
+        <div>三段分布<b class="${sums.even ? "ok" : "no"}">${
+          (sums.spread || []).join(" / ")}</b><i>實拍不能擠在一段</i></div>
+
+        <div class="band">十一道門</div>
+        ${[["結構", sums.shapeless, "起承轉合四個都在、順序沒亂、轉在前三分之一"],
+           ["沒標來源", sums.unsourced, "陳述事實卻沒說出處"],
+           ["沒指定圖", sums.unpicked, "說要用圖，但那個檔案不是這個題目的"],
+           ["沒看過", sums.unchecked, "有圖，但沒有人打開看過"],
+           ["沒畫卡", sums.undrawn, "說「自製」卻沒說這張卡怎麼畫"],
+           ["沒出處", sums.uncredited, "引用的畫面沒有出處可以燒上去"],
+           ["重複", sums.samey, "同一種卡連續超過三張就是投影片"],
+           ["缺結尾", sums.unsigned, "最後一句要是帶得走的一句話 + 頻道標記"],
+           ["簡體", sums.simplified, "燒進畫面的簡體字"],
+           ["畫不出來", sums.card_wrong, "卡片的欄位不符合那種卡的需求"],
+           ["會被截掉", sums.clipped, "一句斷成三行還放不完，尾巴會消失"]]
+          .map(([label, faults, why]) => {
+            const n = (faults || []).length;
+            return `<div title="${escapeHTML(why)}">${escapeHTML(label)}`
+              + `<b class="${n ? "no" : "ok"}">${n ? n : "✓"}</b>`
+              + `<i>${escapeHTML(why)}</i></div>`;
+          }).join("")}
+      </div>
+    </details>
     <!-- Rendering, and the sheet it produces. Looking at what was actually
          rendered is the one check nothing else can do: two of the faults in
          this project were only ever visible with all the shots laid out at
