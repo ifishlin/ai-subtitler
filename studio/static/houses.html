@@ -6,6 +6,15 @@
 <title>片型　AI-Reporters</title>
 <link rel="stylesheet" href="/static/theme.css">
 <style>
+  /* 輸入框的底。搬過來的時候只帶了 `.house-card textarea` 那幾行，而底色、
+     邊框、字色在 prompts.html 的 `textarea{...}` 裡 —— 留在原地，於是這一頁
+     的框變回 Chrome 的預設樣子：白底黑字。
+     搬東西要連它站在什麼上面一起搬。 */
+  textarea{width:100%;resize:vertical;
+    font:12.5px/1.75 var(--mono);color:var(--ink);background:var(--panel);
+    border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  textarea:focus{outline:none;border-color:var(--accent)}
+
   /* 一個片型一張卡，內容就是它的 JSON。當資料編，因為它本來就是資料 ——
      一個欄位配一個輸入框的做法，保證有一天欄位加了而畫面沒加。 */
   .house-card{border:1px solid var(--line);border-radius:10px;padding:11px 13px;
