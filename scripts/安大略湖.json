@@ -1,0 +1,54 @@
+{
+  "view": "把安大略湖改名，這事到底誰最關心？",
+  "tone": "詼諧",
+  "lines": [
+    {
+      "say": "有誰會關心湖改名的事？",
+      "role": "起",
+      "show": "P1",
+      "card": {
+        "kind": "word",
+        "title": "川普要把安大略湖改名"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "say": "左口袋欠右口袋八萬塊，然後宣布自己破產。",
+      "role": "承",
+      "show": "P8",
+      "card": {
+        "kind": "word",
+        "title": "最新聞"
+      },
+      "from": "觀點",
+      "seconds": 4.35
+    },
+    {
+      "say": "不過，湖名改了，你會在哪兒遇到它？",
+      "role": "轉",
+      "show": "P14",
+      "card": {
+        "kind": "word",
+        "title": "安大略湖"
+      },
+      "from": "觀點",
+      "seconds": 3.7
+    },
+    {
+      "say": "在船票上，或是野餐用的紙巾上。",
+      "role": "合",
+      "show": "P18",
+      "card": {
+        "kind": "word",
+        "title": "安大略湖"
+      },
+      "from": "P18",
+      "seconds": 3.26
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人"
+}

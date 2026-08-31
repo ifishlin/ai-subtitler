@@ -1,0 +1,54 @@
+{
+  "view": "特朗普想改名的湖，和你我的生活到底有什麼關？",
+  "tone": "詼諧",
+  "lines": [
+    {
+      "say": "你知道嗎？特朗普居然想把安大略湖改名！",
+      "role": "起",
+      "show": "示意：Trump's controversial decisions",
+      "card": {
+        "kind": "word",
+        "title": "特朗普的爭議決定"
+      },
+      "from": "P8",
+      "seconds": 4.13
+    },
+    {
+      "say": "真的假的？安大略湖，就是那片湖水清清，魚兒游游的地方！",
+      "role": "承",
+      "show": "示意：Local landmarks",
+      "card": {
+        "kind": "word",
+        "title": "當地的地標"
+      },
+      "from": "P14",
+      "seconds": 5.87
+    },
+    {
+      "say": "但他說，要改叫它湖美利加。這名字聽起來好怪，對吧？",
+      "role": "轉",
+      "show": "示意：Odd objects and structures",
+      "card": {
+        "kind": "word",
+        "title": "奇怪的物體和結構"
+      },
+      "from": "P6",
+      "seconds": 5.43
+    },
+    {
+      "say": "但這不是真的怪，因為特朗普從來就不按常理出牌！",
+      "role": "合",
+      "show": "示意：Trump's controversial decisions",
+      "card": {
+        "kind": "word",
+        "title": "特朗普的爭議決定"
+      },
+      "from": "P8",
+      "seconds": 5.0
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人"
+}
