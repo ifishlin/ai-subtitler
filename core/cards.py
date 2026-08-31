@@ -65,6 +65,10 @@ TOP = rules_module.look("frame.card_top", 470)
 MARGIN = rules_module.look("frame.side_margin", 74)
 FONT = rules_module.look("font", "/System/Library/Fonts/PingFang.ttc")
 
+# 一種卡，好幾種畫法。宣告在這裡、內容在函式都定義完之後填 ——
+# 名字要先存在才填得進去。
+WAYS: dict[str, list] = {}
+
 
 # --- palettes ---------------------------------------------------------------
 # The tone turns with the argument rather than with taste. Twenty-nine cards on
@@ -322,6 +326,136 @@ def _word(spec: dict[str, Any], t: float) -> Image.Image:
         _mid(draw, top + index * (size + 20) + (1 - part) * 40, row, size, colour)
     if spec.get("under"):
         _mid(draw, top + len(rows) * (size + 20) + 40, spec["under"], 52,
+             tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _word_left(spec: dict[str, Any], t: float) -> Image.Image:
+    """靠左，一行一行從左邊推進來。
+
+    置中的字是「宣告」，靠左的字是「有人在講」—— 同一句話，兩種語氣。
+    左邊留一道豎線當基準，眼睛才知道每一行從哪裡開始。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 230, room=W - MARGIN - 150)
+    top = 800 - (len(rows) - 1) * (size + 22) // 2
+    rule = ease(min(1.0, t * 1.8))
+    draw.line([(120, top - 20), (120, top - 20 + (len(rows) * (size + 22)) * rule)],
+              fill=tone["rule"], width=8)
+    for index, row in enumerate(rows):
+        part = stagger(t, index, len(rows))
+        colour = "#" + "".join(f"{v:02x}" for v in
+                               _fade(spec.get("colour") or tone["lead"], part,
+                                     tone["top"]))
+        draw.text((150 - (1 - part) * 50, top + index * (size + 22)), row,
+                  font=face(size), fill=colour, anchor="la")
+    if spec.get("under"):
+        at(draw, 150, top + len(rows) * (size + 22) + 40, spec["under"], 52,
+           tone["dim"], room=W - MARGIN - 150, bold=False, anchor="la")
+    _note(draw, spec, t)
+    return card
+
+
+def _word_boxed(spec: dict[str, Any], t: float) -> Image.Image:
+    """關在一個框裡，框先畫出來，字才進去。
+
+    框把一句話變成一件東西 —— 像貼在牆上的一張告示。用在「這就是規定」那種
+    句子上，比整片空白的宣告更硬。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 190, room=W - 2 * MARGIN - 120)
+    high = len(rows) * (size + 24) + 90
+    top = 830 - high // 2
+    grow = ease(min(1.0, t * 1.6))
+    # 框從中間往兩邊長開，不是淡入 —— 淡入的東西不會被看成「被放上去」。
+    wide = (W - 2 * MARGIN - 40) * grow
+    draw.rounded_rectangle([W // 2 - wide / 2, top, W // 2 + wide / 2, top + high],
+                           26, outline=tone["rule"], width=7)
+    if grow > 0.75:
+        for index, row in enumerate(rows):
+            part = stagger((t - 0.45) / 0.55, index, len(rows))
+            if part <= 0.02:
+                continue
+            colour = "#" + "".join(f"{v:02x}" for v in
+                                   _fade(spec.get("colour") or tone["ink"],
+                                         part, tone["top"]))
+            _mid(draw, top + 45 + index * (size + 24), row, size, colour)
+    if spec.get("under"):
+        _mid(draw, top + high + 46, spec["under"], 52, tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _word_mark(spec: dict[str, Any], t: float) -> Image.Image:
+    """字先在，然後一枝螢光筆從左往右刷過去。
+
+    刷過去的是**動作**：那一刷本身說「注意這一句」，而底線或框只是狀態。
+    刷痕比字略高一點、兩端不齊，看起來才像手畫的。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    # 刷痕比字寬 18px，兩邊各一 —— 量字級的時候要把它算進去，
+    # 不然字剛好貼齊留白，刷痕就出去了。差 2px，掃邊界抓得到，眼睛抓不到。
+    size = fits(rows, 250, room=W - 2 * MARGIN - 40)
+    top = 820 - (len(rows) - 1) * (size + 20) // 2
+    ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    for index, row in enumerate(rows):
+        y = top + index * (size + 20)
+        sweep = stagger(max(0.0, (t - 0.25) / 0.75), index, len(rows))
+        if sweep > 0.02:
+            wide = ruler.textlength(row, font=face(size))
+            layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+            ImageDraw.Draw(layer).rounded_rectangle(
+                [W // 2 - wide / 2 - 18,
+                 y + size * 0.28,
+                 W // 2 - wide / 2 - 18 + (wide + 36) * sweep,
+                 y + size * 0.98], 10,
+                fill=(*ImageColorRGB(tone["hot"]), 70))
+            card = Image.alpha_composite(card.convert("RGBA"), layer).convert("RGB")
+            draw = ImageDraw.Draw(card)
+        _mid(draw, y, row, size, tone["ink"])
+    if spec.get("under"):
+        _mid(draw, top + len(rows) * (size + 20) + 40, spec["under"], 52,
+             tone["dim"], bold=False)
+    _note(draw, spec, t)
+    return card
+
+
+def _word_quote(spec: dict[str, Any], t: float) -> Image.Image:
+    """當成一句引言：巨大的引號在後面，字壓在上面。
+
+    用在「他說」那種句子上。引號是背景不是裝飾 —— 它先到，字後到，
+    所以讀的順序是「有人講了一句話」而不是「一句話旁邊有符號」。
+    """
+    card, draw = _base(spec)
+    tone = tone_of(spec)
+    rows = [row for row in str(spec.get("title", "")).split("\n") if row]
+    size = fits(rows, 210, room=W - 2 * MARGIN - 80)
+    top = 840 - (len(rows) - 1) * (size + 20) // 2
+    mark = ease(min(1.0, t * 2.2))
+    if mark > 0.02:
+        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        pen = ImageDraw.Draw(layer)
+        shade = (*ImageColorRGB(tone["lead"]), int(38 * mark))
+        pen.text((120, top - 210), "「", font=face(360), fill=shade, anchor="la")
+        pen.text((W - 120, top + len(rows) * (size + 20) - 60), "」",
+                 font=face(360), fill=shade, anchor="ra")
+        card = Image.alpha_composite(card.convert("RGBA"), layer).convert("RGB")
+        draw = ImageDraw.Draw(card)
+    for index, row in enumerate(rows):
+        part = stagger(max(0.0, (t - 0.2) / 0.8), index, len(rows))
+        colour = "#" + "".join(f"{v:02x}" for v in
+                               _fade(spec.get("colour") or tone["ink"], part,
+                                     tone["top"]))
+        _mid(draw, top + index * (size + 20) + (1 - part) * 26, row, size, colour)
+    if spec.get("under"):
+        _mid(draw, top + len(rows) * (size + 20) + 50, spec["under"], 52,
              tone["dim"], bold=False)
     _note(draw, spec, t)
     return card
@@ -778,16 +912,63 @@ def _outro(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
+# 每一種卡有哪些畫法。放在函式都定義完之後 —— 在上面填的話，名字還不存在。
+WAYS.update({
+    "word":  [_word, _word_left, _word_boxed, _word_mark, _word_quote],
+    "title": [_word, _word_left, _word_boxed, _word_mark, _word_quote],
+})
+
 KINDS = {"title": _title, "outro": _outro, "word": _word, "number": _number, "bars": _bars,
          "split": _split, "chain": _chain, "queue": _queue, "stack": _stack,
          "clock": _clock, "ring": _ring, "swap": _swap}
+
+
+# --- 一種卡，好幾種畫法 -------------------------------------------------
+#
+# 十二種卡各只有一種長相，於是一支九十秒的片裡同一種形狀會出現六七次，
+# 每次一模一樣。單張看不出來，排成接觸表就是投影片 —— `samey` 那道門攔的是
+# 「連續三張同一種」，攔不了「整支片每張 word 都長一樣」。
+#
+# 所以每一種可以有好幾個畫法，`WAYS` 列在下面。第一個是原本那個。
+
+
+
+def _off() -> set[str]:
+    """被關掉的畫法。從 `assets/cards.json` 讀，不在程式裡。
+
+    畫法是程式，關不關掉是選擇 —— 兩件事分開，才可能在網頁上關掉一個
+    而不用改程式。
+    """
+    where = ROOT / "assets" / "cards.json"
+    if not where.is_file():
+        return set()
+    try:
+        return set(json.loads(where.read_text(encoding="utf-8")).get("off") or [])
+    except Exception:                                             # noqa: BLE001
+        return set()
+
+
+def way_for(spec: dict[str, Any]):
+    """這張卡用哪一個畫法。
+
+    **從卡片自己的內容算出來，不是隨機。** 隨機的話同一份文案重壓兩次會長得
+    不一樣，接觸表看到的跟成品不同，而過了門的那一版可能根本不是畫出來的那版。
+    雜湊給的是「散開但固定」：不同的卡分到不同的畫法，同一張卡永遠同一個。
+    """
+    kind = str(spec.get("kind") or "title")
+    ways = WAYS.get(kind) or [KINDS.get(kind, _word)]
+    off = _off()
+    live = [one for one in ways if f"{kind}.{one.__name__}" not in off] or ways[:1]
+    mark = json.dumps(spec, ensure_ascii=False, sort_keys=True)
+    pick = int(hashlib.sha1(mark.encode("utf-8")).hexdigest(), 16)
+    return live[pick % len(live)]
 
 
 def draw(spec: dict[str, Any], t: float = 1.0) -> Image.Image:
     """One card at a moment in its own arrival. An unknown kind becomes a word
     card rather than an error: a script naming a shape nobody has drawn yet
     should still render."""
-    return KINDS.get(str(spec.get("kind") or "title"), _word)(spec, t)
+    return way_for(spec)(spec, t)
 
 
 def frames(spec: dict[str, Any], seconds: float, fps: int = FPS
