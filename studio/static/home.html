@@ -30,30 +30,36 @@
   <div class="strip" id="strip"></div>
   <p class="note" id="stripNote"></p>
 
-  <h2>照順序走</h2>
+  <!-- 兩套流程，方向相反。這裡本來把「產製」寫成「把文案壓成影片」，那是
+       錯的：壓片按鈕在文案那一頁（/api/script/film），產製跟文案毫無關係。 -->
+  <h2>做新的短片　—— 從一則新聞開始</h2>
   <div class="cards">
     <a class="card" href="/scripts">
-      <span class="step">① – ⑦</span>
+      <span class="step">① – ⑨　全部在這一頁</span>
       <b><span class="icon">📝</span>題目與文案</b>
-      <span>開題目、逐家問十九家媒體、看素材、選公版、產生或修改文案。
-        大部分時間都在這一頁。</span>
+      <span>開題目、逐家問十九家媒體、看素材、選公版、寫文案、看圖打勾，
+        然後按「壓片」做出九十秒的成品。內容是我們寫的。</span>
     </a>
+  </div>
+
+  <h2>替既有的影片上字幕　—— 從一支片開始</h2>
+  <div class="cards">
     <a class="card" href="/produce">
-      <span class="step">⑧</span>
+      <span class="step">先</span>
       <b><span class="icon">⚙️</span>產製</b>
-      <span>把文案壓成影片。九道門在編碼開始之前全部跑完 ——
-        過不去的文案不會浪費四分鐘。</span>
-    </a>
-    <a class="card" href="/assemble">
-      <span class="step">⑨</span>
-      <b><span class="icon">🧩</span>組裝</b>
-      <span>版面、卡片、鏡頭的細節。</span>
+      <span>給一個 YouTube 網址或本機檔案 → 下載、語音辨識、翻譯、
+        產生字幕。輸出進 projects/。</span>
     </a>
     <a class="card" href="/desk">
-      <span class="step">長片</span>
+      <span class="step">再</span>
       <b><span class="icon">🎬</span>AI 導演台</b>
-      <span>原本的工作台：辨識、翻譯、校對、字幕、資訊卡。
-        處理既有影片，不是從新聞做起。</span>
+      <span>上一步做出來的東西在這裡校對：改錯字、調時間軸、加資訊卡、
+        預覽。內容是別人的，我們加工。</span>
+    </a>
+    <a class="card" href="/assemble">
+      <span class="step">最後</span>
+      <b><span class="icon">🧩</span>組裝</b>
+      <span>把好幾段接成一支，排順序。一支組裝好的片可以再當下一支的片源。</span>
     </a>
   </div>
 
