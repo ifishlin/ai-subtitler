@@ -268,6 +268,7 @@ def build(name: str, target: Path | None = None,
                              ("samey", "連續太多張長一樣"),
                              ("unsigned", "沒有結尾頁"),
                              ("simplified", "簡體字"),
+                             ("card_wrong", "卡片畫不出來"),
                              ("shapeless", "結構不對")):
         if measured.get(fault):
             faults = measured[fault]

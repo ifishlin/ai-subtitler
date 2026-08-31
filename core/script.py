@@ -163,6 +163,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "samey": samey(script),
             "unsigned": unsigned(script),
             "simplified": simplified(script),
+            "card_wrong": card_wrong(script),
             "house": rules_module.house(script.get("format")).get("name", ""),
             "roles": roles_of(script),
             "borrowed_most": most,
@@ -727,3 +728,75 @@ def listing() -> list[dict[str, Any]]:
             "modified": int(path_for(name).stat().st_mtime),
         })
     return found
+
+
+# What each kind of card needs before it can be drawn. Written here rather
+# than discovered at encode time: a `bars` row whose value read 「超過 1/3」
+# passed all eight gates, and the run died four minutes later inside
+# ImageDraw with `could not convert string to float`. Every other picture
+# fault in this project fails silently; this one fails loudly and very late,
+# which is its own kind of expensive.
+CARD_NEEDS: dict[str, dict[str, Any]] = {
+    "bars":   {"rows": "list"},        # [[label, number], ...]
+    "split":  {"branches": "list"},
+    "stack":  {"items": "list"},
+    "chain":  {"points": "list"},
+    "queue":  {"count": "number"},
+    "clock":  {"value": "number"},
+    "ring":   {"value": "any"},
+    "swap":   {"was": "any", "now": "any"},
+    "number": {"value": "any"},
+    "outro":  {"points": "list", "title": "any"},
+    "word":   {"title": "any"},
+    "title":  {"title": "any"},
+}
+
+
+def _is_number(value: Any) -> bool:
+    try:
+        float(value)
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
+def card_wrong(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """Cards whose spec the renderer cannot draw.
+
+    `undrawn` asks whether a card is there at all. This asks whether the one
+    that is there can be drawn, which is a different question and the one that
+    stopped a finished script four minutes into encoding.
+    """
+    faults = []
+    for index, line in enumerate(script.get("lines") or []):
+        spec = line.get("card")
+        if not spec:
+            continue
+        kind = str(spec.get("kind") or "title")
+        needs = CARD_NEEDS.get(kind)
+        if needs is None:
+            faults.append({"line": index, "say": line.get("say", ""),
+                           "why": f"沒有這種卡：{kind}"})
+            continue
+        for field, shape in needs.items():
+            value = spec.get(field)
+            if value in (None, "", [], {}):
+                faults.append({"line": index, "say": line.get("say", ""),
+                               "why": f"{kind} 卡少了 {field}"})
+            elif shape == "list" and not isinstance(value, list):
+                faults.append({"line": index, "say": line.get("say", ""),
+                               "why": f"{kind} 卡的 {field} 要是清單"})
+            elif shape == "number" and not _is_number(value):
+                faults.append({"line": index, "say": line.get("say", ""),
+                               "why": f"{kind} 卡的 {field} 要是數字，寫的是「{value}」"})
+        # A bar's length is its number. A row that says 「超過 1/3」 is a
+        # sentence, and the renderer will try to make a width out of it.
+        if kind == "bars":
+            for row in spec.get("rows") or []:
+                if not isinstance(row, (list, tuple)) or len(row) < 2:
+                    faults.append({"line": index, "say": line.get("say", ""),
+                                   "why": "bars 的每一列要是 [名稱, 數字]"})
+                elif not _is_number(row[1]):
+                    faults.append({"line": index, "say": line.get("say", ""),
+                                   "why": f"bars 的長度要是數字，寫的是「{row[1]}」"})
+    return faults

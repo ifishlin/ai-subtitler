@@ -3,11 +3,436 @@
   "note": "Focus online 2026-08-17，Göran Schattauer 專訪薩克森邦刑事警察局（LKA）組織犯罪科長 Raiko Märtins。萊比錫一帶 700–1000 人被歸入敘利亞「clan 圈」，其中約 130 人有案底，核心是四個大家族。\n\n坑一：**單一來源**。整篇只有一個受訪者、一家媒體，而且 Focus 偏右。數字全部是「警方估計」，700–1000 這個區間本身就說明沒人真的數過。\n坑二：**19 家媒體全是英語的**，這是德國地方新聞，CNN、Fox 大概率沒報。平衡檢查很可能過不了 —— 那不是收集失敗，是這題在現有媒體清單下做不成。要做得先補德語媒體（Zeit、SZ、taz、Welt、FAZ）。\n坑三：**族裔犯罪報導**。文章自己都寫了「不是所有成員都犯罪，絕大多數在德敘利亞人守法」。90 秒放不下這個限定條件，放不下就變成另一種東西。",
   "made": 1788131861,
   "sources": {
-    "videos": [],
-    "reports": [],
-    "images": [],
+    "videos": [
+      {
+        "title": "Jahresbericht des Bundeskriminalamts: Mehr Verfahren gegen Banden",
+        "url": "https://www.youtube.com/watch?v=TnXbZWDBBB4",
+        "seconds": 444,
+        "outlet": "tagesschau",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Russland ohne Putin? Militärexperte über Szenarien für mögliches Kriegsende ",
+        "url": " ZDFheute live|https://www.youtube.com/watch?v=N2TK3ASKEoY",
+        "seconds": 360,
+        "outlet": "ZDFheute",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Clan-Kriminalität: Die Gomans vor Gericht ",
+        "url": " SPIEGEL TV|https://www.youtube.com/watch?v=VJHdLOT5y8E",
+        "seconds": 988,
+        "outlet": "DER SPIEGEL",
+        "lean": "centre-left",
+        "doubt": false
+      },
+      {
+        "title": "Clankriminalität in Deutschland: Der Goman-Clan und sein Millionen-Imperium ",
+        "url": " SPIEGEL TV Classic|https://www.youtube.com/watch?v=6gBFF9rHFP8",
+        "seconds": 1260,
+        "outlet": "DER SPIEGEL",
+        "lean": "centre-left",
+        "doubt": false
+      },
+      {
+        "title": "Crime in Germany: Fewer crimes than at any time since 1992",
+        "url": "https://www.youtube.com/watch?v=Qtu_Y7YbJRk",
+        "seconds": 149,
+        "outlet": "FAZ",
+        "lean": "centre-right",
+        "doubt": true
+      },
+      {
+        "title": "CLAN CRIME IN LEIPZIG: \"Someone should have noticed that!\" – Clan patriarch reportedly has 32 chi...",
+        "url": "https://www.youtube.com/watch?v=rUmBFAzS4Ig",
+        "seconds": 442,
+        "outlet": "WELT",
+        "lean": "right",
+        "doubt": false
+      },
+      {
+        "title": "BERLIN: War between crime families – Clan violence escalates! Call for peace goes unheeded",
+        "url": "https://www.youtube.com/watch?v=y923LN82ekQ",
+        "seconds": 166,
+        "outlet": "WELT",
+        "lean": "right",
+        "doubt": false
+      },
+      {
+        "title": "Corona: Intensivmediziner schweigen über die Intensivbetten ",
+        "url": " Hart aber Weise|https://www.youtube.com/watch?v=RP9SULEV7mw",
+        "seconds": 190,
+        "outlet": "BILD",
+        "lean": "right",
+        "doubt": true
+      },
+      {
+        "title": "Taliban überrennen Afghanistan – war alles umsonst?",
+        "url": "https://www.youtube.com/watch?v=Grx6GAUjaOw",
+        "seconds": 133,
+        "outlet": "BILD",
+        "lean": "right",
+        "doubt": true
+      }
+    ],
+    "reports": [
+      {
+        "title": "Gewalt an Schulen: Schlagen, treten, würgen – Wie brutal es im Land wirklich zugeht",
+        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOekw2TGw1N2ZXdnFOeWFtM29kc1dGY00xTVU3clZDYnd1eTBSc09LLTZqVzdzUkhIM0tnNUVmUTBROURwSzhOQXl3V1hxU3kwSWE2OV92ZElWR3FLTWRDWWsteXV2RFJKZ29uclRZWTcxTzFTTHhFbE9NcWQ1VVJLNVVhUGEtZHpzZ3dSWVRCZ0U3M0k0dzVHWDlfMjJKRy1QSUdEVmlqTzlacjVrWDdfeE1IYnZKMzlNVzRnOFpCLWRiNnVadVdEaWhpbnRHSUJzNGZtbg?oc=5",
+        "outlet": "WELT",
+        "lean": "right",
+        "when": "Mon, 21 Jul 2025",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Miri-Clan: Eine Familie, tief verstrickt ins Verbrechen",
+        "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPQWdHZ1M0VnNsWTd1a1BqNjM5R3ByQThjUVlNT1htWGo0Z2N1OUxGR2ZvTGhZS0lVdUNWLVFhZWk1MjBIV0NOV1hYU2w4VHBZTWNONVg2Um9kbXQxTm5xU0lIRUdraDlvNHZxZkpMZ3NTU0RhYXVfTTRqRjZ5akhSbkQtYXRCTE13amYxRHdFNUlLMkVZWjFTNllnZXV2NURhdTQwQVFfVXBDbGs?oc=5",
+        "outlet": "WELT",
+        "lean": "right",
+        "when": "Mon, 21 Oct 2013",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Regionales Sachsen - n-tv.de",
+        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1sNXNQRFk3a3F5eU9Ma0Z1aWMxT3NnRzhWOS1mMVpEa3RyTjlTcUJzYjMzd04yVjVYZnZkZ25OTFQwNEdiZm5pc3FtRmlqODFp?oc=5",
+        "outlet": "ntv",
+        "lean": "neutral",
+        "when": "Sun, 03 Mar 2019",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Regionales Niedersachsen Bremen - n-tv.de",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE51WjBQSGlCSTNaa2hvSEFHWXk4dm9FMVV3QnRndHFUTUdGQm9XdmI5Y3RBVndOaUtoVUtsRVVsX3dEY3dEWEJjV0swLUZQT2prbUo3WE4wcEoyblQzX1NrMS1iTEZJQnc?oc=5",
+        "outlet": "ntv",
+        "lean": "neutral",
+        "when": "Mon, 04 Mar 2019",
+        "paywall": false,
+        "doubt": false
+      }
+    ],
+    "images": [
+      {
+        "id": "5739261",
+        "term": "Leipzig city street",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/5739261.jpg",
+        "caption": "Explore Leipzig's historic architecture in Germany with clear blue skies and classic buildings.",
+        "outlet": "Pexels",
+        "author": "Antonio Friedemann",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/old-town-in-summer-5739261/",
+        "look": 18374699933597462640,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "12763882",
+        "term": "Leipzig city street",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/12763882.jpg",
+        "caption": "Crowded urban scene on a sunny day in Leipzig, showcasing bustling pedestrian activity.",
+        "outlet": "Pexels",
+        "author": "Abdulmomen Bsruki",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/busy-people-walking-on-street-between-city-buildings-12763882/",
+        "look": 18374686480485071934,
+        "size": [
+          6016,
+          4016
+        ]
+      },
+      {
+        "id": "12269036",
+        "term": "Leipzig city street",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/12269036.jpg",
+        "caption": "A bustling town square featuring historic buildings and outdoor seating in Germany.",
+        "outlet": "Pexels",
+        "author": "Bruno Pellegrino",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/view-of-a-town-square-12269036/",
+        "look": 48381799956479,
+        "size": [
+          4592,
+          3448
+        ]
+      },
+      {
+        "id": "2927569",
+        "term": "police car germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/2927569.jpg",
+        "caption": "German police presence with cars and motorcycle during daytime traffic control.",
+        "outlet": "Pexels",
+        "author": "Darya Sannikova",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/man-riding-on-green-motorcycle-2927569/",
+        "look": 852770458206207,
+        "size": [
+          3089,
+          2048
+        ]
+      },
+      {
+        "id": "37969450",
+        "term": "police car germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/37969450.jpg",
+        "caption": "A police car stationed in a historic square of Münster, Germany, surrounded by pedestrians and bicycles.",
+        "outlet": "Pexels",
+        "author": "Sergej  *****",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/police-car-in-historic-munster-square-37969450/",
+        "look": 18446611595450141852,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "27617403",
+        "term": "police car germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/27617403.jpg",
+        "caption": "Classic DDR police car parked on a city street, showcasing historical nostalgia.",
+        "outlet": "Pexels",
+        "author": "Marian  Cosnete",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-police-car-parked-on-the-street-with-a-sign-on-it-27617403/",
+        "look": 35039779835100184,
+        "size": [
+          5218,
+          3483
+        ]
+      },
+      {
+        "id": "4682719",
+        "term": "german police officer",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/4682719.jpg",
+        "caption": "A police officer stands in uniform outdoors, highlighting law enforcement.",
+        "outlet": "Pexels",
+        "author": "Markus Spiske",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/a-man-in-black-police-uniform-4682719/",
+        "look": 16413302063712237692,
+        "size": [
+          3500,
+          2333
+        ]
+      },
+      {
+        "id": "38169927",
+        "term": "german police officer",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/38169927.jpg",
+        "caption": "Mounted police officers patrolling the streets of Munich for law enforcement and public safety.",
+        "outlet": "Pexels",
+        "author": "Harry Dona",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/mounted-police-patrol-on-munich-city-street-38169927/",
+        "look": 16411961470302486271,
+        "size": [
+          4928,
+          3264
+        ]
+      },
+      {
+        "id": "15626454",
+        "term": "german police officer",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/15626454.jpg",
+        "caption": "German police in full gear detain a suspect in an urban area in Hamburg.",
+        "outlet": "Pexels",
+        "author": "O H",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/back-view-of-police-officers-stopping-suspect-15626454/",
+        "look": 13962216303390541443,
+        "size": [
+          4592,
+          3056
+        ]
+      },
+      {
+        "id": "5841927",
+        "term": "apartment block germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/5841927.jpg",
+        "caption": "High-rise apartment buildings with multiple balconies in Berlin, Germany.",
+        "outlet": "Pexels",
+        "author": "Marcus Lenk",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/apartment-buildings-with-balconies-5841927/",
+        "look": 388830636651538407,
+        "size": [
+          3895,
+          2921
+        ]
+      },
+      {
+        "id": "14851065",
+        "term": "apartment block germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/14851065.jpg",
+        "caption": "A detailed view of an urban apartment building facade in Berlin, showcasing multiple balconies.",
+        "outlet": "Pexels",
+        "author": "Marcus Lenk",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/facade-of-a-block-of-flats-in-city-14851065/",
+        "look": 131071,
+        "size": [
+          5500,
+          3093
+        ]
+      },
+      {
+        "id": "19002692",
+        "term": "apartment block germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/19002692.jpg",
+        "caption": "View of a residential high-rise in Munich, Germany, illuminated at night.",
+        "outlet": "Pexels",
+        "author": "Matias Luge",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/block-of-flats-at-night-19002692/",
+        "look": 8662682885773422945,
+        "size": [
+          4592,
+          2584
+        ]
+      },
+      {
+        "id": "5739260",
+        "term": "courthouse germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/5739260.jpg",
+        "caption": "Stunning view of the Federal Administrative Court building in Leipzig, Germany.",
+        "outlet": "Pexels",
+        "author": "Antonio Friedemann",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/concrete-building-under-blue-sky-5739260/",
+        "look": 17802639441528,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "13240142",
+        "term": "courthouse germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/13240142.jpg",
+        "caption": "Front view of an elegant old courthouse building in Germany under a clear blue sky.",
+        "outlet": "Pexels",
+        "author": "Neo Lee",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/the-hanseatisches-oberlandesgericht-in-germany-13240142/",
+        "look": 65678623113089,
+        "size": [
+          8000,
+          6000
+        ]
+      },
+      {
+        "id": "11342466",
+        "term": "courthouse germany",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/11342466.jpg",
+        "caption": "Exterior view of the Federal Administrative Court in Leipzig, Germany with a blue sky.",
+        "outlet": "Pexels",
+        "author": "Antonio Friedemann",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/brown-concrete-building-under-the-blue-sky-11342466/",
+        "look": 18310510635801688316,
+        "size": [
+          5184,
+          3456
+        ]
+      },
+      {
+        "id": "32954174",
+        "term": "late night shop",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/32954174.jpg",
+        "caption": "A vibrant night market stall illuminated by lights, offering drinks and snacks.",
+        "outlet": "Pexels",
+        "author": "Vincent Tan",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/night-market-stall-selling-drinks-and-snacks-32954174/",
+        "look": 4041991860371863600,
+        "size": [
+          6714,
+          4468
+        ]
+      },
+      {
+        "id": "30142246",
+        "term": "late night shop",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/30142246.jpg",
+        "caption": "Exterior of a brightly lit convenience store in Kyoto, Japan during night.",
+        "outlet": "Pexels",
+        "author": "Julien",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/illuminated-kyoto-convenience-store-at-night-30142246/",
+        "look": 61832471380992,
+        "size": [
+          3840,
+          2397
+        ]
+      },
+      {
+        "id": "11175908",
+        "term": "late night shop",
+        "kind": "stock",
+        "file": "assets/photos/萊比錫敘利亞家族犯罪/11175908.jpg",
+        "caption": "Night view of an illuminated meat market with parked cars, exuding a calm and urban atmosphere.",
+        "outlet": "Pexels",
+        "author": "Selvin Esteban",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/car-parked-by-store-at-night-11175908/",
+        "look": 6821903724969984,
+        "size": [
+          5234,
+          2944
+        ]
+      }
+    ],
     "data": []
   },
   "facts": [],
-  "voices": []
+  "voices": [],
+  "regions": [
+    "DE"
+  ],
+  "audience": "看到治安新聞、但分不清數字是估計還是統計的人",
+  "gathered": {
+    "when": 1788133424,
+    "trouble": []
+  }
 }

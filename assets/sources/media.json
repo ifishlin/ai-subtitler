@@ -1,5 +1,5 @@
 {
-  "note": "找報導和影片時照這份清單走。分成光譜是為了讓長片有反方——只抓同一邊會變成宣傳，人工審查時也站不住。",
+  "note": "找報導和影片時照這份清單走。分成光譜是為了讓長片有反方——只抓同一邊會變成宣傳，人工審查時也站不住。\n\n德語那九家是為了德國本地題目加的。一則薩克森的地方新聞，英美十九家不會報，而該有的光譜是 SPIEGEL 到 BILD。題目的 regions 欄決定問哪一區，沒填就跟以前一樣（US + EU）；通訊社永遠會問。",
   "mix": {
     "reports": {
       "neutral": 2,
@@ -190,6 +190,92 @@
       "youtube": "@aljazeeraenglish",
       "paywall": false,
       "note": "非西方視角，常補到英美媒體不提的角度"
+    },
+    {
+      "name": "tagesschau",
+      "region": "DE",
+      "lean": "neutral",
+      "kind": "public",
+      "site": "tagesschau.de",
+      "youtube": "@tagesschau",
+      "paywall": false,
+      "note": "ARD 的新聞旗艦，德國公共廣播的基準線"
+    },
+    {
+      "name": "ZDFheute",
+      "region": "DE",
+      "lean": "neutral",
+      "kind": "public",
+      "site": "zdf.de",
+      "youtube": "@ZDFheute",
+      "paywall": false
+    },
+    {
+      "name": "MDR",
+      "region": "DE",
+      "lean": "neutral",
+      "kind": "public",
+      "site": "mdr.de",
+      "youtube": "@MDR",
+      "paywall": false,
+      "note": "薩克森、圖林根、薩克森-安哈特的公共廣播。萊比錫的事只有它會持續報"
+    },
+    {
+      "name": "DER SPIEGEL",
+      "region": "DE",
+      "lean": "centre-left",
+      "kind": "newspaper",
+      "site": "spiegel.de",
+      "youtube": "@derspiegel",
+      "paywall": true
+    },
+    {
+      "name": "Süddeutsche Zeitung",
+      "region": "DE",
+      "lean": "centre-left",
+      "kind": "newspaper",
+      "site": "sueddeutsche.de",
+      "youtube": "@sueddeutsche",
+      "paywall": true,
+      "note": "頻道是 @sueddeutsche，@SZ 沒有搜尋頁"
+    },
+    {
+      "name": "FAZ",
+      "region": "DE",
+      "lean": "centre-right",
+      "kind": "newspaper",
+      "site": "faz.net",
+      "youtube": "@faz",
+      "paywall": true
+    },
+    {
+      "name": "WELT",
+      "region": "DE",
+      "lean": "right",
+      "kind": "broadcast",
+      "site": "welt.de",
+      "youtube": "@WELTVideoTV",
+      "paywall": false,
+      "note": "新聞頻道是 @WELTVideoTV；@WELT 是別的東西"
+    },
+    {
+      "name": "BILD",
+      "region": "DE",
+      "lean": "right",
+      "kind": "newspaper",
+      "site": "bild.de",
+      "youtube": "@BILD",
+      "paywall": false,
+      "note": "小報。數字常誇大，但它報的事本身通常有"
+    },
+    {
+      "name": "ntv",
+      "region": "DE",
+      "lean": "neutral",
+      "kind": "broadcast",
+      "site": "n-tv.de",
+      "youtube": "@ntv",
+      "paywall": false
     }
   ],
   "primary": [
