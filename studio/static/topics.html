@@ -40,7 +40,42 @@
   .item b .films{float:right;font:11px var(--mono);color:var(--faint);
     font-weight:400}
 
-  h2{margin:0 0 4px;font-size:19px}
+  /* 題目的名字。這一頁最該一眼認出的東西，跟短影音那邊同一個道理。 */
+  h2{margin:0 0 12px;font-size:24px;letter-spacing:.5px}
+
+  /* 還沒處理的事，一區三列。本來是兩個黃框加一列並排 —— 三條橫幅讀起來像
+     三個警報，而它們是同一種東西：等你決定的。
+     只有真正等你動手的那兩列是黃的；「產生文案」是交接不是警告，所以不是。 */
+  .todo{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    margin:0 0 14px;overflow:hidden}
+  .todo .row{display:grid;gap:4px 12px;padding:11px 15px;
+    grid-template-columns:1fr auto auto;align-items:center;
+    border-bottom:1px solid var(--line)}
+  .todo .row:last-child{border-bottom:none}
+  .todo .doubt,.todo .want{background:#241f12}
+  .todo .what{min-width:0}
+  .todo .what b{display:block;font-size:13px;color:#e2a33c}
+  .todo .write .what b{color:var(--ink)}
+  .todo .what span{display:block;font-size:11px;color:var(--faint);
+    line-height:1.55;margin-top:2px}
+  /* 公版的說明只留一行，全文在 title。它是三四句話，整段攤開會把這一列撐成
+     一個段落，而它要回答的問題只在選公版的那一刻問一次。 */
+  .todo .write .what span{overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap}
+  .todo .rows{grid-column:1 / -1;margin-top:6px;display:flex;
+    flex-direction:column;gap:3px}
+  .todo .rows.terms{flex-direction:row;flex-wrap:wrap;gap:6px}
+  .todo .rows code{font:11px var(--mono);color:var(--dim);background:var(--bg);
+    border:1px solid var(--line);border-radius:5px;padding:1px 7px}
+  .doubt-row{display:flex;align-items:center;gap:9px;font-size:12px;min-width:0}
+  .doubt-row .who{color:var(--faint);font:11px var(--mono);flex:none;
+    width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .doubt-row .txt{color:var(--dim);overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap}
+  .todo select{font:13px inherit;color:var(--ink);background:#0b1017;
+    border:1px solid var(--line);border-radius:7px;padding:5px 9px;
+    cursor:pointer}
+  .todo select:hover{border-color:var(--accent)}
 
   /* ---- what has been gathered ---- */
   /* A pile to choose from, so it is browsed rather than read: small, dense,
@@ -110,12 +145,6 @@
   .houses-new{display:flex;gap:8px;align-items:center;margin-top:6px;
     padding-top:11px;border-top:1px solid var(--line)}
 
-  .pick-house{display:flex;align-items:center;gap:7px;font-size:12px;
-    color:var(--faint)}
-  .pick-house select{font:13px inherit;color:var(--ink);background:#0d1014;
-    border:1px solid var(--line);border-radius:6px;padding:4px 9px;cursor:pointer}
-  .pick-house select:hover{border-color:var(--accent)}
-  #whyHouse{font-size:11px;color:var(--faint);flex:1;line-height:1.5}
 
   /* Which shape a script is, on its card. Not only inside the script view:
      it decides what every other number on that card means -- 38% borrowed is
@@ -155,28 +184,7 @@
   .gather > span{font-size:11px;color:var(--faint);flex:none}
   .gather input{flex:1}
 
-  .doubted{margin:10px 0;padding:9px 14px;border-radius:9px;background:#2a2415;
-    border:1px solid #5b4a22}
-  .doubted-head{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
-  .doubted-head b{font-size:12px;color:#e2a33c}
-  .doubted-head .hint{font-size:11px;color:var(--faint)}
-  .doubted-head .grow{flex:1}
-  .doubt-row{display:flex;align-items:center;gap:9px;padding:2px 0;
-    font-size:12px}
-  .doubt-row .who{color:var(--faint);font:11px var(--mono);flex:none;
-    width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .doubt-row .what{color:var(--dim);overflow:hidden;text-overflow:ellipsis;
-    white-space:nowrap}
 
-  .wanted{display:flex;align-items:center;gap:11px;margin:10px 0;
-    padding:8px 14px;border-radius:9px;background:#2a2415;
-    border:1px solid #5b4a22;flex-wrap:wrap}
-  .wanted > span{font-size:12px;color:#e2a33c;flex:none}
-  .wanted > span b{color:#ffd76a}
-  .wanted .why{font-size:11px;color:var(--faint);flex:1 0 100%;order:9}
-  .wanted-terms{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-  .wanted-terms code{font:11px var(--mono);color:var(--dim);background:#0d1014;
-    border:1px solid var(--line);border-radius:5px;padding:1px 7px}
   /* A rule between piles, so one section ends visibly before the next
      begins. Everything stays open: a pile you have to unfold is a pile you
      forget is there. */
@@ -565,57 +573,62 @@ async function open(name) {
     </div>
     <div id="termsNote" class="hint"></div>
 
-    ${(pile.doubted || []).length ? `
-    <!-- A model's opinion, held for a decision. Deleting on it loses both the
-         source and the fact that anything was judged: the count simply reads
-         lower and looks like a search that found less. -->
-    <div class="doubted">
-      <div class="doubted-head">
-        <b>模型覺得這 ${pile.doubted.length} 篇跟題目無關</b>
-        <span class="hint">還留著，也還沒算進計數。掃一遍，撿回判錯的</span>
-        <span class="grow"></span>
+    <!-- 還沒處理的事，一區。本來是兩個一模一樣的黃框上下疊著，再加一列
+         「寫成／產生文案」—— 三條橫幅，讀起來像三個警報，而它們其實是同一
+         種東西：等你決定的。
+         順序就是做事的順序：先撿回判錯的，再補缺的圖，然後才寫。 -->
+    <div class="todo">
+      ${(pile.doubted || []).length ? `
+      <div class="row doubt">
+        <div class="what">
+          <b>模型覺得這 ${pile.doubted.length} 篇跟題目無關</b>
+          <span>還留著，也還沒算進計數。撿回判錯的，其餘丟掉</span>
+        </div>
         <button id="btnDropAll" class="tiny">其餘全部丟</button>
-      </div>
-      ${pile.doubted.map((one) => `
-        <div class="doubt-row" data-url="${escapeHTML(one.url || "")}">
-          <button class="tiny keep">留</button>
-          <span class="who">${escapeHTML(one.outlet || "")}</span>
-          <span class="what">${escapeHTML(one.title || "")}</span>
-        </div>`).join("")}
-    </div>` : ""}
+        <div class="rows">${pile.doubted.map((one) => `
+          <div class="doubt-row" data-url="${escapeHTML(one.url || "")}">
+            <button class="tiny keep">留</button>
+            <span class="who">${escapeHTML(one.outlet || "")}</span>
+            <span class="txt">${escapeHTML(one.title || "")}</span>
+          </div>`).join("")}</div>
+      </div>` : ""}
 
-    ${(pile.wanted || []).length ? `
-    <!-- What the audience implies and the pile does not have. The counts say
-         this topic has enough pictures; they cannot say it has nothing to end
-         on, because the ending is aimed at a group of people and thirty
-         pictures of the subject satisfy a number either way. -->
-    <div class="wanted">
-      <span>結尾會需要的<b>示意圖</b>，還沒收到</span>
-      <span class="why">說給誰聽是「${escapeHTML(pile.audience || "")}」，
-        文案最後幾句要落在那群人的生活上</span>
-      <div class="wanted-terms">${pile.wanted.map((one) =>
-        `<code>${escapeHTML(one)}</code>`).join("")}</div>
-      <button id="btnWanted" class="tiny">去 Pexels 抓這幾個</button>
-    </div>` : ""}
+      ${(pile.wanted || []).length ? `
+      <!-- 受眾要求的、素材堆沒有的。計數說圖夠了；計數看不出「結尾沒有東西
+           可以落」，因為結尾是講給一群人聽的，而三十張講主題的圖在數字上一
+           樣夠。 -->
+      <div class="row want">
+        <div class="what">
+          <b>結尾會需要的示意圖，還沒收到</b>
+          <span>說給誰聽是「${escapeHTML(pile.audience || "")}」，
+            文案最後幾句要落在那群人的生活上</span>
+        </div>
+        <button id="btnWanted" class="tiny">去 Pexels 抓</button>
+        <div class="rows terms">${pile.wanted.map((one) =>
+          `<code>${escapeHTML(one)}</code>`).join("")}</div>
+      </div>` : ""}
 
-    <div style="display:flex;gap:8px;align-items:center">
-      <!-- Chosen before writing, not corrected afterwards. The shape decides
-           the roles, the pacing, the borrowed ceiling and which prompt is
-           sent, so picking it after the fact means every line has to be
-           relabelled -- which is what happened to Messina. -->
-      <label class="pick-house">寫成
+      <!-- 交接點。公版在寫之前選，不是寫完再改：它決定角色、節奏、實拍上限
+           和送哪一份 prompt，事後換等於每一句都要重貼標籤 —— 梅西納就是這樣。 -->
+      <div class="row write">
+        <div class="what">
+          <b>寫成哪一種</b>
+          <!-- 公版的 why，一行。它是三四句話，本來整段塞在按鈕旁邊 —— 跟短
+               影音那條超長 metadata 同一個毛病。滑上去看全文。
+               這一列本來寫「素材夠了，可以寫」，而上面那條綠色的已經說過
+               了；同一句話講兩次，第二次就沒有人讀。 -->
+          <span id="whyHouse"></span>
+        </div>
         <select id="writeAs">
           ${(FORMATS.length ? FORMATS : [{key: "argue", name: "新聞報導"}])
             .map((one) => `<option value="${escapeHTML(one.key)}">${
               escapeHTML(one.name || one.key)}</option>`).join("")}
         </select>
-      </label>
-      <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
-      ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">素材不齊也要寫</button>'}
-      <span id="whyHouse" class="hint"></span>
-      <span style="flex:1"></span>
+        <button id="btnWrite" class="primary" ${pile.ready ? "" : "disabled"}>產生文案</button>
+        ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">不齊也要寫</button>'}
+      </div>
+      <div id="note"></div>
     </div>
-    <div id="note"></div>
 
     ${(pile.scripts || []).length ? `
       <h3>寫好的文案 <span class="count">${pile.scripts.length} 份</span></h3>
@@ -788,7 +801,10 @@ async function open(name) {
   if (writeAs) {
     const sayWhy = () => {
       const spec = FORMATS.find((one) => one.key === writeAs.value) || {};
+      // 一行，全文在 title。三四句話塞在按鈕旁邊只會被跳過，而它要回答的是
+      // 「這兩種公版差在哪」—— 那個問題只在選的那一刻要問一次。
       $("whyHouse").textContent = spec.why || "";
+      $("whyHouse").title = spec.why || "";
     };
     writeAs.onchange = sayWhy;
     sayWhy();
