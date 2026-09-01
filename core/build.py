@@ -11,15 +11,20 @@ length as its line, then joined:
 
     card    drawn here, and it moves: see core/cards.py
     pic     a still, pushed in slowly so it reads as film rather than a slide
-    clip    a passage of the source, silent, in the tall frame
+    clip    a passage of the source, with its sound, in the tall frame
 
 The caption is burnt on last, over all of them, so type does not change
 between shot kinds.
+
+Cards and stills carry a silent track of the same shape as the clips' real
+one, because the join is `-c copy` and a piece missing a stream takes every
+stream after it with it.
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import re
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -339,10 +344,50 @@ def build(name: str, target: Path | None = None,
         ["ffmpeg", "-v", "error", "-f", "concat", "-safe", "0",
          "-i", str(listing), "-c", "copy", "-movflags", "+faststart",
          str(target), "-y"], check=True)
+    heard = loudness(target)
     return {"file": str(target.relative_to(ROOT)),
             "seconds": measured["seconds"], "shots": len(pieces),
             # Made every time rather than on request: looking at what was
             # actually rendered is the one check nothing else can do, and a
             # check that has to be remembered is one that will be skipped.
             "contact": str(contact(name, target).relative_to(ROOT)),
+            "loudness": heard,
+            "silent": silent_clips(measured, heard),
             "rights": script_module.rights(found, pictures, measured)}
+
+
+SILENT_DB = -60.0
+
+
+def loudness(film: Path) -> float:
+    """Mean level of a finished film, in dB. -91 is digital silence."""
+    got = subprocess.run(
+        ["ffmpeg", "-i", str(film), "-af", "volumedetect", "-f", "null", "-"],
+        capture_output=True, text=True)
+    found = re.search(r"mean_volume:\s*(-?[\d.]+) dB", got.stderr)
+    return float(found.group(1)) if found else SILENT_DB
+
+
+def silent_clips(measured: dict[str, Any], heard: float) -> str:
+    """Whether a film that should have sound came out without any.
+
+    Borrowed passages carry their own audio now. Nothing about that announces
+    itself when it stops working: `_has_sound` answering False for every file,
+    a loudnorm that outputs digital silence, an ffmpeg built without the aac
+    encoder -- each of those renders a complete film, reports success, and is
+    only discovered by somebody putting headphones on.
+
+    Which is the shape this project keeps meeting: **doing the work and
+    quietly reporting nothing**. So the number gets measured every build and
+    said out loud, rather than waiting to be asked for.
+
+    Not a gate. A film of nothing but cards is legitimately silent, and the
+    one number cannot tell that apart from a broken encoder -- so it warns,
+    where `build()` refuses.
+    """
+    moving = [line for line in (measured.get("lines") or [])
+              if script_module.is_clip(line)]
+    if not moving or heard > SILENT_DB:
+        return ""
+    return (f"有 {len(moving)} 段影片，成片卻是靜音的（{heard:.0f} dB）—— "
+            f"素材沒有音軌，或是這台機器的 ffmpeg 沒有 aac")

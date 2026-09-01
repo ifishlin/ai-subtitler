@@ -1,516 +1,501 @@
 {
+  "view": "這不是娛樂新聞。派拉蒙已經有 CBS News，再吃下 CNN，加上 TikTok 的美國業務 —— 買走的不是電影，是你每天新聞的入口",
+  "tone": "克制",
   "topic": "科技巨頭買下好萊塢",
-  "view": "大家在吵誰買到華納。沒有人在問：併成之後，美國兩家新聞台會是同一個老闆——而那個人同時在買抖音美國。",
-  "tone": "冷靜",
-  "for": "每天看新聞、但沒想過新聞是誰的人",
-  "narration": false,
   "format": "argue",
+  "narration": false,
   "lines": [
     {
-      "say": "好萊塢又一樁併購案。",
+      "say": "好萊塢在打一場搶親",
       "role": "起",
-      "show": "新聞畫格：Fox Business 的字卡",
-      "pic": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_4.jpg",
-      "fit": "fill",
       "tone": "cool",
-      "seen": true,
-      "from": "Fox Business"
+      "show": "影片：財經台形容這場收購戰已經翻臉",
+      "clip": {
+        "file": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "start": 3.52,
+        "end": 8.56
+      },
+      "from": "Fox Business 第 5 秒",
+      "seconds": 3.3,
+      "seen": true
     },
     {
-      "say": "出價一千一百億美元。",
+      "say": "派拉蒙對華納出價",
       "role": "起",
-      "show": "自製：數字卡",
       "tone": "cool",
-      "from": "The Economist",
-      "card": {
-        "kind": "number",
-        "title": "派拉蒙出價",
-        "value": "1110 億",
-        "under": "美元，敵意收購",
-        "note": "資料：The Economist",
-        "ghost": "購"
-      }
-    },
-    {
-      "say": "財經版追了三個月。",
-      "role": "起",
-      "show": "自製：字卡",
-      "tone": "cool",
-      "from": "觀點",
-      "card": {
-        "kind": "word",
-        "title": "財經版追了三個月",
-        "under": "誰出價高，誰買到手",
-        "ghost": "錢"
-      }
-    },
-    {
-      "say": "看起來跟你沒關係。",
-      "role": "起",
-      "show": "自製：字卡",
-      "tone": "cool",
-      "from": "觀點",
-      "card": {
-        "kind": "word",
-        "title": "看起來",
-        "under": "跟你沒關係",
-        "ghost": "無"
-      }
-    },
-    {
-      "say": "出價的人姓艾利森。",
-      "role": "承",
-      "show": "真實：Larry Ellison",
-      "pic": "assets/photos/科技巨頭買下好萊塢/Larry_Ellison_picture_(cropped).png.jpg",
-      "fit": "fill",
-      "tone": "cool",
-      "seen": true,
-      "from": "維基百科"
-    },
-    {
-      "say": "世界第二有錢的人。",
-      "role": "承",
-      "show": "自製：數字卡",
-      "tone": "cool",
-      "from": "The Economist",
-      "card": {
-        "kind": "number",
-        "title": "Larry Ellison",
-        "value": "全球第 2",
-        "under": "富有的人",
-        "note": "資料：The Economist"
-      }
-    },
-    {
-      "say": "甲骨文的董事長。",
-      "role": "承",
-      "show": "自製：字卡",
-      "tone": "cool",
-      "from": "The Economist",
-      "card": {
-        "kind": "word",
-        "title": "甲骨文董事長",
-        "under": "軟體業，不是娛樂業",
-        "ghost": "骨"
-      }
-    },
-    {
-      "say": "去年他先買下派拉蒙。",
-      "role": "承",
-      "show": "新聞畫格：派拉蒙與 CBS 的招牌",
-      "pic": "assets/photos/科技巨頭買下好萊塢/frame_12g9HaRI7UU_9.jpg",
-      "fit": "fill",
-      "tone": "cool",
-      "seen": true,
-      "from": "PBS NewsHour"
-    },
-    {
-      "say": "買下來，掛在兒子名下。",
-      "role": "承",
-      "show": "自製：換位卡",
-      "tone": "cool",
-      "from": "The Economist",
-      "card": {
-        "kind": "swap",
-        "title": "派拉蒙",
-        "was": "上市公司",
-        "now": "艾利森家的",
-        "note": "2026 年 8 月．The Economist"
-      }
-    },
-    {
-      "say": "今年，他要華納兄弟。",
-      "role": "承",
-      "show": "自製：字卡",
-      "tone": "light",
-      "from": "The Economist",
-      "card": {
-        "kind": "word",
-        "title": "今年",
-        "under": "他要華納兄弟",
-        "ghost": "華"
-      }
-    },
-    {
-      "say": "個人擔保四百億美元。",
-      "role": "承",
-      "show": "自製：數字卡",
-      "tone": "light",
-      "from": "AP News",
-      "card": {
-        "kind": "number",
-        "title": "Larry Ellison 個人擔保",
-        "value": "404 億",
-        "under": "美元",
-        "note": "資料：AP News",
-        "ghost": "保"
-      }
-    },
-    {
-      "say": "華納叫股東別賣。",
-      "role": "承",
-      "show": "自製：分岔卡",
-      "tone": "light",
-      "from": "AP News",
-      "card": {
-        "kind": "split",
-        "title": "華納董事會的建議",
-        "branches": [
-          "拒絕派拉蒙",
-          "支持 Netflix"
-        ],
-        "note": "資料：AP News"
-      }
-    },
-    {
-      "say": "敵意收購就是這意思。",
-      "role": "承",
-      "show": "自製：字卡",
-      "tone": "light",
-      "from": "觀點",
+      "show": "自製：一句話佔滿畫面",
       "card": {
         "kind": "word",
         "title": "敵意收購",
-        "under": "對方不想賣，照買",
-        "ghost": "敵"
-      }
+        "under": "派拉蒙天空之舞，直接向華納股東出價",
+        "tone": "cool"
+      },
+      "from": "Fox Business 第 87 秒",
+      "seconds": 1.9
     },
     {
-      "say": "但這不是娛樂新聞。",
-      "role": "轉",
-      "show": "自製：字卡",
-      "tone": "light",
-      "from": "觀點",
-      "card": {
-        "kind": "word",
-        "title": "但這不是",
-        "under": "娛樂新聞",
-        "ghost": "轉"
-      }
-    },
-    {
-      "say": "派拉蒙手上有 CBS。",
-      "role": "轉",
-      "show": "自製：字卡",
-      "tone": "light",
-      "from": "The Economist",
-      "card": {
-        "kind": "word",
-        "title": "派拉蒙手上",
-        "under": "CBS 新聞",
-        "note": "The Economist 第 74 秒"
-      }
-    },
-    {
-      "say": "華納手上有 CNN。",
-      "role": "轉",
-      "show": "新聞畫格：CNN 大樓",
-      "pic": "assets/photos/科技巨頭買下好萊塢/frame_12g9HaRI7UU_24.jpg",
+      "say": "每股三十一美元",
+      "role": "起",
+      "tone": "cool",
+      "show": "Fox Business 畫面，下標寫好萊塢的爛攤子",
+      "pic": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_4.jpg",
       "fit": "fill",
-      "tone": "light",
-      "seen": true,
-      "from": "CNBC"
+      "from": "PBS NewsHour",
+      "seconds": 2.3,
+      "seen": true
     },
     {
-      "say": "併成一家會是什麼。",
-      "role": "轉",
-      "show": "影片：經濟學人講合併後的規模",
+      "say": "Netflix 也在搶同一家",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：兩個買家比出價",
+      "card": {
+        "kind": "bars",
+        "title": "誰出得比較高",
+        "rows": [
+          [
+            "派拉蒙",
+            31,
+            "",
+            "每股 31 美元"
+          ],
+          [
+            "Netflix",
+            27.75,
+            "",
+            "每股 27.75 美元"
+          ]
+        ],
+        "tone": "cool"
+      },
+      "from": "Fox Business 第 236 秒",
+      "seconds": 2.83
+    },
+    {
+      "say": "華納董事會叫股東拒絕",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：董事會的建議",
+      "card": {
+        "kind": "swap",
+        "title": "董事會建議",
+        "was": "接受派拉蒙",
+        "now": "支持 Netflix",
+        "tone": "cool"
+      },
+      "from": "AP News",
+      "seconds": 2.17
+    },
+    {
+      "say": "你大概當娛樂新聞看",
+      "role": "起",
+      "tone": "cool",
+      "show": "有人窩在沙發上看電視",
+      "pic": "assets/photos/科技巨頭買下好萊塢/3811851.jpg",
+      "fit": "fill",
+      "from": "觀點",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "誰買下誰，關我什麼事",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "誰買下誰\n關我什麼事",
+        "tone": "cool"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "出錢的是艾利森父子",
+      "role": "承",
+      "tone": "cool",
+      "show": "甲骨文董事長賴瑞・艾利森在台上發言",
+      "pic": "assets/photos/科技巨頭買下好萊塢/Larry_Ellison_picture_(cropped).png.jpg",
+      "fit": "fill",
+      "from": "The Economist",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "老艾利森世界第二有錢",
+      "role": "承",
+      "tone": "cool",
+      "show": "自製：一個數字",
+      "card": {
+        "kind": "number",
+        "title": "全球富豪榜",
+        "value": "第 2 名",
+        "under": "甲骨文董事長賴瑞・艾利森",
+        "tone": "cool"
+      },
+      "from": "The Economist",
+      "seconds": 2.17
+    },
+    {
+      "say": "他個人擔保四百億",
+      "role": "承",
+      "tone": "cool",
+      "show": "自製：一個數字跑上去",
+      "card": {
+        "kind": "number",
+        "title": "他個人擔保的金額",
+        "value": "404 億",
+        "under": "美元，為了這樁併購",
+        "tone": "cool"
+      },
+      "from": "AP News",
+      "seconds": 1.9
+    },
+    {
+      "say": "併成後票房遠超對手",
+      "role": "承",
+      "tone": "cool",
+      "show": "影片：經濟學人說這會造出一個好萊塢巨獸",
       "clip": {
         "file": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
         "start": 24.16,
         "end": 30.88
       },
-      "seen": true,
-      "from": "The Economist",
-      "seconds": 6.72
+      "from": "The Economist 第 25 秒",
+      "seconds": 3.3,
+      "seen": true
     },
     {
-      "say": "美國兩家新聞台，",
+      "say": "但他們買的不是電影",
       "role": "轉",
-      "show": "自製：分岔卡",
       "tone": "light",
-      "from": "The Economist",
-      "card": {
-        "kind": "split",
-        "title": "併成之後",
-        "branches": [
-          "CBS 新聞",
-          "CNN"
-        ],
-        "note": "同一個家族"
-      }
-    },
-    {
-      "say": "會是同一個老闆。",
-      "role": "轉",
-      "show": "自製：字卡",
-      "tone": "light",
-      "from": "觀點",
+      "show": "自製：翻轉那一句",
       "card": {
         "kind": "word",
-        "title": "同一個老闆",
-        "ghost": "一"
-      }
+        "title": "他們買的\n不是電影",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 1.96
     },
     {
-      "say": "經濟學人算過這件事。",
+      "say": "派拉蒙旗下已經有 CBS",
       "role": "轉",
-      "show": "影片：經濟學人講片庫規模",
+      "tone": "light",
+      "show": "時代廣場上的派拉蒙與 CBS NEWS 招牌",
+      "pic": "assets/photos/科技巨頭買下好萊塢/frame_12g9HaRI7UU_9.jpg",
+      "fit": "fill",
+      "from": "The Economist",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "併成之後再加上 CNN",
+      "role": "轉",
+      "tone": "light",
+      "show": "CNN 中庭，牆上一排 CNN 標誌與美國國旗",
+      "pic": "assets/photos/科技巨頭買下好萊塢/frame_12g9HaRI7UU_24.jpg",
+      "fit": "fill",
+      "from": "PBS NewsHour 第 24 秒",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "兩家新聞台，一個家族",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一條線分岔成兩條",
+      "card": {
+        "kind": "split",
+        "title": "同一個老闆",
+        "branches": [
+          "CBS\nNews",
+          "CNN"
+        ],
+        "tone": "light"
+      },
+      "from": "The Economist",
+      "seconds": 2.17
+    },
+    {
+      "say": "經濟學人的原話很直白",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：談這兩家的片庫合起來沒有對手",
       "clip": {
         "file": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
         "start": 58.8,
         "end": 66.0
       },
-      "seen": true,
-      "from": "The Economist",
-      "seconds": 7.2
+      "from": "The Economist 第 60 秒",
+      "seconds": 3.3,
+      "seen": true
     },
     {
-      "say": "一個家族會控制掉，",
+      "say": "控制美國一塊新聞消費",
       "role": "轉",
-      "show": "自製：長條卡",
       "tone": "light",
-      "from": "The Economist",
+      "show": "自製：引述那一句",
+      "card": {
+        "kind": "ring",
+        "title": "經濟學人的說法",
+        "value": "一個家族",
+        "under": "將控制美國相當大一塊的新聞消費",
+        "tone": "light"
+      },
+      "from": "The Economist 第 66 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "電視廣告三分之一",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：市場佔比",
       "card": {
         "kind": "bars",
         "title": "全美電視廣告市場",
         "rows": [
           [
-            "派拉蒙＋華納",
-            34
+            "併成後這一家",
+            34,
+            "",
+            "超過三分之一"
           ],
           [
-            "其他所有人",
-            66
+            "其他全部",
+            66,
+            "",
+            "剩下的"
           ]
         ],
-        "note": "併成後超過三分之一．The Economist"
-      }
+        "tone": "light"
+      },
+      "from": "The Economist",
+      "seconds": 1.9
     },
     {
-      "say": "美國一大塊的新聞。",
+      "say": "而他還在買 TikTok",
       "role": "轉",
-      "show": "自製：字卡",
       "tone": "light",
-      "from": "The Economist",
+      "show": "自製：另一條線",
       "card": {
         "kind": "word",
-        "title": "美國相當大一塊的",
-        "under": "新聞消費",
-        "note": "The Economist 第 66 秒"
-      }
+        "title": "同一個人\n還在買 TikTok",
+        "under": "賴瑞・艾利森參與收購 TikTok 美國業務",
+        "tone": "light"
+      },
+      "from": "The Economist",
+      "seconds": 2.39
     },
     {
-      "say": "而人事已經動過了。",
+      "say": "近半年輕人在那看新聞",
       "role": "轉",
-      "show": "自製：字卡",
       "tone": "light",
-      "from": "The Economist",
-      "card": {
-        "kind": "word",
-        "title": "關鍵編輯職位",
-        "under": "已有爭議性任命",
-        "note": "The Economist 第 79 秒"
-      }
-    },
-    {
-      "say": "還有第三隻腳。",
-      "role": "轉",
-      "show": "自製：鏈條卡",
-      "tone": "light",
-      "from": "The Economist",
-      "card": {
-        "kind": "chain",
-        "title": "同一個人，三個地方",
-        "points": [
-          "派拉蒙／CBS",
-          "華納／CNN",
-          "抖音美國"
-        ],
-        "under": "都在買"
-      }
-    },
-    {
-      "say": "近半美國年輕人，",
-      "role": "轉",
-      "show": "自製：數字卡",
-      "tone": "light",
-      "from": "The Economist",
+      "show": "自製：一個數字",
       "card": {
         "kind": "number",
-        "title": "美國年輕人",
+        "title": "美國年輕人看新聞的地方",
         "value": "近一半",
-        "under": "從抖音看新聞",
-        "note": "資料：The Economist",
-        "ghost": "滑"
-      }
+        "under": "來自 TikTok",
+        "tone": "light"
+      },
+      "from": "The Economist",
+      "seconds": 2.17
     },
     {
-      "say": "那監管擋得住嗎。",
-      "role": "合",
-      "show": "自製：字卡",
-      "tone": "warm",
-      "from": "觀點",
-      "card": {
-        "kind": "word",
-        "title": "那監管",
-        "under": "擋得住嗎",
-        "ghost": "法"
-      }
-    },
-    {
-      "say": "沒有一樁是定局的。",
-      "role": "合",
-      "show": "影片：經濟學人講變數",
+      "say": "大片廠從五家變四家",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：談傳統片廠會從五家減成四家",
       "clip": {
         "file": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
         "start": 99.2,
         "end": 106.0
       },
-      "seen": true,
+      "from": "The Economist 第 100 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "反壟斷本來該擋一下",
+      "role": "轉",
+      "tone": "light",
+      "show": "聯邦通訊委員會主席卡爾的官方肖像",
+      "pic": "assets/photos/科技巨頭買下好萊塢/Brendan_Carr,_official_portrait_2025_(cropped)(b).jpg.jpg",
+      "fit": "fill",
       "from": "The Economist",
-      "seconds": 6.8
+      "seconds": 2.3,
+      "seen": true
     },
     {
-      "say": "但他跟川普交好。",
-      "role": "合",
-      "show": "自製：字卡",
-      "tone": "warm",
-      "from": "The Economist",
-      "card": {
-        "kind": "word",
-        "title": "但他跟川普關係好",
-        "under": "監管阻力可能變小",
-        "note": "The Economist 第 111 秒"
-      }
+      "say": "但他跟川普關係很好",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：分析師說這樁案子像是跟政府談成的",
+      "clip": {
+        "file": "assets/footage/科技巨頭買下好萊塢/mEy6dWIrJd0.mp4",
+        "start": 220.12,
+        "end": 226.76
+      },
+      "from": "Fox Business 第 220 秒",
+      "seconds": 3.3,
+      "seen": true
     },
     {
-      "say": "小艾利森承諾過，",
+      "say": "電影誰拍，其實還好",
       "role": "合",
-      "show": "自製：字卡",
       "tone": "warm",
-      "from": "Fox News",
+      "show": "自製：一條線分岔成兩條",
       "card": {
-        "kind": "word",
-        "title": "David Ellison 承諾",
-        "under": "維持 CNN 編輯獨立",
-        "note": "資料：Fox News"
-      }
-    },
-    {
-      "say": "那是他自己給的承諾。",
-      "role": "合",
-      "show": "自製：堆疊卡",
-      "tone": "warm",
-      "from": "觀點",
-      "card": {
-        "kind": "stack",
-        "title": "這個承諾",
-        "items": [
-          "他自己說的",
-          "他自己解釋",
-          "他自己可以收回"
+        "kind": "split",
+        "title": "換老闆的差別在哪",
+        "branches": [
+          "電影\n誰拍",
+          "新聞\n誰播"
         ],
-        "note": "沒有第三方能執行"
-      }
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
     },
     {
-      "say": "換個老闆不會有公告。",
+      "say": "新聞誰播，不一樣",
       "role": "合",
-      "show": "自製：字卡",
       "tone": "warm",
+      "show": "主控室裡一整面監看牆",
+      "pic": "assets/photos/科技巨頭買下好萊塢/13627258.jpg",
+      "fit": "fill",
       "from": "觀點",
-      "card": {
-        "kind": "word",
-        "title": "換老闆",
-        "under": "不會跳出通知",
-        "ghost": "靜"
-      }
+      "seconds": 2.3,
+      "seen": true
     },
     {
-      "say": "畫面一樣，主播一樣。",
+      "say": "他們承諾編輯獨立",
       "role": "合",
-      "show": "自製：換位卡",
       "tone": "warm",
-      "from": "觀點",
+      "show": "自製：承諾與動作",
       "card": {
         "kind": "swap",
-        "title": "你看到的",
-        "was": "一模一樣",
-        "now": "決定的人換了",
-        "note": "沒有公告，沒有跑馬燈"
-      }
+        "title": "同一個月",
+        "was": "承諾維持 CNN 編輯獨立",
+        "now": "關鍵編輯職位換人",
+        "tone": "warm"
+      },
+      "from": "Fox News",
+      "seconds": 1.9
     },
     {
-      "say": "你每天滑開手機，",
+      "say": "同時換掉關鍵的位置",
       "role": "合",
-      "show": "自製：字卡",
       "tone": "warm",
+      "show": "影片：主持人說沒見過這種規模的媒體併購",
+      "clip": {
+        "file": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "start": 24.68,
+        "end": 29.68
+      },
+      "from": "CNBC 第 24 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "留言區只有一句話",
+      "role": "合",
+      "tone": "warm",
+      "show": "華納兄弟位在柏本克的片廠大門",
+      "pic": "assets/photos/科技巨頭買下好萊塢/Gate_4_Warner_Bros._Studios.jpg.jpg",
+      "fit": "fill",
       "from": "觀點",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "誰贏，我們都輸",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：把留言圈起來",
+      "card": {
+        "kind": "ring",
+        "title": "按讚最多的留言",
+        "value": "誰贏我們都輸",
+        "under": "Whoever wins, we ultimately all lose.",
+        "tone": "warm"
+      },
+      "from": "鄉民反應 540 讚",
+      "seconds": 1.9
+    },
+    {
+      "say": "這件事不會有通知",
+      "role": "合",
+      "tone": "warm",
+      "show": "影片：談這樁案子會改變整個產業",
+      "clip": {
+        "file": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "start": 500.96,
+        "end": 507.12
+      },
+      "from": "CNBC 第 500 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "明天你打開電視",
+      "role": "合",
+      "tone": "warm",
+      "show": "有人拿著遙控器對著電視",
+      "pic": "assets/photos/科技巨頭買下好萊塢/4777979.jpg",
+      "fit": "fill",
+      "from": "觀點",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "台還是那個台",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一句話佔滿畫面",
       "card": {
         "kind": "word",
-        "title": "你每天滑開手機",
-        "under": "打開電視",
-        "ghost": "你"
-      }
-    },
-    {
-      "say": "轉台，換一個 App，",
-      "role": "合",
-      "show": "自製：字卡",
-      "tone": "warm",
+        "title": "台還是\n那個台",
+        "tone": "warm"
+      },
       "from": "觀點",
-      "card": {
-        "kind": "word",
-        "title": "轉台",
-        "under": "換一個 App",
-        "ghost": "轉"
-      }
+      "seconds": 1.9
     },
     {
-      "say": "以為在看很多家。",
+      "say": "決定播什麼的人換了",
       "role": "合",
-      "show": "自製：佇列卡",
       "tone": "warm",
-      "from": "觀點",
+      "show": "自製：換掉的是誰",
       "card": {
-        "kind": "queue",
-        "title": "你以為在看很多家",
-        "count": 6,
-        "under": "其實可能是同一家"
-      }
+        "kind": "swap",
+        "title": "沒有換的與換掉的",
+        "was": "頻道號碼、主播、時段",
+        "now": "決定播什麼的那個人",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
     },
     {
-      "say": "多看幾家，本來是辦法。",
+      "say": "你看的新聞，換了老闆",
       "role": "合",
-      "show": "自製：字卡",
-      "tone": "warm",
-      "from": "觀點",
-      "card": {
-        "kind": "word",
-        "title": "多看幾家",
-        "under": "本來是辦法",
-        "ghost": "多"
-      }
-    },
-    {
-      "say": "整件事是這樣的。",
-      "role": "合",
+      "tone": "cool",
       "show": "自製：結尾頁",
-      "from": "觀點",
       "card": {
         "kind": "outro",
-        "tone": "warm",
-        "ghost": "誰",
         "points": [
-          "艾利森父子買下派拉蒙，現在要華納",
-          "併成後，CBS 新聞和 CNN 同一個老闆",
-          "同一個人還在買抖音美國，年輕人一半在那看新聞",
-          "編輯獨立的承諾，是他自己給自己的"
+          "派拉蒙旗下已經有 CBS News",
+          "併下華納，再加上一個 CNN",
+          "同一個人還在買 TikTok 美國業務",
+          "近半數美國年輕人在那裡看新聞"
         ],
-        "title": "你以為在看很多家\n可能是同一家",
-        "under": "科技巨頭買下好萊塢"
-      }
+        "title": "被買走的不是電影\n是你每天的新聞入口",
+        "under": "艾利森家族併購華納兄弟探索",
+        "tone": "cool"
+      },
+      "from": "觀點",
+      "seconds": 5.6
     }
   ]
 }

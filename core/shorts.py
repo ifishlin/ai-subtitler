@@ -243,7 +243,7 @@ def interlude(cards: list[Path], target: Path, each: float = 5.0) -> Path:
 def clip_cut(video: Path, start: float, end: float, seconds: float,
              target: Path, overlay: Path | None = None,
              credit: str = "") -> Path:
-    """One moving shot, cut to length, silent, in the tall frame.
+    """One moving shot, cut to length, with its sound, in the tall frame.
 
     This is what was missing. A short built only from cards and stills has
     nothing on screen that moves, and without narration that is the whole of
@@ -251,9 +251,19 @@ def clip_cut(video: Path, start: float, end: float, seconds: float,
     is happening. Five videos were being downloaded per topic and used only as
     a place to take screenshots from.
 
-    Silent on purpose, not by omission. Content ID matches the audio, and
-    these run without narration anyway, so the sound is the one part of a
-    borrowed clip there is no reason to keep and every reason not to.
+    It used to be silent on purpose: Content ID matches the audio, and these
+    run without narration anyway. That call has been reversed -- a news clip
+    with the sound stripped is a moving photograph, and the one thing it had
+    to offer over a still was that somebody is speaking in it.
+
+    Keeping it costs three things silence did not:
+
+    - the source may have no audio track at all, and mapping one that is not
+      there fails the whole render
+    - every outlet masters at a different level, so cuts between them jump.
+      One loudness target, from rules.json
+    - the picture is slowed when the passage is shorter than the line, and
+      audio that is not slowed with it drifts out of sync within a second
 
     `overlay` is the line's caption drawn by the same code that draws it on a
     still, so the type does not change when the picture starts moving. The
@@ -280,19 +290,87 @@ def clip_cut(video: Path, start: float, end: float, seconds: float,
     steps.append(f"[{last}]fps={FPS},trim=duration={seconds:.2f},"
                  f"setpts=PTS-STARTPTS,fade=in:0:6[v]")
 
+    # The sound. `anullsrc` stays as the input either way, because a passage
+    # whose source has no audio track still has to come out with one: the film
+    # is joined with `-c copy`, and a piece missing a stream drops every
+    # stream after it.
+    silence = 2 if overlay else 1
+    if _has_sound(video):
+        steps.append(f"[0:a]{_sound_filter(rate, seconds)}[a]")
+        sound = "[a]"
+    else:
+        sound = f"{silence}:a"
     command = ["ffmpeg", "-v", "error",
                "-ss", f"{start:.3f}", "-to", f"{end:.3f}", "-i", str(video)]
     if overlay:
         command += ["-i", str(overlay)]
     command += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
                 "-filter_complex", ";".join(steps),
-                "-map", "[v]", "-map", f"{2 if overlay else 1}:a",
+                "-map", "[v]", "-map", sound,
                 "-t", f"{seconds:.2f}",
                 "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
+                "-pix_fmt", "yuv420p",
+                # Same shape as the silent track the cards and stills carry,
+                # or the join produces a file whose sound stops partway.
+                "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2",
                 "-shortest", str(target), "-y"]
     subprocess.run(command, check=True)
     return target
+
+
+def _has_sound(video: Path) -> bool:
+    """Whether the file carries an audio stream.
+
+    Asked rather than assumed. Footage arrives from several places -- yt-dlp
+    with opus, stock libraries with none at all -- and `-map 0:a` on a file
+    without one fails the render with a stream-not-found, at the point where
+    thirty other shots have already been encoded.
+    """
+    try:
+        got = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "a",
+             "-show_entries", "stream=codec_name", "-of", "csv=p=0",
+             str(video)], capture_output=True, text=True, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+    return bool(got.stdout.strip())
+
+
+def _sound_filter(rate: float, seconds: float) -> str:
+    """Stretch, level and fade one passage's audio.
+
+    `rate` is the same number the picture is slowed by, so the two stay
+    together. `atempo` only takes 0.5 to 2.0, so a passage stretched further
+    than double needs the factor split across several -- a five-second line
+    holding a two-second passage is 0.4, which one `atempo` refuses and two
+    accept. It does sound like slow motion. So does the picture.
+
+    Loudness is levelled in one pass. Two-pass measurement is more accurate
+    and would mean probing every passage before rendering any of them, which
+    is the kind of step that gets skipped.
+    """
+    from . import rules as rules_module
+    want = rules_module.at("sound.clip_loudness", -16)
+    peak = rules_module.at("sound.clip_peak", -1.5)
+    fade = rules_module.at("sound.fade", 0.15)
+
+    steps = []
+    left = max(0.05, min(1.0, rate))
+    while left < 0.5 - 1e-9:                    # 0.5 是 atempo 的下限
+        steps.append("atempo=0.5")
+        left /= 0.5
+    if abs(left - 1.0) > 1e-6:
+        steps.append(f"atempo={left:.6f}")
+    steps.append("aresample=48000")
+    steps.append(f"loudnorm=I={want}:TP={peak}:LRA=11")
+    steps.append("asetpts=PTS-STARTPTS")
+    # 淡入淡出。沒有它，每一段的頭尾是啪的一聲 —— 而那個聲音在有人戴耳機
+    # 看的時候最明顯，也就是這種片子絕大多數被看的方式。
+    out = max(0.0, seconds - fade)
+    steps.append(f"afade=t=in:st=0:d={fade}")
+    steps.append(f"afade=t=out:st={out:.2f}:d={fade}")
+    steps.append(f"apad,atrim=duration={seconds:.2f}")
+    return ",".join(steps)
 
 
 def render(video: Path, passage: Passage, target: Path,

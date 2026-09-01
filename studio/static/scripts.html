@@ -743,12 +743,18 @@ async function showScript(name) {
   const sums = made.measured;
   // One rule, and it lives in core/script.py: the share is measured there.
   const share = 100 - (sums.borrowed_share || 0);
+  /* 上下兩條線也一樣從 measure() 來。這兩個數字本來寫死在這一頁上（35 和
+     60），而片型可以改它們 —— 故事型的上限一直是 50%，這一頁六個月來都在
+     說那是「不合格」。指名一個數字的畫面不會過期，引用一個會。 */
+  const real = sums.borrowed_share || 0;
+  const floor = Math.round((sums.borrowed_least || 0) * 100);
+  const roof = Math.round((sums.borrowed_most || 0) * 100);
   /* 沒過幾處。門的清單長度加上三個是非題。
      算在這裡而不是伺服器，因為 measure() 已經把每一項算好了 —— 再回傳一個
      總數就是同一個事實的第二份，而這個專案為那件事修過四次錯。 */
   const GATE_KEYS = ["shapeless", "unsourced", "unpicked", "unchecked",
                      "undrawn", "uncredited", "samey", "unsigned",
-                     "simplified", "card_wrong", "clipped"];
+                     "simplified", "card_wrong", "clipped", "cardbound"];
   sums.__bad = GATE_KEYS.reduce((n, key) => n + (sums[key] || []).length, 0)
     + (sums.too_long ? 1 : 0)
     + (sums.even ? 0 : 1)
@@ -806,10 +812,10 @@ async function showScript(name) {
           <i>上限 90 秒${sums.over ? `，超出 ${sums.over}s` : ""}</i></div>
         <div>句數<b>${sums.lines.length}</b><i>${sums.characters} 字</i></div>
         <div>觀點<b>${sums.opinion}</b><i>句，其餘要有出處</i></div>
-        <div>自製<b class="${share >= 60 ? "ok" : "no"}">${share}%</b>
-          <i>其餘是引用的畫面</i></div>
-        <div>實拍<b class="${(sums.borrowed_share || 0) <= 35 ? "ok" : "no"}">${
-          sums.borrowed_share || 0}%</b><i>上限 35%</i></div>
+        <div>自製<b class="${share <= 100 - floor ? "ok" : "no"}">${share}%</b>
+          <i>上限 ${100 - floor}%，其餘是引用的畫面</i></div>
+        <div>實拍<b class="${real >= floor && real <= roof ? "ok" : "no"}">${
+          real}%</b><i>${floor}–${roof}%</i></div>
         <div>會動的<b class="${sums.still_enough ? "ok" : "no"}">${
           sums.clip_share || 0}%</b><i>實拍裡至少一半要是影片</i></div>
         <div>三段分布<b class="${sums.even ? "ok" : "no"}">${
@@ -884,7 +890,12 @@ async function showScript(name) {
             <div class="say-meter">${sayMeter(line.say || "")}</div>
           </td>
           <td class="show">
-            ${line.clip ? `<video class="pic" preload="metadata" muted
+            ${/* preload="none"，不是 metadata。八個段落縮圖各開一條連線去抓
+                  原始素材的檔頭，而瀏覽器對同一台主機只給六條 —— 底下二十六
+                  張照片就全部排在後面，永遠載不完。畫面上的樣子是「這一頁一直
+                  在轉」，而每一個請求單獨看都是好的。
+                  它有 controls：本來就是按了才播的播放器，不是一格縮圖。*/""}
+            ${line.clip ? `<video class="pic" preload="none" muted
               controls src="/media/pic/${
               line.clip.file.split("/").map(encodeURIComponent).join("/")}#t=${
               line.clip.start},${line.clip.end}"></video>`

@@ -27,8 +27,26 @@ seen=$(mktemp)
 # 要兩分鐘，而只驗一頁要十秒。
 PAGES="${*:-/ /topics /scripts /produce /desk /assemble /gates /docs}"
 for page in $PAGES; do
-  "$CHROME" --headless --disable-gpu --virtual-time-budget=7000 \
-    --dump-dom "$HOST$page" > "$seen" 2>/dev/null
+  # 限時。`--virtual-time-budget` 只算「頁面自己的時間」，所以一個永遠載不完
+  # 的資源會讓它永遠不結束 —— 而這一支跑在 pre-commit 裡，於是那次 commit
+  # 就停在那裡，沒有訊息、沒有進度。**一個會卡住的檢查會被關掉**，所以寧可
+  # 誤判成失敗，也不要沒有盡頭地等。
+  #
+  # 真的發生過：/scripts 上八個段落縮圖各開一條連線抓原始素材的檔頭，佔滿了
+  # 瀏覽器對單一主機的六條上限，底下二十六張照片全部排在後面。
+  ( "$CHROME" --headless --disable-gpu --virtual-time-budget=7000 \
+      --dump-dom "$HOST$page" > "$seen" 2>/dev/null ) &
+  chrome=$!
+  waited=0
+  while kill -0 "$chrome" 2>/dev/null && [ "$waited" -lt "${VIEW_WAIT:-40}" ]; do
+    sleep 1; waited=$((waited + 1))
+  done
+  if kill -0 "$chrome" 2>/dev/null; then
+    kill -9 "$chrome" 2>/dev/null
+    echo "  ❌ $page 等了 ${VIEW_WAIT:-40} 秒還沒畫完 —— 有東西載不完"
+    bad=1; continue
+  fi
+  wait "$chrome" 2>/dev/null
   if [ ! -s "$seen" ]; then
     echo "  ❌ $page 沒有回應"; bad=1; continue
   fi

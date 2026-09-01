@@ -210,6 +210,15 @@ def room_at(x: float, limit: float | None = None) -> int:
     return int(max(24, min(room, limit if limit is not None else room)))
 
 
+def _latin(char: str) -> bool:
+    """這個字元是不是一個拉丁字的一部分。
+
+    數字和 `.`、`-`、`'` 算進去：`27.75`、`Warner-Bros`、`Trump's` 斷在中間
+    跟斷在字母中間一樣難看。中文不算 —— 中文本來就哪裡都能斷。
+    """
+    return char.isascii() and (char.isalnum() or char in ".-'")
+
+
 def wrap_at(text: str, size: int, room: int, bold: bool = True,
             most_rows: int = 3) -> tuple[int, list[str]]:
     """把一段字折成幾行，並回報該用多大的字級。
@@ -220,29 +229,50 @@ def wrap_at(text: str, size: int, room: int, bold: bool = True,
     再小的字不是解法，是把「不出界」換成「看不清楚」。長標籤該做的是折行：
     先試最大的字級，折得完就用；折出來超過三行就縮一級再試。
 
-    中文哪裡都能斷，英文盡量斷在空格 —— 不然 `Bloomberg` 會被切成兩半。
+    中文哪裡都能斷，拉丁字不能 —— 不然 `Netflix` 會變成 `Ne` 和 `tflix`。
+
+    第一版往回找最近的空格，但加了一個條件：那個空格要落在這一行的四成之後。
+    「支持 Netflix」的空格在第 2 個字，四成是 2.4，於是條件不成立，走進逐字
+    切的那一支，成片上就是 `支持 Ne` 換行 `tflix`。**每一道門都過了** ——
+    字沒有出界，卡片畫得出來，寬度也量過。那個位置沒有東西在看單字。
     """
     ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    fallback = None
     for step in range(size, 23, -4):
         font = face(step, bold)
-        rows, now = [], ""
+        rows, now, broke = [], "", False
         for char in str(text):
             if ruler.textlength(now + char, font=font) <= room:
                 now += char
                 continue
-            # 這一行滿了。英文的話往回找最近的空格，不要切在字中間。
-            cut = now.rfind(" ")
-            if cut > len(now) * 0.4:
-                rows.append(now[:cut])
-                now = now[cut + 1:] + char
+            # 這一行滿了。正在寫的如果是拉丁字的一部分，往回退到那個字的
+            # 開頭再斷；退不動、或退完剩下的還是放不下，才逐字切。
+            cut = len(now)
+            if _latin(char):
+                while cut and _latin(now[cut - 1]):
+                    cut -= 1
+            head, tail = now[:cut].rstrip(), now[cut:].lstrip()
+            if head and ruler.textlength(tail + char, font=font) <= room:
+                rows.append(head)
+                now = tail + char
             else:
+                # 退不動，或退完那個字自己一行還是放不下。切開它。
+                broke = broke or (_latin(char) and now and _latin(now[-1]))
                 rows.append(now)
                 now = char
         if now:
             rows.append(now)
-        if len(rows) <= most_rows:
+        # 兩個條件，不是一個：行數要夠少，**而且**不能把單字切開。
+        # 只看行數的話第一級就交卷了 —— 而第一級正是最容易切開字的那一級。
+        # 每一行前後的空白拿掉：行是置中畫的，留著就是把整行推歪一點。
+        rows = [one.strip() for one in rows]
+        if len(rows) <= most_rows and not broke:
             return step, rows
-    return 24, [str(text)]
+        if broke and len(rows) <= most_rows and fallback is None:
+            fallback = (step, rows)
+    # 每一級都切開了字：那個字再小也放不下一行，切開是唯一的辦法。
+    # 留最大的那一級，因為縮字級並沒有換到什麼。
+    return fallback if fallback else (24, [str(text)])
 
 
 def at(draw: ImageDraw.ImageDraw, x: float, y: float, text: str, size: int,

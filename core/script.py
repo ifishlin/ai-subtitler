@@ -53,8 +53,9 @@ def line_seconds(line: dict[str, Any]) -> float:
     return round(spoken_length(line.get("say", "")) / PER_SECOND, 2)
 
 
-REAL_AIM = rules_module.at("borrowed.aim", 0.25)
-REAL_MOST = rules_module.at("borrowed.most", 0.35)
+REAL_AIM = rules_module.at("borrowed.aim", 0.5)
+REAL_LEAST = rules_module.at("borrowed.least", 0.5)
+REAL_MOST = rules_module.at("borrowed.most", 0.65)
 CLIP_LEAST = rules_module.at("borrowed.clip_least", 0.5)
 DRAWN = "自製"
 
@@ -150,6 +151,9 @@ GATES = [
      "每種卡需要的欄位。bars 的長度要是數字，不能是「超過 1/3」"),
     ("clipped",    "台詞會被字幕區截掉",    "frame",    True,
      "一句斷成三行還放不完，尾巴就會消失，而且只在燒上去的畫面裡看得到"),
+    ("cardbound",  "卡片佔太多",          "sequence", True,
+     "實拍要佔滿一半的時間。上限守了半年，下限沒有人守 —— 一張卡接一張卡"
+     "的成品每一道門都過得去，因為它是有聲音的簡報，不是壞掉的影片"),
 ]
 
 # One frame of slack on the length, and it is not a fudge: a film cannot be
@@ -180,7 +184,8 @@ SUMS = [
     ("over",         "超過 90 秒",   "frame",
      "成片長度。上限在 rules.json 的 length.limit_seconds"),
     ("even",         "實拍比例與分布", "frame",
-     "借來的畫面 ≤35%，而且三段都要有。一整團擠在一起看起來像別人的片"),
+     f"借來的畫面 ≤{REAL_MOST:.0%}，而且三段都要有。"
+     f"一整團擠在一起看起來像別人的片"),
     ("still_enough", "會動的畫面夠",   "frame",
      "借來的時間至少一半要是會動的片段，不能全是靜照"),
 ]
@@ -240,11 +245,15 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "house": rules_module.house(script.get("format")).get("name", ""),
             "roles": roles_of(script),
             "borrowed_most": most,
+            "borrowed_least": rules_module.of(script, "borrowed.least",
+                                              REAL_LEAST),
+            "cardbound": [],
             "shapeless": []}
     # 真的超長，還是只是進位超長。門檻在 SLACK_SECONDS，一個地方。網頁本來
     # 自己判斷 over > 0，於是把一支已經出片的 90.01 秒說成太長，而壓片那邊
     # 早就收下了。
     out["too_long"] = runs_over(out)
+    out["cardbound"] = cardbound(out)
     out["shapeless"] = structure(script, out)
     out["rights"] = rights(script, gathered(script)[0], out)
     return out
@@ -590,6 +599,39 @@ def samey(script: dict[str, Any]) -> list[dict[str, Any]]:
     close(run, most, "卡片")
     close(tone_run, tone_most, "色調")
     return faults
+
+
+def cardbound(measured: dict[str, Any]) -> list[dict[str, Any]]:
+    """Whether the film leans on cards for more than its share of the time.
+
+    The ceiling on borrowed footage has been gated since the beginning, for a
+    reason that is about somebody else's rights. Nothing ever watched the
+    floor, and the floor is the one the viewer feels: a run of cards is a
+    slide deck with a voice over it, and it passes every other gate in this
+    file because nothing about it is broken.
+
+    `samey` is not this gate. It catches three of the same *kind* in a row and
+    deliberately ignores runs of borrowed shots -- so a film can alternate
+    word, number, ring, word, number, ring for ninety seconds and `samey` has
+    no complaint to make. This one counts seconds, not neighbours.
+
+    The floor is reachable in every case, because the same photograph may be
+    shown on more than one line -- no rule in this file forbids it. Failing it
+    means nobody went and looked at what was collected.
+    """
+    clock = measured.get("seconds") or 0
+    least = measured.get("borrowed_least") or 0
+    if not clock or not least:
+        return []
+    share = measured.get("borrowed_share") or 0
+    if share >= round(least * 100):
+        return []
+    return [{"line": 0,
+             "why": f"實拍只佔 {share}%，至少要 {round(least * 100)}% —— "
+                    f"卡片佔了 {100 - share}%，那是有聲音的簡報",
+             "lines": [index for index, line in
+                       enumerate(measured.get("lines") or [], start=1)
+                       if not is_real(line.get("show"))]}]
 
 
 def unsigned(script: dict[str, Any]) -> list[dict[str, Any]]:
