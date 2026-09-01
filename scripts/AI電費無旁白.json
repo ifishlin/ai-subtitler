@@ -1,483 +1,501 @@
 {
-  "view": "兩邊吵的是「AI 是不是元凶」，而兩邊的數據其實指向同一件事：電網接不上。無論誰對，那條線的錢都照人頭分攤",
+  "view": "兩邊還在吵 AI 是不是元凶，而這件事已經不讓你看見了：協議被保密條款蓋住、電力公司談徵地、反對的政治廣告花了三千一百萬 —— 你沒得投票，但那條線的錢照付",
   "tone": "克制",
   "topic": "AI資料中心推高電費",
   "format": "argue",
   "narration": false,
   "lines": [
     {
-      "say": "你的電費去年漲了",
+      "say": "你的電費又漲了",
       "role": "起",
       "tone": "cool",
-      "show": "一整排住宅電表裝在牆上",
+      "show": "牆上一整排住宅電表",
       "pic": "assets/photos/AI資料中心推高電費/11924298.jpg",
       "fit": "fill",
-      "from": "CNBC",
-      "seconds": 2.0,
+      "from": "PBS NewsHour 第 97 秒",
+      "seconds": 2.3,
       "seen": true
     },
     {
-      "say": "住宅電價漲百分之七點一",
+      "say": "有些地區漲了一成四",
       "role": "起",
       "tone": "cool",
       "show": "自製：一個數字跑上去",
       "card": {
         "kind": "number",
-        "title": "2025 年住宅電價",
-        "value": "+7.1%",
-        "under": "是同年通膨的兩倍多",
+        "title": "部分地區的漲幅",
+        "value": "14%",
+        "under": "全美電價普遍上漲",
         "tone": "cool"
       },
-      "from": "CNBC",
-      "seconds": 2.39
+      "from": "PBS NewsHour 第 97 秒",
+      "seconds": 1.96
     },
     {
-      "say": "有些州超過兩成",
+      "say": "大家都說是這些東西",
+      "role": "起",
+      "tone": "cool",
+      "show": "影片：走進一座 AI 資料中心，聲音大得驚人",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.mp4",
+        "start": 0.08,
+        "end": 5.84
+      },
+      "from": "Wall Street Journal 第 0 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "全美三千座在運轉",
+      "role": "起",
+      "tone": "cool",
+      "show": "空拍：一整片資料中心園區",
+      "pic": "assets/photos/AI資料中心推高電費/frame_Tx0uoiuLAZg_43.jpg",
+      "fit": "fill",
+      "from": "PBS NewsHour〈When can a power company〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "還有一千五百座在蓋",
       "role": "起",
       "tone": "cool",
       "show": "自製：兩邊比大小",
       "card": {
         "kind": "bars",
-        "title": "漲幅",
+        "title": "美國的資料中心",
         "rows": [
           [
-            "全美平均",
-            7.1,
+            "在運轉",
+            3000,
             "",
-            "百分之七點一"
+            "超過三千座"
           ],
           [
-            "部分州",
-            20,
+            "在開發",
+            1500,
             "",
-            "超過兩成"
+            "一千五百座"
           ]
         ],
         "tone": "cool"
       },
-      "from": "CNBC",
-      "seconds": 1.9
+      "from": "PBS NewsHour〈When can a power company〉",
+      "seconds": 1.96
     },
     {
-      "say": "大家都說是 AI 害的",
+      "say": "二〇二八年吃掉一成二",
       "role": "起",
       "tone": "cool",
-      "show": "影片：AI 資料中心在全美各地冒出來",
+      "show": "影片：談到二〇二八年這些機房會用掉全美一成二的電",
       "clip": {
-        "file": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
-        "start": 2.6,
-        "end": 8.23
+        "file": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.mp4",
+        "start": 9.68,
+        "end": 16.32
       },
-      "from": "PBS NewsHour 第 2 秒",
-      "seconds": 3.5,
+      "from": "Wall Street Journal 第 9 秒",
+      "seconds": 3.3,
       "seen": true
     },
     {
-      "say": "資料中心一個接一個蓋",
-      "role": "起",
-      "tone": "cool",
-      "show": "空拍：德州平原上一整片資料中心園區",
-      "pic": "assets/photos/AI資料中心推高電費/frame_fkB8mt1DEVw_3.jpg",
-      "fit": "fill",
-      "from": "PBS NewsHour 第 123 秒",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "它們確實很吃電",
-      "role": "起",
-      "tone": "cool",
-      "show": "影片：跑 AI 模型的機房需要大量電力",
-      "clip": {
-        "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "start": 11.48,
-        "end": 19.8
-      },
-      "from": "CNBC 第 11 秒",
-      "seconds": 3.5,
-      "seen": true
-    },
-    {
-      "say": "這個故事聽起來很完整",
+      "say": "這個故事很完整",
       "role": "起",
       "tone": "cool",
       "show": "自製：一句話佔滿畫面",
       "card": {
         "kind": "word",
-        "title": "聽起來\n很完整",
+        "title": "這個故事\n很完整",
         "tone": "cool"
       },
       "from": "觀點",
-      "seconds": 2.17
+      "seconds": 1.9
     },
     {
-      "say": "七成美國人反對社區蓋",
+      "say": "而且兩邊都同意漲價",
       "role": "承",
       "tone": "cool",
-      "show": "自製：一個數字",
+      "show": "影片：主播說價格被推上去，我們都在付更高的錢",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.mp4",
+        "start": 93.6,
+        "end": 100.64
+      },
+      "from": "PBS NewsHour 第 93 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "連挺的人都承認",
+      "role": "承",
+      "tone": "cool",
+      "show": "自製：兩邊的說法",
       "card": {
-        "kind": "number",
-        "title": "反對在自家社區蓋資料中心",
-        "value": "70%",
-        "under": "美國民調",
+        "kind": "split",
+        "title": "難得一致",
+        "branches": [
+          "反對方\n電費會漲",
+          "支持方\n可能會漲"
+        ],
         "tone": "cool"
       },
-      "from": "PBS NewsHour 第 172 秒",
-      "seconds": 2.17
+      "from": "CNN〈I feel your pain vs. 'le〉",
+      "seconds": 1.9
     },
     {
-      "say": "有人上街喊口號",
+      "say": "川普說不會漲",
       "role": "承",
       "tone": "cool",
-      "show": "影片：居民舉牌抗議，喊資料中心滾出去",
-      "clip": {
-        "file": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
-        "start": 137.63,
-        "end": 145.7
+      "show": "自製：劃掉舊的換上新的",
+      "card": {
+        "kind": "swap",
+        "title": "同一個政府",
+        "was": "副總統：可能提高電費",
+        "now": "總統：不會增加電費",
+        "tone": "cool"
       },
-      "from": "PBS NewsHour 第 137 秒",
-      "seconds": 3.5,
-      "seen": true
+      "from": "CNN〈I feel your pain vs. 'le〉",
+      "seconds": 1.9
     },
     {
-      "say": "德州州長本來全力支持",
+      "say": "該誰付，吵到現在",
       "role": "承",
       "tone": "cool",
-      "show": "CNN 畫面：州長艾伯特改口，宣布暫停許可",
-      "pic": "assets/photos/AI資料中心推高電費/frame_RF6OMq1NHuE_31.jpg",
-      "fit": "fill",
-      "from": "CNN 第 41 秒",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "後來改口暫停發許可",
-      "role": "承",
-      "tone": "cool",
-      "show": "影片：談艾伯特在反彈聲中轉向",
+      "show": "影片：記者問，該不該是他們來付這筆錢",
       "clip": {
-        "file": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
-        "start": 28.72,
-        "end": 34.08
+        "file": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.mp4",
+        "start": 163.67,
+        "end": 168.91
       },
-      "from": "CNN 第 28 秒",
-      "seconds": 3.5,
+      "from": "PBS NewsHour 第 163 秒",
+      "seconds": 3.3,
       "seen": true
     },
     {
-      "say": "但反方的數據也很硬",
+      "say": "但吵的是錯的問題",
       "role": "轉",
       "tone": "light",
       "show": "自製：翻轉那一句",
       "card": {
         "kind": "word",
-        "title": "反方的數據\n也很硬",
+        "title": "吵的是\n錯的問題",
         "tone": "light"
       },
       "from": "觀點",
-      "seconds": 1.96
+      "seconds": 1.9
     },
     {
-      "say": "州級資料看不出相關",
+      "say": "路易斯安那有五十四份",
       "role": "轉",
       "tone": "light",
-      "show": "自製：反方說了什麼",
+      "show": "自製：一個數字跑上去",
       "card": {
-        "kind": "stack",
-        "title": "反方的三個說法",
-        "items": [
-          "州級資料：數量與電價無顯著相關",
-          "漲價來自供應側限制，不是需求",
-          "多一個大用戶，固定成本反而攤薄"
-        ],
+        "kind": "number",
+        "title": "民選官員簽的保密協議",
+        "value": "54 份",
+        "under": "光是路易斯安那一州",
         "tone": "light"
       },
-      "from": "Institute for Energy Research",
-      "seconds": 1.96
+      "from": "NPR〈NDAs are hiding data cen〉",
+      "seconds": 2.17
     },
     {
-      "say": "研究說主因是電網汰換",
+      "say": "保密協議，簽的是官員",
       "role": "轉",
       "tone": "light",
-      "show": "輸電鐵塔仰角，纜線交錯",
-      "pic": "assets/photos/AI資料中心推高電費/19686062.jpg",
+      "show": "自製：被蓋住的是什麼",
+      "card": {
+        "kind": "ring",
+        "title": "協議內容",
+        "value": "不能公開",
+        "under": "開發商說是為了保護商業機密",
+        "tone": "light"
+      },
+      "from": "NPR〈NDAs are hiding data cen〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "你家旁邊要蓋什麼",
+      "role": "轉",
+      "tone": "light",
+      "show": "郊區街道，電線與住宅",
+      "pic": "assets/photos/AI資料中心推高電費/11175907.jpg",
       "fit": "fill",
-      "from": "Institute for Energy Research",
-      "seconds": 2.0,
+      "from": "觀點",
+      "seconds": 2.3,
       "seen": true
     },
     {
-      "say": "天災，還有天然氣漲價",
+      "say": "鎮上的人不能知道",
+      "role": "轉",
+      "tone": "light",
+      "show": "PBS 畫面：談這些機房的鄰居",
+      "pic": "assets/photos/AI資料中心推高電費/frame_2IsvYp2yhtw_26.jpg",
+      "fit": "fill",
+      "from": "PBS NewsHour〈When can a power company〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "電力公司還談徵地",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：要拿來做什麼",
+      "card": {
+        "kind": "stack",
+        "title": "電力公司考慮的手段",
+        "items": [
+          "徵用私有土地",
+          "建輸電線路",
+          "理由是供電可靠度"
+        ],
+        "tone": "light"
+      },
+      "from": "PBS NewsHour〈When can a power company〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "蓋一條線的錢誰出",
       "role": "轉",
       "tone": "light",
       "show": "夕陽下的高壓電塔",
-      "pic": "assets/photos/AI資料中心推高電費/13216331.jpg",
+      "pic": "assets/photos/AI資料中心推高電費/36566099.jpg",
       "fit": "fill",
-      "from": "Institute for Energy Research",
-      "seconds": 2.0,
+      "from": "PBS NewsHour 第 188 秒",
+      "seconds": 2.3,
       "seen": true
     },
     {
-      "say": "兩邊都拿得出數字",
+      "say": "轉嫁到所有用戶身上",
       "role": "轉",
       "tone": "light",
-      "show": "自製：一條線分岔成兩條",
-      "card": {
-        "kind": "split",
-        "title": "兩邊在吵什麼",
-        "branches": [
-          "是 AI\n把電弄貴",
-          "是電網\n本來就舊"
-        ],
-        "tone": "light"
-      },
-      "from": "觀點",
-      "seconds": 1.9
-    },
-    {
-      "say": "可是他們有個共識",
-      "role": "轉",
-      "tone": "light",
-      "show": "自製：一個詞被圈起來",
-      "card": {
-        "kind": "ring",
-        "title": "兩邊都同意的那一件事",
-        "value": "電接不上",
-        "under": "一邊叫供應側限制，一邊叫傳輸不足",
-        "tone": "light"
-      },
-      "from": "Reuters 第 43 秒",
-      "seconds": 1.9
-    },
-    {
-      "say": "資料中心自己去買渦輪機",
-      "role": "轉",
-      "tone": "light",
-      "show": "影片：機房自購天然氣渦輪機，因為電力公司供不上",
-      "clip": {
-        "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "start": 43.6,
-        "end": 49.36
-      },
-      "from": "CNBC 第 43 秒",
-      "seconds": 3.5,
-      "seen": true
-    },
-    {
-      "say": "因為電力公司給不了",
-      "role": "轉",
-      "tone": "light",
-      "show": "奇異的渦輪機產線，一整排機組",
-      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_44.jpg",
-      "fit": "fill",
-      "from": "CNBC 第 43 秒",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "微軟一次買了七台",
-      "role": "轉",
-      "tone": "light",
-      "show": "CNBC 畫面：渦輪機旁標著七台",
-      "pic": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_91.jpg",
-      "fit": "fill",
-      "from": "CNBC 第 89 秒",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "兩點七 GW，一個機房",
-      "role": "轉",
-      "tone": "light",
-      "show": "影片：微軟在德州的機房要兩點七 GW",
-      "clip": {
-        "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "start": 89.42,
-        "end": 96.3
-      },
-      "from": "CNBC 第 89 秒",
-      "seconds": 3.5,
-      "seen": true
-    },
-    {
-      "say": "連晶片商都說電不夠",
-      "role": "轉",
-      "tone": "light",
-      "show": "Fox 畫面：晶片商執行長說電力撐不起算力",
-      "pic": "assets/photos/AI資料中心推高電費/frame_uQ3Qc2gi2RQ_239.jpg",
-      "fit": "fill",
-      "from": "Fox Business 第 189 秒",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "問題不在誰用電",
-      "role": "轉",
-      "tone": "light",
-      "show": "自製：一句話佔滿畫面",
+      "show": "自製：這一筆算在誰頭上",
       "card": {
         "kind": "word",
-        "title": "問題不在\n誰用電",
+        "title": "轉嫁到\n所有用戶",
+        "under": "資料中心的建設成本",
         "tone": "light"
       },
-      "from": "觀點",
-      "seconds": 1.9
-    },
-    {
-      "say": "在那條線本來就該換",
-      "role": "合",
-      "tone": "warm",
-      "show": "自製：一條線分岔成兩條",
-      "card": {
-        "kind": "split",
-        "title": "帳單上的兩筆",
-        "branches": [
-          "誰用掉的\n電",
-          "誰要付的\n那條線"
-        ],
-        "tone": "warm"
-      },
-      "from": "觀點",
+      "from": "PBS NewsHour 第 188 秒",
       "seconds": 1.96
     },
     {
-      "say": "電網汰換的錢誰出",
-      "role": "合",
-      "tone": "warm",
-      "show": "電力工人在高空作業車上修線",
-      "pic": "assets/photos/AI資料中心推高電費/17018102.jpg",
-      "fit": "fill",
-      "from": "觀點",
-      "seconds": 2.0,
+      "say": "排隊接電要等七年",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：談併網等候時間最長拉到七年",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/j7yZ5vrIASw.mp4",
+        "start": 35.64,
+        "end": 42.04
+      },
+      "from": "Reuters 第 35 秒",
+      "seconds": 3.3,
       "seen": true
     },
     {
-      "say": "照人頭分攤，寫在費率裡",
-      "role": "合",
-      "tone": "warm",
-      "show": "自製：一份清單",
+      "say": "電網升級要數兆美元",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一個數字",
       "card": {
-        "kind": "stack",
-        "title": "已經在做的事",
-        "items": [
-          "俄亥俄：對大型資料中心另訂費率",
-          "維吉尼亞：同樣另訂"
-        ],
-        "tone": "warm"
+        "kind": "number",
+        "title": "電網全面更新的規模",
+        "value": "數兆",
+        "under": "美元",
+        "tone": "light"
       },
-      "from": "CNBC",
-      "seconds": 2.39
+      "from": "Reuters 第 64 秒",
+      "seconds": 1.96
     },
     {
-      "say": "已經轉嫁兩百三十億",
+      "say": "變壓器和電池還缺貨",
+      "role": "轉",
+      "tone": "light",
+      "show": "變電所的高壓設備特寫",
+      "pic": "assets/photos/AI資料中心推高電費/7867332.jpg",
+      "fit": "fill",
+      "from": "Reuters 第 86 秒",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "而選舉廣告已經在打了",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：談資料中心引發的跨黨派反彈",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.mp4",
+        "start": 35.14,
+        "end": 47.15
+      },
+      "from": "PBS NewsHour 第 35 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "三千一百萬美元",
       "role": "合",
       "tone": "warm",
       "show": "自製：一個數字跑上去",
       "card": {
         "kind": "number",
-        "title": "估計已轉嫁到消費者帳單",
-        "value": "230 億",
+        "title": "今年提到資料中心的政治廣告",
+        "value": "3100 萬",
         "under": "美元",
         "tone": "warm"
       },
-      "from": "Forbes",
-      "seconds": 1.96
-    },
-    {
-      "say": "所以誰對其實不重要",
-      "role": "合",
-      "tone": "warm",
-      "show": "影片：居民擔心費率會被推上去",
-      "clip": {
-        "file": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
-        "start": 352.6,
-        "end": 359.37
-      },
-      "from": "PBS NewsHour 第 352 秒",
-      "seconds": 3.5,
-      "seen": true
-    },
-    {
-      "say": "帳單都是你在付",
-      "role": "合",
-      "tone": "warm",
-      "show": "桌上攤著寫著已繳與未繳的帳單",
-      "pic": "assets/photos/AI資料中心推高電費/7111490.jpg",
-      "fit": "ground",
-      "from": "觀點",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "德州那兩個人也發現了",
-      "role": "合",
-      "tone": "warm",
-      "show": "CNN 畫面：終身共和黨員因資料中心改投民主黨",
-      "pic": "assets/photos/AI資料中心推高電費/frame_RF6OMq1NHuE_18.jpg",
-      "fit": "fill",
-      "from": "CNN 第 93 秒",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "他們投了三十年的黨",
-      "role": "合",
-      "tone": "warm",
-      "show": "影片：問他為什麼這件事大過政黨",
-      "clip": {
-        "file": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
-        "start": 86.24,
-        "end": 93.52
-      },
-      "from": "CNN 第 86 秒",
-      "seconds": 3.5,
-      "seen": true
-    },
-    {
-      "say": "這次換邊投",
-      "role": "合",
-      "tone": "warm",
-      "show": "自製：換掉的是什麼",
-      "card": {
-        "kind": "swap",
-        "title": "德州兩位受訪者",
-        "was": "終身投共和黨",
-        "now": "這次投民主黨",
-        "tone": "warm"
-      },
-      "from": "CNN 第 93 秒",
+      "from": "CNN〈A uniquely bipartisan ba〉",
       "seconds": 1.9
     },
     {
-      "say": "下次帳單來的時候",
+      "say": "九成九是反對的",
       "role": "合",
       "tone": "warm",
-      "show": "有人在桌前拿計算機對帳",
-      "pic": "assets/photos/AI資料中心推高電費/6964357.jpg",
+      "show": "自製：兩邊比大小",
+      "card": {
+        "kind": "bars",
+        "title": "那些廣告的立場",
+        "rows": [
+          [
+            "反對",
+            99,
+            "",
+            "超過九成九"
+          ],
+          [
+            "其餘",
+            1,
+            "",
+            "不到百分之一"
+          ]
+        ],
+        "tone": "warm"
+      },
+      "from": "CNN〈A uniquely bipartisan ba〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "左邊右邊一起反對",
+      "role": "合",
+      "tone": "warm",
+      "show": "街頭抗議的人群舉著牌子",
+      "pic": "assets/photos/AI資料中心推高電費/4712159.jpg",
       "fit": "fill",
-      "from": "觀點",
-      "seconds": 2.0,
+      "from": "CNN〈A uniquely bipartisan ba〉",
+      "seconds": 2.3,
       "seen": true
     },
     {
-      "say": "多出來的不是電，是線",
+      "say": "紐澤西有一鎮擋下來了",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：擋下來的方式",
+      "card": {
+        "kind": "chain",
+        "title": "紐澤西那一鎮",
+        "points": [
+          "居民集結",
+          "理由：電費與環保",
+          "建案沒蓋成"
+        ],
+        "tone": "warm"
+      },
+      "from": "Deutsche Welle〈Can data centers be gree〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "但那是他們知道了",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "前提是\n他們知道了",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "五十四份協議還蓋著",
+      "role": "合",
+      "tone": "warm",
+      "show": "電表箱與線路，牆上斑駁",
+      "pic": "assets/photos/AI資料中心推高電費/10065200.jpg",
+      "fit": "ground",
+      "from": "NPR〈NDAs are hiding data cen〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "電網分區地圖長這樣",
+      "role": "合",
+      "tone": "warm",
+      "show": "美國電網分區圖，各區塊不同顏色",
+      "pic": "assets/photos/AI資料中心推高電費/Rto_map_2024.png.jpg",
+      "fit": "ground",
+      "from": "觀點",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "你在哪一區，決定漲多少",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "你在哪一區\n決定你漲多少",
+        "under": "而那不是你選的",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "say": "這件事沒有投票",
+      "role": "合",
+      "tone": "warm",
+      "show": "影片：談需求把電網逼到極限",
+      "clip": {
+        "file": "assets/footage/AI資料中心推高電費/_pbvZRbN87A.mp4",
+        "start": 15.76,
+        "end": 23.52
+      },
+      "from": "Reuters 第 15 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "帳單倒是每個月都來",
+      "role": "合",
+      "tone": "warm",
+      "show": "桌上攤著帳單與計算機",
+      "pic": "assets/photos/AI資料中心推高電費/7680696.jpg",
+      "fit": "fill",
+      "from": "觀點",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "下次漲價通知寄到",
       "role": "合",
       "tone": "cool",
       "show": "自製：結尾頁",
       "card": {
         "kind": "outro",
         "points": [
-          "電價漲百分之七點一，是通膨兩倍",
-          "兩邊吵 AI 是不是元凶，數據都拿得出來",
-          "兩邊都同意的是：電網接不上",
-          "而換電網的錢，照人頭分攤"
+          "電價漲了，兩邊都同意這件事",
+          "但協議被保密條款蓋住，五十四份",
+          "電力公司談的是徵用私有土地",
+          "反對的政治廣告花了三千一百萬"
         ],
-        "title": "多出來的那一筆\n不是電，是那條線",
+        "title": "你付的不是他們用的電\n是一份你沒看過的合約",
         "under": "AI 資料中心與你的電費帳單",
         "tone": "cool"
       },
       "from": "觀點",
-      "seconds": 6.4
+      "seconds": 5.6
     }
   ]
 }

@@ -4,1152 +4,622 @@
   "sources": {
     "videos": [
       {
-        "title": "We solve the 'power problem' AI data centers are facing: Onsemi CEO",
-        "url": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "outlet": "Fox Business",
-        "lean": "right",
-        "seconds": 466.0,
-        "file": "assets/footage/AI資料中心推高電費/uQ3Qc2gi2RQ.mp4",
-        "captions": "assets/footage/AI資料中心推高電費/uQ3Qc2gi2RQ.en-orig.vtt",
-        "size": 32079360
-      },
-      {
-        "title": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
-        "url": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "outlet": "CNBC",
+        "title": "US Solar Power Industry Braces for Tariffs",
+        "url": "https://www.youtube.com/watch?v=bnP2SJKWCII",
+        "seconds": 128,
+        "outlet": "AP News",
         "lean": "neutral",
-        "seconds": 225.0,
-        "file": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "captions": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.en-en.vtt",
-        "size": 108353541
+        "doubt": true
       },
       {
-        "title": "Why communities are revolting against data centers",
-        "url": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
-        "outlet": "PBS NewsHour",
-        "lean": "centre-left",
-        "seconds": 1607.0,
-        "file": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
-        "captions": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.en-US.vtt",
-        "size": 90596100
-      },
-      {
-        "title": "Lifelong TX Republicans pledge to vote Dem over data centers",
-        "url": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
-        "outlet": "CNN",
-        "lean": "left",
-        "seconds": 857.0,
-        "file": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
-        "captions": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.en-en.vtt",
-        "size": 52263571
+        "title": "Pool and Spa Industry Grapple With Drought",
+        "url": "https://www.youtube.com/watch?v=wFn18Ubp71Y",
+        "seconds": 122,
+        "outlet": "AP News",
+        "lean": "neutral",
+        "doubt": true
       },
       {
         "title": "Inside ETFs: Is AI's power problem an opportunity?",
         "url": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
+        "seconds": 316,
         "outlet": "Reuters",
         "lean": "neutral",
-        "seconds": 316.0,
+        "doubt": false,
         "file": "assets/footage/AI資料中心推高電費/j7yZ5vrIASw.mp4",
         "captions": "assets/footage/AI資料中心推高電費/j7yZ5vrIASw.en-orig.vtt",
         "size": 25483178
       },
       {
-        "title": "David Icke talks conspiracy theories - BBC News",
-        "url": "https://www.youtube.com/watch?v=GlAjeTunopo",
+        "title": "Inside ETFs: Data centers 'will raise electricity demand by 20% this decade' | REUTERS",
+        "url": "https://www.youtube.com/watch?v=_pbvZRbN87A",
+        "seconds": 335,
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/_pbvZRbN87A.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/_pbvZRbN87A.en.vtt",
+        "size": 16841515
+      },
+      {
+        "title": "How AI infrastructure is driving a sharp rise in electricity bills",
+        "url": "https://www.youtube.com/watch?v=iVGTGpKpykM",
+        "seconds": 410,
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.en.vtt",
+        "size": 23594253
+      },
+      {
+        "title": "AI and the energy required to power it fuel new climate concerns",
+        "url": "https://www.youtube.com/watch?v=VOezW-b_mD8",
+        "seconds": 473,
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/VOezW-b_mD8.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/VOezW-b_mD8.en.vtt",
+        "size": 58462867
+      },
+      {
+        "title": "Bill Gates lists his 3 AI warnings: 'The turbulent AI era is here'",
+        "url": "https://www.youtube.com/watch?v=pJ-TBE7HaiA",
+        "seconds": 562,
+        "outlet": "CNN",
+        "lean": "left",
+        "doubt": true
+      },
+      {
+        "title": "Bernie Sanders, AOC announce AI data center moratorium bill",
+        "url": "https://www.youtube.com/watch?v=W5WtaHMYlLs",
+        "seconds": 1876,
+        "outlet": "CNN",
+        "lean": "left",
+        "doubt": true
+      },
+      {
+        "title": "Gutfeld: Politicians are PANICKING…",
+        "url": "https://www.youtube.com/watch?v=kvkXkeCjrbA",
+        "seconds": 910,
+        "outlet": "Fox News",
+        "lean": "right",
+        "doubt": true
+      },
+      {
+        "title": "Gutfeld: China has been doing this for a WHILE…",
+        "url": "https://www.youtube.com/watch?v=bnaeJkN-AU4",
+        "seconds": 847,
+        "outlet": "Fox News",
+        "lean": "right",
+        "doubt": true
+      },
+      {
+        "title": "How geothermal energy could power AI data centers",
+        "url": "https://www.youtube.com/watch?v=7dsxovHHn88",
+        "seconds": 334,
+        "outlet": "Fox Business",
+        "lean": "right",
+        "doubt": true
+      },
+      {
+        "title": "Energy, natural gas business has changed ‘DRAMATICALLY’: Ex-Cheniere Energy CEO",
+        "url": "https://www.youtube.com/watch?v=IVzIJK8_BxU",
+        "seconds": 464,
+        "outlet": "Fox Business",
+        "lean": "right",
+        "doubt": true
+      },
+      {
+        "title": "The Real Cost of Your AI Use: Inside a Power-Hungry Data Center",
+        "url": "https://www.youtube.com/watch?v=Tx0uoiuLAZg",
+        "seconds": 175,
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.en.vtt",
+        "size": 7074812
+      },
+      {
+        "title": "CIO Network: Will AI Take Your Job?",
+        "url": "https://www.youtube.com/watch?v=2P2mAwFOPcI",
+        "seconds": 182,
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "doubt": true
+      },
+      {
+        "title": "Bill Gates Says AI Will Pay for Itself on Offsetting Emissions",
+        "url": "https://www.youtube.com/watch?v=hEsSu1RMtvo",
+        "seconds": 200,
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Duke Energy Signs Deals to Power Data Centers",
+        "url": "https://www.youtube.com/watch?v=fmvRdj6Rz8Y",
+        "seconds": 368,
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
+        "url": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
+        "seconds": 225,
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "How The Massive Power Draw Of Generative AI Is Overtaxing Our Grid",
+        "url": "https://www.youtube.com/watch?v=MJQIQJYxey4",
+        "seconds": 889,
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "The battle in rural America against AI data centres | BBC Americast",
+        "url": "https://www.youtube.com/watch?v=70pOP3oDv9o",
+        "seconds": 2104,
         "outlet": "BBC News",
         "lean": "neutral",
-        "seconds": 447.0
+        "doubt": true
+      },
+      {
+        "title": "David Icke talks conspiracy theories - BBC News",
+        "url": "https://www.youtube.com/watch?v=GlAjeTunopo",
+        "seconds": 447,
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "General Motor's IT revolution",
+        "url": "https://www.youtube.com/watch?v=TETM1fMwkls",
+        "seconds": 197,
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "AI power demand could stifle industry's growth | FT Energy Source",
+        "url": "https://www.youtube.com/watch?v=rcIqrT5rIzw",
+        "seconds": 178,
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/rcIqrT5rIzw.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/rcIqrT5rIzw.en.vtt",
+        "size": 24215427
+      },
+      {
+        "title": "Why have AI data centres become so unpopular? | The Economist",
+        "url": "https://www.youtube.com/watch?v=_QK44XXgL3Q",
+        "seconds": 161,
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "doubt": true
+      },
+      {
+        "title": "Beyond ChatGPT: what chatbots mean for the future",
+        "url": "https://www.youtube.com/watch?v=dctcfxw13AQ",
+        "seconds": 968,
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "doubt": true
+      },
+      {
+        "title": "Local opposition to energy-guzzling data centers in the US is growing | DW News",
+        "url": "https://www.youtube.com/watch?v=2IsvYp2yhtw",
+        "seconds": 142,
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/2IsvYp2yhtw.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/2IsvYp2yhtw.en.vtt",
+        "size": 6343353
+      },
+      {
+        "title": "Europe trails behind US, China in AI research & development | DW Business",
+        "url": "https://www.youtube.com/watch?v=uQl5zC_xdPQ",
+        "seconds": 392,
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "AI: ChatGPT consumes more energy than a traditional Internet search",
+        "url": "https://www.youtube.com/watch?v=WYHslY80cNA",
+        "seconds": 284,
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/WYHslY80cNA.mp4",
+        "captions": null,
+        "size": 35466379
+      },
+      {
+        "title": "The power of business clusters",
+        "url": "https://www.youtube.com/watch?v=SMz9s1OhO74",
+        "seconds": 181,
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "UK data centres expand as AI boom raises concerns over water and power use",
+        "url": "https://www.youtube.com/watch?v=DpU0qXkQrAs",
+        "seconds": 166,
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "doubt": false,
+        "file": "assets/footage/AI資料中心推高電費/DpU0qXkQrAs.mp4",
+        "captions": "assets/footage/AI資料中心推高電費/DpU0qXkQrAs.en.vtt",
+        "size": 12915997
+      },
+      {
+        "title": "China bets on battery storage as the next clean energy frontier.",
+        "url": "https://www.youtube.com/watch?v=J_5oTw22Puk",
+        "seconds": 150,
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "doubt": true
       }
     ],
     "reports": [
       {
-        "title": "AI data center 'frenzy' is pushing up your electric bill — here's why",
-        "url": "https://www.cnbc.com/2025/11/26/ai-data-center-frenzy-is-pushing-up-your-electric-bill-heres-why.html",
-        "outlet": "CNBC",
+        "title": "Trump officials announce 10-gigawatt data center, gas plants for former Ohio uranium site",
+        "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNTEJIcUhVNDN2U1ZxWFlneE9yN2RGUmhMQnpDYlpIaWRHc3FJYnJoSGNRZkhaS1I1MENJRVZMRU5JXzlrV3IydHUwNW1ycWtYUlphNjQ2X3psZjZRZmluNzl5SUQwYWVHVk1QVjloVGxZWF80WHpMeHVEVlhYaDVBRU91RzdZVzZxVGd0Mm01VWhod2EwZHk5MUFvTUVDV1U?oc=5",
+        "outlet": "AP News",
         "lean": "neutral",
-        "facts": [
-          "住宅電價 2025 年漲 7.1%，是通膨的兩倍多",
-          "部分州漲幅超過 20%"
-        ]
+        "when": "Fri, 20 Mar 2026",
+        "paywall": false,
+        "doubt": false
       },
       {
-        "title": "Who pays for AI's electricity? Data centers spark debate",
-        "url": "https://www.cnbc.com/2026/03/13/ai-data-centers-electricity-prices-backlash-ratepayer-protection.html",
-        "outlet": "CNBC",
+        "title": "In a divided America, the left and right unite to oppose artificial intelligence data centers",
+        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOaDFHTFNqSzk3TjZzUE1MMk9ORTlULW0yajc1UGNPWUdnX2dlNnQ4cWwxd0xSTFlLY1dQangyUmM4bmlHSG4weDRZU2MyaHBRV09uN2pkdUgxOWg4RTFDdWU4U0w1QjdHS0VDb0xaTk9tRmR4UkpWOXlfLTQtbk03UHRwUWp3UlFBeDFtbEJIU1dHVEs3Z3gtSER2ODJDRGxMX0hZVzJWS2w1dm5iSEFF?oc=5",
+        "outlet": "AP News",
         "lean": "neutral",
-        "facts": [
-          "俄亥俄、維吉尼亞開始對大型資料中心另訂費率",
-          "「公平分攤」主張成本應直接算給資料中心"
-        ]
+        "when": "Wed, 26 Aug 2026",
+        "paywall": false,
+        "doubt": false
       },
       {
-        "title": "AI Data Centers Are Sending Power Bills Soaring",
-        "url": "https://www.bloomberg.com/graphics/2025-ai-data-centers-electricity-prices/",
+        "title": "Europe AI data centres seek cheaper, quicker energy and land",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQbDdLQ0hZWDRyZ0xhVnVYZ3EyanNtODlsUERkaGxtc21CaUtYa3Zwd0xqbDY1RnVma3YyVkQwSDRzaHRVaGotRGNsRUN0XzR0WU9aZmFXeHdrSzVOMlVoZVZzZ2hYdk9SWjJCZTUtWmZBblNCTjlKSGtIMzdmTUd3VEIzQ2ZWQWVfZlpaei12S1lMNlFpUzJxc2tjNjB6TV9xT3c?oc=5",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "when": "Wed, 19 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Saudi AI firms Humain, DataVolt partner for data center on kingdom's Red Sea coast",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOWU1yMXFWYnFPUzRpSlBxWXlncW9jczBjX0x3akZKUkVJV24tTFpIVXI0U2N6NjN6NlBiTGRwb2lscHRqVE1OaXVPU3pFbkItR2tCbkJTcXJpRFJEQXM5MUJNZnhpZURiU1RReGxFc1VyUTRfd05KTV9JQW44VUMtZWlaMGxPdDlvTWxxeEVnTlA4WHdKb0xyZHpZM2N6ZV9wT0R5LTRhMGxsYW1rVVZNdDRDNnZ3aEo3XzQ4X1BxOVJieTg?oc=5",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Data center controversies have transformed midterms. Here's where different groups stand",
+        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOVkRUVEZBb3E4RVpacU84Vm1uTzJfNXNlcWZ3ZDUtdTJNQ254RXhzUGhmV1Y2N0lwUG9fbmpmX254RjlvNDJ2a0xBVkd6SGFRVEs5eWZPV2M2MUJBSVViZVhTaXFHaHIwQXdGVGZwcWVhMjBSYnU5ZEZ0cVJZdm00NElxOHJWb00wMkFfRnlxTEFIcGlKWndxSGVNRFlMR0QzMFF6RGEyaHlyYXY3VjFncy1JaERPN3dfaWh5TDRfR0dKQQ?oc=5",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "When can a power company take your land for data center infrastructure?",
+        "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPSjQ4dmxSWC00UGNocjNFcWNXRzRIWlRpb1MtOTZTbERZdFVUWUVMUXdrUk5TXzhlWHJ3alVIM3A5bGd4eFJjdGowaEMtS1dBM0k0SEJnaXRfX2s1b0FpU0ZLeE1HX0NHU0JfaGJEcTcwNm1zNmdxRDdNV2dyRzRtS05mZDE1UEx0TFFsazVoTFNMVHdFQnpwNW5MTFRSaVhlUVFaNDB3eks3Qkk?oc=5",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "when": "Sun, 19 Jul 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "NDAs are hiding data center deals, drawing ire from locals — and attention from lawmakers",
+        "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNU3V4dHVkbWdGMjRwUXVQaXhhQU4tMzVMMTB6el9pVVFrWjZ3OVZYejVnTWxfaGVmZ1FHc0VqUFZpcU5pdVhIejR6UjA4ZWNVa0lUeXNNNVlTT2NQY0p1NGY2Q2prWmROMmw1bXZFclVpOExDV2lmbXNYdi00MkRlMndvNFE5azlE?oc=5",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "'Survival mode': Indiana residents endure a ninth day without power",
+        "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9YM0IwWWhrOHZab1ZOR2w5bW5uYjFtRWtLUnRFN0tZTHFMcjhrYTlpdHZqcVNMbHJPRlh6eXdpQVNvWTBBSEFHREhMTmtzdDJyVzhEVEIxVEJPMmZTMG52cTdZalRneWFIaGFiVDU1T2xFUQ?oc=5",
+        "outlet": "NPR",
+        "lean": "centre-left",
+        "when": "Fri, 21 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "A uniquely bipartisan backlash against data centers shakes up the midterms",
+        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPb05HenltU2lDX3g1Wld1R0x6QmwyaE0yYmdRdk5jbmU0SVZWa3NMYmdkZ2JLSDNpd2RwZnI5aXE1dV80R1lQekpBNFdlc1c0YVVlQ3g5Y3l2V0lHUkszZU5LblRPalBzaV81Yk02Wnhqa1BRWFBDaTdDWU5WSEFoandkbjllZw?oc=5",
+        "outlet": "CNN",
+        "lean": "left",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "I feel your pain vs. ‘let Data Reign’: How Trump and his VP are out of step on data centers",
+        "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5tLWJjb2d3QkdRYTd3b1JXeVUwR3dJVjVzbGYydTd0ck13cTZldmNYN3BkWjBtOW1iZENOenh5elUwSjZ4TFB5MzVMbVIyQVBSRlc5QVVyYUNMUlJmdl8zWWxUZlJYdlhXQ0FlQ0JESktGdw?oc=5",
+        "outlet": "CNN",
+        "lean": "left",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Answering your questions in our #WITHpod holiday mailbag: podcast and transcript",
+        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQenNyT0c3ZU5tdXZDaEV0TG4wVk5URHh6MnNLcFY4MTlWYmRrV0hFUFppSVJpeF9BbFZ6RTJ0Y0RjeU4wZ2xzZjNFOC1WUlI2c1p5a2xoOEJJSTNzbUNlRWlxTGlIbmowNkxPaGo3U3Z1ZWdaRVdRUldnUFluMi1GUUNieVpQWGZpTk92VDdrVXJlYktsbUpvaG05dEFGc1lKNy1YRTdmV1Z6MU0zcWV2d3U2OGVzUWV4eDBhcFBnN1Y0X2VNUkIyY3piLVlod1c1el9MeA?oc=5",
+        "outlet": "MS NOW",
+        "lean": "left",
+        "when": "Wed, 06 Dec 2023",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Deadline: White House",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNTERXRmduYThXUGVPRlBpckllN0NTaFlIR3pQckZ1b1FQTVZPbzZWV00xRGluLXFEQTgzbXVoOEJVc0Y5djRIVE9DY2RUbTNjVkcxb3VwczRub3ZZY2tuQ3VFbU42bzVBRkFuWFNRSDgxeTQ0alIyNkpxNjc1N0EwYTV3Zk8?oc=5",
+        "outlet": "MS NOW",
+        "lean": "left",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "The data center fight could decide the next president and cost America the AI race",
+        "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQLUlNN255RHRqLTdvRXpnVlFmWVZMOWNpQjc5akUyeWR3eEthaExSVWRhS1RYVkEtbTJBQTRkSVc5TnNYTFlvckVJdUdhb2tJc3NtZldWZkxnSzRqYlFmTXhfMUk5cGh6LWN3UnpHVFVuLUNJZ1RpZ0FIMEpoS3Rqdzg1clZUVXB6RjRhUnk3SlVtVktHZEtmekZ3VXJfVFHSAaQBQVVfeXFMTWlCeUVrWHZqbVFyWEdUbFVjVmJGMjBBUGMwbVNCZzhyX0ZPcmV2UTh2ODI2SndHTHlfajRHdUljbktLS1hEb2UzZjBYZDJLN285cFNtRlB5UHhQeDhMODA5U0lNaGZBZ1B6UW9McW9sLU9PYXAxZEQ0dF9LYlBJdmZMck5DcS1iVFpDUFRlWlU4Y2psYl9UTDZydzdwVkx1Q0otMEg?oc=5",
+        "outlet": "Fox News",
+        "lean": "right",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Who pays for US power boom? Blue, red states offer starkly different ways to lower utility bills amid AI surge",
+        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOU1ZZRk1sanAyOTZ0NHNIUTFYclVJYUFPbUxvZ0FGZmp6NmlQUlctRmt3OElhMGNkODdzb0ZtczJNOEhUeFg2WHYxMFNtNkxxMW5JUUNmczZiRkM5VXEtYUc4Zm5zNXFUN1V3M2FXdkZRVUhyOHhaMDhFN01CRWxjVVpBMTZfNWNGaHBQNVNMYjBFcTc2M3Y1ODNvQmxTQ2xoQ2U2bUZVY2tpZTlUY2tMejJwaDV3TjM4V2FNYnZBSkZTUGltaEF4T0llWXJvd2vSAdQBQVVfeXFMTzFtX196ZExnWnNCQ05nSWFINTlES3BtdzF0bkZnUTktSklydFpBckZXRnBmR0N2XzlMZUVpQlhYX19EVHJOZjdSQkxvejB4Vzc2RTlLQzE4emI2VU10VjVoaXVhTnY2amtFQ1paYlRKV0RTSTVWcnZRdG04S1UtVlo1aWNQa2FWVDZadTlJN0FHOFRhWHFrdmZReTloTDduX2I0cVhfdDlZdGJiWS1SbWRnbEFjVXcxOXByMlRPWGlmYWNiYkNHWGpMRThaZXNRdzdiUno?oc=5",
+        "outlet": "Fox News",
+        "lean": "right",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "X reveals foreign adversary behind fake accounts disseminating anti-data center messaging",
+        "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPU3psRk5oSmxYMndac1dkMU1ZcXF6clBkOXpVdVA0TUF1VDVNSGtMejM5dkJKX3pVTlU3aGswOWlLR1NwSzJXc2Z0ZHI4YkRnbGdKUXl4RDY1QVhxczNsZ2NKVUpORExIaF9FQ3dxREZfUkFoUld2MnBrdGduT3VYU05SRTJQVFFROXcwY2hOSkNDSUNFZTZHcUJrUGxjaF9YeU5xWG5LTGo4YTlZeGNEZURhRm5DM0tUV2JDQllialowbUxFSUxhN2Fma9IB0AFBVV95cUxObmFkNmlJMlAxRWNFNEJwVW5IanhpcjdfQ3I4REV5RmFFWVhoRjk5c0UxOXhfRk1tQzVFYVg3UFVoSXVRa0VMVi1xMGpJTF9HR2lOQzF4TEpCbTU5eXVCU05pWDJmN1hPZ2lqXzIxSDM5UkhOSks2X2syN2hNVllfTzctQ0Q5QzJwdFlkejN3TndRaEV0Wkt4X3Frcy1sT0t6YWJSdi1LaHJjd1hNVzY3WklfSTBERkdzX3gxajlfNDM2MXhVUUFhRmp6MmlGM3dR?oc=5",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Trump order could force US utilities to replace foreign power equipment",
+        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNVGlWaHFaSXM0TnZhZE0wQnZwNFE1a3RrTEdjOWFUUHpJbktpeWY2d3JkcXJ3R3hVU2ZpSEd6VzM5WDZHcVh0SGJIUzh1QlN2WGd0MVp5VEhMYlByaG5EWjRYMU1KYmJmTElzNjhub1l5T0F1a21oTWJmNnlhd2RZZENWa2JhWkVUZHVPdm5mMjcySnNyRnkyaVl3MlRjTHJPeWh6RUxR0gGrAUFVX3lxTE9GVG5pc01uNWNkdUE4cnJmM0pmY01MY21iRnZSQ1o0d05BZ3ZveUpYRjBNRXdMTmNDeUxFbGJPSGtkbDE4MHhLS1FQSHFid25pRDhnWU1uUHlOMi1OSzlEdHdaN1Z2NzNUdU1oVC03RmtLV2NJWDgyT2Z3bG82QWpVWkQ2bFpDeXFrSkVKQ2UzTlI3SVZIYld1V091WmZxUXVwUkk4SERyQ3prQQ?oc=5",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "when": "Wed, 26 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Trump Says Communities That Oppose Data Centers Risk Becoming ‘Backwards and Poor’",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNVmExRzhRZDNDRWZELWJBY3dmX2FDSnFoWlM2cS00RUJmWjhNT3J2N3UyLVpKRGxBMlBVYWtQNnBoU1l5UUJ6OTJ5dXBxTmRGX05EcHI4ai1ybHlrOUg4dUZ4OVVyb0FtWXk3TVBySTVfZmR3T09YNHhHMi1EVXo3a0pkYXpkckNhM18xbEQyRnB0elZxbThqQ3JtelA5Q2MxUW45T2FNc2RDSTZTRHE2dnlMYmlpWjQzLUs1ekE0YmVJSlk?oc=5",
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Blue-Collar Jobs Are the New Flashpoint in Data-Center Fight",
+        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPelN5b2pLMnlJSklWLUJNVThEV20ydXR6ZmQ2Q005dGNtU2tXckJabE95emh1akVuR2NrUDU5MTc4bEFzek9WVG5taVZqa0x0MUhvVVF1QzlvMEN2NklMRUNyLTg2aXdEalh3eHZvcng4RmpSZTZUa195dDhEelF3aDFwNVNYMVlETVZQX2ZoNHFqVl9JYlRoNGo4b0xIUU9sbTU5Sw?oc=5",
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Australian Minister Denies Softer Stance on Data Center Power",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQU0RrSkgxV3NnTmFadjN0bkNtTkEwRFFMczFwLWViYkU2Tk1sNDVTenFsUHdxTFg4Yk96SVRmR0dUMm03M19jSHJ1NEs0ajc4cXhrQzhvdWpJeU1PaEFNQ2JkN0hOc0VkQmJnemRUVlpkaDY1bTF0eGJKRTJyWF9HSjVBSUh1Yk1OOU5XRG9yXzh3T1lRUnlCeFpyOVBlR202RzlKdkZLb3RLZUhBUU9XQkhB?oc=5",
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "facts": [
-          "資料中心密集區的電費，五個月費用比五年前高 267%"
-        ]
+        "when": "Sat, 29 Aug 2026",
+        "paywall": true,
+        "doubt": true
       },
       {
-        "title": "No, AI Data Centers Are Not Driving Up Electricity Costs",
-        "url": "https://reason.com/2025/12/23/the-data-center-price-myth/",
-        "outlet": "Reason",
-        "lean": "right",
-        "facts": [
-          "電網固定成本高，用電量增加反而攤薄單位成本",
-          "反方主張：漲價來自老化電網和天然氣價格"
-        ]
+        "title": "Bloomberg - Business News, Stock Markets, Finance, Breaking & World News",
+        "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTE9qYU5Fb2FhR3RmNHZUdG1PZFRYOVdvalpTcXd4VjBBME5WRmxTaGphdzFWb2hGTGJVeUU1UVpLOA?oc=5",
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "when": "Sat, 18 Jul 2009",
+        "paywall": true,
+        "doubt": true
       },
       {
-        "title": "Have Data Centers Driven Up Electricity Prices? The State-Level Data Don't Support the Narrative",
-        "url": "https://www.instituteforenergyresearch.org/the-grid/have-data-centers-driven-up-electricity-prices-the-state-level-data-dont-support-the-narrative/",
-        "outlet": "Institute for Energy Research",
-        "lean": "right",
-        "facts": [
-          "州級資料顯示資料中心數量與電價無統計顯著相關",
-          "EPRI 研究：主因是電網汰換、天災重建、天然氣價格波動"
-        ]
+        "title": "Tech backlash reaches fever pitch as AI angst collides with social media fears",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOWVVyS25EMUpKT2NCRlBlT1ZWMmkxME9CbUhrRm1FcHBpUlU2dmxaX1NfWXE4VDNjREVHWjY3UEt5d3dCMGZKR3JrOWxQalJibkRHdDU4YjliUEViVmVDVVMzT0xaUTdtd3o0dFppaVJxRkJVMDRtakoxa0ZQTjZkSTR30gGHAUFVX3lxTE5zSjRrVktpSnZfc1JZc0NCdl9oZnRodnZTM3ZFRGdsQVlJVlhUakxRSEFqOVB0R1gzQ3NQd1dLTWZROUpobkpnXzg2cGhfYUZSX3hJcW5aSWNLWktqSXB2QWV6VnZiR0JPMzA5NWJLNnhyRHRBQ05sX3lWVUFrZmUyTmRCMkI4TQ?oc=5",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "when": "Sat, 29 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Trump says U.S. communities opposing AI data centers could end up 'backwards and poor'",
+        "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNTExvUVdXQTlCbnN3OXZIaWNHN0JXXzlyUlp3b1NfUmpMTlllOFNGdktjYzZTSExHYzlncDdBYl84TXJ2ZzI2TzZIRHVEV0hzNWNkU0puX2JwYzdYUWdJX0QyU3dSanhULXZOSXV5MXljaV9lcnlOVG4zRTdXUFRTekttRVRIbWowU2JR0gGQAUFVX3lxTE85bUVxMUF3dE82UFFIaUtYUzZsZWdka1lZN2RfWE9VY1c1VUJ2XzZxSTlUd2VsTDNIY0lnTVZlNm9vXzJkOTlCWm1YbG9zZExBVzI2LXdEdEpwTy1qb3pOd0EydlRLdml4UnF0ZXk1TTRhVzBHbEtYclBxcnE3ZE5GeTRJM0hCSU1QTGt3VVlpcA?oc=5",
+        "outlet": "CNBC",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Greens call for temporary ban on new data centres",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1fZy1QcEJOQmRlbkxwN29iWDRERDZiVmZMcEwxalFubUJyTmdSMVZIWk54UVB3ek1VbkdhU2hzZFplX2hpZkFERDlrU1U3N25UcjF0SzgtS19rQQ?oc=5",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "China is winning one AI race, the US another - but either might pull ahead",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9pdHNSdEpTT3NVSXF3VFZuUFNWOTF0UDB6VG5mTUU0RDAxX21lZEhLSWd0YjBmb21KeFlySWE4SFMwenVjS0loY2c1emlRS2dTX2Zmdng4TkNBZw?oc=5",
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "when": "Tue, 07 Apr 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "The multiplying risks of financing data centres",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPT3NLZk16NDdyV3NrQ292SmUzeXJPX2lKVEw2aG9MTmNTd2VRNVcwbTNIN1RQVkN5aWF3aExlVE91c3l3UV8xNGhvQnFjbWtfNGFPSXFLOUwtZGg5aWhFYl9zT3h4ZG9FMzFqaGd5MldabVVtcG9sejM5MVh2WVBTdzYzWVE?oc=5",
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "when": "Wed, 26 Aug 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Trump says data centre critics ‘want to end up backwards and poor’",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQYV9zQTRxalNBQXctWUtrcFpNdjVmbkNjLXZBdGI2M005V0FBc1NoRHl3VlRNQlVpSy15NDMteWZWN0RBZlBYQkYzSEI2cnVYOGVpUGdtQnRuN2RfaE51YVFTanVBX1cyZzlUUFlJOFFfZ3dtM0ZUdHlnWGhyTHBNX2dwNDA?oc=5",
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "The state that could shape the winning Democratic message",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNR0hQNmxXdFpWV3oyWHJNWDEzZHBaTHRGWkpfMDlGdmJPXzlCem5sTnlEMXpLUEt5eC1rbVdtMFg3d1k1QmpBT0ozeUctM2FsS1M1QTFjaHlONTJ1d2xuLTAzazduUTNkTThTRndubWlQdkVmM05ZVUViTGo1MHN5Qnd1X2EydUFYTml3SXJyQTh3ejc4OGppckhJNjlNRFRGWnMwc2FTcmRNeGtj?oc=5",
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "when": "Thu, 27 Aug 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Elon Musk’s vision of the future",
+        "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxONmp6R2hScWRqWXhTNy0xNmtZYktBSG1uRDUzUVFIVnhoUS1PS1U5M1hjOVNkUl9idkx6LURkaGxPUUp2MWJZMGFRcVRwblRRc0dicWVWZUN5bGxCSnEwcFJJckgzUVE3ZWV1RGMyOTZEOWE2UllUb3hfWmpzVVRqeHBWUQ?oc=5",
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "when": "Thu, 23 Jul 2026",
+        "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Is the environmental impact of datacentres finally cutting through?",
+        "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOcjh3UXJmRDNxZ1dDbmwzT0NyWDNiemFGeGZfV2dEY0lkaVU1aHZwS2JSb3lpeGJrLWVIVzZNbVRNbTdPcTRxMGw0RzIyMzNrdU52Z3VKZ3lLOWJaSmlYb2g0VlYwSnB5djJsZVowbjBKX0tvTTh4Szg4RHJmY192ZmtHalNucXdTaDIxRXdFTHN0RFlGVHBpcEU5QzdkQXRWU2JIakU2NU42RGlpWmdtNWVHUFZoU0JtZ3c?oc=5",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "when": "Fri, 28 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Trump attacks datacenter backlash, claiming communities pushing back risk becoming ‘backwards and poor’",
+        "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5vWGFfWGhXNmlwZ1UtMmpqUXdQQjVHeTlTZ1VNVHB1VzdnQ0VwREtNNi1fMGcyZE1xaW0xbTY3ZFVYVm5yd2lraVNWLXBPZElfcjA2dU9iZk5vczJ2NVJ0eFhCWnBxTFJFZFYwZHo4bG5jYy1LbVRmZUtYbl9MUQ?oc=5",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Germany news: Third drone found in Leipzig airport probe",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNZkFJN2VBaWdoSGptRlpaNm52ZjkzNXAwbDloSk1zOVhsbjBGQzVMYXZ0MzI3ZnhydEtyaTUtVzNEZFZqeWNCZFBRdEhIV0o5ODh2MlBwMDY4TU43b3RiVTBabHM3Sk45SGVIcGlOUm93aTdZLUpQY01iVERDV29WejRieWFSUkxOeEhsNXVtdzRBbzBqdkE?oc=5",
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "when": "Tue, 25 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Can data centers be green?",
+        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPd2VfUUoxVVI5THMtN3l0UzltWk5ncWxZRklMeDZrMmlWcnpJUW9zZ2VtQllPdEhrejN1QzQwN21QdGh1ekZvUktFSUVuOFBYQ19KeXkyczA2ZVplS09ZZjc2RHBTT3lHR0RydmxhU3dvSXQ5OVdkblBVZFBLa3pWbnNaUzZoczVEZFVpVERSTlA3cUs3MzdNYXBKdU1iTzNFdEJEWlc5UGNmTFRDR2tTRmpFVmrSAbQBQVVfeXFMTlJRSkZiZGNjQ01pLV9ROGFFR3JEbV9UYnlCc2c3YWhKd01HMnZaQjA4TWdoMmFqMFVJbGlvZUhEMExibHNGeGZYZ21zcjI3MjFTMGliTjFuWjNLeEM1NWJ3YjRuYWExYWNQN1RHX3BSU1V0ZXBIMmNmY1I1RDdVZEpwZE5CSkxJQlctU0VEQnplS21nMXFyRVBvb2Jqb2ZlZWt5eVZvNTBWdHpBaFFXQzVkLTJi?oc=5",
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "when": "Tue, 21 Apr 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Trump says AI data center opponents want to be 'backwards and poor'",
+        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOcDczN1ZJWmZPYnBqOWJiTS1OejlBLXBmRk82QUpjMy0td1R1WmxKTDVQNzBpRkMzcWVUck9WWmlPd3B2Ukl2MkJuQkp1ZEtNRHFmOEN0YXJrYlNPQXYwUEx5bHhUNk5qU3hjY0RrVmJwV3NVWkxBYVR6MmxicEFNYllYZ0JwckcyTVVvc0N2T2VBT2JPWm9V?oc=5",
+        "outlet": "France 24",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Maine governor nixes data center moratorium in state",
+        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOb2NJNmpsVkRPSXJWeWZZak1sSVRfaUNMYm5tTUFXaFhkRlJFbW1HUl9McVZlMUNEM0ltZENHSlZ6Zm5oc1VYSXZrdi14bFJTVjc0S0Zhc2w5WS0yWlVXeTBHX1BzdVVRRmhaLUYzT2Jwc3JyRmFIUVJZWXJ5ZWNETTgtSFZkLVhTTF9IQVpqUUI2YTk0emVJNFd5TjlGMTAz?oc=5",
+        "outlet": "France 24",
+        "lean": "neutral",
+        "when": "Fri, 24 Apr 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Ireland keeps nuclear door open as data centre energy demand surges",
+        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQZzJvM0xHZ2ExRUZiWEdhd1M5ajZkUU16U3RSbHNNTlFVRzJOTUVKaW91Tms3WWViTXRkaUhmR2RNZ3pldWVGS1pMVFJlYnl2Mk1JSGhSV1dwUnRBSEhQV2xQd0c2MUdEYWpxeXJvMThWNk42NFZaaUhjcTllZlpIekVLV0t0aEFEQmdnNkVQYmlVLWdkMFFfaHlWdTkwUV9RSDJnSEIyVlJ0Unp2UzFGVHEwRQ?oc=5",
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "when": "Wed, 26 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Meet the company trying to make car tyres less toxic for the planet",
+        "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNQlQ3NjFIYkYtTV9qcWhRaFp0TkdieF9iakZ1WnA1b2RKN05odW1Zdzh5ZndMN1djcFNIWklWT05SRThBQ3RMVHRERi1ZbVZDN3kyV0YyWUtGYVI4YjY4MnlnWTFXMERDMFJCbFFwSlMyWFpWQU0zVEVVcHEzQUtJdEZLa1p1RGM0RHo5YnBMeDFpSUZBck1pOHRuakVwVHcwQW1ZcEdYTlpoT1Z5VUJ1cVAyM0JWMzZ3SlFMNTFqRVEzQi1H?oc=5",
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "‘Let Data Reign’: Trump decries opposition to data centres in US",
+        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNSFVoNG9fV09QRWgwMk9CZUtRa3MxZWZ0NGppU04xNng1bTRzMklCeWk5UjhKOWsySUhwMHhKck91cTdfRnBEVHRVWWsyTXFzZFUzR25fcmxRRTQybXNTOXNJSUJkVlRfZFBWS3pCNWkyWHhwSWoxODdhY1JqV0VuTUtPbnh2Y1BaZXJYWGRBSTlMc1pDdHVYYS11RUtlb245MkRMbNIBqgFBVV95cUxQd1U3TmRKaHNNZHpGeGJkRGhPVHBsbFNCdUZKNzRIcWZ0MmlQM21DWDg5eEw4RmJsY3AxRHI4M01PRmJwbHVEWEtCZkQ1Rkw2Um4xNWhKQmpNTDFtWVFrbU9Jcm5Id0xhc3AwVG42b0h0QldwWlhIXzhVWlE1UnJCTWx3eGdhZEVXT0c1eU5pY2F4YmJjRHd6WThzMDBiTk8wWnhfRWpWS3huQQ?oc=5",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Who are the economic winners and losers of the US-Israel war on Iran?",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOYktMVHVmNXUyS3dHaWUxYXJ2TGprWWs3aGdmTDdYSEdHMXVZY1JMTmNsYlZwc1dxNzVVaFd4MkdTTGNod2MzTGo5TjhRTG5tZ19fdktURE15VGZBY2dWcHZ1aUhLMS1xVEptN1EwdndDRzJ1QU9MRVNfclFjRm04UzhyTGR4cjFRNlVkMkVfS3Z4eHRodVN5ckxHQlh2TVI4WU1UWTduMWV4bmI0OVVEOTJn0gG3AUFVX3lxTE5sczJYM3ZIbkpSOE1DaUZfZDZoa2ppQy00elNTcnFlNWVKa3ZBa292QmFmQ2ZDMGdVbEFhOFJiMzJZa2pmbUtPLWhLSm5zVEdpVkh6bVlVLTVSWDJUZ1hrNWZsdFFuWU9XRV9ScWtGUHdNeUFaQlJQQl9Za0xoUHNkMlJGSWxGVU1LOUp4OExNZENITFRJbThad0NWVW1UUWo2bVdQOWZWTFctUVRjUG5XTG9MVXZMQQ?oc=5",
+        "outlet": "Al Jazeera English",
+        "lean": "non-western",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
       }
     ],
     "images": [
       {
-        "id": "13785838",
-        "term": "electricity bill",
-        "file": "assets/photos/AI資料中心推高電費/13785838.jpg",
-        "caption": "Electrical meter and fuse box on a white wall in Cape Town, South Africa, for energy monitoring or billing.",
-        "outlet": "Pexels",
-        "author": "Akashni Weimers",
-        "page": "https://www.pexels.com/photo/electricity-box-on-white-wall-13785838/",
-        "look": 18358023165395193855,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "7680324",
-        "term": "electricity bill",
-        "file": "assets/photos/AI資料中心推高電費/7680324.jpg",
-        "caption": "A five dollar bill and receipts on a white surface, emphasizing finance and expenses.",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "page": "https://www.pexels.com/photo/paper-money-and-bills-on-white-surface-7680324/",
-        "look": 18446736346809293305,
-        "size": [
-          6720,
-          4480
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "7111490",
-        "term": "electricity bill",
-        "file": "assets/photos/AI資料中心推高電費/7111490.jpg",
-        "caption": "Top view of financial papers labeled 'Paid' and 'Due' beside a calculator and glasses.",
-        "outlet": "Pexels",
-        "author": "Tara Winstead",
-        "page": "https://www.pexels.com/photo/black-calculator-beside-white-papers-7111490/",
-        "look": 18230007228433140177,
-        "size": [
-          5909,
-          3939
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "11924298",
-        "term": "electric meter",
-        "file": "assets/photos/AI資料中心推高電費/11924298.jpg",
-        "caption": "Close-up view of a row of industrial electricity meters for power monitoring and technology.",
-        "outlet": "Pexels",
-        "author": "Connor Scott McManus",
-        "page": "https://www.pexels.com/photo/row-of-electricity-meters-11924298/",
-        "look": 6951356778474830016,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "10065200",
-        "term": "electric meter",
-        "file": "assets/photos/AI資料中心推高電費/10065200.jpg",
-        "caption": "Electrical meters attached to a graffiti-covered wall showcasing utility infrastructure.",
-        "outlet": "Pexels",
-        "author": "AV",
-        "page": "https://www.pexels.com/photo/high-voltage-electricity-on-junction-boxes-10065200/",
-        "look": 1081727234214969215,
-        "size": [
-          6488,
-          4328
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "30144993",
-        "term": "electric meter",
-        "file": "assets/photos/AI資料中心推高電費/30144993.jpg",
-        "caption": "Electrical boxes and power meters mounted on a white brick wall.",
-        "outlet": "Pexels",
-        "author": "Anh-Bao Tran-Le",
-        "page": "https://www.pexels.com/photo/electrical-boxes-on-white-brick-wall-in-chattanooga-30144993/",
-        "look": 18436471894145236990,
-        "size": [
-          7728,
-          5152
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "37730212",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/37730212.jpg",
-        "caption": "Close-up of server racks in a data center highlighting modern technology infrastructure.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/data-center-server-racks-with-active-equipment-37730212/",
-        "look": 3474588892269132832,
-        "size": [
-          4108,
-          2734
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "17489151",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/17489151.jpg",
-        "caption": "Close-up of tower servers in a data center with blue and red lighting.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/line-of-pc-towers-17489151/",
-        "look": 8025529350858828623,
-        "size": [
-          3872,
-          2592
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "17489160",
-        "term": "data center servers",
-        "file": "assets/photos/AI資料中心推高電費/17489160.jpg",
-        "caption": "Detailed image of illuminated server racks showcasing modern technology infrastructure.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/box-server-illuminated-on-blue-17489160/",
-        "look": 6664832799240756248,
-        "size": [
-          6016,
-          4016
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "11166543",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/11166543.jpg",
-        "caption": "Photograph of an electric pole standing tall against a cloudy sky, capturing urban infrastructure.",
-        "outlet": "Pexels",
-        "author": "Matthias Schleiden",
-        "page": "https://www.pexels.com/photo/electric-pole-under-white-clouds-11166543/",
-        "look": 3343496316544036643,
-        "size": [
-          7952,
-          5304
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "19686062",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/19686062.jpg",
-        "caption": "Low angle shot of a metal power transmission tower with cables against a clear sky.",
-        "outlet": "Pexels",
-        "author": "Budget Bizar",
-        "page": "https://www.pexels.com/photo/low-angle-shot-of-transmission-tower-19686062/",
-        "look": 14250167407902716405,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "13216331",
-        "term": "power grid",
-        "file": "assets/photos/AI資料中心推高電費/13216331.jpg",
-        "caption": "Silhouetted transmission towers under a vibrant sunset in Baghdad, Iraq.",
-        "outlet": "Pexels",
-        "author": "Haitham Moussa",
-        "page": "https://www.pexels.com/photo/silhouette-of-transmission-towers-13216331/",
-        "look": 26922952163327,
-        "size": [
-          6960,
-          4640
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "12551266",
-        "term": "power lines suburb",
-        "file": "assets/photos/AI資料中心推高電費/12551266.jpg",
-        "caption": "A black SUV parked on a suburban street lined with trees and houses on a sunny day.",
-        "outlet": "Pexels",
-        "author": "Erik Mclean",
-        "page": "https://www.pexels.com/photo/black-suv-car-parked-in-front-of-a-white-wooden-house-12551266/",
-        "look": 8935705438517985279,
-        "size": [
-          5472,
-          3648
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "27275324",
-        "term": "power lines suburb",
-        "file": "assets/photos/AI資料中心推高電費/27275324.jpg",
-        "caption": "A serene neighborhood view with a bus on a street in St. John's, NL, Canada.",
-        "outlet": "Pexels",
-        "author": "Jonathan Cooper",
-        "page": "https://www.pexels.com/photo/a-street-with-cars-parked-on-it-and-a-bus-27275324/",
-        "look": 8297319467564539455,
-        "size": [
-          5688,
-          3792
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "38341668",
-        "term": "power lines suburb",
-        "file": "assets/photos/AI資料中心推高電費/38341668.jpg",
-        "caption": "A cityscape featuring a high-voltage power line tower against a clear blue sky, surrounded by modern buildings and greenery.",
-        "outlet": "Pexels",
-        "author": "Doğan Alpaslan  Demir",
-        "page": "https://www.pexels.com/photo/urban-landscape-with-power-lines-and-buildings-38341668/",
-        "look": 264973695384824,
-        "size": [
-          6129,
-          3992
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "11368700",
-        "term": "family kitchen evening",
-        "file": "assets/photos/AI資料中心推高電費/11368700.jpg",
-        "caption": "A family gathered around a dinner table indoors, enjoying a meal together with wine and candles.",
-        "outlet": "Pexels",
-        "author": "Anna Shvets",
-        "page": "https://www.pexels.com/photo/a-family-having-dinner-at-a-table-11368700/",
-        "look": 18446672863960236032,
-        "size": [
-          6240,
-          4160
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "3171295",
-        "term": "family kitchen evening",
-        "file": "assets/photos/AI資料中心推高電費/3171295.jpg",
-        "caption": "Two children decorating gingerbread cookies indoors by candlelight, creating a cozy holiday atmosphere.",
-        "outlet": "Pexels",
-        "author": "cottonbro studio",
-        "page": "https://www.pexels.com/photo/two-kids-holding-cream-bags-3171295/",
-        "look": 18226965005647937792,
-        "size": [
-          4069,
-          2718
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "11369060",
-        "term": "family kitchen evening",
-        "file": "assets/photos/AI資料中心推高電費/11369060.jpg",
-        "caption": "A family shares dinner together, highlighting warmth and togetherness across generations.",
-        "outlet": "Pexels",
-        "author": "Anna Shvets",
-        "page": "https://www.pexels.com/photo/smiling-girl-between-two-grandmothers-at-table-11369060/",
-        "look": 16825446131659968560,
-        "size": [
-          6199,
-          4133
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "17489157",
-        "term": "server room cooling",
-        "file": "assets/photos/AI資料中心推高電費/17489157.jpg",
-        "caption": "Detailed view of a server rack with a focus on technology and data storage.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/close-up-of-computer-hardware-17489157/",
-        "look": 2043647300835507200,
-        "size": [
-          6016,
-          4016
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "5480781",
-        "term": "server room cooling",
-        "file": "assets/photos/AI資料中心推高電費/5480781.jpg",
-        "caption": "System with various wires managing access to centralized resource of server in data center",
-        "outlet": "Pexels",
-        "author": "Brett Sayles",
-        "page": "https://www.pexels.com/photo/server-racks-on-data-center-5480781/",
-        "look": 13889313185449702644,
-        "size": [
-          6048,
-          4024
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "37605910",
-        "term": "server room cooling",
-        "file": "assets/photos/AI資料中心推高電費/37605910.jpg",
-        "caption": "Close-up of server equipment in a modern data center highlighting technology infrastructure.",
-        "outlet": "Pexels",
-        "author": "panumas nikhomkhai",
-        "page": "https://www.pexels.com/photo/server-rack-in-modern-data-center-37605910/",
-        "look": 9087873296071393280,
-        "size": [
-          4256,
-          2832
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "34610699",
-        "term": "utility worker",
-        "file": "assets/photos/AI資料中心推高電費/34610699.jpg",
-        "caption": "Workers managing tangled power lines by a street setup near a vehicle, highlighting infrastructure challenges.",
-        "outlet": "Pexels",
-        "author": "Denniz Futalan",
-        "page": "https://www.pexels.com/photo/electrical-workers-navigating-complex-power-lines-34610699/",
-        "look": 1089863348810416128,
-        "size": [
-          3000,
-          2000
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "33217702",
-        "term": "utility worker",
-        "file": "assets/photos/AI資料中心推高電費/33217702.jpg",
-        "caption": "Aerial view of a utility worker on a bucket truck fixing power lines by a road.",
-        "outlet": "Pexels",
-        "author": "K",
-        "page": "https://www.pexels.com/photo/utility-worker-on-bucket-truck-repairs-power-lines-33217702/",
-        "look": 18446475792872380287,
-        "size": [
-          4806,
-          2700
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "17018102",
-        "term": "utility worker",
-        "file": "assets/photos/AI資料中心推高電費/17018102.jpg",
-        "caption": "Electricians wearing safety gear work on power lines using lifts against a clear blue sky.",
-        "outlet": "Pexels",
-        "author": "Thampapon Otavorn",
-        "page": "https://www.pexels.com/photo/electricians-working-with-power-lines-17018102/",
-        "look": 13772738803252863024,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "7616651",
-        "term": "thermostat home",
-        "file": "assets/photos/AI資料中心推高電費/7616651.jpg",
-        "caption": "Close-up of a modern digital thermostat mounted on a wall, displaying temperature settings in Celsius.",
-        "outlet": "Pexels",
-        "author": "Erik Mclean",
-        "page": "https://www.pexels.com/photo/white-thermostat-hanging-on-the-wall-7616651/",
-        "look": 9160056724449598492,
-        "size": [
-          5472,
-          3648
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "36730582",
-        "term": "thermostat home",
-        "file": "assets/photos/AI資料中心推高電費/36730582.jpg",
-        "caption": "Woman adjusting the thermostat in a bright, contemporary room with large windows and a potted plant.",
-        "outlet": "Pexels",
-        "author": "Vitaly Gariev",
-        "page": "https://www.pexels.com/photo/woman-adjusting-thermostat-in-bright-indoor-setting-36730582/",
-        "look": 68330262569942011,
-        "size": [
-          3800,
-          2138
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "271614",
-        "term": "thermostat home",
-        "file": "assets/photos/AI資料中心推高電費/271614.jpg",
-        "caption": "Comfortable hotel room with modern design and minimalistic decor.",
-        "outlet": "Pexels",
-        "author": "Pixabay",
-        "page": "https://www.pexels.com/photo/gray-and-brown-sectional-couch-271614/",
-        "look": 72349545501032447,
-        "size": [
-          5616,
-          3868
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "5466795",
-        "term": "money calculator bills",
-        "file": "assets/photos/AI資料中心推高電費/5466795.jpg",
-        "caption": "Top view of a calculator showing $5200 surrounded by $100 bills on a tan background.",
-        "outlet": "Pexels",
-        "author": "olia danilevich",
-        "page": "https://www.pexels.com/photo/photo-of-calculator-near-dollar-bills-5466795/",
-        "look": 18442209429048262655,
-        "size": [
-          6000,
-          4000
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "7735796",
-        "term": "money calculator bills",
-        "file": "assets/photos/AI資料中心推高電費/7735796.jpg",
-        "caption": "Close-up of hands using smartphone calculator next to dollar bills on table. Financial planning concept.",
-        "outlet": "Pexels",
-        "author": "Mikhail Nilov",
-        "page": "https://www.pexels.com/photo/close-up-shot-of-a-person-holding-cellphone-7735796/",
-        "look": 17361924066368404479,
-        "size": [
-          3751,
-          2737
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "5900233",
-        "term": "money calculator bills",
-        "file": "assets/photos/AI資料中心推高電費/5900233.jpg",
-        "caption": "Hands managing finances with calculator, cash, and receipts on a wooden table. Ideal for budgeting concepts.",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "page": "https://www.pexels.com/photo/person-holding-paper-bills-while-using-a-calculator-5900233/",
-        "look": 9180384461061033771,
-        "size": [
-          6720,
-          4480
-        ],
-        "kind": "stock",
-        "seen": true
-      },
-      {
-        "id": "141680753",
-        "term": "data center",
-        "file": "assets/photos/AI資料中心推高電費/141680753.jpg",
-        "caption": "BF2 Settimo Milanese",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Davide Alotto",
-        "credit": "Davide Alotto／CC0",
-        "page": "https://commons.wikimedia.org/wiki/File:BT_Italia_Settimo_Milanese.jpg",
-        "look": 553798926335,
-        "size": [
-          3264,
-          1836
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "26575836",
-        "term": "data center",
-        "file": "assets/photos/AI資料中心推高電費/26575836.jpg",
-        "caption": "Server room of BalticServers",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "BalticServers.com",
-        "credit": "BalticServers.com／CC BY-SA 3.0",
-        "page": "https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg",
-        "look": 72905347689285383,
-        "size": [
-          2048,
-          1360
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "165776581",
-        "term": "data center",
-        "file": "assets/photos/AI資料中心推高電費/165776581.jpg",
-        "caption": "Centre de données MTL8-S, 7350 rue Frederick-Banting, dans le Technoparc de Montréal",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Jeangagnon",
-        "credit": "Jeangagnon／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Centre_de_donnees_MTL8-S_-_2025-04-09_-_01.jpg",
-        "look": 17941216106341005536,
-        "size": [
-          4000,
-          3000
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "152346043",
-        "term": "electrical substation",
-        "file": "assets/photos/AI資料中心推高電費/152346043.jpg",
-        "caption": "The power station Mühltal with an electrical substation in front of it.",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Flocci Nivis",
-        "credit": "Flocci Nivis／CC BY 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:20240407_Kraftwerk_M%C3%BChltal.jpg",
-        "look": 3476779119430664191,
-        "size": [
-          6016,
-          4016
-        ],
-        "answers": 1.0,
-        "seen": true
-      },
-      {
-        "id": "131774185",
-        "term": "electrical substation",
-        "file": "assets/photos/AI資料中心推高電費/131774185.jpg",
-        "caption": "sottostazione 3kV",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Al*from*Lig",
-        "credit": "Al*from*Lig／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Albenga_stazione_ferroviaria.jpg",
-        "look": 2090232078241041561,
-        "size": [
-          3106,
-          4096
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "197834157",
-        "term": "electrical substation",
-        "file": "assets/photos/AI資料中心推高電費/197834157.jpg",
-        "caption": "The newly built substation of APG in Leoben-Donawitz (Austria).",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Aciarium",
-        "credit": "Aciarium／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:DSC04737_APG_Leoben_Substation,_Leoben-Donawitz,_2026-04.jpg",
-        "look": 279823545425920,
-        "size": [
-          6554,
-          4369
-        ],
-        "answers": 0.5,
-        "seen": true
-      },
-      {
-        "id": "103494974",
-        "term": "power station",
-        "file": "assets/photos/AI資料中心推高電費/103494974.jpg",
-        "caption": "Andasol Solar Power Station",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "kallerna",
-        "credit": "kallerna／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Andasol_Guadix_4.jpg",
-        "look": 4642670668480511,
-        "size": [
-          4150,
-          2790
-        ],
-        "answers": 1.0,
-        "seen": true
-      },
-      {
-        "id": "121140343",
-        "term": "power station",
-        "file": "assets/photos/AI資料中心推高電費/121140343.jpg",
-        "caption": "Powerhouse, Lower Bankhead , Bankhead, Banff National Park , Alberta , Canada Banff National Park in the Canadian province of Alberta was founded in 1885 and is Canada’s oldest national park. Its creation dates back to the discovery of hot springs on Sulphur Mountain, after which the area was placed",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Dietmar Rabich",
-        "credit": "Dietmar Rabich／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Banff_National_Park_(AB,_Canada),_Bankhead,_Lower_Bankhead,_Powerhouse_--_2022_--_2253.jpg",
-        "look": 440831759089098303,
-        "size": [
-          6720,
-          4480
-        ],
-        "answers": 0.5,
-        "seen": true
-      },
-      {
-        "id": "56720546",
-        "term": "power station",
-        "file": "assets/photos/AI資料中心推高電費/56720546.jpg",
-        "caption": "Administration building of Hydro Dolomiti Energia in power station Malga Mare (Italy).",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Agnes Monkelbaan",
-        "credit": "Agnes Monkelbaan／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Bergtocht_van_parkeerplaats_bij_centrale_Malga_Mare_naar_Lago_Lungo_44.jpg",
-        "look": 17874817828088539007,
-        "size": [
-          4119,
-          3199
-        ],
-        "answers": 1.0,
-        "seen": true
-      },
-      {
-        "id": "36433653",
-        "term": "transmission tower",
-        "file": "assets/photos/AI資料中心推高電費/36433653.jpg",
-        "caption": "Kłodzko, ul. Drzymały",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Jacek Halicki",
-        "credit": "Jacek Halicki／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:2014_K%C5%82odzko,_ul._Drzyma%C5%82y_01.JPG",
-        "look": 432563851241193471,
-        "size": [
-          2337,
-          3208
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "38708143",
-        "term": "transmission tower",
-        "file": "assets/photos/AI資料中心推高電費/38708143.jpg",
-        "caption": "Power lines near Marxheim, Germany. The insulators are inclined due to crosswind from the left.",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Kreuzschnabel",
-        "credit": "Kreuzschnabel／CC BY-SA 3.0",
-        "page": "https://commons.wikimedia.org/wiki/File:2015_Freileitungen_bei_Marxheim.jpg",
-        "look": 50384020831145728,
-        "size": [
-          4509,
-          3553
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "110102516",
-        "term": "transmission tower",
-        "file": "assets/photos/AI資料中心推高電費/110102516.jpg",
-        "caption": "Ada Bridge pylon, Belgrade, Serbia",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Petar Milošević",
-        "credit": "Petar Milošević／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Ada_Bridge_pylon_(Sava_river,_Belgrade).jpg",
-        "look": 4340370632655962112,
-        "size": [
-          4608,
-          3456
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "65122033",
-        "term": "server room",
-        "file": "assets/photos/AI資料中心推高電費/65122033.jpg",
-        "caption": "Indian Railway 139 Server Room.",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Indrajit Das",
-        "credit": "Indrajit Das／CC BY-SA 3.0",
-        "page": "https://commons.wikimedia.org/wiki/File:139_Server_Room_01.jpg",
-        "look": 18158725821647092990,
-        "size": [
-          3264,
-          2448
-        ],
-        "answers": 1.0,
-        "seen": true
-      },
-      {
-        "id": "66391416",
-        "term": "server room",
-        "file": "assets/photos/AI資料中心推高電費/66391416.jpg",
-        "caption": "this is rack shelf which can install to short depth 19\" rack with 3 NUC mini PC",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Truenetworks",
-        "credit": "Truenetworks／CC BY-SA 3.0",
-        "page": "https://commons.wikimedia.org/wiki/File:3_intel_NUC_mini_pc_rack_mount_rack_shelf.jpg",
-        "look": 289165090438919,
-        "size": [
-          923,
-          645
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "16886979",
-        "term": "server room",
-        "file": "assets/photos/AI資料中心推高電費/16886979.jpg",
-        "caption": "The server room at The National Archives",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "The National Archives (UK)",
-        "credit": "The National Archives (UK)／CC BY 3.0",
-        "page": "https://commons.wikimedia.org/wiki/File:A_view_of_the_server_room_at_The_National_Archives.jpg",
-        "look": 594704746786863216,
-        "size": [
-          3600,
-          2100
-        ],
-        "answers": 1.0,
-        "seen": true
-      },
-      {
-        "id": "138554678",
-        "term": "computer server",
-        "file": "assets/photos/AI資料中心推高電費/138554678.jpg",
-        "caption": "Scematic of a 3-2-1 backup strategy.",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Olaf Pichler",
-        "credit": "Olaf Pichler／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:3-2-1_backup_01.png",
-        "look": 11320947883769315784,
-        "size": [
-          3000,
-          1500
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "29153949",
-        "term": "computer server",
-        "file": "assets/photos/AI資料中心推高電費/29153949.jpg",
-        "caption": "Server Cabinet Networking Cross Connect Panels",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Robert.Harker",
-        "credit": "Robert.Harker／CC BY-SA 3.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Cabinet_Network_Rear_Close.jpg",
-        "look": 576602456108890304,
-        "size": [
-          2592,
-          3456
-        ],
-        "answers": 0.5,
-        "seen": true
-      },
-      {
-        "id": "110732208",
-        "term": "computer server",
-        "file": "assets/photos/AI資料中心推高電費/110732208.jpg",
-        "caption": "In fact: Dell PowerEdge R710",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Johannes Weber",
-        "credit": "Johannes Weber／CC BY 2.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Cisco_ESA_IronPort_C670.jpg",
-        "look": 2176156725164604231,
-        "size": [
-          5472,
-          3648
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "117569941",
-        "term": "electricity meter",
-        "file": "assets/photos/AI資料中心推高電費/117569941.jpg",
-        "caption": "This is an image with the theme \" Home + Habitat in Africa \" from:",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Prof OJ",
-        "credit": "Prof OJ／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:23--MG_0377.jpg",
-        "look": 123631998563207,
-        "size": [
-          3456,
-          2304
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "117569947",
-        "term": "electricity meter",
-        "file": "assets/photos/AI資料中心推高電費/117569947.jpg",
-        "caption": "This is an image with the theme \" Home + Habitat in Africa \" from:",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Prof OJ",
-        "credit": "Prof OJ／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:31--MG_0456.jpg",
-        "look": 545391690751,
-        "size": [
-          3456,
-          2304
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "95617449",
-        "term": "electricity meter",
-        "file": "assets/photos/AI資料中心推高電費/95617449.jpg",
-        "caption": "Carlton County History and Heritage Center - back, Cloquet, Minnesota, USA.",
-        "kind": "real",
-        "outlet": "Wikimedia Commons",
-        "author": "Myotus",
-        "credit": "Myotus／CC BY-SA 4.0",
-        "page": "https://commons.wikimedia.org/wiki/File:Carlton_County_History_and_Heritage_Center-North.jpg",
-        "look": 8935489106385959167,
-        "size": [
-          4160,
-          2340
-        ],
-        "answers": 0.0,
-        "seen": true
-      },
-      {
-        "id": "frame_uQ3Qc2gi2RQ_24",
-        "kind": "frame",
-        "term": "Fox Business 24s",
-        "file": "assets/photos/AI資料中心推高電費/frame_uQ3Qc2gi2RQ_24.jpg",
-        "caption": "AI data centers. But, there's one",
-        "said": "AI data centers. But, there's one",
-        "at": 24.36,
-        "source": "assets/footage/AI資料中心推高電費/uQ3Qc2gi2RQ.mp4",
-        "outlet": "Fox Business",
-        "author": "",
-        "credit": "畫面來源：Fox Business",
-        "page": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "look": 13636898436874805375,
-        "seen": true
-      },
-      {
-        "id": "frame_uQ3Qc2gi2RQ_135",
-        "kind": "frame",
-        "term": "Fox Business 135s",
-        "file": "assets/photos/AI資料中心推高電費/frame_uQ3Qc2gi2RQ_135.jpg",
-        "caption": "loss in data centers by 50%. I mean,",
-        "said": "loss in data centers by 50%. I mean,",
-        "at": 135.28,
-        "source": "assets/footage/AI資料中心推高電費/uQ3Qc2gi2RQ.mp4",
-        "outlet": "Fox Business",
-        "author": "",
-        "credit": "畫面來源：Fox Business",
-        "page": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "look": 80069283640563964,
-        "seen": true
-      },
-      {
-        "id": "frame_uQ3Qc2gi2RQ_239",
-        "kind": "frame",
-        "term": "Fox Business 239s",
-        "file": "assets/photos/AI資料中心推高電費/frame_uQ3Qc2gi2RQ_239.jpg",
-        "caption": "power usage in AI data center comes in.",
-        "said": "power usage in AI data center comes in.",
-        "at": 239.54,
-        "source": "assets/footage/AI資料中心推高電費/uQ3Qc2gi2RQ.mp4",
-        "outlet": "Fox Business",
-        "author": "",
-        "credit": "畫面來源：Fox Business",
-        "page": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-        "look": 3836924688511198780,
-        "seen": true
-      },
-      {
-        "id": "frame_gk8ziQCWK1w_44",
-        "kind": "frame",
-        "term": "CNBC 44s",
-        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_44.jpg",
-        "caption": "energy to power those data centers.",
-        "said": "energy to power those data centers.",
-        "at": 44.6,
-        "source": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "outlet": "CNBC",
-        "author": "",
-        "credit": "畫面來源：CNBC",
-        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "look": 4575656199240204516,
-        "seen": true
-      },
-      {
-        "id": "frame_gk8ziQCWK1w_12",
-        "kind": "frame",
-        "term": "CNBC 12s",
-        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_12.jpg",
-        "caption": "data centers that run AI models made by companies",
-        "said": "data centers that run AI models made by companies",
-        "at": 12.98,
-        "source": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "outlet": "CNBC",
-        "author": "",
-        "credit": "畫面來源：CNBC",
-        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "look": 504417447722418175,
-        "seen": true
-      },
-      {
-        "id": "frame_gk8ziQCWK1w_91",
-        "kind": "frame",
-        "term": "CNBC 91s",
-        "file": "assets/photos/AI資料中心推高電費/frame_gk8ziQCWK1w_91.jpg",
-        "caption": "Microsoft just bought seven to power its data center in",
-        "said": "Microsoft just bought seven to power its data center in",
-        "at": 91.1,
-        "source": "assets/footage/AI資料中心推高電費/gk8ziQCWK1w.mp4",
-        "outlet": "CNBC",
-        "author": "",
-        "credit": "畫面來源：CNBC",
-        "page": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-        "look": 72339877479202732,
-        "seen": true
-      },
-      {
-        "id": "frame_fkB8mt1DEVw_3",
-        "kind": "frame",
-        "term": "PBS NewsHour 3s",
-        "file": "assets/photos/AI資料中心推高電費/frame_fkB8mt1DEVw_3.jpg",
-        "caption": "Artificial intelligence data centers",
-        "said": "Artificial intelligence data centers",
-        "at": 3.45,
-        "source": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
-        "outlet": "PBS NewsHour",
-        "author": "",
-        "credit": "畫面來源：PBS NewsHour",
-        "page": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
-        "look": 11278131665705631999,
-        "seen": true
-      },
-      {
-        "id": "frame_fkB8mt1DEVw_20",
-        "kind": "frame",
-        "term": "PBS NewsHour 20s",
-        "file": "assets/photos/AI資料中心推高電費/frame_fkB8mt1DEVw_20.jpg",
-        "caption": "What we know about the impact of data centers,",
-        "said": "What we know about the impact of data centers,",
-        "at": 20.15,
-        "source": "assets/footage/AI資料中心推高電費/fkB8mt1DEVw.mp4",
-        "outlet": "PBS NewsHour",
-        "author": "",
-        "credit": "畫面來源：PBS NewsHour",
-        "page": "https://www.youtube.com/watch?v=fkB8mt1DEVw",
-        "look": 8866599221462032576,
-        "seen": true
-      },
-      {
-        "id": "frame_RF6OMq1NHuE_18",
-        "kind": "frame",
-        "term": "CNN 18s",
-        "file": "assets/photos/AI資料中心推高電費/frame_RF6OMq1NHuE_18.jpg",
-        "caption": "issue, AI data centers. Last November, Republican Governor Greg Abbott called Texas the epicenter",
-        "said": "issue, AI data centers. Last November, Republican Governor Greg Abbott called Texas the epicenter",
-        "at": 18.0,
-        "source": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
-        "outlet": "CNN",
-        "author": "",
-        "credit": "畫面來源：CNN",
-        "page": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
-        "look": 9151169833851584000,
-        "seen": true
-      },
-      {
-        "id": "frame_RF6OMq1NHuE_31",
-        "kind": "frame",
-        "term": "CNN 31s",
-        "file": "assets/photos/AI資料中心推高電費/frame_RF6OMq1NHuE_31.jpg",
-        "caption": "But as backlash to data centers has intensified across the state, Governor Abbott has changed",
-        "said": "But as backlash to data centers has intensified across the state, Governor Abbott has changed",
-        "at": 31.4,
-        "source": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
-        "outlet": "CNN",
-        "author": "",
-        "credit": "畫面來源：CNN",
-        "page": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
-        "look": 13618674170307083464,
-        "seen": true
-      },
-      {
-        "id": "frame_RF6OMq1NHuE_58",
-        "kind": "frame",
-        "term": "CNN 58s",
-        "file": "assets/photos/AI資料中心推高電費/frame_RF6OMq1NHuE_58.jpg",
-        "caption": "Abbott has now paused permits for new data centers, but my next guests say his change of",
-        "said": "Abbott has now paused permits for new data centers, but my next guests say his change of",
-        "at": 58.28,
-        "source": "assets/footage/AI資料中心推高電費/RF6OMq1NHuE.mp4",
-        "outlet": "CNN",
-        "author": "",
-        "credit": "畫面來源：CNN",
-        "page": "https://www.youtube.com/watch?v=RF6OMq1NHuE",
-        "look": 18446517574448971776,
-        "seen": true
-      },
-      {
         "id": "frame_j7yZ5vrIASw_18",
         "kind": "frame",
+        "seen": true,
         "term": "Reuters 18s",
         "file": "assets/photos/AI資料中心推高電費/frame_j7yZ5vrIASw_18.jpg",
         "caption": "electricity? By 2035, data centers could",
@@ -1160,12 +630,12 @@
         "author": "",
         "credit": "畫面來源：Reuters",
         "page": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
-        "look": 11013579380512259997,
-        "seen": true
+        "look": 11013579380512259997
       },
       {
         "id": "frame_j7yZ5vrIASw_163",
         "kind": "frame",
+        "seen": true,
         "term": "Reuters 163s",
         "file": "assets/photos/AI資料中心推高電費/frame_j7yZ5vrIASw_163.jpg",
         "caption": "the AI data centers, but just for",
@@ -1176,61 +646,970 @@
         "author": "",
         "credit": "畫面來源：Reuters",
         "page": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
-        "look": 10484876782453589947,
-        "seen": true
+        "look": 10484876782453589947
       },
       {
-        "id": "6862458",
-        "term": "person paying bills laptop",
-        "file": "assets/photos/AI資料中心推高電費/6862458.jpg",
+        "id": "frame__pbvZRbN87A_16",
+        "kind": "frame",
         "seen": true,
-        "caption": "Overhead view of woman organizing finances on bed with laptop and checks.",
+        "term": "Reuters 16s",
+        "file": "assets/photos/AI資料中心推高電費/frame__pbvZRbN87A_16.jpg",
+        "caption": "huge amounts of power. Data centers",
+        "said": "huge amounts of power. Data centers",
+        "at": 16.84,
+        "source": "assets/footage/AI資料中心推高電費/_pbvZRbN87A.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=_pbvZRbN87A",
+        "look": 1736379931565948927
+      },
+      {
+        "id": "frame_iVGTGpKpykM_35",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 35s",
+        "file": "assets/photos/AI資料中心推高電費/frame_iVGTGpKpykM_35.jpg",
+        "caption": "the massive data centers behind",
+        "said": "the massive data centers behind",
+        "at": 35.66,
+        "source": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=iVGTGpKpykM",
+        "look": 18446183349455292990
+      },
+      {
+        "id": "frame_iVGTGpKpykM_94",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 94s",
+        "file": "assets/photos/AI資料中心推高電費/frame_iVGTGpKpykM_94.jpg",
+        "caption": "energy centers is booming, it is",
+        "said": "energy centers is booming, it is",
+        "at": 94.6,
+        "source": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=iVGTGpKpykM",
+        "look": 9476580577639653375
+      },
+      {
+        "id": "frame_iVGTGpKpykM_163",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 163s",
+        "file": "assets/photos/AI資料中心推高電費/frame_iVGTGpKpykM_163.jpg",
+        "caption": "from these data centers and ai",
+        "said": "from these data centers and ai",
+        "at": 163.9,
+        "source": "assets/footage/AI資料中心推高電費/iVGTGpKpykM.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=iVGTGpKpykM",
+        "look": 4484507866631899136
+      },
+      {
+        "id": "frame_VOezW-b_mD8_22",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 22s",
+        "file": "assets/photos/AI資料中心推高電費/frame_VOezW-b_mD8_22.jpg",
+        "caption": "company's massive data centers.",
+        "said": "company's massive data centers.",
+        "at": 22.67,
+        "source": "assets/footage/AI資料中心推高電費/VOezW-b_mD8.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=VOezW-b_mD8",
+        "look": 18391575253152185470
+      },
+      {
+        "id": "frame_VOezW-b_mD8_196",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 196s",
+        "file": "assets/photos/AI資料中心推高電費/frame_VOezW-b_mD8_196.jpg",
+        "caption": "Paul: Bill runs the data centers",
+        "said": "Paul: Bill runs the data centers",
+        "at": 196.13,
+        "source": "assets/footage/AI資料中心推高電費/VOezW-b_mD8.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=VOezW-b_mD8",
+        "look": 523986003428
+      },
+      {
+        "id": "frame_VOezW-b_mD8_134",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 134s",
+        "file": "assets/photos/AI資料中心推高電費/frame_VOezW-b_mD8_134.jpg",
+        "caption": "It is centers have already been",
+        "said": "It is centers have already been",
+        "at": 134.17,
+        "source": "assets/footage/AI資料中心推高電費/VOezW-b_mD8.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=VOezW-b_mD8",
+        "look": 17361641481138397280
+      },
+      {
+        "id": "frame_VOezW-b_mD8_156",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 156s",
+        "file": "assets/photos/AI資料中心推高電費/frame_VOezW-b_mD8_156.jpg",
+        "caption": "centers, like those that mine",
+        "said": "centers, like those that mine",
+        "at": 156.94,
+        "source": "assets/footage/AI資料中心推高電費/VOezW-b_mD8.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=VOezW-b_mD8",
+        "look": 2242260580154998808
+      },
+      {
+        "id": "frame_Tx0uoiuLAZg_11",
+        "kind": "frame",
+        "seen": true,
+        "term": "Wall Street Journal 11s",
+        "file": "assets/photos/AI資料中心推高電費/frame_Tx0uoiuLAZg_11.jpg",
+        "caption": ">> by 2028 data centers like this across",
+        "said": ">> by 2028 data centers like this across",
+        "at": 11.24,
+        "source": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.mp4",
+        "outlet": "Wall Street Journal",
+        "author": "",
+        "credit": "畫面來源：Wall Street Journal",
+        "page": "https://www.youtube.com/watch?v=Tx0uoiuLAZg",
+        "look": 6786445557694208
+      },
+      {
+        "id": "frame_Tx0uoiuLAZg_43",
+        "kind": "frame",
+        "seen": true,
+        "term": "Wall Street Journal 43s",
+        "file": "assets/photos/AI資料中心推高電費/frame_Tx0uoiuLAZg_43.jpg",
+        "caption": "center alley. When your prompt arrives",
+        "said": "center alley. When your prompt arrives",
+        "at": 43.16,
+        "source": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.mp4",
+        "outlet": "Wall Street Journal",
+        "author": "",
+        "credit": "畫面來源：Wall Street Journal",
+        "page": "https://www.youtube.com/watch?v=Tx0uoiuLAZg",
+        "look": 6928507104726350335
+      },
+      {
+        "id": "frame_Tx0uoiuLAZg_153",
+        "kind": "frame",
+        "seen": true,
+        "term": "Wall Street Journal 153s",
+        "file": "assets/photos/AI資料中心推高電費/frame_Tx0uoiuLAZg_153.jpg",
+        "caption": "centers. We saw several new ones already",
+        "said": "centers. We saw several new ones already",
+        "at": 153.4,
+        "source": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.mp4",
+        "outlet": "Wall Street Journal",
+        "author": "",
+        "credit": "畫面來源：Wall Street Journal",
+        "page": "https://www.youtube.com/watch?v=Tx0uoiuLAZg",
+        "look": 36030411943968767
+      },
+      {
+        "id": "frame_Tx0uoiuLAZg_24",
+        "kind": "frame",
+        "seen": true,
+        "term": "Wall Street Journal 24s",
+        "file": "assets/photos/AI資料中心推高電費/frame_Tx0uoiuLAZg_24.jpg",
+        "caption": "increasing that energy every time you",
+        "said": "increasing that energy every time you",
+        "at": 24.08,
+        "source": "assets/footage/AI資料中心推高電費/Tx0uoiuLAZg.mp4",
+        "outlet": "Wall Street Journal",
+        "author": "",
+        "credit": "畫面來源：Wall Street Journal",
+        "page": "https://www.youtube.com/watch?v=Tx0uoiuLAZg",
+        "look": 12366269843200
+      },
+      {
+        "id": "frame_rcIqrT5rIzw_27",
+        "kind": "frame",
+        "seen": true,
+        "term": "Financial Times 27s",
+        "file": "assets/photos/AI資料中心推高電費/frame_rcIqrT5rIzw_27.jpg",
+        "caption": "Global power demand from data centers Ai",
+        "said": "Global power demand from data centers Ai",
+        "at": 27.38,
+        "source": "assets/footage/AI資料中心推高電費/rcIqrT5rIzw.mp4",
+        "outlet": "Financial Times",
+        "author": "",
+        "credit": "畫面來源：Financial Times",
+        "page": "https://www.youtube.com/watch?v=rcIqrT5rIzw",
+        "look": 434034422728342403
+      },
+      {
+        "id": "frame_rcIqrT5rIzw_142",
+        "kind": "frame",
+        "seen": true,
+        "term": "Financial Times 142s",
+        "file": "assets/photos/AI資料中心推高電費/frame_rcIqrT5rIzw_142.jpg",
+        "caption": "plants to power data centers for example",
+        "said": "plants to power data centers for example",
+        "at": 142.18,
+        "source": "assets/footage/AI資料中心推高電費/rcIqrT5rIzw.mp4",
+        "outlet": "Financial Times",
+        "author": "",
+        "credit": "畫面來源：Financial Times",
+        "page": "https://www.youtube.com/watch?v=rcIqrT5rIzw",
+        "look": 4611401231107641456
+      },
+      {
+        "id": "frame_rcIqrT5rIzw_68",
+        "kind": "frame",
+        "seen": true,
+        "term": "Financial Times 68s",
+        "file": "assets/photos/AI資料中心推高電費/frame_rcIqrT5rIzw_68.jpg",
+        "caption": "data centers have made Net Zero CO2",
+        "said": "data centers have made Net Zero CO2",
+        "at": 68.94,
+        "source": "assets/footage/AI資料中心推高電費/rcIqrT5rIzw.mp4",
+        "outlet": "Financial Times",
+        "author": "",
+        "credit": "畫面來源：Financial Times",
+        "page": "https://www.youtube.com/watch?v=rcIqrT5rIzw",
+        "look": 10095961090495184767
+      },
+      {
+        "id": "frame_2IsvYp2yhtw_3",
+        "kind": "frame",
+        "seen": true,
+        "term": "Deutsche Welle 3s",
+        "file": "assets/photos/AI資料中心推高電費/frame_2IsvYp2yhtw_3.jpg",
+        "caption": "data centers. There's one there, there,",
+        "said": "data centers. There's one there, there,",
+        "at": 3.88,
+        "source": "assets/footage/AI資料中心推高電費/2IsvYp2yhtw.mp4",
+        "outlet": "Deutsche Welle",
+        "author": "",
+        "credit": "畫面來源：Deutsche Welle",
+        "page": "https://www.youtube.com/watch?v=2IsvYp2yhtw",
+        "look": 966317109248
+      },
+      {
+        "id": "frame_2IsvYp2yhtw_26",
+        "kind": "frame",
+        "seen": true,
+        "term": "Deutsche Welle 26s",
+        "file": "assets/photos/AI資料中心推高電費/frame_2IsvYp2yhtw_26.jpg",
+        "caption": "are a pain for the data centers'",
+        "said": "are a pain for the data centers'",
+        "at": 26.06,
+        "source": "assets/footage/AI資料中心推高電費/2IsvYp2yhtw.mp4",
+        "outlet": "Deutsche Welle",
+        "author": "",
+        "credit": "畫面來源：Deutsche Welle",
+        "page": "https://www.youtube.com/watch?v=2IsvYp2yhtw",
+        "look": 1073741823
+      },
+      {
+        "id": "frame_2IsvYp2yhtw_123",
+        "kind": "frame",
+        "seen": true,
+        "term": "Deutsche Welle 123s",
+        "file": "assets/photos/AI資料中心推高電費/frame_2IsvYp2yhtw_123.jpg",
+        "caption": "data centers. First, court rulings have",
+        "said": "data centers. First, court rulings have",
+        "at": 123.66,
+        "source": "assets/footage/AI資料中心推高電費/2IsvYp2yhtw.mp4",
+        "outlet": "Deutsche Welle",
+        "author": "",
+        "credit": "畫面來源：Deutsche Welle",
+        "page": "https://www.youtube.com/watch?v=2IsvYp2yhtw",
+        "look": 15816461628473343
+      },
+      {
+        "id": "frame_DpU0qXkQrAs_45",
+        "kind": "frame",
+        "seen": true,
+        "term": "Al Jazeera English 45s",
+        "file": "assets/photos/AI資料中心推高電費/frame_DpU0qXkQrAs_45.jpg",
+        "caption": "heat-generating data centers often built",
+        "said": "heat-generating data centers often built",
+        "at": 45.48,
+        "source": "assets/footage/AI資料中心推高電費/DpU0qXkQrAs.mp4",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=DpU0qXkQrAs",
+        "look": 9153284769482501922
+      },
+      {
+        "id": "frame_DpU0qXkQrAs_89",
+        "kind": "frame",
+        "seen": true,
+        "term": "Al Jazeera English 89s",
+        "file": "assets/photos/AI資料中心推高電費/frame_DpU0qXkQrAs_89.jpg",
+        "caption": "cool down your data center. The only",
+        "said": "cool down your data center. The only",
+        "at": 89.06,
+        "source": "assets/footage/AI資料中心推高電費/DpU0qXkQrAs.mp4",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=DpU0qXkQrAs",
+        "look": 18446480208429252608
+      },
+      {
+        "id": "frame_DpU0qXkQrAs_105",
+        "kind": "frame",
+        "seen": true,
+        "term": "Al Jazeera English 105s",
+        "file": "assets/photos/AI資料中心推高電費/frame_DpU0qXkQrAs_105.jpg",
+        "caption": "we've been given access to a data center",
+        "said": "we've been given access to a data center",
+        "at": 105.08,
+        "source": "assets/footage/AI資料中心推高電費/DpU0qXkQrAs.mp4",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=DpU0qXkQrAs",
+        "look": 18446216998068405187
+      },
+      {
+        "id": "frame_DpU0qXkQrAs_152",
+        "kind": "frame",
+        "seen": true,
+        "term": "Al Jazeera English 152s",
+        "file": "assets/photos/AI資料中心推高電費/frame_DpU0qXkQrAs_152.jpg",
+        "caption": "centers are expanding at pace, while the",
+        "said": "centers are expanding at pace, while the",
+        "at": 152.0,
+        "source": "assets/footage/AI資料中心推高電費/DpU0qXkQrAs.mp4",
+        "outlet": "Al Jazeera English",
+        "author": "",
+        "credit": "畫面來源：Al Jazeera English",
+        "page": "https://www.youtube.com/watch?v=DpU0qXkQrAs",
+        "look": 18373838743203803360
+      },
+      {
+        "id": "30144993",
+        "term": "electricity meter house wall",
         "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/30144993.jpg",
+        "seen": true,
+        "caption": "Electrical boxes and power meters mounted on a white brick wall.",
         "outlet": "Pexels",
-        "author": "cottonbro studio",
+        "author": "Anh-Bao Tran-Le",
         "credit": "",
-        "answers": 0.25,
-        "page": "https://www.pexels.com/photo/overhead-shot-of-a-woman-holding-a-cheque-6862458/",
-        "look": 2251574652161769472,
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/electrical-boxes-on-white-brick-wall-in-chattanooga-30144993/",
+        "look": 18436471894145236990,
         "size": [
-          6240,
-          4160
+          7728,
+          5152
         ]
       },
       {
-        "id": "7191157",
-        "term": "person paying bills laptop",
-        "file": "assets/photos/AI資料中心推高電費/7191157.jpg",
-        "seen": true,
-        "caption": "Woman sitting on a couch, shopping online using a laptop and a credit card.",
+        "id": "10065200",
+        "term": "electricity meter house wall",
         "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/10065200.jpg",
+        "seen": true,
+        "caption": "Electrical meters attached to a graffiti-covered wall showcasing utility infrastructure.",
+        "outlet": "Pexels",
+        "author": "AV",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/high-voltage-electricity-on-junction-boxes-10065200/",
+        "look": 1081727234214969215,
+        "size": [
+          6488,
+          4328
+        ]
+      },
+      {
+        "id": "6678587",
+        "term": "electricity meter house wall",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/6678587.jpg",
+        "seen": true,
+        "caption": "Aged electrical meters and wiring mounted on a concrete wall of an old building in India.",
+        "outlet": "Pexels",
+        "author": "Gezel Remy",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/abandoned-electricity-meter-boxes-on-a-wall-of-old-building-6678587/",
+        "look": 9096708299423694654,
+        "size": [
+          4032,
+          3023
+        ]
+      },
+      {
+        "id": "29886911",
+        "term": "power transmission tower sunset",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/29886911.jpg",
+        "seen": true,
+        "caption": "Silhouetted electric towers set against a deep orange sunset sky, capturing serene industrial beauty.",
+        "outlet": "Pexels",
+        "author": "Abdelrahman  Ahmed",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/electric-towers-silhouetted-against-sunset-sky-29886911/",
+        "look": 6824388405950134,
+        "size": [
+          3226,
+          2151
+        ]
+      },
+      {
+        "id": "170465",
+        "term": "power transmission tower sunset",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/170465.jpg",
+        "seen": true,
+        "caption": "Silhouette of power lines against vibrant sunset sky, illustrating energy and nature's beauty.",
+        "outlet": "Pexels",
+        "author": "Pok Rie",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/grey-transmission-towers-at-golden-hour-170465/",
+        "look": 18014398509219840,
+        "size": [
+          2200,
+          1467
+        ]
+      },
+      {
+        "id": "36566099",
+        "term": "power transmission tower sunset",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/36566099.jpg",
+        "seen": true,
+        "caption": "Silhouetted power lines against a vibrant orange sunset, symbolizing energy and infrastructure.",
+        "outlet": "Pexels",
+        "author": "Ntate Mohlala Sir",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/high-voltage-transmission-towers-at-sunset-36566099/",
+        "look": 45314164075134974,
+        "size": [
+          4154,
+          2770
+        ]
+      },
+      {
+        "id": "37730212",
+        "term": "data center server racks",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/37730212.jpg",
+        "seen": true,
+        "caption": "Close-up of server racks in a data center highlighting modern technology infrastructure.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/data-center-server-racks-with-active-equipment-37730212/",
+        "look": 3474588892269132832,
+        "size": [
+          4108,
+          2734
+        ]
+      },
+      {
+        "id": "17489151",
+        "term": "data center server racks",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/17489151.jpg",
+        "seen": true,
+        "caption": "Close-up of tower servers in a data center with blue and red lighting.",
+        "outlet": "Pexels",
+        "author": "panumas nikhomkhai",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/line-of-pc-towers-17489151/",
+        "look": 8025529350858828623,
+        "size": [
+          3872,
+          2592
+        ]
+      },
+      {
+        "id": "4508751",
+        "term": "data center server racks",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/4508751.jpg",
+        "seen": true,
+        "caption": "Steel framework cabinets housing servers networking devices and cables in contemporary equipped data center",
+        "outlet": "Pexels",
+        "author": "Brett Sayles",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/server-racks-on-data-center-4508751/",
+        "look": 9096723707913445153,
+        "size": [
+          5568,
+          3712
+        ]
+      },
+      {
+        "id": "7680696",
+        "term": "utility bill paperwork calculator",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7680696.jpg",
+        "seen": true,
+        "caption": "Hands using a pink calculator to manage expenses amidst various receipts and documents.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/a-close-up-shot-of-a-person-using-a-calculator-7680696/",
+        "look": 18446479156084408583,
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "7680736",
+        "term": "utility bill paperwork calculator",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7680736.jpg",
+        "seen": true,
+        "caption": "A woman reviews receipts and calculates expenses at a desk with a pink calculator.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/person-holding-receipts-and-using-a-calculator-7680736/",
+        "look": 4557395566314591976,
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "7111490",
+        "term": "utility bill paperwork calculator",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7111490.jpg",
+        "seen": true,
+        "caption": "Top view of financial papers labeled 'Paid' and 'Due' beside a calculator and glasses.",
+        "outlet": "Pexels",
+        "author": "Tara Winstead",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/black-calculator-beside-white-papers-7111490/",
+        "look": 18230007228433140177,
+        "size": [
+          5909,
+          3939
+        ]
+      },
+      {
+        "id": "7867332",
+        "term": "electrical substation transformer",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7867332.jpg",
+        "seen": true,
+        "caption": "Close-up of electrical transformers with colorful tops and wires in an outdoor setting.",
+        "outlet": "Pexels",
+        "author": "Diana ✨",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/close-up-of-electricity-poles-and-transformers-7867332/",
+        "look": 2310497000911861503,
+        "size": [
+          5697,
+          3798
+        ]
+      },
+      {
+        "id": "36137506",
+        "term": "electrical substation transformer",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/36137506.jpg",
+        "seen": true,
+        "caption": "Close-up of outdoor electrical power equipment with insulators and conductors.",
+        "outlet": "Pexels",
+        "author": "Mr Dr3igeteilt",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/detailed-view-of-electrical-power-equipment-outdoors-36137506/",
+        "look": 15986968341403336703,
+        "size": [
+          5947,
+          3965
+        ]
+      },
+      {
+        "id": "7867328",
+        "term": "electrical substation transformer",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7867328.jpg",
+        "seen": true,
+        "caption": "Multiple colorful electrical transformers at an outdoor power station under the daylight.",
+        "outlet": "Pexels",
+        "author": "Diana ✨",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/colorful-high-voltage-power-transformer-7867328/",
+        "look": 159201148139007,
+        "size": [
+          5560,
+          3707
+        ]
+      },
+      {
+        "id": "7938018",
+        "term": "family home evening lights",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7938018.jpg",
+        "seen": true,
+        "caption": "Family bonding over a storybook in a warmly lit, cozy bedroom. Ideal for lifestyle and family themes.",
         "outlet": "Pexels",
         "author": "Pavel Danilyuk",
         "credit": "",
         "answers": 0.25,
-        "page": "https://www.pexels.com/photo/woman-in-white-sweater-entering-card-details-into-laptop-7191157/",
-        "look": 9286079141193646304,
+        "page": "https://www.pexels.com/photo/family-sitting-on-a-bed-7938018/",
+        "look": 14468069958954580720,
         "size": [
-          5925,
-          3955
+          4895,
+          3268
         ]
       },
       {
-        "id": "6964357",
-        "term": "person paying bills laptop",
-        "file": "assets/photos/AI資料中心推高電費/6964357.jpg",
-        "seen": true,
-        "caption": "Close-up of hands calculating finances with a laptop and paperwork.",
+        "id": "7938062",
+        "term": "family home evening lights",
         "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7938062.jpg",
+        "seen": true,
+        "caption": "A mother lovingly plays with her child in a warmly lit bedroom, creating a cozy atmosphere.",
         "outlet": "Pexels",
-        "author": "Mikhail Nilov",
+        "author": "Pavel Danilyuk",
         "credit": "",
-        "answers": 0.25,
-        "page": "https://www.pexels.com/photo/couple-hands-people-dark-6964357/",
-        "look": 36170363385625405,
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/a-woman-and-boy-looking-a-lamp-7938062/",
+        "look": 4324641010535501340,
         "size": [
-          4104,
-          2736
+          4895,
+          3268
+        ]
+      },
+      {
+        "id": "11175907",
+        "term": "family home evening lights",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/11175907.jpg",
+        "seen": true,
+        "caption": "A serene nighttime view of a suburban area with houses illuminated by streetlights.",
+        "outlet": "Pexels",
+        "author": "Selvin Esteban",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/bare-tree-near-houses-11175907/",
+        "look": 18392419619839148032,
+        "size": [
+          5296,
+          3531
+        ]
+      },
+      {
+        "id": "36230768",
+        "term": "data center construction site aerial",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/36230768.jpg",
+        "seen": true,
+        "caption": "Empty industrial warehouse interior with polished concrete floor in Houston, Texas.",
+        "outlet": "Pexels",
+        "author": "Craftsman Concrete Floors",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/modern-industrial-warehouse-interior-in-houston-36230768/",
+        "look": 18446744058542948352,
+        "size": [
+          5760,
+          3840
+        ]
+      },
+      {
+        "id": "25461690",
+        "term": "data center construction site aerial",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/25461690.jpg",
+        "seen": true,
+        "caption": "Drone shot capturing aerial view of a large construction site with unfinished buildings.",
+        "outlet": "Pexels",
+        "author": "Greece-China  News",
+        "credit": "",
+        "answers": 0.6,
+        "page": "https://www.pexels.com/photo/aerial-view-on-a-construction-site-25461690/",
+        "look": 3528843092138360336,
+        "size": [
+          4000,
+          2250
+        ]
+      },
+      {
+        "id": "7430018",
+        "term": "data center construction site aerial",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/7430018.jpg",
+        "seen": true,
+        "caption": "An aerial tilt-shift view of a bustling construction site in downtown Chicago, showcasing urban development.",
+        "outlet": "Pexels",
+        "author": "Julien Goettelmann",
+        "credit": "",
+        "answers": 0.6,
+        "page": "https://www.pexels.com/photo/aerial-view-of-city-buildings-7430018/",
+        "look": 354720152312606522,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "17018103",
+        "term": "electrician power line repair",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/17018103.jpg",
+        "seen": true,
+        "caption": "Electricians wearing safety gear work on power lines in Nakhon Ratchasima, Thailand.",
+        "outlet": "Pexels",
+        "author": "Thampapon Otavorn",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/men-working-with-power-lines-17018103/",
+        "look": 4485049614166401072,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "2898199",
+        "term": "electrician power line repair",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/2898199.jpg",
+        "seen": true,
+        "caption": "Electrician in a bucket lift repairing power lines from a utility pole in a suburban neighborhood.",
+        "outlet": "Pexels",
+        "author": "K",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/photography-of-man-repairing-electrical-wires-2898199/",
+        "look": 17363897609467469880,
+        "size": [
+          4600,
+          2584
+        ]
+      },
+      {
+        "id": "17321815",
+        "term": "electrician power line repair",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/17321815.jpg",
+        "seen": true,
+        "caption": "Engineer works on high power lines, ensuring electrical safety and maintenance.",
+        "outlet": "Pexels",
+        "author": "Roman Castillo",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/worker-on-hoist-repairing-power-line-17321815/",
+        "look": 17863465554862604544,
+        "size": [
+          4929,
+          3286
+        ]
+      },
+      {
+        "id": "11924298",
+        "term": "smart meter close up",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/11924298.jpg",
+        "seen": true,
+        "caption": "Close-up view of a row of industrial electricity meters for power monitoring and technology.",
+        "outlet": "Pexels",
+        "author": "Connor Scott McManus",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/row-of-electricity-meters-11924298/",
+        "look": 6951356778474830016,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "35107502",
+        "term": "smart meter close up",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/35107502.jpg",
+        "seen": true,
+        "caption": "Multiple smart utility meters lined up on a blue industrial wall.",
+        "outlet": "Pexels",
+        "author": "Robert So",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/row-of-industrial-utility-meters-on-blue-wall-35107502/",
+        "look": 2333001423135842304,
+        "size": [
+          8755,
+          6336
+        ]
+      },
+      {
+        "id": "13785838",
+        "term": "smart meter close up",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/13785838.jpg",
+        "seen": true,
+        "caption": "Electrical meter and fuse box on a white wall in Cape Town, South Africa, for energy monitoring or billing.",
+        "outlet": "Pexels",
+        "author": "Akashni Weimers",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/electricity-box-on-white-wall-13785838/",
+        "look": 18358023165395193855,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "32053445",
+        "term": "protest sign neighborhood",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/32053445.jpg",
+        "seen": true,
+        "caption": "A group of people holding signs in a designated expressive activity zone during a peaceful protest outdoors.",
+        "outlet": "Pexels",
+        "author": "Charles Criscuolo",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/black-and-white-peaceful-protest-with-signs-32053445/",
+        "look": 54320805043106815,
+        "size": [
+          4240,
+          2832
+        ]
+      },
+      {
+        "id": "4712159",
+        "term": "protest sign neighborhood",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/4712159.jpg",
+        "seen": true,
+        "caption": "Protesters hold signs in a Los Angeles street demonstration advocating for racial justice.",
+        "outlet": "Pexels",
+        "author": "Eric Yeich",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/people-protesting-on-the-street-4712159/",
+        "look": 18437459799678533183,
+        "size": [
+          4160,
+          3303
+        ]
+      },
+      {
+        "id": "6257035",
+        "term": "protest sign neighborhood",
+        "kind": "stock",
+        "file": "assets/photos/AI資料中心推高電費/6257035.jpg",
+        "seen": true,
+        "caption": "A masked protestor stands outdoors with a 'Justice 4 All' sign, advocating for equality and human rights.",
+        "outlet": "Pexels",
+        "author": "RDNE Stock project",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/man-with-face-mask-holding-a-sign-on-the-street-6257035/",
+        "look": 43670149480255,
+        "size": [
+          6304,
+          4203
+        ]
+      },
+      {
+        "id": "Yipwm_1b_(7691592010).jpg",
+        "term": "Electricity meter",
+        "kind": "real",
+        "file": "assets/photos/AI資料中心推高電費/Yipwm_1b_(7691592010).jpg.jpg",
+        "seen": true,
+        "caption": "An electricity meter, electric meter, electrical meter, energy meter, kilowatt-hour meter, or power meter is a device that measures the amount of electric energy consumed by a residence, a business, or an electrically powered device over a time interval.",
+        "outlet": "維基百科",
+        "author": "Greg Goebel from Loveland CO, USA",
+        "credit": "Greg Goebel from Loveland CO, USA／CC BY-SA 2.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:Yipwm_1b_(7691592010).jpg",
+        "look": 1081711649092528127,
+        "size": [
+          1292,
+          1356
+        ]
+      },
+      {
+        "id": "Rto_map_2024.png",
+        "term": "PJM Interconnection",
+        "kind": "real",
+        "file": "assets/photos/AI資料中心推高電費/Rto_map_2024.png.jpg",
+        "seen": true,
+        "caption": "PJM Interconnection LLC (PJM) is a regional transmission organization (RTO) in the United States. It is part of the Eastern Interconnection grid operating an electric transmission system serving all or parts of Delaware, Illinois, Indiana, Kentucky, Maryland, Michigan, New Jersey, North Carolina, Oh",
+        "outlet": "維基百科",
+        "author": "BlckAssn",
+        "credit": "BlckAssn／CC BY-SA 4.0",
+        "answers": 0.5,
+        "page": "https://commons.wikimedia.org/wiki/File:Rto_map_2024.png",
+        "look": 17287036950351564511,
+        "size": [
+          497,
+          314
+        ]
+      },
+      {
+        "id": "500kV_3-Phase_Transmission_Lines.png",
+        "term": "Electric power transmission",
+        "kind": "real",
+        "file": "assets/photos/AI資料中心推高電費/500kV_3-Phase_Transmission_Lines.png.jpg",
+        "seen": true,
+        "caption": "Electric power transmission is the bulk movement of electrical energy from a generating site, such as a power plant, to an electrical substation. A long conductor used to facilitate such movement is called a transmission line. The interconnected transmission lines form a transmission network. In the",
+        "outlet": "維基百科",
+        "author": "Varistor60",
+        "credit": "Varistor60／CC BY-SA 4.0",
+        "answers": 1.0,
+        "page": "https://commons.wikimedia.org/wiki/File:500kV_3-Phase_Transmission_Lines.png",
+        "look": 68442442956799,
+        "size": [
+          3264,
+          1836
+        ]
+      },
+      {
+        "id": "Olympus_Marine_Gas_Turbine_-_geograph.org.uk_-_7879345.jpg",
+        "term": "Gas turbine",
+        "kind": "real",
+        "file": "assets/photos/AI資料中心推高電費/Olympus_Marine_Gas_Turbine_-_geograph.org.uk_-_7879345.jpg.jpg",
+        "seen": true,
+        "caption": "A gas turbine is a complete continuous-flow internal combustion engine in which air is compressed, fuel is burned in the compressed air, and the resulting hot gas expands through a turbine. The turbine drives the compressor and, depending on the design, may also produce thrust, shaft power, or both.",
+        "outlet": "維基百科",
+        "author": "Billy McCrorie",
+        "credit": "Billy McCrorie／CC BY-SA 2.0",
+        "answers": 0.5,
+        "page": "https://commons.wikimedia.org/wiki/File:Olympus_Marine_Gas_Turbine_-_geograph.org.uk_-_7879345.jpg",
+        "look": 18446713287434436862,
+        "size": [
+          2921,
+          1931
         ]
       }
     ],
@@ -1238,670 +1617,351 @@
   },
   "facts": [
     {
-      "say": "住宅電價 2025 年上漲 7.1%，是通膨的兩倍多",
-      "from": "CNBC"
+      "say": "AI 資料中心的電力需求正在急遽增加。",
+      "from": "Reuters 第 0 秒"
     },
     {
-      "say": "部分州漲幅超過 20%",
-      "from": "CNBC"
+      "say": "到 2035 年，資料中心可能會消耗美國總電力的近 9%，比現在高出超過一倍。",
+      "from": "Reuters 第 22 秒"
     },
     {
-      "say": "資料中心密集區，單月電費比五年前高 267%",
-      "from": "Bloomberg／Warren 參議員"
+      "say": "電網升級將需要數兆美元的投資。",
+      "from": "Reuters 第 64 秒"
     },
     {
-      "say": "已被轉嫁到消費者帳單的金額估計約 230 億美元",
-      "from": "Forbes"
-    },
-    {
-      "say": "反方：EPRI 研究認為主因是電網汰換、天災、天然氣價格",
-      "from": "Institute for Energy Research"
-    },
-    {
-      "say": "反方：州級資料顯示資料中心數量與電價無顯著相關",
-      "from": "Institute for Energy Research"
-    },
-    {
-      "say": "俄亥俄、維吉尼亞已對大型資料中心另訂費率",
-      "from": "CNBC"
-    },
-    {
-      "say": "AI 資料中心需要大量的電力來運行。",
-      "from": "Fox Business 第 21 秒"
-    },
-    {
-      "say": "Onsemi 的股價在今年達到 52 周新高，漲幅高達 84.8%。",
-      "from": "Fox Business 第 41 秒"
-    },
-    {
-      "say": "Onsemi 的產品可以將資料中心的電力損失降低 50%。",
-      "from": "Fox Business 第 125 秒"
-    },
-    {
-      "say": "目前全球在計算力方面存在短缺。",
-      "from": "Fox Business 第 189 秒"
-    },
-    {
-      "say": "Onsemi 正在努力解決電力問題，從資料中心進電的那頭開始。",
-      "from": "Fox Business 第 319 秒"
-    },
-    {
-      "say": "AI 資料中心需要大量電力，以應付客戶需求並保持競爭力。",
-      "from": "CNBC 第 123 秒"
-    },
-    {
-      "say": "這些資料中心正在購買天然氣渦輪機，因為當地電力公司無法提供足夠的電力。",
-      "from": "CNBC 第 21 秒"
-    },
-    {
-      "say": "GE 是天然氣渦輪機的主要供應商，正在南卡羅來納州擴建其生產線。",
-      "from": "CNBC 第 43 秒"
-    },
-    {
-      "say": "GE 的渦輪機已被多家大科技公司採用，用於資料中心。",
-      "from": "CNBC 第 64 秒"
-    },
-    {
-      "say": "GE 正努力應對環境關注，使其渦輪機更高效，減少污染。",
-      "from": "CNBC 第 172 秒"
-    },
-    {
-      "say": "AI資料中心的建造興起，引起電費上漲的反彈。",
-      "from": "PBS NewsHour 第 123 秒"
-    },
-    {
-      "say": "70%的美國人反對在社區內建造資料中心。",
-      "from": "PBS NewsHour 第 172 秒"
-    },
-    {
-      "say": "65%的民眾反對資料中心建設，其中64%的人擔心水耗。",
-      "from": "PBS NewsHour 第 321 秒"
-    },
-    {
-      "say": "資料中心需要大量電力，擔心會增加居民電費。",
-      "from": "PBS NewsHour 第 343 秒"
-    },
-    {
-      "say": "共和黨 governor Greg Abbott 稱德州為 AI 資料中心的發源地。",
-      "from": "CNN 第 123 秒"
-    },
-    {
-      "say": "Abbott 改變主張，暫停新資料中心的許可證。",
-      "from": "CNN 第 41 秒"
-    },
-    {
-      "say": "退休者 Tom Weekes 與護理師 Nikki Meador 因資料中心問題轉而支持民主黨。",
-      "from": "CNN 第 93 秒"
-    },
-    {
-      "say": "Tom Weekes 認為共和黨未顧及當地社區。",
-      "from": "CNN 第 120 秒"
-    },
-    {
-      "say": "Nikki Meador 認為暫停資料中心對德州不利。",
-      "from": "CNN 第 189 秒"
-    },
-    {
-      "say": "美國2035年數據中心電力需求可能佔全國幾乎9%。",
-      "from": "Reuters 第 123 秒"
-    },
-    {
-      "say": "數據中心需要更多電力，但傳輸能力不足。",
-      "from": "Reuters 第 43 秒"
-    },
-    {
-      "say": "數據中心投資機會主要在電力傳輸和分配技術。",
+      "say": "電力設備短缺，例如變壓器和蓄電池，迫使開發商尋求海外。",
       "from": "Reuters 第 86 秒"
     },
     {
-      "say": "美國數據中心可能轉向太陽能、風能和儲電。",
-      "from": "Reuters 第 213 秒"
+      "say": "美國電網需要全面更新，不僅是為了 AI 資料中心，還為了國家安全和消費者的電力需求。",
+      "from": "Reuters 第 150 秒"
     },
     {
-      "say": "數據中心驅動的電力需求增長正在推高家庭電費。",
-      "from": "CNBC〈AI data center 'frenzy' 〉"
+      "say": "數據中心預計到2030年將佔美國電力消費的12%。",
+      "from": "Reuters 第 12 秒"
     },
     {
-      "say": "數據中心可能會佔據美國總電力消耗的6.7%至12%，2028年將比2023年的4.4%增加。",
-      "from": "CNBC〈AI data center 'frenzy' 〉"
+      "say": "電力需求在美國將增長20%。",
+      "from": "Reuters 第 62 秒"
     },
     {
-      "say": "數據中心的電力需求預計到2030年將增長超過四倍。",
-      "from": "CNBC〈AI data center 'frenzy' 〉"
+      "say": "電力價格將上升。",
+      "from": "Reuters 第 83 秒"
     },
     {
-      "say": "在美國，數據中心預計將佔總體電力需求增長的一半。",
-      "from": "CNBC〈AI data center 'frenzy' 〉"
+      "say": "電力供應商公司的股票並非家喻戶曉。",
+      "from": "Reuters 第 146 秒"
     },
     {
-      "say": "自2020年起，美國住宅電價上漲超過36%，預計到2027年9月將達到每千瓦時19.01美分。",
-      "from": "CNBC〈Who pays for AI's electr〉"
+      "say": "數據中心的建設速度可能不如預期。",
+      "from": "Reuters 第 210 秒"
     },
     {
-      "say": "SemiAnalysis認為， PJMInterconnection區域的電價上漲主要是因為預測需求過於保守。",
-      "from": "CNBC〈Who pays for AI's electr〉"
+      "say": "AI和資料中心的需求正在增加電力需求，對電力網造成壓力。",
+      "from": "PBS NewsHour 第 32 秒"
     },
     {
-      "say": "拜登政府召見了AI巨頭公司，促請他們簽署保護消費者電費的承諾。",
-      "from": "CNBC〈Who pays for AI's electr〉"
+      "say": "全美電價普遍上漲，其中某些地區漲幅高達14%。",
+      "from": "PBS NewsHour 第 97 秒"
     },
     {
-      "say": "Counterpoint Research的研究員Marc Einstein認為，AI巨頭公司不盈利的問題，增加了他們處理電力成本壓力的難度。",
-      "from": "CNBC〈Who pays for AI's electr〉"
+      "say": "資料中心的建設成本正在轉嫁到所有用戶身上。",
+      "from": "PBS NewsHour 第 188 秒"
     },
     {
-      "say": "Data-center 項目被阻止或拖延，社區認定自己將面臨電費上漲的威脅。",
-      "from": "Reason〈No, AI Data Centers Are 〉"
+      "say": "AI和資料中心的能源需求上升，導致電費增加。",
+      "from": "PBS NewsHour 第 123 秒"
     },
     {
-      "say": "參議院華倫（D-麻薩諸塞州）展開調查，指控 AI 資料中心推高了美國家庭的電費。",
-      "from": "Reason〈No, AI Data Centers Are 〉"
+      "say": "到2028年，美國數據中心可能會使用全國12%的電力。",
+      "from": "Wall Street Journal 第 22 秒"
     },
     {
-      "say": "研究發現，電價的上漲並非由需求引起，而是由供應側的限制造成。",
-      "from": "Reason〈No, AI Data Centers Are 〉"
+      "say": "每次發送AI指令都會增加電力消耗。",
+      "from": "Wall Street Journal 第 22 秒"
     },
     {
-      "say": "數據中心的需求實際上有助於降低電價，因為它可以分攤固定成本。",
-      "from": "Reason〈No, AI Data Centers Are 〉"
+      "say": "生成圖像可能需要0.17至2瓦時的電力。",
+      "from": "Wall Street Journal 第 64 秒"
+    },
+    {
+      "say": "生成一段視頻可能需要20至110瓦時的電力。",
+      "from": "Wall Street Journal 第 85 秒"
+    },
+    {
+      "say": "我們制作一部短片可能需要約110,000瓦時的電力。",
+      "from": "Wall Street Journal 第 130 秒"
+    },
+    {
+      "say": "全球資料中心的電力需求可能在2026年相比2022年翻倍。",
+      "from": "Financial Times 第 43 秒"
+    },
+    {
+      "say": "微軟每3天在全球開設一個新的數據中心。",
+      "from": "Financial Times 第 64 秒"
+    },
+    {
+      "say": "到2010年以來，開發機器學習模型所需的計算能力每5到6個月增加一倍。",
+      "from": "Financial Times 第 43 秒"
+    },
+    {
+      "say": "亞馬遜的AWS在今年三月支付了650百萬元，在賓夕法尼亞州的一個連接塔隆能源蘇薩納核電廠的數據中心園區。",
+      "from": "Financial Times 第 146 秒"
+    },
+    {
+      "say": "數據中心的興建使電費可能增加50%。",
+      "from": "Deutsche Welle 第 61 秒"
+    },
+    {
+      "say": "電網目前無法支撐數據中心快速發展，缺乏電力供應能力。",
+      "from": "Deutsche Welle 第 83 秒"
+    },
+    {
+      "say": "數據中心的興建對當地居民的生活標準有所影響。",
+      "from": "Deutsche Welle 第 40 秒"
+    },
+    {
+      "say": "美軍方認為，數據中心的擴張對美國經濟增長有重大影響。",
+      "from": "Deutsche Welle 第 104 秒"
+    },
+    {
+      "say": "AI 聊天機器人每次對話都有隱含的電力和冷卻水成本。",
+      "from": "Al Jazeera English 第 20 秒"
+    },
+    {
+      "say": "Usa 的大型科技公司數據中心依靠蒸發冷卻塔，每年消耗數十億公升的水。",
+      "from": "Al Jazeera English 第 61 秒"
+    },
+    {
+      "say": "英國的數據中心業界則較為規範，大多數使用無水冷卻系統，但仍消耗大量電力。",
+      "from": "Al Jazeera English 第 41 秒"
+    },
+    {
+      "say": "數據中心正在尋求更為永續的解決方案。",
+      "from": "Al Jazeera English 第 82 秒"
+    },
+    {
+      "say": "Digital Realty 的數據中心使用泰晤士河的河水來冷卻系統。",
+      "from": "Al Jazeera English 第 124 秒"
+    },
+    {
+      "say": "AI資料中心推高電費。",
+      "from": "PBS NewsHour〈Data center controversie〉"
+    },
+    {
+      "say": "AI資料中心的興建正在美國掀起一波建設風潮，目前已有超過3,000個資料中心正在運作，另有1,500個正在開發中。",
+      "from": "PBS NewsHour〈When can a power company〉"
+    },
+    {
+      "say": "這些資料中心需要大量的電力和水，而且引起當地居民對電費增加和環境問題的憂慮。",
+      "from": "PBS NewsHour〈When can a power company〉"
+    },
+    {
+      "say": "為了滿足資料中心的電力需求，電力公司考慮使用徵用私有土地的方式。",
+      "from": "PBS NewsHour〈When can a power company〉"
+    },
+    {
+      "say": "電力公司可以透過徵用私有土地，來建造傳輸線路，以改善電力供應的可靠度。",
+      "from": "PBS NewsHour〈When can a power company〉"
+    },
+    {
+      "say": "在路易斯安那州博伊斯鎮附近，開發商應用數字公司與當地官員之間的協議被非披露協議（NDA）遮掩。",
+      "from": "NPR〈NDAs are hiding data cen〉"
+    },
+    {
+      "say": "非披露協議使開發商在各地尋找最有利條件時佔據優勢。",
+      "from": "NPR〈NDAs are hiding data cen〉"
+    },
+    {
+      "say": "路易斯安那州至少有54個由選舉官員簽署的非披露協議，涉及各種項目。",
+      "from": "NPR〈NDAs are hiding data cen〉"
+    },
+    {
+      "say": "開發商表示，這些協議是為了保護商業機密和自由商討。",
+      "from": "NPR〈NDAs are hiding data cen〉"
+    },
+    {
+      "say": "AI資料中心推高電費",
+      "from": "NPR〈'Survival mode': Indiana〉"
+    },
+    {
+      "say": "NIPSCO表示此次破壞為前所未見且廣泛",
+      "from": "NPR〈'Survival mode': Indiana〉"
+    },
+    {
+      "say": "Gary的學校從8月13日起關閉，至少持續到8月25日",
+      "from": "NPR〈'Survival mode': Indiana〉"
+    },
+    {
+      "say": "AI資料中心的反彈在全美各地和政治光譜上都出現了，候選人正在接受來自公眾對AI基礎設施的批評。",
+      "from": "CNN〈A uniquely bipartisan ba〉"
+    },
+    {
+      "say": "從今年開始，已超過3100萬美元的政治廣告提到資料中心，其中超過99%的廣告反對AI基礎設施項目。",
+      "from": "CNN〈A uniquely bipartisan ba〉"
+    },
+    {
+      "say": "密歇根的一位參議院候選人拍攝了一則廣告，指資料中心將使當地電費上漲並降低房地產價值。",
+      "from": "CNN〈A uniquely bipartisan ba〉"
+    },
+    {
+      "say": "在威斯康辛州，參議院候選人湯菲佛以「Data Center David」之名攻擊科維勒。",
+      "from": "CNN〈A uniquely bipartisan ba〉"
+    },
+    {
+      "say": "特朗普在推特上支持數據中心，表示如果不支持數據中心就是「想讓自己地區落後和窮困」。",
+      "from": "CNN〈I feel your pain vs. ‘le〉"
+    },
+    {
+      "say": "副總統JD範斯則表示數據中心可能會提高當地的電費，但若能回饋電網則不會造成爭議。",
+      "from": "CNN〈I feel your pain vs. ‘le〉"
+    },
+    {
+      "say": "特朗普聲稱數據中心不會增加電費，並表示已有相關計劃讓數據中心承諾不會提高居民電費。",
+      "from": "CNN〈I feel your pain vs. ‘le〉"
+    },
+    {
+      "say": "特朗普表示數據中心現在已經被強制要求自行建造電力設施，不會從電網取電。",
+      "from": "CNN〈I feel your pain vs. ‘le〉"
+    },
+    {
+      "say": "AI資料中心推高電費是Chris Hayes在MS NOW〈Answering your questions〉中提到的一件事情。",
+      "from": "MS NOW〈Answering your questions〉"
+    },
+    {
+      "say": "2026年你決定限制數據中心建設，讓俄亥俄州尤寧斯堡的機師失去了工作。",
+      "from": "Fox News〈The data center fight co〉"
+    },
+    {
+      "say": "美國電費將因為數據中心的建設而變貴，但這不是一個為了政治 Expediency 而匆匆決定的方案。",
+      "from": "Fox News〈The data center fight co〉"
+    },
+    {
+      "say": "Data Center 是人工智慧（AI）的物理基礎，美國如果不能在2026年之前建成必要的設施，可能會失去在AI領域的領先地位。",
+      "from": "Fox News〈The data center fight co〉"
+    },
+    {
+      "say": "Fox News〈The data center fight co〉建議，Data Center 應該承擔所需電力基礎設施的額外成本，並與社區有實際的電力協議。",
+      "from": "Fox News〈The data center fight co〉"
+    },
+    {
+      "say": "美國的數據中心使用大量電力，導致電力需求超過供應，促使電網運營商轉向使用污染能源。",
+      "from": "Deutsche Welle〈Can data centers be gree〉"
+    },
+    {
+      "say": "美國最大的電力網絡推遲或取消了60%的化石燃料發電廠的關閉計劃。",
+      "from": "Deutsche Welle〈Can data centers be gree〉"
+    },
+    {
+      "say": "由於天然氣價格低廉，許多公司選擇使用天然氣來爲數據中心供電。",
+      "from": "Deutsche Welle〈Can data centers be gree〉"
+    },
+    {
+      "say": "美國能源部強調煤炭和核能在數據中心增長中的重要性。",
+      "from": "Deutsche Welle〈Can data centers be gree〉"
+    },
+    {
+      "say": "美國新澤西州的一鎮居民成功阻止了數據中心的建設，理由是環保和電費問題。",
+      "from": "Deutsche Welle〈Can data centers be gree〉"
+    },
+    {
+      "say": "AI資料中心推高電費，Ireland的數據中心佔總電力消耗的21%至22%，預計到2030年代初將升至31%。",
+      "from": "Euronews〈Ireland keeps nuclear do〉"
+    },
+    {
+      "say": "Ireland考慮核能作為未來選項，但因技術和法律障礙，可能直到2040年代後才能實現。",
+      "from": "Euronews〈Ireland keeps nuclear do〉"
+    },
+    {
+      "say": "政府官員表示，核能無法在電力系統中實質參與直到至少2040年代。",
+      "from": "Euronews〈Ireland keeps nuclear do〉"
+    },
+    {
+      "say": "數據中心對經濟有重大貢獻，每年創造22億歐元的經濟活動並支撐1萬9千5百個職位。",
+      "from": "Euronews〈Ireland keeps nuclear do〉"
+    },
+    {
+      "say": "美國總統川普呼籲社區接受資料中心，稱之能帶來就業機會，降低稅率，使社區富裕。",
+      "from": "Al Jazeera English〈‘Let Data Reign’: Trump 〉"
+    },
+    {
+      "say": "資料中心的電力消耗引發擔憂，包括可能導致電力中斷和電費增加。",
+      "from": "Al Jazeera English〈‘Let Data Reign’: Trump 〉"
+    },
+    {
+      "say": "川普政府支持科技公司自願承諾全數支付其能源消耗費用。",
+      "from": "Al Jazeera English〈‘Let Data Reign’: Trump 〉"
+    },
+    {
+      "say": "一些居民批評資料中心發出的噪音。",
+      "from": "Al Jazeera English〈‘Let Data Reign’: Trump 〉"
+    },
+    {
+      "say": "油公司獲利大增，ExxonMobil獲利達145億美元，Chevron獲利120億美元，TotalEnergies獲利60億美元，Shell獲利98億美元，BP獲利57億3000萬美元。",
+      "from": "Al Jazeera English〈Who are the economic win〉"
+    },
+    {
+      "say": "美國國防部預估戰爭成本達375億美元，哈佛公共政策學教授琳達·比爾米斯估計總成本可能達1兆美元。",
+      "from": "Al Jazeera English〈Who are the economic win〉"
+    },
+    {
+      "say": "防衛企業獲利不佳，諾斯洛普格魯曼股價下跌25%，波音下跌8%，洛克希德馬丁股價僅微幅上漲14%。",
+      "from": "Al Jazeera English〈Who are the economic win〉"
+    },
+    {
+      "say": "航空業受損，特別是在中東地區，因伊朗導彈和無人機攻擊導致數萬航班取消或轉飛。",
+      "from": "Al Jazeera English〈Who are the economic win〉"
     }
   ],
   "voices": [
     {
-      "url": "https://www.youtube.com/watch?v=uQ3Qc2gi2RQ",
-      "title": "We solve the 'power problem' AI data centers are facing: Onsemi CEO",
-      "outlet": "Fox Business",
-      "lean": "right",
+      "url": "https://www.youtube.com/watch?v=j7yZ5vrIASw",
+      "title": "Inside ETFs: Is AI's power problem an opportunity?",
+      "outlet": "Reuters",
       "comments": [
         {
-          "say": "No one NEEDS AI, but we do NEED water.",
-          "likes": 5,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "A.i. is gonna wreck civilization as we know it. Id rather have forests and fresh drinking water.",
-          "likes": 4,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "This whole idea that we need to keep \"throwing hardware\" at AI and build these monster data centers is a very old fashion way to deal with technology as AI. Someday soon either the AI chips and or Quantum computing will turn these data centers into empty warehouses because none of that room is actually needed anymore. This is how computing was done early on when datacenters where on every campus before we had the \"cloud\". Also I highly believe that distributed computing is the way to go for future AI compute, imagine using all the worlds server and computers that have plenty of idle CPU time j",
-          "likes": 3,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "Amazon jungle is good for u n u can go there now n start early",
-          "likes": 3,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "🧐What about insanely high GPU prices??? (5090)👉🏻Drop them now‼️🙈",
-          "likes": 3,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "Ticker $ET\n+6% dividend and they will be feeding AI with Energy.",
+          "say": "Your greed knows no bounds",
           "likes": 2,
-          "when": "3 months ago",
+          "when": "4 months ago",
           "reply": false
         },
         {
-          "say": "There is an ai bubble, if you have no consumers you have no business. They continue to fire everyone, no one will buy their products",
-          "likes": 2,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "​​ @EasyChefsLife  the 50% of ai facilities canceled and the businesses that fired their people only to hire them back when their ai replacements that failed like IBM beg to differ 😅",
+          "say": "My son lost his job in favor of A I.  🙏🙏🙏🙏🙏.",
           "likes": 1,
-          "when": "3 months ago (edited)",
+          "when": "4 months ago",
+          "reply": false
+        },
+        {
+          "say": "You like a champ work ethics work ethics elite Sir anchor",
+          "likes": 0,
+          "when": "4 months ago",
+          "reply": false
+        },
+        {
+          "say": "have you tried praying about it?  lol",
+          "likes": 0,
+          "when": "4 months ago",
           "reply": true
         },
         {
-          "say": "The cost of electronics has gone up because of AI data centers",
-          "likes": 1,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "I looked. Year to date they are not beating AMD. It’s close but AMD is beating ON by about 5%.",
-          "likes": 1,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "I'm a lifelong conservative and I'm going to fight these AI data center with everything I've got",
-          "likes": 1,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "This is exactly what i voted for. More AI Data Centre.",
-          "likes": 1,
-          "when": "2 months ago",
-          "reply": false
-        },
-        {
-          "say": "Communities all over the country are finding that AI data centers use more power than entire cities, regions and even states (Utah.) This cannot continue.",
-          "likes": 1,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "Yeah that has nothing to do with AI data center power issues.",
-          "likes": 1,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "Need money 😶🔫",
-          "likes": 1,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "We need AI for consumer GPU and CPU. This is the most environmentally friendly.",
+          "say": "🤲🤲🤲👍👍👍🇯🇴🇯🇴🇯🇴🇯🇴🇯🇴🇮🇷🇮🇷🇮🇷🇮🇷🇵🇰🇵🇰🇵🇰🇹🇷🇹🇷👌👌💪",
           "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "the problem is the elite doesn't need you in the future if there is ai and robots... the only reason the elite provide for you (human fodder) is because they needed productivity... if ai and robots are better than you why would they need to feed you or give you water.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "Who do you think wants their computer and servers to used and shared.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "Onsemi is a great option. It solves the power crunch through efficiency.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "There is no AI bubble, you are weak on facts but strong on opinion",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "The growth of the market, would be determined by the sophisticated, superficial, innovative, productive, sustainable & smart utilization & development of A.I. platforms, in association of intellectuals & employees, in the sectors of defence, energy, banking services, Healthcare service, supply chain & logistics, manufacturing sectors & their businesses.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "ALL BEFORE THE KRASHING =MARKETS DO NOT FEED THE PUBLIC",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "🤥🤥🤥",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "On a  side note tapping groundwater for cooling is not an unlimited resource. While it is a renewable resource, it is finite and often depleted much faster than it can be naturally replenished by rain and snowmelt, making it effectively non-renewable in many regions. Over-pumping causes serious issues like dried-up wells, reduced stream flows, and land sinking.",
-          "likes": 0,
-          "when": "3 months ago (edited)",
-          "reply": false
-        },
-        {
-          "say": "so you just randomly educate people about groundwater ? well thanks. i just randomly got educated. but just in case you think datacenters using a lot of water, they don't, they use closed-loop cooling systems.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "@matthew04101   Yes and No.    AI data centers extensively use fresh water—including municipal water and groundwater from local aquifers.  While many do use city water, some data centers, especially in remote/rural areas, operate private wells to draw directly from aquifers.  High-efficiency data centers often use closed-loop systems (recirculating coolant) to minimize usage, while many large, traditional, or AI-focused data centers still rely on evaporative (open-loop) cooling, consuming 1 to 5 million gallons of water daily.",
-          "likes": 0,
-          "when": "3 months ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "Does anyone else think Lary fink (she said \"Lary kink\"😂) looks like baby Sinclair from the 1990s \"Dinosaurs\" TV show?",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "😂",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "Whoa. Good stuff !!!",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "We clearly don't want AI or data centers! We need a national stand down week! No work! No travel! No purchases to show the elite that yes, we outnumber them!",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": false
-        },
-        {
-          "say": "AI uses too much compute, we need to compress token usage such that it uses less electricity.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "It's priced too scheap",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "Grabbit says he was successful with his job on California  and Harris backs Bass for her great work against L.A.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "Good luck",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @juantamad18 yeah, we're going to need it",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "Larry King 😂",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "Is this CEO in a hair race with Karp?",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "@birosone9453 so your comeback is if you don’t like us ruining our own country go to a better one. Thats rather fascinating.",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": true
-        },
-        {
-          "say": "We are close to the leverage point of AI. I am so HYPED. I hope my government in Quebec stand on the good side of history with the US",
-          "likes": 0,
-          "when": "3 months ago",
-          "reply": false
-        },
-        {
-          "say": "I'm 48 Catholic on the side of Uncle Sam being free 1% owning the running economy have no wife have no American Dream have no interest coming in just losing unconceivable to think one in here mentioned thinking it's not replaceable For the Love of... from today\nStill backed up by the Un forsaken\nIn 2000 more  years  a double up to the power of z number of precious metals will be in existence, we the public of people governing  the universe still being  the unforsaken.\n\nSucks.\n.",
-          "likes": 0,
-          "when": "3 months ago (edited)",
+          "when": "4 months ago",
           "reply": false
         }
       ]
     },
     {
-      "url": "https://www.youtube.com/watch?v=gk8ziQCWK1w",
-      "title": "How The AI Boom Is Causing A Surge In Demand For Gas Turbines",
-      "outlet": "CNBC",
-      "lean": "neutral",
-      "comments": [
-        {
-          "say": "\"sustainability\" and \"gas turbine\" should NOT be used in the same sentence.",
-          "likes": 280,
-          "when": "2 months ago",
-          "reply": false
-        },
-        {
-          "say": "For some context regarding what 2.7 Gigawatts represents, the power generation capacity of the Hoover Dam in only 2 Gigawatts.",
-          "likes": 228,
-          "when": "2 months ago",
-          "reply": false
-        },
-        {
-          "say": "Oh yeah? well my brain can run AGI on 15 watts",
-          "likes": 137,
-          "when": "2 months ago",
-          "reply": false
-        },
-        {
-          "say": "20yrs of all US media telling us the world is ending soon due to global warming; then $ comes along and the tune has changed to, LOOK AT THESE AWESOME GAS TURBINES!!!!",
-          "likes": 58,
-          "when": "1 month ago",
-          "reply": false
-        },
-        {
-          "say": "More context: The entire state of Utah’s demand is about 4GW \nthe Kevin O’Leary (Stratos) data center boondoggle is 9GW….",
-          "likes": 29,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "Nope, your brain runs only GI 😂😂😂",
-          "likes": 11,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "Also worth noting, a standard flux capacitor requires 1.21 gigawatts to operate efficiently",
-          "likes": 10,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "This is the cost of progress. If you don't want to participate,  it's simple,  opt out. Boycott these companies and their products,  aka don't use social media like this comments section or this YouTube platform. Opt out of the new medications and diagnostic tools developing new treatments for diseases,  opt out of using ai in your business and smart devices at home. Put up or shut up. I'm sick of all these virtue signaling comment warriors who do nothing but yap and type. Words mean nothing if you live like a hypocrit.",
-          "likes": 8,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "@TheBusinessMindset_  GTs are only 30-45% efficient on their own. Pair that with a Steam Turbine then they are ~65% efficient. That’s not close to 100%",
-          "likes": 6,
-          "when": "1 month ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "@akdomun  Both human and AI emit 100% energy to waster heat.",
-          "likes": 5,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "@RN2040RN  I know, right?  That used to mean something.  Now we are just throwing that kind of power around like it's nothing.\n\nBut fun fact, I actually did the math once, and it would only take about 32 gallons of gasoline to generate the power equivalent of 1.21 gigawatts for a second.  So the gas tank of a large SUV carries as much power as the lightning bolt from Back to the Future.  The energy equivalent is only about half of a barrel of oil.",
-          "likes": 5,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "@shaunanderson8491  They absolutely do. CH4 + 2O2 -> 2H20 + CO2. Basic chemistry.",
-          "likes": 5,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "But you are not scalable, you can't replicate yourself million times but a real AGI can do.",
-          "likes": 4,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "@DARKORBITPYRO  My statement was positive rather than normative.  There was no implication of judgement in my statement.  The inference is entirely yours.",
-          "likes": 4,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "This is where the electricity comes from. They burn cleanly, btw.",
-          "likes": 4,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "US Media hardly ever mentioned global warming but its past the point of being obvious and a problem.",
-          "likes": 3,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "Aren’t these plane engines?",
-          "likes": 3,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "​​ @DARKORBITPYRO  Oh knock it off. There's always one of you that comes along and tells everybody they've got to give up everything they use in their entire life if they don't like it. No that's not progress. When something is wasteful or harmful to humans or the environment you change how you're doing it, you don't just keep polluting and keep killing people because it's progress according to you. Funny thing we had medicines, research and the internet before all this AI BS started coming about. These things are being built for greed and greed alone and you know it. None of these are being b",
-          "likes": 3,
-          "when": "2 months ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "@ronald3836 they absolutely do not lol",
-          "likes": 3,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "@comforth3898  CO2 is totally clean. You exhale it all day. Plants need it to grow. It also protects the earth from turning into a snowball by retaining some of the sun's heat. Yes, it is possible to have too much of it.",
-          "likes": 3,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "Absolutely insane, thank you for the info, really puts the waste and expense into perspective.",
-          "likes": 2,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "@comforth3898  SO2, NOx, fine ash and dust causing chronic lung disease, mercury/lead/arsenic causing brain degradation, radioactive stuff (far, far more than nuclear power plants).",
-          "likes": 2,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "No, the turbine can be used to bridge the fluctuations of solar and wind.",
-          "likes": 2,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "How much waste heat do you emit?",
-          "likes": 1,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "@HouXiang  if 100% of the energy input was wasted as heat, as you assert, then what would be the point, lol? no actual work is being done if all the energy is being wasted as heat (which it's not). In terms of energy btw, the human brain consumes around 20 watts, at full power :) Our brains are basically like a dim light bulb (some more dim than others ;). A large data centre though, let's say drawing 100 megawatts uses the same amount of power as 5 million human brains, lol. Hyperscale AI data centers consume electricity in the hundreds of megawatts to gigawatts, more than enough to power an ",
-          "likes": 1,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "@Percy-k3f That is about right 1.1 kW is 27 kWh per day\nUtah uses about 30 kWh per per person per day.",
-          "likes": 1,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "Hoover Dam is 100 years old and running out of water behind it.  The Chinese are making real water work for them. \n 3 Gorges.  Massive electricity",
-          "likes": 1,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "The flux capacitor requires 1.21 Gigawatts",
-          "likes": 1,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "@ronald3836  Is C02 not a bad emmission?",
-          "likes": 1,
-          "when": "1 month ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "​ @ronald3836 so what are the harmful gases emitted by coal powered power plants?",
-          "likes": 1,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "Exactly that was very funny when he even attempted to answer the question, what a joke! 😂😂😂😂😂",
-          "likes": 1,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "Actually, they just came up with a way to pressurize it with ammonia instead of LNG. They are constantly looking long for better fuels.",
-          "likes": 1,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "talk about efficiency",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "😂😂stupid",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "​ @whatever77ism the A in AGI is not better than the N in GI.",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "To be fair, gas turbines are almost 100 percent efficient. They don't burn fuel like car engines, where cars only concert 35 percent into usable energy.",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "4GW make only 1.1 kW per person.",
-          "likes": 0,
-          "when": "2 months ago",
-          "reply": true
-        },
-        {
-          "say": "@hi-lx7wr  no these are heavy ones and they generate lot of electrical power output. jet engines in aircraft are much lighter and use better materials to produce maximum thrust-to-weight ratio",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "@derewreck  You are about 4 days late to make that comment.  Someone beat you to it.  😜",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": true
-        },
-        {
-          "say": "​ @DARKORBITPYRO I already cut AI off my life entirely, it was easier than expected",
-          "likes": 0,
-          "when": "1 month ago",
-          "reply": true
-        }
-      ]
+      "url": "https://www.youtube.com/watch?v=_pbvZRbN87A",
+      "title": "Inside ETFs: Data centers 'will raise electricity demand by 20% this decade' | REUTERS",
+      "outlet": "Reuters",
+      "comments": []
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=iVGTGpKpykM",
+      "title": "How AI infrastructure is driving a sharp rise in electricity bills",
+      "outlet": "PBS NewsHour",
+      "comments": []
     }
   ],
   "scripts": [
@@ -1910,8 +1970,9 @@
   "note": "電費帳單直接有感。左右都在報，但結論相反——右派說是成長，左派說是轉嫁。",
   "audience": "每個要付帳單的人",
   "gathered": {
+    "when": 1788247207,
     "trouble": [
-      "讀不到正文 2 篇：Bloomberg：拿不到頁面（擋機器人或付費牆）；Institute for Energy Research：拿不到頁面（擋機器人或付費牆）"
+      "讀不到正文 5 篇：AP News：拿不到頁面（擋機器人或付費牆）；AP News：拿不到頁面（擋機器人或付費牆）；Reuters：拿不到頁面（擋機器人或付費牆）；Reuters：拿不到頁面（擋機器人或付費牆）；MS NOW：Google 沒有換出網址"
     ]
   }
 }

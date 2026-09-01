@@ -5,41 +5,60 @@
   "sources": {
     "videos": [
       {
+        "title": "Americans say the state of their union is stressed",
+        "url": "https://www.youtube.com/watch?v=lKIufYP2vKA",
+        "seconds": 214,
+        "outlet": "AP News",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
         "title": "Paramount makes hostile bid for Warner Bros, challenging Netflix | REUTERS",
         "url": "https://www.youtube.com/watch?v=LNZM4eqisXg",
         "seconds": 142,
         "outlet": "Reuters",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/LNZM4eqisXg.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/LNZM4eqisXg.en.vtt",
+        "size": 25101826
       },
       {
-        "title": "The Week in Numbers: Trump's aid package, Warner Bros bids | REUTERS",
-        "url": "https://www.youtube.com/watch?v=ZbNQbnD10pM",
-        "seconds": 129,
+        "title": "How China built its ‘Manhattan Project’ to rival the West in AI chips",
+        "url": "https://www.youtube.com/watch?v=Rl4LahGIW6A",
+        "seconds": 603,
         "outlet": "Reuters",
         "lean": "neutral",
-        "doubt": false
+        "doubt": true
       },
       {
-        "title": "News Wrap: Paramount Skydance starts bidding war for Warner Bros. Discovery",
-        "url": "https://www.youtube.com/watch?v=12g9HaRI7UU",
-        "seconds": 431,
+        "title": "Paramount's Warner Bros. bid and threat to leave California divide Hollywood",
+        "url": "https://www.youtube.com/watch?v=J37mOVNkLR8",
+        "seconds": 397,
         "outlet": "PBS NewsHour",
         "lean": "centre-left",
-        "file": "assets/footage/科技巨頭買下好萊塢/12g9HaRI7UU.mp4",
-        "captions": "assets/footage/科技巨頭買下好萊塢/12g9HaRI7UU.en.vtt",
-        "size": 33780097,
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/J37mOVNkLR8.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/J37mOVNkLR8.en.vtt",
+        "size": 22122756
       },
       {
-        "title": "DNC chair Perez and vice chair Ellison comment on President Trump's speech",
-        "url": "https://www.youtube.com/watch?v=NSuKFS5znkE",
-        "seconds": 315,
+        "title": "What Netflix's deal to buy Warner Bros. means for one of Hollywood's oldest studios",
+        "url": "https://www.youtube.com/watch?v=cPy3K5NRuNs",
+        "seconds": 430,
         "outlet": "PBS NewsHour",
         "lean": "centre-left",
-        "file": "assets/footage/科技巨頭買下好萊塢/NSuKFS5znkE.mp4",
-        "captions": null,
-        "size": 65662684,
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/cPy3K5NRuNs.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/cPy3K5NRuNs.en.vtt",
+        "size": 27386202
+      },
+      {
+        "title": "Iran rejects Trump's 15-point ceasefire proposal, calling for 'reparations'",
+        "url": "https://www.youtube.com/watch?v=N3yQSHvaU2E",
+        "seconds": 125,
+        "outlet": "NPR",
+        "lean": "centre-left",
         "doubt": true
       },
       {
@@ -48,10 +67,10 @@
         "seconds": 598,
         "outlet": "CNN",
         "lean": "left",
+        "doubt": false,
         "file": "assets/footage/科技巨頭買下好萊塢/Tsyu0SQWpo4.mp4",
         "captions": null,
-        "size": 30053163,
-        "doubt": false
+        "size": 30053163
       },
       {
         "title": "Paramount win? Netflix drops out of WBD bidding war",
@@ -59,20 +78,23 @@
         "seconds": 517,
         "outlet": "CNN",
         "lean": "left",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/ypZBDlVdIo8.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/ypZBDlVdIo8.en.vtt",
+        "size": 27060242
       },
       {
-        "title": "Making the election racial",
-        "url": "https://www.youtube.com/watch?v=2UXV3y3V-bY",
-        "seconds": 411,
+        "title": "FALSELY ACCUSED: Woman fights Flock camera catch with OWN evidence",
+        "url": "https://www.youtube.com/watch?v=2a4t7QiMjOk",
+        "seconds": 225,
         "outlet": "Fox News",
         "lean": "right",
         "doubt": true
       },
       {
-        "title": "Joe Concha on the media’s reaction to Sanders’ Nevada victory",
-        "url": "https://www.youtube.com/watch?v=LztS-N6f19g",
-        "seconds": 182,
+        "title": "Sam Bankman-Fried moves back in with his parents",
+        "url": "https://www.youtube.com/watch?v=U3Wp0ePQxvU",
+        "seconds": 376,
         "outlet": "Fox News",
         "lean": "right",
         "doubt": true
@@ -89,39 +111,50 @@
         "size": 37240477
       },
       {
-        "title": "Democrats should disavow Farrakhan: RNC spokesperson",
-        "url": "https://www.youtube.com/watch?v=6BjdhBkrM2s",
-        "seconds": 216,
+        "title": "Larry Ellison: I had all the disadvantages necessary for success",
+        "url": "https://www.youtube.com/watch?v=vrZoRNSQSPw",
+        "seconds": 346,
         "outlet": "Fox Business",
         "lean": "right",
         "doubt": true
       },
       {
-        "title": "Google, Oracle CEOs Testify in Court",
-        "url": "https://www.youtube.com/watch?v=zRCIW_-ojJ0",
-        "seconds": 385,
+        "title": "Steve Jobs Remembered by Larry Ellison and Pixar's Ed Catmull",
+        "url": "https://www.youtube.com/watch?v=j-Yk4k2tG4A",
+        "seconds": 743,
         "outlet": "Wall Street Journal",
         "lean": "right-editorial",
         "doubt": true
       },
       {
-        "title": "Who Will Win Warner Bros. and Who's the Best Fit?",
-        "url": "https://www.youtube.com/watch?v=NPvyaz3BCw0",
-        "seconds": 342,
+        "title": "Best of 2012: Business Interviews",
+        "url": "https://www.youtube.com/watch?v=p4gMu5wGPtk",
+        "seconds": 361,
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "doubt": true
+      },
+      {
+        "title": "Larry Ellison Personally Backs Paramount's Bid for Warner",
+        "url": "https://www.youtube.com/watch?v=8rr4pKtsoNY",
+        "seconds": 225,
         "outlet": "Bloomberg",
         "lean": "neutral",
         "doubt": false,
-        "file": "assets/footage/科技巨頭買下好萊塢/NPvyaz3BCw0.mp4",
-        "captions": "assets/footage/科技巨頭買下好萊塢/NPvyaz3BCw0.en-orig.vtt",
-        "size": 15509054
+        "file": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.en.vtt",
+        "size": 19087867
       },
       {
-        "title": "Paramount Reaffirms Warner Bros. Offer, Views Cable Channels as Worth Nothing",
-        "url": "https://www.youtube.com/watch?v=vh_0vdkBvx8",
-        "seconds": 211,
+        "title": "Ellison, Paramount Put Pressure on WBD for a Deal",
+        "url": "https://www.youtube.com/watch?v=k2TBRP325W8",
+        "seconds": 145,
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "doubt": false
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/k2TBRP325W8.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/k2TBRP325W8.en.vtt",
+        "size": 5555035
       },
       {
         "title": "What Makes Paramount Skydance's Deal For Warner Bros. Discovery So Unique",
@@ -135,10 +168,45 @@
         "size": 35153986
       },
       {
-        "title": "How Oracle’s AI-Fueled Debt Load Has Investors On Edge",
-        "url": "https://www.youtube.com/watch?v=e5POYwqVpiU",
-        "seconds": 345,
+        "title": "Discovery CEO David Zaslav: Sky Now 'Fastastic' Direct To Consumer Product | CNBC",
+        "url": "https://www.youtube.com/watch?v=et4uJuP0ewA",
+        "seconds": 192,
         "outlet": "CNBC",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Warner Bros favours Netflix offer over $108bn Paramount bid | BBC News",
+        "url": "https://www.youtube.com/watch?v=3C3x-CFFgfc",
+        "seconds": 230,
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Netflix boss defends bid for Warner Bros as Paramount deadline looms | BBC News",
+        "url": "https://www.youtube.com/watch?v=1kwhrhucMGU",
+        "seconds": 932,
+        "outlet": "BBC News",
+        "lean": "neutral",
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/1kwhrhucMGU.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/1kwhrhucMGU.en.vtt",
+        "size": 56870707
+      },
+      {
+        "title": "Trust and Trump: Chris Wallace, Dean Baquet and Christiane Amanpour at FT Future of News I FT",
+        "url": "https://www.youtube.com/watch?v=QkIp0h9gFWM",
+        "seconds": 835,
+        "outlet": "Financial Times",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "Why Americans aren't better off since Trump took office | FT",
+        "url": "https://www.youtube.com/watch?v=rCIgpbIUn14",
+        "seconds": 219,
+        "outlet": "Financial Times",
         "lean": "neutral",
         "doubt": true
       },
@@ -154,17 +222,71 @@
         "size": 6685315
       },
       {
-        "title": "Bari Weiss and the Israel narrative in the US | The Listening Post",
-        "url": "https://www.youtube.com/watch?v=BUNFnZBXVhM",
-        "seconds": 1493,
+        "title": "What Americans think of Trump's immigration policies | The Economist",
+        "url": "https://www.youtube.com/watch?v=9StvCGDHn8w",
+        "seconds": 154,
+        "outlet": "The Economist",
+        "lean": "market-liberal",
+        "doubt": true
+      },
+      {
+        "title": "Jeff Bezos gutting the Washington Post is a threat to US democracy under Trump",
+        "url": "https://www.youtube.com/watch?v=RyeRmmdF4Yg",
+        "seconds": 154,
+        "outlet": "The Guardian",
+        "lean": "left",
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/RyeRmmdF4Yg.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/RyeRmmdF4Yg.en.vtt",
+        "size": 6608317
+      },
+      {
+        "title": "How US networks reacted to Donald Trump's election victory",
+        "url": "https://www.youtube.com/watch?v=Km1Dw8q98PQ",
+        "seconds": 149,
+        "outlet": "The Guardian",
+        "lean": "left",
+        "doubt": true
+      },
+      {
+        "title": "Donald Trump gets involved in Netflix and Paramount bidding war to take over Warner Bros. | DW News",
+        "url": "https://www.youtube.com/watch?v=p82Cc8wPxGM",
+        "seconds": 246,
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "doubt": false,
+        "file": "assets/footage/科技巨頭買下好萊塢/p82Cc8wPxGM.mp4",
+        "captions": "assets/footage/科技巨頭買下好萊塢/p82Cc8wPxGM.en.vtt",
+        "size": 13866427
+      },
+      {
+        "title": "Is US debt the EU's secret weapon against Donald Trump? | DW News",
+        "url": "https://www.youtube.com/watch?v=EbswiQsFB4I",
+        "seconds": 179,
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "US election: What would a Biden or Trump win mean for NATO?",
+        "url": "https://www.youtube.com/watch?v=KJZ72lMD5-M",
+        "seconds": 156,
+        "outlet": "Euronews",
+        "lean": "neutral",
+        "doubt": true
+      },
+      {
+        "title": "How Silicon Valley swallowed Hollywood | The Listening Post",
+        "url": "https://www.youtube.com/watch?v=wCQ-rA2bS28",
+        "seconds": 1511,
         "outlet": "Al Jazeera English",
         "lean": "non-western",
         "doubt": true
       },
       {
-        "title": "King hearings on homegrown terrorism",
-        "url": "https://www.youtube.com/watch?v=zCB5ENatTcg",
-        "seconds": 153,
+        "title": "Trump's Iran Exit Strategy: Is there a way out? | This is America",
+        "url": "https://www.youtube.com/watch?v=mrCnNM695G0",
+        "seconds": 1605,
         "outlet": "Al Jazeera English",
         "lean": "non-western",
         "doubt": true
@@ -190,11 +312,29 @@
         "doubt": false
       },
       {
-        "title": "Warner Bros' lack of response fueled Paramount's hostile bid, filing says",
-        "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQOFk3bHNXNVdxY2tPenVjd2JKNFRSZVJZYmRqRUxZdkVPa3R6QVVLZ05zT05FOWc4NEk4Mk5zbjNtYXN2RVBjSEE3ZTgyLTdVTWFodVJKaEVDeWRTMDFLUDUyc2tkR3RZNzFpWks5RUEta0NVclNibkVJX3d5UUx1eko5Y0xkLTBrZ0RGcHRHQXg3Q1RjVEtDYlgwNVZyc2hJNGxVWjloS0M2RUJFRjZ5dGw0bW5wOW4zWEZNQmhuYTZOMHZU?oc=5",
+        "title": "California, Writers Guild ask court to reject Paramount request for $1.9 billion bond",
+        "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOeWp0Snh2M3BOTG14S1JleHotMFZiSVl1cmtnVWhIeEdyaFpZUXFWLWptT25wV1kyWGRoWUhCTGNsajZHMWJhRllrUEJTUmVSVFVjZFYzemFhanRacXREcDlZVmgzelZQdDJxck9OcDFDMEo5S1dmTEZSMmlDTk93YkthQ2QtbkVhbVU1d0p0SzBlV2N3MFB1M1I2a09ZbjVpdl9hZnoxS1dRdw?oc=5",
         "outlet": "Reuters",
         "lean": "neutral",
-        "when": "Tue, 09 Dec 2025",
+        "when": "Mon, 31 Aug 2026",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "EXCLUSIVE: Puck in advanced talks for investment by RedBird Capital Partners at $250 million valuation",
+        "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPOWtMaGd1VlVYdXFEVDVPUi0ta2RkNWNYX2MtQUV0QW5kcFYtZ3ptTG1SNGFIREpkVnJtYU9KdHpCUmt0R25fRVRRZ0ZTcmU3MHh1bWhzelFWM2doY0xoTXJoc3ZDOENWOHp6NlAzWGFYdWlLUF9CMGloTHFIU1FVYnoxWjcyejBZQU5JbW5KbG5Vakp5LUliQUN3UURPeUdsb0dmQzlXUnh4bDV3cFFlSUVGc2ZOSUVITEhIU0JBZjRucXZLZmstR0xsemZremxmVHBBd05n?oc=5",
+        "outlet": "Reuters",
+        "lean": "neutral",
+        "when": "Wed, 26 Aug 2026",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Paramount's Warner Bros. bid and threat to leave California divide Hollywood",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQcVpTaUx6RmFhR0VFck1fT2phbXdmRlBkSE0zRXJmNEZjdllWbXRDQXY2WEplXzVfY01ZMFFQWVRzcHVMa2FaajFhS3AtN2Z2OXVLOUgtZDBhblJhaUJzbWpkckhWQTczcVRHdjJ0LXZDTm1yX3ptRWFreWJhejJNdnBHYTBJX091eGU5R2Fhbk5pQ19wRkNYeHFvcjJ0YVJyZDByVVVnWDdJNFFo?oc=5",
+        "outlet": "PBS NewsHour",
+        "lean": "centre-left",
+        "when": "Fri, 21 Aug 2026",
         "paywall": false,
         "doubt": false
       },
@@ -204,15 +344,6 @@
         "outlet": "PBS NewsHour",
         "lean": "centre-left",
         "when": "Tue, 09 Dec 2025",
-        "paywall": false,
-        "doubt": false
-      },
-      {
-        "title": "Paramount has raised its takeover offer to $31 per share, Warner Bros. says",
-        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNS1lIT1ZkNm5CZmRUUDRvdDlGUzJKY0h6SXBENGZ6dG50dEdnVlJjX0I3RzI1UVhXdFdVMm1nMWZMR1RsamI2VldYdWY0Nndvb3dtMDBFSHNzdnVkY2ZreHRFdHhPLWFSbVlHZnpGY3NURVBTUWZUM19NWkRGaTJUZzVtc05vQ0ZjdUY5aDJDMHNnTG1oR1d4by1mYW9scFFfRkQ4M2NwTGxvYzNnckHSAbMBQVVfeXFMT1RNTVFFTXZ2dVRhVzJnMUJ6TXhJSDlrMW43Tm81S2tYaUdOaDZaWDV3eEZJVllqUTRTU0V6ZW9ldE1rSTYyUUotMTl4YWpiakRDLXRDWUM0ekgtWkxOaFlmRk04SlcxZWxwUndkUk5xTDlVc2ptQXkzcm5xWlRlNnlHSFRSZkpCb3hyTF9weGZURVRUa3hnbTd0OTI5aE9vTFl5TE1Sak8yRjFTYUl4SFh3OVE?oc=5",
-        "outlet": "PBS NewsHour",
-        "lean": "centre-left",
-        "when": "Tue, 24 Feb 2026",
         "paywall": false,
         "doubt": false
       },
@@ -235,8 +366,17 @@
         "doubt": false
       },
       {
-        "title": "What we know about Paramount's hostile takeover bid for Warner Bros. Discovery",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOWjliVWxFSXozZllpLXowTTRHUlljeVhCZVdIUFpfeVJNN1hhM3d2UFRfbU5JcU5leDZmVXY2UzdVV2xqXzVuaTI2S2VHeXFLWmRtenNnMGtRakxCUWZiNmgxN0hNaFlzbG1iZlVLX0oyN2VYQS13MEdHSFhnYm1Qd3VocVVpaTZLMG8wMUVvNVA?oc=5",
+        "title": "Warner Bros. Discovery advises shareholders to reject Paramount’s offer. But the battle isn’t over | CNN Business",
+        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQaE5VblBVMlBWN2JjbXJ1T2thbW9OU2JXMHVwZzNVckJqSHlmcTVYVEZ2ZFBjaHo2YXNvdWtYUUpOSmpXd3VRcF9zOFJwY2pGdm9MUjViU2ZKSDBuNTlXMk5lUDlkVjFjRGVaVkt4aDRUQWVpWENOaGc0WUFRRjdnOUdlX3BoU2J4R0o5WQ?oc=5",
+        "outlet": "CNN",
+        "lean": "left",
+        "when": "Wed, 17 Dec 2025",
+        "paywall": false,
+        "doubt": false
+      },
+      {
+        "title": "Battle over future of Warner Bros. Discovery captures Trump’s attention",
+        "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPdVpLT0hEVWJJSV9GVTVfRXZjWXh6SDIyR1VJSm16bEpNMjFTc3dPVEt0ZUVpdnlXdXZtcjZ4Njc1MVpIY3FndUdLUWtlWkJ5cUVYUVBzQ0FkM09VUkpwUk1wb3FwbkNzNnZ3YzlvTDVXem1XVWduLVB6bW9mTmZzWGZ3QUg5aFJsUnc?oc=5",
         "outlet": "CNN",
         "lean": "left",
         "when": "Mon, 08 Dec 2025",
@@ -244,22 +384,13 @@
         "doubt": false
       },
       {
-        "title": "Paramount escalates Warner Bros. Discovery fight with new $31-per-share bid | CNN Business",
-        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQak9yU2FWSUZ1a0ZQOWxScWw1SDFVTmE4UGRMYzFYY2dsWkJNd21SYl9jTS1LaWxrbWNnb1dFdzFXM2NhTzNfZzFMeEZySWJNNnpnX2diYVdUemF3b3R5YklLU3Y0RS0yVGlEZmpKQnNwcmM4dVM2LWRkc3hYN09VV0tZM1FhWjR6STI0Vm1LYjZNNnRQ?oc=5",
-        "outlet": "CNN",
+        "title": "Celebrating the 50th anniversary of hip-hop with Trymaine Lee, Imani Perry and Vic Mensa: podcast and transcript",
+        "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPalVwd3pMMUhscFFGV1AxTVZicTdCX3FfWXZ4SnNsS1REaHVBS29hWHdCV0hzZVQ5clZNaS0zeHVONUFjZ2FMN1JTZmJjbUllWks0MmhFMnF5dUJBbnkxbXJhdE1XSW11U1ZtRU5TTzFvWVFuUmpGQzlBM0VZNEZ2b29IVVNGYWk3VXFmT18wTVRsN1h6VUM1Q3NxckhKaWUzNGxPZGo3NUhDYWdFdXVHTl82b18zMHVSZFdDU0NKVkliR3pMWVcxT2h3YnQ?oc=5",
+        "outlet": "MS NOW",
         "lean": "left",
-        "when": "Tue, 24 Feb 2026",
+        "when": "Fri, 20 Oct 2023",
         "paywall": false,
-        "doubt": false
-      },
-      {
-        "title": "Paramount makes hostile takeover bid for WB",
-        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5tTnJPZUo1bDBlSHlOaG9rT2RrOWdmb3V5czZLOGlYckdCVmZnOVhsQWdWZGoybDZOZjFTbndrcGVlY1FDUXVfOWlWQ3BOY2s0d290WUNR?oc=5",
-        "outlet": "Fox News",
-        "lean": "right",
-        "when": "Tue, 09 Dec 2025",
-        "paywall": false,
-        "doubt": false
+        "doubt": true
       },
       {
         "title": "Paramount CEO David Ellison vows to maintain CNN’s editorial independence after takeover amid staff fears",
@@ -271,49 +402,67 @@
         "doubt": false
       },
       {
-        "title": "Warner Bros. Discovery rejects Paramount's hostile bid",
-        "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE0yNVR5eEF1NkZrSm8ydFhTUzA5QzBEUkdEQTAxakp0X1lUdTVxVFpJcmFBbmJLckIyTUJGOHdKTUhiRmZtWlU3anpTN3VPaXd1bGdTSU9TVk4zUXc?oc=5",
-        "outlet": "Fox Business",
+        "title": "Mark Ruffalo fires back at Paramount over 'appalling' antisemitism accusation tied to Ellison merger criticism",
+        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQNklHVGlndWJHZzBwQktWYjE0WkRBNGxSeVdjNUI2c2pocWZ0dHVJbzF5TXhMYjF5aTJWRnJGdGdSaUUxaDRLLVg1Y3dUUzFYcjdUd29OdHk0QnR5Ykp2TDlKeGV2TTAtTklqTWJXTTJMMlVIVGpVWk12Rl92dlBXMmdmNkVrTjFzWEstaER4ZEM3LUVWNzlSaWNzV0tISzlhd2wzNndBTmhEVEhCelJCbW1iVGh5Wmd4dTZ1SlhPWdIBxAFBVV95cUxQSWNTTEY5a3dVbENleURSX0pnaWpXaEhScU9MNzNxd1NPVGpzTVNRNEVuSFlVLW54REtINDlfZFNzcjVRajIwOGJVUFoxY1lsblFxTVJIYzBHaUV4a1ZMWVRLWGpyX1g2T0RvV3FXZWhIdUNOLTRia29OQ3lUR2Rqb2hpaUtKNDBDRURLekhkYkdLSjdyVVBVel84cXc1NGdLTFJRX2FabEp1MXE1VTE1WVNPWVlKM0FsVWJMYURmTElkbTZt?oc=5",
+        "outlet": "Fox News",
         "lean": "right",
-        "when": "Wed, 17 Dec 2025",
+        "when": "Sat, 22 Aug 2026",
         "paywall": false,
         "doubt": false
       },
       {
-        "title": "Los Angeles County board votes to analyze Paramount and Warner Bros. Discovery merger's job impact",
-        "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOR1M2WGVoVGFITnBTUmYxd1U2RlpFekFreDN0UkVUWHRlZ0JuNGMxVk1YcmRJbGZPSHljd2VFcXNnM3VhdFZSYVE2NEM0N09ndGszMlFDUW84TlV0NGJDczRkdjktZnVETnhDU25QOE9laWQzZG56UFhJYmwwQXdCaWs5OGhLUWMtc2N5MW4wanF5UnhuOEsydzJJaGpWQ1lRb0h4VnNSTTl4ZHlHNWdfQ3RRelRpWkFocWJQZU51QmXSAcYBQVVfeXFMUFhrUVRCVWtjYXd6N1RhMUJHeG91T05RVF90RVp2NGhvZGpKWktrZGJ6WmktSVBhcTEzYlRTaFU0ZFFHODNMeFdQaVFLQ1A3ZUE4T3FQU2hieHpZd0pkV0psalJMR3JHYzVRRldhWGJuZUl2QkI2UEdJN01jTGlmUzdaNG54M0l0RGN0ZU5mZUlJUDU3VUdnYUU5V3FHMWRlUHplbldVSXoxVGgwQzNqMkNSM3JTYUFXSXR5Ri1ubE1NT25hQV9n?oc=5",
+        "title": "Paramount efforts to buy Warner Bros Discovery play out in background of latest CBS News drama",
+        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPYlBOVDNaUVhJS1VSN0FkUWlmTW1OYnRQbUFpMEl1a3pTTXVWbGh6d01wX3FsU09YX1l1N0NOdnpCZ0pZSkFPN2t2SUZrSHhMaUo3UlZTSjFzYWRjZW5hQmZ0NVMzRXNGUU9sZTdxYndYR3Frb1JXRWNpNmdaV2FEang2dTBIOGZwUmdQaFpMUUhJdXdIZWtDOXRYc1NoNlZVZUcwV3NtRmQ3UlM2cTdybGM5dm9pdEhRSmhv0gHAAUFVX3lxTE1kam9oY0FpNDZXOWw4SVVXcVFYS3FiaUFjRzFwXzY2Z1pzZ1l4WFlHY0ZjTU9xWlpPYlVtemVnUnloZjlvMndyWnAxSTdwc2N3dThuNkw2eHljWmVESTBCNGFybjJ3a19SSzdUM0lyYWtmU0Vja0tPWVFTem9Na3NVSTdicVRmWEpJZzhkX1ZCdEM1SGc4Z2dUTFp3VHB0akRWOXlMVlJhYkl5YlRfalR1OXpIbnlSLXJBcnZ2NWdXNA?oc=5",
         "outlet": "Fox Business",
         "lean": "right",
-        "when": "Thu, 26 Mar 2026",
+        "when": "Tue, 23 Dec 2025",
+        "paywall": false,
+        "doubt": true
+      },
+      {
+        "title": "Judge delays ruling on California's bid to freeze Paramount's $111B takeover of Warner Bros. Discovery",
+        "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPREdHVHpnTlhrNHUtc1VlaDdadWxQVVNVYkI2T005UnROTWdYSi1MdTY2WGQ4ZUVzT1k2M2JLTmowRjVvcTdSV05ZeUM1aWt3WU1SWlZWUWFRRlExeWgxVFhhamEtNzZvSThZaXJURHZkTmVJYXYtMXZ1YUFKMUMwMGZwSHRKcnpDS2lRWlFNXzZyb2pyUWIzbC10RjhlMERqalhqckZnRTNvY0RxbnYtdk11Y01DaTA5Z3hrcjNCZGLSAcYBQVVfeXFMUF9ycHJsLVpseWo5S2dtd2VHVmV6c1lPbWRGb1MzYWwzaDkwVzM2SE9DQVhPelpiTVJTYmpQQnlPTjZxWEZfTHRPQV9YNUxQSlZNcGlXeEtKbVJtcHFTNXcwdExvWWhmU1VXMUQ2Tm0xZm5FSjVOZ3lpVzgwNEVLZEhZVDhLVTZSWmtIUHRid2lpX2tHSWl5bjk0NVZwZHpoRWJhdFo2a2FqTEhBczgzWTRHTGVHQWdweEJEUEJLTm1WaHR3R3RB?oc=5",
+        "outlet": "Fox Business",
+        "lean": "right",
+        "when": "Fri, 17 Jul 2026",
         "paywall": false,
         "doubt": false
       },
       {
-        "title": "Warner Reopens Talks With Paramount After Sweetened Offer",
-        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPVGRqRG5Fb0Y4bHZTZXdBUjBrXzJ1TVpEcC0xUFIzM00yVmhxYXBrV1FvMkZNZXIxdjZSMjRyZzRpV1J3V2NONlduczA1eGhvUm14bmc2RUw4Tzg2UHRwbVlVZngtRm5zbmNqUGtXR1dqSEVGY252dm4wckoxX2NzMlp5aDNEMFQ5TVNSYlh6elMxbkt1dkFkR0ZjVUt2TWFqUWd3?oc=5",
+        "title": "Behind Paramount’s Relentless Campaign to Woo Warner Discovery and President Trump",
+        "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOY2RTcjdFbVJMQU9Oa0F0OGR1OVRFQ2VRbGhxeFFFMWNxQXl5aVJFNUF1YXhyMzY3Mk9neGZyMWN3YVZ4cS1VZS15REx5QXBrQUlYSkdkcG1yQW9id0RpbFU1eGtwbkxGU091OWJEUFd4RjhpV1FxMUpmenJZUGY3ZWRJQWhFTlpucF82Ri1OTFNjNW8?oc=5",
         "outlet": "Wall Street Journal",
         "lean": "right-editorial",
-        "when": "Tue, 17 Feb 2026",
+        "when": "Mon, 08 Dec 2025",
         "paywall": true,
         "doubt": false
       },
       {
-        "title": "Kushner’s Affinity Withdraws From Warner Bros. Takeover Battle",
-        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOSnhUQk5UeFM3U3p4aTVNdnVfdnZoLTFOSzl6TlZYT0g3VERJTUFTTTRGT2NlX3BObFJxQ202VWtnanRwTWZPOHRuT0YzcFIzQWlxVkl4WXNFcXdiRGsyVVJsRTN2eFJ6NGROMmI2QUNFNlZ1aGp3R3A4Rm5FUEtSZGVmaUV4ak9oSTlmcG80NjVYVGdPTW9YZjJwc2xXSm1qanNtVlE1UnFEbFNiTGd4UlRn?oc=5",
-        "outlet": "Bloomberg",
-        "lean": "neutral",
-        "when": "Tue, 16 Dec 2025",
+        "title": "Larry Ellison Provides Personal Guarantee for Paramount’s Bid for Warner",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQOGdXenBMREVkb0hTbVRvM285R053dXJpQlZpZDlMY21rSU5BdVg2Q2s1OWY3VUdQQnN5V2JvRmVWdFhiTTlaaUFSaWJpdkZpVEJ6NzZ5VzUzai0yQzhKV3pJODBnZEx0OXR5MlpkeC04SFdKQ0MzSWFzaVpBUlYyXy1GQnNGUGVoYlRuX0NSU2RKMlFiSXVqdWxneW5YbnFsN3NqeV9CVlJQMDBSS1gtZnB3?oc=5",
+        "outlet": "Wall Street Journal",
+        "lean": "right-editorial",
+        "when": "Mon, 22 Dec 2025",
         "paywall": true,
         "doubt": false
       },
       {
-        "title": "Warner Bros. Rejects Latest Paramount Bid, Favoring Netflix",
-        "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPUGR4ZV8xaW1xRFZLVEY3UkNaMHdxWjByczBVZ3JQY0VlUWRpZ1drdXY1OFR2ZW9SaXg3LWVYS3I1a0o0bnIxbTRndFlGdVlGOEZKcjJ6Z1NEWk9XTnEwQzVscVNpQjFMWVhXYmNzV0x2Q01RZEVlU3JvbXpndXRnVXRPS01xOU1sSUhHOV9CV3g2Vkw0TklsZmdGdWE4SVBuYmlJYmtDa2E?oc=5",
+        "title": "The Looming Bidding War for Warner Bros. Discovery",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQOWktb2tUR21EQXEtY2ZjZ2h1TmtfVnVPdXFPZ3VCVEY2eXVjdHhNbVpzNVV6cDdqd29fRTVGRnUyd1dNOUdfSXphNDlILWprX3BTZUZVMHlWVndZbFhITmdsUWtLcjBkaW05LVhieWVtenBWTmpqb1FSXzJXRDZKQzk5U2RGUmRxd1VTN1VVRWlQLXF3eGJLNGwzRnNLd0lpWE5WcTBkN1c5WDNJa0lUTjN3?oc=5",
         "outlet": "Bloomberg",
         "lean": "neutral",
-        "when": "Wed, 07 Jan 2026",
+        "when": "Sun, 12 Oct 2025",
         "paywall": true,
-        "doubt": false
+        "doubt": true
+      },
+      {
+        "title": "David Ellison Used Political Ties, Deep Pockets to Buy Warner Bros.",
+        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOMVN0SzlXam5ZcXc5bkJlb21aWkpIdDFMYWN1WFZ1OEtTYTdFNmFvY0tjWkl1ODV0ZW1ESlZ3dm85VTFzM0dpZEp2bTJHREZuOEpLR1diWHNoR0l2YWJjbVFRWGxOYjZ5alJubEpoMEpvRE82V3NtbDQ1RmxKR015NEhPRm1BZ1JCczhlRk9uTGVHdDNMX0xSMVNHWndSMS1JZ01VR0tkRmFJMDZTUXZwNV9FN2w0ZmNz?oc=5",
+        "outlet": "Bloomberg",
+        "lean": "neutral",
+        "when": "Fri, 27 Feb 2026",
+        "paywall": true,
+        "doubt": true
       },
       {
         "title": "Paramount CEO David Ellison is at the final hurdle before buying WBD. So far, he can't clear it",
@@ -325,31 +474,31 @@
         "doubt": false
       },
       {
-        "title": "Does it really matter who ends up owning Warner Bros.? Media exec Tom Rogers breaks it down",
-        "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOd2d4dVZCcktpdklkVW1YNmdVdlpFSGt6YUxPTEVySk12a3hXU1BUTFlYZXZLZHQ3N0JtUVFxZWFRa0x6c0llU0Eyem1ZN1pneE1mWkt5R3VESzZiNUloNmJPeGhuLVlKeEE5OWR6dEhWTy1uZm9OVC1JTXYyRThBbjJyN0ZPRVkxZjdXeC1FUlR1MVhhMnVIcW9qWjBPTWxndlZldUdGTXdwMlJhSEUzaGlxU0lOZWI2YWJYOHJZaDQ4aHBQ0gHKAUFVX3lxTFBGUWR2MmtsbjQtSlhVSHpDaGFpdTIxNC1rd2VWcDVvay1fMjRTdVhNYlBwSTFYWWMtMnpoLWNFT2psdnlmSWJVVzN5LW90NzNTMVloUHk3WFB0bHk5bHdrbUZMVnFLSTU1WWFXYWtZSjEyaHAwcDc2MmFrTUQ4UmNsOUhNV3BQZDEzT0trRkF0cHdhalVIV3pZa3pNRVJxTWxzX09NR1ZMemQ0NUtNNzdPZ3lnd0xQTENYUDZMemp5c3ZXZjF4M3lwOXc?oc=5",
+        "title": "A media M&A chill: The Paramount-WBD antitrust challenge may hold up more deals than one",
+        "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE00WUxKVURZNkZhSE1qWHBmYmFHZHdqS0M5U25xaE16N1h6QlAwcS1jejB5eFlHRmd4VndFYVdLcmdGakZJS0t3VFh5N3JZelRhTW1OejY2N2hMY2NuUDJvRTdOOHZGNHVZNHJXZVBwRUpnOXpsMVRhYXhnZkfSAYIBQVVfeXFMTTV6ckpKZ0g2cGpVQWpLc0FCSTFBVmh6MDF6WnRZNFhCbTFPQm1NTkQ0d2IyR05ocEVvWFU3RjlRSExpdVdhM2V6c3pUWFZDNWNfRkhfeTB3aEM0QTQtVkVCT1FDMU1SaGxsWnRHYl8wOFUtSjd4bF9PZnJQYUlOb0dBZw?oc=5",
         "outlet": "CNBC",
         "lean": "neutral",
-        "when": "Tue, 13 Jan 2026",
+        "when": "Mon, 24 Aug 2026",
         "paywall": false,
-        "doubt": false
+        "doubt": true
       },
       {
-        "title": "How did Paramount beat Netflix to win Warner Bros.?",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBCa0hPY1NHNi04dDhRVWtyU0w2WXZjNi1BVGNGR1lLazdKaW5vRzduelRxeDUzajFvOVBEbjRHeHM0VnRXZGVGRzVobnhZZUgzcTlIdDZjdk5TUQ?oc=5",
+        "title": "Hollywood stars unite to oppose Paramount and Warner Bros Discovery merger",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBKelVtNDBCQTFzQmliZ3JDSHV1SWc4cThzNVphbXBxdlhXaXhLSFdkZkVxZlJuanMzcjhEUklXOXRXTV8ycWZNOXdsV1EtZWxPM1M0a2NkZGdNZw?oc=5",
         "outlet": "BBC News",
         "lean": "neutral",
-        "when": "Fri, 27 Feb 2026",
+        "when": "Tue, 14 Apr 2026",
         "paywall": false,
-        "doubt": false
+        "doubt": true
       },
       {
-        "title": "Warner Bros favours Netflix offer over $108bn Paramount bid",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5ScldEZjFvLWJVWlhqNkpXZWZfMTFVRTlKTzhqeVlNR0lRUUlwZUJaMGdQaWw0VjRsQmFmdUJoNlE2SXh4ZV9DZFFOaUtHOHBJWXI5MU9wb094Zw?oc=5",
+        "title": "Warner Bros shareholders approve Paramount's $111bn takeover",
+        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE95X0VoREZ3MnRvbWlCek82XzVTMExGWWUwT2dRWTNlb3NoMzJKTkFJeHpzRmREUWtLTFQzY1hkUllhOS1YUDR0TlFBRWRIZ0Mzdnd1V3VtZ0ZPUQ?oc=5",
         "outlet": "BBC News",
         "lean": "neutral",
-        "when": "Thu, 18 Dec 2025",
+        "when": "Thu, 23 Apr 2026",
         "paywall": false,
-        "doubt": false
+        "doubt": true
       },
       {
         "title": "Paramount’s WBD bid relegates Netflix to a supporting role",
@@ -358,14 +507,14 @@
         "lean": "neutral",
         "when": "Mon, 08 Dec 2025",
         "paywall": true,
-        "doubt": false
+        "doubt": true
       },
       {
-        "title": "Warner Bros rejects Paramount’s ‘inadequate’ $108bn hostile bid",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQQnRpd254WmNlcDFIMXQ2cGV1Wkc2VDM3cXpLWl9JYzRCSWxTUXRrWHppUkljRDgxdzZ5VHg1YmJjX2F1aW5sSFdYRUNrQW16am5sRmtWa0tuREFDaDlKNWJBQjE0RHc2NUtwTW9ScmFPOW53MkNIclFkUXQxRHk2ZElhWFg?oc=5",
+        "title": "Rivals eye options as bidding war for Warner Bros escalates",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxObVdfZlNhcEMzaGpzWnQ0TDFqTEg0VVRXNFMtbm85YjlVMHRaTnJ1THB1VGppeHBrazRYMWVBQVo2WWJhT2xSZC0wOXU2VG5DSnhaTXlwZUpROTR1bmxmNktKNE93Wldua0t4MVRNMWxjSmw1Qk5IdHRUSWl0VVgwYWtmTEg?oc=5",
         "outlet": "Financial Times",
         "lean": "neutral",
-        "when": "Wed, 07 Jan 2026",
+        "when": "Thu, 11 Dec 2025",
         "paywall": true,
         "doubt": false
       },
@@ -379,12 +528,21 @@
         "doubt": false
       },
       {
-        "title": "Will California try to block Hollywood’s next megadeal?",
-        "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNcFRManZqYjNfTWc5bWtIVGVxaGx3NmlPUHhILWpEdFVQMGZTRFYxeFJPYkhhN2hOWm1zM3VVSzBONEJGaVVHMTNkS205ZmM4M2VUVFdudTJCX0RfZnozQnRyMVBmMjFpSGJ5cG5LNUlYS21sLVJwODlka1FXS2hub0xaejMyNzNHa2xaMGFJOVhXR25QMWE0R0xrMkx6MTlJXzNjYWR2Yw?oc=5",
+        "title": "America’s newest media moguls: the Ellisons",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOWmlCSUpBczlvUjl2UmdlR1lsbGpPSTZILVJYMFhwREY3M3RvTGp3UWVMVlJNN21LcXV3eWJfY3U4QndrQXpmX3phWnJvOURYV0x2UWp4bUhPWEhmQzl3cE9yams2dGd5MEQ2eElBUmxnLTlhUzFrcVpCNWx6V1RKQUxOWjBPME0zWEpRNUh5S0I?oc=5",
         "outlet": "The Economist",
         "lean": "market-liberal",
-        "when": "Fri, 12 Dec 2025",
+        "when": "Wed, 01 Oct 2025",
         "paywall": true,
+        "doubt": true
+      },
+      {
+        "title": "Mark Ruffalo fires back at Paramount Skydance after it accuses him of using ‘antisemitic tropes’",
+        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQMFFhVmcwYXlMT2U0eEtpZDBpVnE3X0IxWkNVMi05V3hrR3owalVXSW9fWEFxV2xoYXpYczVhTzNlcFFxNFVIekpselZQUHNaSi1NQjQzUzlsbjRJaW5FTkRoR2VXM0Q5UnktOXd6RG9Bem5HbWZrN09KZnZKd3JrYWctUWRWQnpmd01mSUlVMUtodmQ2WXA5VjRUOThYdE95dUh6NDJtalpENEVPeGNYdWliQ2J2OXRYQWZJ?oc=5",
+        "outlet": "The Guardian",
+        "lean": "left",
+        "when": "Tue, 25 Aug 2026",
+        "paywall": false,
         "doubt": false
       },
       {
@@ -397,11 +555,11 @@
         "doubt": false
       },
       {
-        "title": "Jared Kushner’s firm exits takeover battle for Warner Bros Discovery",
-        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOdTRQUmxSZHA4bjBrTnMyTmhDbTRIOEJaREZaV05kNWtjTExQQ1BDX2tKcXZlVUVlMG9GZ09ZVzkyM0lFZlJVbjlNU1N3VktuX3dzcXF0T2cxcFlfOVdLOGs1UWJMMUcybElJWElKeWZkRnJEZUtISjA0MEk0ckM3QTYzdEFEblVqUF9KN1BMc19DVGVLRHZ0dEdyU2RaZmpu?oc=5",
-        "outlet": "The Guardian",
-        "lean": "left",
-        "when": "Tue, 16 Dec 2025",
+        "title": "Netflix bows out of Warner Bros. bid, Paramount set to win",
+        "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQdXVYZ01sOEZyTktjb1RmSmNNWnNlcUw0ZFBDU3pFYzY1cXUzZXFLX3IzdVhGSmp0Q2ticWFKQlIxVTBfNEU3VExuX3djOXhaREdpZ25RZXZoM1hwNmJwR1RXS0pONjRDRmJXT3dFc1ppdTJhMWVsRDZYZmhGallmLVZqVE5uWFpNelJoekx6YktFSXPSAZMBQVVfeXFMTzJfbDJvYW9tU2dHYVV6TTNTbUd3RUVyRHFnSjV5MzJvekpVa0oyZGJHQmxxM3RZcFFOaVJhblRwZ3pMbHd5a0tqQ2NQT2ZidnEtUVJfN3N2eFp1cS1OR0c2a0ZfcFRnTWFnbmZTX3c4QXpqOW5nODhPUTk1clc5cDNucHRmallZV0tGUGZZX3Y4alVR?oc=5",
+        "outlet": "Deutsche Welle",
+        "lean": "neutral",
+        "when": "Fri, 27 Feb 2026",
         "paywall": false,
         "doubt": false
       },
@@ -415,29 +573,20 @@
         "doubt": false
       },
       {
-        "title": "Paramount seeking to outbid Netflix in Warner Bros. deal",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOTmlpMm1BbDlkaEw1ekFOTlA3aVlOaWVsVlNMUERpUEFsbWduSTZyTjlwOE52ODg4YUxrbVowbXRuaHFCOU50YzA2dUljcExTOGlEVUd2aEl5bGpsLV9VaUhNMnVjNE9TSDZzZFNOSTZhMHhQTlhjSHFBMXpWNTBEblZLdG4xUGNGQXB3ektCdDFlUdIBkgFBVV95cUxPNURGaU5rZTNXTVlEb2h6UUd5RFlyeVQ2Rjc1SUVnYmdfM1NlNzdSdjFlLWcyZ181bmJZYVhlc2NMZmhLeTEyQkIzeThnaXRQaV9sRnN2enRER2hLczBxWFRXMFg0MEZfSlc4R2RRYkQ1QnQzQm05NFBESkhKOWRucVRxSEIzUmNtWS02ck5UYkxNZw?oc=5",
-        "outlet": "Deutsche Welle",
+        "title": "Paramount demands $1.9 billion surety over states' merger lawsuit",
+        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNZkltU1dGbXl6SUdtTWtheTZTZTg5SGwydDhLZHdwMEFVYndUbUxTQjZCaWp1dlZmeDlHcl9FUVZFdGJvWnlPcHZqY0w3U3pzck5IZVM4SXJjZ1FIYWN5ZmZDMmZJc2JVQUUxb0xrVmhLbnY5NmxMSG1WbUROd0k1eUppenJlU1VGU2RLb0xjbXpNbnI1cnY4N21JdjgySk5RUkJINjg4bEtWUUxyRTVn?oc=5",
+        "outlet": "France 24",
         "lean": "neutral",
-        "when": "Mon, 08 Dec 2025",
+        "when": "Tue, 18 Aug 2026",
         "paywall": false,
         "doubt": false
       },
       {
-        "title": "Business - Warner Bros. rejects Paramount's revised offer",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQUkdfdWk0Uk1iLUdrRVh3a3ZZMDVMMFFHenA5Z1FsSjBDSXpVWjNTTFIyanhWOTYwMHR0UHVXa2N1bU8wWDFjTmVaMUNCX24tTjVVMWpCUndmbUtaUW84RDVjamR4WmZDc2hkZEN3Uk1ndTd0U3FmRTVIRVFnVlZPdTNSZ0phRklCbUZRRl9MdGpJVDQ2bWhtamFaOFRHUzVxVkE?oc=5",
+        "title": "Paramount poised to acquire Warner Bros. after Netflix walks away",
+        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQc2sxMFhGbzZhTDVNbzZMUjVUM09uLXBNTzV1WVdFdk9uSzl6N29vcDVVd3FQZDBzMHE2M1FNdmhVRTg0MWFYOEZPaThudFJqU25rWWp1M2pYMGMyOUl3ZFdjY044bng5LTBwWEpwX0kyMnA2UXMyVFVjZ1ZGbTdjNUQ5WXVoWko2RTBfRVVYdTNjeGRtbHhFX2djX3h4U2tEZW5nSzhhNUg3ejlBY2piUHFxSnI?oc=5",
         "outlet": "France 24",
         "lean": "neutral",
-        "when": "Wed, 07 Jan 2026",
-        "paywall": false,
-        "doubt": false
-      },
-      {
-        "title": "Paramount challenges Netflix with $108.4 billion hostile takeover bid for Warner Bros",
-        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPeG5oSjFQR3RqSUlTSl9xX2JCenRHaTVIT2R2VnJnX2t0ZDdCbGZjcU5NenlHVUxLcUp2SjdxR2VXdEx2LUxPMmpENU42dlByUG1CMEQyNGZKMFdXUXF0YlQ0enpFNDJnbU9ZZjEyNU9QaXFIbkExa3c5b0Jldm1UaHNsNy1oWW9QNkk0WUFYUi1PNUh3WGhLSEp0MHJtc1JMT1F3bDVXUWdVekM3b0UyX0xRTzRwSEdqcld2RkJGeldra0hzbGVLM2Jn?oc=5",
-        "outlet": "France 24",
-        "lean": "neutral",
-        "when": "Mon, 08 Dec 2025",
+        "when": "Fri, 27 Feb 2026",
         "paywall": false,
         "doubt": false
       },
@@ -451,11 +600,11 @@
         "doubt": false
       },
       {
-        "title": "Paramount sues Warner Bros, launches proxy war to scupper Netflix deal",
-        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNbWN2STJDU3IyVXBSUURISmwybUxsTkh4bnBFQ3YzTFVHOXRCOG1wRnpfYnVpYlRpTjhmZWc3bjRROGZZUUJRYU1xN2dCQWZzejJ6MUsxV25BTlA5bndpZjlMaDRtbkVsODFLRDR3VHVBV2xlRUhrYU03RnJFZEVHdUJ5NG0zRkdNZEFQZFh5QXdNVVo5S2RWdGI3TWUtdWFIQ0h4NFBudkw4VnZ4R1BnVDNlblY?oc=5",
+        "title": "Warner Bros Discovery shares surge on Paramount Skydance buyout report",
+        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPQWZqbkpJazVNeFRGV3d4NnduRm82VDV5Z1JtbWNLUUN5MWpMOVpTTVFzUFl4bXA5S0tOd2xnM1ZOS3dnRHZmR2hwRl8xWE40VkpjaUZiWUpPZmE5YUJETVJodXQ2MGVheU1zVkJfVXdTNk9SOWV2aDZwd2Jqd1RDbkQ3cUFfWk1rVVZjNnVMRFdjd2UteUF6Mk44VG8yRFMzQV8zbWRmMUM3b0tRQzhoZ3VDb2xDZw?oc=5",
         "outlet": "Euronews",
         "lean": "neutral",
-        "when": "Mon, 12 Jan 2026",
+        "when": "Fri, 12 Sep 2025",
         "paywall": false,
         "doubt": false
       },
@@ -480,382 +629,233 @@
     ],
     "images": [
       {
-        "id": "frame_12g9HaRI7UU_24",
+        "id": "frame_LNZM4eqisXg_1",
         "kind": "frame",
-        "term": "PBS NewsHour 24s",
-        "file": "assets/photos/科技巨頭買下好萊塢/frame_12g9HaRI7UU_24.jpg",
-        "caption": "PARAMOUNT'S COUNTER-OFFER WOULD",
-        "said": "PARAMOUNT'S COUNTER-OFFER WOULD",
-        "at": 24.11,
-        "source": "assets/footage/科技巨頭買下好萊塢/12g9HaRI7UU.mp4",
+        "seen": true,
+        "term": "Reuters 1s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_LNZM4eqisXg_1.jpg",
+        "caption": "The battle for Warner Brothers discovery",
+        "said": "The battle for Warner Brothers discovery",
+        "at": 1.72,
+        "source": "assets/footage/科技巨頭買下好萊塢/LNZM4eqisXg.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=LNZM4eqisXg",
+        "look": 10959676924617096446
+      },
+      {
+        "id": "frame_LNZM4eqisXg_112",
+        "kind": "frame",
+        "seen": true,
+        "term": "Reuters 112s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_LNZM4eqisXg_112.jpg",
+        "caption": "Amazon Prime Video. But Paramount's bid",
+        "said": "Amazon Prime Video. But Paramount's bid",
+        "at": 112.76,
+        "source": "assets/footage/科技巨頭買下好萊塢/LNZM4eqisXg.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=LNZM4eqisXg",
+        "look": 16645303398127632384
+      },
+      {
+        "id": "frame_LNZM4eqisXg_134",
+        "kind": "frame",
+        "seen": true,
+        "term": "Reuters 134s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_LNZM4eqisXg_134.jpg",
+        "caption": "while Warner Brothers Discovery surged",
+        "said": "while Warner Brothers Discovery surged",
+        "at": 134.4,
+        "source": "assets/footage/科技巨頭買下好萊塢/LNZM4eqisXg.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=LNZM4eqisXg",
+        "look": 144976239885054016
+      },
+      {
+        "id": "frame_LNZM4eqisXg_33",
+        "kind": "frame",
+        "seen": true,
+        "term": "Reuters 33s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_LNZM4eqisXg_33.jpg",
+        "caption": "Comics. But Paramount's latest move",
+        "said": "Comics. But Paramount's latest move",
+        "at": 33.76,
+        "source": "assets/footage/科技巨頭買下好萊塢/LNZM4eqisXg.mp4",
+        "outlet": "Reuters",
+        "author": "",
+        "credit": "畫面來源：Reuters",
+        "page": "https://www.youtube.com/watch?v=LNZM4eqisXg",
+        "look": 14648872581549983488
+      },
+      {
+        "id": "frame_J37mOVNkLR8_2",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 2s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_J37mOVNkLR8_2.jpg",
+        "caption": "The proposed $111 billion merger between Paramount and Warner Brothers.",
+        "said": "The proposed $111 billion merger between Paramount and Warner Brothers.",
+        "at": 2.92,
+        "source": "assets/footage/科技巨頭買下好萊塢/J37mOVNkLR8.mp4",
         "outlet": "PBS NewsHour",
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
-        "page": "https://www.youtube.com/watch?v=12g9HaRI7UU",
-        "look": 1012833271395792390,
-        "seen": true
+        "page": "https://www.youtube.com/watch?v=J37mOVNkLR8",
+        "look": 18374686540306464256
       },
       {
-        "id": "frame_12g9HaRI7UU_9",
+        "id": "frame_J37mOVNkLR8_126",
         "kind": "frame",
-        "term": "PBS NewsHour 9s",
-        "file": "assets/photos/科技巨頭買下好萊塢/frame_12g9HaRI7UU_9.jpg",
-        "caption": "HOSTILE, ALL-CASH OFFER DIRECTLY",
-        "said": "HOSTILE, ALL-CASH OFFER DIRECTLY",
-        "at": 9.24,
-        "source": "assets/footage/科技巨頭買下好萊塢/12g9HaRI7UU.mp4",
+        "seen": true,
+        "term": "PBS NewsHour 126s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_J37mOVNkLR8_126.jpg",
+        "caption": "this. Remember, he's the son of Larry Ellison, who is the controlling",
+        "said": "this. Remember, he's the son of Larry Ellison, who is the controlling",
+        "at": 126.11,
+        "source": "assets/footage/科技巨頭買下好萊塢/J37mOVNkLR8.mp4",
         "outlet": "PBS NewsHour",
         "author": "",
         "credit": "畫面來源：PBS NewsHour",
-        "page": "https://www.youtube.com/watch?v=12g9HaRI7UU",
-        "look": 17922216308886652614,
-        "seen": true
+        "page": "https://www.youtube.com/watch?v=J37mOVNkLR8",
+        "look": 1374463283882360831
       },
       {
-        "id": "7865064",
-        "term": "television newsroom",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/7865064.jpg",
-        "caption": "A TV studio setup featuring cameras and a green screen for production purposes.",
-        "outlet": "Pexels",
-        "author": "SHAHBAZ ZAMAN",
-        "credit": "",
-        "answers": 0.0,
-        "page": "https://www.pexels.com/photo/photo-of-a-studio-set-up-7865064/",
-        "look": 12731831173370396672,
-        "size": [
-          6000,
-          4000
-        ],
-        "seen": true
+        "id": "frame_J37mOVNkLR8_30",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 30s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_J37mOVNkLR8_30.jpg",
+        "caption": "If Paramount did leave California, and that is a big if. It could",
+        "said": "If Paramount did leave California, and that is a big if. It could",
+        "at": 30.22,
+        "source": "assets/footage/科技巨頭買下好萊塢/J37mOVNkLR8.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=J37mOVNkLR8",
+        "look": 2097582416257097231
       },
       {
-        "id": "35755252",
-        "term": "television newsroom",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/35755252.jpg",
-        "caption": "A journalist interviews a professional in a formal setting, highlighting media interaction.",
-        "outlet": "Pexels",
-        "author": "Jitte Davidson",
-        "credit": "",
-        "answers": 0.0,
-        "page": "https://www.pexels.com/photo/journalist-interviewing-professional-in-elegant-room-35755252/",
-        "look": 13707279253539980,
-        "size": [
-          3078,
-          2048
-        ],
-        "seen": true
+        "id": "frame_cPy3K5NRuNs_2",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 2s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_cPy3K5NRuNs_2.jpg",
+        "caption": "GEOFF BENNETT: Netflix has struck a nearly $83 billion deal to acquire Warner Bros.,",
+        "said": "GEOFF BENNETT: Netflix has struck a nearly $83 billion deal to acquire Warner Bros.,",
+        "at": 2.32,
+        "source": "assets/footage/科技巨頭買下好萊塢/cPy3K5NRuNs.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=cPy3K5NRuNs",
+        "look": 18437736883078438526
       },
       {
-        "id": "33317197",
-        "term": "television newsroom",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/33317197.jpg",
-        "caption": "A spokesperson engages with media during an outdoor press interview surrounded by microphones.",
-        "outlet": "Pexels",
-        "author": "Tahir Xəlfəquliyev",
-        "credit": "",
-        "answers": 0.0,
-        "page": "https://www.pexels.com/photo/female-spokesperson-giving-press-interview-outdoors-33317197/",
-        "look": 17772892979812171005,
-        "size": [
-          6000,
-          4000
-        ],
-        "seen": true
+        "id": "frame_cPy3K5NRuNs_346",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 346s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_cPy3K5NRuNs_346.jpg",
+        "caption": "that they were not given the opportunity to overpay or outbid the entity that got it, Netflix.",
+        "said": "that they were not given the opportunity to overpay or outbid the entity that got it, Netflix.",
+        "at": 346.8,
+        "source": "assets/footage/科技巨頭買下好萊塢/cPy3K5NRuNs.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=cPy3K5NRuNs",
+        "look": 4048211472925582313
       },
       {
-        "id": "32215665",
-        "term": "broadcast control room",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/32215665.jpg",
-        "caption": "Detailed view of audio mixer sliders in a recording studio setting.",
-        "outlet": "Pexels",
-        "author": "Matthias Wunderlich",
-        "credit": "",
-        "answers": 0.0,
-        "page": "https://www.pexels.com/photo/close-up-of-a-professional-audio-mixer-32215665/",
-        "look": 18293770255740174136,
-        "size": [
-          3648,
-          2736
-        ],
-        "seen": true
+        "id": "frame_cPy3K5NRuNs_53",
+        "kind": "frame",
+        "seen": true,
+        "term": "PBS NewsHour 53s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_cPy3K5NRuNs_53.jpg",
+        "caption": "rather than a buyer. So what does it want with Warner Bros., and why now?",
+        "said": "rather than a buyer. So what does it want with Warner Bros., and why now?",
+        "at": 53.67,
+        "source": "assets/footage/科技巨頭買下好萊塢/cPy3K5NRuNs.mp4",
+        "outlet": "PBS NewsHour",
+        "author": "",
+        "credit": "畫面來源：PBS NewsHour",
+        "page": "https://www.youtube.com/watch?v=cPy3K5NRuNs",
+        "look": 2242238488799015616
       },
       {
-        "id": "13627258",
-        "term": "broadcast control room",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/13627258.jpg",
-        "caption": "Close-up of a sound mixer with screens displaying video feeds in a professional studio setup.",
-        "outlet": "Pexels",
-        "author": "Luke Yanko",
-        "credit": "",
-        "answers": 0.0,
-        "page": "https://www.pexels.com/photo/sound-mixer-and-screen-behind-13627258/",
-        "look": 17024838992165912,
-        "size": [
-          3847,
-          2565
-        ],
-        "seen": true
+        "id": "frame_ypZBDlVdIo8_257",
+        "kind": "frame",
+        "seen": true,
+        "term": "CNN 257s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_ypZBDlVdIo8_257.jpg",
+        "caption": "order to get the Warner Brothers Discovery board to really uh favor its bid. Uh the first one was",
+        "said": "order to get the Warner Brothers Discovery board to really uh favor its bid. Uh the first one was",
+        "at": 257.16,
+        "source": "assets/footage/科技巨頭買下好萊塢/ypZBDlVdIo8.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=ypZBDlVdIo8",
+        "look": 14123009444357006074
       },
       {
-        "id": "14699396",
-        "term": "broadcast control room",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/14699396.jpg",
-        "caption": "A hand operates a broadcast control mixer in a television studio setting.",
-        "outlet": "Pexels",
-        "author": "Isaiah Ekele",
-        "credit": "",
-        "answers": 0.67,
-        "page": "https://www.pexels.com/photo/hand-on-a-broadcasting-mixer-14699396/",
-        "look": 1048987835773475192,
-        "size": [
-          4032,
-          2268
-        ],
-        "seen": true
+        "id": "frame_ypZBDlVdIo8_286",
+        "kind": "frame",
+        "seen": true,
+        "term": "CNN 286s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_ypZBDlVdIo8_286.jpg",
+        "caption": "Ellison's money. The Warner Brothers Discovery Board wanted to make sure this deal was going",
+        "said": "Ellison's money. The Warner Brothers Discovery Board wanted to make sure this deal was going",
+        "at": 286.52,
+        "source": "assets/footage/科技巨頭買下好萊塢/ypZBDlVdIo8.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=ypZBDlVdIo8",
+        "look": 18446462634039500927
       },
       {
-        "id": "7991579",
-        "term": "cinema screen",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/7991579.jpg",
-        "caption": "A cozy indoor movie theater showing an animated film to a small audience.",
-        "outlet": "Pexels",
-        "author": "Tima Miroshnichenko",
-        "credit": "",
-        "answers": 0.0,
-        "page": "https://www.pexels.com/photo/cartoon-movie-showing-on-theater-screen-7991579/",
-        "look": 1044283070,
-        "size": [
-          5982,
-          3988
-        ],
-        "seen": true
+        "id": "frame_ypZBDlVdIo8_9",
+        "kind": "frame",
+        "seen": true,
+        "term": "CNN 9s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_ypZBDlVdIo8_9.jpg",
+        "caption": "the purchase of Warner Brothers Studios and HBO following the Warner Brothers Discovery Board's",
+        "said": "the purchase of Warner Brothers Studios and HBO following the Warner Brothers Discovery Board's",
+        "at": 9.56,
+        "source": "assets/footage/科技巨頭買下好萊塢/ypZBDlVdIo8.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=ypZBDlVdIo8",
+        "look": 17077368381143830771
       },
       {
-        "id": "7991318",
-        "term": "cinema screen",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/7991318.jpg",
-        "caption": "View from behind of people watching a movie in a cinema with red seats and a large screen.",
-        "outlet": "Pexels",
-        "author": "Tima Miroshnichenko",
-        "credit": "",
-        "answers": 1.0,
-        "page": "https://www.pexels.com/photo/a-group-of-people-watching-movie-7991318/",
-        "look": 212069248401408,
-        "size": [
-          6000,
-          4000
-        ],
-        "seen": true
-      },
-      {
-        "id": "7991486",
-        "term": "cinema screen",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/7991486.jpg",
-        "caption": "A dimly lit empty cinema theater with rows of red chairs facing a projector screen.",
-        "outlet": "Pexels",
-        "author": "Tima Miroshnichenko",
-        "credit": "",
-        "answers": 1.0,
-        "page": "https://www.pexels.com/photo/an-empty-cinema-7991486/",
-        "look": 281444787683360,
-        "size": [
-          6000,
-          4000
-        ],
-        "seen": true
-      },
-      {
-        "id": "8476867",
-        "term": "satellite dish",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/8476867.jpg",
-        "caption": "A low-angle view of communication dishes and antennas on a building against a clear blue sky.",
-        "outlet": "Pexels",
-        "author": "Francesco Ungaro",
-        "credit": "",
-        "answers": 0.5,
-        "page": "https://www.pexels.com/photo/satellite-dishes-on-a-building-8476867/",
-        "look": 10439891493026791424,
-        "size": [
-          6240,
-          4160
-        ],
-        "seen": true
-      },
-      {
-        "id": "12898227",
-        "term": "satellite dish",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/12898227.jpg",
-        "caption": "A detailed view of satellite dishes and antennas on an urban rooftop under a cloudy sky.",
-        "outlet": "Pexels",
-        "author": "Lutfi Elyas",
-        "credit": "",
-        "answers": 1.0,
-        "page": "https://www.pexels.com/photo/close-up-of-satellites-on-building-roof-12898227/",
-        "look": 1819188217296977919,
-        "size": [
-          6240,
-          4160
-        ],
-        "seen": true
-      },
-      {
-        "id": "5790645",
-        "term": "satellite dish",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/5790645.jpg",
-        "caption": "Silver satellite dish pointing skyward under a bright blue sky with scattered clouds.",
-        "outlet": "Pexels",
-        "author": "Rafa Sants",
-        "credit": "",
-        "answers": 1.0,
-        "page": "https://www.pexels.com/photo/satellite-dish-against-blue-sky-and-clouds-5790645/",
-        "look": 3189894131983634247,
-        "size": [
-          5184,
-          3456
-        ],
-        "seen": true
-      },
-      {
-        "id": "37726669",
-        "term": "courtroom exterior",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/37726669.jpg",
-        "caption": "Elegant wooden interior of a courtroom in Wrocław, showcasing judicial decor.",
-        "outlet": "Pexels",
-        "author": "SHOX ART",
-        "credit": "",
-        "answers": 0.5,
-        "page": "https://www.pexels.com/photo/interior-of-a-courtroom-in-wroclaw-poland-37726669/",
-        "look": 2314888824645455871,
-        "size": [
-          5184,
-          3888
-        ],
-        "seen": true
-      },
-      {
-        "id": "37726665",
-        "term": "courtroom exterior",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/37726665.jpg",
-        "caption": "A detailed view of a courtroom interior in Wrocław, Poland, showcasing the judge's bench and national emblem.",
-        "outlet": "Pexels",
-        "author": "SHOX ART",
-        "credit": "",
-        "answers": 0.5,
-        "page": "https://www.pexels.com/photo/polish-courtroom-interior-in-wroclaw-37726665/",
-        "look": 2531075986704794623,
-        "size": [
-          5184,
-          3888
-        ],
-        "seen": true
-      },
-      {
-        "id": "30483132",
-        "term": "courtroom exterior",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/30483132.jpg",
-        "caption": "Detailed image of Lady Justice statue, symbolizing fairness and impartiality.",
-        "outlet": "Pexels",
-        "author": "dp singh Bhullar",
-        "credit": "",
-        "answers": 0.0,
-        "page": "https://www.pexels.com/photo/close-up-of-lady-justice-statue-with-scales-30483132/",
-        "look": 2559103418107426807,
-        "size": [
-          8192,
-          5464
-        ],
-        "seen": true
-      },
-      {
-        "id": "21792101",
-        "term": "remote control television",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/21792101.jpg",
-        "caption": "Close-up of a hand using a remote control to operate a television indoors.",
-        "outlet": "Pexels",
-        "author": "Image Hunter",
-        "credit": "",
-        "answers": 1.0,
-        "page": "https://www.pexels.com/photo/changing-tv-channels-with-the-remote-control-21792101/",
-        "look": 2242261675287839111,
-        "size": [
-          5760,
-          3840
-        ],
-        "seen": true
-      },
-      {
-        "id": "5202957",
-        "term": "remote control television",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/5202957.jpg",
-        "caption": "Person using a TV remote control with a blurred television screen in the background.",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "credit": "",
-        "answers": 1.0,
-        "page": "https://www.pexels.com/photo/person-pressing-the-button-of-a-remote-control-5202957/",
-        "look": 9150960498974589950,
-        "size": [
-          6640,
-          4427
-        ],
-        "seen": true
-      },
-      {
-        "id": "4777979",
-        "term": "remote control television",
-        "kind": "stock",
-        "file": "assets/photos/科技巨頭買下好萊塢/4777979.jpg",
-        "caption": "Close-up of a hand holding a remote control in front of a TV showing a football match.",
-        "outlet": "Pexels",
-        "author": "Soumith Soman",
-        "credit": "",
-        "answers": 0.67,
-        "page": "https://www.pexels.com/photo/photo-of-a-person-s-hand-holding-a-remote-control-4777979/",
-        "look": 3386757789711102,
-        "size": [
-          5847,
-          3899
-        ],
-        "seen": true
-      },
-      {
-        "id": "Larry_Ellison_picture_(cropped).png",
-        "term": "Larry Ellison",
-        "kind": "real",
-        "file": "assets/photos/科技巨頭買下好萊塢/Larry_Ellison_picture_(cropped).png.jpg",
-        "caption": "Lawrence Joseph Ellison is an American businessman. He co-founded the software company Oracle Corporation, and was its CEO from 1977 to 2014. He now serves as its CTO and executive chairman. According to Forbes, as of early 2026, Ellison's estimated net worth is $201–203 billion, making him the worl",
-        "outlet": "維基百科",
-        "author": "Oracle PR Hartmann Studios",
-        "credit": "Oracle PR Hartmann Studios／CC BY 2.0",
-        "answers": 0.5,
-        "page": "https://commons.wikimedia.org/wiki/File:Larry_Ellison_picture_(cropped).png",
-        "look": 27060922417675512,
-        "size": [
-          1288,
-          1717
-        ],
-        "seen": true
+        "id": "frame_ypZBDlVdIo8_27",
+        "kind": "frame",
+        "seen": true,
+        "term": "CNN 27s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_ypZBDlVdIo8_27.jpg",
+        "caption": "according to Warner Brothers Discovery's board. As I've noted, Warner Brothers Discovery is the",
+        "said": "according to Warner Brothers Discovery's board. As I've noted, Warner Brothers Discovery is the",
+        "at": 27.0,
+        "source": "assets/footage/科技巨頭買下好萊塢/ypZBDlVdIo8.mp4",
+        "outlet": "CNN",
+        "author": "",
+        "credit": "畫面來源：CNN",
+        "page": "https://www.youtube.com/watch?v=ypZBDlVdIo8",
+        "look": 15275920524979700675
       },
       {
         "id": "frame_mEy6dWIrJd0_86",
         "kind": "frame",
+        "seen": true,
         "term": "Fox Business 86s",
         "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_86.jpg",
         "caption": "this hostile takeover bid from Paramount",
@@ -866,12 +866,12 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
-        "look": 1387107589476614399,
-        "seen": true
+        "look": 1387107589476614399
       },
       {
         "id": "frame_mEy6dWIrJd0_4",
         "kind": "frame",
+        "seen": true,
         "term": "Fox Business 4s",
         "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_4.jpg",
         "caption": "battle over Warner Brothers Discovery.",
@@ -882,12 +882,12 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
-        "look": 233908733143875390,
-        "seen": true
+        "look": 233908733143875390
       },
       {
         "id": "frame_mEy6dWIrJd0_183",
         "kind": "frame",
+        "seen": true,
         "term": "Fox Business 183s",
         "file": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_183.jpg",
         "caption": "Warner Brothers Discovery pairing. So,",
@@ -898,28 +898,140 @@
         "author": "",
         "credit": "畫面來源：Fox Business",
         "page": "https://www.youtube.com/watch?v=mEy6dWIrJd0",
-        "look": 1242851669920580348,
-        "seen": true
+        "look": 1242851669920580348
       },
       {
-        "id": "frame_NPvyaz3BCw0_1",
+        "id": "frame_8rr4pKtsoNY_92",
         "kind": "frame",
-        "term": "Bloomberg 1s",
-        "file": "assets/photos/科技巨頭買下好萊塢/frame_NPvyaz3BCw0_1.jpg",
-        "caption": "Warner Brothers would create cultural",
-        "said": "Warner Brothers would create cultural",
-        "at": 1.16,
-        "source": "assets/footage/科技巨頭買下好萊塢/NPvyaz3BCw0.mp4",
+        "seen": true,
+        "term": "Bloomberg 92s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_8rr4pKtsoNY_92.jpg",
+        "caption": "about $34 billion worth. You then look over to what Paramount's",
+        "said": "about $34 billion worth. You then look over to what Paramount's",
+        "at": 92.17,
+        "source": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
         "outlet": "Bloomberg",
         "author": "",
         "credit": "畫面來源：Bloomberg",
-        "page": "https://www.youtube.com/watch?v=NPvyaz3BCw0",
-        "look": 17744184778367696895,
-        "seen": true
+        "page": "https://www.youtube.com/watch?v=8rr4pKtsoNY",
+        "look": 18378064232752054028
+      },
+      {
+        "id": "frame_8rr4pKtsoNY_1",
+        "kind": "frame",
+        "seen": true,
+        "term": "Bloomberg 1s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_8rr4pKtsoNY_1.jpg",
+        "caption": "Paramount Sky dance. It sweetened its offer for Warner",
+        "said": "Paramount Sky dance. It sweetened its offer for Warner",
+        "at": 1.27,
+        "source": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=8rr4pKtsoNY",
+        "look": 18337818777092556292
+      },
+      {
+        "id": "frame_8rr4pKtsoNY_35",
+        "kind": "frame",
+        "seen": true,
+        "term": "Bloomberg 35s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_8rr4pKtsoNY_35.jpg",
+        "caption": "details of basically Larry Ellison's wealth of the trust.",
+        "said": "details of basically Larry Ellison's wealth of the trust.",
+        "at": 35.67,
+        "source": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=8rr4pKtsoNY",
+        "look": 9155260603793094439
+      },
+      {
+        "id": "frame_8rr4pKtsoNY_68",
+        "kind": "frame",
+        "seen": true,
+        "term": "Bloomberg 68s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_8rr4pKtsoNY_68.jpg",
+        "caption": "seen Warner Brothers say Netflix's offer is better, but also because the clarity",
+        "said": "seen Warner Brothers say Netflix's offer is better, but also because the clarity",
+        "at": 68.76,
+        "source": "assets/footage/科技巨頭買下好萊塢/8rr4pKtsoNY.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=8rr4pKtsoNY",
+        "look": 144967339770085375
+      },
+      {
+        "id": "frame_k2TBRP325W8_59",
+        "kind": "frame",
+        "seen": true,
+        "term": "Bloomberg 59s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_k2TBRP325W8_59.jpg",
+        "caption": "they had Larry Ellison backstop 40 billion sort of built into that 40",
+        "said": "they had Larry Ellison backstop 40 billion sort of built into that 40",
+        "at": 59.52,
+        "source": "assets/footage/科技巨頭買下好萊塢/k2TBRP325W8.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=k2TBRP325W8",
+        "look": 8998438898463668729
+      },
+      {
+        "id": "frame_k2TBRP325W8_114",
+        "kind": "frame",
+        "seen": true,
+        "term": "Bloomberg 114s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_k2TBRP325W8_114.jpg",
+        "caption": "have Paramount $30 a share, Netflix 2775 but all in, it's probably roughly about",
+        "said": "have Paramount $30 a share, Netflix 2775 but all in, it's probably roughly about",
+        "at": 114.61,
+        "source": "assets/footage/科技巨頭買下好萊塢/k2TBRP325W8.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=k2TBRP325W8",
+        "look": 18159645122754835456
+      },
+      {
+        "id": "frame_k2TBRP325W8_2",
+        "kind": "frame",
+        "seen": true,
+        "term": "Bloomberg 2s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_k2TBRP325W8_2.jpg",
+        "caption": "It is time now to look at media and specifically the Warner Brothers deal in",
+        "said": "It is time now to look at media and specifically the Warner Brothers deal in",
+        "at": 2.1,
+        "source": "assets/footage/科技巨頭買下好萊塢/k2TBRP325W8.mp4",
+        "outlet": "Bloomberg",
+        "author": "",
+        "credit": "畫面來源：Bloomberg",
+        "page": "https://www.youtube.com/watch?v=k2TBRP325W8",
+        "look": 1880849033538844728
+      },
+      {
+        "id": "frame_viwG_sFgu_0_162",
+        "kind": "frame",
+        "seen": true,
+        "term": "CNBC 162s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_162.jpg",
+        "caption": "Warner Bros. Discovery board just said,",
+        "said": "Warner Bros. Discovery board just said,",
+        "at": 162.2,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
+        "author": "",
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 72057594029408256
       },
       {
         "id": "frame_viwG_sFgu_0_482",
         "kind": "frame",
+        "seen": true,
         "term": "CNBC 482s",
         "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_482.jpg",
         "caption": "Warner Bros. Discovery, would be bad for",
@@ -930,12 +1042,12 @@
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
-        "look": 17877210261964845029,
-        "seen": true
+        "look": 17877210261964845029
       },
       {
         "id": "frame_viwG_sFgu_0_64",
         "kind": "frame",
+        "seen": true,
         "term": "CNBC 64s",
         "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_64.jpg",
         "caption": ">> June 2025, Warner Brothers Discovery",
@@ -946,28 +1058,60 @@
         "author": "",
         "credit": "畫面來源：CNBC",
         "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
-        "look": 2305892732214439919,
-        "seen": true
+        "look": 2305892732214439919
       },
       {
-        "id": "frame_lGsc338MTSk_59",
+        "id": "frame_viwG_sFgu_0_82",
         "kind": "frame",
-        "term": "The Economist 59s",
-        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_59.jpg",
-        "caption": "Warner and Paramount's vast media",
-        "said": "Warner and Paramount's vast media",
-        "at": 59.72,
-        "source": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
-        "outlet": "The Economist",
+        "seen": true,
+        "term": "CNBC 82s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_82.jpg",
+        "caption": "Discovery unsolicited saying that he was",
+        "said": "Discovery unsolicited saying that he was",
+        "at": 82.66,
+        "source": "assets/footage/科技巨頭買下好萊塢/viwG_sFgu_0.mp4",
+        "outlet": "CNBC",
         "author": "",
-        "credit": "畫面來源：The Economist",
-        "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
-        "look": 13787905877016320,
-        "seen": true
+        "credit": "畫面來源：CNBC",
+        "page": "https://www.youtube.com/watch?v=viwG_sFgu_0",
+        "look": 36302446464400508
+      },
+      {
+        "id": "frame_1kwhrhucMGU_328",
+        "kind": "frame",
+        "seen": true,
+        "term": "BBC News 328s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_1kwhrhucMGU_328.jpg",
+        "caption": "If your bid for Warner Brothers is",
+        "said": "If your bid for Warner Brothers is",
+        "at": 328.46,
+        "source": "assets/footage/科技巨頭買下好萊塢/1kwhrhucMGU.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=1kwhrhucMGU",
+        "look": 3540164222624738855
+      },
+      {
+        "id": "frame_1kwhrhucMGU_702",
+        "kind": "frame",
+        "seen": true,
+        "term": "BBC News 702s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_1kwhrhucMGU_702.jpg",
+        "caption": "This is all process of price discovery.",
+        "said": "This is all process of price discovery.",
+        "at": 702.02,
+        "source": "assets/footage/科技巨頭買下好萊塢/1kwhrhucMGU.mp4",
+        "outlet": "BBC News",
+        "author": "",
+        "credit": "畫面來源：BBC News",
+        "page": "https://www.youtube.com/watch?v=1kwhrhucMGU",
+        "look": 15887639676820654081
       },
       {
         "id": "frame_lGsc338MTSk_25",
         "kind": "frame",
+        "seen": true,
         "term": "The Economist 25s",
         "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_25.jpg",
         "caption": "company, Warner Brothers Discovery. If",
@@ -978,48 +1122,784 @@
         "author": "",
         "credit": "畫面來源：The Economist",
         "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
-        "look": 104268038143,
-        "seen": true
+        "look": 104268038143
       },
       {
-        "id": "frame_lGsc338MTSk_100",
+        "id": "frame_lGsc338MTSk_59",
         "kind": "frame",
-        "term": "The Economist 100s",
-        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_100.jpg",
-        "caption": "of these deals is set in stone. A Warner",
-        "said": "of these deals is set in stone. A Warner",
-        "at": 100.32,
+        "seen": true,
+        "term": "The Economist 59s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_59.jpg",
+        "caption": "Warner and Paramount's vast media",
+        "said": "Warner and Paramount's vast media",
+        "at": 59.72,
         "source": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
         "outlet": "The Economist",
         "author": "",
         "credit": "畫面來源：The Economist",
         "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
-        "look": 557942556671,
-        "seen": true
+        "look": 13787905877016320
       },
       {
-        "id": "Gate_4_Warner_Bros._Studios.jpg",
-        "term": "Warner Bros. Studios, Burbank",
-        "kind": "real",
-        "file": "assets/photos/科技巨頭買下好萊塢/Gate_4_Warner_Bros._Studios.jpg.jpg",
-        "caption": "Warner Bros. Studios Burbank, formerly known as First National Studio (1926–1929), Warner Bros.-Seven Arts Studios (1967–1970) and The Burbank Studios (1972–1990), is a major filmmaking facility owned and run by Warner Bros. Entertainment in Burbank, California, United States. First National Picture",
-        "outlet": "維基百科",
-        "author": "Coolcaesar",
-        "credit": "Coolcaesar／CC BY-SA 4.0",
-        "answers": 1.0,
-        "page": "https://commons.wikimedia.org/wiki/File:Gate_4_Warner_Bros._Studios.jpg",
-        "look": 18376938283528486911,
+        "id": "frame_lGsc338MTSk_1",
+        "kind": "frame",
+        "seen": true,
+        "term": "The Economist 1s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_1.jpg",
+        "caption": "Is Larry [music] Ellison the new king of",
+        "said": "Is Larry [music] Ellison the new king of",
+        "at": 1.28,
+        "source": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
+        "outlet": "The Economist",
+        "author": "",
+        "credit": "畫面來源：The Economist",
+        "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
+        "look": 557338060799
+      },
+      {
+        "id": "frame_lGsc338MTSk_42",
+        "kind": "frame",
+        "seen": true,
+        "term": "The Economist 42s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_42.jpg",
+        "caption": "Larry Ellison's also part of a group",
+        "said": "Larry Ellison's also part of a group",
+        "at": 42.56,
+        "source": "assets/footage/科技巨頭買下好萊塢/lGsc338MTSk.mp4",
+        "outlet": "The Economist",
+        "author": "",
+        "credit": "畫面來源：The Economist",
+        "page": "https://www.youtube.com/watch?v=lGsc338MTSk",
+        "look": 68678794820451582
+      },
+      {
+        "id": "frame_RyeRmmdF4Yg_1",
+        "kind": "frame",
+        "seen": true,
+        "term": "The Guardian 1s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_RyeRmmdF4Yg_1.jpg",
+        "caption": "What Jeff Bezos did for Melania Trump",
+        "said": "What Jeff Bezos did for Melania Trump",
+        "at": 1.24,
+        "source": "assets/footage/科技巨頭買下好萊塢/RyeRmmdF4Yg.mp4",
+        "outlet": "The Guardian",
+        "author": "",
+        "credit": "畫面來源：The Guardian",
+        "page": "https://www.youtube.com/watch?v=RyeRmmdF4Yg",
+        "look": 5070065818994146942
+      },
+      {
+        "id": "frame_RyeRmmdF4Yg_28",
+        "kind": "frame",
+        "seen": true,
+        "term": "The Guardian 28s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_RyeRmmdF4Yg_28.jpg",
+        "caption": "and US democracy can withstand the Trump",
+        "said": "and US democracy can withstand the Trump",
+        "at": 28.96,
+        "source": "assets/footage/科技巨頭買下好萊塢/RyeRmmdF4Yg.mp4",
+        "outlet": "The Guardian",
+        "author": "",
+        "credit": "畫面來源：The Guardian",
+        "page": "https://www.youtube.com/watch?v=RyeRmmdF4Yg",
+        "look": 18217192952474041980
+      },
+      {
+        "id": "frame_RyeRmmdF4Yg_47",
+        "kind": "frame",
+        "seen": true,
+        "term": "The Guardian 47s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_RyeRmmdF4Yg_47.jpg",
+        "caption": "out, Bezos could cover five years of the",
+        "said": "out, Bezos could cover five years of the",
+        "at": 47.66,
+        "source": "assets/footage/科技巨頭買下好萊塢/RyeRmmdF4Yg.mp4",
+        "outlet": "The Guardian",
+        "author": "",
+        "credit": "畫面來源：The Guardian",
+        "page": "https://www.youtube.com/watch?v=RyeRmmdF4Yg",
+        "look": 4065761057690304285
+      },
+      {
+        "id": "frame_RyeRmmdF4Yg_71",
+        "kind": "frame",
+        "seen": true,
+        "term": "The Guardian 71s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_RyeRmmdF4Yg_71.jpg",
+        "caption": "Melania Trump herself. The Melania film",
+        "said": "Melania Trump herself. The Melania film",
+        "at": 71.0,
+        "source": "assets/footage/科技巨頭買下好萊塢/RyeRmmdF4Yg.mp4",
+        "outlet": "The Guardian",
+        "author": "",
+        "credit": "畫面來源：The Guardian",
+        "page": "https://www.youtube.com/watch?v=RyeRmmdF4Yg",
+        "look": 132974687289343
+      },
+      {
+        "id": "frame_p82Cc8wPxGM_10",
+        "kind": "frame",
+        "seen": true,
+        "term": "Deutsche Welle 10s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_p82Cc8wPxGM_10.jpg",
+        "caption": "Discovery. That's a company behind the",
+        "said": "Discovery. That's a company behind the",
+        "at": 10.48,
+        "source": "assets/footage/科技巨頭買下好萊塢/p82Cc8wPxGM.mp4",
+        "outlet": "Deutsche Welle",
+        "author": "",
+        "credit": "畫面來源：Deutsche Welle",
+        "page": "https://www.youtube.com/watch?v=p82Cc8wPxGM",
+        "look": 172936018037853967
+      },
+      {
+        "id": "frame_p82Cc8wPxGM_35",
+        "kind": "frame",
+        "seen": true,
+        "term": "Deutsche Welle 35s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_p82Cc8wPxGM_35.jpg",
+        "caption": "criticized the net Netflix bid while",
+        "said": "criticized the net Netflix bid while",
+        "at": 35.44,
+        "source": "assets/footage/科技巨頭買下好萊塢/p82Cc8wPxGM.mp4",
+        "outlet": "Deutsche Welle",
+        "author": "",
+        "credit": "畫面來源：Deutsche Welle",
+        "page": "https://www.youtube.com/watch?v=p82Cc8wPxGM",
+        "look": 225743621367332791
+      },
+      {
+        "id": "frame_p82Cc8wPxGM_117",
+        "kind": "frame",
+        "seen": true,
+        "term": "Deutsche Welle 117s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_p82Cc8wPxGM_117.jpg",
+        "caption": "Paramount is a man called David Ellison.",
+        "said": "Paramount is a man called David Ellison.",
+        "at": 117.12,
+        "source": "assets/footage/科技巨頭買下好萊塢/p82Cc8wPxGM.mp4",
+        "outlet": "Deutsche Welle",
+        "author": "",
+        "credit": "畫面來源：Deutsche Welle",
+        "page": "https://www.youtube.com/watch?v=p82Cc8wPxGM",
+        "look": 63314354782338047
+      },
+      {
+        "id": "frame_p82Cc8wPxGM_152",
+        "kind": "frame",
+        "seen": true,
+        "term": "Deutsche Welle 152s",
+        "file": "assets/photos/科技巨頭買下好萊塢/frame_p82Cc8wPxGM_152.jpg",
+        "caption": "that Larry Ellison, so the father, held",
+        "said": "that Larry Ellison, so the father, held",
+        "at": 152.8,
+        "source": "assets/footage/科技巨頭買下好萊塢/p82Cc8wPxGM.mp4",
+        "outlet": "Deutsche Welle",
+        "author": "",
+        "credit": "畫面來源：Deutsche Welle",
+        "page": "https://www.youtube.com/watch?v=p82Cc8wPxGM",
+        "look": 72340181595979775
+      },
+      {
+        "id": "14699396",
+        "term": "television studio control room",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/14699396.jpg",
+        "seen": true,
+        "caption": "A hand operates a broadcast control mixer in a television studio setting.",
+        "outlet": "Pexels",
+        "author": "Isaiah Ekele",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/hand-on-a-broadcasting-mixer-14699396/",
+        "look": 1048987835773475192,
         "size": [
-          5184,
-          3456
-        ],
-        "seen": true
+          4032,
+          2268
+        ]
+      },
+      {
+        "id": "33925166",
+        "term": "television studio control room",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/33925166.jpg",
+        "seen": true,
+        "caption": "A professional in a TV broadcast control room with multiple screens and equipment.",
+        "outlet": "Pexels",
+        "author": "Tahir Xəlfəquliyev",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/inside-a-television-broadcast-control-room-33925166/",
+        "look": 36170567471197695,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "17095445",
+        "term": "television studio control room",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/17095445.jpg",
+        "seen": true,
+        "caption": "Men working in a vintage broadcasting control room filled with analogue equipment and monitors.",
+        "outlet": "Pexels",
+        "author": "Emmanuel Codden",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/black-and-white-analogue-photograph-of-people-in-a-room-with-obsolete-equipment-17095445/",
+        "look": 8084014349254852347,
+        "size": [
+          4288,
+          2848
+        ]
+      },
+      {
+        "id": "35755252",
+        "term": "news anchor desk broadcast",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/35755252.jpg",
+        "seen": true,
+        "caption": "A journalist interviews a professional in a formal setting, highlighting media interaction.",
+        "outlet": "Pexels",
+        "author": "Jitte Davidson",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/journalist-interviewing-professional-in-elegant-room-35755252/",
+        "look": 13707279253539980,
+        "size": [
+          3078,
+          2048
+        ]
+      },
+      {
+        "id": "10464787",
+        "term": "news anchor desk broadcast",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/10464787.jpg",
+        "seen": true,
+        "caption": "Asian female reporter smiling with microphone besides a news van at night.",
+        "outlet": "Pexels",
+        "author": "cottonbro studio",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/woman-standing-beside-a-van-10464787/",
+        "look": 1085137776944025351,
+        "size": [
+          4903,
+          3269
+        ]
+      },
+      {
+        "id": "13824575",
+        "term": "news anchor desk broadcast",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/13824575.jpg",
+        "seen": true,
+        "caption": "Journalist reporting live from Vatican City, capturing the essence of urban broadcast journalism.",
+        "outlet": "Pexels",
+        "author": "Efrem  Efre",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/woman-in-red-shirt-holding-black-microphone-13824575/",
+        "look": 4738281390154448863,
+        "size": [
+          6960,
+          4640
+        ]
+      },
+      {
+        "id": "11970615",
+        "term": "person watching tv remote sofa",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/11970615.jpg",
+        "seen": true,
+        "caption": "Close-up of a person's hand holding a TV remote control in Berlin, Germany.",
+        "outlet": "Pexels",
+        "author": "Leon Kohle",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/person-holding-black-remote-control-in-close-up-photography-11970615/",
+        "look": 5642533618507079680,
+        "size": [
+          6016,
+          4000
+        ]
+      },
+      {
+        "id": "7155738",
+        "term": "person watching tv remote sofa",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7155738.jpg",
+        "seen": true,
+        "caption": "Bearded man in casual wear relaxing on a sofa, enjoying coffee while watching TV indoors.",
+        "outlet": "Pexels",
+        "author": "Gustavo Fring",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/man-sitting-on-couch-holding-a-remote-control-7155738/",
+        "look": 1152922662361599951,
+        "size": [
+          4000,
+          2666
+        ]
+      },
+      {
+        "id": "5207535",
+        "term": "person watching tv remote sofa",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/5207535.jpg",
+        "seen": true,
+        "caption": "A person relaxing indoors, holding a TV remote control against a cozy blanket.",
+        "outlet": "Pexels",
+        "author": "https://kaboompics.com/",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/hand-holding-a-black-remote-control-5207535/",
+        "look": 13762972296729865436,
+        "size": [
+          5472,
+          3648
+        ]
+      },
+      {
+        "id": "7991486",
+        "term": "cinema empty seats screen",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7991486.jpg",
+        "seen": true,
+        "caption": "A dimly lit empty cinema theater with rows of red chairs facing a projector screen.",
+        "outlet": "Pexels",
+        "author": "Tima Miroshnichenko",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/an-empty-cinema-7991486/",
+        "look": 281444787683360,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "7991381",
+        "term": "cinema empty seats screen",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7991381.jpg",
+        "seen": true,
+        "caption": "A view of an empty cinema with rows of red seats facing the illuminated screen.",
+        "outlet": "Pexels",
+        "author": "Tima Miroshnichenko",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/red-chairs-in-the-cinema-7991381/",
+        "look": 1808546265703390720,
+        "size": [
+          5953,
+          3969
+        ]
+      },
+      {
+        "id": "7991112",
+        "term": "cinema empty seats screen",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7991112.jpg",
+        "seen": true,
+        "caption": "An empty movie theater interior with rows of red and black seats, awaiting audience.",
+        "outlet": "Pexels",
+        "author": "Tima Miroshnichenko",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/empty-seats-of-a-movie-theater-7991112/",
+        "look": 17870283321406185471,
+        "size": [
+          5471,
+          3647
+        ]
+      },
+      {
+        "id": "8476867",
+        "term": "satellite dishes rooftop",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/8476867.jpg",
+        "seen": true,
+        "caption": "A low-angle view of communication dishes and antennas on a building against a clear blue sky.",
+        "outlet": "Pexels",
+        "author": "Francesco Ungaro",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/satellite-dishes-on-a-building-8476867/",
+        "look": 10439891493026791424,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "33539158",
+        "term": "satellite dishes rooftop",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/33539158.jpg",
+        "seen": true,
+        "caption": "A view of various satellite dishes atop a rooftop in Tanger, Morocco.",
+        "outlet": "Pexels",
+        "author": "Ismaël  Bouzid",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/multiple-satellite-dishes-on-tanger-rooftop-33539158/",
+        "look": 214284508332031,
+        "size": [
+          3118,
+          2495
+        ]
+      },
+      {
+        "id": "12898227",
+        "term": "satellite dishes rooftop",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/12898227.jpg",
+        "seen": true,
+        "caption": "A detailed view of satellite dishes and antennas on an urban rooftop under a cloudy sky.",
+        "outlet": "Pexels",
+        "author": "Lutfi Elyas",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/close-up-of-satellites-on-building-roof-12898227/",
+        "look": 1819188217296977919,
+        "size": [
+          6240,
+          4160
+        ]
+      },
+      {
+        "id": "9290878",
+        "term": "broadcast tower antenna city",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/9290878.jpg",
+        "seen": true,
+        "caption": "Telecommunication towers with antennas and dishes under a bright cloudy sky.",
+        "outlet": "Pexels",
+        "author": "Barnabas Davoti",
+        "credit": "",
+        "answers": 0.5,
+        "page": "https://www.pexels.com/photo/tall-cell-towers-9290878/",
+        "look": 977016205271829791,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "9290873",
+        "term": "broadcast tower antenna city",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/9290873.jpg",
+        "seen": true,
+        "caption": "A telecommunication tower equipped with satellite dishes against a cloudy sky.",
+        "outlet": "Pexels",
+        "author": "Barnabas Davoti",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/a-cell-tower-9290873/",
+        "look": 508659501442703007,
+        "size": [
+          7952,
+          5304
+        ]
+      },
+      {
+        "id": "36395337",
+        "term": "broadcast tower antenna city",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/36395337.jpg",
+        "seen": true,
+        "caption": "Black and white capture of a modern TV tower against a clear sky, minimalist style.",
+        "outlet": "Pexels",
+        "author": "HOWARD  HERDI",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/monochrome-view-of-modern-tv-tower-36395337/",
+        "look": 16211828343331405824,
+        "size": [
+          4288,
+          2848
+        ]
+      },
+      {
+        "id": "33317197",
+        "term": "newsroom journalists working",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/33317197.jpg",
+        "seen": true,
+        "caption": "A spokesperson engages with media during an outdoor press interview surrounded by microphones.",
+        "outlet": "Pexels",
+        "author": "Tahir Xəlfəquliyev",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/female-spokesperson-giving-press-interview-outdoors-33317197/",
+        "look": 17772892979812171005,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "32957317",
+        "term": "newsroom journalists working",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/32957317.jpg",
+        "seen": true,
+        "caption": "Photographers focusing on event coverage with advanced cameras indoors, showcasing media professionals in action.",
+        "outlet": "Pexels",
+        "author": "Tahir Xəlfəquliyev",
+        "credit": "",
+        "answers": 0.0,
+        "page": "https://www.pexels.com/photo/professional-photographers-capturing-event-moments-32957317/",
+        "look": 939283100637069054,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "6950237",
+        "term": "newsroom journalists working",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/6950237.jpg",
+        "seen": true,
+        "caption": "African American businessman in formal attire being interviewed by journalists with microphones in a conference room.",
+        "outlet": "Pexels",
+        "author": "Werner Pfennig",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-man-in-black-suit-talking-to-a-man-and-a-woman-6950237/",
+        "look": 57526466693299711,
+        "size": [
+          6556,
+          4370
+        ]
+      },
+      {
+        "id": "20319002",
+        "term": "film studio backlot gate",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/20319002.jpg",
+        "seen": true,
+        "caption": "Monochrome image of a garden gate surrounded by tall trees and grass.",
+        "outlet": "Pexels",
+        "author": "Cz Jen",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/black-and-white-film-photo-of-a-yard-and-fence-20319002/",
+        "look": 36276054075345919,
+        "size": [
+          4849,
+          3879
+        ]
+      },
+      {
+        "id": "18905809",
+        "term": "film studio backlot gate",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/18905809.jpg",
+        "seen": true,
+        "caption": "A rustic white wooden gate with diagonal panels and a black metal frame in a residential entrance.",
+        "outlet": "Pexels",
+        "author": "David Brown",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/a-gate-in-front-of-a-house-18905809/",
+        "look": 35604387651813375,
+        "size": [
+          5418,
+          3612
+        ]
+      },
+      {
+        "id": "16580841",
+        "term": "film studio backlot gate",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/16580841.jpg",
+        "seen": true,
+        "caption": "A bold red gate on a sunny day, marking the entrance to a beautiful hillside residence.",
+        "outlet": "Pexels",
+        "author": "David Brown",
+        "credit": "",
+        "answers": 0.25,
+        "page": "https://www.pexels.com/photo/residential-house-on-a-hill-and-red-gate-in-foreground-16580841/",
+        "look": 4548635608662212865,
+        "size": [
+          5252,
+          3501
+        ]
+      },
+      {
+        "id": "16229745",
+        "term": "smartphone social media apps",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/16229745.jpg",
+        "seen": true,
+        "caption": "A close-up shot of smartphone displaying social media apps icons on screen.",
+        "outlet": "Pexels",
+        "author": "Sanket  Mishra",
+        "credit": "",
+        "answers": 1.0,
+        "page": "https://www.pexels.com/photo/social-media-apps-on-smartphone-16229745/",
+        "look": 9331701413307423748,
+        "size": [
+          6959,
+          4198
+        ]
+      },
+      {
+        "id": "5633334",
+        "term": "smartphone social media apps",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/5633334.jpg",
+        "seen": true,
+        "caption": "Close-up view of popular social media app icons on a smartphone screen.",
+        "outlet": "Pexels",
+        "author": "Ocko Geserick",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/shot-of-mobile-screen-with-app-icons-5633334/",
+        "look": 4485090715924961280,
+        "size": [
+          6000,
+          4000
+        ]
+      },
+      {
+        "id": "147413",
+        "term": "smartphone social media apps",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/147413.jpg",
+        "seen": true,
+        "caption": "Close-up image of various social media app icons on a smartphone screen.",
+        "outlet": "Pexels",
+        "author": "Pixabay",
+        "credit": "",
+        "answers": 0.75,
+        "page": "https://www.pexels.com/photo/facebook-application-icon-147413/",
+        "look": 8115655000354904871,
+        "size": [
+          3000,
+          2000
+        ]
+      },
+      {
+        "id": "7433919",
+        "term": "boardroom meeting executives",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7433919.jpg",
+        "seen": true,
+        "caption": "Three mature professionals in a business meeting discussing and signing documents in an office setting.",
+        "outlet": "Pexels",
+        "author": "Vlada Karpovich",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/gray-haired-man-signing-the-papers-7433919/",
+        "look": 652896334883578851,
+        "size": [
+          6632,
+          4421
+        ]
+      },
+      {
+        "id": "7433840",
+        "term": "boardroom meeting executives",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/7433840.jpg",
+        "seen": true,
+        "caption": "Business professionals discussing documents in a modern meeting room.",
+        "outlet": "Pexels",
+        "author": "Vlada Karpovich",
+        "credit": "",
+        "answers": 0.33,
+        "page": "https://www.pexels.com/photo/a-group-of-people-discussing-in-a-room-7433840/",
+        "look": 18389365158111078144,
+        "size": [
+          6521,
+          4347
+        ]
+      },
+      {
+        "id": "6949494",
+        "term": "boardroom meeting executives",
+        "kind": "stock",
+        "file": "assets/photos/科技巨頭買下好萊塢/6949494.jpg",
+        "seen": true,
+        "caption": "Senior executives discussing strategies in a modern boardroom setting.",
+        "outlet": "Pexels",
+        "author": "Werner Pfennig",
+        "credit": "",
+        "answers": 0.67,
+        "page": "https://www.pexels.com/photo/businesspeople-at-conference-in-boardroom-6949494/",
+        "look": 27061188827021311,
+        "size": [
+          6720,
+          4480
+        ]
+      },
+      {
+        "id": "Larry_Ellison_picture_(cropped).png",
+        "term": "Larry Ellison",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Larry_Ellison_picture_(cropped).png.jpg",
+        "seen": true,
+        "caption": "Lawrence Joseph Ellison is an American businessman. He co-founded the software company Oracle Corporation, and was its CEO from 1977 to 2014. He now serves as its CTO and executive chairman. According to Forbes, as of early 2026, Ellison's estimated net worth is $201–203 billion, making him the worl",
+        "outlet": "維基百科",
+        "author": "Oracle PR Hartmann Studios",
+        "credit": "Oracle PR Hartmann Studios／CC BY 2.0",
+        "answers": 0.5,
+        "page": "https://commons.wikimedia.org/wiki/File:Larry_Ellison_picture_(cropped).png",
+        "look": 27060922417675512,
+        "size": [
+          1288,
+          1717
+        ]
+      },
+      {
+        "id": "Paramount_Skydance_Logo.svg.png",
+        "term": "Paramount Skydance",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Paramount_Skydance_Logo.svg.png.jpg",
+        "seen": true,
+        "caption": "Paramount Skydance Corporation is an American multinational mass media and entertainment conglomerate. The company's primary corporate headquarters is located at the Paramount Pictures lot in the Hollywood neighborhood of Los Angeles, California, and Paramount's secondary and operational headquarter",
+        "outlet": "維基百科",
+        "author": "",
+        "credit": "／見檔案頁",
+        "answers": 1.0,
+        "page": "https://en.wikipedia.org/wiki/Paramount_Skydance",
+        "look": 71494783611976760,
+        "size": [
+          512,
+          370
+        ]
+      },
+      {
+        "id": "Atlanta-cnn-center-aerial.jpg",
+        "term": "CNN Center",
+        "kind": "real",
+        "file": "assets/photos/科技巨頭買下好萊塢/Atlanta-cnn-center-aerial.jpg.jpg",
+        "seen": true,
+        "caption": "The Center, formerly and still commonly called the CNN Center, is the former international headquarters of U.S. cable network CNN in Atlanta, Georgia, United States. The main newsrooms and studios for several of CNN's news channels were located in the building. The facility's commercial office space",
+        "outlet": "維基百科",
+        "author": "Connor.carey",
+        "credit": "Connor.carey／CC BY-SA 4.0",
+        "answers": 0.5,
+        "page": "https://commons.wikimedia.org/wiki/File:Atlanta-cnn-center-aerial.jpg",
+        "look": 433334040347541439,
+        "size": [
+          2272,
+          1704
+        ]
       },
       {
         "id": "Brendan_Carr,_official_portrait_2025_(cropped)(b).jpg",
-        "term": "Brendan Carr (lawyer)",
+        "term": "Brendan Carr",
         "kind": "real",
         "file": "assets/photos/科技巨頭買下好萊塢/Brendan_Carr,_official_portrait_2025_(cropped)(b).jpg.jpg",
+        "seen": true,
         "caption": "Brendan Thomas Carr is an American lawyer who has served as the chair of the Federal Communications Commission (FCC) since 2025. He has additionally served as a commissioner of the FCC since 2017.",
         "outlet": "維基百科",
         "author": "Federal Communications Commission",
@@ -1030,540 +1910,539 @@
         "size": [
           3674,
           4583
-        ],
-        "seen": true
-      },
-      {
-        "id": "David_Zaslav_LQ_2026.jpg",
-        "term": "David Zaslav",
-        "kind": "real",
-        "file": "assets/photos/科技巨頭買下好萊塢/David_Zaslav_LQ_2026.jpg.jpg",
-        "caption": "David Zaslav is an American media executive. He is the current chief executive officer (CEO) and president of Warner Bros. Discovery (WBD). Zaslav became CEO and president of Discovery, Inc. in 2006. He oversaw the company as it went public in 2008 and then merged with WarnerMedia in April 2022.",
-        "outlet": "維基百科",
-        "author": "US Embassy Italy",
-        "credit": "US Embassy Italy／Public domain",
-        "answers": 1.0,
-        "page": "https://commons.wikimedia.org/wiki/File:David_Zaslav_LQ_2026.jpg",
-        "look": 4565382614417407,
-        "size": [
-          237,
-          344
-        ],
-        "seen": true
-      },
-      {
-        "id": "CBS_Broadcast_Center_(55282653632).jpg",
-        "term": "CBS Broadcast Center",
-        "kind": "real",
-        "file": "assets/photos/科技巨頭買下好萊塢/CBS_Broadcast_Center_(55282653632).jpg.jpg",
-        "caption": "The CBS Broadcast Center is a television and radio production facility located on the West Side of Midtown Manhattan in New York City. It is CBS's main East Coast production hub, similar to CBS Studio Center in Los Angeles as the West Coast hub. The Broadcast Center is one of two production faciliti",
-        "outlet": "維基百科",
-        "author": "Ajay Suresh",
-        "credit": "Ajay Suresh／CC BY 4.0",
-        "answers": 0.67,
-        "page": "https://commons.wikimedia.org/wiki/File:CBS_Broadcast_Center_(55282653632).jpg",
-        "look": 141574065881087,
-        "size": [
-          8457,
-          4757
-        ],
-        "seen": true
-      },
-      {
-        "id": "7155738",
-        "term": "person watching tv sofa",
-        "file": "assets/photos/科技巨頭買下好萊塢/7155738.jpg",
-        "caption": "Bearded man in casual wear relaxing on a sofa, enjoying coffee while watching TV indoors.",
-        "kind": "stock",
-        "outlet": "Pexels",
-        "author": "Gustavo Fring",
-        "credit": "",
-        "answers": 0.67,
-        "page": "https://www.pexels.com/photo/man-sitting-on-couch-holding-a-remote-control-7155738/",
-        "look": 1152922662361599951,
-        "size": [
-          4000,
-          2666
-        ],
-        "seen": true
-      },
-      {
-        "id": "7283715",
-        "term": "person watching tv sofa",
-        "file": "assets/photos/科技巨頭買下好萊塢/7283715.jpg",
-        "caption": "Woman lounging comfortably on a sofa with a remote control, enjoying leisure time indoors.",
-        "kind": "stock",
-        "outlet": "Pexels",
-        "author": "https://kaboompics.com/",
-        "credit": "",
-        "answers": 0.33,
-        "page": "https://www.pexels.com/photo/woman-in-black-top-lying-on-sofa-7283715/",
-        "look": 506100563700613119,
-        "size": [
-          6426,
-          4284
-        ],
-        "seen": true
-      },
-      {
-        "id": "3811851",
-        "term": "person watching tv sofa",
-        "file": "assets/photos/科技巨頭買下好萊塢/3811851.jpg",
-        "caption": "Smiling male wearing casual shirt sitting with crossed legs on cozy sofa and enjoying TV series while resting in dark room with garland during weekend",
-        "kind": "stock",
-        "outlet": "Pexels",
-        "author": "Andrea Piacquadio",
-        "credit": "",
-        "answers": 0.33,
-        "page": "https://www.pexels.com/photo/young-man-watching-tv-in-the-living-room-3811851/",
-        "look": 13889119104939130108,
-        "size": [
-          5760,
-          3840
-        ],
-        "seen": true
+        ]
       }
     ],
     "data": []
   },
   "facts": [
     {
-      "say": "Larry Ellison 是世界第二富有的人，甲骨文董事長",
-      "from": "The Economist"
+      "say": "Paramount Skyance 發起了一次價值 1084 億美元的敵意收購，旨在超越 Netflix。",
+      "from": "Reuters 第 20 秒"
     },
     {
-      "say": "2026 年 8 月，Larry Ellison 出資替兒子 David 買下派拉蒙",
-      "from": "The Economist"
+      "say": "Paramount 提出每股 30 美元的全現金收購，比 Netflix 的出價多出 18 億美元。",
+      "from": "Reuters 第 40 秒"
     },
     {
-      "say": "艾利森父子正出價收購更大的華納兄弟探索",
-      "from": "The Economist"
+      "say": "Paramount CEO David Ellison 認為他的出價能強化好萊塢並為消費者提供更多競爭。",
+      "from": "Reuters 第 61 秒"
     },
     {
-      "say": "Larry Ellison 為這樁併購個人擔保 404 億美元",
-      "from": "AP News"
+      "say": "Netflix 的出價附帶 58.8 億美元的分手費。",
+      "from": "Reuters 第 84 秒"
     },
     {
-      "say": "派拉蒙把出價提高到每股 31 美元",
-      "from": "PBS NewsHour"
+      "say": "若 Paramount 收購成功，將會將 Paramount Plus 與 HBO Max 合併。",
+      "from": "Reuters 第 104 秒"
     },
     {
-      "say": "華納董事會建議股東拒絕派拉蒙、支持 Netflix",
-      "from": "AP News"
+      "say": "這支影片講了科技巨頭買下好萊塢這件事情。",
+      "from": "PBS NewsHour 第 0 秒"
     },
     {
-      "say": "併成後兩家近年票房總和遠超其他對手",
-      "from": "The Economist"
+      "say": "Netfilx 出手收購 Warner Bros.，出價近 830 億美元。",
+      "from": "PBS NewsHour 第 12 秒"
     },
     {
-      "say": "併成後將掌握全美三分之一以上的電視廣告市場",
-      "from": "The Economist"
+      "say": "這筆交易將使 Netflix 能接觸到 DC 漫畫、Game of Thrones、哈利波特 等大型IP。",
+      "from": "PBS NewsHour 第 41 秒"
     },
     {
-      "say": "派拉蒙旗下已有 CBS News；併成後再加上 CNN",
-      "from": "The Economist"
+      "say": "Warner Bros. 旗下的有線電視網，包括 CNN、TNT、TBS，將在交易完成前獨立-spin off。",
+      "from": "PBS NewsHour 第 23 秒"
     },
     {
-      "say": "「一個家族將控制美國相當大一塊的新聞消費」",
+      "say": "這筆交易可能引發反壟斷監管，特別是來自川普司法部的監管。",
+      "from": "PBS NewsHour 第 106 秒"
+    },
+    {
+      "say": "CNBC 和 Writers Guild of America 反對這筆交易，擔心 Netflix 取得壟斷地位。",
+      "from": "PBS NewsHour 第 129 秒"
+    },
+    {
+      "say": "Netflix 放棄了對華納兄弟和 HBO 的收購要約。",
+      "from": "CNN 第 0 秒"
+    },
+    {
+      "say": "華納兄弟 Discovery 的董事會決定支持派拉蒙的出價。",
+      "from": "CNN 第 24 秒"
+    },
+    {
+      "say": "派拉蒙提出了一個更有吸引力的出價，每股 31 美元。",
+      "from": "CNN 第 91 秒"
+    },
+    {
+      "say": "派拉蒙已經取得優越地位，有可能收購 CNN。",
+      "from": "CNN 第 159 秒"
+    },
+    {
+      "say": "Paramount Skydance 提出有敵意的併購提案，出價每股 30 美元，總額 1080 億美元，高於 Netflix 的出價。",
+      "from": "Fox Business 第 123 秒"
+    },
+    {
+      "say": "華納兄弟宣布收到 Paramoun Skydance 的非請求兼併提案，並且在 10 天內會向股東建議行動。",
+      "from": "Fox Business 第 44 秒"
+    },
+    {
+      "say": "Paramount Skydance 的股價上漲 7.5%，而 Netflix 的股價下跌接近 4%。",
+      "from": "Fox Business 第 87 秒"
+    },
+    {
+      "say": "Ross 認為 Netflix 的行動令人意外，因為 Netflix 主要是想抬高價格，而不是真的想併購 Warner Brothers。",
+      "from": "Fox Business 第 108 秒"
+    },
+    {
+      "say": "Ross 認為政府對 Paramount Skydance 更有利，認為這筆交易會更順利完成。",
+      "from": "Fox Business 第 213 秒"
+    },
+    {
+      "say": "派拉蒙sky dance提高出價，以480億美元個人承擔抵押480億美元，總出價1080億美元收購華納兄弟。",
+      "from": "Bloomberg"
+    },
+    {
+      "say": "派拉蒙sky dance的財務保證較不確定，而netflix的財務保障則較清晰。",
+      "from": "Bloomberg"
+    },
+    {
+      "say": "華納兄弟更傾向於netflix的出價，因其財務保障較明確。",
+      "from": "Bloomberg"
+    },
+    {
+      "say": "派拉蒙sky dance提出如果交易失敗，將提供58億美元的分手費。",
+      "from": "Bloomberg"
+    },
+    {
+      "say": "華納兄弟認為有線電視網絡的價值可能不如派拉蒙sky dance所估計的高。",
+      "from": "Bloomberg"
+    },
+    {
+      "say": "華納兄弟的股價約下降1.4%，並開始下滑。",
+      "from": "Bloomberg 第 12 秒"
+    },
+    {
+      "say": "帕萬圖Skydance可能會撤回其出價，並對公司董事會提起訴訟。",
+      "from": "Bloomberg 第 20 秒"
+    },
+    {
+      "say": "華納兄弟出售過程中的某些安排包括勞瑞．艾倫提供的400億美元保底金。",
+      "from": "Bloomberg 第 67 秒"
+    },
+    {
+      "say": "這是一場典型的併購鬥爭，充滿了 THR 戲劇性和人物角色。",
+      "from": "Bloomberg 第 89 秒"
+    },
+    {
+      "say": "Paramount 提出每股30元的出價，Netflix 提出每股27.75元的出價。",
+      "from": "Bloomberg 第 111 秒"
+    },
+    {
+      "say": "Paramount 至少要提高每股1元才能吸引華納兄弟離開。",
+      "from": "Bloomberg 第 136 秒"
+    },
+    {
+      "say": "參議院司法委員會批準了這筆交易。",
+      "from": "CNBC 第 187 秒"
+    },
+    {
+      "say": "加州總檢察長羅伯·博塔對此交易提出訴訟。",
+      "from": "CNBC 第 229 秒"
+    },
+    {
+      "say": "-paramount 要為未達成交易支付每日 7 百萬美元的罰款。",
+      "from": "CNBC 第 293 秒"
+    },
+    {
+      "say": "-paramount 和加州總檢察長羅伯·博塔在反托拉斯法上各有強大論點。",
+      "from": "CNBC 第 314 秒"
+    },
+    {
+      "say": "科技巨頭在英國設有創意團隊。",
+      "from": "BBC News 第 20 秒"
+    },
+    {
+      "say": "該科技巨頭的英國製作內容具英國特色。",
+      "from": "BBC News 第 41 秒"
+    },
+    {
+      "say": "該科技巨頭捐助英國電影及電視學校。",
+      "from": "BBC News 第 84 秒"
+    },
+    {
+      "say": "該科技巨頭的成功讓當地電視業界感到受威脅。",
+      "from": "BBC News 第 126 秒"
+    },
+    {
+      "say": "該科技巨頭在英國進行的製作多數為英國原創。",
+      "from": "BBC News 第 147 秒"
+    },
+    {
+      "say": "Larry Ellison 買下 Paramount",
+      "from": "The Economist 第 22 秒"
+    },
+    {
+      "say": "Ellison 家族有意收購 Warner Brothers Discovery",
+      "from": "The Economist 第 43 秒"
+    },
+    {
+      "say": "Ellison 家族與 Tik Tok 交易",
       "from": "The Economist 第 66 秒"
     },
     {
-      "say": "艾利森家族近期對關鍵編輯職位做了有爭議的人事任命",
-      "from": "The Economist"
+      "say": "Ellison 家族控制 CBS News 和 CNN",
+      "from": "The Economist 第 86 秒"
     },
     {
-      "say": "David Ellison 公開承諾維持 CNN 的編輯獨立",
-      "from": "Fox News"
+      "say": "Jeff Bezos 創立的亞馬遜公司推出了關於梅蘭妮亞夫人的紀錄片，耗資 7500 萬美元。",
+      "from": "The Guardian 第 62 秒"
     },
     {
-      "say": "Larry Ellison 同時參與收購 TikTok 的美國業務",
-      "from": "The Economist"
+      "say": "貝佐斯可藉由一週的收益覆蓋《華盛頓郵報》預計每年的 1 億美元虧損。",
+      "from": "The Guardian 第 42 秒"
     },
     {
-      "say": "近半數美國年輕人從 TikTok 看新聞",
-      "from": "The Economist"
+      "say": "《華盛頓郵報》裁員了至少 300 位記者，佔報社三分之一。",
+      "from": "The Guardian 第 21 秒"
     },
     {
-      "say": "併成會讓傳統大片廠從五家變四家，可能觸發反壟斷審查",
-      "from": "The Economist"
+      "say": "貝佐斯為了掩蓋《華盛頓郵報》的虧損，裁員了至少 300 位記者。",
+      "from": "The Guardian 第 0 秒"
     },
     {
-      "say": "Larry Ellison 與川普關係良好，可能降低監管阻力",
-      "from": "The Economist"
+      "say": "貝佐斯介入阻止《華盛頓郵報》發表支持哈里斯的評論。",
+      "from": "The Guardian 第 105 秒"
     },
     {
-      "say": "CNN 等有線頻道在收購案中處於懸而未決的狀態",
-      "from": "PBS NewsHour"
+      "say": "Netflix 和 Paramount 於 Warner Brothers Discovery 的競標戰中角力。",
+      "from": "Deutsche Welle 第 123 秒"
+    },
+    {
+      "say": "Netflix 首先提出 72 億美元的出價。",
+      "from": "Deutsche Welle 第 22 秒"
+    },
+    {
+      "say": "Paramount 提出更高額的出價，包括 CNN。",
+      "from": "Deutsche Welle 第 86 秒"
+    },
+    {
+      "say": "Paramount 的 CEO 是唐納德．川普的支持者。",
+      "from": "Deutsche Welle 第 107 秒"
+    },
+    {
+      "say": "此交易增加了政治層面。",
+      "from": "Deutsche Welle 第 127 秒"
+    },
+    {
+      "say": "參議院和11個州對這筆1110億美元的合併提出反托拉斯訴訟，以阻止它進行。",
+      "from": "PBS NewsHour〈Paramount's Warner Bros.〉"
+    },
+    {
+      "say": "-paramount skydance高層戴維·艾爾森威脅，如果合併不獲批準，將搬離加州。",
+      "from": "PBS NewsHour〈Paramount's Warner Bros.〉"
+    },
+    {
+      "say": "洛杉磯市長凱倫·巴茲轉變立場，支持迅速解決這起跨州反托拉斯案件。",
+      "from": "PBS NewsHour〈Paramount's Warner Bros.〉"
+    },
+    {
+      "say": "一項報告指出，合併會導致約4500個工作崗位消失和數十億美元的收入流失。",
+      "from": "PBS NewsHour〈Paramount's Warner Bros.〉"
+    },
+    {
+      "say": "Paramount Skydance提出對Warner Bros. Discovery的敵意併購，包含有線電視資產。",
+      "from": "PBS NewsHour〈CNN and fellow cable net〉"
+    },
+    {
+      "say": "Netflix已購買Warner的電影工作室和串流業務，但CNN不受該交易影響。",
+      "from": "PBS NewsHour〈CNN and fellow cable net〉"
+    },
+    {
+      "say": "ParamountSkydance的主席及首席執行官David Ellison表示，有意將CNN與CBS News整合。",
+      "from": "PBS NewsHour〈CNN and fellow cable net〉"
+    },
+    {
+      "say": "Paramount提出敵意併購 Warner Bros. Discovery，出價1080億美元。",
+      "from": "NPR〈Paramount's hostile bid 〉"
+    },
+    {
+      "say": "Netflix提出830億美元併購 Warner Bros. Discovery。",
+      "from": "NPR〈Paramount's hostile bid 〉"
+    },
+    {
+      "say": "Ellison家族希望通過併購來競爭對付Netflix。",
+      "from": "NPR〈Paramount's hostile bid 〉"
+    },
+    {
+      "say": "Paramount的敵意併購策略是直接向Warner Bros. Discovery股東提出更好的出價。",
+      "from": "NPR〈Paramount's hostile bid 〉"
+    },
+    {
+      "say": "-parametro全球已提出以1080億美元全現金收購華納兄弟 Discovery，超越Netflix先前提出的830億美元協議。",
+      "from": "NPR〈Not so fast, Netflix. Pa〉"
+    },
+    {
+      "say": "-華納兄弟 Discovery首席執行官David Zaslav對Parametro全球的出價持抗拒態度。",
+      "from": "NPR〈Not so fast, Netflix. Pa〉"
+    },
+    {
+      "say": "-Ellison家族提出出價的原因是，他們認為這筆交易將創造一個能與Netflix等競爭對手抗衡的電影和電視流媒體巨頭。",
+      "from": "NPR〈Not so fast, Netflix. Pa〉"
+    },
+    {
+      "say": "Warner Bros. Discovery 拒絕 Paramont 的收購出價，認為 Paramont 的出價「虛幻不實」，並認為將公司大部分出售給 Netflix 的計劃對股東更有利。",
+      "from": "CNN〈Warner Bros. Discovery a〉"
+    },
+    {
+      "say": "特朗普宣布會介入 Warner Bros. Discovery 被 Netflix 獷新聞的監管決定。",
+      "from": "CNN〈Battle over future of Wa〉"
+    },
+    {
+      "say": "參議院打算對 Warner Bros. Discovery 被 Netflix 獷新聞的交易提出反對。",
+      "from": "CNN〈Battle over future of Wa〉"
+    },
+    {
+      "say": "特朗普支持 Paramount 收購 Warner Bros. Discovery。",
+      "from": "CNN〈Battle over future of Wa〉"
+    },
+    {
+      "say": "特朗普與 Larry Ellison 有密切關係。",
+      "from": "CNN〈Battle over future of Wa〉"
+    },
+    {
+      "say": "Paramount CEO David Ellison 承諾在收購後維持 CNN 的編採獨立",
+      "from": "Fox News〈Paramount CEO David Elli〉"
+    },
+    {
+      "say": "馬克·勞法洛指斥Paramount指控他反猶太主義是荒唐且不誠實的。",
+      "from": "Fox News〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "Paramount指控馬克·勞法洛在商業糾紛中使用反猶太主義 trope。",
+      "from": "Fox News〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "Paramount表示「大屠殺」和「種族隔離」用在企業交易中是錯誤的。",
+      "from": "Fox News〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "Paramount表示不容忍任何形式的偏見。",
+      "from": "Fox News〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "法官延後裁決 Paramount 收購 Warner Bros. Discovery 的案件，並表示會在 7 月 22 日之前下達裁決。",
+      "from": "Fox Business〈Judge delays ruling on C〉"
+    },
+    {
+      "say": "加州檢察總長 Rob Bonta 組織 12 位州級檢察總長對此交易提出抗議，指稱此舉會導致價格上漲，品質下降，以及電影和電視內容減少。",
+      "from": "Fox Business〈Judge delays ruling on C〉"
+    },
+    {
+      "say": "Paramount CEO David Ellison 認為此交易會增加競爭，而加州則認為結合兩個主要的好萊塢電影工作室會傷害業界，並給公司過多權力。",
+      "from": "Fox Business〈Judge delays ruling on C〉"
+    },
+    {
+      "say": "Paramount 表示會堅決捍衛此交易，並指出延遲此交易會損害已經受技術打擊的娛樂工作者，並且會使加州失去數萬個娛樂工作崗位。",
+      "from": "Fox Business〈Judge delays ruling on C〉"
+    },
+    {
+      "say": "Paramount CEO David Ellison 已經努力近一年，企圖收購 Warner Bros. Discovery，但遭到了多個州檢察長的反對，這些反對者擔心交易會產生反托拉斯問題。",
+      "from": "CNBC〈Paramount CEO David Elli〉"
+    },
+    {
+      "say": "Ellison 已經提出讓步，包括承諾每年拍攝至少 30 部電影，但仍未獲得多數反對者的同意。",
+      "from": "CNBC〈Paramount CEO David Elli〉"
+    },
+    {
+      "say": "Ellison 企圖通過公開說服和與院線簽訂合約來爭取支持，但仍未成功。",
+      "from": "CNBC〈Paramount CEO David Elli〉"
+    },
+    {
+      "say": "多個州檢察長希望看到一些有線電視網被出售，以減少交易後兩家公司結合所形成的市場力量。",
+      "from": "CNBC〈Paramount CEO David Elli〉"
+    },
+    {
+      "say": "Mark Ruffalo 調查出 Paramount Skydance 的 CEO David Ellison 跟 Oracle 有密切聯繫，而 Oracle 長期為以色列提供軍事技術支援。",
+      "from": "The Guardian〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "Ruffalo 訴求反對這筆總值 1110 億美元的併購案，認為這會對娛樂產業造成災難性影響。",
+      "from": "The Guardian〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "Paramount 發表聲明，批評 Ruffalo 使用反猶太主義的手法來進行商業爭議，並指責其用詞有失妥當。",
+      "from": "The Guardian〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "Ruffalo 表示，批評以色列行動、軍事技術合同及其供應商的行為，並非針對猶太人。",
+      "from": "The Guardian〈Mark Ruffalo fires back 〉"
+    },
+    {
+      "say": "科技巨頭Larry Ellison同意為Paramount Skydance收購Warner Bros Discovery的交易提供超過400億美元的個人擔保。",
+      "from": "The Guardian〈Larry Ellison gives pers〉"
+    },
+    {
+      "say": "WBD指控Paramount欺詐投資人，並表示其提出的安全網資金不足。",
+      "from": "The Guardian〈Larry Ellison gives pers〉"
+    },
+    {
+      "say": "Paramount提出全現金每股30元的收購要約，並表示其交易對WBD所有利益相關者更有利。",
+      "from": "The Guardian〈Larry Ellison gives pers〉"
+    },
+    {
+      "say": "Paramount的收購要約包括Warner Bros Discovery的全部資產，而Netflix僅收購其電影工作室、HBO及HBO Max。",
+      "from": "The Guardian〈Larry Ellison gives pers〉"
+    },
+    {
+      "say": "Netflix 退出對 Warner Bros. 的收購競標，Paramount 將勝出。",
+      "from": "Deutsche Welle〈Netflix bows out of Warn〉"
+    },
+    {
+      "say": "Paramount 提出每股 31 美元的收購價格，超越 Netflix 的每股 27.75 美元。",
+      "from": "Deutsche Welle〈Netflix bows out of Warn〉"
+    },
+    {
+      "say": "Netflix 認為 Paramoun 的新出價不再具有財務吸引力。",
+      "from": "Deutsche Welle〈Netflix bows out of Warn〉"
+    },
+    {
+      "say": "Warner Bros. 的董事會將可以與 Paramoun 進行收購協議，而不必與 Netflix 雙方協商。",
+      "from": "Deutsche Welle〈Netflix bows out of Warn〉"
+    },
+    {
+      "say": "德國之聲〈Netflix vs. Paramount bid for Warner Bros.〉報導指出，華納兄弟的董事會拒絕了-parametro Skydance的1080億美元敵意收購提案。",
+      "from": "Deutsche Welle〈Netflix vs. Paramount bi〉"
+    },
+    {
+      "say": "相反地，華納兄弟的董事會支持與Netflix的827億美元合約，Netflix將收購華納兄弟的電影 studios、品牌（如哈利波特、DC漫畫）及HBO等資產。",
+      "from": "Deutsche Welle〈Netflix vs. Paramount bi〉"
+    },
+    {
+      "say": "Netflix的收購案不包括華納兄弟的有線電視頻道，這些資產將於明年被分拆。",
+      "from": "Deutsche Welle〈Netflix vs. Paramount bi〉"
+    },
+    {
+      "say": "華納兄弟董事會認為Netflix的收購案更安全，因此訂定了高昂的罰款，以防收購案失敗。",
+      "from": "Deutsche Welle〈Netflix vs. Paramount bi〉"
+    },
+    {
+      "say": "德國之聲報導指出，參議院Skydance收購案獲得沙特阿拉伯、卡達和阿布達比的國有財富基金的支持，可能影響美國監管機構的審核。",
+      "from": "Deutsche Welle〈Netflix vs. Paramount bi〉"
+    },
+    {
+      "say": "Paramount要求加州及其他11個州支付19億美元的擔保金，以防合並案拖延導致公司需支付費用。",
+      "from": "France 24〈Paramount demands $1.9 b〉"
+    },
+    {
+      "say": "Paramount反駁稱，若法官批準該舉措，加州及其他11個州若法律行動失敗將需承擔這筆費用。",
+      "from": "France 24〈Paramount demands $1.9 b〉"
+    },
+    {
+      "say": "Paramount的首席執行官David Ellison揚言若加州不同意其訴訟將將公司遷出加州。",
+      "from": "France 24〈Paramount demands $1.9 b〉"
+    },
+    {
+      "say": "-paramount skydance 要收購 Warner Bros. Discovery，Netflix 不再加價，終止了這場media 拍賣。",
+      "from": "France 24〈Paramount poised to acqu〉"
+    },
+    {
+      "say": "Paramount 提出的收購價為每股 31 美元現金，估值約 1080 億美元。",
+      "from": "France 24〈Paramount poised to acqu〉"
+    },
+    {
+      "say": "Netflix 確認不會匹配 Paramount Skydance 的出價，因為認為此價格不再有利可圖。",
+      "from": "France 24〈Paramount poised to acqu〉"
+    },
+    {
+      "say": "-paramount 的收購案將使包括 CNN 在內的多個媒體資產落入 Oracle 發起人Larry Ellison 領導的家族手中。",
+      "from": "France 24〈Paramount poised to acqu〉"
+    },
+    {
+      "say": "華納兄弟 Discovery 預期將鼓勵股東反對派拉蒙的敵意併購提案。",
+      "from": "Euronews〈Warner to urge rejection〉"
+    },
+    {
+      "say": "派拉蒙撤回了其私人股權公司的融資提案。",
+      "from": "Euronews〈Warner to urge rejection〉"
+    },
+    {
+      "say": "華納兄弟 Discovery 的股價因併購戰爭而上漲至每股約30美元。",
+      "from": "Euronews〈Warner to urge rejection〉"
+    },
+    {
+      "say": "Warner Bros Discovery的股價在週四上漲近30%，Euronews〈Warner Bros Discovery shares surge on Paramount Skydance buyout report〉",
+      "from": "Euronews〈Warner Bros Discovery sh〉"
+    },
+    {
+      "say": "Paramount Skydance的股價也在當日上漲約16%。",
+      "from": "Euronews〈Warner Bros Discovery sh〉"
+    },
+    {
+      "say": "Paramount提出全數現金收購 Warner Bros Discovery，包括電影工作室和有線電視網如HBO和CNN。",
+      "from": "Euronews〈Warner Bros Discovery sh〉"
+    },
+    {
+      "say": "Paramount的收購案獲得Oracle的Larry Ellison支持，這位億萬富翁最近成為全球首富。",
+      "from": "Euronews〈Warner Bros Discovery sh〉"
+    },
+    {
+      "say": "Paramount 以高於 Netflix 的出價，向華納兄弟 Discovery 提出敵意併購，出價約 744 億美元，每股現金 30 美元。",
+      "from": "Al Jazeera English〈Paramount goes hostile i〉"
+    },
+    {
+      "say": "Paramount 提議併購華納兄弟 Discovery 的有線電視資產，而 Netflix 沒有。",
+      "from": "Al Jazeera English〈Paramount goes hostile i〉"
+    },
+    {
+      "say": "Paramount 批評 Netflix 的出價「基於虛構的前景估值」，且「引發多管轄區的監管審批過程，結果不明，且包含複雜和波動的現金及股票混合」。",
+      "from": "Al Jazeera English〈Paramount goes hostile i〉"
+    },
+    {
+      "say": "特朗普表示，他將參與決定是否批準 Netflix 收購華納兄弟 Discovery 的 72 億美元交易。",
+      "from": "Al Jazeera English〈Paramount goes hostile i〉"
+    },
+    {
+      "say": "Paramount 的出價比 Netflix 低，引起反托拉斯關注。",
+      "from": "Al Jazeera English〈Paramount’s Warner Bros 〉"
+    },
+    {
+      "say": "Paramount 的出價遭到多重利益衝突，包括與唐納德．川普政府有關聯。",
+      "from": "Al Jazeera English〈Paramount’s Warner Bros 〉"
+    },
+    {
+      "say": "CBS 新聞已做出決定，這些決定被批評者認為越來越符合川普的偏好。",
+      "from": "Al Jazeera English〈Paramount’s Warner Bros 〉"
+    },
+    {
+      "say": "Paramount 購買了右傾出版物《自由新聞》，並任命其創辦人為 CBS 的編輯長。",
+      "from": "Al Jazeera English〈Paramount’s Warner Bros 〉"
     }
   ],
   "voices": [
     {
-      "url": "https://www.youtube.com/watch?v=Tsyu0SQWpo4",
-      "title": "Paramount launches hostile takeover bid for Warner Bros. Discovery after Netflix deal",
-      "outlet": "CNN",
-      "comments": [
-        {
-          "say": "Netflix Monopoly vs. Ellison Oligarchs: Battle of the Bribes",
-          "likes": 587,
-          "when": "8 months ago",
-          "reply": false
-        },
-        {
-          "say": "Whoever wins, we ultimately all lose.",
-          "likes": 540,
-          "when": "8 months ago",
-          "reply": false
-        },
-        {
-          "say": "Ellison wants too control your  media",
-          "likes": 456,
-          "when": "8 months ago",
-          "reply": false
-        },
-        {
-          "say": "Customers are doomed.  Oligopoly.",
-          "likes": 351,
-          "when": "8 months ago",
-          "reply": false
-        },
-        {
-          "say": "I am old enough to remember when Netflix just sent DVDs in the mail",
-          "likes": 309,
-          "when": "8 months ago",
-          "reply": false
-        },
-        {
-          "say": "Larry Ellison would not be my first choice to own CNN.",
-          "likes": 269,
-          "when": "8 months ago",
-          "reply": false
-        },
-        {
-          "say": "The owners of paramount control to much  already.",
-          "likes": 130,
-          "when": "8 months ago",
-          "reply": false
-        },
-        {
-          "say": "Netflix will not be monopoly. Ellison and Trump want all media to be rightwing to make the US like Russia. The US has already become a government that is a Banana Republic with completely unqualified and incompetent people and an idiot dictator with the Supreme Court in his pocket.",
-          "likes": 40,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Some of us are old enough to remember neighborhood video stores that were destroyed by Netflix.",
-          "likes": 33,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @MotherOther  That wasn't netflix's fault. Blockbuster video had a chance to buy Netflix decades ago and chose not to and now we know where blockbuster video ended up.",
-          "likes": 19,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Yes but if netflix win it's less so.",
-          "likes": 13,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "I'd rather have Netflix over propaganda Paramount",
-          "likes": 12,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @Botothe.e what do you mean why? Do you know what a monopoly is and how terrible they are for everyone?",
-          "likes": 12,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Im old enough to goto video planet and block buster before Netflix even existed lol",
-          "likes": 12,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "I'm so tired of seeing this comment over & over & over & ....",
-          "likes": 11,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Paramount/Skydance hostile bid is backed in part by three Arab sovereign wealth funds. \r\nAnd... Jared Kushner’s investment firm, is also listed as a financial backer of the bid\r\nNetflix is looking better and better in comparison",
-          "likes": 11,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Paramount would then own CNN because they want the entire company.\n\n Aside from Fox News' tangents and CBS under Paramount, CNN would be basically be more closely associated to Trump. \n\nThat's most major US News Broadcasting Networks. ♟️",
-          "likes": 10,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "If paramount gets a hostile takeover it won’t be good for Warner, Paramount dosent even allow their movies n tv shows to be streamed on other streaming networks in a hurry , Netflix does business better than Paramount   in my opinion .",
-          "likes": 10,
-          "when": "8 months ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "Who would be named the new propaganda king?",
-          "likes": 10,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Netflix won't be a monopoly. If anything they would finally be on equal footing with Disney. Oracle owning all our data and a majority of media is a distopian future waiting to happen.",
-          "likes": 10,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "@grobble8954  bullshit on Netflix.  They would totally have a monopoly and unfair competitive advantage.  I agree on the rest.",
-          "likes": 9,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "*Succession music starts playing*",
-          "likes": 8,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Understatement of the millennium.",
-          "likes": 8,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Me too 😀",
-          "likes": 7,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @joestar719 go read a history book.",
-          "likes": 5,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Not at all",
-          "likes": 5,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Imagine buying 1000 shares back in the day 😮",
-          "likes": 5,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "This is really tech company vs tech bros. Netflix can’t really have a monopoly as long as broadcast and cable exist. It’s like saying the biggest FM radio station is a monopoly over radio.",
-          "likes": 4,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @sameerrajakumar what are you talking about ? I am from Denmark and paramount and all their shows are accessible through various Danish streaming platforms only in Denmark.",
-          "likes": 3,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "We or YOU? lol You lost at life because why?",
-          "likes": 3,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @joestar719 you seem to be crashing out about my post a lot 😂. I had no idea I meant that much to you, I feel so honored. Have fun trolling the Internet weirdo lol.",
-          "likes": 3,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @MotherOther  No WE as consumers destroyed Blockbuster. The convenience of streaming Vs renting and returning.",
-          "likes": 3,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "apple, amazon and other platforms still have their own platform. Which by definition shows that Netflix isn’t a monopoly. By your logic youtube also has a monopoly on self-produced long-form video content… the argument doesn’t hold. Either way, a Netflix win, which could threaten creatives and union workers, is still better than ziofreak Ellisons getting their greedy little hands on artistic content.",
-          "likes": 3,
-          "when": "8 months ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "Netflix has done more damage to cinematography than anything ever. Short seasons. Years in between seasons. Shitty cinematography that looks like they hired a bunch of high school students who think they're better than established professionals. Soulless garbage. And the rest of the industry has followed because people have bought into the brainwashing of this cheap garbage.",
-          "likes": 3,
-          "when": "8 months ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "it will be best if netflix wins it is about time to have 1 major streaming services again so i dont need to pay multiple service. yes the price of netflix might increase",
-          "likes": 2,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "yeo bills are going 2 be crazy and think about going to a Theme parks whoever like six flags and other wb parks they control all the characters IP's",
-          "likes": 2,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Start reading books.",
-          "likes": 2,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "I just explained this to my 18 yr old. He was too young to remember lol.",
-          "likes": 2,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Same",
-          "likes": 2,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "In granny voice........why I remember back in my day we didn't have them new,fangled voodoo. tapes...we only had 3 channels!!!!",
-          "likes": 2,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "@Astrokurtis it’s all games, boo hoo paramount argument is basically we wanna be #1 not Netflix which is hilarious, bigger issue at play is why companies with 55 billion dollars in debt are allowed to be continuously sold and stock continuing to be traded to where it has to be saved because god forbid rich people lose everything the way everyone else does when they go broke, I think all company debt being paid off before another company is allowed to purchase it should be a requirement, kinda old watching idiots run companies into the ground repetitively just to get bought out or given a parac",
-          "likes": 2,
-          "when": "8 months ago (edited)",
-          "reply": true
-        },
-        {
-          "say": "Piracy is the answer ☠️",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "@stokedd  What are you talking about? Denmark (population 6 million) in Europe has nothing to do with this…",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Why? Why are you owed media?",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "@Apheleion  Netflix is better than Paramount?  Please explain?\nNetflix is destroying the filming industry.  They put out mostly slop, license mostly slop from other countries, and now are on the verge of taking what is probably the best film library in world history. \nNo more releases of great films to theaters.  No more 40 day release window before WB films leave the theater.\nIt’s the beginning of the end for the theater experience.",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "@Apheleion  That's your response? Deflection. lol Now you understand who the losers and winners are in society.",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Blockbuster Hollywood video",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "And promised never to have ads!",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @_Woo If Netflix winning bid for wbd will in no way be equal footing with House of Mouse Disney.",
-          "likes": 1,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "It will be bad for streaming services since Paramount is stingy with releasing their movies to other platforms.\nNot sure how it’s automatically bad for all of us unless you only watch movies on Netflix and Amazon Prime.",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "How We lose? Confused",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @AndStill. While netflix is better than paramount, netflix is the reason we had the writers strike and then the actor strike. Monopolies are not good for anyone, your subscription fees will go up with the mergers.",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "@Apheleion I don’t depend on Netflix or Paramount. Don’t care I’m free to change the channel or turn the tv off",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "@Apheleion  That's not a good answer from you. I probably know more history then you without searching online or asking AI. So 100% you are definiting going to be a loser of a 3rd party deal while I CASH IN ON THIS BUY OUT. WOOT!",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Not the sydner fans",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "nah this just cracked me up 😭😂",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "Yep neither is a good sign. Its like Ford taking over the Austrian painter shares.",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "there's a third one 😂 😂",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​ @Astrokurtis Not while Disney exists.",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        },
-        {
-          "say": "​@grobble8954  netflix will be a monopoly. Idk that this hostile takeover attempt will be successful",
-          "likes": 0,
-          "when": "8 months ago",
-          "reply": true
-        }
-      ]
+      "url": "https://www.youtube.com/watch?v=LNZM4eqisXg",
+      "title": "Paramount makes hostile bid for Warner Bros, challenging Netflix | REUTERS",
+      "outlet": "Reuters",
+      "comments": []
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=J37mOVNkLR8",
+      "title": "Paramount's Warner Bros. bid and threat to leave California divide Hollywood",
+      "outlet": "PBS NewsHour",
+      "comments": []
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=cPy3K5NRuNs",
+      "title": "What Netflix's deal to buy Warner Bros. means for one of Hollywood's oldest studios",
+      "outlet": "PBS NewsHour",
+      "comments": []
     }
   ],
-  "audience": "每天看新聞、但沒想過新聞是誰的人"
+  "audience": "每天看新聞、但沒想過新聞是誰的人",
+  "gathered": {
+    "when": 1788247666,
+    "trouble": [
+      "問了 3 支影片，一則留言都沒有",
+      "讀不到正文 7 篇：AP News：拿不到頁面（擋機器人或付費牆）；AP News：拿不到頁面（擋機器人或付費牆）；Reuters：拿不到頁面（擋機器人或付費牆）；Wall Street Journal：拿不到頁面（擋機器人或付費牆）；Wall Street Journal：拿不到頁面（擋機器人或付費牆）；Financial Times：Google 沒有換出網址；The Economist：拿不到頁面（擋機器人或付費牆）"
+    ]
+  }
 }

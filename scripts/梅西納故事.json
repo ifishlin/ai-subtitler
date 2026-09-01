@@ -1,37 +1,23 @@
 {
-  "view": "警報響了，而警衛把它關掉 —— 因為在那之前，它響過太多次沒事。這個故事的失竊點不在鐵絲網上，在一個被誤報訓練了很多年的人身上",
+  "view": "警報到底有沒有響，兩家說法相反 —— 而有一名館員正因為「警報紀錄對不上」被調查。這個故事的破口不在鐵絲網上，在一份自己人才看得到的紀錄裡",
   "tone": "克制",
   "topic": "梅西納名畫失竊",
   "format": "story",
   "narration": false,
   "lines": [
     {
-      "say": "義大利到處是這種東西",
+      "say": "西西里的梅西納",
       "role": "場景",
       "tone": "cool",
-      "show": "影片：義大利各地隨處可見的藝術品",
-      "clip": {
-        "file": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
-        "start": 19.32,
-        "end": 25.33
-      },
-      "from": "BBC News 第 19 秒",
-      "seconds": 3.8,
-      "seen": true
-    },
-    {
-      "say": "這一件在西西里的梅西納",
-      "role": "場景",
-      "tone": "cool",
-      "show": "衛星圖：西西里島與梅西納海峽",
-      "pic": "assets/photos/梅西納名畫失竊/MessinaStrait.jpg.jpg",
+      "show": "梅西納港與城市天際線",
+      "pic": "assets/photos/梅西納名畫失竊/Messina_2003.JPG.jpg",
       "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "八月十五日，晚上八點多",
+      "say": "八月十五日晚上八點多",
       "role": "場景",
       "tone": "cool",
       "show": "自製：時間",
@@ -41,65 +27,50 @@
         "under": "2026 年，聖母升天日",
         "tone": "cool"
       },
-      "from": "The Guardian",
-      "seconds": 2.39
-    },
-    {
-      "say": "城裡在辦聖母升天遊行",
-      "role": "場景",
-      "tone": "cool",
-      "show": "夜裡的遊行隊伍抬著發光的聖像穿過人群",
-      "pic": "assets/photos/梅西納名畫失竊/19286418.jpg",
-      "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "市中心擠進十五萬人",
-      "role": "場景",
-      "tone": "cool",
-      "show": "空拍：整條大街被遊行的人群塞滿",
-      "pic": "assets/photos/梅西納名畫失竊/18937552.jpg",
-      "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "警察幾百個，路全封了",
-      "role": "場景",
-      "tone": "cool",
-      "show": "自製：那天晚上的市中心",
-      "card": {
-        "kind": "stack",
-        "title": "那天晚上，市中心",
-        "items": [
-          "超過 15 萬人",
-          "數百名警察",
-          "主要道路封閉"
-        ],
-        "tone": "cool"
-      },
-      "from": "The Guardian",
+      "from": "The Guardian〈Messina mystery: theft o〉",
       "seconds": 2.17
     },
     {
-      "say": "而博物館在市郊",
-      "role": "事件",
+      "say": "全城在辦宗教節慶",
+      "role": "場景",
       "tone": "cool",
-      "show": "空無一人的美術館展廳",
-      "pic": "assets/photos/梅西納名畫失竊/39113418.jpg",
+      "show": "空拍：夜裡的街道被遊行的人潮塞滿",
+      "pic": "assets/photos/梅西納名畫失竊/15789993.jpg",
       "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
+      "from": "BBC News 第 86 秒",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "那天幾乎沒有人",
-      "role": "事件",
+      "say": "影片：擠進上千人",
+      "role": "場景",
       "tone": "cool",
-      "show": "自製：兩邊的人",
+      "show": "影片：談竊案就發生在節慶那一天，城裡都是人",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/99J1tPIXL1Q.mp4",
+        "start": 51.2,
+        "end": 58.16
+      },
+      "from": "BBC News 第 51 秒",
+      "seconds": 3.4,
+      "seen": true
+    },
+    {
+      "say": "而博物館在市郊",
+      "role": "場景",
+      "tone": "cool",
+      "show": "美術館展廳，牆上一排畫作",
+      "pic": "assets/photos/梅西納名畫失竊/frame_onzWOGWm3hM_28.jpg",
+      "fit": "fill",
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 2.2,
+      "seen": true
+    },
+    {
+      "say": "那條街罕見地安靜",
+      "role": "場景",
+      "tone": "cool",
+      "show": "自製：同一個晚上",
       "card": {
         "kind": "bars",
         "title": "同一個晚上",
@@ -108,33 +79,36 @@
             "市中心",
             100,
             "",
-            "15 萬人"
+            "上千人"
           ],
           [
-            "博物館",
-            3,
+            "博物館那條街",
+            4,
             "",
-            "幾乎空的"
+            "罕見地安靜"
           ]
         ],
         "tone": "cool"
       },
-      "from": "The Guardian",
+      "from": "The Guardian〈Messina mystery: theft o〉",
       "seconds": 1.9
     },
     {
-      "say": "至少兩個人剪開鐵絲網",
+      "say": "至少兩個人破壞圍牆",
       "role": "事件",
       "tone": "cool",
-      "show": "圍牆頂上的刀片刺網",
-      "pic": "assets/photos/梅西納名畫失竊/2257453.jpg",
-      "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
+      "show": "影片：四幅文藝復興畫作在西西里的博物館被偷",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/99J1tPIXL1Q.mp4",
+        "start": 0.0,
+        "end": 7.44
+      },
+      "from": "BBC News 第 0 秒",
+      "seconds": 3.4,
       "seen": true
     },
     {
-      "say": "用鐵撬撬開一道側門",
+      "say": "撬開一道側門",
       "role": "事件",
       "tone": "cool",
       "show": "自製：他們走的那道門",
@@ -142,343 +116,372 @@
         "kind": "ring",
         "title": "他們走的那道側門",
         "value": "沒有警報",
-        "under": "少數幾個沒裝的入口之一",
+        "under": "而他們知道",
         "tone": "cool"
       },
-      "from": "The Guardian",
-      "seconds": 1.96
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 1.9
     },
     {
-      "say": "偷走安托內羅的多聯畫",
+      "say": "偷走安托內羅的畫",
       "role": "事件",
       "tone": "cool",
       "show": "安托內羅・達・梅西納的男子肖像",
       "pic": "assets/photos/梅西納名畫失竊/Antonello_da_Messina_-_Portrait_of_a_Man_-_National_Gallery_London.jpg.jpg",
       "fit": "ground",
-      "from": "The Guardian",
-      "seconds": 2.0,
+      "from": "BBC News 第 0 秒",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "《聖額我略多聯畫》僅存五片",
+      "say": "五片多聯畫，拿走三片",
       "role": "事件",
       "tone": "cool",
-      "show": "自製：剩下多少",
-      "card": {
-        "kind": "number",
-        "title": "這件作品僅存",
-        "value": "5 片",
-        "under": "《聖額我略多聯畫》，全部被偷走",
-        "tone": "cool"
+      "show": "影片：從加固的展示櫃裡拿走，五片中的三片",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/99J1tPIXL1Q.mp4",
+        "start": 13.96,
+        "end": 19.12
       },
-      "from": "The Guardian",
-      "seconds": 2.83
+      "from": "BBC News 第 13 秒",
+      "seconds": 3.4,
+      "seen": true
+    },
+    {
+      "say": "還有一幅小雙面畫",
+      "role": "事件",
+      "tone": "cool",
+      "show": "BBC 畫面：義大利博物館四幅文藝復興畫作失竊",
+      "pic": "assets/photos/梅西納名畫失竊/frame_99J1tPIXL1Q_31.jpg",
+      "fit": "fill",
+      "from": "The Guardian〈Renaissance paintings by〉",
+      "seconds": 2.2,
+      "seen": true
     },
     {
       "say": "監視器上，兩到三分鐘",
       "role": "事件",
       "tone": "cool",
-      "show": "牆上的監視攝影機",
-      "pic": "assets/photos/梅西納名畫失竊/20783671.jpg",
-      "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
+      "show": "自製：整件事花了多久",
+      "card": {
+        "kind": "clock",
+        "title": "監視器上的時間",
+        "value": "2–3 分鐘",
+        "part": 0.08,
+        "under": "從進去到離開",
+        "tone": "cool"
+      },
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "調查說是訂單式竊盜",
+      "role": "事件",
+      "tone": "cool",
+      "show": "影片：調查人員懷疑這是有人下單的偷竊",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/99J1tPIXL1Q.mp4",
+        "start": 30.16,
+        "end": 37.16
+      },
+      "from": "BBC News 第 30 秒",
+      "seconds": 3.4,
       "seen": true
     },
     {
-      "say": "但畫本身有警報",
+      "say": "警報到底有沒有響",
       "role": "疑點",
       "tone": "light",
       "show": "自製：翻轉那一句",
       "card": {
         "kind": "word",
-        "title": "但畫本身\n有警報",
+        "title": "警報\n到底有沒有響",
         "tone": "light"
       },
-      "from": "La Sicilia",
+      "from": "觀點",
       "seconds": 1.9
     },
     {
-      "say": "感應式的，而且響了",
+      "say": "BBC 說沒有被啟動",
       "role": "疑點",
       "tone": "light",
-      "show": "牆上的紅色手動報警器",
-      "pic": "assets/photos/梅西納名畫失竊/21782970.jpg",
-      "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "警衛聽到了",
-      "role": "疑點",
-      "tone": "light",
-      "show": "保全監控室，警衛坐在一整牆螢幕前",
-      "pic": "assets/photos/梅西納名畫失竊/30692441.jpg",
-      "fit": "fill",
-      "from": "TG La7",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "他把它關掉了",
-      "role": "疑點",
-      "tone": "light",
-      "show": "自製：那一個動作",
-      "card": {
-        "kind": "swap",
-        "title": "警報響起之後",
-        "was": "去看發生什麼事",
-        "now": "把它關掉",
-        "tone": "light"
-      },
-      "from": "TG La7",
-      "seconds": 1.9
-    },
-    {
-      "say": "因為他以為是誤報",
-      "role": "疑點",
-      "tone": "light",
-      "show": "自製：一句話佔滿畫面",
-      "card": {
-        "kind": "word",
-        "title": "他以為\n是誤報",
-        "under": "在那之前，它響過太多次沒事",
-        "tone": "light"
-      },
-      "from": "The Guardian",
-      "seconds": 1.9
-    },
-    {
-      "say": "拿羅浮宮那次來比",
-      "role": "疑點",
-      "tone": "light",
-      "show": "影片：談那場七分鐘的竊案，只有四分鐘在館內",
-      "clip": {
-        "file": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
-        "start": 17.92,
-        "end": 23.96
-      },
-      "from": "CNN 第 17 秒",
-      "seconds": 3.8,
-      "seen": true
-    },
-    {
-      "say": "最多人去的博物館也一樣",
-      "role": "疑點",
-      "tone": "light",
-      "show": "影片：問這種地方怎麼會被這樣搶",
-      "clip": {
-        "file": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
-        "start": 69.6,
-        "end": 74.77
-      },
-      "from": "CNN 第 69 秒",
-      "seconds": 3.8,
-      "seen": true
-    },
-    {
-      "say": "十分鐘後，事情更怪",
-      "role": "疑點",
-      "tone": "light",
-      "show": "義大利教堂裡的祭壇與濕壁畫",
-      "pic": "assets/photos/梅西納名畫失竊/37607917.jpg",
-      "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
-      "seen": true
-    },
-    {
-      "say": "一名婦人發現兩片畫",
-      "role": "疑點",
-      "tone": "light",
-      "show": "自製：她看到的樣子",
-      "card": {
-        "kind": "stack",
-        "title": "外面的矮牆上",
-        "items": [
-          "五片裡的兩片",
-          "靠著牆立著",
-          "沒有摔在地上"
-        ],
-        "tone": "light"
-      },
-      "from": "The Guardian",
-      "seconds": 1.96
-    },
-    {
-      "say": "檢察長說不排除黑手黨",
-      "role": "疑點",
-      "tone": "light",
-      "show": "影片：談西西里黑手黨與失竊名畫的關係",
-      "clip": {
-        "file": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
-        "start": 103.32,
-        "end": 109.44
-      },
-      "from": "Rai",
-      "seconds": 3.8,
-      "seen": true
-    },
-    {
-      "say": "追討專家說不對",
-      "role": "疑點",
-      "tone": "light",
-      "show": "自製：兩種說法",
+      "show": "自製：兩家說法",
       "card": {
         "kind": "split",
         "title": "兩種說法",
         "branches": [
-          "檢方\n不排除黑手黨",
-          "追討專家\n不會這樣做"
+          "BBC\n警報沒被啟動",
+          "衛報\n警報被繞過"
         ],
         "tone": "light"
       },
-      "from": "Art Recovery International",
+      "from": "BBC News 第 45 秒",
+      "seconds": 1.96
+    },
+    {
+      "say": "警方在查他們怎麼繞過",
+      "role": "疑點",
+      "tone": "light",
+      "show": "BBC 畫面：警方調查小偷如何不觸動警報進出",
+      "pic": "assets/photos/梅西納名畫失竊/frame_99J1tPIXL1Q_15.jpg",
+      "fit": "fill",
+      "from": "BBC News〈Four 'extraordinary' Ren〉",
+      "seconds": 2.2,
+      "seen": true
+    },
+    {
+      "say": "而有一個人正被調查",
+      "role": "疑點",
+      "tone": "light",
+      "show": "自製：誰",
+      "card": {
+        "kind": "ring",
+        "title": "正在被調查的",
+        "value": "一名館員",
+        "under": "理由：警報系統的紀錄對不上",
+        "tone": "light"
+      },
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "警方否認有內鬼",
+      "role": "疑點",
+      "tone": "light",
+      "show": "自製：同一件事的兩句話",
+      "card": {
+        "kind": "swap",
+        "title": "同一份報導裡",
+        "was": "一名館員遭調查",
+        "now": "警方否認有內鬼",
+        "tone": "light"
+      },
+      "from": "The Guardian〈Messina mystery: theft o〉",
       "seconds": 1.9
     },
     {
-      "say": "再狠也不會糟蹋梅西納",
+      "say": "知道哪道門沒警報",
       "role": "疑點",
       "tone": "light",
-      "show": "西西里海邊小鎮，山崖與港口",
-      "pic": "assets/photos/梅西納名畫失竊/18453312.jpg",
+      "show": "美術館空廳，地板反光",
+      "pic": "assets/photos/梅西納名畫失竊/frame_onzWOGWm3hM_44.jpg",
       "fit": "fill",
-      "from": "Art Recovery International",
-      "seconds": 2.0,
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "那件作品熬過大地震",
+      "say": "知道那天街上沒人",
       "role": "疑點",
       "tone": "light",
-      "show": "一九〇八年梅西納大地震後的廢墟",
-      "pic": "assets/photos/梅西納名畫失竊/Underwood_&_Underwood_©_1906_No._10495_-_Messina_-_The_once_beautiful_Water-front_after_the_earthquake_dett.jpg.jpg",
+      "show": "自製：他們知道的三件事",
+      "card": {
+        "kind": "stack",
+        "title": "他們事先知道",
+        "items": [
+          "哪一道門沒有警報",
+          "那天全城都在市中心",
+          "展示櫃裡有什麼"
+        ],
+        "tone": "light"
+      },
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "兩片被留在外面矮牆上",
+      "role": "疑點",
+      "tone": "light",
+      "show": "自製：留下來的那兩片",
+      "card": {
+        "kind": "number",
+        "title": "留在圍牆外的",
+        "value": "2 片",
+        "under": "沒有摔在地上，被小心地靠著",
+        "tone": "light"
+      },
+      "from": "The Guardian〈Renaissance paintings by〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "拿了又放回去",
+      "role": "疑點",
+      "tone": "light",
+      "show": "影片：談偷了名畫之後根本脫不了手",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/J46CsKIDiwo.mp4",
+        "start": 225.04,
+        "end": 230.32
+      },
+      "from": "Deutsche Welle 第 225 秒",
+      "seconds": 3.4,
+      "seen": true
+    },
+    {
+      "say": "這種事全世界都在發生",
+      "role": "疑點",
+      "tone": "light",
+      "show": "影片：專家說這類竊案一直都有",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/99J1tPIXL1Q.mp4",
+        "start": 132.36,
+        "end": 139.28
+      },
+      "from": "BBC News 第 132 秒",
+      "seconds": 3.4,
+      "seen": true
+    },
+    {
+      "say": "五十年，四百五十萬件",
+      "role": "疑點",
+      "tone": "light",
+      "show": "自製：一個數字跑上去",
+      "card": {
+        "kind": "number",
+        "title": "義大利五十年來被偷走的",
+        "value": "450 萬",
+        "under": "件藝術品與文物",
+        "tone": "light"
+      },
+      "from": "BBC News 第 314 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "羅浮宮那次七分鐘",
+      "role": "疑點",
+      "tone": "light",
+      "show": "華爾街日報畫面：羅浮宮竊案現場",
+      "pic": "assets/photos/梅西納名畫失竊/frame_SASDkIQjouI_98.jpg",
       "fit": "fill",
-      "from": "The Guardian",
-      "seconds": 2.0,
+      "from": "Wall Street Journal 第 63 秒",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "畫熬過地震，沒熬過那一鍵",
-      "role": "懸念",
-      "tone": "warm",
-      "show": "影片：談義大利的藝術品因為開放而變得脆弱",
-      "clip": {
-        "file": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
-        "start": 50.42,
-        "end": 56.52
-      },
-      "from": "BBC News 第 50 秒",
-      "seconds": 3.8,
+      "say": "帕爾馬那次三分鐘",
+      "role": "疑點",
+      "tone": "light",
+      "show": "德國之聲畫面：帕爾馬竊案五人被監視器拍到落網",
+      "pic": "assets/photos/梅西納名畫失竊/frame_J46CsKIDiwo_29.jpg",
+      "fit": "fill",
+      "from": "CNN〈Renoir, Cezanne and Mati〉",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "偷了之後能拿它怎麼辦",
+      "say": "那三片還沒找到",
       "role": "懸念",
       "tone": "warm",
-      "show": "影片：名畫太燙手，偷了也脫不了手",
-      "clip": {
-        "file": "assets/footage/梅西納名畫失竊/z7KC7vBtqwI.mp4",
-        "start": 366.33,
-        "end": 371.47
-      },
-      "from": "CNN 第 366 秒",
-      "seconds": 3.8,
+      "show": "美術館牆上空著的畫框位置",
+      "pic": "assets/photos/梅西納名畫失竊/frame_99J1tPIXL1Q_133.jpg",
+      "fit": "fill",
+      "from": "BBC News〈Four 'extraordinary' Ren〉",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "一九六九年巴勒摩",
+      "say": "一九六九年的卡拉瓦喬",
       "role": "懸念",
       "tone": "warm",
-      "show": "卡拉瓦喬的自畫像",
-      "pic": "assets/photos/梅西納名畫失竊/Bild-Ottavio_Leoni,_Caravaggio.jpg.jpg",
+      "show": "卡拉瓦喬的《誕生》",
+      "pic": "assets/photos/梅西納名畫失竊/Caravaggio-Nativity(1600).jpg.jpg",
       "fit": "ground",
-      "from": "The Guardian",
-      "seconds": 2.0,
+      "from": "BBC News 第 111 秒",
+      "seconds": 2.2,
       "seen": true
     },
     {
-      "say": "一幅卡拉瓦喬被偷走",
+      "say": "也是西西里，也沒找回",
       "role": "懸念",
       "tone": "warm",
-      "show": "影片：談巴勒摩失竊的卡拉瓦喬《誕生》",
+      "show": "影片：巴勒摩那幅卡拉瓦喬的下落",
       "clip": {
         "file": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
-        "start": 88.44,
-        "end": 93.78
+        "start": 61.08,
+        "end": 68.82
       },
-      "from": "BBC News 第 88 秒",
-      "seconds": 3.8,
+      "from": "BBC News 第 61 秒",
+      "seconds": 3.4,
       "seen": true
     },
     {
-      "say": "到今天還在通緝名單上",
+      "say": "五十七年了",
       "role": "懸念",
       "tone": "warm",
       "show": "自製：過了多久",
       "card": {
         "kind": "clock",
-        "title": "巴勒摩那幅卡拉瓦喬",
+        "title": "巴勒摩那幅",
         "value": "57 年",
         "part": 1.0,
-        "under": "仍在 FBI 通緝名單上",
+        "under": "仍在通緝名單上",
         "tone": "warm"
       },
-      "from": "The Guardian",
-      "seconds": 2.17
-    },
-    {
-      "say": "剩下三片，還沒找到",
-      "role": "懸念",
-      "tone": "warm",
-      "show": "影片：談失竊藝術品的追討工作",
-      "clip": {
-        "file": "assets/footage/梅西納名畫失竊/Ai55zArdmzA.mp4",
-        "start": 141.48,
-        "end": 149.1
-      },
-      "from": "BBC News 第 141 秒",
-      "seconds": 3.8,
-      "seen": true
-    },
-    {
-      "say": "警報其實是響的",
-      "role": "懸念",
-      "tone": "warm",
-      "show": "自製：整件事只差一步",
-      "card": {
-        "kind": "chain",
-        "title": "那天晚上的順序",
-        "points": [
-          "鐵絲網被剪開",
-          "警報響了",
-          "有人把它關掉"
-        ],
-        "tone": "warm"
-      },
-      "from": "The Guardian",
+      "from": "BBC News 第 111 秒",
       "seconds": 1.9
     },
     {
-      "say": "你上一次關掉的是什麼",
+      "say": "這件作品熬過大地震",
+      "role": "懸念",
+      "tone": "warm",
+      "show": "一九〇八年梅西納大地震後的廢墟",
+      "pic": "assets/photos/梅西納名畫失竊/Underwood_&_Underwood_©_1906_No._10495_-_Messina_-_The_once_beautiful_Water-front_after_the_earthquake_dett.jpg.jpg",
+      "fit": "fill",
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 2.2,
+      "seen": true
+    },
+    {
+      "say": "沒熬過一份對不上的紀錄",
+      "role": "懸念",
+      "tone": "warm",
+      "show": "自製：那天晚上的順序",
+      "card": {
+        "kind": "chain",
+        "title": "已知的順序",
+        "points": [
+          "圍牆被破壞",
+          "側門沒有警報",
+          "紀錄對不上"
+        ],
+        "tone": "warm"
+      },
+      "from": "The Guardian〈Messina mystery: theft o〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "守著它的人裡面",
+      "role": "懸念",
+      "tone": "warm",
+      "show": "影片：談這些東西為什麼一直是目標",
+      "clip": {
+        "file": "assets/footage/梅西納名畫失竊/99J1tPIXL1Q.mp4",
+        "start": 177.12,
+        "end": 182.36
+      },
+      "from": "BBC News 第 177 秒",
+      "seconds": 3.4,
+      "seen": true
+    },
+    {
+      "say": "有一個知道哪裡沒鎖",
       "role": "懸念",
       "tone": "cool",
       "show": "自製：結尾頁",
       "card": {
         "kind": "outro",
         "points": [
-          "畫本身有感應警報，而且響了",
-          "警衛聽到，關掉，因為他以為是誤報",
-          "十分鐘後兩片被立在外面的矮牆上",
-          "剩下三片，到現在沒有下落"
+          "他們走的側門，是少數沒裝警報的",
+          "警報有沒有響，兩家說法相反",
+          "一名館員因紀錄對不上被調查，警方否認有內鬼",
+          "五片裡的三片，到現在沒有下落"
         ],
-        "title": "它熬過了一場地震\n沒熬過一次「應該又是誤報」",
+        "title": "它熬過了一場地震\n沒熬過一份對不上的紀錄",
         "under": "梅西納，安托內羅多聯畫失竊",
         "tone": "cool"
       },
       "from": "觀點",
-      "seconds": 5.6
+      "seconds": 6.0
     }
   ]
 }
