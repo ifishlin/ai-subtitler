@@ -29,6 +29,10 @@ assets/articles/
 # 情境影片：影片檔不進版控（一百支一 GB），但 library.json 要進 ——
 # 那份是「哪幾支看過、留下了哪幾支」，是判斷不是素材，重抓一次補不回來。
 assets/broll/*.mp4
+# 上一次組 prompt 抽到哪幾支。它跟著那一份文案有意義，重抽就換一批，
+# 不是判斷也不是素材 —— 但**不能刪**：刪了之後 V2 在 prompt 和 fasten
+# 兩邊會指著不同的影片。它進不進版控無所謂，留在磁碟上才要緊。
+assets/broll/offered/
 # 片型是設計出來的，跟程式一起走
 
 # 衍生檔：proxy、波形、縮圖、字幕圖、抽出來的音軌、Chrome 的 profile
