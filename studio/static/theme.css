@@ -67,6 +67,33 @@ a{color:var(--accent)}
 .topnav .gap{flex:1}
 .topnav .mark{color:var(--faint);font:11px var(--mono);padding-right:6px}
 
+/* 一組收起來的服務。十四格排成一條的時候，「規定」右邊那八格看起來是一團
+   —— 而它們其實分成兩類：三個要先選題目（看同一批資料的三層深度），
+   三個不用選題目（改的都是檔案）。 */
+.topnav .grp{position:relative}
+.topnav .top{
+  font:inherit;color:var(--dim);background:none;border:none;cursor:pointer;
+  padding:5px 11px;border-radius:7px;white-space:nowrap;
+}
+.topnav .top:hover{color:var(--ink);background:var(--panel2)}
+.topnav .top .arrow{font-size:9px;margin-left:4px;opacity:.7}
+/* 現在這一頁在這一組裡。不標的話，人在 /records 上看不出自己在哪一區。 */
+.topnav .grp.here .top{color:var(--bg);background:var(--accent);font-weight:600}
+.topnav .grp.open .top{color:var(--ink);background:var(--panel2)}
+.topnav .grp.here.open .top{color:var(--bg);background:var(--accent)}
+
+/* 下拉**不給自己的 z-index**。它是導覽列（9000）的子孫，本來就畫在頁面
+   內容之上；給它 9001 會連帶壓過覆蓋層，而覆蓋層被壓住的下場上面那一段
+   註解已經寫過一次了。 */
+.topnav .drop{
+  position:absolute;top:calc(100% + 5px);left:0;min-width:168px;
+  display:none;flex-direction:column;gap:1px;padding:5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  box-shadow:0 12px 28px rgba(0,0,0,.45);
+}
+.topnav .grp.open .drop{display:flex}
+.topnav .drop a{padding:7px 11px;border-radius:7px}
+
 /* ---------------------------------------------------------------- 版面 */
 
 .wrap{max-width:1020px;margin:0 auto;padding:30px 22px 80px}

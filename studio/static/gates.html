@@ -58,7 +58,33 @@
   table.sheet td:first-child{white-space:nowrap}
   td.n{font:12px var(--mono);text-align:center;color:var(--faint)}
   td.n.bad{color:var(--warn);font-weight:700}
-  td.n.zero{color:#2e3d4c}
+  /* 通過畫成 ✓ 而不是一個幾乎看不見的點。#2e3d4c 配 #0b0e12 的結果是：
+     四份文案全部通過的表，跟一張讀不到資料的空表，在畫面上一模一樣 ——
+     而「找到 0 筆」和「沒有去找」長得一樣，是這個專案最貴的那一類錯。 */
+  td.n.zero{color:#3f6b52}
+
+  /* 但顏色只解決一半。一列十五格要一格一格掃，而人要的答案是一句話，
+     所以每一列最前面直接寫判決。 */
+  td.verdict{font:12px var(--mono);white-space:nowrap}
+  td.verdict.ok{color:var(--ok)}
+  td.verdict.no{color:var(--warn);font-weight:700}
+
+  /* 表格上方那一句。它同時解決另一半：讀不到資料的時候這裡會說「讀不到」，
+     跟「全部通過」再也不會長得一樣。 */
+  .tally{font:12.5px var(--mono);color:var(--dim);margin:0 0 9px}
+  .tally b{color:var(--ok)}
+  .tally b.no{color:var(--warn)}
+
+  /* 十五欄在一般寬度下會切掉右邊五欄（cardbound、clipped 和整片的三個
+     數字），而捲軸在 macOS 上不會一直顯示 —— 畫面上沒有任何東西說右邊
+     還有東西。右緣壓一層漸層，捲到底就淡掉。 */
+  .scroll.more{position:relative}
+  .scroll.more::after{
+    content:"";position:absolute;top:0;right:0;bottom:0;width:56px;
+    pointer-events:none;
+    background:linear-gradient(90deg,transparent,var(--bg) 78%);
+  }
+  .scroll.more.end::after{opacity:0}
   .thr{font:12.5px var(--mono);color:var(--dim)}
   .thr b{color:var(--ink)}
   .thr .k{color:var(--accent)}
@@ -86,7 +112,8 @@
   <div id="extra"></div>
 
   <h2>每一份文案現在的狀況</h2>
-  <div class="scroll"><table class="sheet" id="grid"></table></div>
+  <p class="tally" id="tally">讀取中…</p>
+  <div class="scroll" id="gridBox"><table class="sheet" id="grid"></table></div>
 
   <h2>門檻的數字 —— assets/rules.json</h2>
   <div id="thr" class="thr"></div>
@@ -150,25 +177,47 @@ async function load() {
     gateCard({...one, hits: 0}, one.blocks)).join("");
 
   const keys = d.gates.map((g) => g.key);
+  /* 一列有幾處沒過。三個是非題跟門一起算 —— 對讀的人來說它們是同一件事
+     （「這一份能不能出」），分開數只是逼他自己加。 */
+  const missed = (one) => keys.reduce((sum, k) => sum + (one.faults[k] || 0), 0)
+    + (one.sums.too_long ? 1 : 0) + (one.sums.even ? 0 : 1)
+    + (one.sums.still_enough ? 0 : 1);
+
   $("grid").innerHTML = `
-    <thead><tr><th>文案</th>
+    <thead><tr><th>文案</th><th>結果</th>
       ${keys.map((k) => `<th style="text-align:center">${esc(k)}</th>`).join("")}
       <th style="text-align:center">長度</th>
       <th style="text-align:center">比例</th>
       <th style="text-align:center">會動</th></tr></thead>
-    <tbody>${d.scripts.map((one) => `
+    <tbody>${d.scripts.map((one) => {
+      const n = missed(one);
+      return `
       <tr><td>${esc(one.name)}</td>
+        <td class="verdict ${n ? "no" : "ok"}">${
+          n ? `${n} 處沒過` : "全部通過"}</td>
         ${keys.map((k) => {
-          const n = one.faults[k] || 0;
-          return `<td class="n ${n ? "bad" : "zero"}">${n ? n : "·"}</td>`;
+          const hits = one.faults[k] || 0;
+          return `<td class="n ${hits ? "bad" : "zero"}">${
+            hits ? hits : "✓"}</td>`;
         }).join("")}
         <td class="n ${one.sums.too_long ? "bad" : "zero"}">${
-          one.sums.over > 0 ? "+" + one.sums.over : "·"}</td>
-        <td class="n ${one.sums.even ? "zero" : "bad"}">${one.sums.even ? "·" : "✗"}</td>
+          one.sums.over > 0 ? "+" + one.sums.over : "✓"}</td>
+        <td class="n ${one.sums.even ? "zero" : "bad"}">${
+          one.sums.even ? "✓" : "✗"}</td>
         <td class="n ${one.sums.still_enough ? "zero" : "bad"}">${
-          one.sums.still_enough ? "·" : "✗"}</td>
-      </tr>`).join("") || '<tr><td class="empty">還沒有文案</td></tr>'}
+          one.sums.still_enough ? "✓" : "✗"}</td>
+      </tr>`;
+    }).join("") || '<tr><td class="empty">還沒有文案</td></tr>'}
     </tbody>`;
+
+  /* 表格上方那一句。四份全過的時候它說「0 處沒過」，讀不到的時候
+     `load()` 的 catch 會把它換成「讀不到」—— 兩種狀態從此長得不一樣。 */
+  const bad = d.scripts.reduce((sum, one) => sum + missed(one), 0);
+  $("tally").innerHTML = d.scripts.length
+    ? `${d.scripts.length} 份文案　${keys.length + 3} 道檢查　`
+      + `目前 <b class="${bad ? "no" : ""}">${bad} 處</b>沒過`
+    : "還沒有文案";
+  showEdge();
 
   /* 每個數字旁邊都有一個 why。引用數字的文字會過期，指名數字的不會 —— 所以
      這裡印的是鍵和值，不是我重打一遍的說明。 */
@@ -184,8 +233,23 @@ async function load() {
   }).join("");
 }
 
+/* 右緣那層漸層：只在右邊真的還有東西的時候才蓋。捲到底就拿掉，
+   不然它會一直說「還有」。 */
+function showEdge() {
+  const box = $("gridBox");
+  if (!box) return;
+  const more = box.scrollWidth > box.clientWidth + 4;
+  box.classList.toggle("more", more);
+  box.classList.toggle("end",
+    box.scrollLeft + box.clientWidth >= box.scrollWidth - 4);
+}
+$("gridBox").addEventListener("scroll", showEdge);
+addEventListener("resize", showEdge);
+
 load().catch((error) => {
   $("source").textContent = "讀不到門的資料：" + error.message;
+  // 表格那一句也要說。不說的話畫面上是一張空表，跟「全部通過」一樣。
+  $("tally").textContent = "讀不到：" + error.message;
 });
 </script>
 </body>
