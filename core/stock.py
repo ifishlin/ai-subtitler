@@ -58,6 +58,9 @@ class Clip:
     url: str                       # direct video file
     page: str                      # human page, for crediting the author
     author: str = ""
+    # 挑片子的時候要先看得到它。抓一支 8MB 的影片只為了知道「不是這個」，
+    # 一百支就是 800MB 的浪費 —— 縮圖二十幾 KB，看完再決定要不要抓。
+    still: str = ""
     tags: list[str] = field(default_factory=list)
 
     @property
@@ -117,6 +120,7 @@ def search_pexels(query: str, count: int = 5, target_width: int = 1920,
             duration=float(item.get("duration", 0)),
             url=chosen["link"], page=item.get("url", ""),
             author=(item.get("user") or {}).get("name", ""),
+            still=item.get("image", ""),
         ))
         if len(clips) >= count:
             break

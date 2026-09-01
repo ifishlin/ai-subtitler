@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>情境影片　AI-Reporters</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+  .bar .n{font:12px var(--mono);color:var(--faint)}
+  .bar .gap{flex:1}
+  .bar button{font:inherit;font-size:12.5px;color:var(--ink);
+    background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+    padding:5px 12px;cursor:pointer}
+  .bar button:hover{border-color:var(--accent)}
+  .bar button.primary{background:var(--accent);color:#0b1017;
+    border-color:transparent;font-weight:600}
+  .bar button:disabled{opacity:.45;cursor:default;border-color:var(--line)}
+
+  .filters{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 18px}
+  .filters button{font:12px inherit;color:var(--dim);background:none;
+    border:1px solid var(--line);border-radius:14px;padding:3px 11px;
+    cursor:pointer;white-space:nowrap}
+  .filters button:hover{color:var(--ink)}
+  .filters button.on{color:var(--accent);border-color:var(--accent)}
+
+  h3.group{font-size:14px;margin:26px 0 10px;color:var(--ink)}
+  h3.group span{font:11px var(--mono);color:var(--faint);margin-left:9px}
+
+  .wall{display:grid;gap:10px;
+    grid-template-columns:repeat(auto-fill,minmax(214px,1fr))}
+  .clip{border:1px solid var(--line);border-radius:11px;overflow:hidden;
+    background:var(--panel)}
+  .clip.keep{border-color:#2c5a45}
+  .clip.drop{border-color:#4a2b24;opacity:.45}
+  /* 縮圖和影片疊在同一格：沒抓回來之前是縮圖，抓回來之後滑過去會播。
+     兩者一樣高，換過去的時候版面不會跳。 */
+  .shot{position:relative;aspect-ratio:16/9;background:#0d1014}
+  .shot img,.shot video{position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block}
+  .shot video{opacity:0;transition:opacity .12s}
+  .clip:hover .shot video.there{opacity:1}
+  .shot .len{position:absolute;right:6px;bottom:6px;font:10.5px var(--mono);
+    color:#fff;background:#000a;padding:1px 6px;border-radius:9px}
+  .shot .down{position:absolute;left:6px;bottom:6px;font:10.5px var(--mono);
+    color:#9fe6b8;background:#000a;padding:1px 6px;border-radius:9px}
+  .clip .say{padding:8px 10px 2px;font:11.5px var(--mono);color:var(--dim);
+    word-break:break-word}
+  .clip .who{padding:0 10px 8px;font:10.5px var(--mono);color:var(--faint)}
+  .clip .pick{display:flex;gap:1px;border-top:1px solid var(--line)}
+  .clip .pick button{flex:1;font:12px inherit;color:var(--dim);background:none;
+    border:none;padding:7px 0;cursor:pointer}
+  .clip .pick button:hover{background:var(--panel2);color:var(--ink)}
+  .clip .pick button.on{color:var(--bg);font-weight:600}
+  .clip .pick button.yes.on{background:var(--ok)}
+  .clip .pick button.no.on{background:var(--warn)}
+
+  .job{font:12px var(--mono);color:var(--accent);margin:0 0 12px;
+    min-height:17px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>情境影片</h1>
+  <p class="under">一批共用的情境畫面。新聞片段是<b>這件事的證據</b>——有出處、
+    有時間點；情境影片不是，它補的是節奏。所以它是第四種鏡頭，
+    <b>會動，但不算實拍</b>。</p>
+  <p class="under">一批共用，不是每題現撈：<b>看過一次就永遠算看過</b>，
+    而且四個題目不會各存一份夕陽電塔。先看縮圖決定要不要，
+    <b>留下來的才下載</b>——抓一支八 MB 只為了知道「不是這個」，
+    一百支就是八百 MB。</p>
+
+  <div class="bar">
+    <span class="n" id="tally">讀取中…</span>
+    <span class="gap"></span>
+    <button id="hunt">再找一批</button>
+    <button id="sweep">掃掉不要的檔案</button>
+    <button id="get" class="primary">下載留下來的</button>
+  </div>
+  <p class="job" id="job"></p>
+  <div class="filters" id="filters"></div>
+  <div id="wall"></div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+let BOOK = {clips: []};
+let ONLY = "";        // 只看某一組
+let STATE = "";       // "" 全部　"new" 還沒看　"keep" 留下　"drop" 不要
+
+function shape(one) {
+  const state = one.keep === true ? "keep" : one.keep === false ? "drop" : "";
+  return `
+  <div class="clip ${state}" data-id="${esc(one.id)}">
+    <div class="shot">
+      <img src="${esc(one.still)}" alt="" loading="lazy">
+      ${one.there ? `<video class="there" src="/media/broll/${esc(one.id)}.mp4"
+        poster="${esc(one.still)}" muted loop playsinline
+        preload="none"></video>` : ""}
+      <span class="len">${one.seconds}s</span>
+      ${one.there ? '<span class="down">已下載</span>' : ""}
+    </div>
+    <div class="say">${esc(one.term)}</div>
+    <div class="who">${esc(one.author || "不詳")}　${one.width}×${one.height}</div>
+    <div class="pick">
+      <button class="yes ${one.keep === true ? "on" : ""}" data-keep="1">留下</button>
+      <button class="no ${one.keep === false ? "on" : ""}" data-keep="0">不要</button>
+    </div>
+  </div>`;
+}
+
+function draw() {
+  const all = BOOK.clips || [];
+  const groups = [...new Set(all.map((one) => one.group))];
+  $("filters").innerHTML =
+    `<button class="${ONLY ? "" : "on"}" data-group="">全部 ${all.length}</button>`
+    + groups.map((g) => `<button class="${ONLY === g ? "on" : ""}"
+        data-group="${esc(g)}">${esc(g)} ${
+        all.filter((o) => o.group === g).length}</button>`).join("")
+    + `<span style="width:14px"></span>`
+    + [["", "不分狀態"], ["new", "還沒看"], ["keep", "留下"], ["drop", "不要"]]
+      .map(([k, label]) => `<button class="${STATE === k ? "on" : ""}"
+        data-state="${k}">${label}</button>`).join("");
+
+  const fits = (one) =>
+    (!ONLY || one.group === ONLY) &&
+    (STATE === "" ||
+     (STATE === "new" && one.keep === null) ||
+     (STATE === "keep" && one.keep === true) ||
+     (STATE === "drop" && one.keep === false));
+
+  const show = groups
+    .filter((g) => !ONLY || g === ONLY)
+    .map((g) => {
+      const mine = all.filter((one) => one.group === g && fits(one));
+      if (!mine.length) return "";
+      return `<h3 class="group">${esc(g)}<span>${mine.length} 支</span></h3>
+        <div class="wall">${mine.map(shape).join("")}</div>`;
+    }).join("");
+  $("wall").innerHTML = show || '<p class="empty">這個條件下一支都沒有。</p>';
+
+  /* 三態要分開數。「還沒看」和「看過而且不要」加在一起報，
+     一個沒看完的池子會看起來像看完了。 */
+  const kept = all.filter((o) => o.keep === true);
+  const there = kept.filter((o) => o.there).length;
+  $("tally").textContent =
+    `候選 ${all.length} 支　留下 ${kept.length}　不要 `
+    + `${all.filter((o) => o.keep === false).length}　還沒看 `
+    + `${all.filter((o) => o.keep === null).length}　已下載 ${there}`;
+  $("get").disabled = kept.length === there;
+}
+
+$("filters").addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  if (button.dataset.group !== undefined) ONLY = button.dataset.group;
+  if (button.dataset.state !== undefined) STATE = button.dataset.state;
+  draw();
+});
+
+/* 滑過去才播，而且 preload="none" —— 一頁一百多支，全部預載會把連線佔滿，
+   而那正好是 /scripts 上二十六張照片永遠載不完的原因。 */
+$("wall").addEventListener("mouseover", (event) => {
+  const film = event.target.closest(".clip")?.querySelector("video.there");
+  if (film) { film.currentTime = 0; film.play().catch(() => {}); }
+});
+$("wall").addEventListener("mouseout", (event) => {
+  const film = event.target.closest(".clip")?.querySelector("video.there");
+  if (film) film.pause();
+});
+
+$("wall").addEventListener("click", async (event) => {
+  const button = event.target.closest(".pick button");
+  if (!button) return;
+  const card = button.closest(".clip");
+  const want = button.dataset.keep === "1";
+  const now = BOOK.clips.find((one) => one.id === card.dataset.id);
+  // 再按一次同一顆＝收回判斷，回到「還沒看」。沒有這一步的話，
+  // 手滑按到「不要」就再也回不去了。
+  const next = now.keep === want ? null : want;
+  const back = await fetch("/api/broll/keep", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({id: now.id, keep: next}),
+  });
+  if (!back.ok) { $("job").textContent = "存不起來：" + await back.text(); return; }
+  now.keep = next;
+  draw();
+});
+
+/* 工作跑在伺服器上，這裡問進度。問到不是 running 就重讀一次池子 ——
+   不重讀的話，下載完的那幾支在畫面上還是「沒下載」。 */
+async function watch(what) {
+  $("job").textContent = what + "…";
+  while (true) {
+    await new Promise((r) => setTimeout(r, 1200));
+    const back = await fetch("/api/job");
+    if (!back.ok) break;
+    const now = await back.json();
+    $("job").textContent = `${what}　${now.step}/${now.steps}　${now.note}`;
+    if (now.state !== "running") break;
+  }
+  await load();
+  setTimeout(() => { $("job").textContent = ""; }, 4000);
+}
+
+$("hunt").onclick = async () => {
+  const back = await fetch("/api/broll/hunt", {method: "POST",
+    headers: {"Content-Type": "application/json"}, body: "{}"});
+  if (!back.ok) { $("job").textContent = await back.text(); return; }
+  watch("找候選");
+};
+$("get").onclick = async () => {
+  const back = await fetch("/api/broll/download", {method: "POST",
+    headers: {"Content-Type": "application/json"}, body: "{}"});
+  if (!back.ok) { $("job").textContent = await back.text(); return; }
+  watch("下載");
+};
+$("sweep").onclick = async () => {
+  const back = await fetch("/api/broll/sweep", {method: "POST"});
+  const got = await back.json();
+  $("job").textContent = `掃掉 ${got.gone} 個檔案`;
+  await load();
+};
+
+async function load() {
+  const back = await fetch("/api/broll");
+  if (!back.ok) throw new Error(await back.text());
+  BOOK = await back.json();
+  draw();
+}
+
+load().catch((error) => {
+  $("tally").textContent = "讀不到：" + error.message;
+  $("wall").innerHTML = "";
+});
+</script>
+</body>
+</html>

@@ -756,6 +756,82 @@ def _sites() -> list[str]:
     return _sites.cached
 
 
+# ------------------------------------------------- 情境影片的池子
+
+@app.get("/broll", response_class=HTMLResponse)
+def broll_page() -> str:
+    """一批共用的情境影片，看過、留下要的、下載。
+
+    分兩步是刻意的：先只拿縮圖和說明（二十幾 KB），看完才下載影片檔。
+    抓一支 8MB 只為了知道「不是這個」，一百支就是八百 MB 的浪費。
+    """
+    return (STATIC / "broll.html").read_text(encoding="utf-8")
+
+
+@app.get("/api/broll")
+def broll_library() -> dict[str, Any]:
+    from core import broll as broll_module
+    return broll_module.library()
+
+
+@app.post("/api/broll/hunt")
+def broll_hunt(payload: dict[str, Any] = Body(default={})) -> dict[str, Any]:
+    """去 Pexels 找候選。重跑安全 —— 已經在池子裡的不會重複加，
+    也不會把看過、留下的判斷洗掉。"""
+    from core import broll as broll_module
+    per = int(payload.get("per_term") or 3)
+
+    def work(say) -> None:
+        got = broll_module.hunt(per_term=per, say=say)
+        say(1, 1, f"候選共 {got['total']} 支（新增 {got['added']}）")
+        for one in got["quiet"]:
+            say(1, 1, f"⚠ {one}")
+
+    _job_run("找情境影片", "", work)
+    return {"started": True}
+
+
+@app.post("/api/broll/keep")
+def broll_keep(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    from core import broll as broll_module
+    keep = payload.get("keep")
+    return broll_module.judge(str(payload.get("id") or ""),
+                              None if keep is None else bool(keep))
+
+
+@app.post("/api/broll/download")
+def broll_download(payload: dict[str, Any] = Body(default={})) -> dict[str, Any]:
+    from core import broll as broll_module
+
+    def work(say) -> None:
+        got = broll_module.bring_in(say=say)
+        say(1, 1, f"下載了 {got['got']} 支"
+                  + (f"，{len(got['missed'])} 支失敗" if got["missed"] else ""))
+        for one in got["missed"]:
+            say(1, 1, f"⚠ {one}")
+
+    _job_run("下載情境影片", "", work)
+    return {"started": True}
+
+
+@app.post("/api/broll/sweep")
+def broll_sweep() -> dict[str, Any]:
+    """掃掉被判成不要、卻已經下載過的檔案。破壞性的，所以是自己一支。"""
+    from core import broll as broll_module
+    return {"gone": broll_module.drop_unwanted()}
+
+
+@app.get("/media/broll/{name}")
+def broll_file(name: str) -> FileResponse:
+    from core import broll as broll_module
+    if not re.fullmatch(r"[0-9]{1,16}\.mp4", name):
+        raise HTTPException(404, "沒有這一支")
+    here = broll_module.HERE / name
+    if not here.is_file():
+        raise HTTPException(404, "沒有這一支")
+    return FileResponse(here, media_type="video/mp4")
+
+
 # ------------------------------------------------- 題目檔的原文
 
 def _record_path(name: str):
