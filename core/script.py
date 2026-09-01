@@ -177,6 +177,9 @@ GATES = [
      "每種卡需要的欄位。bars 的長度要是數字，不能是「超過 1/3」"),
     ("clipped",    "台詞會被字幕區截掉",    "frame",    True,
      "一句斷成三行還放不完，尾巴就會消失，而且只在燒上去的畫面裡看得到"),
+    ("cropped",    "新聞畫格被裁掉一半",    "frame",    True,
+     "從影片截下來的畫格不能用 fill —— 台標、下標、圖表的標籤全在兩側，"
+     "裁成滿版只留中間三分之一的寬度，那些字必然消失"),
     ("cardbound",  "卡片佔太多",          "sequence", True,
      "實拍要佔滿一半的時間。上限守了半年，下限沒有人守 —— 一張卡接一張卡"
      "的成品每一道門都過得去，因為它是有聲音的簡報，不是壞掉的影片"),
@@ -272,6 +275,7 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "still_enough": borrowed > 0 and moving >= borrowed * least,
             "unpicked": missing_pictures(script),
             "unchecked": unchecked(script),
+            "cropped": cropped(script),
             "undrawn": undrawn(script),
             "uncredited": uncredited(script, *gathered(script)),
             "samey": samey(script),
@@ -279,6 +283,10 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "simplified": simplified(script),
             "card_wrong": card_wrong(script),
             "clipped": clipped(script),
+            # 門的名字，給讀的人用。網頁本來自己寫死一份十二個字串的清單來
+            # 數「幾處不合格」—— 加第十三道門的時候它不會動，而畫面上看起來
+            # 就是「全過」。清單只留一份，就是 GATES。
+            "gates": [key for key, *_ in GATES],
             "house": rules_module.house(script.get("format")).get("name", ""),
             "roles": roles_of(script),
             "borrowed_most": most,
@@ -416,6 +424,43 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
         elif pictures and pic not in pictures:
             lack.append({**note, "why": f"{pic} 不是這個題目收的圖"})
     return lack
+
+
+def cropped(script: dict[str, Any]) -> list[dict[str, Any]]:
+    """News frames cropped to the tall frame, which throws their content away.
+
+    A photograph put into 9:16 has to lose something, and `fill` loses two
+    thirds of the width. For a stock photograph that is usually fine -- the
+    subject is in the middle and the edges are sky. For a frame lifted from a
+    broadcast it never is: what a news frame is *for* is the words on it, and
+    the words are the chyron along the bottom, the network mark in the corner,
+    the labels on the chart. All of them are at the edges.
+
+    Found by looking. A line said 「展板上寫讓五大湖更偉大」 over a frame of
+    the signing, and the crop left `…kes Even Greater` hanging off the left
+    edge -- the sentence the caption claimed was on screen was not on screen.
+    Every gate passed: the file existed, it belonged to this topic, `seen` was
+    ticked. Nothing in the program was looking at what survived the crop.
+
+    This does not check that the picture matches the line -- nothing can. It
+    checks the one case where the crop is guaranteed to destroy the reason the
+    picture was chosen, which is narrow enough to be a gate rather than a
+    warning nobody reads.
+    """
+    pictures, _ = gathered(script)
+    default = rules_module.look("still_fit.default", "blur")
+    wrong = []
+    for index, line in enumerate(script.get("lines") or [], start=1):
+        pic = line.get("pic")
+        if not pic or (line.get("fit") or default) != "fill":
+            continue
+        if (pictures.get(pic) or {}).get("kind") != "frame":
+            continue
+        wrong.append({"line": index, "say": line.get("say", ""),
+                      "show": line.get("show", ""),
+                      "why": "新聞畫格用 fill 會把台標、下標和圖表標籤裁掉，"
+                             "改用 ground 或 blur"})
+    return wrong
 
 
 def unchecked(script: dict[str, Any]) -> list[dict[str, Any]]:
@@ -770,23 +815,71 @@ def uncredited(script: dict[str, Any],
     sources, footage = sources or {}, footage or {}
     lack = []
     for index, line in enumerate(script.get("lines") or [], start=1):
-        if not is_real(line.get("show")):
+        if not needs_credit(line, sources):
             continue
-        if is_clip(line):
-            who = footage.get(line["clip"]["file"], {}).get("outlet", "")
-            if not who:
-                lack.append({"line": index, "say": line.get("say", ""),
-                             "why": "這段影片查不到是哪一台的"})
-            continue
-        source = sources.get(line.get("pic") or "")
-        if not source:
-            continue                       # already reported as unpicked
-        # A stock photograph asks for nothing; Commons and a lifted frame both
-        # do, and both record what they ask for when they are fetched.
-        if source.get("kind") in ("real", "frame") and not source.get("credit"):
+        if not credit_line(line, sources, footage):
+            who = (footage.get((line.get("clip") or {}).get("file", ""), {})
+                   or sources.get(line.get("pic") or "") or {}).get("outlet")
             lack.append({"line": index, "say": line.get("say", ""),
-                         "why": f"{source.get('outlet') or '這張圖'} 沒有出處"})
+                         "why": "這段影片查不到是哪一台的" if is_clip(line)
+                                else f"{who or '這張圖'} 沒有出處"})
     return lack
+
+
+def needs_credit(line: dict[str, Any],
+                 sources: dict[str, dict[str, Any]] | None = None) -> bool:
+    """Whether somebody's name has to appear while this shot is on screen.
+
+    A stock photograph asks for nothing -- the Pexels licence is explicit about
+    it, and burning 「畫面來源」 onto a lit substation at dusk would tell the
+    viewer it is a picture of this story, which is worse than saying nothing.
+    Everything else borrowed does: a lifted frame is the broadcaster's, and a
+    Commons photograph carries the author and licence it was fetched under.
+    """
+    if not is_real(line.get("show")):
+        return False
+    if is_clip(line):
+        return True
+    source = (sources or {}).get(line.get("pic") or "")
+    if not source:
+        return False                       # already reported as unpicked
+    return source.get("kind") in ("real", "frame")
+
+
+def credit_line(line: dict[str, Any],
+                sources: dict[str, dict[str, Any]] | None = None,
+                footage: dict[str, dict[str, Any]] | None = None) -> str:
+    """The words to burn onto this shot, or empty if it needs none.
+
+    One function, because there were two and only one of them drew anything.
+    `uncredited` asked whether the *pile* recorded a credit; `build` burned one
+    only inside `clip_cut`. Both were behaving exactly as written, and the
+    result was that every photograph -- news frames lifted from a broadcast,
+    CC BY-SA photographs whose licence requires attribution -- reached the
+    screen with nobody's name on it, on five finished films, with the gate
+    reporting 通過 every time. Fourteen per cent of one of them.
+
+    That is the same shape as the first time this happened: the join from a
+    file to whoever shot it lived in one caller, so the other one passed an
+    empty string and ffmpeg dutifully drew nothing. A gate that reads a
+    different fact from the thing it is guarding is not guarding it.
+
+    So the gate now asks this, and the builder draws this. There is one answer
+    and both of them get it.
+    """
+    sources, footage = sources or {}, footage or {}
+    if not needs_credit(line, sources):
+        return ""
+    if is_clip(line):
+        who = footage.get(line["clip"]["file"], {}).get("outlet", "")
+        return f"畫面來源：{who}" if who else ""
+    source = sources.get(line.get("pic") or "") or {}
+    if source.get("kind") == "frame":
+        # 截下來的那一格還是那一台的 —— 凍住一張畫面不會讓它變成我們的。
+        who = source.get("outlet", "")
+        return f"畫面來源：{who}" if who else ""
+    # Commons：作者和授權都要，那是 CC BY 的條件，不是禮貌。
+    return f"圖片：{source['credit']}" if source.get("credit") else ""
 
 
 ROLES = rules_module.at("structure.roles", ["起", "承", "轉", "合"])

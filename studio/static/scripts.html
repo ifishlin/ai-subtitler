@@ -751,11 +751,12 @@ async function showScript(name) {
   const roof = Math.round((sums.borrowed_most || 0) * 100);
   /* 沒過幾處。門的清單長度加上三個是非題。
      算在這裡而不是伺服器，因為 measure() 已經把每一項算好了 —— 再回傳一個
-     總數就是同一個事實的第二份，而這個專案為那件事修過四次錯。 */
-  const GATE_KEYS = ["shapeless", "unsourced", "unpicked", "unchecked",
-                     "undrawn", "uncredited", "samey", "unsigned",
-                     "simplified", "card_wrong", "clipped", "cardbound"];
-  sums.__bad = GATE_KEYS.reduce((n, key) => n + (sums[key] || []).length, 0)
+     總數就是同一個事實的第二份，而這個專案為那件事修過四次錯。
+
+     但門的「名字」要由 measure() 送過來（core/script.py 的 GATES）。這裡
+     本來寫死十二個字串，而第十三道門加進去的時候這一行不會動 —— 新的門
+     擋下來的東西不會被算進去，畫面上看起來就是全過。 */
+  sums.__bad = (sums.gates || []).reduce((n, key) => n + (sums[key] || []).length, 0)
     + (sums.too_long ? 1 : 0)
     + (sums.even ? 0 : 1)
     + (sums.still_enough ? 0 : 1);

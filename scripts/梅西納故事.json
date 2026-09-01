@@ -61,7 +61,6 @@
       "tone": "cool",
       "show": "美術館展廳，牆上一排畫作",
       "pic": "assets/photos/梅西納名畫失竊/frame_onzWOGWm3hM_28.jpg",
-      "fit": "fill",
       "from": "The Guardian〈Messina mystery: theft o〉",
       "seconds": 2.2,
       "seen": true
@@ -153,7 +152,6 @@
       "tone": "cool",
       "show": "BBC 畫面：義大利博物館四幅文藝復興畫作失竊",
       "pic": "assets/photos/梅西納名畫失竊/frame_99J1tPIXL1Q_31.jpg",
-      "fit": "fill",
       "from": "The Guardian〈Renaissance paintings by〉",
       "seconds": 2.2,
       "seen": true
@@ -224,7 +222,6 @@
       "tone": "light",
       "show": "BBC 畫面：警方調查小偷如何不觸動警報進出",
       "pic": "assets/photos/梅西納名畫失竊/frame_99J1tPIXL1Q_15.jpg",
-      "fit": "fill",
       "from": "BBC News〈Four 'extraordinary' Ren〉",
       "seconds": 2.2,
       "seen": true
@@ -265,7 +262,6 @@
       "tone": "light",
       "show": "美術館空廳，地板反光",
       "pic": "assets/photos/梅西納名畫失竊/frame_onzWOGWm3hM_44.jpg",
-      "fit": "fill",
       "from": "The Guardian〈Messina mystery: theft o〉",
       "seconds": 2.2,
       "seen": true
@@ -352,7 +348,6 @@
       "tone": "light",
       "show": "華爾街日報畫面：羅浮宮竊案現場",
       "pic": "assets/photos/梅西納名畫失竊/frame_SASDkIQjouI_98.jpg",
-      "fit": "fill",
       "from": "Wall Street Journal 第 63 秒",
       "seconds": 2.2,
       "seen": true
@@ -363,7 +358,6 @@
       "tone": "light",
       "show": "德國之聲畫面：帕爾馬竊案五人被監視器拍到落網",
       "pic": "assets/photos/梅西納名畫失竊/frame_J46CsKIDiwo_29.jpg",
-      "fit": "fill",
       "from": "CNN〈Renoir, Cezanne and Mati〉",
       "seconds": 2.2,
       "seen": true
@@ -374,7 +368,6 @@
       "tone": "warm",
       "show": "美術館牆上空著的畫框位置",
       "pic": "assets/photos/梅西納名畫失竊/frame_99J1tPIXL1Q_133.jpg",
-      "fit": "fill",
       "from": "BBC News〈Four 'extraordinary' Ren〉",
       "seconds": 2.2,
       "seen": true

@@ -308,10 +308,11 @@ def write(topic: str, house: str = "argue", name: str | None = None,
     if say:
         say(2, 3, "存好了，跑檢查")
     measured = script_module.measure(draft)
-    faults = {key: measured[key] for key in
-              ("unpicked", "unchecked", "undrawn", "uncredited", "samey",
-               "unsigned", "shapeless")
-              if measured[key]}
+    # 從 GATES 來，不自己列一份。本來寫死七個名字，於是 `simplified`、
+    # `card_wrong`、`clipped`、`cardbound` 擋下來的東西，在「產生文案」的
+    # 回報裡一個字都不會出現 —— 而那份回報就是使用者唯一看到的東西。
+    faults = {key: measured[key] for key, *_ in script_module.GATES
+              if measured.get(key)}
     if measured["over"]:
         faults["over"] = measured["over"]
     if say:

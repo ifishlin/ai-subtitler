@@ -1,491 +1,488 @@
 {
- "view": "改名沒有改到湖，改到的是地圖 —— 而你看到的世界，是別人維護的那份資料庫",
- "tone": "詼諧",
- "topic": "川普要把安大略湖改名",
- "format": "argue",
- "narration": false,
- "lines": [
-  {
-   "say": "川普把一座湖改名了",
-   "role": "起",
-   "tone": "cool",
-   "show": "影片：PBS 主播播報改名，畫面帶到簽署現場",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
-    "start": 3.49,
-    "end": 10.27
-   },
-   "from": "PBS NewsHour 第 0 秒",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "安大略湖變成美利堅湖",
-   "role": "起",
-   "tone": "cool",
-   "show": "自製：劃掉舊名換上新名",
-   "card": {
-    "kind": "swap",
-    "title": "一道行政命令",
-    "was": "Lake Ontario",
-    "now": "Lake America",
-    "tone": "cool"
-   },
-   "from": "PBS NewsHour 第 0 秒",
-   "seconds": 2.17
-  },
-  {
-   "say": "他當場簽字，立刻生效",
-   "role": "起",
-   "tone": "cool",
-   "show": "影片：川普在橢圓形辦公室宣布即刻改名",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
-    "start": 110.47,
-    "end": 117.02
-   },
-   "from": "PBS NewsHour 第 113 秒",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "旁邊立著一張大地圖",
-   "role": "起",
-   "tone": "cool",
-   "show": "橢圓形辦公室裡幕僚舉著五大湖的展示板",
-   "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
-   "fit": "fill",
-   "from": "CNN〈Can Trump actually chang〉",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "寫著讓五大湖更偉大",
-   "role": "起",
-   "tone": "cool",
-   "show": "自製：展板上的標題",
-   "card": {
-    "kind": "word",
-    "title": "讓五大湖\n更偉大",
-    "under": "簽署現場立著的那張地圖",
-    "tone": "cool"
-   },
-   "from": "CNN〈Can Trump actually chang〉",
-   "seconds": 1.96
-  },
-  {
-   "say": "理由是水大半在美國",
-   "role": "起",
-   "tone": "cool",
-   "show": "自製：兩邊比水量",
-   "card": {
-    "kind": "bars",
-    "title": "官方說法",
-    "rows": [
-     [
-      "美國",
-      100,
-      "",
-      "大半水量"
-     ],
-     [
-      "加拿大",
-      40,
-      "",
-      "其餘"
-     ]
-    ],
-    "tone": "cool"
-   },
-   "from": "PBS NewsHour 第 138 秒",
-   "seconds": 1.96
-  },
-  {
-   "say": "聽起來像一則笑話",
-   "role": "起",
-   "tone": "cool",
-   "show": "自製：一句話佔滿畫面",
-   "card": {
-    "kind": "word",
-    "title": "聽起來\n像一則笑話",
-    "tone": "cool"
-   },
-   "from": "觀點",
-   "seconds": 1.9
-  },
-  {
-   "say": "加拿大隔天就回話了",
-   "role": "承",
-   "tone": "cool",
-   "show": "影片：卡尼公開回應，語氣強硬",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/wnmr-jUsv_Q.mp4",
-    "start": 52.04,
-    "end": 57.44
-   },
-   "from": "NPR〈Canada claps back at Tru〉",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "現在，永遠，都叫安大略湖",
-   "role": "承",
-   "tone": "cool",
-   "show": "卡尼在加拿大國旗前發言",
-   "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
-   "fit": "fill",
-   "from": "PBS NewsHour 第 40 秒",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "五十州都在搜舊名字",
-   "role": "承",
-   "tone": "cool",
-   "show": "CNN 圖表：五十州搜安大略湖，零州搜美利堅湖",
-   "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
-   "fit": "fill",
-   "from": "CNN 第 70 秒",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "CNN 說這叫鉛做的氣球",
-   "role": "承",
-   "tone": "cool",
-   "show": "影片：CNN 分析師講民調反應",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
-    "start": 135.84,
-    "end": 144.64
-   },
-   "from": "CNN 第 135 秒",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "但有一件事真的改了",
-   "role": "轉",
-   "tone": "light",
-   "show": "自製：翻轉那一句",
-   "card": {
-    "kind": "word",
-    "title": "但有一件事\n真的改了",
-    "tone": "light"
-   },
-   "from": "觀點",
-   "seconds": 1.96
-  },
-  {
-   "say": "命令當天下午四點半",
-   "role": "轉",
-   "tone": "light",
-   "show": "老人的手在文件上簽字，特寫",
-   "pic": "assets/photos/川普要把安大略湖改名/618158.jpg",
-   "fit": "fill",
-   "from": "Fox News〈House Dem Debbie Dingell〉",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "地質調查局就改完了",
-   "role": "轉",
-   "tone": "light",
-   "show": "自製：同一天的三個時間點",
-   "card": {
-    "kind": "chain",
-    "title": "同一天",
-    "points": [
-     "上午簽署",
-     "下午四點半",
-     "文件全改完"
-    ],
-    "tone": "light"
-   },
-   "from": "Fox News〈House Dem Debbie Dingell〉",
-   "seconds": 1.96
-  },
-  {
-   "say": "所有官方電子文件",
-   "role": "轉",
-   "tone": "light",
-   "show": "自製：一個詞被圈起來",
-   "card": {
-    "kind": "ring",
-    "title": "改掉的範圍",
-    "value": "全部",
-    "under": "地名資訊系統裡的安大略湖，整批移除",
-    "tone": "light"
-   },
-   "from": "CNN〈Can Trump actually chang〉",
-   "seconds": 1.9
-  },
-  {
-   "say": "Google 週末也跟著改",
-   "role": "轉",
-   "tone": "light",
-   "show": "影片：談白宮要求各家地圖跟進",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/SvcrBh8cyt0.mp4",
-    "start": 5.72,
-    "end": 11.28
-   },
-   "from": "BBC News〈Trump pushes Apple to ch〉",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "但只對美國用戶改",
-   "role": "轉",
-   "tone": "light",
-   "show": "自製：三個地方看到的不一樣",
-   "card": {
-    "kind": "stack",
-    "title": "同一張地圖",
-    "items": [
-     "美國用戶：美利堅湖",
-     "加拿大用戶：安大略湖",
-     "其他地方：兩個名字並列"
-    ],
-    "tone": "light"
-   },
-   "from": "BBC News〈Trump pushes Apple to ch〉",
-   "seconds": 1.9
-  },
-  {
-   "say": "加拿大看到的還是舊名",
-   "role": "轉",
-   "tone": "light",
-   "show": "從太空看五大湖全景",
-   "pic": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
-   "fit": "fill",
-   "from": "BBC News〈Trump pushes Apple to ch〉",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "柏根說已經去找蘋果了",
-   "role": "轉",
-   "tone": "light",
-   "show": "自製：下一個目標",
-   "card": {
-    "kind": "word",
-    "title": "下一個是\nApple 地圖",
-    "under": "內政部長柏根說川普已經直接聯絡蘋果",
-    "tone": "light"
-   },
-   "from": "BBC News〈Trump pushes Apple to ch〉",
-   "seconds": 2.17
-  },
-  {
-   "say": "多倫多的電力公司中招",
-   "role": "轉",
-   "tone": "light",
-   "show": "自製：一個詞被圈起來",
-   "card": {
-    "kind": "ring",
-    "title": "自家地圖上冒出",
-    "value": "美利堅湖",
-    "under": "多倫多 Hydro One，隨後道歉",
-    "tone": "light"
-   },
-   "from": "BBC News〈Trump pushes Apple to ch〉",
-   "seconds": 2.17
-  },
-  {
-   "say": "他們說是第三方服務",
-   "role": "轉",
-   "tone": "light",
-   "show": "舊地圖與羅盤、帆船模型",
-   "pic": "assets/photos/川普要把安大略湖改名/5663229.jpg",
-   "fit": "ground",
-   "from": "BBC News〈Trump pushes Apple to ch〉",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "渥太華水電也一樣",
-   "role": "轉",
-   "tone": "light",
-   "show": "自製：跟著改的還有誰",
-   "card": {
-    "kind": "stack",
-    "title": "跟著改的還有",
-    "items": [
-     "渥太華水電",
-     "安大略省酒類管理局"
-    ],
-    "tone": "light"
-   },
-   "from": "BBC News〈Trump pushes Apple to ch〉",
-   "seconds": 1.9
-  },
-  {
-   "say": "沒有人投票，就改了",
-   "role": "轉",
-   "tone": "light",
-   "show": "影片：講改名照慣例該走的程序",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
-    "start": 475.68,
-    "end": 482.32
-   },
-   "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "湖沒有變，地圖變了",
-   "role": "合",
-   "tone": "warm",
-   "show": "自製：一條線分岔成兩條",
-   "card": {
-    "kind": "split",
-    "title": "改到的是哪一個",
-    "branches": [
-     "湖\n沒有變",
-     "地圖\n變了"
-    ],
-    "tone": "warm"
-   },
-   "from": "觀點",
-   "seconds": 1.96
-  },
-  {
-   "say": "而你看的一直是地圖",
-   "role": "合",
-   "tone": "warm",
-   "show": "湖岸空拍，水面平靜",
-   "pic": "assets/photos/川普要把安大略湖改名/37260512.jpg",
-   "fit": "fill",
-   "from": "觀點",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "墨西哥灣改名十八個月",
-   "role": "合",
-   "tone": "warm",
-   "show": "自製：一段時間畫成圈",
-   "card": {
-    "kind": "clock",
-    "title": "上一次改名之後",
-    "value": "18 個月",
-    "part": 0.6,
-    "under": "正經媒體幾乎沒人在用「美國灣」",
-    "tone": "warm"
-   },
-   "from": "The Guardian〈Trump the renamer-in-chi〉",
-   "seconds": 2.17
-  },
-  {
-   "say": "名字沒有真的換過去",
-   "role": "合",
-   "tone": "warm",
-   "show": "影片：記者追問改名到底有什麼用",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
-    "start": 758.08,
-    "end": 766.4
-   },
-   "from": "CNN 第 758 秒",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "塞內卡族叫它美麗的湖",
-   "role": "合",
-   "tone": "warm",
-   "show": "自製：更老的那個名字",
-   "card": {
-    "kind": "word",
-    "title": "sga:nyodai:yoh",
-    "under": "塞內卡語，意思是「美麗的湖」",
-    "tone": "warm"
-   },
-   "from": "Fox News〈Seneca Nation leader cal〉",
-   "seconds": 2.17
-  },
-  {
-   "say": "這個名字更老",
-   "role": "合",
-   "tone": "warm",
-   "show": "影片：談安大略湖這個名字有四百多年",
-   "clip": {
-    "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
-    "start": 315.92,
-    "end": 322.32
-   },
-   "from": "CNN 第 315 秒",
-   "seconds": 3.3,
-   "seen": true
-  },
-  {
-   "say": "四百年，比加拿大還老",
-   "role": "合",
-   "tone": "warm",
-   "show": "湖岸礁石與針葉林，浪打上來",
-   "pic": "assets/photos/川普要把安大略湖改名/32272511.jpg",
-   "fit": "ground",
-   "from": "Al Jazeera English〈Can Trump really rename 〉",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "意思是閃亮之水的湖",
-   "role": "合",
-   "tone": "warm",
-   "show": "情境：海浪，水面在動",
-   "from": "Al Jazeera English〈Can Trump really rename 〉",
-   "seconds": 1.96,
-   "stock": {
-    "file": "assets/broll/5604331.mp4"
-   },
-   "seen": true
-  },
-  {
-   "say": "名字改得動，人改不動",
-   "role": "合",
-   "tone": "warm",
-   "show": "尼加拉瀑布，美加邊界上",
-   "pic": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
-   "fit": "fill",
-   "from": "The Guardian〈Canada erects giant 'Lak〉",
-   "seconds": 2.3,
-   "seen": true
-  },
-  {
-   "say": "下次你打開地圖",
-   "role": "合",
-   "tone": "warm",
-   "show": "自製：一句話佔滿畫面",
-   "from": "觀點",
-   "seconds": 1.9,
-   "card": {
-    "kind": "word",
-    "title": "下次你\n打開地圖",
-    "tone": "warm"
-   }
-  },
-  {
-   "say": "看到的是誰改的那份",
-   "role": "合",
-   "tone": "cool",
-   "show": "自製：結尾頁",
-   "card": {
-    "kind": "outro",
-    "points": [
-     "一道命令，六小時內聯邦文件全改完",
-     "Google 照做，但只對美國用戶",
-     "加拿大看到的還是安大略湖",
-     "湖沒有變，變的是你查的那份資料"
-    ],
-    "title": "改掉的不是湖的名字\n是你手上那張地圖",
-    "under": "川普把安大略湖改名為美利堅湖",
-    "tone": "cool"
-   },
-   "from": "觀點",
-   "seconds": 5.6
-  }
- ]
+  "view": "改名沒有改到湖，改到的是地圖 —— 而你看到的世界，是別人維護的那份資料庫",
+  "tone": "詼諧",
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "lines": [
+    {
+      "say": "川普把一座湖改名了",
+      "role": "起",
+      "tone": "cool",
+      "show": "影片：PBS 主播播報改名，畫面帶到簽署現場",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
+        "start": 3.49,
+        "end": 10.27
+      },
+      "from": "PBS NewsHour 第 0 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "安大略湖變成美利堅湖",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：劃掉舊名換上新名",
+      "card": {
+        "kind": "swap",
+        "title": "一道行政命令",
+        "was": "Lake Ontario",
+        "now": "Lake America",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 0 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "他當場簽字，立刻生效",
+      "role": "起",
+      "tone": "cool",
+      "show": "影片：川普在橢圓形辦公室宣布即刻改名",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
+        "start": 110.47,
+        "end": 117.02
+      },
+      "from": "PBS NewsHour 第 113 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "旁邊立著一張大地圖",
+      "role": "起",
+      "tone": "cool",
+      "show": "橢圓形辦公室裡幕僚舉著五大湖的展示板",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "寫著讓五大湖更偉大",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：展板上的標題",
+      "card": {
+        "kind": "word",
+        "title": "讓五大湖\n更偉大",
+        "under": "簽署現場立著的那張地圖",
+        "tone": "cool"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "理由是水大半在美國",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：兩邊比水量",
+      "card": {
+        "kind": "bars",
+        "title": "官方說法",
+        "rows": [
+          [
+            "美國",
+            100,
+            "",
+            "大半水量"
+          ],
+          [
+            "加拿大",
+            40,
+            "",
+            "其餘"
+          ]
+        ],
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 138 秒",
+      "seconds": 1.96
+    },
+    {
+      "say": "聽起來像一則笑話",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "聽起來\n像一則笑話",
+        "tone": "cool"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "加拿大隔天就回話了",
+      "role": "承",
+      "tone": "cool",
+      "show": "影片：卡尼公開回應，語氣強硬",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/wnmr-jUsv_Q.mp4",
+        "start": 52.04,
+        "end": 57.44
+      },
+      "from": "NPR〈Canada claps back at Tru〉",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "現在，永遠，都叫安大略湖",
+      "role": "承",
+      "tone": "cool",
+      "show": "卡尼在加拿大國旗前發言",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
+      "from": "PBS NewsHour 第 40 秒",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "五十州都在搜舊名字",
+      "role": "承",
+      "tone": "cool",
+      "show": "CNN 圖表：五十州搜安大略湖，零州搜美利堅湖",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+      "from": "CNN 第 70 秒",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "CNN 說這叫鉛做的氣球",
+      "role": "承",
+      "tone": "cool",
+      "show": "影片：CNN 分析師講民調反應",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "start": 135.84,
+        "end": 144.64
+      },
+      "from": "CNN 第 135 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "但有一件事真的改了",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：翻轉那一句",
+      "card": {
+        "kind": "word",
+        "title": "但有一件事\n真的改了",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "命令當天下午四點半",
+      "role": "轉",
+      "tone": "light",
+      "show": "老人的手在文件上簽字，特寫",
+      "pic": "assets/photos/川普要把安大略湖改名/618158.jpg",
+      "fit": "fill",
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "地質調查局就改完了",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：同一天的三個時間點",
+      "card": {
+        "kind": "chain",
+        "title": "同一天",
+        "points": [
+          "上午簽署",
+          "下午四點半",
+          "文件全改完"
+        ],
+        "tone": "light"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "所有官方電子文件",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一個詞被圈起來",
+      "card": {
+        "kind": "ring",
+        "title": "改掉的範圍",
+        "value": "全部",
+        "under": "地名資訊系統裡的安大略湖，整批移除",
+        "tone": "light"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "Google 週末也跟著改",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：談白宮要求各家地圖跟進",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/SvcrBh8cyt0.mp4",
+        "start": 5.72,
+        "end": 11.28
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "但只對美國用戶改",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：三個地方看到的不一樣",
+      "card": {
+        "kind": "stack",
+        "title": "同一張地圖",
+        "items": [
+          "美國用戶：美利堅湖",
+          "加拿大用戶：安大略湖",
+          "其他地方：兩個名字並列"
+        ],
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "加拿大看到的還是舊名",
+      "role": "轉",
+      "tone": "light",
+      "show": "從太空看五大湖全景",
+      "pic": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+      "fit": "fill",
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "柏根說已經去找蘋果了",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：下一個目標",
+      "card": {
+        "kind": "word",
+        "title": "下一個是\nApple 地圖",
+        "under": "內政部長柏根說川普已經直接聯絡蘋果",
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "多倫多的電力公司中招",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一個詞被圈起來",
+      "card": {
+        "kind": "ring",
+        "title": "自家地圖上冒出",
+        "value": "美利堅湖",
+        "under": "多倫多 Hydro One，隨後道歉",
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "他們說是第三方服務",
+      "role": "轉",
+      "tone": "light",
+      "show": "舊地圖與羅盤、帆船模型",
+      "pic": "assets/photos/川普要把安大略湖改名/5663229.jpg",
+      "fit": "ground",
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "渥太華水電也一樣",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：跟著改的還有誰",
+      "card": {
+        "kind": "stack",
+        "title": "跟著改的還有",
+        "items": [
+          "渥太華水電",
+          "安大略省酒類管理局"
+        ],
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "沒有人投票，就改了",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：講改名照慣例該走的程序",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "start": 475.68,
+        "end": 482.32
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "湖沒有變，地圖變了",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一條線分岔成兩條",
+      "card": {
+        "kind": "split",
+        "title": "改到的是哪一個",
+        "branches": [
+          "湖\n沒有變",
+          "地圖\n變了"
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "而你看的一直是地圖",
+      "role": "合",
+      "tone": "warm",
+      "show": "湖岸空拍，水面平靜",
+      "pic": "assets/photos/川普要把安大略湖改名/37260512.jpg",
+      "fit": "fill",
+      "from": "觀點",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "墨西哥灣改名十八個月",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一段時間畫成圈",
+      "card": {
+        "kind": "clock",
+        "title": "上一次改名之後",
+        "value": "18 個月",
+        "part": 0.6,
+        "under": "正經媒體幾乎沒人在用「美國灣」",
+        "tone": "warm"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "名字沒有真的換過去",
+      "role": "合",
+      "tone": "warm",
+      "show": "影片：記者追問改名到底有什麼用",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "start": 758.08,
+        "end": 766.4
+      },
+      "from": "CNN 第 758 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "塞內卡族叫它美麗的湖",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：更老的那個名字",
+      "card": {
+        "kind": "word",
+        "title": "sga:nyodai:yoh",
+        "under": "塞內卡語，意思是「美麗的湖」",
+        "tone": "warm"
+      },
+      "from": "Fox News〈Seneca Nation leader cal〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "這個名字更老",
+      "role": "合",
+      "tone": "warm",
+      "show": "影片：談安大略湖這個名字有四百多年",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "start": 315.92,
+        "end": 322.32
+      },
+      "from": "CNN 第 315 秒",
+      "seconds": 3.3,
+      "seen": true
+    },
+    {
+      "say": "四百年，比加拿大還老",
+      "role": "合",
+      "tone": "warm",
+      "show": "湖岸礁石與針葉林，浪打上來",
+      "pic": "assets/photos/川普要把安大略湖改名/32272511.jpg",
+      "fit": "ground",
+      "from": "Al Jazeera English〈Can Trump really rename 〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "意思是閃亮之水的湖",
+      "role": "合",
+      "tone": "warm",
+      "show": "情境：海浪，水面在動",
+      "from": "Al Jazeera English〈Can Trump really rename 〉",
+      "seconds": 1.96,
+      "stock": {
+        "file": "assets/broll/5604331.mp4"
+      },
+      "seen": true
+    },
+    {
+      "say": "名字改得動，人改不動",
+      "role": "合",
+      "tone": "warm",
+      "show": "尼加拉瀑布，美加邊界上",
+      "pic": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+      "fit": "fill",
+      "from": "The Guardian〈Canada erects giant 'Lak〉",
+      "seconds": 2.3,
+      "seen": true
+    },
+    {
+      "say": "下次你打開地圖",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一句話佔滿畫面",
+      "from": "觀點",
+      "seconds": 1.9,
+      "card": {
+        "kind": "word",
+        "title": "下次你\n打開地圖",
+        "tone": "warm"
+      }
+    },
+    {
+      "say": "看到的是誰改的那份",
+      "role": "合",
+      "tone": "cool",
+      "show": "自製：結尾頁",
+      "card": {
+        "kind": "outro",
+        "points": [
+          "一道命令，六小時內聯邦文件全改完",
+          "Google 照做，但只對美國用戶",
+          "加拿大看到的還是安大略湖",
+          "湖沒有變，變的是你查的那份資料"
+        ],
+        "title": "改掉的不是湖的名字\n是你手上那張地圖",
+        "under": "川普把安大略湖改名為美利堅湖",
+        "tone": "cool"
+      },
+      "from": "觀點",
+      "seconds": 5.6
+    }
+  ]
 }

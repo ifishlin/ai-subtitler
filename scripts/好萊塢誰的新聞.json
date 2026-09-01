@@ -11,7 +11,6 @@
       "tone": "cool",
       "show": "PBS 畫面：派拉蒙與華納的標誌並排，標題寫好萊塢戲碼",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_J37mOVNkLR8_2.jpg",
-      "fit": "fill",
       "from": "PBS NewsHour 第 0 秒",
       "seconds": 2.0,
       "seen": true
@@ -51,7 +50,6 @@
       "tone": "cool",
       "show": "CNN 畫面：Netflix 不再加價",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_ypZBDlVdIo8_257.jpg",
-      "fit": "fill",
       "from": "CNN〈Warner Bros. Discovery a〉",
       "seconds": 2.0,
       "seen": true
@@ -77,7 +75,6 @@
       "tone": "cool",
       "show": "CNBC 畫面：派拉蒙把出價提高到每股三十一美元",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_viwG_sFgu_0_162.jpg",
-      "fit": "fill",
       "from": "CNN 第 91 秒",
       "seconds": 2.0,
       "seen": true
@@ -112,7 +109,6 @@
       "tone": "cool",
       "show": "彭博畫面：艾利森將為華納提供四百億擔保",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_8rr4pKtsoNY_68.jpg",
-      "fit": "fill",
       "from": "Bloomberg 第 57 秒",
       "seconds": 2.0,
       "seen": true
@@ -137,7 +133,6 @@
       "tone": "cool",
       "show": "經濟學人畫面：他是美國媒體的新國王嗎",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_lGsc338MTSk_1.jpg",
-      "fit": "fill",
       "from": "The Economist 第 86 秒",
       "seconds": 2.0,
       "seen": true
@@ -207,7 +202,6 @@
       "tone": "light",
       "show": "CNN 與 HBO 的辦公大樓外觀",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_ypZBDlVdIo8_286.jpg",
-      "fit": "fill",
       "from": "The Economist 第 86 秒",
       "seconds": 2.0,
       "seen": true
@@ -218,7 +212,6 @@
       "tone": "light",
       "show": "Fox 畫面：川普說 Netflix 的收購可能有問題",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_mEy6dWIrJd0_183.jpg",
-      "fit": "fill",
       "from": "CNN〈Battle over future of Wa〉",
       "seconds": 2.0,
       "seen": true
@@ -347,7 +340,6 @@
       "tone": "warm",
       "show": "衛報畫面：貝佐斯掏空華盛頓郵報",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_RyeRmmdF4Yg_1.jpg",
-      "fit": "fill",
       "from": "The Guardian 第 0 秒",
       "seconds": 2.0,
       "seen": true
@@ -385,7 +377,6 @@
       "tone": "warm",
       "show": "衛報畫面：貝佐斯與郵報每年一億美元的虧損",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_RyeRmmdF4Yg_47.jpg",
-      "fit": "fill",
       "from": "The Guardian 第 42 秒",
       "seconds": 2.0,
       "seen": true
@@ -435,7 +426,6 @@
       "tone": "warm",
       "show": "遙控器上的 Netflix 與 Prime Video 按鍵",
       "pic": "assets/photos/科技巨頭買下好萊塢/frame_LNZM4eqisXg_112.jpg",
-      "fit": "fill",
       "from": "觀點",
       "seconds": 2.0,
       "seen": true

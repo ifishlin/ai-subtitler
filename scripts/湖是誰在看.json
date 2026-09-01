@@ -1,0 +1,440 @@
+{
+  "view": "每一家都寫了「這是貿易戰的一步」，然後每一家都把整段時間花在那座湖上——報導本身就是那道命令的效果",
+  "tone": "詼諧",
+  "lines": [
+    {
+      "say": "他拍片把湖名劃掉",
+      "role": "起",
+      "tone": "cool",
+      "show": "影片：記者問起那段劃掉湖名的影片",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
+        "start": 198.84,
+        "end": 205.11
+      },
+      "seen": true,
+      "from": "PBS NewsHour 第 198 秒",
+      "seconds": 6.27
+    },
+    {
+      "say": "三千萬人看了那段",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：一個數字被圈起來",
+      "card": {
+        "kind": "ring",
+        "title": "那段自拍影片",
+        "value": "三千萬次",
+        "under": "川普前一天自己貼的",
+        "tone": "cool"
+      },
+      "from": "CNN 第 84 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "隔天他就簽了命令",
+      "role": "起",
+      "tone": "cool",
+      "show": "橢圓形辦公室，川普在辦公桌後簽署",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_26.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 26 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "安大略湖改成美利堅湖",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：劃掉舊名換上新名",
+      "card": {
+        "kind": "swap",
+        "title": "即刻生效",
+        "was": "Lake Ontario",
+        "now": "Lake America",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 0 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "展板上寫讓五大湖更偉大",
+      "role": "起",
+      "tone": "cool",
+      "show": "幕僚舉著五大湖展示板，標題寫讓五大湖更偉大",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
+      "fit": "ground",
+      "seen": true,
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "他說只差一個海洋了",
+      "role": "起",
+      "tone": "cool",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "只差\n一個海洋",
+        "under": "川普說下一個可能是大西洋或太平洋",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 309 秒",
+      "seconds": 1.96
+    },
+    {
+      "say": "五十州都在搜舊名字",
+      "role": "承",
+      "tone": "cool",
+      "show": "影片：CNN 分析師講搜尋數據",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "start": 58.96,
+        "end": 65.28
+      },
+      "seen": true,
+      "from": "CNN 第 62 秒",
+      "seconds": 6.32
+    },
+    {
+      "say": "零州搜新的那個",
+      "role": "承",
+      "tone": "cool",
+      "show": "CNN 圖表：五十州搜安大略湖，零州搜美利堅湖",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+      "seen": true,
+      "from": "CNN 第 70 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "連球賽主播都在開玩笑",
+      "role": "承",
+      "tone": "cool",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "不確定旁邊那座\n還叫不叫伊利湖",
+        "under": "美式足球季前賽的轉播主播",
+        "tone": "cool"
+      },
+      "from": "CNN 第 21 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "學者說沒有任何效果",
+      "role": "承",
+      "tone": "cool",
+      "show": "自製：一份清單",
+      "card": {
+        "kind": "stack",
+        "title": "哥倫比亞大學研究員",
+        "items": [
+          "聯邦文件上的名字會改",
+          "除此之外沒有任何效果"
+        ],
+        "tone": "cool"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "但零效果要看你在算什麼",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "零效果？\n看你在算哪一件事",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "say": "談判破裂之後才改的名",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：PBS 說改名是關稅談判破裂之後的事，畫面帶到邊境貨運橋",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
+        "start": 24.33,
+        "end": 32.44
+      },
+      "seen": true,
+      "from": "PBS NewsHour 第 24 秒",
+      "seconds": 8.11
+    },
+    {
+      "say": "五十趴關稅，兩百億商品",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一個數字被圈起來",
+      "card": {
+        "kind": "ring",
+        "title": "五十趴關稅涵蓋",
+        "value": "兩百億美元",
+        "under": "加拿大輸美商品",
+        "tone": "light"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "那張單子沒有上鏡頭",
+      "role": "轉",
+      "tone": "light",
+      "show": "情境：貨櫃車在公路上跑",
+      "stock": {
+        "file": "assets/broll/18749847.mp4"
+      },
+      "from": "觀點",
+      "seen": true,
+      "seconds": 1.96
+    },
+    {
+      "say": "命令裡一個字都沒提貿易",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "命令自己寫的理由",
+        "under": "「表彰美國人民的非凡貢獻」",
+        "tone": "light"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "吵湖的那天就沒在談判",
+      "role": "轉",
+      "tone": "light",
+      "show": "影片：CNN 說花在這件事的一天，就是沒有談判的一天",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.mp4",
+        "start": 359.12,
+        "end": 364.33
+      },
+      "seen": true,
+      "from": "CNN 第 359 秒",
+      "seconds": 5.2
+    },
+    {
+      "say": "時間順序是這樣的",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：同一條線上的幾個點",
+      "card": {
+        "kind": "chain",
+        "title": "同一個夏天",
+        "points": [
+          "八月二十一日談判破裂",
+          "五十趴關稅生效",
+          "才簽下改名命令"
+        ],
+        "tone": "light"
+      },
+      "from": "Euronews〈Lake Ontario or Lake Ame〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "加拿大說一塊對一塊反制",
+      "role": "轉",
+      "tone": "light",
+      "show": "卡尼在加拿大國旗前發言",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
+      "seen": true,
+      "from": "NPR〈Canada claps back at Tru〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "汽車關稅明年一月加倍",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：劃掉舊的換上新的",
+      "card": {
+        "kind": "swap",
+        "title": "加拿大製車輛的關稅",
+        "was": "百分之二十五",
+        "now": "百分之五十",
+        "tone": "light"
+      },
+      "from": "Euronews〈Lake Ontario or Lake Ame〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "九成五的加拿大車賣美國",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：兩個量比大小",
+      "card": {
+        "kind": "bars",
+        "title": "加拿大汽車出口去哪",
+        "rows": [
+          [
+            "賣到美國",
+            95,
+            "",
+            "百分之九十五"
+          ],
+          [
+            "其他地方",
+            5,
+            "",
+            "其餘"
+          ]
+        ],
+        "tone": "light"
+      },
+      "from": "Euronews〈Lake Ontario or Lake Ame〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "零件來回，關稅疊了又疊",
+      "role": "轉",
+      "tone": "light",
+      "show": "自製：一份清單",
+      "card": {
+        "kind": "stack",
+        "title": "一輛車的零件",
+        "items": [
+          "在美加邊境來回好幾趟",
+          "每過一次課一次"
+        ],
+        "tone": "light"
+      },
+      "from": "Euronews〈Lake Ontario or Lake Ame〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "這才是要算的那本帳",
+      "role": "轉",
+      "tone": "light",
+      "show": "情境：桌上的計算機、單據和鈔票",
+      "stock": {
+        "file": "assets/broll/7735854.mp4"
+      },
+      "from": "觀點",
+      "seen": true,
+      "seconds": 1.96
+    },
+    {
+      "say": "你看到的和發生的",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一條線分岔成兩條",
+      "card": {
+        "kind": "split",
+        "title": "同一個星期",
+        "branches": [
+          "你看到的\n是一座湖",
+          "發生的\n是一張帳單"
+        ],
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "湖從頭到尾沒有動過",
+      "role": "合",
+      "tone": "warm",
+      "show": "太空站拍的安大略湖",
+      "pic": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+      "fit": "fill",
+      "seen": true,
+      "from": "Al Jazeera English〈Can Trump really rename 〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "改名換不到尊重",
+      "role": "合",
+      "tone": "warm",
+      "show": "影片：CNN 來賓說改名換不到別人的尊重",
+      "clip": {
+        "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
+        "start": 728.88,
+        "end": 734.16
+      },
+      "seen": true,
+      "from": "CNN 第 728 秒",
+      "seconds": 5.28
+    },
+    {
+      "say": "邊界也還在原來的地方",
+      "role": "合",
+      "tone": "warm",
+      "show": "尼加拉瀑布，美加邊界上",
+      "pic": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+      "fit": "fill",
+      "seen": true,
+      "from": "The Guardian〈Canada erects giant 'Lak〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "湖岸還是那個湖岸",
+      "role": "合",
+      "tone": "warm",
+      "show": "五大湖岸空拍，水面平靜",
+      "pic": "assets/photos/川普要把安大略湖改名/37260512.jpg",
+      "fit": "blur",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "怪事最好看，也最好用",
+      "role": "合",
+      "tone": "warm",
+      "show": "情境：浪打上岸，水面在動",
+      "stock": {
+        "file": "assets/broll/5604331.mp4"
+      },
+      "from": "觀點",
+      "seen": true,
+      "seconds": 2.17
+    },
+    {
+      "say": "下次你想笑一件蠢事",
+      "role": "合",
+      "tone": "warm",
+      "show": "自製：一句話佔滿畫面",
+      "card": {
+        "kind": "word",
+        "title": "下次你\n想笑一件蠢事",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "say": "先看旁邊在辦什麼",
+      "role": "合",
+      "tone": "cool",
+      "seconds": 6.0,
+      "from": "觀點",
+      "show": "自製：結尾頁",
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "title": "你笑的那件蠢事\n是給你看的那一件",
+        "under": "川普把安大略湖改名為美利堅湖",
+        "points": [
+          "談判破裂，五十趴關稅先生效",
+          "接著才簽下改名命令",
+          "命令裡一個字沒提貿易",
+          "然後所有人談的都是湖"
+        ]
+      }
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人",
+  "answered": {
+    "when": 1788268127,
+    "took": 0.0,
+    "model": "claude-opus-5（在 Claude Code 裡人工扮演 LLM，沒有走 API）",
+    "raw": "沒有 API 呼叫：這一份是助理直接照 brief.prompt() 的內容寫的。"
+  }
+}

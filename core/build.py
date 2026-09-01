@@ -126,7 +126,7 @@ def _ground_colour(tone: str) -> str:
 
 
 def _still(pic: Path, seconds: float, target: Path, overlay: Path,
-           fit: str = "blur", tone: str = "cool") -> Path:
+           fit: str = "blur", tone: str = "cool", credit: str = "") -> Path:
     """A photograph, held, pushed in slowly, standing in the tall frame.
 
     A landscape picture in a 9:16 frame always leaves room, and how that room
@@ -143,12 +143,15 @@ def _still(pic: Path, seconds: float, target: Path, overlay: Path,
                 reason: every shot in the film gets the same treatment
     """
     size = placed_size(pic)
+    # 出處畫在字幕之後，跟影片段落走同一個位置和同一份字型 —— 兩種鏡頭的
+    # 那一行要長得一樣，觀眾才讀得出它講的是同一件事。
+    mark = shorts_module._credit_filter(credit) if credit else ""
     if fit == "fill":
         # Cropping to the whole frame means the push has to happen at frame
         # size too, or the picture is scaled twice and softens.
         front = (f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
                  f"crop={W}:{H},{shorts_module._push_filter(seconds, (W, H))}[fg]")
-        graph = f"{front};[fg][1:v]overlay=0:0,fps={FPS}[v]"
+        graph = f"{front};[fg][1:v]overlay=0:0{mark},fps={FPS}[v]"
     else:
         if fit == "ground":
             back = (f"color=c={_ground_colour(tone)}:s={W}x{H}:"
@@ -159,7 +162,7 @@ def _still(pic: Path, seconds: float, target: Path, overlay: Path,
         graph = (
             f"{back};[0:v]{shorts_module._push_filter(seconds, size)}[fg];"
             f"[bg][fg]overlay=(W-w)/2:{shorts_module.PICTURE_TOP}[under];"
-            f"[under][1:v]overlay=0:0,fps={FPS}[v]")
+            f"[under][1:v]overlay=0:0{mark},fps={FPS}[v]")
     subprocess.run(
         ["ffmpeg", "-v", "error", "-loop", "1", "-i", str(pic),
          "-i", str(overlay), "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
@@ -309,12 +312,15 @@ def build(name: str, target: Path | None = None,
         caption_layer(script_module.wrap(line["say"])).save(plate)
         piece = work / f"{index:02d}.{_recipe(line, how)}.mp4"
         if not piece.is_file():
+            # 出處由 `script.credit_line()` 決定，門也問同一個函式。以前這裡
+            # 自己 join 一次 outlet，而照片那一支根本沒有 join —— 於是門說
+            # 通過、畫面上沒有名字，兩邊都「照寫的做」。
+            mark = script_module.credit_line(line, pictures, footage)
             if line.get("clip"):
-                who = footage.get(line["clip"]["file"], {}).get("outlet", "")
                 shorts_module.clip_cut(
                     ROOT / line["clip"]["file"], line["clip"]["start"],
                     line["clip"]["end"], seconds, piece, overlay=plate,
-                    credit=f"畫面來源：{who}" if who else "")
+                    credit=mark)
             elif script_module.is_stock(line):
                 # 情境影片：整支都是同一個畫面，所以從頭取夠長就好 ——
                 # 沒有「哪一秒」這回事，那是字幕決定的，而它沒有字幕。
@@ -327,7 +333,7 @@ def build(name: str, target: Path | None = None,
                 _still(ROOT / line["pic"], seconds, piece, plate,
                        fit=line.get("fit")
                            or rules_module.look("still_fit.default", "blur"),
-                       tone=line.get("tone") or "cool")
+                       tone=line.get("tone") or "cool", credit=mark)
             else:
                 # The line's tone, unless the card names its own. Without this
                 # the two halves disagreed: `samey` counts tone runs as

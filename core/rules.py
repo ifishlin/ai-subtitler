@@ -83,6 +83,29 @@ def _flatten(source: dict[str, Any], prefix: str = "") -> dict[str, Any]:
     return out
 
 
+def _derived(known: dict[str, Any]) -> dict[str, Any]:
+    """Numbers that are two other numbers multiplied.
+
+    `visual.md` told the model「影片段落 2 到 3 段，每段 4 到 6 秒」—— 大約
+    十八秒，而兩條門相乘要的是二十三秒。照那句話寫必定被 `still_enough`
+    退回，而那句話從來沒有人算過：它是手寫的散文，寫的時候 `borrowed.least`
+    那條下限還不存在。
+
+    所以這裡算，不存進 rules.json。存一份就是第二份，而第二份會跟門的算法
+    分家 —— 這個專案已經有過一次（網頁把三分之一實拍的文案報成「自製 100%」）。
+    """
+    out: dict[str, Any] = {}
+    least = known.get("borrowed.least")
+    clip_least = known.get("borrowed.clip_least")
+    limit = known.get("length.limit_seconds")
+    if isinstance(least, (int, float)) and isinstance(clip_least, (int, float)):
+        # 實拍要佔一半，其中一半要會動 —— 影片段落佔總長的下限就是這兩個相乘。
+        out["borrowed.clip_share"] = least * clip_least
+        if isinstance(limit, (int, float)):
+            out["borrowed.clip_seconds"] = round(limit * least * clip_least, 1)
+    return out
+
+
 NAMED = re.compile(r"\{([^{}\s:]+)(?::([a-z]+))?\}")
 
 
@@ -101,6 +124,7 @@ def fill(text: str, house_of: str | None = None) -> str:
     if house_of:
         known.update(_flatten(house(house_of)))
     known.update({f"theme.{key}": value for key, value in _flatten(theme()).items()})
+    known.update(_derived(known))
     for name, value in known.items():
         for how, shown in _shapes(value).items():
             text = text.replace("{" + name + (f":{how}" if how else "") + "}",
