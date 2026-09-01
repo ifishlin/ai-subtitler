@@ -35,6 +35,7 @@ prompt 裡** —— 報導能擋你（篇數、平衡檢查），不能幫你。
 """
 from __future__ import annotations
 
+import time
 from pathlib import Path
 from typing import Any
 
@@ -275,6 +276,38 @@ def ask_report(topic: str, report: dict[str, Any],
     return out, ""
 
 
+def unread(pile: dict[str, Any]) -> list[str]:
+    """還沒有人讀過的來源，用媒體名說出來。
+
+    這一支存在，是因為那顆「整理事實」按鈕本來的顯示條件是「事實少於八條」。
+    四個題目都有四十九到一百二十五條，所以按鈕**在每一個題目上都是藏起來的**
+    —— 而裁決之後補下載回來的影片、後來才收的報導，就永遠沒有人讀。
+
+    藏起來又不自動做，是最糟的組合：畫面上「整理過了」和「整理過，但後來
+    又進了五支影片」長得一模一樣。
+    """
+    from core import topic as topic_module
+    # 這個章是後加的，而在它之前整理過的題目一個章都沒有 —— 照字面判就會說
+    # 四十八個來源沒讀過，其實全部讀過了。分辨得出來：**一個章都沒有、而事實
+    # 已經夠多**，那是舊的題目，不是沒讀過的題目。下一次重跑就會蓋上章。
+    #
+    # 只認「一個都沒有」這種全有全無的狀態。有一個章就表示這個題目已經在新
+    # 制度裡了，那時候沒有章就真的是沒讀過。
+    kinds = ("videos", "reports")
+    if not any(one.get("read") for kind in kinds
+               for one in pile.get("sources", {}).get(kind) or []):
+        if len(topic_module.facts_of(pile)) >= rules_module.at("facts.least", 8):
+            return []
+    out = []
+    for one in topic_module.settled(pile, "videos"):
+        if one.get("file") and captions_of(one) and not one.get("read"):
+            out.append(one.get("outlet", "") or "一支影片")
+    for one in topic_module.settled(pile, "reports"):
+        if not one.get("read"):
+            out.append(one.get("outlet", "") or "一篇報導")
+    return out
+
+
 def gather(name: str, say=None) -> dict[str, Any]:
     """讀完影片的字幕和報導的正文，把事實加進去。
 
@@ -291,6 +324,9 @@ def gather(name: str, say=None) -> dict[str, Any]:
     pile = topic_module.load(name)
     have = {one["say"] for one in topic_module.facts_of(pile)}
     fresh, asked, empty = [], 0, []
+    # 真的問到模型、拿到回答的那些來源。用網址認人，因為那是來源唯一穩定的
+    # 識別 —— 檔名會變，媒體名會重複（PBS 那題有兩支）。
+    read_from: set[str] = set()
 
     videos = [one for one in topic_module.settled(pile, "videos")
               if captions_of(one)]
@@ -308,6 +344,7 @@ def gather(name: str, say=None) -> dict[str, Any]:
             # 問不到模型跟「這支沒說什麼」是兩件事。前者要出聲，後者不必。
             raise RuntimeError(f"問不到模型：{error}") from error
         asked += 1
+        read_from.add(str(video.get("url") or ""))
         if not got:
             empty.append(video.get("outlet", ""))
         for one in got:
@@ -332,6 +369,7 @@ def gather(name: str, say=None) -> dict[str, Any]:
             continue
         read_ok += 1
         asked += 1
+        read_from.add(str(report.get("url") or ""))
         if not got:
             empty.append(f"{report.get('outlet', '')}（報導）")
         for one in got:
@@ -341,6 +379,14 @@ def gather(name: str, say=None) -> dict[str, Any]:
 
     pile = topic_module.load(name)
     pile["facts"] = topic_module.facts_of(pile) + fresh
+    # 讀過的蓋一個章。少了它，「還沒整理過」和「整理過但後來又收了五支影片」
+    # 在畫面上一模一樣 —— 而那顆按鈕本來的顯示條件是「事實少於八條」，於是
+    # 四個題目都有五十條以上，按鈕全部藏起來，補下載回來的影片永遠沒人讀。
+    stamp = int(time.time())
+    for kind in ("videos", "reports"):
+        for one in pile.get("sources", {}).get(kind) or []:
+            if one.get("url") in read_from:
+                one["read"] = stamp
     # 警告寫進檔案，不只寫進工作日誌。看得到的地方才算報告過。
     trouble = list((pile.get("gathered") or {}).get("trouble") or [])
     trouble = [one for one in trouble if not one.startswith("讀不到正文")]

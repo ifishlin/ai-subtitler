@@ -18,6 +18,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from core import passages as passages_module
 from core import rules as rules_module
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -26,68 +27,6 @@ ROOT = Path(__file__).resolve().parent.parent
 # 小數字（88 和 70），而那不是設計，是「先讓 prompt 短一點」隨手打的。
 PASSAGE_CHARS = rules_module.at("brief.passage_chars", 200)
 CAPTION_CHARS = rules_module.at("brief.caption_chars", 200)
-
-
-def passages_for(pile: dict[str, Any], want: float = 5.0,
-                 per_video: int | None = None) -> list[dict[str, Any]]:
-    """Every stretch of footage worth cutting, already on caption boundaries.
-
-    Offered as a list to pick from rather than as a rule to obey. A start and
-    an end typed by hand land mid-sentence; these cannot, because they are the
-    boundaries.
-
-    ## 一支給幾段
-
-    本來寫死 3 段。而這些影片實際上有 7、18、22、25、43 段 —— 第 4 段之後
-    直接丟掉，**而且不出聲**。三段是一支七分鐘新聞的百分之十二，挑的人手上
-    只有那一小撮。
-
-    改成取前三分之一（比例和上限都在 `assets/rules.json` 的 `collect` 裡，
-    不是寫死在這裡）。名次照 `moments()` 算的關鍵詞命中數，那個排序本來就在，
-    只是以前只用來取前三名。
-
-    上限存在是因為四十三段的三分之一還是十四段，而那一節會佔掉 prompt 的
-    四分之一。段落是拿來挑的，多幾個選項有用；多到蓋過事實就沒用了。
-    """
-    from core import topic as topic_module
-    words = topic_module.keywords(pile)
-    share = rules_module.at("collect.passages_share", 0.34)
-    most = rules_module.at("collect.passages_most", 12)
-    everything = rules_module.at("collect.passages_all", 40)
-
-    # 一支一支算它自己那三分之一。
-    by_video: list[list[dict[str, Any]]] = []
-    for video in pile["sources"]["videos"]:
-        if not video.get("file"):
-            continue
-        # 先要全部，才知道三分之一是多少。`clip_passages` 本來就照命中數排，
-        # 所以切前面那一段就是「最相關的那三分之一」。
-        every = topic_module.clip_passages(video, words, want=want, most=999)
-        if not every:
-            continue
-        # min 要包住 round，不是被 round 包住 —— 上限 12 的設定跑出過 13 段。
-        room = per_video if per_video is not None else \
-            max(1, min(most, round(len(every) * share)))
-        by_video.append([{**found, "file": video["file"],
-                          "outlet": video.get("outlet", ""),
-                          "title": video.get("title", "")[:70]}
-                         for found in every[:room]])
-
-    # 總數上限。十五支影片的三分之一是一百零二段，佔掉 prompt 的四成五，
-    # 而一支片實際只用兩三段。
-    #
-    # 每支先保底一段，剩下的跨影片照命中數排名取 —— 只照分數排的話，
-    # 一支四十三段的長片會把短片整支擠掉，而「這一家怎麼講」正是它的價值。
-    kept = [rows[0] for rows in by_video]
-    rest = sorted((one for rows in by_video for one in rows[1:]),
-                  key=lambda one: -len(one.get("hits") or ()))
-    kept += rest[:max(0, everything - len(kept))]
-    # 排回原本的順序：同一支影片的段落要排在一起，時間也照著走。
-    order = {id(rows): index for index, rows in enumerate(by_video)}
-    where = {id(one): (index, place)
-             for index, rows in enumerate(by_video)
-             for place, one in enumerate(rows)}
-    return sorted(kept, key=lambda one: where[id(one)])
 
 
 def sheet(name: str) -> dict[str, Any]:
@@ -149,7 +88,10 @@ def sheet(name: str) -> dict[str, Any]:
                         ("outlet", "lean", "title", "url", "file", "captions")}
                        for v in pile["sources"]["videos"]],
             "pictures": pictures,
-            "passages": passages_for(pile),
+            # 存好的那一份，不現算。這裡和 `writer.fasten()` 各算一次的時候，
+            # 中間只要有人補了一篇報導，關鍵詞就變、排序就變，而模型回答裡的
+            # `C3` 會指到另一段 —— 兩邊各自都正確地算了一次，沒有人會報錯。
+            "passages": passages_module.stored(name),
             "stock": stock_offer(name)}
 
 

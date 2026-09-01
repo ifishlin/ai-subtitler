@@ -662,17 +662,29 @@ async function openTopic(name) {
       ${(() => {
         const have = (pile.facts || []).length;
         const readable = pile.readable || 0;
-        if (have >= (pile.facts_least || 8) || !readable) return "";
+        const unread = pile.unread || [];
+        /* 條件是「有來源還沒被讀過」，不是「事實不夠」。本來看事實夠不夠
+           八條，而四個題目都有四十九條以上 —— 按鈕在每一題上都是藏的，
+           於是裁決後補下載回來的影片永遠沒有人讀。收集那一輪現在會自己跑
+           一次，這顆按鈕是重跑的入口，不再是唯一的路。 */
+        if (!readable && !unread.length) return "";
+        if (have >= (pile.facts_least || 8) && !unread.length) return "";
+        const thin = have < (pile.facts_least || 8);
         return `
         <div class="row want">
           <div class="what">
-            <b>${have ? `只有 ${have} 條事實` : "還沒整理出事實"}</b>
-            <span>寫作的每一句都要指得回某一篇。讀 ${readable}
-              支影片的字幕和 ${(pile.sources.reports || []).filter(
-                (one) => !one.doubt).length} 篇報導的正文 ——
-              沒有事實，模型只有標題可用，寫不出九十秒</span>
+            <b>${thin ? (have ? `只有 ${have} 條事實` : "還沒整理出事實")
+                      : `${unread.length} 個來源還沒讀過`}</b>
+            <span>${thin
+              ? `寫作的每一句都要指得回某一篇。讀 ${readable}
+                 支影片的字幕和 ${(pile.sources.reports || []).filter(
+                   (one) => !one.doubt).length} 篇報導的正文 ——
+                 沒有事實，模型只有標題可用，寫不出九十秒`
+              : `${escapeHTML(unread.slice(0, 4).join("、"))}${
+                   unread.length > 4 ? ` 等 ${unread.length} 個` : ""}
+                 ——它們的字幕和正文還沒有變成事實`}</span>
           </div>
-          <button id="btnFacts" class="tiny">整理事實</button>
+          <button id="btnFacts" class="tiny">${thin ? "整理事實" : "讀新素材"}</button>
         </div>`;
       })()}
 

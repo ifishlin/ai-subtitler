@@ -29,6 +29,7 @@ const WHERE = [
     // 照資料的方向排，不照當初加進來的順序。
     ["/records",   "紀錄",     "🗄"],
     ["/material",  "素材去哪", "🔀"],
+    ["/passages",  "影片段落", "✂️"],
     ["/prompt",    "送去寫",   "✉️"],
   ]},
   {group: "設定", icon: "⚙︎", items: [
@@ -50,7 +51,7 @@ const WHERE = [
  * 換過。整併如果只是把八格藏起來，那就只是藏起來。
  *
  * 只補這三個路徑。`/docs?name=` 的 name 是文件名，補過去會落到白名單外。 */
-const CARRIES = new Set(["/records", "/material", "/prompt"]);
+const CARRIES = new Set(["/records", "/material", "/passages", "/prompt"]);
 
 function withName(path) {
   const now = new URLSearchParams(location.search).get("name");

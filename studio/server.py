@@ -770,6 +770,54 @@ def config_page() -> str:
     return (STATIC / "config.html").read_text(encoding="utf-8")
 
 
+@app.get("/passages", response_class=HTMLResponse)
+def passages_page() -> str:
+    """切出來的影片段落 —— 就是 prompt 裡 C1…C40 那一節。"""
+    return (STATIC / "passages.html").read_text(encoding="utf-8")
+
+
+@app.get("/api/passages")
+def passages_of(name: str | None = None) -> dict[str, Any]:
+    """這個題目切出來的段落，跟送進 prompt 的是同一份。
+
+    讀存好的那一份而不是現算：現算的話這一頁會變成第三個算法的地方，而它
+    算出來的東西跟模型看到的**看起來一樣但不保證是**。看的人要能相信畫面上
+    這一段就是 C7。
+    """
+    from core import passages as passages_module
+    from core import rules as rules_module
+    from core import topic as topic_module
+    names = topic_module.names()
+    if not names:
+        return {"topic": "", "topics": [], "passages": []}
+    which = name if name in names else names[0]
+    got = passages_module.report(which)
+    return {**got, "topic": which, "topics": names,
+            "least": rules_module.at("collect.passage_seconds", [4, 12])[0],
+            "most": rules_module.at("collect.passage_seconds", [4, 12])[1]}
+
+
+@app.get("/media/passage/{topic}/{stem}")
+def passage_clip(topic: str, stem: str) -> FileResponse:
+    """一段剪好的影片。
+
+    播的是**剪出來的檔案**，不是叫瀏覽器跳到原片的那一秒 —— 跳過去看到的是
+    「我以為我切在這裡」，而這個專案的錯有一半是「程式跑完了，只是畫面上不是
+    那樣」。
+
+    檔名比對這個題目自己的段落清單，不是把使用者給的字串接到路徑後面 ——
+    接起來的話 `../` 就能走出這個目錄。`final_video()` 也是這樣做的。
+    """
+    from core import passages as passages_module
+    for one in passages_module.stored(topic):
+        for key, kind in (("clip", "video/mp4"), ("thumb", "image/jpeg")):
+            where = one.get(key) or ""
+            if where and Path(where).name == stem and (ROOT / where).is_file():
+                return FileResponse(ROOT / where, media_type=kind,
+                                    headers={"Cache-Control": "no-store"})
+    raise HTTPException(404, f"找不到 {stem}")
+
+
 @app.get("/api/shots")
 def shots() -> dict[str, Any]:
     """四種鏡頭的定義，**從程式裡讀出來**，不是我在網頁上重打一遍。
@@ -1055,6 +1103,11 @@ def get_topic(name: str) -> dict[str, Any]:
             # —— 紀錄裡的 `captions` 欄從來沒被填，能不能讀只有檔案知道。
             "readable": len([one for one in topic_module.settled(pile, "videos")
                              if facts_module.captions_of(one)]),
+            # 還沒有人讀過的來源。按鈕本來看「事實夠不夠八條」，而四個題目都
+            # 有四十九條以上 —— 按鈕在每一題上都是藏的，於是補下載回來的影片
+            # 沒有人讀。「整理過了」和「整理過，但後來又進了五支影片」不是
+            # 同一件事，而畫面上它們長得一樣。
+            "unread": facts_module.unread(pile),
             "facts_least": rules_module.at("facts.least", 8)}
 
 
@@ -1381,8 +1434,58 @@ def gather(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
         pile["gathered"] = {"when": int(time_module.time()), "trouble": trouble}
         topic_module.save(name, pile)
 
+        # 收完之後還有兩件事，以前都要人再按一次，而其中一顆按鈕在事實夠多
+        # 的題目上根本不顯示 —— 藏起來又不自動做，是最糟的組合。兩件都是
+        # 「拿手上的字幕再讀一次」，而字幕正好是這一輪剛下載回來的。
+        #
+        # 放在存檔之後：破壞性的動作已經結束，這兩件失敗只損失時間，不損失
+        # 素材。而且事實是加不是換，段落是算完才寫，兩件都可以重跑。
+        _after_gathering(name, say, trouble)
+
     _job_run(f"收集：{name}", name, work)
     return {"started": name}
+
+
+def _after_gathering(name: str, say, trouble: list[str]) -> None:
+    """切段、讀事實。收集完和補下載完都要跑，所以只寫一次。
+
+    失敗不讓整輪算失敗：影片和字幕已經在硬碟上了，而這兩步都可以重跑。但
+    **失敗要寫進題目檔案**，不能只寫進工作日誌 —— 上一次那句 ⚠ 只活在記憶體
+    裡，重啟伺服器就沒了。
+    """
+    from core import facts as facts_module
+    from core import passages as passages_module
+    from core import topic as topic_module
+    for label, run in (("切影片段落", passages_module.cut),
+                       ("剪出段落檔案", passages_module.carve),
+                       ("整理事實", facts_module.gather)):
+        try:
+            got = run(name) if label == "切影片段落" else run(name, say)
+        except Exception as error:                                # noqa: BLE001
+            trouble.append(f"{label}失敗：{error}")
+            say(1, 1, f"⚠ {label}失敗：{str(error)[:80]}")
+            continue
+        if label == "剪出段落檔案":
+            say(1, 1, f"剪出 {got['carved']} 段檔案"
+                      + (f"　⚠ {len(got['failed'])} 段剪不出來" if got["failed"] else ""))
+            if got["failed"]:
+                trouble.append(f"剪不出段落：{'；'.join(got['failed'][:4])}")
+        elif label == "切影片段落":
+            say(1, 1, f"切出 {len(got['passages'])} 段影片"
+                      + (f"　⚠ {'、'.join(got['silent'])} 切不出東西"
+                         if got["silent"] else ""))
+            if got["silent"]:
+                trouble.append(f"切不出影片段落：{'、'.join(got['silent'])}")
+            if not got["passages"]:
+                trouble.append(f"讀了 {got['videos']} 支影片，一段都切不出來")
+        else:
+            say(1, 1, f"讀了 {got['videos_read']} 支影片、{got['reports_read']} 篇報導，"
+                      f"{got['added']} 條新的事實，共 {got['total']} 條")
+            if got["nothing_from"]:
+                trouble.append(f"讀不出事實：{'、'.join(got['nothing_from'])}")
+    pile = topic_module.load(name)
+    pile.setdefault("gathered", {})["trouble"] = trouble
+    topic_module.save(name, pile)
 
 
 @app.post("/api/topic/judge")
@@ -1444,6 +1547,12 @@ def judge_sources(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
                         if one.get("url") == video.get("url"):
                             one.update(got)
                     topic_module.save(name, fresh)
+                # 補下載回來的影片帶著字幕，而字幕是這條路上唯一拿得到完整
+                # 句子的地方。不在這裡讀，就永遠沒有人讀 —— 那顆按鈕在事實
+                # 夠多的題目上是藏起來的。
+                _after_gathering(name, say, list(
+                    (topic_module.load(name).get("gathered") or {})
+                    .get("trouble") or []))
             try:
                 _job_run(f"補下載：{name}", name, work)
             except HTTPException:

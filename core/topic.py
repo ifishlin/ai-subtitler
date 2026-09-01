@@ -723,7 +723,12 @@ def clip_passages(video: dict[str, Any], words: list[str],
     cues = cues_of(video)
     if not cues:
         return []
-    return caption_module.passages(cues, words, want=want, most=most)
+    # 字幕檔本身也要交出去 —— 自動字幕在裡面標了每個字幾秒開始，而 `cues_of`
+    # 為了讀內容把那些標記剝掉了。剝掉之後切點只能用估的，而檔案裡本來就有
+    # 真值：四十份字幕有二十七份是這種。
+    return caption_module.passages(cues, words, want=want, most=most,
+                                   track=ROOT / video["captions"]
+                                   if video.get("captions") else None)
 
 
 def cut_frames(name: str, video: dict[str, Any],

@@ -25,7 +25,7 @@ bad=0
 seen=$(mktemp)
 # 要看哪幾頁。給參數就只看那幾頁 —— 種一個錯回去驗證的時候，開八次瀏覽器
 # 要兩分鐘，而只驗一頁要十秒。
-PAGES="${*:-/ /topics /scripts /produce /desk /assemble /gates /docs}"
+PAGES="${*:-/ /topics /scripts /produce /desk /assemble /passages /gates /docs}"
 for page in $PAGES; do
   # 限時。`--virtual-time-budget` 只算「頁面自己的時間」，所以一個永遠載不完
   # 的資源會讓它永遠不結束 —— 而這一支跑在 pre-commit 裡，於是那次 commit

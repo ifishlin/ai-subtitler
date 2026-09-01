@@ -83,6 +83,21 @@ def _flatten(source: dict[str, Any], prefix: str = "") -> dict[str, Any]:
     return out
 
 
+def _names(house_of: str | None = None) -> dict[str, Any]:
+    """一份 prompt 裡的 `{名字}` 可以用哪些，以及它們今天的值。
+
+    `fill()` 和 `unfilled()` 都問這裡。本來各自組一份 —— 內容一樣，所以看起來
+    沒問題，直到有人加了一個算出來的名字：`fill()` 認得，`unfilled()` 不認得，
+    於是「這份 prompt 有錯」而它其實填得好好的。同一個事實兩份，第三次。
+    """
+    known = _flatten(rules())
+    if house_of:
+        known.update(_flatten(house(house_of)))
+    known.update({f"theme.{key}": value for key, value in _flatten(theme()).items()})
+    known.update(_derived(known))
+    return known
+
+
 def _derived(known: dict[str, Any]) -> dict[str, Any]:
     """Numbers that are two other numbers multiplied.
 
@@ -120,11 +135,7 @@ def fill(text: str, house_of: str | None = None) -> str:
     story prompt asks for `{structure.least_per_role.疑點}`, which only exists
     in that format.
     """
-    known = _flatten(rules())
-    if house_of:
-        known.update(_flatten(house(house_of)))
-    known.update({f"theme.{key}": value for key, value in _flatten(theme()).items()})
-    known.update(_derived(known))
+    known = _names(house_of)
     for name, value in known.items():
         for how, shown in _shapes(value).items():
             text = text.replace("{" + name + (f":{how}" if how else "") + "}",
@@ -153,10 +164,7 @@ def unfilled(text: str, house_of: str | None = None) -> list[str]:
     """Names a prompt asks for that the rule files do not have. Checked when a
     prompt is loaded, so a typo is found at that moment rather than reaching a
     model as a literal brace."""
-    known = set(_flatten(rules())) | {
-        f"theme.{key}" for key in _flatten(theme())}
-    if house_of:
-        known |= set(_flatten(house(house_of)))
+    known = set(_names(house_of))
     # Any name, not only ASCII ones. The pattern used to be [a-z_.]+, so
     # `{structure.least_per_role.疑點}` matched nothing: fill left it alone and
     # unfilled reported the prompt clean, and the literal braces would have

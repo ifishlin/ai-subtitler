@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>影片段落　AI-Reporters</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .pickrow{display:flex;gap:8px;align-items:center;margin:0 0 22px}
+  .pickrow select{font:14px inherit;color:var(--ink);background:var(--panel);
+    border:1px solid var(--line);border-radius:8px;padding:7px 10px;
+    cursor:pointer;max-width:100%}
+
+  .tally{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 26px}
+  .tally div{background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:9px 15px;font-size:13px;color:var(--dim)}
+  .tally b{color:var(--ink);font-size:17px;margin-right:5px}
+
+  /* 播放器只有一個，跟著被按的那一段走。
+     四十段各給一個 <video> 的話，四十條連線會塞爆瀏覽器對單一主機的六條
+     上限 —— /scripts 那一頁就是這樣永遠載不完的。 */
+  .stage{position:sticky;top:8px;z-index:5;background:var(--bg);
+    padding:8px 0 14px;margin:0 0 8px}
+  .stage video{width:100%;max-height:40vh;background:#000;border-radius:10px;
+    border:1px solid var(--line)}
+  .stage p{margin:8px 0 0;color:var(--faint);font-size:12.5px}
+  /* 逐字稿跟著播放器走。它本來只留在底下那張卡上，而播放器貼在頂端 ——
+     一按下去，正在播的那一段的字就被自己的播放器蓋住了。要看的東西被
+     用來看它的東西擋住，是這一頁最不該有的錯。 */
+  .stage .said{margin:6px 0 0;color:var(--ink);font-size:14px;line-height:1.6}
+  .stage.off{display:none}
+
+  .film{margin:26px 0 10px;color:var(--faint);font-size:13px;
+    border-bottom:1px solid var(--line);padding-bottom:6px}
+  .film b{color:var(--ink);font-size:14.5px}
+
+  .cut{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:13px 16px;margin:0 0 10px;
+    display:grid;grid-template-columns:168px 1fr;gap:14px}
+  /* 縮圖點下去就播。清單是拿來找的，四十段逐一按下去播要好幾分鐘，
+     掃一遍縮圖只要幾秒。 */
+  .cut .shot{width:168px;border-radius:8px;border:1px solid var(--line);
+    display:block;cursor:pointer;background:#000;aspect-ratio:16/9;
+    object-fit:cover}
+  .cut .shot:hover{border-color:var(--ok)}
+  .cut .body{min-width:0}
+  .cut .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .cut .no{font:13px var(--mono);color:var(--ok);font-weight:600}
+  .cut .when{font:12px var(--mono);color:var(--faint)}
+  .cut .said{margin:8px 0 0;color:var(--ink);font-size:14px;line-height:1.6}
+  .cut .why{margin:9px 0 0;font-size:12px;color:var(--faint)}
+  .cut .key{display:inline-block;font:11.5px var(--mono);margin:0 5px 0 0;
+    padding:2px 8px;border-radius:10px;border:1px solid #2c5a45;color:var(--ok)}
+  .cut .key.dim{border-color:var(--line);color:var(--faint)}
+  /* 還沒剪出檔案的，縮圖那一格放一塊佔位 —— 沒有按鈕之後，它是唯一
+     說得出「這一段還不能看」的東西。 */
+  .cut .none{width:168px;aspect-ratio:16/9;border-radius:8px;
+    border:1px dashed var(--line);color:var(--faint);font-size:12px;
+    display:flex;align-items:center;justify-content:center}
+
+  .callout{background:var(--panel);border:1px solid var(--line);
+    border-left:4px solid var(--warn);border-radius:12px;
+    padding:15px 18px;margin:0 0 24px}
+  .callout b{display:block;font-size:16px;margin-bottom:6px}
+  .callout p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.65}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>影片段落</h1>
+  <p class="under">送進 prompt 的就是這一份 —— 文案裡寫 <code>C7</code>，指的是底下第 7 段。</p>
+
+  <div class="pickrow"><select id="pick"></select></div>
+  <div id="callout"></div>
+  <div class="tally" id="tally"></div>
+
+  <div class="stage off" id="stage">
+    <video id="player" controls preload="metadata"></video>
+    <p id="now"></p>
+    <p class="said" id="saidnow"></p>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+/* 播一段。播的是**剪出來的那個檔案**，不是叫瀏覽器跳到原片的那一秒 ——
+   跳過去看到的是「我以為我切在這裡」。 */
+function play(row, topic, index) {
+  if (!row.clip) return;
+  const video = $("player");
+  $("stage").classList.remove("off");
+  video.setAttribute("src", `/media/passage/${encodeURIComponent(topic)}/${
+    encodeURIComponent(row.clip.split("/").pop())}`);
+  $("now").textContent = `C${index}　${row.outlet}　原片的 ${row.start}s – ${
+    row.end}s（${row.seconds} 秒）`;
+  $("saidnow").textContent = row.said;
+  video.play().catch(() => {});      /* 使用者還沒互動過就會被擋，不是錯 */
+  $("stage").scrollIntoView({block: "nearest"});
+}
+
+function cut(row, index, topic) {
+  /* 命中的關鍵詞排前面（那是它被選上的原因），整段涵蓋到的排後面。
+     排序看的是命中「幾個」不是哪一個，所以那個數字也要寫出來。 */
+  const hit = new Set(row.matched || []);
+  const keys = (row.hits || []).map((one) =>
+    `<span class="key${hit.has(one) ? "" : " dim"}">${esc(one)}</span>`).join("");
+  /* 縮圖就是播放鍵。多一顆「播這一段」是同一件事的第二個入口，而點圖
+     本來就是所有人的第一直覺。 */
+  const shot = row.thumb
+    ? `<img class="shot" loading="lazy" data-cut="${index - 1}"
+         alt="C${index} 的畫面" src="/media/passage/${encodeURIComponent(topic)}/${
+           encodeURIComponent(row.thumb.split("/").pop())}">`
+    : '<div class="none">還沒剪</div>';
+  return `
+  <div class="cut">
+    ${shot}
+    <div class="body">
+      <div class="top">
+        <span class="no">C${index}</span>
+        <span class="when">${clock(row.start)} → ${clock(row.end)}　${
+          row.seconds} 秒</span>
+      </div>
+      <p class="said">${esc(row.said)}</p>
+      <p class="why">因為命中 ${hit.size} 個關鍵詞被選上　${keys}</p>
+    </div>
+  </div>`;
+}
+
+async function load() {
+  const wanted = new URLSearchParams(location.search).get("name") || "";
+  const back = await fetch("/api/passages"
+    + (wanted ? "?name=" + encodeURIComponent(wanted) : ""));
+  if (!back.ok) throw new Error(await back.text());
+  const d = await back.json();
+  const rows = d.passages || [];
+
+  $("pick").innerHTML = (d.topics || []).map((one) =>
+    `<option value="${esc(one)}"${one === d.topic ? " selected" : ""}>${
+      esc(one)}</option>`).join("");
+  $("pick").onchange = () => {
+    location.search = "?name=" + encodeURIComponent($("pick").value);
+  };
+
+  const seconds = rows.reduce((n, one) => n + one.seconds, 0);
+  $("tally").innerHTML = [
+    [`<b>${rows.length}</b>段`, ""],
+    [`<b>${d.videos || 0}</b>支影片有字幕`, ""],
+    [`<b>${rows.length ? (seconds / rows.length).toFixed(1) : 0}</b>秒`, "平均長度"],
+    [`<b>${d.least}–${d.most}</b>秒`, "上下限"],
+    [`<b>${d.carved || 0}</b>段`, "已經剪出檔案"],
+  ].map(([head, tail]) => `<div>${head}${tail ? " " + esc(tail) : ""}</div>`).join("");
+
+  /* 讀了 N 支影片、一段都切不出來，跟「這個題目沒有影片」在畫面上一模一樣。
+     這裡把它說出來 —— 而且是說哪幾家，不是只說一個數字。 */
+  const silent = d.silent || [];
+  $("callout").innerHTML = !rows.length
+    ? `<div class="callout"><b>一段都沒有</b><p>讀了 ${d.videos || 0}
+         支有字幕的影片，切不出任何段落。文案會寫成一支完全沒有動態畫面的片，
+         而每一道門都會過。</p></div>`
+    : (silent.length
+      ? `<div class="callout"><b>${esc(silent.join("、"))} 切不出東西</b>
+         <p>有字幕，但沒有一段落在長度範圍內（${d.least}–${d.most} 秒）。
+            多半是那份字幕整段沒有句號 —— 硬切就會切回半句。</p></div>`
+      : "");
+
+  const by = [];
+  rows.forEach((one, index) => {
+    const last = by[by.length - 1];
+    if (!last || last.file !== one.file) {
+      by.push({file: one.file, outlet: one.outlet, title: one.title, rows: []});
+    }
+    by[by.length - 1].rows.push({one, index: index + 1});
+  });
+
+  $("list").innerHTML = by.map((film) => `
+    <div class="film"><b>${esc(film.outlet)}</b>　${esc(film.title || "")}</div>
+    ${film.rows.map(({one, index}) => cut(one, index, d.topic)).join("")}`).join("")
+    || "";
+
+  $("list").onclick = (event) => {
+    const which = event.target.getAttribute("data-cut");
+    if (which !== null) play(rows[Number(which)], d.topic, Number(which) + 1);
+  };
+}
+
+load().catch((error) => {
+  $("callout").innerHTML = '<div class="callout"><b>讀不到</b><p>'
+    + esc(error.message) + "</p></div>";
+});
+</script>
+</body>
+</html>
