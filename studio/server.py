@@ -260,6 +260,18 @@ def material_page() -> str:
     return (STATIC / "material.html").read_text(encoding="utf-8")
 
 
+@app.get("/records", response_class=HTMLResponse)
+def records_page() -> str:
+    """題目檔本身。
+
+    別的頁面都是「讀完之後整理給你看」，這一頁給的是**紀錄的原文** ——
+    每一支影片存了哪九欄、每一張照片帶著什麼、事實那一條的出處長什麼樣。
+    整理過的畫面沒辦法回答「這一欄到底叫什麼名字」，而這個專案憑記憶寫
+    欄位名已經錯過三次。
+    """
+    return (STATIC / "records.html").read_text(encoding="utf-8")
+
+
 @app.get("/prompt", response_class=HTMLResponse)
 def prompt_page() -> str:
     """送進模型寫文案的那份文字，就是它本身，不是它的描述。"""
@@ -742,6 +754,84 @@ def _sites() -> list[str]:
         _sites.cached = sorted({line.strip() for line in found.stdout.splitlines()
                                 if line.strip() and ":" not in line})
     return _sites.cached
+
+
+# ------------------------------------------------- 題目檔的原文
+
+def _record_path(name: str):
+    """The topic file for `name`, or 404.
+
+    The name is checked against the list rather than sanitised, because
+    sanitising a path is a filter and a filter is something you can get wrong
+    once. `topic.names()` is the set of things that exist; anything else is
+    not a topic, whatever it looks like.
+    """
+    from core import topic as topic_module
+    if name not in topic_module.names():
+        raise HTTPException(404, f"沒有這個題目：{name}")
+    return topic_module.TOPIC_DIR / f"{name}.json"
+
+
+@app.get("/api/records")
+def records() -> dict[str, Any]:
+    """每一份題目檔有多大、上一次改是什麼時候、頂層有哪幾節。"""
+    from core import topic as topic_module
+    out = []
+    for name in topic_module.names():
+        here = topic_module.TOPIC_DIR / f"{name}.json"
+        pile = json.loads(here.read_text(encoding="utf-8"))
+        sources = pile.get("sources") or {}
+        out.append({
+            "name": name,
+            "bytes": here.stat().st_size,
+            "changed": int(here.stat().st_mtime),
+            "keys": list(pile),
+            # 算得出來的就不要另外存。這幾個數字別的頁面也在用，而它們
+            # 全部是 len() —— 存一份就是等它跟真的那份分岔。
+            "counts": {
+                "videos": len(sources.get("videos") or []),
+                "reports": len(sources.get("reports") or []),
+                "images": len(sources.get("images") or []),
+                "facts": len(pile.get("facts") or []),
+                # voices 是「一支影片一組」，組數不是留言數 —— 這一欄
+                # 報過一次組數，看起來像有三則留言，其實一則都沒有。
+                "voices": sum(len(one.get("comments") or [])
+                              for one in (pile.get("voices") or [])),
+            }})
+    return {"records": out}
+
+
+@app.get("/api/record")
+def record(name: str) -> dict[str, Any]:
+    """一份題目檔的原文，一個字都沒動過。"""
+    here = _record_path(name)
+    return {"name": name, "bytes": here.stat().st_size,
+            "text": here.read_text(encoding="utf-8")}
+
+
+@app.get("/api/record/download")
+def record_download(name: str) -> FileResponse:
+    """同一份檔案，當附件送出去。"""
+    here = _record_path(name)
+    return FileResponse(here, media_type="application/json",
+                        filename=f"{name}.json")
+
+
+@app.get("/api/records/download")
+def records_download() -> FileResponse:
+    """全部打包成一個 zip。
+
+    做在暫存檔而不是記憶體裡串出去，因為 FileResponse 要一個路徑；
+    四份加起來不到四百 KB，值不得為它寫一個串流。
+    """
+    import tempfile, zipfile
+    from core import topic as topic_module
+    room = Path(tempfile.gettempdir()) / "video_pipeline_records.zip"
+    with zipfile.ZipFile(room, "w", zipfile.ZIP_DEFLATED) as bag:
+        for name in topic_module.names():
+            bag.write(topic_module.TOPIC_DIR / f"{name}.json", f"{name}.json")
+    return FileResponse(room, media_type="application/zip",
+                        filename="topics.zip")
 
 
 # ------------------------------------------------------------------ topics

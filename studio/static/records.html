@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>紀錄　AI-Reporters</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  /* 左邊選題目，右邊看那一份。跟短影音那頁同一種形狀，因為做的是同一件事：
+     一份一份東西，挑一個看細節。換一個排法只是讓人多學一次。 */
+  html,body{height:100%}
+  body{display:flex;flex-direction:column;margin:0}
+  #both{flex:1;min-height:0;display:flex}
+
+  #side{width:290px;flex:none;overflow:auto;padding:14px 12px;
+    border-right:1px solid var(--line);background:var(--panel)}
+  #side h2{font-size:12px;color:var(--faint);margin:0 0 9px;font-weight:600}
+  .one{border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+    margin-bottom:8px;cursor:pointer;background:var(--bg)}
+  .one:hover{border-color:var(--accent)}
+  .one.on{border-color:var(--accent);background:var(--panel2)}
+  .one b{display:block;font-size:13.5px;margin-bottom:4px}
+  .one .n{font:11px var(--mono);color:var(--faint);line-height:1.7}
+  .one .n i{font-style:normal;color:var(--dim)}
+
+  #main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:none;
+    padding:11px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+  .bar b{font-size:15px}
+  .bar .n{font:11.5px var(--mono);color:var(--faint)}
+  .bar .gap{flex:1}
+  .bar input{background:var(--bg);border:1px solid var(--line);border-radius:7px;
+    color:var(--ink);padding:5px 10px;font-size:12.5px;width:190px}
+  .bar input:focus{outline:none;border-color:var(--accent)}
+  .bar button{font:inherit;font-size:12.5px;color:var(--ink);
+    background:var(--panel2);border:1px solid var(--line);border-radius:7px;
+    padding:4px 11px;cursor:pointer}
+  .bar button:hover{border-color:var(--accent)}
+  .bar button.on{border-color:var(--accent);color:var(--accent)}
+  .bar button.primary{background:var(--accent);color:#0b1017;
+    border-color:transparent;font-weight:600}
+
+  #body{flex:1;min-height:0;overflow:auto;padding:12px 16px 40px}
+
+  /* 樹。物件和陣列用原生 <details>，不用套件也不用自己寫展開邏輯。 */
+  .node{font:12.5px/1.85 var(--mono)}
+  .node details{margin-left:15px;border-left:1px solid var(--line);
+    padding-left:11px}
+  .node > details{margin-left:0;border-left:none;padding-left:0}
+  .node summary{cursor:pointer;list-style:none;margin-left:-11px;
+    padding-left:11px;border-radius:5px}
+  .node > details > summary{margin-left:0;padding-left:0}
+  .node summary::-webkit-details-marker{display:none}
+  .node summary::before{content:"▸";color:var(--faint);
+    display:inline-block;width:13px}
+  .node details[open] > summary::before{content:"▾"}
+  .node summary:hover{background:var(--panel)}
+  .k{color:#7fd4ff}
+  .t{color:var(--faint);font-size:11px;margin-left:7px}
+  .row{margin-left:15px;border-left:1px solid var(--line);padding-left:24px;
+    text-indent:-11px}
+  .s{color:#a9e6a0;white-space:pre-wrap;word-break:break-word}
+  .num{color:#ffc46b}
+  .bool{color:#ff9d7a}
+  .nul{color:var(--faint)}
+  .hit{background:#4a3a12;border-radius:3px}
+
+  pre#raw{margin:0;white-space:pre-wrap;word-break:break-word;
+    font:12px/1.8 var(--mono);color:var(--dim)}
+
+</style>
+</head>
+<body>
+<div id="both">
+  <div id="side">
+    <h2>題目檔</h2>
+    <div id="list"></div>
+    <button id="all" class="tiny" style="width:100%;margin-top:6px;
+      font:12px inherit;color:var(--ink);background:var(--panel2);
+      border:1px solid var(--line);border-radius:8px;padding:7px;
+      cursor:pointer">全部下載（zip）</button>
+  </div>
+  <div id="main">
+    <div class="bar">
+      <b id="who">選一個題目</b>
+      <span class="n" id="size"></span>
+      <span class="gap"></span>
+      <input id="find" placeholder="找欄位或內容…" spellcheck="false">
+      <button id="mode">看原文</button>
+      <button id="wide">全部展開</button>
+      <button id="down" class="primary">下載這一份</button>
+    </div>
+    <div id="body"><p class="empty" style="padding:20px">左邊選一個。</p></div>
+  </div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+let ROWS = [];
+let NOW = null;      // {name, text, data}
+let RAW = false;     // 看原文，還是看樹
+
+const kb = (n) => (n / 1024).toFixed(1) + " KB";
+const when = (t) => new Date(t * 1000).toLocaleString("zh-TW",
+  {month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"});
+
+/* ---------------------------------------------------------------- 左邊
+ * 每一份的大小和五個數字。數字是伺服器算的 len()，不是存下來的欄位 ——
+ * 存一份就是等它跟真的那份分岔，而這個專案為那件事修過四次錯。
+ */
+function drawList() {
+  $("list").innerHTML = ROWS.map((one) => `
+    <div class="one${NOW && NOW.name === one.name ? " on" : ""}"
+      data-name="${esc(one.name)}">
+      <b>${esc(one.name)}</b>
+      <div class="n">${kb(one.bytes)}　${esc(when(one.changed))}<br>
+        影片 <i>${one.counts.videos}</i>　報導 <i>${one.counts.reports}</i>
+        照片 <i>${one.counts.images}</i><br>
+        事實 <i>${one.counts.facts}</i>　留言 <i>${one.counts.voices}</i></div>
+    </div>`).join("") || '<p class="empty">一個題目都沒有。</p>';
+}
+
+$("list").addEventListener("click", (event) => {
+  const card = event.target.closest(".one");
+  if (card) openRecord(card.dataset.name);
+});
+
+/* ---------------------------------------------------------------- 樹
+ * 物件和陣列畫成 <details>，不用套件。陣列預設收起來 —— 一份題目檔裡
+ * 有三十幾支影片、七十幾張照片，全部攤開的第一眼是一片字。
+ */
+function leaf(value) {
+  if (value === null) return '<span class="nul">null</span>';
+  if (typeof value === "number") return `<span class="num">${value}</span>`;
+  if (typeof value === "boolean") return `<span class="bool">${value}</span>`;
+  return `<span class="s">"${esc(value)}"</span>`;
+}
+
+function about(value) {
+  if (Array.isArray(value)) return `[ ${value.length} 筆 ]`;
+  return `{ ${Object.keys(value).length} 欄 }`;
+}
+
+/* 陣列裡一筆東西，用一句話認得出來是哪一筆 —— 收起來的時候只看得到這個，
+   而 `{ 9 欄 }` 對每一筆都一樣，等於沒說。 */
+function hint(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return "";
+  for (const key of ["title", "say", "caption", "name", "term", "url", "id"]) {
+    if (typeof value[key] === "string" && value[key].trim()) {
+      return "　" + value[key].trim().slice(0, 54);
+    }
+  }
+  return "";
+}
+
+function node(key, value, depth) {
+  const label = key === null ? "" : `<span class="k">${esc(key)}</span>：`;
+  if (value === null || typeof value !== "object") {
+    return `<div class="row">${label}${leaf(value)}</div>`;
+  }
+  const items = Array.isArray(value)
+    ? value.map((one, index) => node(String(index), one, depth + 1))
+    : Object.entries(value).map(([k, v]) => node(k, v, depth + 1));
+  // 頂層那一層打開，底下收起來。
+  const open = depth < 1 ? " open" : "";
+  return `<details${open}><summary>${label}<span class="t">${
+    about(value)}${esc(hint(value))}</span></summary>${
+    items.join("") || '<div class="row"><span class="nul">（空的）</span></div>'
+  }</details>`;
+}
+
+function drawBody() {
+  if (!NOW) return;
+  if (RAW) {
+    $("body").innerHTML = `<pre id="raw">${esc(NOW.text)}</pre>`;
+  } else {
+    $("body").innerHTML = `<div class="node">${node(null, NOW.data, 0)}</div>`;
+  }
+  mark($("find").value.trim());
+}
+
+/* ---------------------------------------------------------------- 找
+ * 找到的地方要**把它上面每一層都打開**，不然瀏覽器的搜尋也看不到它 ——
+ * <details> 收起來的內容不在畫面上。標了顏色卻藏著，等於沒找到。
+ */
+function mark(want) {
+  document.querySelectorAll(".hit").forEach((one) => {
+    one.replaceWith(document.createTextNode(one.textContent));
+  });
+  $("body").normalize();
+  if (!want) return;
+  const low = want.toLowerCase();
+  let found = 0;
+  const walk = document.createTreeWalker($("body"), NodeFilter.SHOW_TEXT);
+  const todo = [];
+  while (walk.nextNode()) {
+    if (walk.currentNode.nodeValue.toLowerCase().includes(low)) {
+      todo.push(walk.currentNode);
+    }
+  }
+  for (const text of todo) {
+    const at = text.nodeValue.toLowerCase().indexOf(low);
+    const tail = text.splitText(at);
+    tail.splitText(want.length);
+    const paint = document.createElement("span");
+    paint.className = "hit";
+    tail.replaceWith(paint);
+    paint.appendChild(tail);
+    for (let up = paint.parentElement; up; up = up.parentElement) {
+      if (up.tagName === "DETAILS") up.open = true;
+      if (up.id === "body") break;
+    }
+    found += 1;
+  }
+  $("size").textContent = NOW
+    ? `${kb(NOW.text.length)}　${found ? `找到 ${found} 處` : (want ? "找不到" : "")}`
+    : "";
+}
+
+let typing;
+$("find").oninput = () => {
+  clearTimeout(typing);
+  typing = setTimeout(() => mark($("find").value.trim()), 220);
+};
+
+$("mode").onclick = () => {
+  RAW = !RAW;
+  $("mode").textContent = RAW ? "看結構" : "看原文";
+  $("mode").classList.toggle("on", RAW);
+  $("wide").disabled = RAW;
+  drawBody();
+};
+
+$("wide").onclick = () => {
+  const all = [...$("body").querySelectorAll("details")];
+  const shut = all.some((one) => !one.open);
+  all.forEach((one) => { one.open = shut; });
+  $("wide").textContent = shut ? "全部收起" : "全部展開";
+};
+
+/* 下載走伺服器的端點，不是在前端把字串包成 blob —— 那樣下載到的是
+   瀏覽器手上那一份，而它可能是幾分鐘前讀的。檔案要來自檔案。 */
+$("down").onclick = () => {
+  if (NOW) location.href = "/api/record/download?name="
+    + encodeURIComponent(NOW.name);
+};
+$("all").onclick = () => { location.href = "/api/records/download"; };
+
+async function openRecord(name) {
+  const back = await fetch("/api/record?name=" + encodeURIComponent(name));
+  if (!back.ok) {
+    $("body").innerHTML = '<p class="empty" style="padding:20px">讀不到：'
+      + esc(await back.text()) + "</p>";
+    return;
+  }
+  const got = await back.json();
+  NOW = {name: got.name, text: got.text, data: JSON.parse(got.text)};
+  $("who").textContent = name;
+  $("size").textContent = kb(got.bytes);
+  history.replaceState(null, "", "/records?name=" + encodeURIComponent(name));
+  drawList();
+  drawBody();
+}
+
+async function load() {
+  const back = await fetch("/api/records");
+  if (!back.ok) throw new Error(await back.text());
+  ROWS = (await back.json()).records || [];
+  drawList();
+  const want = new URLSearchParams(location.search).get("name");
+  const first = ROWS.find((one) => one.name === want) || ROWS[0];
+  if (first) openRecord(first.name);
+}
+
+load().catch((error) => {
+  $("body").innerHTML = '<p class="empty" style="padding:20px">讀不到：'
+    + esc(error.message) + "</p>";
+});
+</script>
+</body>
+</html>
