@@ -362,7 +362,24 @@ def _sound_filter(rate: float, seconds: float) -> str:
     if abs(left - 1.0) > 1e-6:
         steps.append(f"atempo={left:.6f}")
     steps.append("aresample=48000")
-    steps.append(f"loudnorm=I={want}:TP={peak}:LRA=11")
+    # loudnorm 要大約三秒才算得出東西。給它 1.9 秒，它回 NaN，然後 aac 拒收
+    # 整個鏡頭 ——「Input contains (near) NaN/+-Inf」，壓片直接失敗。
+    #
+    # 短的用 dynaudnorm：它是逐格算的，短輸入不會爆，代價是它比較不準。
+    # 不準沒關係，NaN 有關係 —— 一個兩秒的鏡頭響度差三分貝沒有人聽得出來，
+    # 而壓不出來是所有人都看得到。
+    if seconds >= 3.0:
+        steps.append(f"loudnorm=I={want}:TP={peak}:LRA=11")
+    else:
+        steps.append("dynaudnorm=f=100:g=5")
+    # **這一行才是真的在擋。** loudnorm 對著一段幾乎全是零的樣本算增益，
+    # 算出來是 NaN；aac 收到 NaN 就整支拒收，壓片直接失敗 ——
+    # 「Input contains (near) NaN/+-Inf」。alimiter 把它夾回有限值。
+    #
+    # 上面那個「短的改用 dynaudnorm」是第二層：它讓短鏡頭的響度算得比較
+    # 合理，但就算拿掉，有 alimiter 就不會爆。分清楚哪一層在擋什麼很重要
+    # —— 我第一次種錯種在長度那一層，門說通過，而我差點以為門壞了。
+    steps.append(f"alimiter=limit={10 ** (peak / 20):.4f}")
     steps.append("asetpts=PTS-STARTPTS")
     # 淡入淡出。沒有它，每一段的頭尾是啪的一聲 —— 而那個聲音在有人戴耳機
     # 看的時候最明顯，也就是這種片子絕大多數被看的方式。
