@@ -155,14 +155,21 @@ def judge(clip_id: str, keep: bool | None) -> dict[str, Any]:
     raise ValueError(f"池子裡沒有這一支：{clip_id}")
 
 
-def bring_in(say=None) -> dict[str, Any]:
-    """把留下來的那幾支下載回來。
+def bring_in(say=None, every: bool = False) -> dict[str, Any]:
+    """把片子下載回來。只抓還沒有檔案的，中斷之後再跑一次就是接著抓。
 
-    只抓還沒有檔案的，所以中斷之後再跑一次就是接著抓。
+    `every` 是「全部抓下來看」。本來的設計是先看縮圖再決定，但**一張靜圖
+    看不出一支影片值不值得留** —— 鏡頭有沒有在動、動得好不好、有沒有晃到
+    不能用，全部在那一格裡看不到。所以「省流量」省掉的其實是判斷的依據。
+
+    抓完之後用 `drop_unwanted()` 把不要的掃掉，硬碟就回來了；那一支是分開
+    的，因為它是破壞性的，不該夾在下載裡面 —— 抓到一半失敗的時候，不該
+    順便把別的東西刪掉。
     """
     book = _load()
     HERE.mkdir(parents=True, exist_ok=True)
-    todo = [one for one in book["clips"] if one.get("keep")
+    todo = [one for one in book["clips"]
+            if (every or one.get("keep"))
             and not (one.get("file") and (ROOT / one["file"]).is_file())]
     got, missed = 0, []
     for index, one in enumerate(todo, start=1):
@@ -180,8 +187,11 @@ def bring_in(say=None) -> dict[str, Any]:
     return {"got": got, "missed": missed, "todo": len(todo)}
 
 
-def drop_unwanted() -> int:
-    """掃掉被判成不要、卻已經下載過的檔案。
+def drop_unwanted(also_unseen: bool = False) -> int:
+    """掃掉不要的那些檔案。
+
+    預設只掃「看過而且判成不要」的。`also_unseen` 連「還沒看過」的一起掃 ——
+    那是清空重來，不是整理，所以要明講。
 
     破壞性的步驟，所以它是自己一支，不夾在下載那一支裡面 —— 抓到一半失敗
     的時候，不該順便把別的東西刪掉。
@@ -191,6 +201,9 @@ def drop_unwanted() -> int:
     for one in book["clips"]:
         if one.get("keep"):
             continue
+        # 還沒看過的不掃 —— 掃了就等於替他決定，而他還沒看。
+        if one.get("keep") is None and not also_unseen:
+            continue
         if one.get("file"):
             here = ROOT / one["file"]
             if here.is_file():
@@ -199,6 +212,48 @@ def drop_unwanted() -> int:
             one["file"] = None
     _save(book)
     return gone
+
+
+OFFERED = HERE / "offered"
+
+
+def offer(topic: str, per: int = 3, fresh: bool = False) -> list[dict[str, Any]]:
+    """這個題目這一次送出去的是哪幾支。
+
+    抽，不是全部列出去：池子有一百多支，全列會把素材那一節灌成一片清單，
+    而模型挑的時候只看得到搜尋詞 —— 一組看三支和看十五支，它挑得一樣好。
+
+    **抽完要存下來。** `sheet()` 被 `as_text()`（印出 V1、V2 給模型看）和
+    `fasten()`（把 V2 換回檔案）各呼叫一次；隨機而不存的話，兩邊抽到不同的
+    三支，V2 在那兩個地方指著不同的影片 —— 而兩邊各自都「正確地」隨機了，
+    不會有任何一邊報錯。這是這個專案的老毛病：同一個事實算兩遍。
+
+    `fresh=True` 是重抽，只有組 prompt 的那一刻會這樣叫。其餘所有人讀的都是
+    存下來的那一份。
+    """
+    import random
+    OFFERED.mkdir(parents=True, exist_ok=True)
+    note = OFFERED / f"{topic}.json"
+    if not fresh and note.is_file():
+        try:
+            saved = json.loads(note.read_text(encoding="utf-8"))
+        except Exception:                                         # noqa: BLE001
+            saved = None
+        if saved:
+            # 存的是 id：池子裡那一支後來被刪掉的話，這裡就要少一支，
+            # 而不是回一個指著不存在檔案的紀錄。
+            have = {one["id"]: one for one in kept()}
+            live = [have[i] for i in saved if i in have]
+            if live:
+                return live
+    by: dict[str, list[dict[str, Any]]] = {}
+    for one in kept():
+        by.setdefault(one["group"], []).append(one)
+    out = []
+    for group in sorted(by):
+        out += random.sample(by[group], min(per, len(by[group])))
+    note.write_text(json.dumps([one["id"] for one in out]), encoding="utf-8")
+    return out
 
 
 def kept() -> list[dict[str, Any]]:

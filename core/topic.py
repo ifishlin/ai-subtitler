@@ -937,13 +937,14 @@ def replace_images(name: str, fresh: list[dict[str, Any]]) -> dict[str, int]:
                if item.get("file") and item["file"] not in keep]
     pile["sources"]["images"] = fresh
     save(name, pile)                      # the record first, the files after
-    gone = 0
-    for item in dropped:
-        target = ROOT / item["file"]
-        if target.is_file():
-            target.unlink()
-            gone += 1
-    return {"kept": len(fresh), "removed": gone}
+    # 移到 trash，不真刪。這一支就是那次「先刪舊圖再抓新圖，抓到一半失敗」
+    # 留下的教訓，順序已經倒過來了 —— 但順序對，不代表刪對：**掃檔少數了
+    # 一種指標**這件事在同一個專案裡也發生過（四十四個字幕檔），而那次沒有
+    # 損失的唯一原因就是丟進了 trash。
+    from core import bin as bin_module
+    got = bin_module.toss([item["file"] for item in dropped], "沒人指著的素材")
+    return {"kept": len(fresh), "removed": got["moved"],
+            "moved_to": got["room"]}
 
 
 def path_for(name: str) -> Path:

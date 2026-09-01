@@ -58,6 +58,9 @@ REAL_LEAST = rules_module.at("borrowed.least", 0.5)
 REAL_MOST = rules_module.at("borrowed.most", 0.65)
 CLIP_LEAST = rules_module.at("borrowed.clip_least", 0.5)
 DRAWN = "自製"
+# 第四種鏡頭的前綴。用前綴而不是另外一個欄位來分類，是因為 `is_real()` 收到
+# 的只有 `show` 那一個字串 —— 換成看欄位的話，這個判斷就得改成到處傳整行。
+STOCK = "情境"
 
 
 def is_clip(line: dict[str, Any]) -> bool:
@@ -77,6 +80,25 @@ def is_clip(line: dict[str, Any]) -> bool:
     return bool(clip and clip.get("file"))
 
 
+def is_stock(line: dict[str, Any]) -> bool:
+    """Whether this shot is a stock clip from the shared pool.
+
+    The fourth kind. It moves, and it is not evidence -- a lit substation at
+    dusk belongs to no topic, so it can carry rhythm but never a claim. That
+    distinction is the whole reason it is its own kind rather than a `clip`:
+    if it counted as borrowed footage, the floor that exists to force real
+    pictures onto the screen could be met with mood.
+    """
+    stock = line.get("stock")
+    return bool(stock and isinstance(stock, dict) and stock.get("file"))
+
+
+def moves(line: dict[str, Any]) -> bool:
+    """Whether anything on screen is moving. Cards move too, but they move the
+    way type moves; this asks whether a camera was running."""
+    return is_clip(line) or is_stock(line)
+
+
 def is_real(show: str | None) -> bool:
     """Whether this shot is a photograph or footage rather than a card we drew.
 
@@ -90,7 +112,11 @@ def is_real(show: str | None) -> bool:
     check went on looking for words nobody was writing, so it reported no
     footage at all in a script full of it.
     """
-    return bool(show) and not show.strip().startswith(DRAWN)
+    # 情境 跟 自製 一樣不算：兩者都不是「這件事」的畫面。情境影片看起來
+    # 像世界，但不像世界的這一塊 —— 算進實拍的話，那條逼真實畫面上場的
+    # 下限就可以用天氣和車流填滿。
+    head = (show or "").strip()
+    return bool(head) and not head.startswith(DRAWN) and not head.startswith(STOCK)
 
 
 def gathered(script: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -232,6 +258,17 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
             "even": all(thirds) and borrowed <= clock * most,
             "clip_seconds": round(moving, 2),
             "clip_share": round(moving / borrowed * 100) if borrowed else 0,
+            # 情境影片：會動，但不算實拍。單獨報，因為它兩邊都不屬於 ——
+            # 加進實拍會讓那條下限可以用天氣填滿，加進卡片會讓「一片字」
+            # 的警訊消失。不報的話它就是一個沒有人看得見的第三塊。
+            "stock_seconds": round(sum(item["seconds"] for item in laid
+                                       if is_stock(item)), 2),
+            "stock_share": round(sum(item["seconds"] for item in laid
+                                     if is_stock(item)) / clock * 100)
+                           if clock else 0,
+            "moving_share": round(sum(item["seconds"] for item in laid
+                                      if moves(item)) / clock * 100)
+                            if clock else 0,
             "still_enough": borrowed > 0 and moving >= borrowed * least,
             "unpicked": missing_pictures(script),
             "unchecked": unchecked(script),
@@ -339,11 +376,29 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
     """
     pictures, footage = gathered(script)
     lack = []
+    from core import broll as broll_module
+    pool = None
     for index, line in enumerate(script.get("lines") or [], start=1):
-        if not is_real(line.get("show")):
-            continue
         note = {"line": index, "say": line.get("say", ""),
                 "show": line.get("show", "")}
+        # 情境影片不是實拍，所以它走不進下面那個迴圈 —— 但它一樣是「指著
+        # 一個檔案」，一樣會指到不存在的地方。少了這一段，寫錯的編號會一路
+        # 到壓片才炸，而那是四分鐘之後的事。
+        if str(line.get("show") or "").strip().startswith(STOCK):
+            spot = (line.get("stock") or {}).get("file") \
+                if isinstance(line.get("stock"), dict) else None
+            if not spot:
+                lack.append({**note, "why": "沒指定情境影片"})
+            elif not (ROOT / spot).is_file():
+                lack.append({**note, "why": f"找不到 {spot}"})
+            else:
+                if pool is None:
+                    pool = {one["file"] for one in broll_module.kept()}
+                if pool and spot not in pool:
+                    lack.append({**note, "why": f"{spot} 不在情境影片的池子裡"})
+            continue
+        if not is_real(line.get("show")):
+            continue
         if is_clip(line):
             clip = line["clip"]
             if not (ROOT / clip["file"]).is_file():
@@ -484,7 +539,14 @@ def undrawn(script: dict[str, Any]) -> list[dict[str, Any]]:
     """
     lack = []
     for index, line in enumerate(script.get("lines") or [], start=1):
-        if is_real(line.get("show")) or line.get("card"):
+        # 「不是實拍」曾經等於「是卡片」，而第四種鏡頭出現之後就不等於了。
+        # 這一行本來寫 `if is_real(...) or line.get("card")` —— 加了情境影片
+        # 之後，每一句情境都被判成「沒說這張卡怎麼畫」，而它根本不是卡片。
+        # 把一個二分法留在三種東西的世界裡，就會這樣。
+        if is_real(line.get("show")) or is_stock(line) or line.get("card"):
+            continue
+        if str(line.get("show") or "").strip().startswith(STOCK):
+            # 寫了「情境：」卻沒有指定哪一支。`unpicked` 會另外報，這裡不重複。
             continue
         lack.append({"line": index, "say": line.get("say", ""),
                      "show": line.get("show", ""), "why": "沒說這張卡怎麼畫"})

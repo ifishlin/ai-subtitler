@@ -149,7 +149,16 @@ def sheet(name: str) -> dict[str, Any]:
                         ("outlet", "lean", "title", "url", "file", "captions")}
                        for v in pile["sources"]["videos"]],
             "pictures": pictures,
-            "passages": passages_for(pile)}
+            "passages": passages_for(pile),
+            "stock": stock_offer(name)}
+
+
+def stock_offer(name: str, fresh: bool = False) -> list[dict[str, Any]]:
+    """這個題目這一次拿到哪幾支情境影片。抽樣和保存都在 `broll.offer()`。"""
+    from core import broll as broll_module
+    return broll_module.offer(
+        name, per=int(rules_module.at("collect.stock_per_group", 3)),
+        fresh=fresh)
 
 
 def pick(name: str) -> dict[str, str]:
@@ -169,6 +178,8 @@ def pick(name: str) -> dict[str, str]:
            for index, one in enumerate(found["pictures"], start=1)}
     out.update({f"C{index}": one["file"]
                 for index, one in enumerate(found["passages"], start=1)})
+    out.update({f"V{index}": one["file"]
+                for index, one in enumerate(found["stock"], start=1)})
     return out
 
 
@@ -276,6 +287,15 @@ def as_text(name: str) -> str:
     for voice in found["voices"][:12]:
         said = " ".join(voice["say"].split())[:90]
         out.append(f"- {said}　（{voice['likes']} 讚）")
+
+    # 情境影片。跟照片一樣只有一行說明可以判斷，但它會動 —— 所以它的用途
+    # 是「這一句需要畫面在動，而手上的新聞片段都不對」，不是拿來當證據。
+    if found.get("stock"):
+        out += ["", "## 情境影片　—— 會動，但**不是這件事的畫面**。"
+                    "不能拿來當證據，只能拿來讓畫面別停住"]
+        for index, one in enumerate(found["stock"], start=1):
+            out.append(f"[V{index}] {one['group']}　{one['term']}"
+                       f"　（{one['seconds']}s）")
     return "\n".join(out)
 
 

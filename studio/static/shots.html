@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>四種鏡頭　AI-Reporters</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .kinds{display:grid;gap:12px;margin:0 0 26px;
+    grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+  .kind{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:15px 17px;border-top:3px solid var(--line)}
+  .kind.card{border-top-color:#7f8ea3}
+  .kind.pic{border-top-color:var(--ok)}
+  .kind.clip{border-top-color:var(--accent)}
+  .kind.stock{border-top-color:#9a7fd0}
+  .kind b.n{display:block;font-size:16px;margin-bottom:2px}
+  .kind .k{display:block;font:11px var(--mono);color:var(--faint);
+    margin-bottom:10px}
+  .kind p{margin:0 0 10px;color:var(--dim);font-size:13.5px;line-height:1.65}
+  .kind pre{margin:0 0 10px;font:11.5px/1.6 var(--mono);color:var(--dim);
+    background:#00000026;border-radius:8px;padding:9px 11px;
+    overflow-x:auto;white-space:pre}
+  .tags{display:flex;gap:5px;flex-wrap:wrap}
+  .tag{font:11px var(--mono);padding:2px 8px;border-radius:10px;
+    border:1px solid var(--line);color:var(--faint)}
+  .tag.yes{border-color:#2c5a45;color:var(--ok)}
+  .tag.no{border-color:#4a3226;color:var(--warn)}
+
+  .bars{margin:0 0 10px}
+  .row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+  .row .who{width:110px;flex:none;font:12px var(--mono);color:var(--dim);
+    text-align:right}
+  .row .track{flex:1;height:16px;border-radius:4px;background:var(--panel);
+    display:flex;overflow:hidden}
+  .row .seg{height:100%}
+  .row .seg.card{background:#7f8ea3}
+  .row .seg.pic{background:var(--ok)}
+  .row .seg.clip{background:var(--accent)}
+  .row .seg.stock{background:#9a7fd0}
+  .row .num{width:66px;flex:none;font:11.5px var(--mono);color:var(--faint)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font:11.5px var(--mono);
+    color:var(--faint);margin:0 0 18px}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;
+    margin-right:5px}
+  .under code{font:12.5px var(--mono);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>四種鏡頭</h1>
+  <p class="under">一句台詞配一個畫面，那個畫面就是一個鏡頭。三十四句就是
+    三十四個鏡頭，接起來是成片。這一頁的數字全部從程式讀出來，
+    不是在這裡重打一遍 —— 重打的那份會過期，而過期的說明比沒有說明更糟：
+    它看起來還是對的。</p>
+
+  <div class="kinds" id="kinds"></div>
+
+  <h2>兩條線，管的不是同一件事</h2>
+  <p class="under" id="bounds">讀取中…</p>
+
+  <h2>現在的成片用了多少</h2>
+  <div class="legend">
+    <span><i style="background:#7f8ea3"></i>卡片</span>
+    <span><i style="background:var(--ok)"></i>照片</span>
+    <span><i style="background:var(--accent)"></i>新聞片段</span>
+    <span><i style="background:#9a7fd0"></i>情境影片</span>
+  </div>
+  <div class="bars" id="bars"></div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+/* 說明寫在這裡，但**判定的依據不在這裡** —— 前綴、上下限、用量都從
+   /api/shots 來，也就是從程式裡來。這一頁只負責排版。 */
+const SAY = {
+  card: {
+    name: "卡片", when: "在講道理：判斷、提問、結論",
+    body: "程式畫的，會動 —— 字滑進來、圈畫出去、數字跑上去。十二種形狀，"
+        + "每種五個畫法。它是唯一不需要素材就能生出來的鏡頭，"
+        + "所以也是最容易用過頭的那一種。",
+  },
+  pic: {
+    name: "照片", when: "要看清楚一個東西：帳單、電表、一張臉",
+    body: "一張靜圖，慢慢推近，讓它讀起來像影片而不是投影片。來源是 Pexels、"
+        + "維基百科，或從新聞影片截下來的畫格。",
+  },
+  clip: {
+    name: "新聞片段", when: "事情在發生：現場、群眾、有人在說話",
+    body: "從收回來的新聞影片剪一段。起訖由字幕決定，落在句子邊界上；"
+        + "會燒上「畫面來源：某家」，而且保留原聲。它是這四種裡唯一算得上"
+        + "「證據」的。",
+  },
+  stock: {
+    name: "情境影片", when: "需要畫面在動，但這件事沒有現場畫面",
+    body: "共用池子裡的一支，跟任何題目都沒有關係。補的是節奏，不是事實 ——"
+        + "所以它不算實拍，也不燒出處：燒了會讓觀眾以為那是現場。",
+  },
+};
+
+function card(key, d) {
+  const one = SAY[key];
+  const real = key === "pic" || key === "clip";
+  const move = key === "clip" || key === "stock" || key === "card";
+  const write = {
+    card: `{"show": "${d.prefix.card}：一句話佔滿畫面",\n `
+        + `"card": {"kind": "word", "title": "…"}}`,
+    pic: `{"show": "太空站拍的安大略湖",\n "pic": "P13", "seen": true}`,
+    clip: `{"show": "影片：川普簽署改名令",\n "clip": "C8", "seen": true}`,
+    stock: `{"show": "${d.prefix.stock}：夕陽下的高壓電塔",\n "stock": "V7"}`,
+  }[key];
+  return `
+  <div class="kind ${key}">
+    <b class="n">${one.name}</b>
+    <span class="k">${esc(key)}　${d.used[key]} 秒</span>
+    <p>${esc(one.when)}</p>
+    <p>${esc(one.body)}</p>
+    <pre>${esc(write)}</pre>
+    <div class="tags">
+      <span class="tag ${move ? "yes" : "no"}">${
+        move ? "會動" : "不會動"}</span>
+      <span class="tag ${real ? "yes" : "no"}">${
+        real ? "算實拍" : "不算實拍"}</span>
+      <span class="tag ${key === "clip" ? "yes" : ""}">${
+        {clip: "要燒出處",
+         // 照片看授權：CC BY 的要掛作者，公有領域的不用，新聞畫格算引用。
+         // 寫成一律「不燒」是錯的 —— 那正是 uncredited 那道門存在的理由。
+         pic: "看授權",
+         stock: "不燒出處", card: "不燒出處"}[key]}</span>
+      <span class="tag ${key === "card" ? "" : "yes"}">${
+        key === "card" ? "不用 seen" : "要 seen"}</span>
+    </div>
+  </div>`;
+}
+
+function draw(d) {
+  $("kinds").innerHTML = ["clip", "pic", "stock", "card"]
+    .map((k) => card(k, d)).join("");
+
+  const pct = (x) => Math.round(x * 100) + "%";
+  $("bounds").innerHTML =
+    `<b>實拍的下限 ${pct(d.bounds.least)}</b>（目標 ${pct(d.bounds.aim)}、`
+    + `上限 ${pct(d.bounds.most)}）只算<b>照片和新聞片段</b>。`
+    + `情境影片會動，但不進這個分子 —— 進了的話，那條「逼真實畫面上場」的`
+    + `線就可以用天氣和車流填滿。<br>`
+    + `<b>會動的至少 ${pct(d.bounds.clip_least)}</b>算的是實拍裡面有多少是`
+    + `新聞片段，跟情境影片也無關。<br>`
+    + `所以多用情境影片<b>不會讓你少用實拍</b>，只會少用卡片。<br><br>`
+    + `情境影片的池子：候選 <code>${d.candidates}</code> 支，`
+    + `留下 <code>${d.pool}</code> 支，每一組每次送 `
+    + `<code>${d.per_group}</code> 支進 prompt`
+    + `（<code>collect.stock_per_group</code>，隨機，每次重抽）。`;
+
+  $("bars").innerHTML = d.films.map((one) => {
+    const all = one.seconds || 1;
+    return `<div class="row">
+      <span class="who">${esc(one.name)}</span>
+      <span class="track">${["clip", "pic", "stock", "card"].map((k) =>
+        one.kinds[k] ? `<span class="seg ${k}" title="${k} ${one.kinds[k]}s"
+          style="width:${(one.kinds[k] / all * 100).toFixed(1)}%"></span>` : ""
+        ).join("")}</span>
+      <span class="num">${one.seconds}s</span>
+    </div>`;
+  }).join("") || '<p class="empty">還沒有文案。</p>';
+}
+
+fetch("/api/shots").then(async (back) => {
+  if (!back.ok) throw new Error(await back.text());
+  draw(await back.json());
+}).catch((error) => {
+  $("bounds").textContent = "讀不到：" + error.message;
+});
+</script>
+</body>
+</html>

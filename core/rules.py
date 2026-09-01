@@ -203,7 +203,9 @@ def drop_house(key: str) -> bool:
     path = FORMATS / f"{key}.json"
     if not path.is_file():
         return False
-    path.unlink()
+    # 片型是設計出來的，重跑補不回來 —— 所以移到 trash，不真刪。
+    from core import bin as bin_module
+    bin_module.toss([path], f"刪掉片型 {key}")
     _cache.pop(str(path), None)
     return True
 

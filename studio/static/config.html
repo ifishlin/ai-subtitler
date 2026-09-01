@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>所有設定　AI-Reporters</title>
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+  .bar input{background:var(--panel);border:1px solid var(--line);
+    border-radius:8px;color:var(--ink);padding:6px 11px;font-size:13px;
+    width:230px}
+  .bar input:focus{outline:none;border-color:var(--accent)}
+  .bar .n{font:11.5px var(--mono);color:var(--faint)}
+
+  .file{margin:0 0 24px}
+  .file h3{font-size:14px;margin:0 0 3px}
+  .file h3 code{font:12px var(--mono);color:var(--accent);margin-right:8px}
+  .file .where{font-size:12px;color:var(--faint);margin:0 0 9px}
+
+  table.vals{width:100%;border-collapse:collapse;font:12.5px var(--mono)}
+  table.vals td{padding:5px 10px;border-bottom:1px solid var(--line);
+    vertical-align:top}
+  table.vals td.k{width:38%;color:#7fd4ff;white-space:nowrap}
+  table.vals td.v{color:var(--ink);word-break:break-word}
+  table.vals tr.why td{border-bottom:none;padding-top:0;padding-bottom:11px}
+  table.vals tr.why span{display:block;color:var(--faint);font-size:12px;
+    font-family:-apple-system,"PingFang TC",sans-serif;line-height:1.65}
+  table.vals tr.hit td.k,table.vals tr.hit td.v{background:#4a3a1233}
+  .none{color:var(--faint);font-style:normal}
+  .under code{font:12.5px var(--mono);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>所有設定</h1>
+  <p class="under">程式和 prompt 都從這幾個檔案讀數字。這一頁<b>只給看</b>——
+    改哪一個值各有各的地方（<a href="/prompts">規定</a>、
+    <a href="/houses">片型</a>、<a href="/cards">卡片</a>），
+    分開才知道改了會動到誰。</p>
+  <p class="under">每一節底下那一行灰字是檔案裡的 <code>why</code>：
+    為什麼是這個數字、上一次是為了哪一個錯改的。
+    <b>引用一個數字的文字會過期，指名一個數字的不會</b>——
+    所以這裡印的是鍵和值，不是我重打一遍的說明。</p>
+
+  <div class="bar">
+    <input id="find" placeholder="找設定名或值…" spellcheck="false">
+    <span class="n" id="tally"></span>
+  </div>
+  <div id="all">讀取中…</div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script>
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+  (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = (id) => document.getElementById(id);
+
+let FILES = [];
+
+/* 攤平成 `borrowed.least = 0.5` 這種一行一條。巢狀畫成樹比較忠實，但
+   這一頁要回答的是「那個數字叫什麼名字、現在是多少」，而樹要點開三層
+   才看得到值。`why` 單獨挑出來，因為它是說明不是設定。 */
+function flatten(body, prefix = "") {
+  const rows = [];
+  for (const [key, value] of Object.entries(body)) {
+    const path = prefix ? `${prefix}.${key}` : key;
+    if (key === "why" || key.endsWith("_why") || key === "note") {
+      rows.push({why: true, path: prefix || "（整份）", text: String(value)});
+      continue;
+    }
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      rows.push(...flatten(value, path));
+    } else {
+      rows.push({path, value});
+    }
+  }
+  return rows;
+}
+
+function show(value) {
+  if (Array.isArray(value)) return esc(JSON.stringify(value));
+  if (value === null) return '<span class="none">null</span>';
+  return esc(String(value));
+}
+
+function draw() {
+  const want = $("find").value.trim().toLowerCase();
+  let shown = 0, total = 0;
+  $("all").innerHTML = FILES.map((one) => {
+    const rows = flatten(one.body);
+    total += rows.filter((r) => !r.why).length;
+    const body = rows.map((r) => {
+      if (r.why) {
+        // why 跟著它上面那一節走：那一節被濾掉的時候它也該不見。
+        const keep = !want || r.text.toLowerCase().includes(want)
+          || r.path.toLowerCase().includes(want);
+        return keep ? `<tr class="why"><td colspan="2"><span>${
+          esc(r.text)}</span></td></tr>` : "";
+      }
+      const hay = (r.path + " " + JSON.stringify(r.value)).toLowerCase();
+      if (want && !hay.includes(want)) return "";
+      shown += 1;
+      return `<tr><td class="k">${esc(r.path)}</td><td class="v">${
+        show(r.value)}</td></tr>`;
+    }).join("");
+    if (!body.trim()) return "";
+    return `<div class="file">
+      <h3><code>${esc(one.file)}</code>${esc(one.what)}</h3>
+      <p class="where">${esc(one.where)}</p>
+      <table class="vals">${body}</table>
+    </div>`;
+  }).join("") || '<p class="empty">找不到。</p>';
+  $("tally").textContent = want
+    ? `${shown} / ${total} 個設定` : `${total} 個設定，${FILES.length} 個檔案`;
+}
+
+let typing;
+$("find").oninput = () => {
+  clearTimeout(typing);
+  typing = setTimeout(draw, 200);
+};
+
+fetch("/api/config").then(async (back) => {
+  if (!back.ok) throw new Error(await back.text());
+  const got = await back.json();
+  FILES = got.files || [];
+  draw();
+}).catch((error) => {
+  $("all").innerHTML = '<p class="empty">讀不到：' + esc(error.message) + "</p>";
+});
+</script>
+</body>
+</html>

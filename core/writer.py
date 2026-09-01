@@ -134,6 +134,19 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
             line["clip"] = {"file": one["file"], "start": one["start"],
                             "end": one["end"]}
             line.setdefault("seconds", round(one["seconds"], 2))
+        if line.get("stock") is not None:
+            key = line["stock"]
+            if not (isinstance(key, str) and key.startswith("V")):
+                raise ValueError(f"第 {index} 句的 stock 要寫編號（V3 這種），"
+                                 f"寫的是 {key!r}")
+            if key not in picks:
+                raise ValueError(f"第 {index} 句的情境影片編號 {key} 不在素材裡")
+            # 起訖不用寫：整支都是同一個畫面，從頭取夠長就好。新聞片段要
+            # start／end 是因為「哪一秒」由字幕決定，情境影片沒有那回事。
+            line["stock"] = {"file": picks[key]}
+            # 池子裡的每一支都在 /broll 上被人看過才留下來的，所以這裡直接
+            # 算數 —— 不標的話 `unchecked` 會擋，而那個「請再看一次」是假的。
+            line.setdefault("seen", True)
         # Seconds come from the reading pace unless the line pinned its own,
         # so a model that omits them is not thereby writing a nine-second card.
         if "seconds" not in line:

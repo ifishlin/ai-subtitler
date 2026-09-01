@@ -66,16 +66,18 @@
     有時間點；情境影片不是，它補的是節奏。所以它是第四種鏡頭，
     <b>會動，但不算實拍</b>。</p>
   <p class="under">一批共用，不是每題現撈：<b>看過一次就永遠算看過</b>，
-    而且四個題目不會各存一份夕陽電塔。先看縮圖決定要不要，
-    <b>留下來的才下載</b>——抓一支八 MB 只為了知道「不是這個」，
-    一百支就是八百 MB。</p>
+    而且四個題目不會各存一份夕陽電塔。</p>
+  <p class="under"><b>一張靜圖看不出一支影片值不值得留</b>——鏡頭有沒有在動、
+    動得好不好、有沒有晃到不能用，全在那一格裡看不到。所以先全部下載來看
+    （約 1～1.5 GB），挑完再按「掃掉不要的檔案」把硬碟拿回來。</p>
 
   <div class="bar">
     <span class="n" id="tally">讀取中…</span>
     <span class="gap"></span>
     <button id="hunt">再找一批</button>
     <button id="sweep">掃掉不要的檔案</button>
-    <button id="get" class="primary">下載留下來的</button>
+    <button id="getall" class="primary">全部下載來看</button>
+    <button id="get">補下載留下來的</button>
   </div>
   <p class="job" id="job"></p>
   <div class="filters" id="filters"></div>
@@ -152,6 +154,7 @@ function draw() {
     + `${all.filter((o) => o.keep === false).length}　還沒看 `
     + `${all.filter((o) => o.keep === null).length}　已下載 ${there}`;
   $("get").disabled = kept.length === there;
+  $("getall").disabled = all.every((o) => o.there);
 }
 
 $("filters").addEventListener("click", (event) => {
@@ -213,14 +216,18 @@ $("hunt").onclick = async () => {
   if (!back.ok) { $("job").textContent = await back.text(); return; }
   watch("找候選");
 };
-$("get").onclick = async () => {
+async function pull(every) {
   const back = await fetch("/api/broll/download", {method: "POST",
-    headers: {"Content-Type": "application/json"}, body: "{}"});
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({every})});
   if (!back.ok) { $("job").textContent = await back.text(); return; }
-  watch("下載");
-};
+  watch(every ? "全部下載" : "下載");
+}
+$("get").onclick = () => pull(false);
+$("getall").onclick = () => pull(true);
 $("sweep").onclick = async () => {
-  const back = await fetch("/api/broll/sweep", {method: "POST"});
+  const back = await fetch("/api/broll/sweep", {method: "POST",
+    headers: {"Content-Type": "application/json"}, body: "{}"});
   const got = await back.json();
   $("job").textContent = `掃掉 ${got.gone} 個檔案`;
   await load();

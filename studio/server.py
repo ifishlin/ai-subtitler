@@ -756,6 +756,99 @@ def _sites() -> list[str]:
     return _sites.cached
 
 
+# ------------------------------------------------- 四種鏡頭、所有設定
+
+@app.get("/shots", response_class=HTMLResponse)
+def shots_page() -> str:
+    """四種鏡頭各是什麼、怎麼寫、算不算實拍、現在用了多少。"""
+    return (STATIC / "shots.html").read_text(encoding="utf-8")
+
+
+@app.get("/config", response_class=HTMLResponse)
+def config_page() -> str:
+    """所有設定檔的值，唯讀。"""
+    return (STATIC / "config.html").read_text(encoding="utf-8")
+
+
+@app.get("/api/shots")
+def shots() -> dict[str, Any]:
+    """四種鏡頭的定義，**從程式裡讀出來**，不是我在網頁上重打一遍。
+
+    前綴（自製／情境）、比例的上下限、每一種現在被用掉多少秒 —— 全部指名
+    程式裡那個值。重打一遍的那份會過期，而過期的說明比沒有說明更糟：它看
+    起來還是對的。
+    """
+    from core import broll as broll_module
+    from core import script as script_module
+    from core import rules as rules_module
+
+    used = {"card": 0.0, "pic": 0.0, "clip": 0.0, "stock": 0.0}
+    films = []
+    for name in script_module.names():
+        try:
+            measured = script_module.measure(script_module.load(name))
+        except Exception:                                         # noqa: BLE001
+            continue
+        mine = dict.fromkeys(used, 0.0)
+        for line in measured["lines"]:
+            if script_module.is_stock(line):
+                kind = "stock"
+            elif script_module.is_clip(line):
+                kind = "clip"
+            elif script_module.is_real(line.get("show")):
+                kind = "pic"
+            else:
+                kind = "card"
+            mine[kind] += line["seconds"]
+            used[kind] += line["seconds"]
+        films.append({"name": name, "seconds": measured["seconds"],
+                      "kinds": {k: round(v, 1) for k, v in mine.items()}})
+    return {
+        "prefix": {"card": script_module.DRAWN, "stock": script_module.STOCK},
+        "bounds": {
+            "least": rules_module.at("borrowed.least", 0.5),
+            "aim": rules_module.at("borrowed.aim", 0.5),
+            "most": rules_module.at("borrowed.most", 0.65),
+            "clip_least": rules_module.at("borrowed.clip_least", 0.5),
+        },
+        "per_group": rules_module.at("collect.stock_per_group", 3),
+        "pool": len(broll_module.kept()),
+        "candidates": len(broll_module.library()["clips"]),
+        "used": {k: round(v, 1) for k, v in used.items()},
+        "films": films,
+    }
+
+
+@app.get("/api/config")
+def config_all() -> dict[str, Any]:
+    """每一份設定檔的內容。唯讀 —— 這一頁是為了「看得到全部」而做的，
+    改哪一個值各有各的地方（規定、片型、卡片），分開才知道改了會動到誰。"""
+    from core import topic as topic_module
+    out = []
+    for path, what, where in (
+        (ROOT / "assets" / "rules.json", "門檻與數量",
+         "程式從這裡讀，prompt 也從這裡填"),
+        (ROOT / "assets" / "theme.json", "外觀",
+         "畫面尺寸、字級、色調、頻道標記的位置"),
+        (ROOT / "assets" / "cards.json", "卡片畫法",
+         "關掉了哪些畫法、寫下的改進意見"),
+        (ROOT / "assets" / "crops.json", "裁切",
+         "個別照片的裁切位置"),
+    ):
+        if not path.is_file():
+            continue
+        out.append({"file": str(path.relative_to(ROOT)), "what": what,
+                    "where": where,
+                    "body": json.loads(path.read_text(encoding="utf-8"))})
+    for path in sorted((ROOT / "assets" / "formats").glob("*.json")):
+        out.append({"file": str(path.relative_to(ROOT)), "what": "片型",
+                    "where": "沒寫的項目會掉回 rules.json",
+                    "body": json.loads(path.read_text(encoding="utf-8"))})
+    return {"files": out,
+            "media": {"file": "core/topic.py 的 media()",
+                      "outlets": len(topic_module.media().get("outlets") or [])}}
+
+
 # ------------------------------------------------- 情境影片的池子
 
 @app.get("/broll", response_class=HTMLResponse)
@@ -803,8 +896,10 @@ def broll_keep(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 def broll_download(payload: dict[str, Any] = Body(default={})) -> dict[str, Any]:
     from core import broll as broll_module
 
+    every = bool(payload.get("every"))
+
     def work(say) -> None:
-        got = broll_module.bring_in(say=say)
+        got = broll_module.bring_in(say=say, every=every)
         say(1, 1, f"下載了 {got['got']} 支"
                   + (f"，{len(got['missed'])} 支失敗" if got["missed"] else ""))
         for one in got["missed"]:
@@ -815,10 +910,11 @@ def broll_download(payload: dict[str, Any] = Body(default={})) -> dict[str, Any]
 
 
 @app.post("/api/broll/sweep")
-def broll_sweep() -> dict[str, Any]:
-    """掃掉被判成不要、卻已經下載過的檔案。破壞性的，所以是自己一支。"""
+def broll_sweep(payload: dict[str, Any] = Body(default={})) -> dict[str, Any]:
+    """掃掉不要的那些檔案。破壞性的，所以是自己一支。"""
     from core import broll as broll_module
-    return {"gone": broll_module.drop_unwanted()}
+    return {"gone": broll_module.drop_unwanted(
+        also_unseen=bool(payload.get("also_unseen")))}
 
 
 @app.get("/media/broll/{name}")
@@ -2617,21 +2713,20 @@ def drop_script(name: str) -> dict[str, Any]:
     if not path.is_file():
         raise HTTPException(404, f"找不到文案 {name}")
 
-    bin_here = ROOT / "trash"
-    bin_here.mkdir(exist_ok=True)
-    shutil.move(str(path), bin_here / f"{name}.{int(time_module.time())}.json")
-
+    # 文案本身和成片一起進 trash：一支片壓四分鐘，而「按錯了」是一秒。
+    # 中間產物（鏡頭片段、卡片快取）直接刪 —— 重壓一次就回來了，丟進
+    # trash 只會把它塞滿，而塞滿的 trash 沒有人會去翻。
+    from core import bin as bin_module
+    got = bin_module.toss(
+        [path, build_module.OUT_DIR / f"{name}.mp4",
+         build_module.OUT_DIR / f"{name}.contact.jpg"], f"刪掉文案 {name}")
     gone = []
-    for target in (build_module.OUT_DIR / f"{name}.mp4",
-                   build_module.OUT_DIR / f"{name}.contact.jpg"):
-        if target.is_file():
-            target.unlink()
-            gone.append(target.name)
     for folder in (build_module.OUT_DIR / f".{name}", cards_module.CARD_DIR / name):
         if folder.is_dir():
             shutil.rmtree(folder)
             gone.append(folder.name)
-    return {"deleted": name, "moved_to": "trash/", "also_removed": gone}
+    return {"deleted": name, "moved_to": got["room"],
+            "moved": got["moved"], "also_removed": gone}
 
 
 @app.get("/scripts")

@@ -315,6 +315,14 @@ def build(name: str, target: Path | None = None,
                     ROOT / line["clip"]["file"], line["clip"]["start"],
                     line["clip"]["end"], seconds, piece, overlay=plate,
                     credit=f"畫面來源：{who}" if who else "")
+            elif script_module.is_stock(line):
+                # 情境影片：整支都是同一個畫面，所以從頭取夠長就好 ——
+                # 沒有「哪一秒」這回事，那是字幕決定的，而它沒有字幕。
+                # 也不燒出處：Pexels License 不要求標示，而燒一行「畫面來源」
+                # 上去會讓觀眾以為那是這件事的現場畫面。
+                shorts_module.clip_cut(
+                    ROOT / line["stock"]["file"], 0.0,
+                    max(0.4, seconds), seconds, piece, overlay=plate)
             elif line.get("pic"):
                 _still(ROOT / line["pic"], seconds, piece, plate,
                        fit=line.get("fit")
