@@ -49,4 +49,51 @@ if not faults:
 sys.exit(1 if faults else 0)
 PY
 
+# 畫卡片的地方有兩個：壓片走 frames()，網頁上那張靜圖走 render()。
+# 隨機模式下籤只要漏給其中一邊，兩邊就會畫出不同的畫法 —— 而畫面上的樣子是
+# 「網頁顯示的跟成片不一樣」，沒有錯誤訊息，兩邊各自都是對的。
+# 這個專案為「兩份不同步的邏輯」修過三次：門算三段色調而成片一片藍、
+# 網頁把三分之一實拍報成自製 100%、還有這一次。
+echo "檢查網頁那張圖跟成片會不會畫成不同種…"
+.venv/bin/python - <<'PY' || bad=1
+import sys, json, pathlib, tempfile
+sys.path.insert(0, ".")
+from core import cards, rules
+
+spec = {"kind": "word", "tone": "cool", "title": "測試", "under": "說明"}
+here = pathlib.Path("assets/rules.json")
+raw = here.read_text(encoding="utf-8")
+faults = 0
+try:
+    for mode in ("fixed", "random"):
+        d = json.loads(raw)
+        d["cards"]["pick"] = mode
+        here.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8")
+        import importlib
+        importlib.reload(rules); importlib.reload(cards)
+        name = "＿門測試"
+        seed = cards.roll_for(name)
+        if mode == "random" and not seed:
+            print("  ❌ 設成 random，roll_for 卻沒有給籤"); faults += 1; continue
+        if mode == "fixed" and seed:
+            print("  ❌ 設成 fixed，roll_for 卻抽了籤"); faults += 1; continue
+        # 壓片那一邊
+        film = cards.way_for(spec, cards.seed_of(name)).__name__
+        # 網頁那一邊：render 自己去讀籤，這裡只問它畫出來的檔名對不對得上
+        want = cards.name_for(spec, seed=cards.seed_of(name))
+        got = pathlib.Path(cards.render(name, spec)).name
+        if film and want == got:
+            print(f"  ✅ {mode}：兩邊都是 {film}")
+        else:
+            print(f"  ❌ {mode}：網頁那張是 {got}，壓片那邊要的是 {want}")
+            faults += 1
+        for one in (pathlib.Path("assets/cards") / name).glob("*"):
+            one.unlink(missing_ok=True)
+        (pathlib.Path("assets/cards") / name).rmdir()
+finally:
+    here.write_text(raw, encoding="utf-8")
+sys.exit(1 if faults else 0)
+PY
+
 exit ${bad:-0}

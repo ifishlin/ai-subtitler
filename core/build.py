@@ -171,7 +171,7 @@ def _still(pic: Path, seconds: float, target: Path, overlay: Path,
 
 
 def _card(spec: dict[str, Any], seconds: float, target: Path,
-          overlay: Path) -> Path:
+          overlay: Path, seed: str = "") -> Path:
     """A drawn shot. The frames come from cards.py and go straight into
     ffmpeg; the caption is composited onto each one in Pillow, which is
     cheaper than a second encode and keeps the type identical to the stills."""
@@ -183,7 +183,7 @@ def _card(spec: dict[str, Any], seconds: float, target: Path,
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
          "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
          "-shortest", str(target), "-y"], stdin=subprocess.PIPE)
-    for frame in cards_module.frames(spec, seconds, FPS):
+    for frame in cards_module.frames(spec, seconds, FPS, seed=seed):
         merged = Image.alpha_composite(frame.convert("RGBA"), plate)
         pipe.stdin.write(merged.convert("RGB").tobytes())
     pipe.stdin.close()
@@ -296,6 +296,12 @@ def build(name: str, target: Path | None = None,
     work.mkdir(parents=True, exist_ok=True)
     target = target or OUT_DIR / f"{name}.mp4"
     how = _how()
+    # 這一次壓片的籤。`cards.pick` 是 fixed 的時候是空字串，什麼都不變。
+    # 它進鏡頭的檔名（透過 `how`）—— 不進去的話，隨機只會發生第一次：
+    # 檔案已經在了，之後每次壓片都拿同一批舊的鏡頭，而畫面上看起來就像
+    # 「設成隨機了，但每次都一樣」。
+    seed = cards_module.roll_for(name)
+    how = f"{how}|{seed}" if seed else how
     pieces = []
     for index, line in enumerate(measured["lines"]):
         seconds = line["seconds"]
@@ -325,7 +331,7 @@ def build(name: str, target: Path | None = None,
                 # up in different palettes in the same film.
                 _card({**line["card"],
                        "tone": script_module.tone_of_line(line)},
-                      seconds, piece, plate)
+                      seconds, piece, plate, seed=seed)
         pieces.append(piece)
         if say:
             say(index + 1, len(measured["lines"]), line["say"])

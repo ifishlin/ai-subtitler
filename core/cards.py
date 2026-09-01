@@ -33,6 +33,7 @@ import functools
 import hashlib
 import json
 import math
+import secrets
 import subprocess
 from pathlib import Path
 from typing import Any, Iterator
@@ -2436,41 +2437,91 @@ def _off() -> set[str]:
         return set()
 
 
-def way_for(spec: dict[str, Any]):
+def seed_of(script_name: str) -> str:
+    """這一份文案上一次抽到的籤。
+
+    存起來，因為**畫卡片的地方有兩個**：壓片走 `frames()`，網頁上那張靜圖走
+    `render()`。籤只給壓片的那一邊，網頁那邊就會畫出另一種畫法 —— 而畫面上
+    的樣子是「網頁顯示的跟成片不一樣」，沒有錯誤訊息，兩邊各自都是對的。
+
+    這個專案為「兩份不同步的邏輯」修過的錯：門算三段色調而成片一片藍、
+    網頁把三分之一實拍報成自製 100%。這是同一個形狀的第三次。
+    """
+    if str(rules_module.at("cards.pick", "fixed")).lower() != "random":
+        return ""
+    kept = CARD_DIR / script_name / "seed.txt"
+    return kept.read_text(encoding="utf-8").strip() if kept.is_file() else ""
+
+
+def roll_for(script_name: str) -> str:
+    """抽一支新籤並記下來，讓網頁那一邊畫得出同樣的畫法。"""
+    seed = roll()
+    if seed:
+        here = CARD_DIR / script_name
+        here.mkdir(parents=True, exist_ok=True)
+        (here / "seed.txt").write_text(seed + "\n", encoding="utf-8")
+    return seed
+
+
+def roll() -> str:
+    """這一次壓片的籤。
+
+    `cards.pick` 是 `random` 的時候給一個新的隨機字串，`fixed` 的時候給空的。
+    **一個鏡頭抽一次**，不是一格畫面抽一次 —— 一張三秒的卡是七十五格，
+    每格重抽會變成七十五種畫法連在一起，那不是隨機，那是壞掉。
+
+    抽出來的籤要進鏡頭的檔名，否則第一次抽完就被快取凍住：檔案已經在了，
+    下一次壓片直接拿舊的，於是「每次隨機」實際上只發生過一次。
+    """
+    if str(rules_module.at("cards.pick", "fixed")).lower() != "random":
+        return ""
+    return secrets.token_hex(4)
+
+
+def way_for(spec: dict[str, Any], seed: str = ""):
     """這張卡用哪一個畫法。
 
-    **從卡片自己的內容算出來，不是隨機。** 隨機的話同一份文案重壓兩次會長得
-    不一樣，接觸表看到的跟成品不同，而過了門的那一版可能根本不是畫出來的那版。
-    雜湊給的是「散開但固定」：不同的卡分到不同的畫法，同一張卡永遠同一個。
+    沒有籤的時候**從卡片自己的內容算出來**：同一份文案重壓兩次長得一樣，
+    接觸表看到的就是成品，過了門的那一版就是畫出來的那版。雜湊給的是
+    「散開但固定」—— 不同的卡分到不同的畫法，同一張卡永遠同一個。
+
+    有籤的時候把籤混進去。混、而不是直接 `random.choice`，是為了讓同一支片
+    裡不同的卡還是分到不同的畫法：籤只換一次位移，散開的還是內容。
     """
     kind = str(spec.get("kind") or "title")
     ways = WAYS.get(kind) or [KINDS.get(kind, _word)]
     off = _off()
     live = [one for one in ways if f"{kind}.{one.__name__}" not in off] or ways[:1]
-    mark = json.dumps(spec, ensure_ascii=False, sort_keys=True)
+    mark = json.dumps(spec, ensure_ascii=False, sort_keys=True) + seed
     pick = int(hashlib.sha1(mark.encode("utf-8")).hexdigest(), 16)
     return live[pick % len(live)]
 
 
-def draw(spec: dict[str, Any], t: float = 1.0) -> Image.Image:
+def draw(spec: dict[str, Any], t: float = 1.0, seed: str = "") -> Image.Image:
     """One card at a moment in its own arrival. An unknown kind becomes a word
     card rather than an error: a script naming a shape nobody has drawn yet
     should still render."""
-    return way_for(spec)(spec, t)
+    return way_for(spec, seed)(spec, t)
 
 
-def frames(spec: dict[str, Any], seconds: float, fps: int = FPS
-           ) -> Iterator[Image.Image]:
+def frames(spec: dict[str, Any], seconds: float, fps: int = FPS,
+           seed: str = "") -> Iterator[Image.Image]:
     """Every frame of this card.
 
     The arrival takes a fixed share of the shot rather than all of it: a card
     still moving when the line ends never settles, and the eye needs a moment
     on the finished thing before the cut.
+
+    The way is chosen **once, here**, and every frame is drawn by it. Choosing
+    inside the loop would draw seventy-five frames of seventy-five different
+    shapes -- which is what "pick one of five at random" turns into if the
+    picking happens where the drawing happens.
     """
+    way = way_for(spec, seed)
     total = max(1, round(seconds * fps))
     arrive = max(1, round(min(0.62, 1.4 / max(seconds, 0.1)) * total))
     for index in range(total):
-        yield draw(spec, min(1.0, (index + 1) / arrive))
+        yield way(spec, min(1.0, (index + 1) / arrive))
 
 
 def how() -> str:
@@ -2489,19 +2540,27 @@ def how() -> str:
     return hashlib.sha1("|".join(marks).encode("utf-8")).hexdigest()[:8]
 
 
-def name_for(spec: dict[str, Any], suffix: str = ".png") -> str:
-    """A filename that changes when the card does -- or when the drawing does."""
-    body = json.dumps(spec, ensure_ascii=False, sort_keys=True) + how()
+def name_for(spec: dict[str, Any], suffix: str = ".png",
+             seed: str = "") -> str:
+    """A filename that changes when the card does -- or when the drawing does,
+    or when the draw was rolled again."""
+    body = json.dumps(spec, ensure_ascii=False, sort_keys=True) + how() + seed
     return hashlib.sha1(body.encode("utf-8")).hexdigest()[:12] + suffix
 
 
 def render(script_name: str, spec: dict[str, Any]) -> str:
-    """The finished card as a still, for the page."""
+    """The finished card as a still, for the page.
+
+    Drawn with this script's own seed, so the page shows the shape the film
+    has. Without that the two disagree in random mode -- silently, because
+    each half is doing exactly what it was told.
+    """
     here = CARD_DIR / script_name
     here.mkdir(parents=True, exist_ok=True)
-    target = here / name_for(spec)
+    seed = seed_of(script_name)
+    target = here / name_for(spec, seed=seed)
     if not target.is_file():
-        draw(spec, 1.0).save(target)
+        draw(spec, 1.0, seed=seed).save(target)
     return str(target.relative_to(ROOT))
 
 
@@ -2533,7 +2592,8 @@ def render_clip(script_name: str, spec: dict[str, Any], seconds: float,
     """
     here = CARD_DIR / script_name
     here.mkdir(parents=True, exist_ok=True)
-    target = here / name_for({**spec, "_s": round(seconds, 2)}, ".mp4")
+    seed = seed_of(script_name)
+    target = here / name_for({**spec, "_s": round(seconds, 2)}, ".mp4", seed)
     if target.is_file():
         return str(target.relative_to(ROOT))
     pipe = subprocess.Popen(
@@ -2543,7 +2603,7 @@ def render_clip(script_name: str, spec: dict[str, Any], seconds: float,
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
          "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
          "-shortest", str(target), "-y"], stdin=subprocess.PIPE)
-    for frame in frames(spec, seconds, fps):
+    for frame in frames(spec, seconds, fps, seed=seed):
         pipe.stdin.write(frame.tobytes())
     pipe.stdin.close()
     if pipe.wait() != 0:
