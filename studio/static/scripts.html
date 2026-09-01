@@ -387,6 +387,7 @@
 
 
 <script src="/static/shared.js"></script>
+<script src="/static/nav.js"></script>
 <script>
 const STATE = { list: [], chosen: null, topic: null };
 
@@ -732,6 +733,7 @@ function rightsRows(rights) {
 
 
 async function showScript(name) {
+  pickName(name, "script");     /* 記住現在在看哪一份 */
   // Opening a different script drops whatever was pending on the last one.
   // Deliberate: an edit that was never saved is not a change, and carrying it
   // across would make it one without anybody deciding to.
@@ -1162,10 +1164,16 @@ async function reload() {
   renderList();
 }
 
-/* 網址帶名字就開那一份 —— 素材頁的文案卡片這樣連過來。 */
+/* 開哪一份：網址帶名字就開那一份（素材頁的文案卡片這樣連過來），否則開
+   上一次看的那一份。
+
+   本來只看網址，沒有就退回「清單的第一個」，而清單預設照 modified 排 ——
+   存一次檔、壓一次片，順序就變了，於是切走再切回來換了一份文案。題目那邊
+   是一模一樣的毛病。存的地方跟題目共用 nav.js 那一對函式，只是換一個名字，
+   因為「現在在看哪一份文案」和「現在在看哪一個題目」是兩件事。 */
 async function boot() {
   const settle = holdOff();
-  const wanted = new URLSearchParams(location.search).get("name");
+  const wanted = pickedName("script");
 
   /* 三個呼叫並行。它們本來串著跑 —— 片型 140ms、清單 402ms、那一份 62ms ——
      六百毫秒是切換頁面時看得到的一閃。而它們不互相依賴：網址帶了名字，那一
@@ -1190,4 +1198,3 @@ boot().catch(reportFault);
 window.addEventListener("unhandledrejection",
   (event) => reportFault(event.reason));
 </script>
-<script src="/static/nav.js"></script>

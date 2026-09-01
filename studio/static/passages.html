@@ -52,6 +52,18 @@
   .cut .key{display:inline-block;font:11.5px var(--mono);margin:0 5px 0 0;
     padding:2px 8px;border-radius:10px;border:1px solid #2c5a45;color:var(--ok)}
   .cut .key.dim{border-color:var(--line);color:var(--faint)}
+  /* 切點是查來的還是算來的。標在每一段上，因為兩種在畫面上長得一樣，
+     而「切得剛好」是真的準還是估對了，只有這個標記說得出來。 */
+  .cut .src{display:inline-block;font:11px var(--mono);margin-left:8px;
+    padding:2px 8px;border-radius:10px;border:1px solid var(--line);
+    color:var(--faint)}
+  .cut .src.exact{border-color:#2c4a6a;color:#7ab6e0}
+  /* 切點上還有人在說話。是記號不是門 —— 程式判斷得了「有沒有聲音」，
+     判斷不了「這樣剪聽起來能不能接受」，所以它只負責把要聽的挑出來。 */
+  .cut.doubt{border-color:#5c3a2a}
+  .cut .warn{display:inline-block;font:11px var(--mono);margin-left:8px;
+    padding:2px 8px;border-radius:10px;border:1px solid #5c3a2a;
+    color:var(--warn)}
   /* 還沒剪出檔案的，縮圖那一格放一塊佔位 —— 沒有按鈕之後，它是唯一
      說得出「這一段還不能看」的東西。 */
   .cut .none{width:168px;aspect-ratio:16/9;border-radius:8px;
@@ -99,8 +111,10 @@ function play(row, topic, index) {
   video.setAttribute("src", `/media/passage/${encodeURIComponent(topic)}/${
     encodeURIComponent(row.clip.split("/").pop())}`);
   $("now").textContent = `C${index}　${row.outlet}　原片的 ${row.start}s – ${
-    row.end}s（${row.seconds} 秒）`;
+    row.end}s（${row.seconds} 秒）　${
+    row.exact ? "切點查真值" : "切點用估的，誤差中位 0.13 秒"}`;
   $("saidnow").textContent = row.said;
+  $("now").textContent += row.doubt ? "　⚠ 切點上還有人在說話" : "";
   video.play().catch(() => {});      /* 使用者還沒互動過就會被擋，不是錯 */
   $("stage").scrollIntoView({block: "nearest"});
 }
@@ -119,13 +133,17 @@ function cut(row, index, topic) {
            encodeURIComponent(row.thumb.split("/").pop())}">`
     : '<div class="none">還沒剪</div>';
   return `
-  <div class="cut">
+  <div class="cut${row.doubt ? " doubt" : ""}">
     ${shot}
     <div class="body">
       <div class="top">
         <span class="no">C${index}</span>
         <span class="when">${clock(row.start)} → ${clock(row.end)}　${
           row.seconds} 秒</span>
+        <span class="src${row.exact ? " exact" : ""}">${
+          row.exact ? "切點查真值" : "切點用估的"}</span>
+        ${row.doubt ? `<span class="warn">切點上還有人在說話　頭 ${
+          (row.edge || [])[0]} / 尾 ${(row.edge || [])[1]} dB</span>` : ""}
       </div>
       <p class="said">${esc(row.said)}</p>
       <p class="why">因為命中 ${hit.size} 個關鍵詞被選上　${keys}</p>
@@ -134,7 +152,7 @@ function cut(row, index, topic) {
 }
 
 async function load() {
-  const wanted = new URLSearchParams(location.search).get("name") || "";
+  const wanted = pickedName();
   const back = await fetch("/api/passages"
     + (wanted ? "?name=" + encodeURIComponent(wanted) : ""));
   if (!back.ok) throw new Error(await back.text());
@@ -145,7 +163,9 @@ async function load() {
     `<option value="${esc(one)}"${one === d.topic ? " selected" : ""}>${
       esc(one)}</option>`).join("");
   $("pick").onchange = () => {
-    location.search = "?name=" + encodeURIComponent($("pick").value);
+    /* 記住就好，不寫網址 —— 中文題目編碼成一串百分號很醜。 */
+    pickName($("pick").value);
+    location.href = location.pathname;
   };
 
   const seconds = rows.reduce((n, one) => n + one.seconds, 0);
@@ -155,6 +175,9 @@ async function load() {
     [`<b>${rows.length ? (seconds / rows.length).toFixed(1) : 0}</b>秒`, "平均長度"],
     [`<b>${d.least}–${d.most}</b>秒`, "上下限"],
     [`<b>${d.carved || 0}</b>段`, "已經剪出檔案"],
+    [`<b>${rows.filter((one) => one.exact).length}</b>段`, "切點查真值"],
+    [`<b>${rows.filter((one) => !one.exact).length}</b>段`, "切點用估的"],
+    [`<b>${rows.filter((one) => one.doubt).length}</b>段`, "可疑，要聽"],
   ].map(([head, tail]) => `<div>${head}${tail ? " " + esc(tail) : ""}</div>`).join("");
 
   /* 讀了 N 支影片、一段都切不出來，跟「這個題目沒有影片」在畫面上一模一樣。

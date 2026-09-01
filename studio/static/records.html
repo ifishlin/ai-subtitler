@@ -251,6 +251,7 @@ $("down").onclick = () => {
 $("all").onclick = () => { location.href = "/api/records/download"; };
 
 async function openRecord(name) {
+  pickName(name);        /* 記住現在在看哪一個，跟其他頁共用同一份 */
   const back = await fetch("/api/record?name=" + encodeURIComponent(name));
   if (!back.ok) {
     $("body").innerHTML = '<p class="empty" style="padding:20px">讀不到：'
@@ -271,7 +272,7 @@ async function load() {
   if (!back.ok) throw new Error(await back.text());
   ROWS = (await back.json()).records || [];
   drawList();
-  const want = new URLSearchParams(location.search).get("name");
+  const want = pickedName();
   const first = ROWS.find((one) => one.name === want) || ROWS[0];
   if (first) openRecord(first.name);
 }

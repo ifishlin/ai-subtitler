@@ -95,7 +95,23 @@ def word_times(path: Path | str | None) -> list[tuple[float, str]]:
     if not path or not path.is_file():
         return []
     found: list[tuple[float, str]] = []
+    opened = 0.0
     for raw in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        stamp = STAMP.search(raw)
+        if stamp:
+            opened = _seconds(*stamp.group(1, 2, 3, 4))
+            continue
+        first = INLINE.search(raw)
+        if not first:
+            continue
+        # 一行的**第一個字沒有自己的標記** —— 它寫在第一個標記的前面：
+        #     The<00:00:00.280><c> relationship</c><00:00:00.880><c> between</c>
+        # 而句子通常從一行的開頭開始，所以漏掉的正是最需要認出來的那個字。
+        # 它的時間就是這一條 cue 的起點，那也正是它被說出來的時候。
+        for word in html.unescape(TAGS.sub("", raw[:first.start()])).split():
+            bare = BARE.sub("", word.lower())
+            if bare:
+                found.append((opened, bare))
         for hours, minutes, secs, word in INLINE.findall(raw):
             bare = BARE.sub("", html.unescape(word).lower())
             if bare:
@@ -105,25 +121,57 @@ def word_times(path: Path | str | None) -> list[tuple[float, str]]:
     return found
 
 
-def _snap(exact: list[tuple[float, str]], guess: float, word: str,
-          reach: float = 1.5) -> float:
-    """把估出來的切點換成那個字真正的時間，找得到的話。
+def has_word_times(path: Path | str | None) -> bool:
+    """這份字幕有沒有寫每個字的時間。看第一個就回答，不用整份讀完。
 
-    只動兩端 —— 中間不必準。切點落在句子的邊界，也就是說話的停頓處，而估算
-    的誤差（拿有時間戳的二十七份回頭比對兩萬八千個字，中位 0.13 秒）本來就
-    小於那個停頓。
+    這個答案要跟著段落走，因為它決定切點是查來的還是算來的 —— 而畫面上
+    兩種長得一模一樣。看的人要能分辨「這一段切得漂亮」是真的準，還是估對了。
     """
-    if not exact or not word:
-        return guess
-    best = None
-    for at, said in exact:
+    path = Path(path) if path else None
+    if not path or not path.is_file():
+        return False
+    with path.open(encoding="utf-8", errors="replace") as lines:
+        return any(INLINE.search(line) for line in lines)
+
+
+def _snap(exact: list[tuple[float, str]], guess: float, words: list[str],
+          reach: float = 1.5) -> tuple[float, bool]:
+    """把估出來的切點換成那個字真正的時間，**只有在認得出是哪一個的時候**。
+
+    回傳（秒數, 有沒有真的用上真值）。第二個值要跟著段落走：畫面上標「切點
+    查真值」而其實退回估算，是比沒有標記更糟的一種說法。
+
+    ## 為什麼要兩個字，而且要唯一
+
+    第一版拿句子的第一個字去附近找同樣的字，取最近的那一個。結果是 C27 被
+    切在 603.10 而正確的開頭在 605.5 —— 那句話開頭是 `And`，而 `and` 在
+    一分鐘裡出現十幾次。它抓到錯的那一個，而且**很有信心**：那一段在畫面上
+    掛著「切點查真值」，比誠實地用估算還糟。
+
+    量出來是五趴：一千一百五十四個句子裡，五十九個在 ±1.5 秒內有兩個以上
+    同樣的字。全是 `i`、`the`、`they`、`and` 這種。
+
+    所以改成：**前兩個字要連著對上，而且範圍內只能有一個**。兩個以上就是
+    分不出來，分不出來就用估的 —— 估的誤差中位 0.13 秒，而跳錯的誤差是
+    一整句。選那個答錯了損失比較小的做法。
+    """
+    if not exact or not words:
+        return guess, False
+    found = []
+    for index, (at, said) in enumerate(exact):
         if at < guess - reach:
             continue
         if at > guess + reach:
             break
-        if said == word and (best is None or abs(at - guess) < abs(best - guess)):
-            best = at
-    return guess if best is None else best
+        if said != words[0]:
+            continue
+        if len(words) > 1 and (index + 1 >= len(exact)
+                               or exact[index + 1][1] != words[1]):
+            continue
+        found.append(at)
+        if len(found) > 1:
+            break               # 已經分不出來了，不用再找
+    return (found[0], True) if len(found) == 1 else (guess, False)
 
 
 def sentences(cues: list[dict[str, Any]],
@@ -158,31 +206,46 @@ def sentences(cues: list[dict[str, Any]],
     tail = cues[-1]["end"]
     exact = word_times(track)
 
+    # 句子的起訖位置**直接從原文量**，不從長度累加回推。
+    #
+    # 第一版用 `ENDING.split()` 拿到一段段文字，再自己 `at += len(piece)` 往前
+    # 推。而分隔樣式除了空白還會吃掉句號後面的引號或括號，那一格沒有被補回去
+    # —— 於是每遇到一次 `." ` 就永遠少一格，到檔案結尾累積落後一百八十四個
+    # 字元，時間整段往前偏了一秒多。段落的文字看起來完全正確，只有時間是錯的，
+    # 而畫面上兩者長得一模一樣。
+    #
+    # `finditer` 給的是分隔符自己的位置，減一次法就是句子的邊界，沒有東西可以
+    # 累積。同一個形狀在這個專案出現過三次：能從來源直接量的，就不要自己記帳。
     spots, at = [], 0
-    for piece in ENDING.split(text):
-        spots.append((at, piece))
-        at += len(piece)
-        # `split` 吃掉了句號後面的空白，長度對不回去 —— 照原文往前走到下一個
-        # 非空白，才是下一句真正的起點。少了這一段，時間會愈往後愈偏。
-        while at < len(text) and text[at].isspace():
-            at += 1
+    for gap in ENDING.finditer(text):
+        spots.append((at, text[at:gap.start()]))
+        at = gap.end()
+    spots.append((at, text[at:]))
+    def opening(said: str) -> list[str]:
+        """一句話開頭的前兩個字，用來認出它在真值裡的位置。"""
+        return [BARE.sub("", one.lower()) for one in said.split()[:2]
+                if BARE.sub("", one.lower())]
+
     found = []
     for index, (start, piece) in enumerate(spots):
         body = piece.strip()
         if not body:
             continue
-        opens = BARE.sub("", body.split()[0].lower())
-        head = _snap(exact, marks[min(start, len(marks) - 1)], opens)
+        head, sure_head = _snap(exact, marks[min(start, len(marks) - 1)],
+                                opening(body))
         # 結尾就是下一句的開頭：中間那段是停頓，留給前面那一句才不會切掉尾音。
         if index + 1 < len(spots):
             after, nxt = spots[index + 1]
-            words_after = nxt.strip().split()
-            foot = _snap(exact, marks[min(after, len(marks) - 1)],
-                         BARE.sub("", words_after[0].lower()) if words_after else "")
+            foot, sure_foot = _snap(exact, marks[min(after, len(marks) - 1)],
+                                    opening(nxt.strip()))
         else:
-            foot = tail
+            foot, sure_foot = tail, bool(exact)
         if foot > head:
             found.append({"start": round(head, 2), "end": round(foot, 2),
+                          # 這一句的兩端**都**真的用上真值了嗎。整份檔案有沒有
+                          # 時間戳是另一回事 —— 有時間戳而認不出是哪一個字的
+                          # 時候，切點還是估的，而畫面上不該說它是查來的。
+                          "exact": bool(sure_head and sure_foot),
                           "text": body})
     return found
 
@@ -278,6 +341,10 @@ def passages(cues: list[dict[str, Any]], words: list[str],
                     "end": round(spans[last]["end"], 2),
                     "seconds": round(span, 2),
                     "said": said,
+                    # 這一段的兩端有沒有真的用上真值。頭看第一句的頭，尾看
+                    # 最後一句的尾 —— 中間那幾句的邊界不是這一段的切點。
+                    "exact": bool(spans[first].get("exact")
+                                  and spans[last].get("exact")),
                     # 整段涵蓋到的關鍵詞，不只命中的那條 cue 的 —— 段落現在
                     # 可能橫跨好幾條，而看的人要知道「為什麼是這一段」。
                     "hits": sorted({word for word in hit["hits"]}

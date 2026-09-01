@@ -1,14 +1,15 @@
 {
   "topic": "川普要把安大略湖改名",
-  "when": 1788275654,
+  "when": 1788295513,
   "videos": 15,
   "silent": [],
   "passages": [
     {
-      "start": 0.09,
-      "end": 7.05,
-      "seconds": 6.96,
+      "start": 0.01,
+      "end": 7.62,
+      "seconds": 7.61,
       "said": "In the day's other headlines, President Donald Trump signed an executive order today renaming Lake Ontario as Lake America.",
+      "exact": false,
       "hits": [
         "america",
         "lake",
@@ -25,15 +26,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
       "outlet": "PBS NewsHour",
+      "has_times": false,
       "title": "News Wrap: Trump signs order to rename Lake Ontario as Lake America",
-      "clip": "assets/passages/川普要把安大略湖改名/C01.368b5ad506.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C01.368b5ad506.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C01.fa415d12c6.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C01.fa415d12c6.jpg",
+      "edge": [
+        -43.7,
+        -51.7
+      ],
+      "doubt": false
     },
     {
-      "start": 13.83,
-      "end": 18.76,
-      "seconds": 4.93,
+      "start": 14.17,
+      "end": 18.64,
+      "seconds": 4.47,
       "said": "Trump made the name change official during a signing in the Oval Office this afternoon.",
+      "exact": false,
       "hits": [
         "change",
         "trump"
@@ -45,15 +54,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
       "outlet": "PBS NewsHour",
+      "has_times": false,
       "title": "News Wrap: Trump signs order to rename Lake Ontario as Lake America",
-      "clip": "assets/passages/川普要把安大略湖改名/C02.a60500657f.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C02.a60500657f.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C02.8fc5cc2a51.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C02.8fc5cc2a51.jpg",
+      "edge": [
+        -62.5,
+        -49.2
+      ],
+      "doubt": false
     },
     {
-      "start": 25.16,
-      "end": 34.16,
-      "seconds": 9.0,
+      "start": 25.47,
+      "end": 34.2,
+      "seconds": 8.73,
       "said": "Trump had threatened the change after talks broke down over his 50% tariffs on billions of dollars of Canadian goods which took effect last weekend.",
+      "exact": false,
       "hits": [
         "change",
         "trump"
@@ -65,15 +82,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/S9NbJin7oCM.mp4",
       "outlet": "PBS NewsHour",
+      "has_times": false,
       "title": "News Wrap: Trump signs order to rename Lake Ontario as Lake America",
-      "clip": "assets/passages/川普要把安大略湖改名/C03.6a87e60d67.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C03.6a87e60d67.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C03.29c9a37ff8.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C03.29c9a37ff8.jpg",
+      "edge": [
+        -66.0,
+        -54.3
+      ],
+      "doubt": false
     },
     {
-      "start": 105.59,
+      "start": 105.53,
       "end": 113.92,
-      "seconds": 8.33,
+      "seconds": 8.39,
       "said": "And finally, I guess the purpose of this more than anything else is we're going to be changing the name of Lake Ontario.",
+      "exact": false,
       "hits": [
         "lake",
         "ontario"
@@ -85,15 +110,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
       "outlet": "PBS NewsHour",
+      "has_times": false,
       "title": "WATCH: Trump signs order changing Lake Ontario to 'Lake America'",
-      "clip": "assets/passages/川普要把安大略湖改名/C04.850cbab9c2.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C04.850cbab9c2.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C04.8cb9927f3a.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C04.8cb9927f3a.jpg",
+      "edge": [
+        -56.1,
+        -56.3
+      ],
+      "doubt": false
     },
     {
       "start": 147.51,
       "end": 152.84,
       "seconds": 5.33,
       "said": "Uh this will reflect that this is an American lake. Thank you.",
+      "exact": false,
       "hits": [
         "america",
         "lake"
@@ -105,15 +138,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
       "outlet": "PBS NewsHour",
+      "has_times": false,
       "title": "WATCH: Trump signs order changing Lake Ontario to 'Lake America'",
+      "settled": true,
       "clip": "assets/passages/川普要把安大略湖改名/C05.c87b4def16.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C05.c87b4def16.jpg"
+      "thumb": "assets/passages/川普要把安大略湖改名/C05.c87b4def16.jpg",
+      "edge": [
+        -49.6,
+        -53.1
+      ],
+      "doubt": false
     },
     {
-      "start": 193.47,
+      "start": 193.75,
       "end": 203.46,
-      "seconds": 9.99,
+      "seconds": 9.71,
       "said": "Do you have any questions, that video you put up yesterday you crossing out Lake Ontario and writing Lake America.",
+      "exact": false,
       "hits": [
         "america",
         "lake",
@@ -126,15 +167,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
       "outlet": "PBS NewsHour",
+      "has_times": false,
       "title": "WATCH: Trump signs order changing Lake Ontario to 'Lake America'",
-      "clip": "assets/passages/川普要把安大略湖改名/C06.8a5021136c.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C06.8a5021136c.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C06.bbd3b13776.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C06.bbd3b13776.jpg",
+      "edge": [
+        -54.9,
+        -50.2
+      ],
+      "doubt": false
     },
     {
       "start": 321.99,
-      "end": 333.5,
-      "seconds": 11.51,
+      "end": 333.88,
+      "seconds": 11.89,
       "said": "Maybe we'll change them both why are you why are you so focused on doing things like this towards America's allies instead of doing things that well they haven't treated us well.",
+      "exact": false,
       "hits": [
         "america",
         "america'",
@@ -147,15 +196,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mH6N-V7AHaE.mp4",
       "outlet": "PBS NewsHour",
+      "has_times": false,
       "title": "WATCH: Trump signs order changing Lake Ontario to 'Lake America'",
-      "clip": "assets/passages/川普要把安大略湖改名/C07.db269b1d85.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C07.db269b1d85.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C07.10f7de0d28.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C07.10f7de0d28.jpg",
+      "edge": [
+        -41.4,
+        -51.4
+      ],
+      "doubt": false
     },
     {
       "start": 0.03,
-      "end": 8.41,
-      "seconds": 8.38,
+      "end": 7.92,
+      "seconds": 7.89,
       "said": "We're going to be changing the name of Lake Ontario, effective immediately to Lake America.",
+      "exact": false,
       "hits": [
         "america",
         "lake",
@@ -168,15 +225,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/NGrWxr7FVPE.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Trump renames Lake Ontario to 'Lake America'",
-      "clip": "assets/passages/川普要把安大略湖改名/C08.8853c9da5c.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C08.8853c9da5c.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C08.b2ff174ce6.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C08.b2ff174ce6.jpg",
+      "edge": [
+        -20.9,
+        -37.5
+      ],
+      "doubt": true
     },
     {
       "start": 15.86,
       "end": 20.2,
       "seconds": 4.34,
       "said": "Back we are now in Cleveland. That is Lake Erie.",
+      "exact": false,
       "hits": [
         "america",
         "lake",
@@ -190,15 +255,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Lake Ontario or Lake America? Enten says opinion is clear",
+      "settled": true,
       "clip": "assets/passages/川普要把安大略湖改名/C09.b06ed1b807.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C09.b06ed1b807.jpg"
+      "thumb": "assets/passages/川普要把安大略湖改名/C09.b06ed1b807.jpg",
+      "edge": [
+        -42.0,
+        -22.0
+      ],
+      "doubt": true
     },
     {
-      "start": 108.24,
-      "end": 115.83,
-      "seconds": 7.59,
+      "start": 108.01,
+      "end": 115.54,
+      "seconds": 7.53,
       "said": "Net ratings among Americans confident in Trump on Canada US relations minus 15 points his net rating on that one minus 15.",
+      "exact": false,
       "hits": [
         "america",
         "canada",
@@ -212,15 +285,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Lake Ontario or Lake America? Enten says opinion is clear",
-      "clip": "assets/passages/川普要把安大略湖改名/C10.3f9328ac4e.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C10.3f9328ac4e.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C10.9da00a36a6.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C10.9da00a36a6.jpg",
+      "edge": [
+        -37.2,
+        -45.3
+      ],
+      "doubt": false
     },
     {
-      "start": 137.32,
-      "end": 144.64,
-      "seconds": 7.32,
+      "start": 137.33,
+      "end": 144.48,
+      "seconds": 7.15,
       "said": "This is going over like a lead balloon. All right. I mean, what lessons from history could the president have learned here when he was attempting a name change?",
+      "exact": false,
       "hits": [
         "america",
         "change",
@@ -235,15 +316,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Lake Ontario or Lake America? Enten says opinion is clear",
-      "clip": "assets/passages/川普要把安大略湖改名/C11.a450ff25a2.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C11.a450ff25a2.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C11.5cdfcb7ea1.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C11.5cdfcb7ea1.jpg",
+      "edge": [
+        -37.1,
+        -38.5
+      ],
+      "doubt": false
     },
     {
-      "start": 318.92,
-      "end": 324.31,
-      "seconds": 5.39,
+      "start": 318.99,
+      "end": 324.06,
+      "seconds": 5.07,
       "said": "It predates the Confederation of Canada. It predates the Declaration of Independence.",
+      "exact": false,
       "hits": [
         "canada",
         "lake",
@@ -257,15 +346,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Lake Ontario or Lake America? Enten says opinion is clear",
-      "clip": "assets/passages/川普要把安大略湖改名/C12.3a20ed38bc.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C12.3a20ed38bc.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C12.4e900e2bfc.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C12.4e900e2bfc.jpg",
+      "edge": [
+        -63.8,
+        -56.8
+      ],
+      "doubt": false
     },
     {
-      "start": 478.69,
-      "end": 485.42,
-      "seconds": 6.73,
+      "start": 477.8,
+      "end": 485.62,
+      "seconds": 7.82,
       "said": "Lake Ontario was given that name on maps by European explorers long before the Canadian province of Ontario was named.",
+      "exact": false,
       "hits": [
         "lake",
         "maps",
@@ -279,15 +376,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Lake Ontario or Lake America? Enten says opinion is clear",
-      "clip": "assets/passages/川普要把安大略湖改名/C13.ad647ff92f.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C13.ad647ff92f.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C13.a9e33edbc6.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C13.a9e33edbc6.jpg",
+      "edge": [
+        -42.8,
+        -50.4
+      ],
+      "doubt": false
     },
     {
-      "start": 727.35,
-      "end": 733.47,
-      "seconds": 6.12,
+      "start": 728.01,
+      "end": 734.08,
+      "seconds": 6.07,
       "said": "Let me tell you why the world respects us more for renaming military bases than they do the Gulf of America or Lake Ontario.",
+      "exact": false,
       "hits": [
         "america",
         "lake",
@@ -301,15 +406,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Lake Ontario or Lake America? Enten says opinion is clear",
-      "clip": "assets/passages/川普要把安大略湖改名/C14.f6e60e6222.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C14.f6e60e6222.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C14.7d0639c7de.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C14.7d0639c7de.jpg",
+      "edge": [
+        -52.2,
+        -55.0
+      ],
+      "doubt": false
     },
     {
-      "start": 758.04,
-      "end": 767.42,
-      "seconds": 9.38,
+      "start": 758.47,
+      "end": 768.14,
+      "seconds": 9.67,
       "said": "What we're doing in Lake Ontario and what we're doing in the Gulf of America, that is utter BS. If we want to have a serious president that's talking about serious things, let's actually bring people to the table.",
+      "exact": false,
       "hits": [
         "america",
         "lake",
@@ -323,15 +436,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/mprYW_i27FM.mp4",
       "outlet": "CNN",
+      "has_times": false,
       "title": "Lake Ontario or Lake America? Enten says opinion is clear",
-      "clip": "assets/passages/川普要把安大略湖改名/C15.8f9823692d.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C15.8f9823692d.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C15.4f02ddb284.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C15.4f02ddb284.jpg",
+      "edge": [
+        -53.2,
+        -60.2
+      ],
+      "doubt": false
     },
     {
-      "start": 241.88,
-      "end": 249.36,
-      "seconds": 7.48,
+      "start": 242.47,
+      "end": 249.22,
+      "seconds": 6.75,
       "said": "So, uh, the lake change in the lake of America was something I've been thinking about for a long time, actually.",
+      "exact": true,
       "hits": [
         "america",
         "change",
@@ -345,15 +466,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.mp4",
       "outlet": "Fox News",
+      "has_times": true,
       "title": "Trump SLAMS Canada after signing order renaming Lake Ontario",
-      "clip": "assets/passages/川普要把安大略湖改名/C16.7a49ef484e.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C16.7a49ef484e.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C16.9a857258f2.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C16.9a857258f2.jpg",
+      "edge": [
+        -52.7,
+        -48.7
+      ],
+      "doubt": false
     },
     {
-      "start": 145.32,
+      "start": 146.15,
       "end": 155.04,
-      "seconds": 9.72,
+      "seconds": 8.89,
       "said": "President, that video you put up yesterday of you crossing out Lake Ontario and writing Lake America, it's been seen by about 30 million people, maybe more, across all the social media platforms.",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -366,38 +495,53 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.mp4",
       "outlet": "Fox News",
+      "has_times": true,
       "title": "Trump SLAMS Canada after signing order renaming Lake Ontario",
-      "clip": "assets/passages/川普要把安大略湖改名/C17.e8282aa5f4.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C17.e8282aa5f4.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C17.f1474585d8.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C17.f1474585d8.jpg",
+      "edge": [
+        -41.5,
+        -34.1
+      ],
+      "doubt": false
     },
     {
-      "start": 687.05,
-      "end": 693.83,
-      "seconds": 6.78,
+      "start": 692.23,
+      "end": 698.52,
+      "seconds": 6.29,
       "said": "So, the president could call it Lake Lake America if he wants, but I'm sure that in Canada they'll continue to call it Lake Ontario.",
+      "exact": true,
       "hits": [
         "america",
         "canada",
         "lake",
-        "ontario",
-        "order"
+        "ontario"
       ],
-      "at": 687.12,
+      "at": 697.86,
       "matched": [
-        "canada",
-        "order"
+        "lake",
+        "ontario"
       ],
       "file": "assets/footage/川普要把安大略湖改名/OciTiMiQerI.mp4",
       "outlet": "Fox News",
+      "has_times": true,
       "title": "Trump SLAMS Canada after signing order renaming Lake Ontario",
-      "clip": "assets/passages/川普要把安大略湖改名/C18.85dd4f85bb.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C18.85dd4f85bb.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C18.c9d966643a.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C18.c9d966643a.jpg",
+      "edge": [
+        -53.3,
+        -29.4
+      ],
+      "doubt": true
     },
     {
-      "start": 3.04,
+      "start": 3.0,
       "end": 8.64,
-      "seconds": 5.6,
+      "seconds": 5.64,
       "said": "He signed an order changing the name Lake Ontario to Lake America.",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -412,15 +556,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/SvcrBh8cyt0.mp4",
       "outlet": "Fox News",
+      "has_times": true,
       "title": "Peter Doocy: This is the OFFICIAL new map",
-      "clip": "assets/passages/川普要把安大略湖改名/C19.0215818a54.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C19.0215818a54.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C19.29cbff1c10.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C19.29cbff1c10.jpg",
+      "edge": [
+        -42.6,
+        -44.1
+      ],
+      "doubt": false
     },
     {
-      "start": 80.56,
-      "end": 85.84,
-      "seconds": 5.28,
+      "start": 80.51,
+      "end": 85.4,
+      "seconds": 4.89,
       "said": "Says Lake America right there. Canada's Prime Minister Mark Carney retorts on X.",
+      "exact": true,
       "hits": [
         "america",
         "canada",
@@ -433,15 +585,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/SvcrBh8cyt0.mp4",
       "outlet": "Fox News",
+      "has_times": true,
       "title": "Peter Doocy: This is the OFFICIAL new map",
-      "clip": "assets/passages/川普要把安大略湖改名/C20.95a1803f3d.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C20.95a1803f3d.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C20.117e198ded.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C20.117e198ded.jpg",
+      "edge": [
+        -53.7,
+        -46.2
+      ],
+      "doubt": false
     },
     {
-      "start": 46.18,
-      "end": 55.36,
-      "seconds": 9.18,
+      "start": 46.35,
+      "end": 56.32,
+      "seconds": 9.97,
       "said": "Canadians also know that naming that naming reality uh that naming reality means calling it Lake Ontario, then, now, and always.",
+      "exact": true,
       "hits": [
         "lake",
         "ontario"
@@ -453,15 +613,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/wnmr-jUsv_Q.mp4",
       "outlet": "Fox Business",
+      "has_times": true,
       "title": "TRADE WAR EXPLODES: Trump DOUBLES DOWN on Canada tariffs",
-      "clip": "assets/passages/川普要把安大略湖改名/C21.814b8d98fe.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C21.814b8d98fe.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C21.9eb04fc69f.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C21.9eb04fc69f.jpg",
+      "edge": [
+        -46.8,
+        -46.2
+      ],
+      "doubt": false
     },
     {
-      "start": 64.68,
-      "end": 71.6,
-      "seconds": 6.92,
+      "start": 64.88,
+      "end": 72.38,
+      "seconds": 7.5,
       "said": "It does predate Canada named itself its promise province after the lake, not the other way around.",
+      "exact": true,
       "hits": [
         "canada",
         "lake",
@@ -474,15 +642,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/wnmr-jUsv_Q.mp4",
       "outlet": "Fox Business",
+      "has_times": true,
       "title": "TRADE WAR EXPLODES: Trump DOUBLES DOWN on Canada tariffs",
-      "clip": "assets/passages/川普要把安大略湖改名/C22.8b11780356.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C22.8b11780356.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C22.12127d7707.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C22.12127d7707.jpg",
+      "edge": [
+        -45.7,
+        -57.5
+      ],
+      "doubt": false
     },
     {
-      "start": 162.2,
-      "end": 169.02,
-      "seconds": 6.82,
+      "start": 162.81,
+      "end": 168.84,
+      "seconds": 6.03,
       "said": "So, um, the lake change Lake of America was something I've been thinking about for a long time.",
+      "exact": false,
       "hits": [
         "america",
         "change",
@@ -496,15 +672,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/3P8q6Fs0v3Y.mp4",
       "outlet": "Bloomberg",
+      "has_times": false,
       "title": "Trump Renames Lake Ontario as Lake America, Says Canada Is Ripping Off",
-      "clip": "assets/passages/川普要把安大略湖改名/C23.498730b56b.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C23.498730b56b.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C23.d3bc02815a.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C23.d3bc02815a.jpg",
+      "edge": [
+        -55.1,
+        -50.3
+      ],
+      "doubt": false
     },
     {
-      "start": 0.18,
+      "start": 0.0,
       "end": 7.84,
-      "seconds": 7.66,
+      "seconds": 7.84,
       "said": "We're going to be changing the name of Lake Ontario, effective immediately to Lake America.",
+      "exact": false,
       "hits": [
         "america",
         "lake",
@@ -517,15 +701,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/3P8q6Fs0v3Y.mp4",
       "outlet": "Bloomberg",
+      "has_times": false,
       "title": "Trump Renames Lake Ontario as Lake America, Says Canada Is Ripping Off",
-      "clip": "assets/passages/川普要把安大略湖改名/C24.4cdc195132.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C24.4cdc195132.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C24.4ffbf112c4.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C24.4ffbf112c4.jpg",
+      "edge": [
+        -91.0,
+        -51.2
+      ],
+      "doubt": false
     },
     {
-      "start": 43.49,
-      "end": 49.51,
-      "seconds": 6.02,
+      "start": 43.48,
+      "end": 49.28,
+      "seconds": 5.8,
       "said": "And when I say sought, he did effectively, at least on US maps and in this country.",
+      "exact": false,
       "hits": [
         "america",
         "maps"
@@ -537,20 +729,29 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/JCAuxVQ3_Hg.mp4",
       "outlet": "Bloomberg",
+      "has_times": false,
       "title": "US Canada Trade Fight Shows Few Signs of Easing",
-      "clip": "assets/passages/川普要把安大略湖改名/C25.8888a6fc05.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C25.8888a6fc05.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C25.2c4a8f44df.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C25.2c4a8f44df.jpg",
+      "edge": [
+        -29.6,
+        -48.9
+      ],
+      "doubt": true
     },
     {
-      "start": 397.0,
-      "end": 403.27,
-      "seconds": 6.27,
-      "said": "I grew up on Lake Ontario in Rochester, New York. So it's a lake that's very familiar to me and crossing over to Canada.",
+      "start": 390.82,
+      "end": 397.84,
+      "seconds": 7.02,
+      "said": "And then we saw President Trump escalated one step further where he said he wants to rename Lake Ontario as Lake America.",
+      "exact": true,
       "hits": [
         "america",
-        "canada",
         "lake",
-        "ontario"
+        "ontario",
+        "rename",
+        "trump"
       ],
       "at": 397.64,
       "matched": [
@@ -560,15 +761,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/pZKWNEcJYnw.mp4",
       "outlet": "BBC News",
+      "has_times": true,
       "title": "Who is winning the US-Canada trade war? | BBC Americast",
-      "clip": "assets/passages/川普要把安大略湖改名/C26.310763c063.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C26.310763c063.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C26.ace6eb65e7.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C26.ace6eb65e7.jpg",
+      "edge": [
+        -50.0,
+        -56.3
+      ],
+      "doubt": false
     },
     {
-      "start": 603.1,
-      "end": 607.68,
-      "seconds": 4.58,
-      "said": "And Trump himself has said that, you know, we have all the power. Uh we're the big economic power.",
+      "start": 602.07,
+      "end": 608.8,
+      "seconds": 6.73,
+      "said": "I think the American negotiators look at Canada differently. Uh that. And Trump himself has said that, you know, we have all the power.",
+      "exact": true,
       "hits": [
         "america",
         "canada",
@@ -581,15 +790,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/pZKWNEcJYnw.mp4",
       "outlet": "BBC News",
+      "has_times": true,
       "title": "Who is winning the US-Canada trade war? | BBC Americast",
-      "clip": "assets/passages/川普要把安大略湖改名/C27.5943f3fab2.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C27.5943f3fab2.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C27.2646b67636.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C27.2646b67636.jpg",
+      "edge": [
+        -52.9,
+        -53.0
+      ],
+      "doubt": false
     },
     {
-      "start": 123.4,
-      "end": 132.56,
-      "seconds": 9.16,
+      "start": 123.29,
+      "end": 131.86,
+      "seconds": 8.57,
       "said": "If you remember in Trump's first term, they renegotiated the North America Free Trade Agreement, uh changed it to the US-Mexico-Canada Agreement, USMCA.",
+      "exact": true,
       "hits": [
         "america",
         "canada",
@@ -602,33 +819,51 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/pZKWNEcJYnw.mp4",
       "outlet": "BBC News",
+      "has_times": true,
       "title": "Who is winning the US-Canada trade war? | BBC Americast",
-      "clip": "assets/passages/川普要把安大略湖改名/C28.25df3dae90.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C28.25df3dae90.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C28.6a485caa15.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C28.6a485caa15.jpg",
+      "edge": [
+        -54.2,
+        -39.9
+      ],
+      "doubt": false
     },
     {
-      "start": 6.32,
-      "end": 11.84,
-      "seconds": 5.52,
-      "said": "What's his calculation? And why do Canadians feel like they might have the upper hand?",
+      "start": 1171.65,
+      "end": 1176.84,
+      "seconds": 5.19,
+      "said": "Doug Ford, the premier of Ontario, and now Donald Trump seemed to be going at it.",
+      "exact": true,
       "hits": [
+        "ontario",
         "trump"
       ],
-      "at": 6.44,
+      "at": 1174.36,
       "matched": [
+        "ontario",
         "trump"
       ],
       "file": "assets/footage/川普要把安大略湖改名/vb1H7WoqUBM.mp4",
       "outlet": "BBC News",
+      "has_times": true,
       "title": "Carney stands up to Trump | The Global Story",
-      "clip": "assets/passages/川普要把安大略湖改名/C29.226e0e3dff.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C29.226e0e3dff.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C29.5ab0b0868f.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C29.5ab0b0868f.jpg",
+      "edge": [
+        -60.6,
+        -38.8
+      ],
+      "doubt": false
     },
     {
-      "start": 16.2,
-      "end": 20.8,
-      "seconds": 4.6,
+      "start": 16.13,
+      "end": 20.02,
+      "seconds": 3.89,
       "said": "I mean, Canada is a country, one of the countries most affected by Donald Trump's tariffs.",
+      "exact": true,
       "hits": [
         "canada",
         "trump"
@@ -639,15 +874,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/g-GcmOYd8hc.mp4",
       "outlet": "The Economist",
+      "has_times": true,
       "title": "Mark Carney on dealing with Donald Trump",
-      "clip": "assets/passages/川普要把安大略湖改名/C30.8fe177cd4e.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C30.8fe177cd4e.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C30.023b20bab5.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C30.023b20bab5.jpg",
+      "edge": [
+        -53.2,
+        -77.5
+      ],
+      "doubt": false
     },
     {
       "start": 0.2,
-      "end": 5.04,
-      "seconds": 4.84,
+      "end": 4.62,
+      "seconds": 4.42,
       "said": "President, you have said that Canada should become the 51st state. Yeah.",
+      "exact": false,
       "hits": [
         "canada"
       ],
@@ -657,15 +900,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Da15Gth3jEI.mp4",
       "outlet": "The Guardian",
+      "has_times": true,
       "title": "Mark Carney tells Trump 'Canada will never be for sale'",
-      "clip": "assets/passages/川普要把安大略湖改名/C31.2b96c99e6d.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C31.2b96c99e6d.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C31.d8cfa71516.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C31.d8cfa71516.jpg",
+      "edge": [
+        -50.2,
+        -59.5
+      ],
+      "doubt": false
     },
     {
-      "start": 579.92,
-      "end": 586.72,
-      "seconds": 6.8,
+      "start": 580.16,
+      "end": 586.68,
+      "seconds": 6.52,
       "said": "I think uh he's relay renamed Lake Ontario as Lake America just over two months before midterm elections.",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -681,15 +932,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.mp4",
       "outlet": "Deutsche Welle",
+      "has_times": true,
       "title": "Canadians laugh off a lake name change - but what about an ocean? | DW",
-      "clip": "assets/passages/川普要把安大略湖改名/C32.9079d404c1.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C32.9079d404c1.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C32.b5f94d06fa.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C32.b5f94d06fa.jpg",
+      "edge": [
+        -37.9,
+        -55.7
+      ],
+      "doubt": false
     },
     {
-      "start": 5.2,
-      "end": 15.84,
-      "seconds": 10.64,
+      "start": 4.95,
+      "end": 15.48,
+      "seconds": 10.53,
       "said": "What lies to the south of the United States became the Gulf of America 18 months ago, and now what lies to the north, at least according to Donald Trump, is Lake America.",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -702,15 +961,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.mp4",
       "outlet": "Deutsche Welle",
+      "has_times": true,
       "title": "Canadians laugh off a lake name change - but what about an ocean? | DW",
-      "clip": "assets/passages/川普要把安大略湖改名/C33.e208303376.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C33.e208303376.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C33.0e584b72a3.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C33.0e584b72a3.jpg",
+      "edge": [
+        -47.6,
+        -53.2
+      ],
+      "doubt": false
     },
     {
-      "start": 84.88,
-      "end": 94.96,
-      "seconds": 10.08,
+      "start": 84.74,
+      "end": 94.92,
+      "seconds": 10.18,
       "said": "Uh, can we start with the basics, your reaction to the president of the United States renaming Lake Ontario as Lake America?",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -723,15 +990,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.mp4",
       "outlet": "Deutsche Welle",
+      "has_times": true,
       "title": "Canadians laugh off a lake name change - but what about an ocean? | DW",
-      "clip": "assets/passages/川普要把安大略湖改名/C34.75ec0bb3ca.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C34.75ec0bb3ca.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C34.56088d0876.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C34.56088d0876.jpg",
+      "edge": [
+        -48.9,
+        -75.8
+      ],
+      "doubt": false
     },
     {
-      "start": 237.44,
-      "end": 246.08,
-      "seconds": 8.64,
+      "start": 237.33,
+      "end": 245.42,
+      "seconds": 8.09,
       "said": "I first want to play you the the thoughts of Manitoba Premier Wub Canoe talking about Donald Trump renaming Lake Ontario.",
+      "exact": true,
       "hits": [
         "lake",
         "ontario",
@@ -744,15 +1019,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Pb9WplyDJV4.mp4",
       "outlet": "Deutsche Welle",
+      "has_times": true,
       "title": "Canadians laugh off a lake name change - but what about an ocean? | DW",
-      "clip": "assets/passages/川普要把安大略湖改名/C35.c26c877285.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C35.c26c877285.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C35.432964f46a.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C35.432964f46a.jpg",
+      "edge": [
+        -44.7,
+        -72.1
+      ],
+      "doubt": false
     },
     {
-      "start": 0.4,
-      "end": 6.16,
-      "seconds": 5.76,
+      "start": 0.33,
+      "end": 6.06,
+      "seconds": 5.73,
       "said": "The US president has signed an executive order renaming Lake Ontario as Lake America.",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -767,15 +1050,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Dnmxudm7dK8.mp4",
       "outlet": "Al Jazeera English",
+      "has_times": true,
       "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
-      "clip": "assets/passages/川普要把安大略湖改名/C36.f58c3c8990.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C36.f58c3c8990.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C36.482584e9c7.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C36.482584e9c7.jpg",
+      "edge": [
+        -35.0,
+        -49.5
+      ],
+      "doubt": false
     },
     {
-      "start": 57.68,
-      "end": 66.4,
-      "seconds": 8.72,
+      "start": 57.45,
+      "end": 66.34,
+      "seconds": 8.89,
       "said": "It is often the case that after Donald Trump signs an executive order, the immediate question becomes, does he actually have the power to do this?",
+      "exact": true,
       "hits": [
         "order",
         "signs",
@@ -789,15 +1080,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Dnmxudm7dK8.mp4",
       "outlet": "Al Jazeera English",
+      "has_times": true,
       "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
-      "clip": "assets/passages/川普要把安大略湖改名/C37.f9b9dd0a21.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C37.f9b9dd0a21.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C37.6f62103365.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C37.6f62103365.jpg",
+      "edge": [
+        -45.7,
+        -25.7
+      ],
+      "doubt": true
     },
     {
-      "start": 109.6,
-      "end": 116.16,
-      "seconds": 6.56,
+      "start": 109.2,
+      "end": 116.98,
+      "seconds": 7.78,
       "said": "Uh there could be a real problem with this going forward with some people calling it Lake America, others calling it Lake Ontario.",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -811,15 +1110,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Dnmxudm7dK8.mp4",
       "outlet": "Al Jazeera English",
+      "has_times": true,
       "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
-      "clip": "assets/passages/川普要把安大略湖改名/C38.2a7abe67d3.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C38.2a7abe67d3.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C38.763de53f99.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C38.763de53f99.jpg",
+      "edge": [
+        -27.5,
+        -32.7
+      ],
+      "doubt": true
     },
     {
-      "start": 14.96,
-      "end": 19.28,
-      "seconds": 4.32,
+      "start": 14.85,
+      "end": 19.0,
+      "seconds": 4.15,
       "said": "Lake Ontario is one of the Great Lakes located between the US and Canada.",
+      "exact": true,
       "hits": [
         "canada",
         "lake",
@@ -832,15 +1139,23 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Dnmxudm7dK8.mp4",
       "outlet": "Al Jazeera English",
+      "has_times": true,
       "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
-      "clip": "assets/passages/川普要把安大略湖改名/C39.c825ed7390.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C39.c825ed7390.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C39.2b2113ea96.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C39.2b2113ea96.jpg",
+      "edge": [
+        -62.6,
+        -49.4
+      ],
+      "doubt": false
     },
     {
-      "start": 23.68,
-      "end": 32.24,
-      "seconds": 8.56,
+      "start": 23.45,
+      "end": 32.02,
+      "seconds": 8.57,
       "said": "We're going to be changing the name of Lake Ontario effective immediately to Lake America.",
+      "exact": true,
       "hits": [
         "america",
         "lake",
@@ -853,9 +1168,16 @@
       ],
       "file": "assets/footage/川普要把安大略湖改名/Dnmxudm7dK8.mp4",
       "outlet": "Al Jazeera English",
+      "has_times": true,
       "title": "Trump renames Lake Ontario as Lake America amid Canada trade war",
-      "clip": "assets/passages/川普要把安大略湖改名/C40.21d8addb95.mp4",
-      "thumb": "assets/passages/川普要把安大略湖改名/C40.21d8addb95.jpg"
+      "settled": true,
+      "clip": "assets/passages/川普要把安大略湖改名/C40.d8046b5d5e.mp4",
+      "thumb": "assets/passages/川普要把安大略湖改名/C40.d8046b5d5e.jpg",
+      "edge": [
+        -65.6,
+        -49.1
+      ],
+      "doubt": false
     }
   ],
   "carved": 40,

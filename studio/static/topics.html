@@ -374,6 +374,7 @@
 
 
 <script src="/static/shared.js"></script>
+<script src="/static/nav.js"></script>
 <script>
 const STATE = { list: [], want: { videos: 5, reports: 5 }, chosen: null };
 
@@ -554,6 +555,15 @@ async function openTopic(name) {
     return;
   }
   STATE.chosen = name;
+  /* 記住選了哪一個。沒記的話重新載入會退回「清單的第一個」，而清單是照
+     modified 由新到舊排的 —— 你剛剛動過的題目會浮到最前面，而那常常不是
+     你正在看的那一個（切段、剪片、整理事實都會改到別的題目的檔案）。症狀
+     是：從導覽列切走再切回來，畫面上換了一個題目，而且看不出為什麼。
+
+     不寫進網址：中文題目編碼成一串百分號很醜，而這件事本來就不需要網址
+     —— 它是「我現在在看哪一個」，不是「這一頁是什麼」。存在 nav.js 的
+     pickName／pickedName，因為導覽列切頁時也要讀同一份。 */
+  pickName(name);
   renderList();
   let pile;
   try { pile = await api("GET", `/api/topic?name=${encodeURIComponent(name)}`); }
@@ -1235,9 +1245,13 @@ async function boot() {
   STATE.list = (listed.topics || []).sort((a, b) => b.modified - a.modified);
   STATE.want = listed.want || STATE.want;
 
-  const wanted = new URLSearchParams(location.search).get("name");
-  const pick = (wanted && STATE.list.some((one) => one.name === wanted))
-    ? wanted : (STATE.list[0] && STATE.list[0].name);
+  /* 網址優先，其次是上一次看的那一個，最後才退回清單第一個。
+     只靠網址不夠：從導覽列走回來的是乾淨的 /topics，而退回「清單第一個」
+     等於退回「最近動過的題目」—— 切段、剪片、整理事實都會改到別的題目的
+     檔案，於是它浮到最前面，畫面上就換了一個題目而且看不出為什麼。 */
+  const wanted = pickedName();
+  const has = (one) => one && STATE.list.some((row) => row.name === one);
+  const pick = has(wanted) ? wanted : (STATE.list[0] && STATE.list[0].name);
   renderList();
   settle();
   if (pick) await openTopic(pick);
@@ -1248,4 +1262,3 @@ boot().catch(reportFault);
 window.addEventListener("unhandledrejection",
   (event) => reportFault(event.reason));
 </script>
-<script src="/static/nav.js"></script>

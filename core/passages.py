@@ -77,8 +77,20 @@ def choose(pile: dict[str, Any], want: float | None = None,
         # min 要包住 round，不是被 round 包住 —— 上限 12 的設定跑出過 13 段。
         room = per_video if per_video is not None else \
             max(1, min(most, round(len(every) * share)))
+        # 兩件不同的事，兩個欄位：
+        #   has_times  這份字幕檔有沒有寫每個字的時間（來源的性質）
+        #   exact      這一段的切點有沒有真的用上真值（結果）
+        #
+        # 分開是因為它們會不一樣，而合成一個就是說謊。有時間戳但認不出是哪一
+        # 個字的時候（`And`、`I` 這種常見字在附近出現好幾次），切點還是估的
+        # —— 而第一版把整份檔案的性質當成每一段的性質，於是 C27 掛著「切點查
+        # 真值」，實際上跳到錯的字上，比誠實地用估算更糟。
+        from core import captions as captions_module
+        from core import facts as facts_module
+        has_times = captions_module.has_word_times(facts_module.captions_of(video))
         by_video.append([{**found, "file": video["file"],
                           "outlet": video.get("outlet", ""),
+                          "has_times": has_times,
                           "title": video.get("title", "")[:70]}
                          for found in every[:room]])
 
@@ -96,7 +108,131 @@ def choose(pile: dict[str, Any], want: float | None = None,
              for index, rows in enumerate(by_video)
              for place, one in enumerate(rows)}
     kept.sort(key=lambda one: where.get(id(one), (99, 99)))
+
+    # 最後一步：把切點吸附到聲音上。一支影片解碼一次音軌，套給它
+    # 自己的那幾段 —— 放在挑完之後，是因為挑掉的那幾百段不用花這個時間。
+    for film in {one["file"] for one in kept}:
+        mine = [one for one in kept if one["file"] == film]
+        settle(mine, envelope(ROOT / film))
     return kept
+
+
+STEP = 0.02
+# 量段落頭尾各多長，來判斷切點上還有沒有人在說話。
+EDGE = 0.1
+
+
+def _edge(clip: Path, at: float) -> float:
+    """剪出來的檔案在 `at` 那 {EDGE} 秒的平均音量（dB）。
+
+    完美的切點做不到 —— 有五段的那一秒鐘從頭到尾都在講話，沒有縫可以吸。
+    做得到的是**把它們指出來**：切點上還有聲音，就是那一段值得有人打開來聽。
+    """
+    import re
+    import subprocess
+    done = subprocess.run(
+        ["ffmpeg", "-v", "info", "-ss", f"{max(at, 0):.3f}", "-t", f"{EDGE}",
+         "-i", str(clip), "-vn", "-af", "volumedetect", "-f", "null", "-"],
+        capture_output=True, text=True)
+    found = re.search(r"mean_volume: (-?[\d.]+)", done.stderr)
+    return round(float(found.group(1)), 1) if found else 0.0
+
+
+def envelope(film: Path) -> list[float]:
+    """這支影片的音量曲線，每 0.02 秒一個值（dB）。
+
+    文字推得出「這句話大概第幾秒結束」，推不出「哪一秒沒有人在說話」，而剪
+    出來聽起來對不對靠的正是後者。
+
+    第一版問的是 ffmpeg 的 `silencedetect`：「哪幾段連續安靜超過 0.1 秒」。
+    它救回了大部分，但**兩句之間的停頓常常不到 0.1 秒** —— C11 的結尾多出
+    一個「Yeah.」，而正確的切點就在 0.06 秒外的一個 −44 dB 低谷上。那個谷
+    在，只是不夠長，門檻式的偵測看不見它。
+
+    改成拿整條曲線回來自己判斷。一樣是一次解碼，但「夠不夠安靜」可以就地跟
+    周圍比，而不是跟一個寫死的絕對值比 —— 棚內訪談的底噪是 −55 dB，街訪是
+    −30，同一個數字對前者太鬆、對後者太嚴。
+    """
+    import re
+    import subprocess
+    done = subprocess.run(
+        ["ffmpeg", "-v", "error", "-i", str(film), "-vn", "-af",
+         f"aresample=8000,asetnsamples={int(8000 * STEP)},"
+         "astats=metadata=1:reset=1,"
+         "ametadata=print:key=lavfi.astats.Overall.RMS_level:file=-",
+         "-f", "null", "-"], capture_output=True, text=True)
+    return [-120.0 if "inf" in one else float(one)
+            for one in re.findall(r"RMS_level=(-?[\d.]+|-?inf)", done.stdout)]
+
+
+def pause(levels: list[float], at: float, reach: float,
+          drop: float) -> tuple[float, float] | None:
+    """`at` 附近那個停頓（起, 訖），沒有就 None。
+
+    停頓的定義是**相對的**：比這一秒鐘周圍的中位數安靜 drop 分貝以上。先找
+    窗內最低的那一點，再往兩邊長到聲音回來為止。
+
+    長度不設下限，因為需要的正是那些很短的停頓 —— C11 那個谷只有 0.06 秒，
+    而它就是「Yeah.」前面唯一的縫。
+    """
+    first = max(0, int((at - reach) / STEP))
+    last = min(len(levels), int((at + reach) / STEP))
+    if last - first < 3:
+        return None
+    window = sorted(levels[first:last])
+    floor = window[len(window) // 2] - drop
+    low = min(range(first, last), key=lambda i: levels[i])
+    if levels[low] > floor:
+        return None                     # 這一秒鐘從頭到尾都有聲音
+    head = tail = low
+    while head > first and levels[head - 1] <= floor:
+        head -= 1
+    while tail + 1 < last and levels[tail + 1] <= floor:
+        tail += 1
+    # 一個取樣點不是停頓，是雜訊。長度下限本來完全沒有 —— 為了接住 C11 那個
+    # 0.06 秒的縫我把它整個拿掉，於是 C9 的結尾「找到」一個 0.02 秒的尖點，
+    # 那裡從頭到尾都在講話。下限訂在還接得住 C11 的地方。
+    if (tail + 1 - head) * STEP < rules_module.at("collect.passage_gap", 0.06):
+        return None
+    return head * STEP, (tail + 1) * STEP
+
+
+def settle(rows: list[dict[str, Any]], levels: list[float],
+           reach: float = 1.0) -> int:
+    """把切點吸附到聲音上。回傳動到幾個。
+
+    一條規則，套在每一段上，不是針對哪一段微調：
+
+        頭   在說話開始前 lead 秒
+        尾   在說話停止後 tail 秒
+
+    兩端都用同一個錨點 —— 一個停頓的**結束**就是「說話從這裡開始」。
+
+    找不到停頓就不動。新聞畫面有配樂和連續問答，不是每一句之間都停得下來，
+    而**動不了的時候維持原樣，比硬吸到一秒外的某個地方好** —— 後者會把切點
+    移到另一句話上。
+    """
+    if not levels:
+        return 0
+    lead = rules_module.at("collect.passage_lead", 0.15)
+    tail = rules_module.at("collect.passage_tail", 0.30)
+    drop = rules_module.at("collect.passage_drop", 10)
+    moved = 0
+    for one in rows:
+        was = (one["start"], one["end"])
+        found = pause(levels, one["start"], reach, drop)
+        if found:
+            one["start"] = round(max(found[0], found[1] - lead), 2)
+        found = pause(levels, one["end"], reach, drop)
+        if found:
+            one["end"] = round(min(found[1], found[0] + tail), 2)
+        if one["end"] - one["start"] < 1.0:      # 吸壞了就退回去
+            one["start"], one["end"] = was
+            continue
+        one["seconds"] = round(one["end"] - one["start"], 2)
+        one["settled"] = True
+        moved += (one["start"], one["end"]) != was
+    return moved
 
 
 def cut(name: str) -> dict[str, Any]:
@@ -108,10 +244,20 @@ def cut(name: str) -> dict[str, Any]:
     """
     from core import topic as topic_module
     pile = topic_module.load(name)
-    rows = choose(pile)
-    HERE.mkdir(parents=True, exist_ok=True)
     with_captions = [one for one in topic_module.settled(pile, "videos")
                      if one.get("file") and one.get("captions")]
+    # 沒有素材就不要留下檔案。`stored()` 的規矩是「沒有就現切」，而一個還沒
+    # 收過素材的題目被誰開了一次頁面，就會長出一個 0 段的空檔 —— 那個檔進了
+    # 版控，看起來像「這個題目切過了，結果是零段」，而實際上是「還沒收素材」。
+    # 兩件事在畫面上一模一樣，而後者才是真的。
+    if not with_captions:
+        path = path_for(name)
+        if path.is_file():
+            path.unlink()
+        return {"topic": name, "when": int(time.time()), "videos": 0,
+                "silent": [], "passages": []}
+    rows = choose(pile)
+    HERE.mkdir(parents=True, exist_ok=True)
     body = {
         "topic": name,
         "when": int(time.time()),
@@ -183,6 +329,14 @@ def carve(name: str, say=None) -> dict[str, Any]:
         if card.is_file():
             one["thumb"] = str(card.relative_to(ROOT))
             made.append(card.name)
+        # 剪完之後量自己的頭尾還有沒有聲音。**量剪出來的檔案，不是量原片** ——
+        # 量原片要跨著切點取樣，而一個切得剛好、尾巴緊貼下一句的段落也會量到
+        # 很大聲。我用那把尺誤判過 C11：它其實是對的。
+        one["edge"] = [_edge(cut_to, 0.0), _edge(cut_to, one["seconds"] - EDGE)]
+        # 程式判斷得了「切點上有沒有聲音」，判斷不了「這樣剪聽起來能不能接受」。
+        # 所以這是一個記號不是一道門 —— 它該做的是把要看的挑出來，不是替人決定。
+        one["doubt"] = any(db > rules_module.at("collect.passage_edge", -30)
+                           for db in one["edge"])
         if say:
             say(index, len(rows), f"剪 C{index}　{one['outlet']}")
 

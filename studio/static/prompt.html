@@ -136,7 +136,7 @@ function section(one, share) {
 }
 
 async function load() {
-  const wanted = new URLSearchParams(location.search).get("name") || "";
+  const wanted = pickedName();
   const back = await fetch("/api/prompt-parts"
     + (wanted ? "?name=" + encodeURIComponent(wanted) : ""));
   if (!back.ok) throw new Error((await back.text()).slice(0, 200));
@@ -146,7 +146,9 @@ async function load() {
     `<option value="${esc(one)}"${one === d.topic ? " selected" : ""}>${
       esc(one)}</option>`).join("");
   $("pick").onchange = () => {
-    location.search = "?name=" + encodeURIComponent($("pick").value);
+    /* 記住就好，不寫網址 —— 中文題目編碼成一串百分號很醜。 */
+    pickName($("pick").value);
+    location.href = location.pathname;
   };
 
   const what = d.what || [];

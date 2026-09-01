@@ -44,19 +44,23 @@ const WHERE = [
   ["/docs",      "文件",   "📓"],
 ];
 
-/* 換一個看法的時候，題目要跟著走。
+/* 目前在看哪一個題目 / 哪一份文案。
  *
- * 這三頁本來就吃 `?name=`，只是從來沒有人傳 —— 所以在紀錄頁看梅西納、
- * 切到送去寫，會跳到伺服器自己挑的「最近動過的題目」，而畫面上看不出
- * 換過。整併如果只是把八格藏起來，那就只是藏起來。
+ * 存在 localStorage 而不是網址上。本來是寫進網址讓導覽列帶著走，那會動，
+ * 但網址就變成 `/topics?name=%E5%B7%9D%E6%99%AE...` —— 一串看不懂的百分號。
  *
- * 只補這三個路徑。`/docs?name=` 的 name 是文件名，補過去會落到白名單外。 */
-const CARRIES = new Set(["/records", "/material", "/passages", "/prompt"]);
-
-function withName(path) {
+ * 網址上的 `?name=` 還是認，而且優先：那是別人給你的連結，它明確說了要看
+ * 哪一個。介面自己不寫。
+ *
+ * 存在這裡是因為 nav.js 是唯一每一頁都載入的檔案。 */
+function pickedName(what = "topic") {
   const now = new URLSearchParams(location.search).get("name");
-  if (!now || !CARRIES.has(path) || !CARRIES.has(here())) return path;
-  return path + "?name=" + encodeURIComponent(now);
+  if (now) return now;
+  try { return localStorage.getItem("now." + what) || ""; } catch (e) { return ""; }
+}
+
+function pickName(name, what = "topic") {
+  try { localStorage.setItem("now." + what, name); } catch (e) { /* 無痕視窗 */ }
 }
 
 function here() {
@@ -65,7 +69,12 @@ function here() {
 
 function link([path, label, icon]) {
   const on = path === here() ? " class=\"here\"" : "";
-  return `<a href="${withName(path)}"${on}>${icon} ${label}</a>`;
+  /* 乾淨的路徑，題目不進網址。
+     題目是「我現在在看哪一個」，存在 pickedName()／pickName() 那一份，
+     每一頁自己讀 —— 帶在網址上會把中文編碼成一長串百分號，而那串東西
+     除了醜之外沒有任何人在讀。網址上的 `?name=` 還是認（別人給的連結），
+     只是介面自己不寫。 */
+  return `<a href="${path}"${on}>${icon} ${label}</a>`;
 }
 
 function navBar() {
