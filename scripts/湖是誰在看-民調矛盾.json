@@ -1,0 +1,385 @@
+{
+  "view": "他把改湖名這件事炒成全年最大新聞，同一份民調卻說美國人不埋單這套處理方式",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+    "tagline": "同一份民調，兩個答案"
+  },
+  "lines": [
+    {
+      "role": "起",
+      "tone": "cool",
+      "say": "川普簽了命令，湖要改名了",
+      "show": "影片：橢圓形辦公室，川普簽署改名命令",
+      "clip": "C1",
+      "seen": true,
+      "from": "PBS NewsHour 第 0 秒",
+      "seconds": 7.36
+    },
+    {
+      "role": "起",
+      "tone": "cool",
+      "say": "這座湖，本來沒人在吵",
+      "show": "太空站拍下來的安大略湖",
+      "pic": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "role": "起",
+      "say": "新名字：美利堅湖",
+      "show": "自製：新名字揭示卡",
+      "card": {
+        "kind": "word",
+        "title": "美利堅湖",
+        "tone": "cool"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "起",
+      "tone": "cool",
+      "say": "加拿大回一句：才不跟你改",
+      "show": "PBS 畫面，字卡打著「安大略湖，現在和永遠」的發言",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 40 秒",
+      "seconds": 2.61
+    },
+    {
+      "role": "起",
+      "say": "官方理由：水多半在美國",
+      "show": "自製：官方理由圈詞卡",
+      "card": {
+        "kind": "ring",
+        "title": "官方理由",
+        "value": "水多半在美國",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 138 秒",
+      "seconds": 2.39
+    },
+    {
+      "role": "承",
+      "tone": "cool",
+      "say": "談判破裂，才改名出氣",
+      "show": "PBS 畫面，提到關稅談判破裂",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_26.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 20 秒",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "他說：一年虧六百億",
+      "show": "自製：損失金額卡",
+      "card": {
+        "kind": "number",
+        "title": "川普說：這十五年來",
+        "value": "600億美元",
+        "under": "平均每年",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 243 秒",
+      "seconds": 1.96
+    },
+    {
+      "role": "承",
+      "say": "還說：農民關稅四百趴",
+      "show": "自製：關稅數字圈詞卡",
+      "card": {
+        "kind": "ring",
+        "title": "川普說的另一筆帳",
+        "value": "400%",
+        "tone": "cool"
+      },
+      "from": "CNN 第 333 秒",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "tone": "cool",
+      "say": "還說：白保衛，沒拿錢",
+      "show": "示意畫面：文件簽署桌",
+      "pic": "assets/photos/川普要把安大略湖改名/6814526.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 219 秒",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "tone": "cool",
+      "say": "新聞台幫你出了選擇題",
+      "show": "CNN 整理畫面，標題寫「安大略湖，還是美利堅湖」",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_359.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "這支影片，看過三千萬次",
+      "show": "自製：觀看次數卡",
+      "card": {
+        "kind": "number",
+        "title": "他貼的塗改影片",
+        "value": "3000萬次",
+        "under": "觀看次數",
+        "tone": "cool"
+      },
+      "from": "Fox News 第 146 秒",
+      "seconds": 2.39
+    },
+    {
+      "role": "轉",
+      "tone": "light",
+      "say": "但美國人對他這樣搞，信心負十五",
+      "show": "影片：CNN 畫面，寫著對川普處理美加關係的淨評價負十五",
+      "clip": "C10",
+      "seen": true,
+      "from": "CNN 第 114 秒",
+      "seconds": 7.53
+    },
+    {
+      "role": "轉",
+      "say": "好感度是正四十八",
+      "show": "自製：好感度圈詞卡",
+      "card": {
+        "kind": "number",
+        "title": "同一份民調",
+        "value": "+48",
+        "under": "對加拿大的好感度",
+        "tone": "light"
+      },
+      "from": "CNN 第 114 秒",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "tone": "light",
+      "say": "五十州，沒有一州搜新名字",
+      "show": "CNN 畫面，字卡列出美國五十州都還在搜安大略湖",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_79.jpg",
+      "seen": true,
+      "from": "CNN 第 70 秒",
+      "seconds": 2.61
+    },
+    {
+      "role": "轉",
+      "say": "熱鬧的是聲量，不是民意",
+      "show": "自製：一條線分岔卡",
+      "card": {
+        "kind": "split",
+        "title": "這場秀分岔成兩件事",
+        "branches": [
+          "版面\n有多滿",
+          "民意\n有多挺"
+        ],
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "role": "合",
+      "say": "而且這不是第一次",
+      "show": "自製：轉場卡",
+      "card": {
+        "kind": "word",
+        "title": "而且這不是第一次",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "灣改了，山也改了",
+      "show": "自製：改名紀錄鏈卡",
+      "card": {
+        "kind": "chain",
+        "title": "改名紀錄",
+        "points": [
+          "墨西哥灣→美國灣",
+          "迪納利山→麥金利山",
+          "安大略湖→美利堅湖"
+        ],
+        "under": "這是第三筆",
+        "tone": "warm"
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "十八個月，沒人跟改",
+      "show": "自製：十八個月後圈詞卡",
+      "card": {
+        "kind": "ring",
+        "title": "墨西哥灣改名十八個月後",
+        "value": "沒人跟著改口",
+        "tone": "warm"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "學者說：只有文件變了",
+      "show": "自製：學者評論卡",
+      "card": {
+        "kind": "word",
+        "title": "學者說：只有文件變了",
+        "tone": "warm"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "以為全網挺，其實不埋單",
+      "show": "自製：以為／其實對照卡",
+      "card": {
+        "kind": "swap",
+        "title": "這場秀給你的錯覺",
+        "was": "全網都在挺",
+        "now": "民調不埋單",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "role": "合",
+      "tone": "light",
+      "say": "現實生活裡，還是那樣叫",
+      "show": "影片：民眾受訪，還是說安大略湖，現在和永遠",
+      "clip": "C21",
+      "seen": true,
+      "from": "Fox Business 第 46 秒",
+      "seconds": 9.97
+    },
+    {
+      "role": "合",
+      "say": "連球賽主播都玩這哏",
+      "show": "自製：足球哏卡",
+      "card": {
+        "kind": "word",
+        "title": "連球賽主播都玩這哏",
+        "tone": "warm"
+      },
+      "from": "CNN 第 21 秒",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "tone": "warm",
+      "say": "他自己也說：想很久了",
+      "show": "PBS 畫面，川普說這件事他想了很久",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_297.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 297 秒",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "tone": "warm",
+      "say": "這幾座湖，橫跨美加兩國，是很多人的日常水域",
+      "show": "尼加拉瀑布，橫跨美加邊界的水",
+      "pic": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 4.57
+    },
+    {
+      "role": "合",
+      "say": "記住：聲量不是人數",
+      "show": "自製：結論圈詞卡",
+      "card": {
+        "kind": "ring",
+        "title": "記住這句",
+        "value": "洗版的是聲量，不是人數",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "全網在挺，先想一下",
+      "show": "自製：提醒圈詞卡",
+      "card": {
+        "kind": "ring",
+        "title": "下次滑到全網都在挺",
+        "value": "先想一下",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "只是聲量，不是票數",
+      "show": "自製：轉場卡",
+      "card": {
+        "kind": "word",
+        "title": "只是聲量，不是票數",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "版面，是演算法排的",
+      "show": "自製：版面圈詞卡",
+      "card": {
+        "kind": "ring",
+        "title": "版面",
+        "value": "是演算法排的",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "不是每個人都按了讚",
+      "show": "自製：轉場卡",
+      "card": {
+        "kind": "word",
+        "title": "不是每個人都按了讚",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "洗的是聲量，不是人數",
+      "seconds": 6.5,
+      "show": "自製：結尾頁",
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "points": [
+          "同一份民調：信心負十五、好感正四十八",
+          "美國五十州都還在搜安大略湖",
+          "墨西哥灣改名十八個月，沒人跟著改口",
+          "下次洗版，先數人不數聲量"
+        ],
+        "title": "洗版洗到你以為全世界都挺\n洗的是聲量，不是人數",
+        "under": "美利堅湖：民調裡的矛盾"
+      },
+      "from": "觀點"
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人",
+  "answered": {}
+}

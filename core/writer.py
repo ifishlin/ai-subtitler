@@ -158,7 +158,39 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
                 script_module.READ_PER_SECOND), 2)
         lines.append(line)
     draft["lines"] = lines
+    if draft.get("cover") is not None:
+        draft["cover"] = fasten_cover(topic, draft["cover"])
     return draft
+
+
+def fasten_cover(topic: str, cover: Any) -> dict[str, Any]:
+    """縮圖用的封面：一張滿版照片＋一句標語，跟 `lines` 裡的鏡頭一樣查編號，
+    不猜檔名。
+
+    獨立於任何一句台詞——`fasten()` 對每一句做的是「換掉那一句的畫面」，
+    這裡換的是整支片的封面，所以是分開的一支函式，不是塞進那個迴圈裡當
+    第 31 句處理。
+
+    `pic` 是任選的：LLM 沒挑的話這裡**不**填進一個備援檔名——備援圖存在
+    `theme.json` 的 `cover.default_pic`，畫的時候現查。寫死在這裡的話，
+    換一張預設圖就要重新 `fasten` 每一份文案的封面，變成同一件事兩個地方
+    要記得改。
+    """
+    if not isinstance(cover, dict):
+        raise ValueError(f"cover 要是物件，寫的是 {cover!r}")
+    tagline = str(cover.get("tagline") or "").strip()
+    if not tagline:
+        raise ValueError("cover 要有 tagline")
+    key = cover.get("pic")
+    pic = ""
+    if key is not None:
+        if not (isinstance(key, str) and key.startswith("P")):
+            raise ValueError(f"cover 的 pic 要寫編號（P18 這種），寫的是 {key!r}")
+        picks = brief_module.pick(topic)
+        if key not in picks:
+            raise ValueError(f"cover 的圖片編號 {key} 不在素材裡")
+        pic = picks[key]
+    return {"kind": "cover", "pic": pic, "tagline": tagline}
 
 
 def suggest_terms(topic: str, say=None) -> dict[str, Any]:

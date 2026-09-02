@@ -1,0 +1,369 @@
+{
+  "view": "命令自己講的『改地名要地方發起』，第一個被繞過的就是真正的地方——真正住在湖邊、真正命名這座湖的人",
+  "tone": "克制",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+    "tagline": "湖的名字，誰先取的？"
+  },
+  "lines": [
+    {
+      "role": "起",
+      "say": "川普簽了行政命令，把安大略湖改名叫「美利堅湖」",
+      "show": "影片：川普簽署命令的新聞快報",
+      "clip": "C1",
+      "seen": true,
+      "from": "PBS NewsHour 第0秒",
+      "seconds": 7.36
+    },
+    {
+      "role": "起",
+      "say": "官方說，這座湖大半在美國",
+      "show": "太空站拍的安大略湖",
+      "pic": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第138秒",
+      "seconds": 2.61
+    },
+    {
+      "role": "起",
+      "say": "三十天內，舊名全刪",
+      "show": "自製：三十天期限",
+      "card": {
+        "kind": "number",
+        "title": "三十天",
+        "value": "30天",
+        "under": "舊名要從系統全刪",
+        "tone": "cool"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "起",
+      "say": "命令說：只是要表彰美國人民",
+      "show": "川普官方肖像",
+      "pic": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+      "seen": true,
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 2.83
+    },
+    {
+      "role": "承",
+      "say": "他要蘋果地圖，也跟著改名",
+      "show": "有人在簽署文件",
+      "pic": "assets/photos/川普要把安大略湖改名/6814526.jpg",
+      "seen": true,
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 2.61
+    },
+    {
+      "role": "承",
+      "say": "地圖也顯示新名字",
+      "show": "自製：地圖顯示新名字",
+      "card": {
+        "kind": "word",
+        "title": "有些地方地圖\n真的顯示了新名字",
+        "tone": "cool"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 1.9
+    },
+    {
+      "role": "承",
+      "say": "本來規矩：地方發起",
+      "show": "自製：地方發起",
+      "card": {
+        "kind": "ring",
+        "title": "美國改地名",
+        "value": "地方發起",
+        "under": "本來的規矩，居民提案",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "承",
+      "say": "五大湖，一直都在這裡",
+      "show": "五大湖的衛星空拍",
+      "pic": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "但這次，完全反過來",
+      "show": "自製：完全反過來",
+      "card": {
+        "kind": "split",
+        "title": "但這次\n完全反過來",
+        "branches": [
+          "地方發起\n當地居民同意",
+          "這次：\n華盛頓一紙命令"
+        ],
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "這名字，比兩國建國都早",
+      "show": "影片：主播談論這名字的歷史",
+      "clip": "C12",
+      "seen": true,
+      "from": "CNN",
+      "seconds": 5.07
+    },
+    {
+      "role": "轉",
+      "say": "塞內卡語：美麗的湖",
+      "show": "自製：塞內卡語的名字",
+      "card": {
+        "kind": "ring",
+        "title": "塞內卡語裡",
+        "value": "美麗的湖",
+        "under": "sga:nyodai:yoh",
+        "tone": "light"
+      },
+      "from": "Fox News〈Seneca Nation leader cal〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "省名，來自這座湖",
+      "show": "自製：安大略省名字的由來",
+      "card": {
+        "kind": "number",
+        "title": "安大略省",
+        "value": "1867",
+        "under": "建省時，省名取自這座湖",
+        "tone": "light"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "是省名跟著湖名，不是反過來",
+      "show": "影片：主播談論省名跟湖名的先後",
+      "clip": "C22",
+      "seen": true,
+      "from": "Fox Business",
+      "seconds": 7.5
+    },
+    {
+      "role": "轉",
+      "say": "休倫族語，也有名字",
+      "show": "自製：休倫族的名字",
+      "card": {
+        "kind": "word",
+        "title": "休倫族溫達特語\n也早有名字",
+        "tone": "light"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "十七世紀，擋過改名",
+      "show": "自製：擋過法國人改名",
+      "card": {
+        "kind": "word",
+        "title": "這座湖\n擋過法國人的改名",
+        "tone": "light"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "他有沒有權力這樣做，沒人問",
+      "show": "影片：主播提出的疑問",
+      "clip": "C37",
+      "seen": true,
+      "from": "Al Jazeera English",
+      "seconds": 8.89
+    },
+    {
+      "role": "轉",
+      "say": "領袖說：不能擁有",
+      "show": "自製：不能宣稱擁有",
+      "card": {
+        "kind": "word",
+        "title": "塞內卡族領袖說\n你不能宣稱擁有",
+        "tone": "light"
+      },
+      "from": "Fox News〈Seneca Nation leader cal〉",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "不能抹去我們文化",
+      "show": "自製：抹去我們的文化",
+      "card": {
+        "kind": "word",
+        "title": "也不能用政治\n抹去我們的文化",
+        "tone": "light"
+      },
+      "from": "Fox News〈Seneca Nation leader cal〉",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "教授說：新殖民想像",
+      "show": "自製：新殖民式的想像",
+      "card": {
+        "kind": "word",
+        "title": "地理學教授說\n這是新殖民式的想像",
+        "tone": "light"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "湖邊的人，沒人問過",
+      "show": "自製：沒人問過",
+      "card": {
+        "kind": "ring",
+        "title": "這座湖",
+        "value": "沒人問過",
+        "under": "真正住在湖邊的人",
+        "tone": "light"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "自己說要尊重地方",
+      "show": "自製：命令自己說的規矩",
+      "card": {
+        "kind": "word",
+        "title": "命令自己說\n要尊重地方",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "繞過的是真正地方",
+      "show": "自製：第一個被繞過的",
+      "card": {
+        "kind": "word",
+        "title": "第一個被繞過的\n就是真正的地方",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "這條湖，切著兩個國家",
+      "show": "尼加拉瀑布，湖水切過兩國",
+      "pic": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "他說：現在和永遠都叫安大略湖",
+      "show": "加拿大總理卡尼",
+      "pic": "assets/photos/川普要把安大略湖改名/2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第40秒",
+      "seconds": 3.04
+    },
+    {
+      "role": "合",
+      "say": "眾議員說：命令無效",
+      "show": "自製：不具效力",
+      "card": {
+        "kind": "chain",
+        "title": "密西根眾議員",
+        "points": [
+          "提「別碰五大湖法案」",
+          "宣告命令不具效力"
+        ],
+        "under": "地方也在反抗",
+        "tone": "warm"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "但每一個名字，都是誰選的",
+      "show": "行人號誌牌，寫著禁止穿越",
+      "pic": "assets/photos/川普要把安大略湖改名/27697309.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.61
+    },
+    {
+      "role": "合",
+      "say": "你家路名也被決定",
+      "show": "自製：你家那條路",
+      "card": {
+        "kind": "word",
+        "title": "你家那條路的名字\n也曾經被誰決定過",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "你從沒被問過是誰",
+      "show": "自製：沒被問過是誰",
+      "card": {
+        "kind": "word",
+        "title": "你可能\n從來沒被問過是誰決定的",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "這次有人被看見了",
+      "show": "自製：有人被看見了",
+      "card": {
+        "kind": "word",
+        "title": "這次\n只是有人被看見了",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "是誰被問過",
+      "seconds": 6.5,
+      "show": "自製：結尾頁",
+      "card": {
+        "kind": "outro",
+        "tone": "warm",
+        "points": [
+          "命令三十天內要刪掉安大略湖這個名字",
+          "但省名、原名都比這道命令古老",
+          "塞內卡族領袖說，總統不能抹去他們的文化",
+          "你家附近的名字，也曾被人決定，只是沒人跟你說"
+        ],
+        "title": "地名從來不是誰先到\n是誰被問過",
+        "under": "美利堅湖／安大略湖"
+      },
+      "from": "觀點"
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人",
+  "answered": {}
+}

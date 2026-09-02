@@ -105,5 +105,14 @@
     "plate": true,
     "ring": true,
     "show_from": 0.35
+  },
+  "cover": {
+    "icon": "assets/brand/cover_icon.png",
+    "icon_size": 150,
+    "corner_right": 74,
+    "corner_bottom": 74,
+    "default_pic": "assets/brand/cover_default.jpg",
+    "tagline_size": 128,
+    "why": "封面是縮圖，跟片內卡片是不同的模板：一張滿版照片＋一句標語＋右下角頻道 icon，固定這三樣，不再借用 word/ring 那套片內卡片字彙——片內卡片配合的是那一刻在說什麼，縮圖只需要讓人想點進來。icon 用另一份檔案（cover_icon.png），不是片尾那個 brand.icon：片尾標記出現在字幕帶上面，縮圖沒有字幕帶，位置和比例都不一樣，共用一份檔案早晚會有人改一邊漏一邊。default_pic 是 LLM 沒挑照片時的備援——它是一份獨立存放的檔案，不能指向某個題目自己的素材夾：那個夾子會被 `topic.replace_images()` 整批換掉，備援圖跟著消失就是靜靜的封面全黑，沒有任何錯誤訊息。"
   }
 }

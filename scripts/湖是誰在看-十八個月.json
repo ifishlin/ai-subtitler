@@ -1,0 +1,388 @@
+{
+  "view": "美利堅湖不是新招，是同一齣沒有效果的戲，第三次重演。",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+    "tagline": "改了名字，然後呢？"
+  },
+  "lines": [
+    {
+      "role": "起",
+      "say": "川普簽了命令：湖，改名字",
+      "show": "影片：PBS 主播播報改名命令",
+      "clip": "C1",
+      "seen": true,
+      "from": "PBS NewsHour",
+      "tone": "cool",
+      "seconds": 7.36
+    },
+    {
+      "role": "起",
+      "say": "這座湖，本叫安大略湖",
+      "show": "太空站拍下的安大略湖",
+      "pic": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+      "seen": true,
+      "from": "維基百科",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "起",
+      "say": "改名前，關稅談判破裂",
+      "show": "PBS 提到談判破裂的畫面",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_26.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 26 秒",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "起",
+      "say": "五十趴關稅，兩百億",
+      "show": "自製：關稅規模卡",
+      "card": {
+        "kind": "word",
+        "title": "五十趴關稅\n兩百億美元商品",
+        "tone": "cool"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "cool",
+      "seconds": 1.96
+    },
+    {
+      "role": "起",
+      "say": "理由：水，大半在美國",
+      "show": "示意：五大湖空拍",
+      "pic": "assets/photos/川普要把安大略湖改名/1685778.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 138 秒",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "起",
+      "say": "三十天內，地圖換好",
+      "show": "PBS 提到系統要更新的畫面",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
+      "seen": true,
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "cool",
+      "seconds": 1.96
+    },
+    {
+      "role": "承",
+      "say": "簽署旁邊，立一張地圖",
+      "show": "自製：展板卡",
+      "card": {
+        "kind": "word",
+        "title": "展板寫著：\n讓五大湖更偉大",
+        "tone": "cool"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "他說：這件事想很久了",
+      "show": "他在受訪時這麼說",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_OciTiMiQerI_244.jpg",
+      "seen": true,
+      "from": "Fox News",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "同一張地圖，兩種名字",
+      "show": "自製：地圖依所在地不同",
+      "card": {
+        "kind": "split",
+        "title": "同一張地圖\n兩種名字",
+        "branches": [
+          "美國看見\n新名字",
+          "別處還是\n安大略湖"
+        ],
+        "tone": "cool"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "電力公司地圖也改了",
+      "show": "示意：地圖圖資",
+      "pic": "assets/photos/川普要把安大略湖改名/31805295.jpg",
+      "seen": true,
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "cool",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "十八個月前，也做過一次",
+      "show": "影片：DW 對比美國灣改名先例",
+      "clip": "C33",
+      "seen": true,
+      "from": "Deutsche Welle",
+      "tone": "light",
+      "seconds": 10.53
+    },
+    {
+      "role": "轉",
+      "say": "先例：墨西哥灣改美國灣",
+      "show": "自製：先例卡",
+      "card": {
+        "kind": "word",
+        "title": "先例：墨西哥灣改美國灣",
+        "tone": "light"
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "tone": "light",
+      "seconds": 2.39
+    },
+    {
+      "role": "轉",
+      "say": "十八個月後，沒人改口",
+      "show": "自製：數字卡",
+      "card": {
+        "kind": "number",
+        "value": "18",
+        "title": "美國灣",
+        "under": "個月後，沒人改口",
+        "tone": "light"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "tone": "light",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "美聯社不改，被趕出白宮",
+      "show": "自製：美聯社卡",
+      "card": {
+        "kind": "word",
+        "title": "美聯社不改口\n被趕出白宮",
+        "tone": "light"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "tone": "light",
+      "seconds": 2.39
+    },
+    {
+      "role": "轉",
+      "say": "省名，借自這座湖",
+      "show": "自製：省名卡",
+      "card": {
+        "kind": "word",
+        "title": "安大略省的名字\n本來就借自這座湖",
+        "tone": "light"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "tone": "light",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "法國人，也曾經想改名",
+      "show": "自製：舊例卡",
+      "card": {
+        "kind": "word",
+        "title": "十七、十八世紀\n法國人也想改過名字",
+        "tone": "light"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "tone": "light",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "五十州，一州都沒改口",
+      "show": "美國人搜尋安大略湖比美利堅湖多",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+      "seen": true,
+      "from": "CNN 第 70 秒",
+      "tone": "light",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "現在、永遠，都是安大略湖",
+      "show": "新聞畫面上打著這句字幕",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 40 秒",
+      "tone": "light",
+      "seconds": 2.61
+    },
+    {
+      "role": "轉",
+      "say": "學者：只有文件會變",
+      "show": "自製：學者評論卡",
+      "card": {
+        "kind": "word",
+        "title": "學者：只有聯邦文件會變",
+        "tone": "light"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "light",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "加拿大人：以後也是安大略湖",
+      "show": "影片：加拿大人重申叫法不變",
+      "clip": "C21",
+      "seen": true,
+      "from": "Fox Business",
+      "tone": "light",
+      "seconds": 9.97
+    },
+    {
+      "role": "轉",
+      "say": "議員說：命令沒有效力",
+      "show": "自製：議員發言卡",
+      "card": {
+        "kind": "word",
+        "title": "議員說：命令沒有效力",
+        "tone": "light"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "tone": "light",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "紐約州長，拒絕新名字",
+      "show": "自製：州長發言卡",
+      "card": {
+        "kind": "word",
+        "title": "紐約州長，公開拒絕新名字",
+        "tone": "light"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "tone": "light",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "這不是他第一次改名",
+      "show": "自製：改名紀錄卡",
+      "card": {
+        "kind": "chain",
+        "title": "這不是他第一次改名字",
+        "points": [
+          "和平研究所改名",
+          "推出「川普帳戶」",
+          "TrumpRx",
+          "「川普級」戰艦"
+        ],
+        "tone": "warm"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "tone": "warm",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "公務員，真的在加班",
+      "show": "示意：辦公室裡還有更多文件要簽",
+      "pic": "assets/photos/川普要把安大略湖改名/6814526.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "下午四點半，文件改完了",
+      "show": "自製：時間卡",
+      "card": {
+        "kind": "number",
+        "value": "4:30",
+        "title": "命令簽署當天",
+        "under": "官方文件，全部改好了",
+        "tone": "warm"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "tone": "warm",
+      "seconds": 2.39
+    },
+    {
+      "role": "合",
+      "say": "公文，一份一份要簽",
+      "show": "示意：辦公室簽署文件",
+      "pic": "assets/photos/川普要把安大略湖改名/8730998.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "近全部的車，賣美國",
+      "show": "自製：車貿卡",
+      "card": {
+        "kind": "word",
+        "title": "加拿大近全部的車\n賣來美國",
+        "tone": "warm"
+      },
+      "from": "Euronews〈Lake Ontario or Lake Ame〉",
+      "tone": "warm",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "關稅傷錢，改名字不會",
+      "show": "自製：對比卡",
+      "card": {
+        "kind": "word",
+        "title": "關稅真的傷錢\n改名字不會",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "那是你的稅，付加班",
+      "show": "自製：稅金卡",
+      "card": {
+        "kind": "word",
+        "title": "那是你的稅\n付加班費",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "你付的稅，正在印一個沒人會用的名字",
+      "show": "自製：結尾頁",
+      "seconds": 6.5,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "points": [
+          "改名字不會讓關稅停，也不會讓水變少",
+          "墨西哥灣改美國灣，十八個月後沒人跟著叫",
+          "這次，公務員一樣要加班",
+          "十八個月後，同一齣戲，會再演一次"
+        ],
+        "title": "你付的稅\n正在印一個沒人會用的名字",
+        "under": "美利堅湖：一場沒有效果的重演"
+      },
+      "from": "觀點",
+      "tone": "cool"
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人",
+  "answered": {}
+}

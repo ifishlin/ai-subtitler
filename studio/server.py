@@ -2203,9 +2203,39 @@ def get_script(name: str) -> dict[str, Any]:
             line["clip_file"] = shot.get("clip", "")
             line["clip_said"] = shot.get("said", "")
             line["clip_seconds"] = shot.get("seconds", 0)
-    # Cards are drawn on the way out, so the page shows the actual shot rather
-    # than the sentence describing it. Rendering is cached on the spec's own
-    # hash: an edited card gets a new file, an unchanged one is not redrawn.
+    _draw_cards(name, measured)
+    cover_file = _draw_cover(name, found.get("cover"))
+    return {**found, "measured": measured, "cover_file": cover_file}
+
+
+def _draw_cover(name: str, cover: dict[str, Any] | None) -> str:
+    """封面現在長什麼樣，畫出來的話先畫好。
+
+    跟 `_draw_cards()` 是同一種東西 —— 都是用 `cards.render()` 畫的，只是
+    封面不屬於任何一句台詞，所以不在 `measured["lines"]` 那個迴圈裡處理。
+    """
+    if not isinstance(cover, dict) or cover.get("kind") != "cover":
+        return ""
+    from core import cards as cards_module
+    try:
+        return cards_module.render(f"{name}-cover", cover)
+    except Exception:                                              # noqa: BLE001
+        return ""
+
+
+def _draw_cards(name: str, measured: dict[str, Any]) -> None:
+    """Draw every card line's actual shot into `measured["lines"]`, in place.
+
+    Cards are drawn on the way out, so the page shows the actual shot rather
+    than the sentence describing it. Rendering is cached on the spec's own
+    hash: an edited card gets a new file, an unchanged one is not redrawn.
+
+    Factored out rather than left inside `get_script()` alone, because
+    `/api/script/card` needs the exact same two steps after it saves an
+    edited spec -- draw, then sweep what nothing points at any more. Two
+    copies of "how a card gets from spec to file" is how this project keeps
+    finding a page that shows one thing while the build draws another.
+    """
     from core import cards as cards_module
     drawn: set[str] = set()
     for line in measured["lines"]:
@@ -2216,7 +2246,36 @@ def get_script(name: str) -> dict[str, Any]:
             except Exception as error:                            # noqa: BLE001
                 line["card_error"] = str(error)
     cards_module.sweep(name, drawn)
-    return {**found, "measured": measured}
+
+
+@app.post("/api/script/card")
+def edit_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """Replace one line's card specification, and draw it right now.
+
+    Nothing else redraws a card until the next full build -- `get_script()`
+    renders it once and caches on the spec's own hash. Waiting four minutes
+    for a full render to find out whether a `bars` row's width now reads
+    right is the same problem `card_wrong` exists for, one level up: the
+    only way to know a card is right is to look at the thing itself.
+    """
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    index = int(payload.get("line") or 0) - 1
+    card = payload.get("card")
+    if not isinstance(card, dict) or not str(card.get("kind") or "").strip():
+        raise HTTPException(400, "card 要是物件，而且要有 kind")
+    try:
+        found = script_module.load(name)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+    lines = found.get("lines") or []
+    if not 0 <= index < len(lines):
+        raise HTTPException(400, "沒有這一句")
+    lines[index]["card"] = card
+    script_module.save(name, found)
+    measured = script_module.measure(found)
+    _draw_cards(name, measured)
+    return {"saved": True, "measured": measured}
 
 
 @app.post("/api/script/line")
@@ -2260,16 +2319,20 @@ def edit_line(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     if not say:
         raise HTTPException(400, "台詞不能是空的")
     lines[index]["say"] = say
+    # word／outro 卡的標題本來就該跟這句話一樣，不用手動改兩個地方。
+    script_module.sync_card_title(lines[index], say)
     # The duration was computed from the old words; recompute it unless this
     # line was given one on purpose (a clip's length, a held picture).
     if not lines[index].get("clip"):
         lines[index]["seconds"] = round(
             max(1.9, script_module.spoken_length(say) / 4.6), 2)
     script_module.save(name, found)
+    measured = script_module.measure(found)
+    _draw_cards(name, measured)
     return {"saved": True, "line": index + 1,
             "seconds": lines[index]["seconds"],
             "rows": script_module.wrap(say),
-            "measured": script_module.measure(found)}
+            "measured": measured}
 
 
 PROMPTS = ROOT / "assets" / "prompts"
@@ -2838,6 +2901,8 @@ def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             if not say:
                 raise HTTPException(400, f"第 {index + 1} 句的台詞不能是空的")
             lines[index]["say"] = say
+            # word／outro 卡的標題本來就該跟這句話一樣，不用手動改兩個地方。
+            script_module.sync_card_title(lines[index], say)
             if not lines[index].get("clip"):
                 lines[index]["seconds"] = round(
                     max(script_module.LEAST_SECONDS,
@@ -2852,7 +2917,9 @@ def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
     found["lines"] = lines
     script_module.save(name, found)
-    return {"saved": len(changes), "measured": script_module.measure(found)}
+    measured = script_module.measure(found)
+    _draw_cards(name, measured)
+    return {"saved": len(changes), "measured": measured}
 
 
 @app.delete("/api/script")

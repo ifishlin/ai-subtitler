@@ -1,0 +1,389 @@
+{
+  "view": "他能命令全國文件改名，卻指揮不動自己國內科技公司的地圖資料庫",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+    "tagline": "五十州，沒有一州跟著改口"
+  },
+  "lines": [
+    {
+      "role": "起",
+      "say": "川普簽了一張命令",
+      "show": "影片：PBS 報導簽署現場",
+      "clip": "C1",
+      "seen": true,
+      "from": "PBS NewsHour 第 0 秒",
+      "tone": "cool",
+      "seconds": 7.36
+    },
+    {
+      "role": "起",
+      "say": "聯邦機構全部照改",
+      "show": "自製：文件標題被劃掉重寫",
+      "card": {
+        "kind": "word",
+        "title": "聯邦機構\n一律照改",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 20 秒",
+      "tone": "cool",
+      "seconds": 1.9
+    },
+    {
+      "role": "起",
+      "say": "三十天，全部改完",
+      "show": "自製：倒數的天數",
+      "card": {
+        "kind": "number",
+        "title": "期限",
+        "value": "30",
+        "under": "地名系統要把安大略湖整個刪掉",
+        "tone": "cool"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "cool",
+      "seconds": 1.9
+    },
+    {
+      "role": "起",
+      "say": "要柏根去更新資料庫",
+      "show": "官員在電視上說明改名細節",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 113 秒",
+      "tone": "cool",
+      "seconds": 1.96
+    },
+    {
+      "role": "承",
+      "say": "官方說法：水多在美國",
+      "show": "自製：官方理由",
+      "card": {
+        "kind": "word",
+        "title": "官方理由：\n水多在美國",
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour 第 138 秒",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "順便說：五大湖要更偉大",
+      "show": "五大湖的空拍畫面",
+      "pic": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+      "seen": true,
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "cool",
+      "seconds": 2.39
+    },
+    {
+      "role": "承",
+      "say": "改名，已經是他的日常",
+      "show": "自製：改名清單",
+      "card": {
+        "kind": "chain",
+        "title": "改名\n已經是他的日常",
+        "points": [
+          "墨西哥灣→美國灣",
+          "迪納利山→麥金利山"
+        ],
+        "tone": "cool"
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "五十州都搜安大略湖",
+      "show": "新聞畫面統計五十州搜尋結果",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+      "seen": true,
+      "from": "CNN 第 70 秒",
+      "tone": "cool",
+      "seconds": 1.96
+    },
+    {
+      "role": "承",
+      "say": "卡尼說：現在和永遠",
+      "show": "卡尼在記者會上的畫面",
+      "pic": "assets/photos/川普要把安大略湖改名/2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 40 秒",
+      "tone": "cool",
+      "seconds": 1.96
+    },
+    {
+      "role": "承",
+      "say": "他說貿易最難是加拿大",
+      "show": "自製：他的原話",
+      "card": {
+        "kind": "word",
+        "title": "他自己說：\n貿易最難是加拿大",
+        "tone": "cool"
+      },
+      "from": "NPR〈Canada claps back at Tru〉",
+      "tone": "cool",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "加拿大好感度四十八",
+      "show": "自製：一個數字",
+      "card": {
+        "kind": "number",
+        "title": "加拿大在美國人心中",
+        "value": "48",
+        "under": "淨值正48，比他自己的信心分數還高（負15）",
+        "tone": "cool"
+      },
+      "from": "CNN 第 114 秒",
+      "tone": "cool",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "但命令追不到地圖",
+      "show": "老式指北針與放大鏡",
+      "pic": "assets/photos/川普要把安大略湖改名/10075823.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "light",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "地圖，說了算的是誰",
+      "show": "老地圖與指北針",
+      "pic": "assets/photos/川普要把安大略湖改名/5663229.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "light",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "他還打電話給蘋果",
+      "show": "自製：他打的那通電話",
+      "card": {
+        "kind": "ring",
+        "title": "他還打電話給",
+        "value": "蘋果地圖",
+        "under": "要求 Apple 地圖也跟著改",
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "light",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "Google，週末先幫美國人改了",
+      "show": "自製：兩條分岔的線",
+      "card": {
+        "kind": "split",
+        "title": "同一個 Google\n兩種答案",
+        "branches": [
+          "美國看到\n美利堅湖",
+          "加拿大看到\n安大略湖"
+        ],
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "light",
+      "seconds": 3.48
+    },
+    {
+      "role": "轉",
+      "say": "世界其他地方，兩個名字並列",
+      "show": "新聞畫面上兩個名字並列的標題",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_359.jpg",
+      "seen": true,
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "light",
+      "seconds": 2.83
+    },
+    {
+      "role": "轉",
+      "say": "他們說只是跟著官方資料",
+      "show": "自製：他們的官方回應",
+      "card": {
+        "kind": "word",
+        "title": "Google 說：\n只是跟著官方資料",
+        "tone": "light"
+      },
+      "from": "The Guardian〈Canada erects giant ‘Lak〉",
+      "tone": "light",
+      "seconds": 2.39
+    },
+    {
+      "role": "轉",
+      "say": "連自家電力公司都跳出新名",
+      "show": "自製：地圖上被劃掉換上新字",
+      "card": {
+        "kind": "swap",
+        "title": "連電力公司的地圖\n都跳出新名字",
+        "was": "安大略湖",
+        "now": "美利堅湖",
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "light",
+      "seconds": 2.61
+    },
+    {
+      "role": "轉",
+      "say": "渥太華水電也中招",
+      "show": "自製：接連中招的名單",
+      "card": {
+        "kind": "word",
+        "title": "渥太華水電、酒類局\n也中招",
+        "tone": "light"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "light",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "但每家地圖各自為政",
+      "show": "航海圖與量角器",
+      "pic": "assets/photos/川普要把安大略湖改名/31805295.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "light",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "他的影片，看了三千萬次",
+      "show": "影片：Fox 主播提到那支瘋傳影片",
+      "clip": "C17",
+      "seen": true,
+      "from": "Fox News 第 146 秒",
+      "tone": "light",
+      "seconds": 8.89
+    },
+    {
+      "role": "轉",
+      "say": "但地圖公司，各自照規矩",
+      "show": "三角形行人穿越警示牌",
+      "pic": "assets/photos/川普要把安大略湖改名/39246449.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "light",
+      "seconds": 2.39
+    },
+    {
+      "role": "轉",
+      "say": "學者說：對世界毫無效果",
+      "show": "自製：學者的評論",
+      "card": {
+        "kind": "word",
+        "title": "學者說：\n對世界毫無效果",
+        "tone": "light"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "light",
+      "seconds": 2.39
+    },
+    {
+      "role": "合",
+      "say": "安大略省長，乾脆立了看板",
+      "show": "自製：路邊的巨型看板",
+      "card": {
+        "kind": "word",
+        "title": "安大略省長\n乾脆立了看板",
+        "tone": "warm"
+      },
+      "from": "NPR〈Canada claps back at Tru〉",
+      "tone": "warm",
+      "seconds": 2.61
+    },
+    {
+      "role": "合",
+      "say": "現在和永遠，他們這樣說",
+      "show": "影片：Fox Business 引述加拿大人的說法",
+      "clip": "C21",
+      "seen": true,
+      "from": "Fox Business 第 46 秒",
+      "tone": "warm",
+      "seconds": 9.97
+    },
+    {
+      "role": "合",
+      "say": "這座湖，還是那座湖",
+      "show": "安大略湖的樣子",
+      "pic": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "地圖聽的不是總統的話",
+      "show": "自製：這句話單獨站著",
+      "card": {
+        "kind": "word",
+        "title": "地圖聽的\n不是總統的話",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "是哪一家公司的規則",
+      "show": "有人正在簽署一份文件",
+      "pic": "assets/photos/川普要把安大略湖改名/618158.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 1.96
+    },
+    {
+      "role": "合",
+      "say": "下次朋友手機地名不同",
+      "show": "自製：兩支手機並排",
+      "card": {
+        "kind": "swap",
+        "title": "下次朋友手機\n地名不同",
+        "was": "你的地圖",
+        "now": "朋友的地圖",
+        "tone": "warm"
+      },
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "可能不是定位錯了，是兩家公司剛好站在不同邊",
+      "show": "自製：結尾頁",
+      "seconds": 6.5,
+      "card": {
+        "kind": "outro",
+        "tone": "warm",
+        "points": [
+          "他能命令聯邦文件改名",
+          "指揮不動自己國內的地圖公司",
+          "Google、蘋果、電力公司，各自照自己的規則來",
+          "你的地圖，聽的是公司，不是總統"
+        ],
+        "title": "你的地圖跟朋友不一樣\n可能不是定位錯了，是兩家公司剛好站在不同邊",
+        "under": "川普要把安大略湖改名"
+      },
+      "from": "觀點",
+      "tone": "warm"
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人",
+  "answered": {}
+}

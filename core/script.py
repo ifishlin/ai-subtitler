@@ -86,6 +86,25 @@ def clip_of(topic: str, line: dict[str, Any]) -> dict[str, Any] | None:
     return rows[index - 1] if 1 <= index <= len(rows) else None
 
 
+def sync_card_title(line: dict[str, Any], say: str) -> None:
+    """把新的台詞同步進卡片標題，只對這兩種卡有意義。
+
+    `word` 卡的規則本來就是「畫面 = 複製這句話」；`outro` 卡的規則是
+    `unsigned()` 剛加的那條——`say` 要逐字出現在 `title` 的結尾。兩者說的
+    都是「`title` 該跟 `say`長得一樣」，只是不用每次手動把兩邊各改一次。
+
+    只做這兩種：其他卡的 `title`／`value`／`items` 是刻意寫成跟 `say`
+    不同的標籤（`say`「五十趴關稅，兩百億商品」配的 `ring` 卡是「五十趴
+    關稅涵蓋」）——同步過去會悄悄蓋掉那個標籤，而且沒有任何一道門看得出來。
+
+    手動加的換行不會保留：這裡直接整句蓋掉 `title`，下一次改台詞會再蓋
+    一次。要保留特定斷行，改完台詞後用卡片編輯器手動調一次即可。
+    """
+    card = line.get("card")
+    if isinstance(card, dict) and card.get("kind") in ("word", "outro"):
+        card["title"] = say
+
+
 def is_clip(line: dict[str, Any]) -> bool:
     """Whether this line runs a piece of the source video rather than a still.
 
@@ -811,7 +830,25 @@ def unsigned(script: dict[str, Any]) -> list[dict[str, Any]]:
     if not least <= len(points) <= most:
         return [{"line": len(lines), "say": last.get("say", ""),
                  "why": f"outro 的摘要有 {len(points)} 條，要 {least}–{most} 條"}]
+    # 嘴巴念的要是畫面印的那句話的**結尾那一段**。這裡以前寫著「say 通常跟
+    # title 不一樣」，結果是嘴巴講一件事、畫面印另一件事，兩者毫無關係 ——
+    # 觀眾耳朵聽到的和眼睛看到的，理應是同一支片最後一刻的同一句話。
+    #
+    # 不要求完全相等：`title` 可以在前面多鋪一句只出現在畫面上、不用念出來
+    # 的話（例如「帳單漲的不是電費／是他們插隊用的那條線」，只有後半句要
+    # 念），但 `say` 有講的每一個字，都要逐字出現在 `title` 的結尾。
+    # 標點、換行不算數，那是排版，不是內容。
+    said = _bare_words(last.get("say", ""))
+    if not said or not _bare_words(card.get("title", "")).endswith(said):
+        return [{"line": len(lines), "say": last.get("say", ""),
+                 "why": "outro 的 say 要逐字出現在 title 的結尾（標點、換行不算）"}]
     return []
+
+
+def _bare_words(text: str) -> str:
+    """一句話只留文字，方便比對是不是同一句 —— 標點、換行、空白都不算數。"""
+    import re as re_module
+    return re_module.sub(r"[\s，。！？、,.!?\n]", "", str(text or ""))
 
 
 def out_of_order(given: list[str], roles: list[str] | None = None) -> str:

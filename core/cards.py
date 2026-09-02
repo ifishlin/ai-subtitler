@@ -2161,6 +2161,74 @@ def _brand(card: Image.Image, draw: ImageDraw.ImageDraw,
                   font=face(32, False), fill=tone["dim"], anchor="ra")
 
 
+def _cover(spec: dict[str, Any], t: float) -> Image.Image:
+    """縮圖：一張滿版照片、一句標語、右下角頻道 icon。
+
+    片內的卡片配合的是那一刻在說什麼，這張只需要讓人想點進來 —— 所以背景
+    是真的照片，不是 `tone` 的色底，字也只有一句，不是像 `word` 那樣鋪陳。
+
+    `pic` 沒寫（LLM 沒挑）的時候不在這裡決定備援檔名寫死進規格 —— 讀
+    `cover.default_pic` 現查，換一張預設圖不用重壓每一份文案的封面。
+    """
+    key = str(spec.get("pic") or "") or str(
+        rules_module.look("cover.default_pic", "") or "")
+    photo = ROOT / key if key else None
+    if photo and photo.is_file():
+        shot = Image.open(photo).convert("RGB")
+        ratio = max(W / shot.width, H / shot.height)
+        wide, high = round(shot.width * ratio), round(shot.height * ratio)
+        shot = shot.resize((wide, high))
+        left, top = (wide - W) // 2, (high - H) // 2
+        card = shot.crop((left, top, left + W, top + H)).convert("RGBA")
+    else:
+        card = Image.new("RGBA", (W, H), (20, 24, 32, 255))
+
+    # 一道暗下去的漸層，讓白字不管疊在什麼照片上都讀得清楚——照片本身的
+    # 亮暗是拍的人決定的，字的可讀性不能賭那個決定跟這句標語合拍。
+    scrim = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    pen = ImageDraw.Draw(scrim)
+    band_top, band_bottom = round(H * 0.30), round(H * 0.66)
+    for y in range(band_top, band_bottom):
+        part = min(1.0, (y - band_top) / max(1, (band_bottom - band_top) * 0.45))
+        pen.line([(0, y), (W, y)], fill=(0, 0, 0, round(160 * part)))
+    pen.rectangle([0, band_bottom, W, H], fill=(0, 0, 0, 160))
+    card = Image.alpha_composite(card, scrim).convert("RGB")
+    draw = ImageDraw.Draw(card)
+
+    tagline = str(spec.get("tagline") or "")
+    if tagline:
+        top_size = int(rules_module.look("cover.tagline_size", 128))
+        size, rows = wrap_at(tagline, top_size, W - 2 * MARGIN, most_rows=3)
+        start = (band_top + band_bottom) // 2 - (len(rows) - 1) * (size + 18) // 2
+        for index, row in enumerate(rows):
+            draw.text((W // 2, start + index * (size + 18)), row,
+                       font=face(size), fill="#ffffff", anchor="ma",
+                       stroke_width=5, stroke_fill="#000000")
+
+    conf = rules_module.look("cover", {}) or {}
+    badge_size = int(conf.get("icon_size", 150))
+    right = W - int(conf.get("corner_right", 74))
+    bottom = H - int(conf.get("corner_bottom", 74))
+    box = [right - badge_size, bottom - badge_size, right, bottom]
+    icon = ROOT / str(conf.get("icon", ""))
+    if icon.is_file():
+        badge = Image.open(icon).convert("RGBA").resize((badge_size, badge_size))
+        mask = Image.new("L", (badge_size, badge_size), 0)
+        ImageDraw.Draw(mask).ellipse([0, 0, badge_size - 1, badge_size - 1], fill=255)
+        card.paste(badge, (box[0], box[1]), mask)
+        draw.ellipse(box, outline="#ffffff", width=6)
+    else:
+        # 檔案還沒放進去的時候畫一個佔位圓，不要靜靜地什麼都不畫——
+        # 缺一個 icon 檔跟缺一行 credit 是同一種錯，只是這次沒有門能擋。
+        draw.ellipse(box, outline="#ffffff", width=5)
+        middle = ((box[0] + box[2]) / 2, (box[1] + box[3]) / 2)
+        arm = badge_size * 0.22
+        draw.polygon([(middle[0] - arm * 0.7, middle[1] - arm),
+                      (middle[0] - arm * 0.7, middle[1] + arm),
+                      (middle[0] + arm, middle[1])], fill="#ffffff")
+    return card
+
+
 def _outro(spec: dict[str, Any], t: float) -> Image.Image:
     """The last page: what the film argued, then the sentence to take away.
 
@@ -2409,7 +2477,7 @@ WAYS.update({
 
 KINDS = {"title": _title, "outro": _outro, "word": _word, "number": _number, "bars": _bars,
          "split": _split, "chain": _chain, "queue": _queue, "stack": _stack,
-         "clock": _clock, "ring": _ring, "swap": _swap}
+         "clock": _clock, "ring": _ring, "swap": _swap, "cover": _cover}
 
 
 # --- 一種卡，好幾種畫法 -------------------------------------------------

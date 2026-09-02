@@ -310,6 +310,36 @@
   /* The picture's own words, under the label the writer typed. When they
      disagree the label is the one that is wrong, and this is where that
      shows. */
+  /* 卡片編輯：小按鈕開一個大視窗，不在狹窄的表格欄位裡塞一個文字框 ——
+     那個文字框在三十列的表格裡太窄太矮，改 JSON 幾乎看不到自己在改什麼。 */
+  td.show .edit-card{display:block;margin-top:6px;font:10.5px var(--mono);
+    color:var(--faint);background:transparent;border:1px solid var(--line);
+    border-radius:6px;padding:2px 8px;cursor:pointer}
+  td.show .edit-card:hover{color:var(--accent);border-color:var(--accent)}
+  #cardEdit{position:fixed;inset:0;background:#000d;z-index:9600;
+    display:flex;align-items:center;justify-content:center;padding:24px}
+  #cardEdit[hidden]{display:none}
+  .card-edit-inner{background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;width:min(94vw,760px);
+    max-height:92vh;display:flex;flex-direction:column;gap:10px}
+  .card-edit-bar{display:flex;align-items:baseline;gap:10px}
+  .card-edit-bar b{font-size:14px}
+  .card-edit-bar button{margin-left:auto}
+  .card-edit-body{display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    min-height:0}
+  .card-edit-body img{width:100%;border-radius:8px;border:1px solid var(--line);
+    background:#0d1014;object-fit:contain;max-height:60vh}
+  .card-json{width:100%;box-sizing:border-box;font:13px var(--mono);
+    color:var(--ink);background:#0d1014;border:1px solid var(--line);
+    border-radius:8px;padding:10px 12px;resize:vertical;min-height:50vh}
+  .card-json:focus{outline:none;border-color:var(--accent)}
+  .card-edit-foot{display:flex;align-items:center;gap:10px}
+  .card-edit-msg{font:12px var(--mono);color:var(--faint)}
+  .card-edit-msg.bad{color:#ff8a72}
+  .card-edit-msg.ok{color:#5fcf9b}
+  @media (max-width: 760px) {
+    .card-edit-body{grid-template-columns:1fr}
+  }
   td.show .grabbed{display:block;font:10px var(--mono);color:var(--faint);
     line-height:1.4;margin-top:3px}
   .seen-box{display:inline-flex;align-items:center;gap:5px;margin-top:5px;
@@ -878,7 +908,7 @@ async function showScript(name) {
     </div>
     <table>
       <thead><tr><th>起</th><th>台詞</th><th>畫面</th><th>來源</th></tr></thead>
-      <tbody>${sums.lines.map((line) => `
+      <tbody>${sums.lines.map((line, index) => `
         <tr data-shot="${escapeHTML(JSON.stringify({
             say: line.say || "", show: line.show || "",
             card: line.card_file ? `/media/card/${encodeURIComponent(name)}/${
@@ -936,6 +966,13 @@ async function showScript(name) {
                  title="切點怪怪的？到 /passages 調這一段">調切點</a></span>` : ""}
             ${line.caption ? `<span class="grabbed">${
               escapeHTML(line.caption)}</span>` : ""}
+            ${line.card ? `<button class="edit-card"
+              data-edit-card="${index + 1}"
+              data-card="${escapeHTML(JSON.stringify(line.card))}"
+              data-card-file="${line.card_file ? `/media/card/${
+                encodeURIComponent(name)}/${
+                encodeURIComponent(line.card_file.split("/").pop())}` : ""}"
+              >編輯卡片</button>` : ""}
           </td>
           <td class="from ${line.from === "觀點" ? "ours" : ""}">${
             escapeHTML(line.from || "")}</td>
@@ -951,6 +988,7 @@ async function showScript(name) {
       <span id="filmWhere" class="hint">還沒壓</span>
       <span class="grow"></span>
       <button id="btnSheet" class="tiny" hidden>看接觸表</button>
+      <button id="btnThumb" class="tiny" hidden>看縮圖</button>
       <button id="btnWatch" class="tiny" hidden>看片</button>
     </div>`;
   // 回素材是換一頁了，所以沒存的修改一定會丟 —— 先問。
@@ -979,6 +1017,17 @@ async function showScript(name) {
       await api("POST", "/api/script/build", {name});
       watchJob(() => showScript(name));
     } catch (error) { told('出錯了', error.message); }
+  };
+  // 封面獨立於有沒有壓過片 —— 壓片之前就存在，一律是 cards.render() 畫的。
+  $("btnThumb").hidden = !made.cover_file;
+  $("btnThumb").onclick = () => {
+    const src = `/media/card/${encodeURIComponent(name + "-cover")}/${
+      encodeURIComponent(made.cover_file.split("/").pop())}`;
+    $("bigWho").textContent = `${name}　封面`;
+    $("bigWhat").textContent = "縮圖";
+    $("bigStage").innerHTML = `<img src="${src}" alt="">`;
+    $("bigNote").innerHTML = "";
+    $("big").hidden = false;
   };
   $("btnSheet").onclick = () => {
     $("bigWho").textContent = `${name}　接觸表`;
@@ -1131,6 +1180,110 @@ function saveLine(cell, name) {
   row.querySelector(".say-meter").innerHTML = sayMeter(say);
 }
 
+/* 卡片沒有欄位一個一個編的介面 —— 十種卡片十種欄位，通用做法是整包 JSON
+   一起編。按下「重畫」立刻存檔、立刻用新的規格畫一張新圖，不用等下一次
+   壓片（那要幾分鐘，而且看到的時候已經是四分鐘後）。
+
+   失敗（JSON 打錯、少了必要欄位）不清掉文字框，也不重新整理整頁 ——
+   使用者還在改，重新整理會把他打到一半的東西丟掉。 */
+/* 卡片編輯，開在一個大視窗裡 —— 表格欄位塞不下一個能看得清楚的 JSON
+   文字框。視窗只建一次，之後每次都重用（跟 shared.js 的 shotBox() 同一個
+   做法）。
+
+   重畫成功不整頁重載：只換視窗裡的圖，和表格上那一格的縮圖，門和其他列
+   都不去動 —— 改一張卡不該讓整張表閃一下重排。要看全部門的最新結果，
+   切換文案再切回來就會重新讀一次。 */
+let CARD_EDIT_LINE = 0;
+
+function cardEditBox() {
+  if ($("cardEdit")) return;
+  const box = document.createElement("div");
+  box.id = "cardEdit";
+  box.hidden = true;
+  box.innerHTML = `
+    <div class="card-edit-inner">
+      <div class="card-edit-bar">
+        <b id="cardEditWho"></b>
+        <button id="cardEditClose" class="tiny">關閉</button>
+      </div>
+      <div class="card-edit-body">
+        <img id="cardEditImg" alt="這張卡片現在的樣子">
+        <textarea id="cardEditJson" class="card-json" spellcheck="false"></textarea>
+      </div>
+      <div class="card-edit-foot">
+        <button id="cardEditRedraw" class="primary tiny">重畫</button>
+        <span id="cardEditMsg" class="card-edit-msg"></span>
+      </div>
+    </div>`;
+  document.body.appendChild(box);
+  $("cardEditClose").onclick = closeCardEdit;
+  box.addEventListener("click", (event) => {
+    if (event.target.id === "cardEdit") closeCardEdit();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !box.hidden) closeCardEdit();
+  });
+  $("cardEditRedraw").onclick = redrawCard;
+}
+
+function closeCardEdit() { $("cardEdit").hidden = true; }
+
+function openCardEdit(button) {
+  cardEditBox();
+  CARD_EDIT_LINE = Number(button.dataset.editCard);
+  $("cardEditWho").textContent = `第 ${CARD_EDIT_LINE} 句的卡片`;
+  $("cardEditImg").src = button.dataset.cardFile || "";
+  $("cardEditJson").value = JSON.stringify(JSON.parse(button.dataset.card), null, 1);
+  $("cardEditMsg").textContent = "";
+  $("cardEditMsg").className = "card-edit-msg";
+  $("cardEdit").hidden = false;
+  $("cardEditJson").focus();
+}
+
+async function redrawCard() {
+  const msg = $("cardEditMsg");
+  let card;
+  try {
+    card = JSON.parse($("cardEditJson").value);
+  } catch (error) {
+    msg.textContent = "JSON 格式錯了：" + error.message;
+    msg.className = "card-edit-msg bad";
+    return;
+  }
+  const button = $("cardEditRedraw");
+  button.disabled = true;
+  msg.textContent = "重畫中…";
+  try {
+    const got = await api("POST", "/api/script/card",
+      {name: STATE.chosen, line: CARD_EDIT_LINE, card});
+    const line = got.measured.lines[CARD_EDIT_LINE - 1];
+    if (line.card_error) {
+      msg.textContent = "存了，但畫不出來：" + line.card_error;
+      msg.className = "card-edit-msg bad";
+      return;
+    }
+    // 存檔存的是編輯框裡打的那份，門和接下來的重畫都要照那份走 ——
+    // 不是照畫得出來的圖回推「大概存了什麼」。
+    const src = `/media/card/${encodeURIComponent(STATE.chosen)}/${
+      encodeURIComponent((line.card_file || "").split("/").pop())}?t=${Date.now()}`;
+    $("cardEditImg").src = src;
+    msg.textContent = "畫好了";
+    msg.className = "card-edit-msg ok";
+    // 表格上那一格的縮圖跟著換，不用整頁重讀。
+    const row = document.querySelector(`[data-edit-card="${CARD_EDIT_LINE}"]`)
+      ?.closest("tr");
+    const thumb = row?.querySelector("td.show img.pic");
+    if (thumb) thumb.src = src;
+    const btn = document.querySelector(`[data-edit-card="${CARD_EDIT_LINE}"]`);
+    if (btn) { btn.dataset.card = JSON.stringify(card); btn.dataset.cardFile = src; }
+  } catch (error) {
+    msg.textContent = "存不了：" + error.message;
+    msg.className = "card-edit-msg bad";
+  } finally {
+    button.disabled = false;
+  }
+}
+
 /* Opening one shot at the size it will be seen.
 
    The row thumbnails are 82 pixels tall. A card's own heading is 76 pixels on
@@ -1156,11 +1309,13 @@ $("list").addEventListener("click", (event) => {
 
 /* 一個委派管完 #paper。兩個監聽器各自對付一半的時候，下一個人要讀兩處才知
    道點一下會發生什麼。 */
-$("paper").addEventListener("click", (event) => {
+$("paper").addEventListener("click", async (event) => {
   // 空狀態裡那顆「素材」。只在還沒選文案的時候存在，所以委派而不是直接綁。
   if (event.target.id === "btnGoTopics") { leaveTo("/topics"); return; }
   if (event.target.closest(".say-edit")) return;   // editing, not opening
   if (event.target.closest(".seen-box")) return;   // ticking, not opening
+  const editCard = event.target.closest(".edit-card");
+  if (editCard) { openCardEdit(editCard); return; }
   // 切點怪怪的，從這裡跳去 /passages 調 —— 使用者是從文案這裡看到異常的，
   // 不該還要自己去記是哪一個題目、哪一段。
   const jump = event.target.closest(".jump-passage");

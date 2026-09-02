@@ -76,6 +76,74 @@ def caption_layer(rows: list[str]) -> Image.Image:
     return layer
 
 
+SOURCE_SIZE = rules_module.look("frame.source_caption_size", 30)
+SOURCE_MOST_ROWS = rules_module.look("frame.source_caption_rows", 3)
+
+
+def _wrap_by_width(text: str, font: ImageFont.FreeTypeFont,
+                   draw: ImageDraw.ImageDraw, most: float) -> list[str]:
+    """Break `text` into rows that fit `most` pixels, breaking on spaces.
+
+    `script.wrap()` breaks by character count, calibrated for CJK glyphs that
+    are all the same width. This caption is mostly Latin, whose glyphs are
+    not -- the same character budget that fits 「安大略湖」 leaves half an
+    English sentence hanging off the frame. So this measures actual pixel
+    width instead of counting characters.
+    """
+    rows: list[str] = []
+    row = ""
+    for word in text.split():
+        candidate = f"{row} {word}".strip()
+        if row and draw.textlength(candidate, font=font) > most:
+            rows.append(row)
+            row = word
+        else:
+            row = candidate
+    if row:
+        rows.append(row)
+    return rows
+
+
+def source_caption_layer(text: str) -> Image.Image:
+    """The clip's own words, in the language it was actually said in.
+
+    Only for a line that runs a piece of the source video. It goes in the
+    band that is always free below the spoken caption -- that caption grows
+    upward from a fixed bottom anchor (see `caption_layer`), so the band
+    below it is empty whether the spoken line took one row or three.
+
+    This is what makes a clip checkable without leaving the film: anyone who
+    reads English can compare what we chose to say against what was actually
+    said, right there under the picture, instead of having to open
+    `/passages` to find out the line was translated loosely or the segment
+    was cut wrong.
+
+    The font shrinks rather than truncates. A held sentence runs 120 to 200
+    characters -- long enough that a fixed size either overflows the frame or
+    quietly loses its tail, and a silently lost tail is exactly the kind of
+    visual mistake this project keeps finding too late. Shrinking is the same
+    move `wrap_at` makes for a Latin word that will not fit a row.
+    """
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    if not text:
+        return layer
+    draw = ImageDraw.Draw(layer)
+    band = W - 100
+    for size in (SOURCE_SIZE, SOURCE_SIZE - 4, SOURCE_SIZE - 8, SOURCE_SIZE - 12):
+        font = ImageFont.truetype(FONT, size)
+        rows = _wrap_by_width(text, font, draw, band)
+        if len(rows) <= SOURCE_MOST_ROWS:
+            break
+    rows = rows[:SOURCE_MOST_ROWS]
+    step = size + 12
+    top = H - 60 - len(rows) * step
+    for index, row in enumerate(rows):
+        draw.text((W / 2, top + index * step), row, font=font,
+                  fill=(255, 255, 255, 190), anchor="ma",
+                  stroke_width=2, stroke_fill=(0, 0, 0, 190))
+    return layer
+
+
 def _how() -> str:
     """A fingerprint of the code that draws a shot.
 
@@ -305,17 +373,28 @@ def build(name: str, target: Path | None = None,
     # 「設成隨機了，但每次都一樣」。
     seed = cards_module.roll_for(name)
     how = f"{how}|{seed}" if seed else how
+    topic_name = found.get("topic", "")
     pieces = []
     for index, line in enumerate(measured["lines"]):
         seconds = line["seconds"]
         plate = work / f"cap{index:02d}.png"
-        caption_layer(script_module.wrap(line["say"])).save(plate)
+        plate_img = caption_layer(script_module.wrap(line["say"]))
+        # 有字幕的影片，除了燒我們自己的台詞，也燒上那一段原本說的話 ——
+        # 讀得懂原文的人能當場比對「我們選擇怎麼講」跟「當初到底說了什麼」，
+        # 不用另外開 /passages 去查。只有 clip（新聞片段）才有這個東西：
+        # 照片、卡片、情境影片都沒有一段對得上時間的逐字稿。
+        if line.get("clip"):
+            resolved = script_module.clip_of(topic_name, line)
+            said = (resolved or {}).get("said", "") if resolved else ""
+            if said:
+                plate_img = Image.alpha_composite(
+                    plate_img, source_caption_layer(said))
+        plate_img.save(plate)
         piece = work / f"{index:02d}.{_recipe(line, how)}.mp4"
         if not piece.is_file():
             # 出處由 `script.credit_line()` 決定，門也問同一個函式。以前這裡
             # 自己 join 一次 outlet，而照片那一支根本沒有 join —— 於是門說
             # 通過、畫面上沒有名字，兩邊都「照寫的做」。
-            topic_name = found.get("topic", "")
             mark = script_module.credit_line(line, pictures, footage, topic_name)
             if line.get("clip"):
                 # 這一句只存著段落編號，起訖現查 —— 而且直接用**剪好的那個
