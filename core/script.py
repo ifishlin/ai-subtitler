@@ -438,6 +438,15 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
     for index, line in enumerate(script.get("lines") or [], start=1):
         note = {"line": index, "say": line.get("say", ""),
                 "show": line.get("show", "")}
+        # 卡片自己的背景圖，跟這句話本身用什麼鏡頭無關（卡片句的 `show`
+        # 一定不是實拍，走不進下面任何一個分支），所以獨立檢查一次。
+        card = line.get("card")
+        bg = card.get("bg") if isinstance(card, dict) else None
+        if bg:
+            if not (ROOT / bg).is_file():
+                lack.append({**note, "why": f"卡片背景找不到 {bg}"})
+            elif pictures and bg not in pictures:
+                lack.append({**note, "why": f"卡片背景 {bg} 不是這個題目收的圖"})
         # 情境影片不是實拍，所以它走不進下面那個迴圈 —— 但它一樣是「指著
         # 一個檔案」，一樣會指到不存在的地方。少了這一段，寫錯的編號會一路
         # 到壓片才炸，而那是四分鐘之後的事。
@@ -538,6 +547,15 @@ def unchecked(script: dict[str, Any]) -> list[dict[str, Any]]:
     pictures, _ = gathered(script)
     out = []
     for index, line in enumerate(script.get("lines") or [], start=1):
+        card = line.get("card")
+        bg = card.get("bg") if isinstance(card, dict) else None
+        if bg:
+            held = pictures.get(str(bg))
+            if not (held is not None and held.get("seen")) and not line.get("seen"):
+                out.append({"line": index, "say": line.get("say", ""),
+                            "show": line.get("show", ""),
+                            "why": "卡片背景這張圖被標成沒看過" if held is not None
+                                   else "還沒有人看過卡片背景這張圖"})
         if not is_real(line.get("show")):
             continue
         if not (line.get("pic") or is_clip(line)):
@@ -891,6 +909,17 @@ def uncredited(script: dict[str, Any],
     topic = script.get("topic", "")
     lack = []
     for index, line in enumerate(script.get("lines") or [], start=1):
+        # 卡片背景圖跟這句話本身借了誰的畫面是兩件事，各查各的。背景圖的
+        # 出處在 `writer.fasten_card_bg()` 就摺進 `note` 了——這裡只確認
+        # 那次摺真的發生過，不是漏了、或者後來被卡片編輯器手動蓋掉。
+        card = line.get("card")
+        bg = card.get("bg") if isinstance(card, dict) else None
+        if bg:
+            held = sources.get(str(bg)) or {}
+            credit = str(held.get("credit") or "")
+            if credit and credit not in str(card.get("note") or ""):
+                lack.append({"line": index, "say": line.get("say", ""),
+                             "why": f"卡片背景（{held.get('outlet') or '這張圖'}）沒有出處"})
         if not needs_credit(line, sources):
             continue
         if not credit_line(line, sources, footage, topic):

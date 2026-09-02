@@ -1,0 +1,390 @@
+{
+  "view": "他自己說了「只差一個海洋」——不是陰謀論，是他自己講的下一步",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/32272511.jpg",
+    "tagline": "他說，還差一個海洋"
+  },
+  "lines": [
+    {
+      "role": "起",
+      "say": "川普簽了行政命令，把安大略湖改名叫「美利堅湖」",
+      "show": "影片：川普在橢圓形辦公室簽署",
+      "clip": "C1",
+      "seen": true,
+      "from": "PBS NewsHour 第0秒",
+      "seconds": 7.36
+    },
+    {
+      "role": "起",
+      "say": "這是他今年第三次改地名了",
+      "show": "自製：改名清單",
+      "card": {
+        "kind": "chain",
+        "title": "2025 年的改名清單",
+        "points": [
+          "墨西哥灣→美國灣",
+          "迪納利山→麥金利山",
+          "安大略湖→美利堅湖"
+        ],
+        "under": "這是第三次",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/31805295.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 2.61
+    },
+    {
+      "role": "起",
+      "say": "靈感還沒用完",
+      "show": "川普肖像",
+      "pic": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "起",
+      "say": "地圖還留著空位",
+      "show": "自製：地圖上的空位",
+      "card": {
+        "kind": "word",
+        "title": "地圖上\n好像還留著空位",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/5663229.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "起",
+      "say": "委員會要蓋章",
+      "show": "自製：地名委員會蓋章",
+      "card": {
+        "kind": "word",
+        "title": "地名委員會\n要負責蓋這個章",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/618158.jpg"
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "seconds": 1.9
+    },
+    {
+      "role": "承",
+      "say": "程序非常正式",
+      "show": "有人在簽署文件",
+      "pic": "assets/photos/川普要把安大略湖改名/8730998.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "承",
+      "say": "三十天內，舊名全刪",
+      "show": "五大湖的衛星空拍",
+      "pic": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+      "seen": true,
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 1.96
+    },
+    {
+      "role": "承",
+      "say": "湖，本來就在那裡",
+      "show": "太空站拍的安大略湖",
+      "pic": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "承",
+      "say": "上次改名不到一年",
+      "show": "自製：距離上次改名",
+      "card": {
+        "kind": "number",
+        "title": "距離上一次改名",
+        "value": "不到一年",
+        "under": "墨西哥灣→美國灣",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/10075823.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.9
+    },
+    {
+      "role": "承",
+      "say": "墨西哥灣改名十八個月",
+      "show": "自製：墨西哥灣改名十八個月",
+      "card": {
+        "kind": "number",
+        "title": "墨西哥灣改名",
+        "value": "18個月",
+        "under": "沒人真的在用新名字",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/10075823.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 2.17
+    },
+    {
+      "role": "承",
+      "say": "五大湖不只一座",
+      "show": "自製：五大湖不只一座",
+      "card": {
+        "kind": "word",
+        "title": "五大湖\n不是只有一座",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/37260512.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "承",
+      "say": "浪一直打同一塊石頭",
+      "show": "浪打在礁石上",
+      "pic": "assets/photos/川普要把安大略湖改名/32272512.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "light",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "記者問他，接下來還想改什麼",
+      "show": "影片：記者追問下一步",
+      "clip": "C7",
+      "seen": true,
+      "from": "PBS NewsHour 第322秒",
+      "seconds": 11.89
+    },
+    {
+      "role": "轉",
+      "say": "灣有了，湖也有了",
+      "show": "自製：灣有了湖也有了",
+      "card": {
+        "kind": "split",
+        "title": "灣、山、湖\n都改過了",
+        "branches": [
+          "已經改過的",
+          "還沒輪到的"
+        ],
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/38645978.jpg"
+      },
+      "from": "PBS NewsHour 第309秒",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "只差一個海洋",
+      "show": "自製：只差一個海洋",
+      "card": {
+        "kind": "ring",
+        "title": "他自己說還差一個",
+        "value": "海洋",
+        "under": "大西洋或太平洋，他還沒決定",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/32272511.jpg"
+      },
+      "from": "PBS NewsHour 第309秒",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "連球評都拿這個開玩笑",
+      "show": "自製：球評開玩笑",
+      "card": {
+        "kind": "word",
+        "title": "連球評都在\n拿這個開玩笑",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/13398906.jpg"
+      },
+      "from": "CNN 第21秒",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "尼加拉瀑布也在這條線上",
+      "show": "尼加拉瀑布",
+      "pic": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 2.39
+    },
+    {
+      "role": "轉",
+      "say": "還有四座沒輪到",
+      "show": "自製：五大湖清單",
+      "card": {
+        "kind": "stack",
+        "title": "還沒輪到的四座",
+        "items": [
+          "蘇必略湖",
+          "密西根湖",
+          "休倫湖",
+          "伊利湖"
+        ],
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/19784153.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "地圖沒有終點",
+      "show": "自製：地圖沒有終點",
+      "card": {
+        "kind": "word",
+        "title": "地圖\n沒有規定終點在哪",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/31805295.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "轉",
+      "say": "連他自己都還沒決定",
+      "show": "自製：下一個是誰",
+      "card": {
+        "kind": "ring",
+        "title": "下一個是誰",
+        "value": "還沒人知道",
+        "under": "連他自己都還沒決定",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/38645978.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.96
+    },
+    {
+      "role": "轉",
+      "say": "德國媒體也在報這齣戲",
+      "show": "影片：德國媒體的反應",
+      "clip": "C33",
+      "seen": true,
+      "from": "Deutsche Welle",
+      "seconds": 10.53
+    },
+    {
+      "role": "轉",
+      "say": "五十州都還在搜舊名字",
+      "show": "calling Lake Ontario Lake America? No",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+      "seen": true,
+      "from": "CNN 第70秒",
+      "seconds": 2.17
+    },
+    {
+      "role": "轉",
+      "say": "加拿大總理：現在和永遠",
+      "show": "加拿大總理卡尼",
+      "pic": "assets/photos/川普要把安大略湖改名/2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第40秒",
+      "seconds": 2.39
+    },
+    {
+      "role": "合",
+      "say": "但地名不是玩笑決定的",
+      "show": "自製：真正的地名怎麼決定",
+      "card": {
+        "kind": "word",
+        "title": "但地名\n不是一句玩笑話決定的",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/1685778.jpg"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "改名要地方發起、居民同意",
+      "show": "自製：地方發起居民同意",
+      "card": {
+        "kind": "word",
+        "title": "改名要地方發起\n居民同意",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/27697309.jpg"
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "seconds": 2.61
+    },
+    {
+      "role": "合",
+      "say": "這次完全相反",
+      "show": "自製：完全相反的程序",
+      "card": {
+        "kind": "swap",
+        "was": "地方發起\n居民同意",
+        "now": "華盛頓一紙命令",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/32272512.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "程序花的時間比玩笑久",
+      "show": "自製：程序比玩笑話久",
+      "card": {
+        "kind": "word",
+        "title": "程序花的時間\n比一句玩笑話久得多",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/8730998.jpg"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "邊境擋不下規則",
+      "show": "禁止穿越的警告標誌",
+      "pic": "assets/photos/川普要把安大略湖改名/13398906.jpg",
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "role": "合",
+      "say": "下一個換誰決定沒規則",
+      "show": "自製：下一個換誰決定",
+      "card": {
+        "kind": "word",
+        "title": "下一個名字換誰決定\n沒有規則",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/39246449.jpg"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "role": "合",
+      "say": "還是最新一次被改寫的版本",
+      "show": "自製：結尾頁",
+      "seconds": 6.5,
+      "card": {
+        "kind": "outro",
+        "tone": "warm",
+        "points": [
+          "他自己說，灣、山、湖之後，只差一個海洋",
+          "改名程序本來要地方發起、居民同意，這次完全相反",
+          "沒有規則的話，下一個換誰決定也沒有規則",
+          "地圖不是世界本身，是最新一次被誰改寫的版本"
+        ],
+        "title": "你打開地圖找的是世界\n還是最新一次被改寫的版本",
+        "under": "美利堅湖／安大略湖"
+      },
+      "from": "觀點"
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人",
+  "answered": {}
+}

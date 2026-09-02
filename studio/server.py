@@ -2271,6 +2271,12 @@ def edit_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     lines = found.get("lines") or []
     if not 0 <= index < len(lines):
         raise HTTPException(400, "沒有這一句")
+    if card.get("bg") is not None:
+        from core import writer as writer_module
+        try:
+            writer_module.fasten_card_bg(found.get("topic", ""), card)
+        except ValueError as error:
+            raise HTTPException(400, str(error)) from error
     lines[index]["card"] = card
     script_module.save(name, found)
     measured = script_module.measure(found)

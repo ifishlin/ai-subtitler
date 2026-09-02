@@ -103,6 +103,14 @@ def over(image, margin: int) -> dict[str, int]:
     return {edge: n for edge, n in worst.items() if n > 0}
 
 
+## 這幾種卡故意滿版鋪到邊——`cover` 是縮圖，本來就要滿版照片，不是印在
+## 漸層底上的字。`over()` 判斷「有沒有墨」靠跟同一列最左邊那格比色差，
+## 那格在漸層底上是背景，在滿版照片上就是照片本身：整張都會被誤判成
+## 「超出」。不是漏測，是這幾種卡的規格本來就跟「留白」無關，跳過要寫
+## 出來，不要悄悄從清單裡消失。
+FULL_BLEED = {"cover"}
+
+
 def main() -> int:
     want = sys.argv[1:] or sorted(cards_module.KINDS)
     margin = cards_module.MARGIN
@@ -112,6 +120,9 @@ def main() -> int:
         if kind not in cards_module.KINDS:
             print(f"  ❌ 沒有這種卡：{kind}")
             faults += 1
+            continue
+        if kind in FULL_BLEED:
+            print(f"  ⏭ {kind}　滿版設計，不比對留白")
             continue
         bad = []
         for size, spec in cases(kind):

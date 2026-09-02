@@ -176,8 +176,51 @@ def ImageColorRGB(value: str) -> tuple[int, int, int]:
     return tuple(int(value[i:i + 2], 16) for i in (0, 2, 4))
 
 
+def _luminance(colour: str) -> float:
+    """這個顏色感覺起來多亮，0（黑）到 255（白）。"""
+    red, green, blue = ImageColorRGB(colour)
+    return 0.299 * red + 0.587 * green + 0.114 * blue
+
+
+def _photo_ground(spec: dict[str, Any]) -> Image.Image | None:
+    """一張卡片自己的照片背景，滿版鋪好、壓一層讓字讀得清楚。
+
+    跟 `cover` 的做法是同一個念頭（見 `_cover()`），差別是這裡不知道自己
+    會被哪一種卡、在哪個 y 座標畫字——十二種形狀各畫在不同高度，沒有
+    `_cover()` 那樣單一固定的版面可以只暗一個文字帶。所以整張均勻壓一層，
+    犧牲一點照片的鮮豔度，換十二種形狀都讀得清楚，不用每種形狀各自調。
+
+    壓暗還是壓亮，跟著這張卡的 `tone` 走，不是永遠壓暗。`light` 那個
+    調性本來就假設自己畫在漸層底那種**淺色**背景上，字用深色（`ink`）
+    才看得見——這裡如果一律壓暗，深色字疊深色照片，兩個都暗，字就
+    融進背景消失了。第一版只壓暗，`ring` 卡的「海洋」兩個字疊在森林
+    照片上幾乎看不見，就是這裡漏的。
+
+    `theme.json` 的 `cards.bg_enabled` 是總開關。關掉不等於拿掉文案裡的
+    `bg`——那個編號留在 script 裡沒有變，只是這裡不開照片，退回原本的
+    漸層底。這樣要整批比較「有照片」跟「素色底」哪個好看，改一個布林值
+    就好，不用重寫或另存一份文案。
+    """
+    if not rules_module.look("cards.bg_enabled", True):
+        return None
+    photo = ROOT / str(spec.get("bg") or "") if spec.get("bg") else None
+    if not photo or not photo.is_file():
+        return None
+    shot = Image.open(photo).convert("RGB")
+    ratio = max(W / shot.width, H / shot.height)
+    wide, high = round(shot.width * ratio), round(shot.height * ratio)
+    shot = shot.resize((wide, high))
+    left, top = (wide - W) // 2, (high - H) // 2
+    card = shot.crop((left, top, left + W, top + H)).convert("RGBA")
+    # ink 亮（白字）代表這張卡假設自己畫在暗底上，要壓暗；ink 暗代表假設
+    # 畫在亮底上（`light` 調性），要壓亮，不然深色字疊上壓暗的照片會消失。
+    ink_bright = _luminance(tone_of(spec).get("ink") or "#ffffff") > 128
+    veil = (10, 14, 20, 145) if ink_bright else (245, 244, 240, 165)
+    return Image.alpha_composite(card, Image.new("RGBA", (W, H), veil)).convert("RGB")
+
+
 def _base(spec: dict[str, Any]) -> tuple[Image.Image, ImageDraw.ImageDraw]:
-    card = _ground(spec)
+    card = _photo_ground(spec) or _ground(spec)
     return card, ImageDraw.Draw(card)
 
 
@@ -243,6 +286,17 @@ def wrap_at(text: str, size: int, room: int, bold: bool = True,
         font = face(step, bold)
         rows, now, broke = [], "", False
         for char in str(text):
+            # 手動塞進來的換行當成一個命令，不是要量寬度的字元——
+            # `word`／`split`／`outro` 都是呼叫端自己先 `.split("\n")` 過
+            # 才送進畫圖的函式，這裡收到的字串從來沒有換行，所以第一版
+            # 直接把它跟其他字元一樣量寬度。`chain` 的 `points`、`swap` 的
+            # `was`／`now` 沒有那道手動預先分割，換行原封不動走進這裡，
+            # Pillow 的 `textlength` 遇到就直接 `ValueError`。
+            # 兩個獨立寫手在兩支不同的卡上各踩過一次，都是這裡。
+            if char == "\n":
+                rows.append(now)
+                now = ""
+                continue
             if ruler.textlength(now + char, font=font) <= room:
                 now += char
                 continue
@@ -312,10 +366,14 @@ def _fits(rows: tuple[str, ...], want: int, bold: bool,
     about the font it is actually using.
     """
     room = room if room is not None else W - 2 * MARGIN
+    # 有的呼叫端（`_swap_stack` 那一類）直接把整段沒拆過的字串當一「行」
+    # 送進來——裡面可能藏著手動換行。這裡先攤平一次，`textlength` 才不會
+    # 因為收到帶 `\n` 的字串直接丟 `ValueError`。跟 `wrap_at()` 是同一個坑。
+    flat = tuple(part for row in rows for part in str(row).split("\n"))
     ruler = ImageDraw.Draw(Image.new("RGB", (1, 1)))
     for size in range(want, 23, -4):
         font = face(size, bold)
-        if max((ruler.textlength(row, font=font) for row in rows), default=0) <= room:
+        if max((ruler.textlength(row, font=font) for row in flat), default=0) <= room:
             return size
     return 24
 
@@ -2565,11 +2623,37 @@ def way_for(spec: dict[str, Any], seed: str = ""):
     return live[pick % len(live)]
 
 
+# 手動換行只有這兩個欄位有意義：`title` 是 `_word`／`_heading` 自己
+# `.split("\n")` 過的（前者是整頁大字，後者是每種卡共用的小標題），
+# `branches` 是 `_split` 自己拆過的。混進其他欄位的 `\n`
+# （`chain` 的 `points`、`swap` 的 `was`/`now`……）不是功能，是照著
+# `word` 卡的格式抄過來的痕跡——而至少十幾支畫法直接拿欄位去問
+# Pillow 的 `textlength`，遇到帶 `\n` 的字串就是 `ValueError`。
+# 兩個獨立寫手在兩張不同的卡上各踩過一次，同一個坑踩了第三次才補這裡。
+_MULTILINE_FIELDS = {"title", "branches"}
+
+
+def _sanitized(spec: dict[str, Any]) -> dict[str, Any]:
+    """把不支援手動換行的欄位裡，換行攤成空格。
+
+    在 `draw()`／`frames()` 這兩個唯一的入口做一次，而不是十幾支畫法
+    各自防一次——防一次會漏，這裡已經漏過兩次。
+    """
+    def clean(value: Any) -> Any:
+        if isinstance(value, str):
+            return value.replace("\n", " ")
+        if isinstance(value, list):
+            return [clean(item) for item in value]
+        return value
+    return {key: (value if key in _MULTILINE_FIELDS else clean(value))
+            for key, value in spec.items()}
+
+
 def draw(spec: dict[str, Any], t: float = 1.0, seed: str = "") -> Image.Image:
     """One card at a moment in its own arrival. An unknown kind becomes a word
     card rather than an error: a script naming a shape nobody has drawn yet
     should still render."""
-    return way_for(spec, seed)(spec, t)
+    return way_for(spec, seed)(_sanitized(spec), t)
 
 
 def frames(spec: dict[str, Any], seconds: float, fps: int = FPS,
@@ -2586,6 +2670,7 @@ def frames(spec: dict[str, Any], seconds: float, fps: int = FPS,
     picking happens where the drawing happens.
     """
     way = way_for(spec, seed)
+    spec = _sanitized(spec)
     total = max(1, round(seconds * fps))
     arrive = max(1, round(min(0.62, 1.4 / max(seconds, 0.1)) * total))
     for index in range(total):

@@ -34,6 +34,7 @@ from core import script as script_module
 from core import settings as settings_module
 
 BLOCK = re.compile(r"```(?:json)?\s*(.*?)```", re.S)
+CARD_BG_REF = re.compile(r"P\d+")
 
 
 def ask(prompt: str, say=None) -> tuple[str, float]:
@@ -149,6 +150,13 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
             # 池子裡的每一支都在 /broll 上被人看過才留下來的，所以這裡直接
             # 算數 —— 不標的話 `unchecked` 會擋，而那個「請再看一次」是假的。
             line.setdefault("seen", True)
+        if isinstance(line.get("card"), dict) and line["card"].get("bg") is not None:
+            fasten_card_bg(topic, line["card"])
+            # 卡片背景跟片內任何一張借來的圖是同一種東西：有人要看過。
+            # 卡片本身沒有自己的 `seen` 欄位，借用整句的——反正卡片句從來
+            # 不會同時又有 `pic`／`clip`，這個欄位對它來說本來就是空的。
+            # 不在這裡預設成 True：那張圖有沒有人看過，是 `unchecked` 門
+            # 該問的問題，寫死在這裡問了也白問。
         # Seconds come from the reading pace unless the line pinned its own,
         # so a model that omits them is not thereby writing a nine-second card.
         if "seconds" not in line:
@@ -191,6 +199,43 @@ def fasten_cover(topic: str, cover: Any) -> dict[str, Any]:
             raise ValueError(f"cover 的圖片編號 {key} 不在素材裡")
         pic = picks[key]
     return {"kind": "cover", "pic": pic, "tagline": tagline}
+
+
+def fasten_card_bg(topic: str, card: dict[str, Any]) -> None:
+    """卡片自己的背景照片：編號查成檔案路徑，是別人的圖就把出處摺進 `note`。
+
+    就地修改 `card`，不像 `fasten_cover` 回傳新物件——這裡沒有另外處理的
+    地方接住回傳值：`fasten()` 的主迴圈直接改 `line["card"]`，studio 卡片
+    編輯器（`/api/script/card`）也直接改自己收到的 `card`，兩邊都圖方便。
+
+    只認 `P18` 這種格式，已經解析過的檔案路徑（不會長這樣）原樣放過——
+    這支函式要能在同一張卡上被呼叫第二次而不出錯：卡片編輯器每次存檔都會
+    重跑一次，而使用者這次可能根本沒有動 `bg` 那個欄位。
+
+    新聞畫格（`kind: frame`）不能用：卡片背景一律滿版鋪滿（`cards._photo_ground`），
+    畫格邊上的台標、下標、圖表標籤會被裁掉，跟 `cropped` 門擋 `pic` 的
+    fill 是同一個理由，只是卡片背景沒有 `fit` 這個選項可以改，所以在這裡
+    直接不准選，不留給後面的門去擋。
+    """
+    key = card.get("bg")
+    if not (isinstance(key, str) and CARD_BG_REF.fullmatch(key)):
+        return                            # 已經解析過，或者本來就沒填
+    pictures = brief_module.sheet(topic).get("pictures") or []
+    index = int(key[1:])
+    if not 1 <= index <= len(pictures):
+        raise ValueError(f"卡片背景的圖片編號 {key} 不在素材裡")
+    info = pictures[index - 1]
+    if info.get("kind") == "frame":
+        raise ValueError(f"卡片背景不能用新聞畫格（{key}）——"
+                          f"滿版鋪開會把台標和下標裁掉，換一張別的照片")
+    card["bg"] = info["file"]
+    if info.get("credit"):
+        # 借來的東西上鏡就要有名字，不管它是這句話的主角還是背景——跟
+        # `script.needs_credit()` 判斷的是同一件事，只是卡片的出處是自己
+        # 畫在卡片裡的 `note`，不是 build() 用 ffmpeg 燒的那一行。
+        # 手寫的 note 留著，出處接在後面，不要蓋掉。
+        existing = str(card.get("note") or "").strip()
+        card["note"] = f"{existing}　{info['credit']}" if existing else info["credit"]
 
 
 def suggest_terms(topic: str, say=None) -> dict[str, Any]:
