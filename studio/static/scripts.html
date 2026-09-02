@@ -319,7 +319,14 @@
   .seen-box input{margin:0;accent-color:#5fcf9b}
   td.show video.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     display:block;border-radius:6px;background:#0d1014;margin-bottom:4px}
-  td.show{cursor:zoom-in}
+  td.show{cursor:zoom-in;position:relative}
+  /* 影片縮圖太小看不清楚，點下去要能開大一點看 —— 但縮圖本身的
+     控制列（播放／拖曳）不能被蓋掉，所以放大鍵是另外疊上去的一顆，
+     不是把整格都變成點下去放大。 */
+  td.show .expand{position:absolute;top:6px;right:6px;z-index:2;
+    font:11px var(--mono);color:#fff;background:#000a;border:1px solid #fff5;
+    border-radius:6px;padding:2px 7px;cursor:pointer}
+  td.show .expand:hover{background:#000c;border-color:#fff}
   td.show img.pic.drawn{object-fit:contain;background:#0d1b2a;
     border:1px solid #22405c}
   td.show .grabbed.bad{color:#ff8a72}
@@ -906,7 +913,8 @@ async function showScript(name) {
                   它有 controls：本來就是按了才播的播放器，不是一格縮圖。*/""}
             ${line.clip_file ? `<video class="pic" preload="none" muted
               controls src="/media/passage/${encodeURIComponent(made.topic || "")}/${
-              encodeURIComponent(line.clip_file.split("/").pop())}"></video>`
+              encodeURIComponent(line.clip_file.split("/").pop())}"></video>
+              <button class="expand" data-expand title="放大看">放大</button>`
              : line.pic ? `<img class="pic" src="/media/pic/${
               line.pic.split("/").map(encodeURIComponent).join("/")}"
               alt="" loading="lazy">`

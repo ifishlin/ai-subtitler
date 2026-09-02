@@ -112,8 +112,12 @@ function openShot(shot) {
   $("bigWhat").textContent = shot.say || "";
   if (shot.clip) {
     /* `shot.clip` 現在是**剪好的那個檔案**，不是原片加 #t=起,訖 —— 剪好的
-       檔案本身就只有這一句的長度，不用再叫瀏覽器自己跳過去。 */
-    stage.innerHTML = `<video controls autoplay muted playsinline
+       檔案本身就只有這一句的長度，不用再叫瀏覽器自己跳過去。
+
+       不靜音：打開這個大視窗本來就是為了聽 —— 切點準不準、字有沒有多剪
+       進來，耳朵比眼睛先發現。瀏覽器會擋沒有互動就有聲音的自動播放，但
+       這裡是點擊「放大」觸發的，那個點擊本身就是使用者互動，擋不到。 */
+    stage.innerHTML = `<video controls autoplay playsinline
       src="${shot.clip}"></video>`;
   } else {
     stage.innerHTML = `<img src="${shot.card || shot.pic}" alt="">`;
