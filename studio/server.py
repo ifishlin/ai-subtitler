@@ -797,6 +797,55 @@ def passages_of(name: str | None = None) -> dict[str, Any]:
             "most": rules_module.at("collect.passage_seconds", [4, 12])[1]}
 
 
+@app.get("/api/passage/wave")
+def passage_wave(name: str, index: int, start: float, end: float) -> dict[str, Any]:
+    """切點前後的音量曲線。用看的比用聽的快。"""
+    from core import passages as passages_module
+    try:
+        return passages_module.wave(name, index, start, end)
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(404, str(error)) from error
+
+
+@app.post("/api/passage/hear")
+def passage_hear(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """試聽這個起訖。只切音軌，正式的檔案一格都不動。"""
+    from core import passages as passages_module
+    try:
+        made = passages_module.hear(
+            str(payload.get("name") or ""), int(payload.get("index") or 0),
+            float(payload.get("start")), float(payload.get("end")))
+    except (ValueError, FileNotFoundError, TypeError) as error:
+        raise HTTPException(400, str(error)) from error
+    # 帶一個時間戳，不然瀏覽器會拿上一次那一段的快取來播，而畫面上完全正常。
+    from urllib.parse import quote
+    return {"url": f"/media/hear/{quote(str(payload['name']))}/{made.name}"
+                   f"?at={int(time.time() * 1000)}"}
+
+
+@app.post("/api/passage/retime")
+def passage_retime(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """把調好的起訖寫回去，並重剪這一段。按了確定才走到這裡。"""
+    from core import passages as passages_module
+    try:
+        return passages_module.retime(
+            str(payload.get("name") or ""), int(payload.get("index") or 0),
+            float(payload.get("start")), float(payload.get("end")))
+    except (ValueError, FileNotFoundError, TypeError) as error:
+        raise HTTPException(400, str(error)) from error
+
+
+@app.get("/media/hear/{topic}/{stem}")
+def passage_hearing(topic: str, stem: str) -> FileResponse:
+    """試聽用的音訊。檔名固定是 C01.m4a 這種，比對過才給。"""
+    from core import passages as passages_module
+    where = passages_module.HERE / topic / "hear" / stem
+    if not re.fullmatch(r"C\d{2}\.m4a", stem) or not where.is_file():
+        raise HTTPException(404, f"找不到 {stem}")
+    return FileResponse(where, media_type="audio/mp4",
+                        headers={"Cache-Control": "no-store"})
+
+
 @app.get("/media/passage/{topic}/{stem}")
 def passage_clip(topic: str, stem: str) -> FileResponse:
     """一段剪好的影片。
@@ -2128,16 +2177,15 @@ def get_script(name: str) -> dict[str, Any]:
     # the label the writer typed. A line reading 示意：帳單特寫 next to a
     # caption reading `fuse box on a white wall` gives itself away; with only
     # the label on screen it never did.
+    topic_name = found.get("topic", "")
     from core import topic as topic_module
     known: dict[str, dict[str, Any]] = {}
     try:
-        pile = topic_module.load(found.get("topic", ""))
+        pile = topic_module.load(topic_name)
         known = {item["file"]: item for item in pile["sources"]["images"]
                  if item.get("file")}
     except (ValueError, FileNotFoundError):
         pass
-    footage = {v["file"]: v for v in (pile["sources"]["videos"] if known else [])
-               if v.get("file")}
     for line in measured["lines"]:
         source = known.get(line.get("pic") or "")
         if source:
@@ -2146,9 +2194,15 @@ def get_script(name: str) -> dict[str, Any]:
             line["said"] = source.get("said", "")
             line["outlet"] = source.get("outlet", "")
         if line.get("clip"):
-            shot = footage.get(line["clip"]["file"], {})
+            # 這一句只存編號，現查它現在指著哪一段 —— 而且把**剪好的那個
+            # 檔案**交給前端播，不是完整原片加 #t=起,訖。四十段各拉一次原片
+            # 就是 /scripts 永遠載不完的原因；剪好的檔案只有幾秒鐘。
+            shot = script_module.clip_of(topic_name, line) or {}
             line["outlet"] = shot.get("outlet", "")
-            line["credit"] = f"畫面來源：{shot.get('outlet', '')}"
+            line["credit"] = f"畫面來源：{shot.get('outlet', '')}" if shot.get("outlet") else ""
+            line["clip_file"] = shot.get("clip", "")
+            line["clip_said"] = shot.get("said", "")
+            line["clip_seconds"] = shot.get("seconds", 0)
     # Cards are drawn on the way out, so the page shows the actual shot rather
     # than the sentence describing it. Rendering is cached on the spec's own
     # hash: an edited card gets a new file, an unchanged one is not redrawn.

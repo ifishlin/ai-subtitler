@@ -30,6 +30,23 @@
   .stage .said{margin:6px 0 0;color:var(--ink);font-size:14px;line-height:1.6}
   .stage.off{display:none}
 
+  /* 調切點。用看的比用聽的快 —— 切點落在聲音上還是縫裡，波形一眼看得出來。 */
+  .tune{margin-top:10px;background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:10px 12px}
+  .tune canvas{width:100%;height:72px;display:block;border-radius:6px;
+    background:#0d1014;border:1px solid var(--line)}
+  .tune .knobs{display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+    margin-top:9px;font-size:12px;color:var(--faint)}
+  .tune .grp{display:flex;gap:4px;align-items:center}
+  .tune .grp b{color:var(--ink);font-weight:600;margin-right:2px}
+  .tune button{font:12px var(--mono);color:var(--ink);background:transparent;
+    border:1px solid var(--line);border-radius:7px;padding:3px 8px;cursor:pointer}
+  .tune button:hover{border-color:var(--ok)}
+  .tune button.go{border-color:#2c5a45;color:var(--ok)}
+  .tune button.go:disabled{opacity:.4;cursor:default;border-color:var(--line);
+    color:var(--faint)}
+  .tune .now{font:12px var(--mono);color:var(--ink);margin-left:auto}
+
   .film{margin:26px 0 10px;color:var(--faint);font-size:13px;
     border-bottom:1px solid var(--line);padding-bottom:6px}
   .film b{color:var(--ink);font-size:14.5px}
@@ -90,6 +107,25 @@
     <video id="player" controls preload="metadata"></video>
     <p id="now"></p>
     <p class="said" id="saidnow"></p>
+    <div class="tune" id="tune" hidden>
+      <canvas id="wave" width="1200" height="144"></canvas>
+      <div class="knobs">
+        <span class="grp"><b>頭</b>
+          <button data-move="start,-0.25">−0.25</button>
+          <button data-move="start,-0.05">−0.05</button>
+          <button data-move="start,0.05">+0.05</button>
+          <button data-move="start,0.25">+0.25</button></span>
+        <span class="grp"><b>尾</b>
+          <button data-move="end,-0.25">−0.25</button>
+          <button data-move="end,-0.05">−0.05</button>
+          <button data-move="end,0.05">+0.05</button>
+          <button data-move="end,0.25">+0.25</button></span>
+        <span class="grp">
+          <button id="btnReset">還原</button>
+          <button id="btnKeep" class="go">確定，重剪這一段</button></span>
+        <span class="now" id="tuneNow"></span>
+      </div>
+    </div>
   </div>
 
   <div id="list"></div>
@@ -102,12 +138,92 @@ const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
 const $ = (id) => document.getElementById(id);
 const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
+/* 正在調的那一段。null 表示沒有人在調。 */
+let TUNING = null;
+/* 最近一次畫波形用的曲線。播放時每一格都要重畫，重抓一次就變成每秒
+   五十個請求。 */
+let CURVE = null;
+
+/* 波形。切點畫兩條線疊上去 —— 調的時候要的是「這一刀落在聲音上還是縫裡」，
+   那是用看的，不是用聽的。 */
+function drawWave(box, cut, head) {
+  CURVE = box;
+  const c = $("wave"), pen = c.getContext("2d");
+  pen.clearRect(0, 0, c.width, c.height);
+  const at = (t) => (t - box.from) / (box.step * box.levels.length) * c.width;
+  pen.fillStyle = "#0d1014"; pen.fillRect(0, 0, c.width, c.height);
+  const wide = Math.max(1, c.width / box.levels.length);
+  box.levels.forEach((db, i) => {
+    /* 底 −55 dB、頂 −12 dB。整支片的人聲落在 −15 到 −30 之間，用 −60..0
+       去攤的話每一根都是七成高，畫出來是一塊實心的磚 —— 而要看的正是那些
+       比別人矮的縫。範圍縮到實際用得到的那一段，停頓才看得見。 */
+    const tall = Math.max(1, Math.min(1, Math.max(0, db + 55) / 43) * c.height);
+    const x = i / box.levels.length * c.width;
+    const inside = box.from + i * box.step >= cut.start
+                && box.from + i * box.step <= cut.end;
+    /* 段落之外用暗的。剪進去的是哪一段，用顏色分比用底色分清楚。 */
+    pen.fillStyle = inside ? "#5aa9e6" : "#2b3947";
+    pen.fillRect(x, (c.height - tall) / 2, wide, tall);
+  });
+  [["start", "#4ade80"], ["end", "#f59e0b"]].forEach(([key, colour]) => {
+    pen.strokeStyle = colour; pen.lineWidth = 2;
+    pen.beginPath(); pen.moveTo(at(cut[key]), 0);
+    pen.lineTo(at(cut[key]), c.height); pen.stroke();
+  });
+  /* 播到哪裡了。一條白線跟著走 —— 沒有它，波形上的谷和耳朵聽到的停頓
+     要自己在腦裡對齊。 */
+  if (head != null) {
+    /* 兩像素，而且對齊到整數座標 —— 一像素的線落在半格上會被反鋸齒攤成
+       兩條半透明的，畫面上是一抹灰而不是一條線。 */
+    pen.fillStyle = "#fff";
+    pen.fillRect(Math.round(at(head)) - 1, 0, 2, c.height);
+  }
+}
+
+async function retune() {
+  /* 出錯要寫在畫面上。這一支是 async，而它是從 onclick 裡被 await 的 ——
+     丟出去的例外沒有人接，於是「按了按鈕，數字變了，聲音沒換」看起來完全
+     像正常運作。找那個錯花了半小時，而它從頭到尾沒有留下任何痕跡。 */
+  try {
+    await tuneOnce();
+  } catch (error) {
+    $("tuneNow").textContent = "試聽失敗：" + (error && error.message);
+  }
+}
+
+async function tuneOnce() {
+  const cut = TUNING;
+  $("tuneNow").textContent = `${cut.start.toFixed(2)} – ${cut.end.toFixed(2)}　${
+    (cut.end - cut.start).toFixed(2)} 秒`
+    + (cut.start === cut.origin.start && cut.end === cut.origin.end ? "" : "　已調整");
+  const box = await fetch(`/api/passage/wave?name=${encodeURIComponent(cut.topic)
+    }&index=${cut.index}&start=${cut.start}&end=${cut.end}`).then((r) => r.json());
+  drawWave(box, cut);
+  /* 只切音軌 —— 零點幾秒，重剪整段要兩三秒，而那個差別會決定人願不願意
+     一直微調。沒有按「確定」之前，正式的檔案一格都沒有變。 */
+  const got = await fetch("/api/passage/hear", {method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({name: cut.topic, index: cut.index,
+                          start: cut.start, end: cut.end})}).then((r) => r.json());
+  const player = $("player");
+  player.setAttribute("src", got.url);
+  player.play().catch(() => {});
+}
+
 /* 播一段。播的是**剪出來的那個檔案**，不是叫瀏覽器跳到原片的那一秒 ——
    跳過去看到的是「我以為我切在這裡」。 */
 function play(row, topic, index) {
   if (!row.clip) return;
   const video = $("player");
   $("stage").classList.remove("off");
+  TUNING = {topic, index, row, start: row.start, end: row.end,
+            origin: row.origin || {start: row.start, end: row.end}};
+  $("tune").hidden = false;
+  $("tuneNow").textContent = `${row.start.toFixed(2)} – ${row.end.toFixed(2)}　${
+    row.seconds} 秒`;
+  fetch(`/api/passage/wave?name=${encodeURIComponent(topic)}&index=${index
+    }&start=${row.start}&end=${row.end}`).then((r) => r.json())
+    .then((box) => drawWave(box, TUNING)).catch(() => {});
   video.setAttribute("src", `/media/passage/${encodeURIComponent(topic)}/${
     encodeURIComponent(row.clip.split("/").pop())}`);
   $("now").textContent = `C${index}　${row.outlet}　原片的 ${row.start}s – ${
@@ -133,7 +249,7 @@ function cut(row, index, topic) {
            encodeURIComponent(row.thumb.split("/").pop())}">`
     : '<div class="none">還沒剪</div>';
   return `
-  <div class="cut${row.doubt ? " doubt" : ""}">
+  <div class="cut${row.doubt ? " doubt" : ""}" id="C${index}">
     ${shot}
     <div class="body">
       <div class="top">
@@ -193,6 +309,26 @@ async function load() {
             多半是那份字幕整段沒有句號 —— 硬切就會切回半句。</p></div>`
       : "");
 
+  draw(rows, d);
+  wire(rows, d);
+
+  /* 從文案頁點「調切點」跳過來的時候，網址帶著 #C11 這種錨點。捲過去，
+     而且直接打開那一段 —— 不然使用者還要自己從四十段裡再找一次。 */
+  const wantCut = location.hash.replace(/^#/, "");
+  const match = /^C(\d+)$/.exec(wantCut);
+  if (match) {
+    const index = Number(match[1]);
+    const el = document.getElementById(wantCut);
+    if (el && rows[index - 1]) {
+      el.scrollIntoView({block: "center"});
+      play(rows[index - 1], d.topic, index);
+    }
+  }
+}
+
+/* 清單畫成一片。抽出來是因為重剪一段之後要重畫，而重畫不該重新載入整頁 ——
+   那會把正在調的那一段的狀態丟掉。 */
+function draw(rows, d) {
   const by = [];
   rows.forEach((one, index) => {
     const last = by[by.length - 1];
@@ -206,10 +342,69 @@ async function load() {
     <div class="film"><b>${esc(film.outlet)}</b>　${esc(film.title || "")}</div>
     ${film.rows.map(({one, index}) => cut(one, index, d.topic)).join("")}`).join("")
     || "";
+}
 
+function wire(rows, d) {
   $("list").onclick = (event) => {
     const which = event.target.getAttribute("data-cut");
     if (which !== null) play(rows[Number(which)], d.topic, Number(which) + 1);
+  };
+
+  /* 播放的時候波形跟著動。播的是剪出來的那一段，所以 currentTime 的零點
+     就是這一刀的起點。
+
+     跟著螢幕更新畫，不是跟著 `timeupdate` —— 那個事件一秒只發四次，畫出來
+     的播放頭是一格一格跳的，看起來像卡住而不是在走。 */
+  let running = 0;
+  const follow = () => {
+    const player = $("player");
+    if (TUNING && CURVE) drawWave(CURVE, TUNING, TUNING.start + player.currentTime);
+    running = player.paused || player.ended ? 0 : requestAnimationFrame(follow);
+  };
+  $("player").onplay = () => { if (!running) running = requestAnimationFrame(follow); };
+  /* 停下來也要再畫一次，不然最後一格停在上一次的位置。 */
+  $("player").onpause = $("player").onseeked = $("player").ontimeupdate = () => {
+    if (!running) follow();
+  };
+
+  $("tune").onclick = async (event) => {
+    const move = event.target.getAttribute("data-move");
+    if (!TUNING) return;
+    if (move) {
+      const [which, step] = move.split(",");
+      const next = {...TUNING, [which]: Math.max(0,
+        Number((TUNING[which] + Number(step)).toFixed(2)))};
+      /* 頭尾不能交叉，而且一秒以下剪不出東西。 */
+      if (next.end - next.start < 1) return;
+      TUNING = next;
+      await retune();
+      return;
+    }
+    if (event.target.id === "btnReset") {
+      TUNING = {...TUNING, start: TUNING.origin.start, end: TUNING.origin.end};
+      await retune();
+      return;
+    }
+    if (event.target.id !== "btnKeep") return;
+    /* 確定才落地：寫回起訖、重剪這一段的 mp4 和縮圖。 */
+    const button = event.target;
+    button.disabled = true;
+    button.textContent = "重剪中…";
+    try {
+      const got = await fetch("/api/passage/retime", {method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({name: TUNING.topic, index: TUNING.index,
+                              start: TUNING.start, end: TUNING.end})})
+        .then((r) => r.ok ? r.json() : r.text().then((why) => {throw new Error(why);}));
+      Object.assign(rows[TUNING.index - 1], got);
+      draw(rows, d);
+      play(rows[TUNING.index - 1], d.topic, TUNING.index);
+    } catch (error) {
+      $("tuneNow").textContent = "重剪失敗：" + error.message;
+    } finally {
+      button.disabled = false;
+      button.textContent = "確定，重剪這一段";
+    }
   };
 }
 

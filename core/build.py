@@ -315,12 +315,22 @@ def build(name: str, target: Path | None = None,
             # 出處由 `script.credit_line()` 決定，門也問同一個函式。以前這裡
             # 自己 join 一次 outlet，而照片那一支根本沒有 join —— 於是門說
             # 通過、畫面上沒有名字，兩邊都「照寫的做」。
-            mark = script_module.credit_line(line, pictures, footage)
+            topic_name = found.get("topic", "")
+            mark = script_module.credit_line(line, pictures, footage, topic_name)
             if line.get("clip"):
+                # 這一句只存著段落編號，起訖現查 —— 而且直接用**剪好的那個
+                # 檔案**（0 到它自己的長度），不是原始素材加起訖再剪一次。
+                # 兩個理由：那個檔案已經是 /passages 頁上人調過切點的結果
+                # （不重查就會用到寫文案那一刻的舊切點）；而且切一次比切兩次
+                # 少一次重編碼失真。
+                resolved = script_module.clip_of(topic_name, line)
+                if not resolved or not resolved.get("clip"):
+                    raise RuntimeError(
+                        f"第 {index + 1} 句的影片段落 {line['clip']} "
+                        "找不到剪好的檔案 —— 到 /passages 確認這個題目切過了")
                 shorts_module.clip_cut(
-                    ROOT / line["clip"]["file"], line["clip"]["start"],
-                    line["clip"]["end"], seconds, piece, overlay=plate,
-                    credit=mark)
+                    ROOT / resolved["clip"], 0.0, resolved["seconds"],
+                    seconds, piece, overlay=plate, credit=mark)
             elif script_module.is_stock(line):
                 # 情境影片：整支都是同一個畫面，所以從頭取夠長就好 ——
                 # 沒有「哪一秒」這回事，那是字幕決定的，而它沒有字幕。

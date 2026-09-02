@@ -62,6 +62,29 @@ DRAWN = "自製"
 # 的只有 `show` 那一個字串 —— 換成看欄位的話，這個判斷就得改成到處傳整行。
 STOCK = "情境"
 
+# 一句的 clip 欄位長什麼樣：只有編號，「C7」這種。
+CLIP_REF = re.compile(r"C\d+")
+
+
+def clip_of(topic: str, line: dict[str, Any]) -> dict[str, Any] | None:
+    """這一句的 clip 編號，現在指著哪一段。
+
+    一句只存編號，不存檔名和起訖 —— 那兩樣存在 `assets/passages/<題目>.json`
+    裡，而那份可能在文案寫完之後被人在 `/passages` 調過。存解析後的字典是
+    同一個數字的第二份：那份會凍在 `fasten()` 跑的那一刻，之後不管切點被
+    調成什麼樣，文案永遠指著舊的。所以每次都在這裡現查，不在寫文案的時候
+    查一次就存死。
+
+    段落編號超出範圍（題目被重切過，段數變了）就回 `None`，讓呼叫的地方
+    自己決定要不要當成錯。
+    """
+    if not is_clip(line):
+        return None
+    from core import passages as passages_module
+    index = int(line["clip"][1:])
+    rows = passages_module.stored(topic)
+    return rows[index - 1] if 1 <= index <= len(rows) else None
+
 
 def is_clip(line: dict[str, Any]) -> bool:
     """Whether this line runs a piece of the source video rather than a still.
@@ -75,9 +98,16 @@ def is_clip(line: dict[str, Any]) -> bool:
 
     So half the borrowed time has to move, and `measure` reports whether it
     does.
+
+    A line stores only the passage number it points at ("C7"), not the file
+    and seconds -- those live in `assets/passages/<topic>.json`, where a
+    person may retime the cut in `/passages` after the script was written.
+    Storing the resolved dict was the second copy of a number that drifts:
+    the script would go on pointing at whatever start and end were current
+    the moment `fasten()` ran, deaf to anything retimed afterwards. So this
+    only checks the shape; `clip_of()` resolves it, fresh, every time.
     """
-    clip = line.get("clip")
-    return bool(clip and clip.get("file"))
+    return bool(CLIP_REF.fullmatch(str(line.get("clip") or "")))
 
 
 def is_stock(line: dict[str, Any]) -> bool:
@@ -382,7 +412,7 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
     path itself, and would sail straight through. So the check is now that the
     file is one of this topic's own.
     """
-    pictures, footage = gathered(script)
+    pictures, _footage = gathered(script)
     lack = []
     from core import broll as broll_module
     pool = None
@@ -408,13 +438,14 @@ def missing_pictures(script: dict[str, Any]) -> list[dict[str, Any]]:
         if not is_real(line.get("show")):
             continue
         if is_clip(line):
-            clip = line["clip"]
-            if not (ROOT / clip["file"]).is_file():
-                lack.append({**note, "why": f"找不到 {clip['file']}"})
-            elif footage and clip["file"] not in footage:
-                lack.append({**note, "why": f"{clip['file']} 不是這個題目的影片"})
-            elif float(clip.get("end", 0)) <= float(clip.get("start", 0)):
-                lack.append({**note, "why": "段落的起訖時間不對"})
+            resolved = clip_of(script.get("topic", ""), line)
+            if resolved is None:
+                lack.append({**note, "why": f"{line['clip']} 不在候選段落裡"
+                                            "（這個題目被重切過，段數變了）"})
+            elif not resolved.get("clip"):
+                lack.append({**note, "why": f"{line['clip']} 還沒剪出檔案"})
+            elif not (ROOT / resolved["clip"]).is_file():
+                lack.append({**note, "why": f"找不到 {resolved['clip']}"})
             continue
         pic = line.get("pic")
         if not pic:
@@ -544,6 +575,7 @@ def rights(script: dict[str, Any], sources: dict[str, dict[str, Any]],
     """
     measured = measured or measure(script)
     clock = measured["seconds"] or 1
+    topic = script.get("topic", "")
     seconds = {key: 0.0 for key in RIGHTS}
     holders: dict[str, float] = {}
     for line in measured["lines"]:
@@ -551,8 +583,14 @@ def rights(script: dict[str, Any], sources: dict[str, dict[str, Any]],
         kind = rights_of(line, source)
         seconds[kind] += line["seconds"]
         if kind == CLAIMED:
-            who = (line.get("outlet") or (source or {}).get("outlet")
-                   or line.get("from") or "?")
+            # 一句的 clip 只存編號，它的台名不在 sources（那是照片的 join）
+            # 裡 —— 要問 `clip_of()`，那份資料本來就在段落裡帶著出處。不問
+            # 它的話會退到 `from`，那一欄寫的是「PBS NewsHour 第 25 秒」，
+            # 秒數混進了台名，同一家會被算成好幾個持有人。
+            if is_clip(line):
+                who = (clip_of(topic, line) or {}).get("outlet") or line.get("from") or "?"
+            else:
+                who = (source or {}).get("outlet") or line.get("from") or "?"
             holders[who] = round(holders.get(who, 0.0) + line["seconds"], 2)
     return {
         "seconds": {key: round(value, 2) for key, value in seconds.items()},
@@ -813,13 +851,13 @@ def uncredited(script: dict[str, Any],
     and not a warning.
     """
     sources, footage = sources or {}, footage or {}
+    topic = script.get("topic", "")
     lack = []
     for index, line in enumerate(script.get("lines") or [], start=1):
         if not needs_credit(line, sources):
             continue
-        if not credit_line(line, sources, footage):
-            who = (footage.get((line.get("clip") or {}).get("file", ""), {})
-                   or sources.get(line.get("pic") or "") or {}).get("outlet")
+        if not credit_line(line, sources, footage, topic):
+            who = sources.get(line.get("pic") or "", {}).get("outlet")
             lack.append({"line": index, "say": line.get("say", ""),
                          "why": "這段影片查不到是哪一台的" if is_clip(line)
                                 else f"{who or '這張圖'} 沒有出處"})
@@ -848,7 +886,8 @@ def needs_credit(line: dict[str, Any],
 
 def credit_line(line: dict[str, Any],
                 sources: dict[str, dict[str, Any]] | None = None,
-                footage: dict[str, dict[str, Any]] | None = None) -> str:
+                footage: dict[str, dict[str, Any]] | None = None,
+                topic: str = "") -> str:
     """The words to burn onto this shot, or empty if it needs none.
 
     One function, because there were two and only one of them drew anything.
@@ -866,12 +905,17 @@ def credit_line(line: dict[str, Any],
 
     So the gate now asks this, and the builder draws this. There is one answer
     and both of them get it.
+
+    `footage` (the topic's own videos, joined by file) is unused now -- a
+    clip's outlet already sits on the passage row itself (`choose()` put it
+    there), so there is nothing left to join. Kept as a parameter so callers
+    do not all need editing the day something else needs it.
     """
     sources, footage = sources or {}, footage or {}
     if not needs_credit(line, sources):
         return ""
     if is_clip(line):
-        who = footage.get(line["clip"]["file"], {}).get("outlet", "")
+        who = (clip_of(topic, line) or {}).get("outlet", "")
         return f"畫面來源：{who}" if who else ""
     source = sources.get(line.get("pic") or "") or {}
     if source.get("kind") == "frame":

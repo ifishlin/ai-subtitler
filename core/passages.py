@@ -118,6 +118,8 @@ def choose(pile: dict[str, Any], want: float | None = None,
 
 
 STEP = 0.02
+# 算過的音量曲線，一支影片一條。見 envelope()。
+_CURVES: dict[tuple[str, int], list[float]] = {}
 # 量段落頭尾各多長，來判斷切點上還有沒有人在說話。
 EDGE = 0.1
 
@@ -155,14 +157,27 @@ def envelope(film: Path) -> list[float]:
     """
     import re
     import subprocess
+    # 一支影片只算一次。這條曲線是整支音軌解碼出來的 —— 十四分鐘的片要十二
+    # 秒，而調切點的時候每按一下就要一條。第一次按下去等十二秒，第二次還等
+    # 十二秒，那個介面沒有人會用。
+    #
+    # 用檔案的修改時間當鑰匙的一部分：換了影片就重算，不會拿到上一支的曲線。
+    key = (str(film), film.stat().st_mtime_ns if film.is_file() else 0)
+    if key in _CURVES:
+        return _CURVES[key]
     done = subprocess.run(
         ["ffmpeg", "-v", "error", "-i", str(film), "-vn", "-af",
          f"aresample=8000,asetnsamples={int(8000 * STEP)},"
          "astats=metadata=1:reset=1,"
          "ametadata=print:key=lavfi.astats.Overall.RMS_level:file=-",
          "-f", "null", "-"], capture_output=True, text=True)
-    return [-120.0 if "inf" in one else float(one)
-            for one in re.findall(r"RMS_level=(-?[\d.]+|-?inf)", done.stdout)]
+    out = [-120.0 if "inf" in one else float(one)
+           for one in re.findall(r"RMS_level=(-?[\d.]+|-?inf)", done.stdout)]
+    # 十五支影片的曲線大約十五 MB，留著；再多就丟掉最舊的那一支。
+    if len(_CURVES) >= 24:
+        _CURVES.pop(next(iter(_CURVES)))
+    _CURVES[key] = out
+    return out
 
 
 def pause(levels: list[float], at: float, reach: float,
@@ -257,6 +272,10 @@ def cut(name: str) -> dict[str, Any]:
         return {"topic": name, "when": int(time.time()), "videos": 0,
                 "silent": [], "passages": []}
     rows = choose(pile)
+    # 切出來的原始起訖，另外留一份。人在網頁上調過切點之後，「還原」要有東西
+    # 可以還原 —— 而重切一律覆蓋（人調過的不保護，那是講好的）。
+    for one in rows:
+        one["origin"] = {"start": one["start"], "end": one["end"]}
     HERE.mkdir(parents=True, exist_ok=True)
     body = {
         "topic": name,
@@ -358,6 +377,48 @@ def carve(name: str, say=None) -> dict[str, Any]:
     return body
 
 
+def hear(name: str, index: int, start: float, end: float) -> Path:
+    """把這一段的**聲音**切出來聽，不動影像。回傳檔案。
+
+    調切點的時候要的是耳朵，不是眼睛 —— 而只切音軌不用重編碼影像，零點幾秒
+    就好，重剪整段要兩三秒。差別大到會決定人願不願意一直微調。
+
+    寫進暫存檔而不是正式的段落檔：**沒有按「確定」就什麼都沒有變。** 調到
+    一半離開，原本的東西還在原地。
+    """
+    import subprocess
+    rows = stored(name)
+    if not 1 <= index <= len(rows):
+        raise ValueError(f"沒有 C{index}")
+    one = rows[index - 1]
+    room = HERE / name / "hear"
+    room.mkdir(parents=True, exist_ok=True)
+    out = room / f"C{index:02d}.m4a"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-ss", f"{max(start, 0):.3f}",
+         "-to", f"{end:.3f}", "-i", str(ROOT / one["file"]), "-vn",
+         "-c:a", "aac", "-b:a", "128k", str(out), "-y"], check=True)
+    return out
+
+
+def wave(name: str, index: int, start: float, end: float,
+         wings: float = 1.0) -> dict[str, Any]:
+    """切點前後的音量曲線，畫成波形用。
+
+    用**看的**比用聽的快：切點落在聲音上還是縫裡，波形一眼就看得出來，不用
+    反覆播放。曲線本來就要算（`envelope()` 用它找停頓），這裡只是把切點附近
+    那一段交出去。
+    """
+    rows = stored(name)
+    if not 1 <= index <= len(rows):
+        raise ValueError(f"沒有 C{index}")
+    levels = envelope(ROOT / rows[index - 1]["file"])
+    first = max(0, int((start - wings) / STEP))
+    last = min(len(levels), int((end + wings) / STEP))
+    return {"from": round(first * STEP, 2), "step": STEP,
+            "levels": [round(one, 1) for one in levels[first:last]]}
+
+
 def stored(name: str) -> list[dict[str, Any]]:
     """這個題目存好的段落。沒有就現切一份 —— 不回空清單。
 
@@ -371,6 +432,36 @@ def stored(name: str) -> list[dict[str, Any]]:
         return json.loads(path.read_text(encoding="utf-8")).get("passages") or []
     except json.JSONDecodeError:
         return cut(name)["passages"]
+
+
+def retime(name: str, index: int, start: float, end: float) -> dict[str, Any]:
+    """把人調好的起訖寫回去，並且只重剪這一段。
+
+    「確定」才落地。調的時候只切音軌（`hear()`），那是暫存；到這裡才動正式
+    的檔案 —— 沒按確定就離開，原本的東西一格都沒變。
+
+    只重剪這一段：`carve()` 是照檔名的指紋決定要不要重編碼的，起訖一改指紋
+    就變，所以它自己會跳過另外三十九段。舊檔案在最後一步被掃掉。
+    """
+    body = report(name)
+    rows = body.get("passages") or []
+    if not 1 <= index <= len(rows):
+        raise ValueError(f"沒有 C{index}")
+    one = rows[index - 1]
+    if end - start < 1.0:
+        raise ValueError("太短了，至少要一秒")
+    one["origin"] = one.get("origin") or {"start": one["start"], "end": one["end"]}
+    one["start"], one["end"] = round(start, 2), round(end, 2)
+    one["seconds"] = round(end - start, 2)
+    one["settled"] = True
+    one["by_hand"] = True
+    path_for(name).write_text(
+        json.dumps(body, ensure_ascii=False, indent=2), encoding="utf-8")
+    got = carve(name)
+    return {"index": index, **{key: got["passages"][index - 1][key]
+                               for key in ("start", "end", "seconds", "clip",
+                                           "thumb", "edge", "doubt")
+                               if key in got["passages"][index - 1]}}
 
 
 def report(name: str) -> dict[str, Any]:

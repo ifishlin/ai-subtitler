@@ -323,6 +323,9 @@
   td.show img.pic.drawn{object-fit:contain;background:#0d1b2a;
     border:1px solid #22405c}
   td.show .grabbed.bad{color:#ff8a72}
+  /* 從這裡跳去 /passages 調切點。獨立一個顏色，不然看起來像逐字稿的一部分。 */
+  .jump-passage{color:#7fd4ff;margin-left:6px;text-decoration:none}
+  .jump-passage:hover{text-decoration:underline}
   td.show img.pic{width:100%;max-width:210px;height:82px;object-fit:cover;
     border-radius:6px;display:block;margin-bottom:5px;background:#0d1014}
   td.from{font-size:11px;color:var(--faint);width:11em}
@@ -875,9 +878,12 @@ async function showScript(name) {
               encodeURIComponent(line.card_file.split("/").pop())}` : "",
             pic: line.pic ? `/media/pic/${
               line.pic.split("/").map(encodeURIComponent).join("/")}` : "",
-            clip: line.clip ? `/media/pic/${
-              line.clip.file.split("/").map(encodeURIComponent).join("/")}` : "",
-            at: line.clip ? [line.clip.start, line.clip.end] : null,
+            /* 剪好的那一段，不是原片加 #t=起,訖 —— 四十段各拉一次原片的檔頭
+               就是這一頁本來永遠載不完的原因。 */
+            clip: line.clip_file ? `/media/passage/${
+              encodeURIComponent(made.topic || "")}/${
+              encodeURIComponent(line.clip_file.split("/").pop())}` : "",
+            said: line.clip_said || "",
             caption: line.caption || "", credit: line.credit || "",
             outlet: line.outlet || "", from: line.from || "",
           }))}">
@@ -898,10 +904,9 @@ async function showScript(name) {
                   張照片就全部排在後面，永遠載不完。畫面上的樣子是「這一頁一直
                   在轉」，而每一個請求單獨看都是好的。
                   它有 controls：本來就是按了才播的播放器，不是一格縮圖。*/""}
-            ${line.clip ? `<video class="pic" preload="none" muted
-              controls src="/media/pic/${
-              line.clip.file.split("/").map(encodeURIComponent).join("/")}#t=${
-              line.clip.start},${line.clip.end}"></video>`
+            ${line.clip_file ? `<video class="pic" preload="none" muted
+              controls src="/media/passage/${encodeURIComponent(made.topic || "")}/${
+              encodeURIComponent(line.clip_file.split("/").pop())}"></video>`
              : line.pic ? `<img class="pic" src="/media/pic/${
               line.pic.split("/").map(encodeURIComponent).join("/")}"
               alt="" loading="lazy">`
@@ -917,8 +922,10 @@ async function showScript(name) {
               <input type="checkbox" class="seen"${line.seen ? " checked" : ""}>
               ${line.seen ? "看過了" : "沒看過"}
             </label>` : ""}
-            ${line.clip ? `<span class="grabbed">段落 ${
-              Math.round(line.clip.start)}–${Math.round(line.clip.end)}s</span>` : ""}
+            ${line.clip ? `<span class="grabbed">${escapeHTML(line.clip)}　${
+              line.clip_seconds || "?"}s
+              <a class="jump-passage" data-jump="${escapeHTML(line.clip)}"
+                 title="切點怪怪的？到 /passages 調這一段">調切點</a></span>` : ""}
             ${line.caption ? `<span class="grabbed">${
               escapeHTML(line.caption)}</span>` : ""}
           </td>
@@ -1146,6 +1153,14 @@ $("paper").addEventListener("click", (event) => {
   if (event.target.id === "btnGoTopics") { leaveTo("/topics"); return; }
   if (event.target.closest(".say-edit")) return;   // editing, not opening
   if (event.target.closest(".seen-box")) return;   // ticking, not opening
+  // 切點怪怪的，從這裡跳去 /passages 調 —— 使用者是從文案這裡看到異常的，
+  // 不該還要自己去記是哪一個題目、哪一段。
+  const jump = event.target.closest(".jump-passage");
+  if (jump) {
+    pickName(STATE.topic || "");
+    location.href = "/passages#" + encodeURIComponent(jump.dataset.jump);
+    return;
+  }
   const row = event.target.closest("tr[data-shot]");
   if (row && event.target.closest("td.show")) {
     // The inline clip has its own controls; clicking those should scrub it,

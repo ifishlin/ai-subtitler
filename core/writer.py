@@ -130,10 +130,12 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
                                  f"起訖由程式填，寫的是 {cut!r}")
             if cut not in cuts:
                 raise ValueError(f"第 {index} 句的段落編號 {cut} 不在候選裡")
-            one = cuts[cut]
-            line["clip"] = {"file": one["file"], "start": one["start"],
-                            "end": one["end"]}
-            line.setdefault("seconds", round(one["seconds"], 2))
+            # 只存編號，不存解析後的檔名和起訖。存了解析後的字典是同一個數字
+            # 的第二份 —— 它會凍在這一刻，而 /passages 頁允許之後把切點調得
+            # 更準；存了字典的話，調完文案不會跟著變，得回頭手動同步兩份。
+            # `script.clip_of()` 在每次要用到的時候現查 assets/passages/。
+            line["clip"] = cut
+            line.setdefault("seconds", round(cuts[cut]["seconds"], 2))
         if line.get("stock") is not None:
             key = line["stock"]
             if not (isinstance(key, str) and key.startswith("V")):

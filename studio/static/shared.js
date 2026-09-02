@@ -111,13 +111,15 @@ function openShot(shot) {
   $("bigWho").textContent = shot.show || shot.say || "";
   $("bigWhat").textContent = shot.say || "";
   if (shot.clip) {
+    /* `shot.clip` 現在是**剪好的那個檔案**，不是原片加 #t=起,訖 —— 剪好的
+       檔案本身就只有這一句的長度，不用再叫瀏覽器自己跳過去。 */
     stage.innerHTML = `<video controls autoplay muted playsinline
-      src="${shot.clip}#t=${shot.at[0]},${shot.at[1]}"></video>`;
+      src="${shot.clip}"></video>`;
   } else {
     stage.innerHTML = `<img src="${shot.card || shot.pic}" alt="">`;
   }
   const notes = [];
-  if (shot.at) notes.push(`段落 <em>${shot.at[0]}–${shot.at[1]}s</em>`);
+  if (shot.said) notes.push(`段落逐字稿 <em>${escapeHTML(shot.said)}</em>`);
   if (shot.caption) notes.push(`圖說 <em>${escapeHTML(shot.caption)}</em>`);
   if (shot.credit) notes.push(escapeHTML(shot.credit));
   if (shot.from) notes.push(`出處 ${escapeHTML(shot.from)}`);
