@@ -2089,6 +2089,39 @@ def script_card(script: str, card: str) -> FileResponse:
     return FileResponse(target, media_type="image/png")
 
 
+@app.get("/backgrounds", response_class=HTMLResponse)
+def backgrounds_page() -> str:
+    """卡片背景的共用池子：關鍵字底下最多五張圖，可以看、可以殺。"""
+    return (STATIC / "backgrounds.html").read_text(encoding="utf-8")
+
+
+@app.get("/api/backgrounds")
+def list_backgrounds() -> dict[str, Any]:
+    from core import backgrounds as backgrounds_module
+    return {"keywords": backgrounds_module.all_keywords()}
+
+
+@app.post("/api/backgrounds/reject")
+def reject_background(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """殺掉一張——記進『不要』名單，下次補的時候永久跳過，不是單純拿掉。"""
+    from core import backgrounds as backgrounds_module
+    keyword = str(payload.get("keyword") or "")
+    image_id = str(payload.get("id") or "")
+    if not keyword or not image_id:
+        raise HTTPException(400, "缺 keyword 或 id")
+    backgrounds_module.reject(keyword, image_id)
+    return {"keywords": backgrounds_module.all_keywords()}
+
+
+@app.get("/media/background/{picture:path}")
+def background_picture(picture: str) -> FileResponse:
+    """卡片背景池子裡的一張圖，跟 /media/pic 一樣查過才給，不是直接信網址。"""
+    from core import backgrounds as backgrounds_module
+    if picture not in backgrounds_module.images_by_file():
+        raise HTTPException(404, "找不到這張圖")
+    return FileResponse(ROOT / picture, media_type="image/jpeg")
+
+
 @app.get("/media/photo/{name}/{picture}")
 def topic_photo(name: str, picture: str) -> FileResponse:
     """One gathered photograph, matched against the topic's own list."""
@@ -2157,6 +2190,29 @@ def get_scripts() -> dict[str, Any]:
     from core import script as script_module
     return {"scripts": script_module.listing(), "limit": script_module.LIMIT,
             "per_second": script_module.PER_SECOND}
+
+
+@app.post("/api/script/delete")
+def delete_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
+    """丟掉一份文案，連它自己壓出來的成片和卡片一起——不是拿掉題目底下的
+    素材，那些跟其他文案共用，動不得。
+
+    這份文案獨佔的東西只有三樣：`scripts/<name>.json` 本身、
+    `assets/shorts/<name>.*`（壓出來的影片和接觸表）、
+    `assets/cards/<name>/`（畫出來的卡片）。全部丟進 trash/，不是真的刪掉。
+    """
+    from core import bin as bin_module
+    from core import build as build_module
+    from core import cards as cards_module
+    from core import script as script_module
+    name = str(payload.get("name") or "")
+    if not script_module.path_for(name).is_file():
+        raise HTTPException(404, "沒有這份文案")
+    paths = [script_module.path_for(name), cards_module.CARD_DIR / name]
+    paths += list((build_module.OUT_DIR).glob(f"{name}.*"))
+    paths += list((build_module.OUT_DIR / f".{name}").glob("*"))
+    result = bin_module.toss(paths, f"刪除文案：{name}")
+    return {"deleted": name, **result}
 
 
 @app.get("/api/script")
@@ -2271,7 +2327,7 @@ def edit_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     lines = found.get("lines") or []
     if not 0 <= index < len(lines):
         raise HTTPException(400, "沒有這一句")
-    if card.get("bg") is not None:
+    if card.get("bg") is not None or card.get("bg_search") is not None:
         from core import writer as writer_module
         try:
             writer_module.fasten_card_bg(found.get("topic", ""), card)
@@ -2457,7 +2513,7 @@ def _demo_spec(kind: str, tone: str) -> dict[str, Any]:
     爆版，而「這一種畫法適不適合這種句子」正是這一頁要回答的問題。
     """
     base = {"kind": kind, "tone": tone, "note": "PBS NewsHour"}
-    if kind in ("word", "title"):
+    if kind == "word":
         return {**base, "title": "地圖開始\n看你人在哪", "under": "同一座湖，三個名字"}
     if kind == "number":
         return {**base, "title": "命令簽下去那天", "value": "4:30",

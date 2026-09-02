@@ -182,12 +182,21 @@ def gathered(script: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     from core import topic as topic_module
     try:
         pile = topic_module.load(script.get("topic", ""))
+        pictures = {item["file"]: item for item in pile["sources"]["images"]
+                    if item.get("file")}
+        footage = {item["file"]: item for item in pile["sources"]["videos"]
+                   if item.get("file")}
     except (ValueError, FileNotFoundError):
-        return {}, {}
-    return ({item["file"]: item for item in pile["sources"]["images"]
-             if item.get("file")},
-            {item["file"]: item for item in pile["sources"]["videos"]
-             if item.get("file")})
+        pictures, footage = {}, {}
+    # 卡片背景（`bg`／`bg_search`）跟這個題目自己收的素材是兩個不同的池子
+    # ——`card.bg` 可能指到 `assets/backgrounds/` 那個跨題目共用的池子，不
+    # 在 `pile["sources"]["images"]` 裡。這裡合併進來，這樣 `unpicked`／
+    # `unchecked`／`uncredited` 才問得到那張圖，不會把它當成「不是這個
+    # 題目收的圖」而誤擋。
+    from core import backgrounds as backgrounds_module
+    for file, item in backgrounds_module.images_by_file().items():
+        pictures.setdefault(file, item)
+    return pictures, footage
 
 
 # Every gate, in one place, with what it is actually testing.
@@ -1192,7 +1201,6 @@ CARD_NEEDS: dict[str, dict[str, Any]] = {
     "number": {"value": "any"},
     "outro":  {"points": "list", "title": "any"},
     "word":   {"title": "any"},
-    "title":  {"title": "any"},
 }
 
 
@@ -1216,7 +1224,7 @@ def card_wrong(script: dict[str, Any]) -> list[dict[str, Any]]:
         spec = line.get("card")
         if not spec:
             continue
-        kind = str(spec.get("kind") or "title")
+        kind = str(spec.get("kind") or "word")
         needs = CARD_NEEDS.get(kind)
         if needs is None:
             faults.append({"line": index, "say": line.get("say", ""),

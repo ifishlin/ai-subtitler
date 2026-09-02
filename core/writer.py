@@ -150,8 +150,10 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
             # 池子裡的每一支都在 /broll 上被人看過才留下來的，所以這裡直接
             # 算數 —— 不標的話 `unchecked` 會擋，而那個「請再看一次」是假的。
             line.setdefault("seen", True)
-        if isinstance(line.get("card"), dict) and line["card"].get("bg") is not None:
-            fasten_card_bg(topic, line["card"])
+        card = line.get("card")
+        if isinstance(card, dict) and (card.get("bg") is not None
+                                        or card.get("bg_search") is not None):
+            fasten_card_bg(topic, card)
             # 卡片背景跟片內任何一張借來的圖是同一種東西：有人要看過。
             # 卡片本身沒有自己的 `seen` 欄位，借用整句的——反正卡片句從來
             # 不會同時又有 `pic`／`clip`，這個欄位對它來說本來就是空的。
@@ -216,8 +218,18 @@ def fasten_card_bg(topic: str, card: dict[str, Any]) -> None:
     畫格邊上的台標、下標、圖表標籤會被裁掉，跟 `cropped` 門擋 `pic` 的
     fill 是同一個理由，只是卡片背景沒有 `fit` 這個選項可以改，所以在這裡
     直接不准選，不留給後面的門去擋。
+
+    `bg_search`：清單裡沒有喜歡的圖，LLM 給一個關鍵字，而不是編號。這種
+    情況去問 `core/backgrounds.py`——那是跟任何題目無關的共用池子，同一個
+    關鍵字最多存五張，存滿了就不再打 Pexels，直接從裡面挑一張重複利用。
     """
     key = card.get("bg")
+    if key is None and card.get("bg_search") is not None:
+        from core import backgrounds as backgrounds_module
+        info = backgrounds_module.resolve(str(card["bg_search"]))
+        card["bg"] = info["file"]
+        _note_credit(card, info.get("credit"))
+        return
     if not (isinstance(key, str) and CARD_BG_REF.fullmatch(key)):
         return                            # 已經解析過，或者本來就沒填
     pictures = brief_module.sheet(topic).get("pictures") or []
@@ -229,13 +241,18 @@ def fasten_card_bg(topic: str, card: dict[str, Any]) -> None:
         raise ValueError(f"卡片背景不能用新聞畫格（{key}）——"
                           f"滿版鋪開會把台標和下標裁掉，換一張別的照片")
     card["bg"] = info["file"]
-    if info.get("credit"):
-        # 借來的東西上鏡就要有名字，不管它是這句話的主角還是背景——跟
-        # `script.needs_credit()` 判斷的是同一件事，只是卡片的出處是自己
-        # 畫在卡片裡的 `note`，不是 build() 用 ffmpeg 燒的那一行。
-        # 手寫的 note 留著，出處接在後面，不要蓋掉。
-        existing = str(card.get("note") or "").strip()
-        card["note"] = f"{existing}　{info['credit']}" if existing else info["credit"]
+    _note_credit(card, info.get("credit"))
+
+
+def _note_credit(card: dict[str, Any], credit: str | None) -> None:
+    """借來的東西上鏡就要有名字，不管它是這句話的主角還是背景——跟
+    `script.needs_credit()` 判斷的是同一件事，只是卡片的出處是自己畫在
+    卡片裡的 `note`，不是 build() 用 ffmpeg 燒的那一行。手寫的 note 留著，
+    出處接在後面，不要蓋掉。"""
+    if not credit:
+        return
+    existing = str(card.get("note") or "").strip()
+    card["note"] = f"{existing}　{credit}" if existing else credit
 
 
 def suggest_terms(topic: str, say=None) -> dict[str, Any]:

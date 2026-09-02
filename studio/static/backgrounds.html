@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>背景圖庫　AI-Reporters</title>
+<link rel="stylesheet" href="/static/ask.css">
+<link rel="stylesheet" href="/static/theme.css">
+<style>
+  .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px}
+  .bar span.n{font:11.5px var(--mono);color:var(--faint)}
+
+  .kw{margin:0 0 34px}
+  .kw h3{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;
+    font-size:16px}
+  .kw h3 code{font:12px var(--mono);color:var(--faint)}
+
+  .imgs{display:grid;gap:10px;grid-template-columns:repeat(5,1fr)}
+  @media (max-width:1000px){.imgs{grid-template-columns:repeat(2,1fr)}}
+  .img{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+    overflow:hidden;display:flex;flex-direction:column}
+  .img img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;
+    background:#0d1014}
+  .img .foot{padding:7px 9px;display:flex;align-items:center;gap:7px}
+  .img .foot span{font:11px var(--mono);color:var(--faint);flex:1;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .img .foot button{font:10.5px var(--mono);color:var(--faint);
+    background:none;border:1px solid var(--line);border-radius:7px;
+    padding:2px 8px;cursor:pointer;white-space:nowrap}
+  .img .foot button:hover{color:#ff8a72;border-color:#5b2a22}
+  .empty{color:var(--faint);font:13px var(--sans)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>背景圖庫</h1>
+  <p class="under">卡片找不到合用照片時（<code>bg_search</code>），現搜現抓回來
+    共用的池子——<b>不屬於任何一個題目</b>，同一個關鍵字最多存五張，存滿了
+    就不再搜，之後每次都從這五張裡挑一張重複利用。</p>
+  <p class="under">看到不合適的，<b>殺掉它</b>——殺掉會記住，下次補的時候
+    永久跳過，不會又搜回同一張。</p>
+
+  <div class="bar"><span class="n" id="count"></span></div>
+  <div id="list"></div>
+</div>
+
+<script src="/static/nav.js"></script>
+<script src="/static/shared.js"></script>
+<script src="/static/ask.js"></script>
+<script>
+let KEYWORDS = {};
+
+function draw() {
+  const words = Object.keys(KEYWORDS).sort(
+    (a, b) => KEYWORDS[b].length - KEYWORDS[a].length);
+  const total = words.reduce((sum, w) => sum + KEYWORDS[w].length, 0);
+  $("count").textContent = `${words.length} 個關鍵字　${total} 張圖`;
+
+  if (!words.length) {
+    $("list").innerHTML = '<p class="empty">還沒有任何卡片用過 bg_search。</p>';
+    return;
+  }
+
+  $("list").innerHTML = words.map((word) => {
+    const imgs = KEYWORDS[word];
+    return `
+    <div class="kw">
+      <h3><span>${escapeHTML(word)}</span>
+        <code>${imgs.length}/5</code></h3>
+      <div class="imgs">${imgs.map((one) => `
+        <div class="img">
+          <img src="/media/background/${encodeURIComponent(one.file)}"
+            alt="" loading="lazy">
+          <div class="foot">
+            <span title="${escapeHTML(one.author || "")}">${
+              escapeHTML(one.author || "Pexels")}</span>
+            <button data-word="${escapeHTML(word)}" data-key="${escapeHTML(one.key)}">殺掉</button>
+          </div>
+        </div>`).join("")}</div>
+    </div>`;
+  }).join("");
+}
+
+async function load() {
+  const data = await api("GET", "/api/backgrounds");
+  KEYWORDS = data.keywords || {};
+  draw();
+}
+
+$("list").addEventListener("click", async (event) => {
+  const button = event.target.closest("button[data-key]");
+  if (!button) return;
+  button.disabled = true;
+  try {
+    const data = await api("POST", "/api/backgrounds/reject",
+      {keyword: button.dataset.word, id: button.dataset.key});
+    KEYWORDS = data.keywords || {};
+    draw();
+  } catch (error) {
+    told("出錯了", error.message);
+    button.disabled = false;
+  }
+});
+
+load().catch((error) => {
+  $("list").innerHTML = `<p class="empty">讀不到：${escapeHTML(error.message)}</p>`;
+});
+</script>
+</body>
+</html>

@@ -738,11 +738,6 @@ def _word_quote(spec: dict[str, Any], t: float) -> Image.Image:
     return card
 
 
-def _title(spec: dict[str, Any], t: float) -> Image.Image:
-    """A sentence, large, with room under it. The fallback."""
-    return _word({**spec, "ghost": spec.get("ghost", "")}, t)
-
-
 def _number(spec: dict[str, Any], t: float) -> Image.Image:
     """One figure, counted up to.
 
@@ -2480,7 +2475,11 @@ def _outro_card(spec: dict[str, Any], t: float) -> Image.Image:
     points = [str(one) for one in (spec.get("points") or []) if str(one).strip()]
     rows = [row for row in str(spec.get("title", "")).split("\n") if row]
     size = fits(rows, 120, room=W - 2 * MARGIN - 120)
-    high = len(points) * 82 + len(rows) * (size + 18) + 150
+    # `under` 是選填的，畫在標題下面——沒把它的高度算進框裡，框的下緣就會
+    # 剛好切過那一行字中間：框畫的是「摘要＋標題」的高度，`under` 那 44px
+    # 的字連同上面的間距，整段落在框線正上面，畫面上看起來像是被切斷。
+    under_extra = 94 if spec.get("under") else 0
+    high = len(points) * 82 + len(rows) * (size + 18) + 150 + under_extra
     top = TOP + 10
     grow = ease(min(1.0, t * 1.5))
     draw.rounded_rectangle([MARGIN, top, W - MARGIN, top + high * grow], 26,
@@ -2518,7 +2517,6 @@ def _outro_card(spec: dict[str, Any], t: float) -> Image.Image:
 # 每一種卡有哪些畫法。放在函式都定義完之後 —— 在上面填的話，名字還不存在。
 WAYS.update({
     "word":   [_word, _word_left, _word_boxed, _word_mark, _word_quote],
-    "title":  [_word, _word_left, _word_boxed, _word_mark, _word_quote],
     "number": [_number, _number_dial, _number_unit, _number_stamp,
                _number_ghost],
     "ring":   [_ring, _ring_box, _ring_under, _ring_arrow, _ring_burst],
@@ -2533,7 +2531,7 @@ WAYS.update({
     "outro":  [_outro, _outro_ticks, _outro_steps, _outro_lead, _outro_card],
 })
 
-KINDS = {"title": _title, "outro": _outro, "word": _word, "number": _number, "bars": _bars,
+KINDS = {"outro": _outro, "word": _word, "number": _number, "bars": _bars,
          "split": _split, "chain": _chain, "queue": _queue, "stack": _stack,
          "clock": _clock, "ring": _ring, "swap": _swap, "cover": _cover}
 
@@ -2614,7 +2612,7 @@ def way_for(spec: dict[str, Any], seed: str = ""):
     有籤的時候把籤混進去。混、而不是直接 `random.choice`，是為了讓同一支片
     裡不同的卡還是分到不同的畫法：籤只換一次位移，散開的還是內容。
     """
-    kind = str(spec.get("kind") or "title")
+    kind = str(spec.get("kind") or "word")
     ways = WAYS.get(kind) or [KINDS.get(kind, _word)]
     off = _off()
     live = [one for one in ways if f"{kind}.{one.__name__}" not in off] or ways[:1]

@@ -445,6 +445,10 @@ function scriptCard(one) {
     <div class="item ${one.name === STATE.chosen ? "on" : ""}${
       one.archived ? " archived" : ""}"
          data-name="${escapeHTML(one.name)}">
+      <span class="row-acts">
+        <button class="tiny act" data-del="${escapeHTML(one.name)}"
+          title="刪除這份文案（連壓好的成片一起）">🗑</button>
+      </span>
       <b>${escapeHTML(one.name)}</b>
       <span class="facts">${escapeHTML(one.house || one.format || "")}　`
       + `${one.lines} 句　${clock(one.seconds)}</span>
@@ -1302,7 +1306,28 @@ async function redrawCard() {
 
 /* ---------------------------------------------------------------- 綁事件 */
 
-$("list").addEventListener("click", (event) => {
+$("list").addEventListener("click", async (event) => {
+  const del = event.target.closest("[data-del]");
+  if (del) {
+    event.stopPropagation();     // 刪除不是「打開」
+    const name = del.dataset.del;
+    if (!await confirmed(`刪掉文案「${name}」？`, {
+      body: "壓好的成片、卡片會一起丟進垃圾桶，找得回來，但不會再出現在這份清單。",
+      yes: "刪掉", no: "算了"})) return;
+    del.disabled = true;
+    try {
+      await api("POST", "/api/script/delete", {name});
+      if (STATE.chosen === name) STATE.chosen = "";
+      const found = await api("GET", "/api/scripts");
+      STATE.list = found.scripts || [];
+      renderList();
+      if (!STATE.chosen) {
+        $("paper").innerHTML = '<div class="empty">左邊選一份文案　·　'
+          + '新的文案在<button class="tiny" id="btnGoTopics">素材</button>那一頁產生</div>';
+      }
+    } catch (error) { told("出錯了", error.message); del.disabled = false; }
+    return;
+  }
   const row = event.target.closest("[data-name]");
   if (row) { STATE.chosen = row.dataset.name; renderList(); showScript(row.dataset.name); }
 });

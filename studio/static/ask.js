@@ -17,6 +17,38 @@
    them inside out into callbacks. */
 let ASKING = null;
 
+/* 對話框跟著上一次點下去的地方走，不要每次都彈在畫面正中間。
+   刪一份文案，垃圾桶按鈕常常在畫面左邊靠邊的清單裡，彈窗釘死在正中央
+   的話，滑鼠要拉一大段才點得到「確定」——而這是一個會連續做好幾次的
+   動作（刪好幾份測試文案），每次都要拉那段路。
+   用 capture 階段記下每一次點下去的座標，不用改任何一個呼叫 confirmed()
+   的地方——那些地方本來就是在一個 click handler 裡面呼叫的，這裡記到的
+   永遠是「按下那顆按鈕的地方」。 */
+let LAST_CLICK = null;
+document.addEventListener("pointerdown", (event) => {
+  LAST_CLICK = {x: event.clientX, y: event.clientY};
+}, true);
+
+function placeAsk() {
+  const box = document.querySelector("#ask .ask-inner");
+  if (!LAST_CLICK) {
+    box.style.position = "";
+    box.style.left = box.style.top = box.style.margin = "";
+    return;
+  }
+  const pad = 12;
+  const rect = box.getBoundingClientRect();
+  let left = LAST_CLICK.x - rect.width / 2;
+  let top = LAST_CLICK.y + 16;
+  left = Math.max(pad, Math.min(left, innerWidth - rect.width - pad));
+  if (top + rect.height > innerHeight - pad) top = LAST_CLICK.y - rect.height - 16;
+  top = Math.max(pad, top);
+  box.style.position = "fixed";
+  box.style.left = `${left}px`;
+  box.style.top = `${top}px`;
+  box.style.margin = "0";
+}
+
 function showAsk(title, body, yes, no) {
   $("askTitle").textContent = title;
   $("askBody").innerHTML = body;
@@ -24,6 +56,7 @@ function showAsk(title, body, yes, no) {
   $("askNo").hidden = !no;
   if (no) $("askNo").textContent = no;
   $("ask").hidden = false;
+  placeAsk();
   $("askYes").focus();
   return new Promise((settle) => { ASKING = settle; });
 }

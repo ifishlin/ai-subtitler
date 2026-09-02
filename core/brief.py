@@ -238,6 +238,16 @@ def as_text(name: str) -> str:
         for index, one in enumerate(found["stock"], start=1):
             out.append(f"[V{index}] {one['group']}　{one['term']}"
                        f"　（{one['seconds']}s）")
+
+    # 卡片背景的關鍵字，跨題目共用，不屬於這個題目——所以不編號，只列出
+    # 字串。想要「鈔票特寫」這種畫面，先看這裡有沒有已經寫過的關鍵字夠
+    # 貼近，貼近就照抄那個字串；真的沒有再自己想一個新的。
+    from core import backgrounds as backgrounds_module
+    reused = backgrounds_module.top_keywords()
+    if reused:
+        out += ["", "## 卡片背景已經有的關鍵字　—— 想要類似的畫面就照抄，"
+                    "不要多想一個意思一樣的新詞"]
+        out.append("、".join(reused))
     return "\n".join(out)
 
 
