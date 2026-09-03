@@ -15,6 +15,7 @@ correctly is the path of least resistance rather than an errand.
 """
 from __future__ import annotations
 
+import re
 from pathlib import Path
 from typing import Any
 
@@ -28,6 +29,13 @@ ROOT = Path(__file__).resolve().parent.parent
 PASSAGE_CHARS = rules_module.at("brief.passage_chars", 200)
 CAPTION_CHARS = rules_module.at("brief.caption_chars", 200)
 
+# 畫格上偶爾帶著同一支新聞快報下一條的死傷數字（快報一支影片講好幾件事，
+# 抓格是按秒數切的，不看內容）。擋的是這種「剛好經過」，不是題目真的在講
+# 死傷——那種時候 `term`（搜尋詞）裡也會有這些字，見 sheet() 裡的用法。
+_DISASTER_WORDS = re.compile(
+    r"\b(killed|dead|deaths?|died|dies|dying|injured|crash(?:ed)?|casualt)",
+    re.IGNORECASE)
+
 
 def sheet(name: str) -> dict[str, Any]:
     """Everything available for this topic, in the shape a writer needs it."""
@@ -36,6 +44,15 @@ def sheet(name: str) -> dict[str, Any]:
     pile = topic_module.load(name)
     pictures = []
     for item in pile["sources"]["images"]:
+        # 畫格是從整支影片抓下來的一格，不是搜來的——一支新聞快報講完
+        # 這一題，下一秒可能在講空難死傷。那一格會通過每一道門（程式看不出
+        # 畫格上寫什麼），只有讀了 caption 的人才知道那是另一條新聞。
+        # `term` 是搜尋詞，不是這張圖真正的內容——如果詞裡本來就有這些字，
+        # 代表是真的為了這件事去搜死傷數字，不擋；擋的是「剛好經過」那種。
+        if (item.get("kind") == "frame"
+                and _DISASTER_WORDS.search(item.get("caption", ""))
+                and not _DISASTER_WORDS.search(item.get("term", ""))):
+            continue
         pictures.append({
             "file": item.get("file", ""),
             "kind": item.get("kind", "stock"),
@@ -152,6 +169,10 @@ def as_text(name: str) -> str:
         for one in stray:
             out.append(f"- {one['outlet']}　{one['title']}")
             out.append(f"  {one['why']}")
+        out.append("  下面「影片段落」清單裡這幾支的段落還是會出現——"
+                    "切點是照聲音的停頓算的，跟字幕比對是兩件事，段落本身"
+                    "可能還是切得乾淨。只是這支影片沒辦法自動判斷「這段適不"
+                    "適合這句話」，那個判斷落回你身上，多讀一遍那段引言再決定。")
         out.append("")
 
     # 按影片分組，每一組掛它自己的標題。
@@ -201,8 +222,12 @@ def as_text(name: str) -> str:
     #
     # 留下來的只有兩樣：圖自己的說明，以及畫格的「誰在第幾秒說了什麼」——
     # 那是唯一指得回事件本身的一種。
-    out.append("## 照片　—— 這是來源自己對每張圖的說明。挑的時候照這句判斷")
-    for index, one in enumerate(found["pictures"], start=1):
+    # 編號一定是這張圖在 found["pictures"] 裡原本的位置，不是分區之後重新
+    # 數的——`pick()` 也是照這份清單原本的順序查 P#，兩邊分家的話編號就
+    # 對不起來。所以下面分兩輪印，但共用同一份 enumerate。
+    numbered = list(enumerate(found["pictures"], start=1))
+
+    def picture_line(index: int, one: dict[str, Any]) -> None:
         # 說明也整句給。本來 100，我今天為了省 prompt 改成 70 —— 只算了
         # 省多少字，沒算三十五張裡有二十四張會被截。上限是為了擋住偶爾出現的
         # 三百字長說明，不是為了省空間。
@@ -217,7 +242,25 @@ def as_text(name: str) -> str:
         if one.get("at") is not None:
             out.append(f"      {one['outlet']} 第 {one['at']:.0f} 秒"
                        f"：{one['said'][:CAPTION_CHARS]}")
+
+    out.append("## 照片　—— 這是來源自己對每張圖的說明。挑的時候照這句判斷")
+    for index, one in numbered:
+        if one.get("at") is None:
+            picture_line(index, one)
     out.append("")
+
+    # 畫格：從影片抓下來的一格，不是拍來當照片用的——一定帶著台標、下標，
+    # 而且底下那行是「那一秒在說什麼」，不是圖上有什麼。以前這兩種混在同一
+    # 節底下、靠有沒有「第 N 秒」那一行才分得出來，`visual.md` 卻寫著
+    # 「素材表上標『畫格』的那些」——但從來沒有任何一張真的標著這兩個字。
+    # 現在分成自己的一節，講的話跟看到的字對得上。
+    frames = [(index, one) for index, one in numbered if one.get("at") is not None]
+    if frames:
+        out.append("## 新聞畫格　—— 從影片抓的一格，底下那行是那一秒在說什麼，"
+                    "不是圖上有什麼。不能當卡片背景，滿版鋪開會把台標、下標裁掉")
+        for index, one in frames:
+            picture_line(index, one)
+        out.append("")
 
     # 欄位名是 `say`。這裡本來寫 `text` —— 而 `.get("text")` 不會拋錯，只會
     # 回空字串，所以六十則留言變成十二行「- 」，八個字。同一個欄位名這個專案
@@ -225,7 +268,12 @@ def as_text(name: str) -> str:
     #
     # 讚數帶著送：一則被按四十次讚的話，跟一則沒人理的話，對「觀眾在意什麼」
     # 的意義完全不同，而那正是這一節存在的理由。
-    out.append("## 鄉民反應　—— 按讚數排的。語氣和「這件事在哪裡碰到你」從這裡來")
+    out.append("## 鄉民反應　—— 按讚數排的，拿來判斷這件事在觀眾那裡是什麼溫度，"
+                "不是拿來抄語氣。按讚數高的常常是最狠的那句，狠不等於好笑——"
+                "「詼諧要來自比喻，不是來自嘲笑」優先。留言在講「這件事在哪裡"
+                "碰到我」的時候特別有用，那種通常讚數不高，要自己往下找；"
+                "整批都在表態、沒有一條在講切身的，就是這批留言對你沒用，"
+                "回去看事實清單")
     for voice in found["voices"][:12]:
         said = " ".join(voice["say"].split())[:90]
         out.append(f"- {said}　（{voice['likes']} 讚）")
