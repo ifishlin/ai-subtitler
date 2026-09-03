@@ -78,6 +78,7 @@ def caption_layer(rows: list[str]) -> Image.Image:
 
 SOURCE_SIZE = rules_module.look("frame.source_caption_size", 30)
 SOURCE_MOST_ROWS = rules_module.look("frame.source_caption_rows", 3)
+SOURCE_TOP = rules_module.look("frame.source_caption_top", 1050)
 
 
 def _wrap_by_width(text: str, font: ImageFont.FreeTypeFont,
@@ -107,10 +108,10 @@ def _wrap_by_width(text: str, font: ImageFont.FreeTypeFont,
 def source_caption_layer(text: str) -> Image.Image:
     """The clip's own words, in the language it was actually said in.
 
-    Only for a line that runs a piece of the source video. It goes in the
-    band that is always free below the spoken caption -- that caption grows
-    upward from a fixed bottom anchor (see `caption_layer`), so the band
-    below it is empty whether the spoken line took one row or three.
+    Only for a line that runs a piece of the source video. It grows downward
+    from `SOURCE_TOP`, right below the video's own bottom edge -- not from a
+    bottom anchor of the frame, which used to leave it floating a full
+    background's width away from the picture it belongs to.
 
     This is what makes a clip checkable without leaving the film: anyone who
     reads English can compare what we chose to say against what was actually
@@ -136,11 +137,11 @@ def source_caption_layer(text: str) -> Image.Image:
             break
     rows = rows[:SOURCE_MOST_ROWS]
     step = size + 12
-    top = H - 60 - len(rows) * step
+    top = SOURCE_TOP
     for index, row in enumerate(rows):
         draw.text((W / 2, top + index * step), row, font=font,
-                  fill=(255, 255, 255, 190), anchor="ma",
-                  stroke_width=2, stroke_fill=(0, 0, 0, 190))
+                  fill=(255, 255, 255, 255), anchor="ma",
+                  stroke_width=2, stroke_fill=(0, 0, 0, 220))
     return layer
 
 

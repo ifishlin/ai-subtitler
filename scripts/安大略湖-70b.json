@@ -1,0 +1,309 @@
+{
+  "topic": "川普要把安大略湖改名",
+  "view": "加拿大沒有只是嘴上反駁，看板、承諾、鏡頭前的態度全部做了一輪",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
+    "tagline": "加拿大沒有只是嘴上說說"
+  },
+  "lines": [
+    {
+      "say": "美國政府把湖改名了",
+      "role": "起",
+      "show": "影片：官方新地圖",
+      "clip": "C19",
+      "seen": true,
+      "from": "Fox News〈Peter Doocy: This is the OFFICIAL new map〉",
+      "seconds": 5.64
+    },
+    {
+      "say": "叫美利堅湖",
+      "role": "起",
+      "show": "CNN 畫面寫著改名生效",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_2.jpg",
+      "seen": true,
+      "from": "CNN 第 3 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "這座湖歷史很久了",
+      "role": "起",
+      "show": "自製：這座湖的年紀",
+      "card": {
+        "kind": "word",
+        "title": "1867年安大略省建省，省名就來自這座湖",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/31805295.jpg"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename 〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "十七世紀就擋過改名",
+      "role": "起",
+      "show": "自製：不是第一次有人想改名",
+      "card": {
+        "kind": "word",
+        "title": "十七、十八世紀，這座湖擋過法國人的改名嘗試",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/5663229.jpg"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename 〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "加拿大電視上直接反駁",
+      "role": "承",
+      "show": "影片：卡尼在社群上回話",
+      "clip": "C20",
+      "seen": true,
+      "from": "Fox News〈Peter Doocy: This is the OFFICIAL new map〉",
+      "seconds": 4.89
+    },
+    {
+      "say": "現在和永遠都叫安大略湖",
+      "role": "承",
+      "show": "新聞畫面寫著現在和永遠",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_42.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 40 秒",
+      "seconds": 2.39
+    },
+    {
+      "say": "溫達特語裡另有意思",
+      "role": "承",
+      "show": "自製：這名字原本的意思",
+      "card": {
+        "kind": "word",
+        "title": "溫達特語裡，這名字是「這湖很美、這湖很大」",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg.jpg",
+        "note": "Lea-Kim／CC BY-SA 4.0"
+      },
+      "from": "The Guardian〈Canada erects giant 'Lak〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "塞內卡族也不答應",
+      "role": "承",
+      "show": "自製：原住民也表態",
+      "card": {
+        "kind": "ring",
+        "value": "不答應",
+        "title": "塞內卡族的回應",
+        "under": "政治行動不能抹去我們的文化",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/37260512.jpg"
+      },
+      "from": "Fox News〈Seneca Nation leader cal〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "反覆播著同一句話",
+      "role": "轉",
+      "show": "自製：電視上反覆播的話",
+      "card": {
+        "kind": "ring",
+        "value": "現在和永遠",
+        "title": "加拿大電視反覆播的那句話",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+        "note": "Saffron Blaze／CC BY-SA 3.0"
+      },
+      "from": "Fox Business 第 46 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "省長立了一面巨型看板",
+      "role": "轉",
+      "show": "自製：邊界大路旁的看板",
+      "card": {
+        "kind": "word",
+        "title": "邊界大路旁立看板",
+        "note": "英法雙語寫著現在和永遠",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/13398906.jpg"
+      },
+      "from": "NPR〈Canada claps back at Tru〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "他說愛怎麼叫是川普的事",
+      "role": "轉",
+      "show": "自製：福特的回應",
+      "card": {
+        "kind": "swap",
+        "title": "福特怎麼回",
+        "was": "愛怎麼叫都行，是他的事",
+        "now": "世界其他地方永遠叫安大略湖",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+        "note": "Daniel Torok／Public domain"
+      },
+      "from": "NPR〈Canada claps back at Tru〉",
+      "seconds": 2.39
+    },
+    {
+      "say": "卡尼承諾一塊錢對一塊錢反制",
+      "role": "轉",
+      "show": "自製：對等反制",
+      "card": {
+        "kind": "word",
+        "title": "一塊錢對一塊錢",
+        "ghost": "卡尼的承諾",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/2025-11-14_InaugurationREM_Deux-Montagnes_Mark_Carney.jpg.jpg",
+        "note": "Lea-Kim／CC BY-SA 4.0"
+      },
+      "from": "NPR〈Canada claps back at Tru〉",
+      "seconds": 2.83
+    },
+    {
+      "say": "渥太華也搞混了",
+      "role": "轉",
+      "show": "自製：連自己人都搞混",
+      "card": {
+        "kind": "word",
+        "title": "渥太華電力公司地圖也一度顯示「美利堅湖」",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+        "note": "NASA／Public domain"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "谷歌只改美國看到的",
+      "role": "轉",
+      "show": "自製：谷歌怎麼處理這個名字",
+      "card": {
+        "kind": "ring",
+        "value": "只改美國",
+        "title": "谷歌的地圖",
+        "under": "加拿大用戶看到的還是安大略湖",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/10075823.jpg"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "蘋果地圖也被要求改",
+      "role": "轉",
+      "show": "自製：連蘋果都被點名",
+      "card": {
+        "kind": "word",
+        "title": "內政部長說已經直接聯絡蘋果，要地圖也跟著改",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/8730998.jpg"
+      },
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "新聞台也吵不出一個名字",
+      "role": "轉",
+      "show": "CNN 畫面打出兩個名字並列",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_359.jpg",
+      "seen": true,
+      "from": "CNN 第 360 秒",
+      "seconds": 2.39
+    },
+    {
+      "say": "加拿大是受衝擊最大的國家",
+      "role": "轉",
+      "show": "影片：分析加拿大受關稅衝擊",
+      "clip": "C30",
+      "seen": true,
+      "from": "The Economist〈Mark Carney on dealing with Donald Trump〉",
+      "seconds": 3.89
+    },
+    {
+      "say": "省長跟總統直接槓上了",
+      "role": "轉",
+      "show": "影片：福特跟川普對上",
+      "clip": "C29",
+      "seen": true,
+      "from": "BBC News〈Carney stands up to Trump | The Global Story〉",
+      "seconds": 5.19
+    },
+    {
+      "say": "紐約州長也不埋單",
+      "role": "轉",
+      "show": "自製：紐約州也不跟",
+      "card": {
+        "kind": "word",
+        "title": "紐約州長霍楚也公開拒絕這個新名字",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/31805295.jpg"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "眾議員說沒有用",
+      "role": "轉",
+      "show": "自製：國會也不埋單",
+      "card": {
+        "kind": "word",
+        "title": "眾議員丁格爾：這道命令不具任何效力",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/10075823.jpg"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "連併州的說法都被問出來了",
+      "role": "合",
+      "show": "影片：被問到第51州的說法",
+      "clip": "C31",
+      "seen": true,
+      "from": "The Guardian〈Mark Carney tells Trump 'Canada will never be for sa〉",
+      "seconds": 4.42
+    },
+    {
+      "say": "美國人不挺這步棋",
+      "role": "合",
+      "show": "CNN 畫面談美國人的態度",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_111.jpg",
+      "seen": true,
+      "from": "CNN 第 111 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "主播也開了玩笑",
+      "role": "合",
+      "show": "CNN 畫面談美式足球主播的玩笑",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_17.jpg",
+      "seen": true,
+      "from": "CNN 第 17 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "看板立在那裡，寫著現在和永遠",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "seconds": 6.5,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "points": [
+          "安大略省長立巨型看板反擊",
+          "卡尼承諾一塊錢對一塊錢反制",
+          "加拿大是關稅衝擊最大的國家",
+          "省長跟總統直接槓上"
+        ],
+        "title": "改名是一句話\n看板立在那裡，寫著現在和永遠",
+        "under": "美國改了文件，加拿大立了看板",
+        "bg": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+        "note": "Saffron Blaze／CC BY-SA 3.0"
+      },
+      "from": "觀點"
+    }
+  ],
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人"
+}

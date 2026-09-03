@@ -1,0 +1,233 @@
+{
+  "topic": "川普要把安大略湖改名",
+  "view": "官方信心負十五，加拿大好感正四十八——民調不埋單，改名也留不住人",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+    "tagline": "民調不埋單"
+  },
+  "lines": [
+    {
+      "say": "美國政府把湖改名了",
+      "role": "起",
+      "show": "影片：簽署改名命令",
+      "clip": "C19",
+      "seen": true,
+      "from": "Fox News〈Peter Doocy: This is the OFFICIAL new map〉",
+      "seconds": 5.64
+    },
+    {
+      "say": "說改就改",
+      "role": "起",
+      "show": "自製：說改就改",
+      "card": {
+        "kind": "word",
+        "title": "說改就改",
+        "ghost": "美利堅湖",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/37260512.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "CNN抓到反應",
+      "role": "承",
+      "show": "CNN 畫面顯示搜尋結果",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+      "seen": true,
+      "from": "CNN 第 62 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "五十州都沒變",
+      "role": "承",
+      "show": "自製：五十州都沒變",
+      "card": {
+        "kind": "word",
+        "title": "五十州",
+        "note": "一州都沒換",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/5663229.jpg"
+      },
+      "from": "CNN 第 70 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "系統要除名安大略湖",
+      "role": "承",
+      "show": "PBS 畫面：地名系統要更新",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 136 秒",
+      "seconds": 1.96
+    },
+    {
+      "say": "CNN說這像鉛氣球",
+      "role": "轉",
+      "show": "影片：CNN 評論反應很差",
+      "clip": "C11",
+      "seen": true,
+      "from": "CNN 第 137 秒",
+      "seconds": 6.45
+    },
+    {
+      "say": "加拿大是被關稅打最重的國家",
+      "role": "轉",
+      "show": "影片：經濟學人談加拿大受衝擊",
+      "clip": "C30",
+      "seen": true,
+      "from": "The Economist〈Mark Carney on dealing with Donald Trump〉",
+      "seconds": 3.89
+    },
+    {
+      "say": "影片被看了三千萬次",
+      "role": "轉",
+      "show": "CNN 畫面：改名影片被看了三千萬次",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_28.jpg",
+      "seen": true,
+      "from": "CNN 第 84 秒",
+      "seconds": 1.96
+    },
+    {
+      "say": "當天下午就改好系統",
+      "role": "轉",
+      "show": "Fox 畫面：官方系統當天就改了",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_OciTiMiQerI_672.jpg",
+      "seen": true,
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "下一步可能改海洋",
+      "role": "轉",
+      "show": "PBS 畫面：他說下一步可能是海洋",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_297.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 309 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "原住民要求撤回",
+      "role": "轉",
+      "show": "自製：塞內卡族要求撤回",
+      "card": {
+        "kind": "word",
+        "title": "撤回命令",
+        "ghost": "塞內卡族",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/32272512.jpg"
+      },
+      "from": "Fox News〈Seneca Nation leader cal〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "議員說命令沒效力",
+      "role": "轉",
+      "show": "自製：議員說命令沒有效力",
+      "card": {
+        "kind": "word",
+        "title": "命令沒有效力",
+        "ghost": "國會議員",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/618158.jpg"
+      },
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "美加信心負十五",
+      "role": "轉",
+      "show": "自製：信心負十五",
+      "card": {
+        "kind": "swap",
+        "title": "美國人怎麼看",
+        "was": "對川普：淨值負15",
+        "now": "對加拿大：淨值正48",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+        "note": "Daniel Torok／Public domain"
+      },
+      "from": "CNN 第 114 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "加拿大好感更高",
+      "role": "轉",
+      "show": "自製：好感度對比",
+      "card": {
+        "kind": "ring",
+        "value": "正48",
+        "title": "對加拿大的好感",
+        "under": "改名沒有拉低這個數字",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/1685778.jpg"
+      },
+      "from": "CNN 第 114 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "文件能蓋章",
+      "role": "合",
+      "show": "自製：文件蓋章換名",
+      "card": {
+        "kind": "swap",
+        "title": "行政命令能做的",
+        "was": "安大略湖",
+        "now": "美利堅湖",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/6814526.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "命令只約束聯邦機構",
+      "role": "合",
+      "show": "PBS 畫面：命令對別州沒有約束力",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_5.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 20 秒",
+      "seconds": 1.96
+    },
+    {
+      "say": "文件外什麼都沒變",
+      "role": "合",
+      "show": "自製：學者說只有文件變了",
+      "card": {
+        "kind": "word",
+        "title": "文件外什麼都沒變",
+        "ghost": "哥倫比亞大學研究員",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/31805295.jpg"
+      },
+      "from": "CNN〈Can Trump actually chang〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "民調不會跟著蓋章",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "seconds": 6.5,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "points": [
+          "美國政府正式把湖改名",
+          "五十州仍搜尋安大略湖",
+          "塞內卡族與國會議員都反對",
+          "文件外，什麼都沒真的改變"
+        ],
+        "title": "文件能蓋章\n民調不會跟著蓋章",
+        "under": "改名容易，改觀感很難",
+        "bg": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+        "note": "NASA／Public domain"
+      },
+      "from": "觀點"
+    }
+  ],
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人"
+}

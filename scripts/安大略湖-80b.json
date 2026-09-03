@@ -1,0 +1,359 @@
+{
+  "topic": "川普要把安大略湖改名",
+  "view": "安大略湖不是特例，是他任內一長串改名清單裡最新的一筆",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+    "tagline": "改名清單，又多一筆"
+  },
+  "lines": [
+    {
+      "say": "美國政府把湖改名了",
+      "role": "起",
+      "show": "影片：官方宣布改名",
+      "clip": "C24",
+      "seen": true,
+      "from": "Bloomberg〈Trump Renames Lake Ontario as Lake America, Says Can〉",
+      "seconds": 7.84
+    },
+    {
+      "say": "叫美利堅湖",
+      "role": "起",
+      "show": "CNN 畫面寫著改名生效",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_2.jpg",
+      "seen": true,
+      "from": "CNN 第 3 秒",
+      "seconds": 1.9
+    },
+    {
+      "say": "轉播主播也拿來開玩笑",
+      "role": "起",
+      "show": "CNN 畫面：主播開玩笑說伊利湖",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_17.jpg",
+      "seen": true,
+      "from": "CNN 第 17 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "但這不是第一次改名",
+      "role": "承",
+      "show": "自製：十八個月前",
+      "card": {
+        "kind": "swap",
+        "title": "十八個月前",
+        "was": "墨西哥灣",
+        "now": "美國灣",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/38645978.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "那座山也改過",
+      "role": "承",
+      "show": "自製：迪納利山改名",
+      "card": {
+        "kind": "swap",
+        "title": "同一年",
+        "was": "迪納利山",
+        "now": "麥金利山",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/10075823.jpg"
+      },
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "他早就說這件事想了很久",
+      "role": "承",
+      "show": "PBS 畫面：這件事他想了很久",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_297.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 298 秒",
+      "seconds": 2.39
+    },
+    {
+      "say": "他先前也用同樣方式威脅過",
+      "role": "承",
+      "show": "PBS 畫面：他先前就威脅要改名",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_S9NbJin7oCM_26.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 26 秒",
+      "seconds": 2.61
+    },
+    {
+      "say": "記者不改名被趕出去",
+      "role": "承",
+      "show": "自製：美聯社的下場",
+      "card": {
+        "kind": "word",
+        "title": "美聯社的下場",
+        "ghost": "拒用美國灣，被禁止進入橢圓形辦公室",
+        "tone": "cool",
+        "bg": "assets/photos/川普要把安大略湖改名/6814526.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "研究機構也逃不掉",
+      "role": "轉",
+      "show": "自製：改名的機構",
+      "card": {
+        "kind": "word",
+        "title": "美國和平研究所",
+        "ghost": "改成了唐納·川普美國和平研究所",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/32272511.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "還推出同名金融產品",
+      "role": "轉",
+      "show": "自製：他推出的金融產品",
+      "card": {
+        "kind": "ring",
+        "title": "他推出的金融產品",
+        "value": "川普帳戶、TrumpRx",
+        "under": "同一套邏輯",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+        "note": "Daniel Torok／Public domain"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "戰艦也要用他的名字",
+      "role": "轉",
+      "show": "自製：川普級戰艦",
+      "card": {
+        "kind": "word",
+        "title": "計畫中的「川普級」戰艦",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025)_(cropped)(2).jpg.jpg",
+        "note": "Daniel Torok／Public domain"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "同一任內至少四件",
+      "role": "轉",
+      "show": "自製：至少四件事",
+      "card": {
+        "kind": "number",
+        "title": "至少",
+        "value": "4",
+        "under": "灣、山、機構、湖，都是同一個人",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/10075823.jpg"
+      },
+      "from": "觀點",
+      "seconds": 1.9
+    },
+    {
+      "say": "湖只是清單上最新一筆",
+      "role": "轉",
+      "show": "自製：改名清單",
+      "card": {
+        "kind": "chain",
+        "title": "改名清單",
+        "points": [
+          "墨西哥灣",
+          "迪納利山",
+          "和平研究所",
+          "安大略湖"
+        ],
+        "under": "同一個人做的同一件事",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/32272512.jpg"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "地圖上真的顯示新名字",
+      "role": "轉",
+      "show": "CNN 畫面：地圖上真的改了",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_28.jpg",
+      "seen": true,
+      "from": "CNN 第 28 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "連主播都說是同一套模式",
+      "role": "轉",
+      "show": "影片：主播也這樣說",
+      "clip": "C33",
+      "seen": true,
+      "from": "Deutsche Welle〈Canadians laugh off a lake name change - but what ab〉",
+      "seconds": 10.53
+    },
+    {
+      "say": "命令只講表彰貢獻",
+      "role": "轉",
+      "show": "自製：命令自己怎麼說",
+      "card": {
+        "kind": "word",
+        "title": "命令自己怎麼說",
+        "ghost": "只說要表彰美國人民的非凡貢獻",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/6814526.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "CNN說這次反應也一樣差",
+      "role": "轉",
+      "show": "影片：CNN 評論反應很差",
+      "clip": "C11",
+      "seen": true,
+      "from": "CNN 第 137 秒",
+      "seconds": 6.45
+    },
+    {
+      "say": "地名系統本身也要跟著換",
+      "role": "轉",
+      "show": "PBS 畫面：地名系統要更新",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mH6N-V7AHaE_135.jpg",
+      "seen": true,
+      "from": "PBS NewsHour 第 136 秒",
+      "seconds": 2.39
+    },
+    {
+      "say": "十八個月後沒人跟叫",
+      "role": "轉",
+      "show": "自製：十八個月後",
+      "card": {
+        "kind": "word",
+        "title": "十八個月後",
+        "ghost": "幾乎沒有正經媒體在用美國灣",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/38645978.jpg"
+      },
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "Google稱反映官方名稱",
+      "role": "轉",
+      "show": "自製：Google的說法",
+      "card": {
+        "kind": "word",
+        "title": "Google的說法",
+        "ghost": "反映官方政府來源的名稱變更",
+        "tone": "light",
+        "bg": "assets/photos/川普要把安大略湖改名/31805295.jpg"
+      },
+      "from": "The Guardian〈Canada erects giant 'Lak〉",
+      "seconds": 2.83
+    },
+    {
+      "say": "這不是意外是固定動作",
+      "role": "合",
+      "show": "自製：模式",
+      "card": {
+        "kind": "ring",
+        "value": "固定動作",
+        "title": "這不是意外",
+        "under": "他任內做過不只一次",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/31805295.jpg"
+      },
+      "from": "觀點",
+      "seconds": 2.17
+    },
+    {
+      "say": "五十州都還在搜舊名字",
+      "role": "合",
+      "show": "CNN 畫面顯示五十州搜尋結果",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_mprYW_i27FM_62.jpg",
+      "seen": true,
+      "from": "CNN 第 70 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "媒體標題也在問怎麼叫",
+      "role": "合",
+      "show": "CNN 畫面：標題也在問怎麼叫",
+      "pic": "assets/photos/川普要把安大略湖改名/frame_NGrWxr7FVPE_359.jpg",
+      "seen": true,
+      "from": "CNN 第 360 秒",
+      "seconds": 2.17
+    },
+    {
+      "say": "他還拍影片自嘲一番",
+      "role": "合",
+      "show": "自製：他還拍了一段影片",
+      "card": {
+        "kind": "word",
+        "title": "他還拍了一段影片",
+        "ghost": "把看板換成美利堅湖，還跳了YMCA",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/19784153.jpg"
+      },
+      "from": "The Guardian〈Canada erects giant 'Lak〉",
+      "seconds": 1.96
+    },
+    {
+      "say": "這名字比省份還老",
+      "role": "合",
+      "show": "自製：這名字比省份老",
+      "card": {
+        "kind": "word",
+        "title": "這名字比省份老",
+        "ghost": "1867年安大略建省，省名就是取自這座湖",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+        "note": "NASA／Public domain"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "seconds": 1.9
+    },
+    {
+      "say": "學者說在抹去原民文化",
+      "role": "合",
+      "show": "自製：學者的評論",
+      "card": {
+        "kind": "word",
+        "title": "地理學教授說",
+        "ghost": "是新殖民式的地理想像",
+        "tone": "warm",
+        "bg": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+        "note": "Saffron Blaze／CC BY-SA 3.0"
+      },
+      "from": "Al Jazeera English〈Can Trump really rename〉",
+      "seconds": 2.17
+    },
+    {
+      "say": "清單還會再長，名字改不改得掉是另一回事",
+      "role": "合",
+      "show": "自製：結尾頁",
+      "seconds": 6.5,
+      "card": {
+        "kind": "outro",
+        "tone": "cool",
+        "points": [
+          "墨西哥灣、迪納利山都已經改過",
+          "和平研究所也冠上了他的名字",
+          "安大略湖是清單上最新一筆",
+          "五十州仍搜尋安大略湖"
+        ],
+        "title": "這是他的固定動作\n清單還會再長，名字改不改得掉是另一回事",
+        "under": "簽名很快，讓人跟著叫很慢",
+        "bg": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+        "note": "NASA／Public domain"
+      },
+      "from": "觀點"
+    }
+  ],
+  "format": "argue",
+  "narration": false,
+  "for": "想看怪事的人"
+}

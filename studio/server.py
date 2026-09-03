@@ -2304,6 +2304,40 @@ def _draw_cards(name: str, measured: dict[str, Any]) -> None:
     cards_module.sweep(name, drawn)
 
 
+def _warm_card_cache() -> None:
+    """Draw every card in every script once, before anyone asks.
+
+    `_draw_cards()` caches on the spec's own hash, so a script whose cards
+    were already drawn costs almost nothing here -- a filesystem stat per
+    card. One whose cards are missing (freshly written or freshly edited,
+    especially now that most cards carry a `bg` photo to composite) costs
+    real seconds per card, and `/api/script` used to be where that bill came
+    due: opening a script for the first time after saving it could take
+    30-45 seconds with 20-30 cards to draw, which read as "the page is
+    slow" when it was actually "nobody has looked at this yet." Paying that
+    bill here, once, in the background, right after the server starts,
+    means the first click a person makes is never the first render.
+
+    Runs in a thread so it cannot delay accepting connections; each script
+    is wrapped so one broken script (a bad card spec, a missing topic)
+    does not stop the rest from warming.
+    """
+    from core import script as script_module
+    names = script_module.listing()
+    if not names:
+        return
+    print(f"暖卡片快取：{len(names)} 份文案")
+    for name in names:
+        try:
+            found = script_module.load(name)
+            measured = script_module.measure(found)
+            _draw_cards(name, measured)
+            _draw_cover(name, found.get("cover"))
+        except Exception as error:                                # noqa: BLE001
+            print(f"  {name} 暖不了：{error}")
+    print("暖卡片快取：完成")
+
+
 @app.post("/api/script/card")
 def edit_card(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     """Replace one line's card specification, and draw it right now.
@@ -4202,6 +4236,7 @@ def main() -> None:
     output = project_dir(chosen)
 
     activate(output, Path(args.source).resolve() if args.source else None)
+    threading.Thread(target=_warm_card_cache, daemon=True).start()
 
     import uvicorn
     print(f"\n開啟 http://127.0.0.1:{args.port}\n")

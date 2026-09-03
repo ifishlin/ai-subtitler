@@ -429,7 +429,7 @@
 <script src="/static/shared.js"></script>
 <script src="/static/nav.js"></script>
 <script>
-const STATE = { list: [], chosen: null, topic: null };
+const STATE = { list: [], chosen: null, topic: null, limit: null };
 
 /* 這一頁的清單是文案，不是題目。同一個題目可以有好幾份文案 —— 梅西納現在
    有兩份 —— 所以文案才是這一頁的主角，題目只是它的來源。 */
@@ -856,7 +856,7 @@ async function showScript(name) {
       <div class="grid">
         <div class="band">這支片</div>
         <div>長度<b class="${sums.over ? "no" : ""}">${clock(sums.seconds)}</b>
-          <i>上限 90 秒${sums.over ? `，超出 ${sums.over}s` : ""}</i></div>
+          <i>上限 ${STATE.limit || 90} 秒${sums.over ? `，超出 ${sums.over}s` : ""}</i></div>
         <div>句數<b>${sums.lines.length}</b><i>${sums.characters} 字</i></div>
         <div>觀點<b>${sums.opinion}</b><i>句，其餘要有出處</i></div>
         <div>自製<b class="${share <= 100 - floor ? "ok" : "no"}">${share}%</b>
@@ -1320,6 +1320,7 @@ $("list").addEventListener("click", async (event) => {
       if (STATE.chosen === name) STATE.chosen = "";
       const found = await api("GET", "/api/scripts");
       STATE.list = found.scripts || [];
+      if (found.limit) STATE.limit = found.limit;
       renderList();
       if (!STATE.chosen) {
         $("paper").innerHTML = '<div class="empty">左邊選一份文案　·　'
@@ -1363,6 +1364,7 @@ async function reload() {
   try {
     const found = await api("GET", "/api/scripts");
     STATE.list = found.scripts || [];
+    if (found.limit) STATE.limit = found.limit;
   } catch (error) { STATE.list = []; }
   renderList();
 }
@@ -1387,6 +1389,7 @@ async function boot() {
   ]);
   FORMATS = formats.formats || [];
   STATE.list = listed.scripts || [];
+  if (listed.limit) STATE.limit = listed.limit;
 
   const pick = (wanted && STATE.list.some((one) => one.name === wanted))
     ? wanted : (STATE.list[0] && STATE.list[0].name);

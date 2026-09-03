@@ -268,7 +268,7 @@ def runs_over(measured: dict[str, Any]) -> bool:
 
 # The three that are a number plus a verdict rather than a list of faults.
 SUMS = [
-    ("over",         "超過 90 秒",   "frame",
+    ("over",         f"超過 {LIMIT:.0f} 秒",   "frame",
      "成片長度。上限在 rules.json 的 length.limit_seconds"),
     ("even",         "實拍比例與分布", "frame",
      f"借來的畫面 ≤{REAL_MOST:.0%}，而且三段都要有。"
