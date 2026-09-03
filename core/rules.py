@@ -118,6 +118,27 @@ def _derived(known: dict[str, Any]) -> dict[str, Any]:
         out["borrowed.clip_share"] = least * clip_least
         if isinstance(limit, (int, float)):
             out["borrowed.clip_seconds"] = round(limit * least * clip_least, 1)
+
+    # 句數範圍改片長就要跟著變，是同一個病：手寫過一次「四到六段」，
+    # 也手寫過一次 90 秒版的句數，兩次都是拿別的數字套比例算出來的散文，
+    # 改了片長之後沒有人記得回頭重算。這裡用結尾頁之外剩下的秒數，除以
+    # 「一句最長會停多久」和「一句最短會停多久」，算出這支片能裝進幾句：
+    #
+    #   下限   句子貼著字幕行寬（caption.per_row 個字）在讀 —— 最少要這麼
+    #          多句才裝得滿剩下的時間
+    #   上限   句子都停在地板（pace.least_seconds）—— 最多能塞這麼多句，
+    #          不代表要塞到這麼多，只是塞不下更多了
+    per_row = known.get("caption.per_row")
+    read = known.get("pace.read_per_second")
+    least_seconds = known.get("pace.least_seconds")
+    ending = known.get("ending.seconds")
+    if (isinstance(limit, (int, float)) and isinstance(per_row, (int, float))
+            and isinstance(read, (int, float)) and isinstance(least_seconds, (int, float))
+            and isinstance(ending, (int, float)) and read > 0 and least_seconds > 0):
+        room = limit - ending
+        lower = -(-room // (per_row / read))          # 無條件進位：裝不滿就是句數不夠
+        upper = room // least_seconds                  # 無條件捨去：超過就是塞不下
+        out["length.lines_silent"] = [int(lower), int(upper)]
     return out
 
 

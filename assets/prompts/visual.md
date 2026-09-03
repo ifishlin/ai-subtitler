@@ -40,7 +40,9 @@
 {length.limit_seconds} 秒的片子就是 {borrowed.clip_seconds} 秒**。其餘的外部素材用照片補滿。
 
 **段數自己算**：拿 {borrowed.clip_seconds} 秒去除素材清單上那些段落的長度
-（每一段旁邊都標了秒數），通常會是四到六段。起訖不用你寫，程式從清單填。
+（每一段旁邊都標了秒數）——**不要預設固定段數**，段落長短每一題都不一樣，
+有的題目段落多是 4-6 秒、湊 {borrowed.clip_seconds} 秒要五六段，有的題目
+段落動輒 10 秒以上、兩三段就夠。起訖不用你寫，程式從清單填。
 
 照片補得越多不會讓你少放影片 —— 實拍一多，「一半要會動」要的秒數跟著變多。
 
@@ -129,6 +131,7 @@ chain   同一條線上的幾個點           title / points[] / under
 queue   一排排隊的人                title / count / under
 stack   一份清單                    title / items[]
 clock   一段年數，畫成圈             title / value / part(0–1) / under
+outro   結尾頁，只能用在最後一句     title / points[3–4] / under
 ```
 
 共通欄位：`note` 是出處（畫在畫面頂端）、`ghost` 是背後放大的一兩個字、
