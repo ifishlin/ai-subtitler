@@ -104,13 +104,13 @@ vs 丟下兩片。
   "view": "一句話講完你的觀點",
   "tone": "詼諧 或 克制",
   "lines": [
-    {"say": "台詞", "role": "角色", "show": "自製：畫面說明",
+    {"say": "台詞", "role": "角色", "show": "自製：這張卡對應的真實畫面或事件",
      "card": {"kind": "word", "title": "…"}, "from": "出處 或 觀點"},
 
-    {"say": "台詞", "role": "角色", "show": "示意：這張圖是什麼",
+    {"say": "台詞", "role": "角色",
      "pic": "P18", "from": "出處"},
 
-    {"say": "台詞", "role": "角色", "show": "影片：這段在演什麼",
+    {"say": "台詞", "role": "角色",
      "clip": "C3", "from": "出處"}
   ]
 }
@@ -127,7 +127,8 @@ vs 丟下兩片。
 ```
 say     台詞。{caption.per_row} 字內
 role    {structure.roles} 其中一個
-show    畫面（看 visual.md）
+show    只有 `card` 才要寫，看 visual.md——`pic`／`clip`／`stock`
+        不用寫，程式會直接從素材自己的說明填
 from    出處。自己的判斷寫「觀點」
 ```
 

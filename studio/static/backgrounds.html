@@ -9,6 +9,20 @@
 <style>
   .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px}
   .bar span.n{font:11.5px var(--mono);color:var(--faint)}
+  .crumb{font:12px var(--mono);color:var(--faint);margin:0 0 18px}
+  .crumb a{color:var(--accent);cursor:pointer;text-decoration:none}
+  .crumb a:hover{text-decoration:underline}
+
+  /* 類別清單——第一層 */
+  .cats{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .cat{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+    padding:16px 18px;cursor:pointer;text-align:left;color:var(--ink);
+    font:inherit}
+  .cat:hover{border-color:var(--accent)}
+  .cat b{font-size:14px;display:block;margin-bottom:6px;color:var(--ink)}
+  .cat span{font:11.5px var(--mono);color:var(--faint)}
+  .cat.empty{opacity:.45}
+  .cat.empty:hover{border-color:var(--line)}
 
   .kw{margin:0 0 34px}
   .kw h3{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;
@@ -41,6 +55,7 @@
     永久跳過，不會又搜回同一張。</p>
 
   <div class="bar"><span class="n" id="count"></span></div>
+  <div class="crumb" id="crumb" hidden></div>
   <div id="list"></div>
 </div>
 
@@ -49,18 +64,52 @@
 <script src="/static/ask.js"></script>
 <script>
 let KEYWORDS = {};
+let CATEGORIES = {};
+let CURRENT = null;      // null＝在看類別清單；否則是選定的類別名稱
 
-function draw() {
-  const words = Object.keys(KEYWORDS).sort(
-    (a, b) => KEYWORDS[b].length - KEYWORDS[a].length);
-  const total = words.reduce((sum, w) => sum + KEYWORDS[w].length, 0);
-  $("count").textContent = `${words.length} 個關鍵字　${total} 張圖`;
+function categoryList() {
+  // 每一類：底下有幾個關鍵字、合計幾張圖——包含「未分類」（LLM 臨時自己
+  // 想的關鍵字，不在 21 大類的固定清單裡）。
+  const byCat = {};
+  for (const word of Object.keys(KEYWORDS)) {
+    const cat = CATEGORIES[word] || "未分類";
+    (byCat[cat] = byCat[cat] || []).push(word);
+  }
+  return Object.entries(byCat).map(([name, words]) => ({
+    name, words,
+    images: words.reduce((sum, w) => sum + KEYWORDS[w].length, 0),
+  })).sort((a, b) => b.words.length - a.words.length);
+}
 
-  if (!words.length) {
-    $("list").innerHTML = '<p class="empty">還沒有任何卡片用過 bg_search。</p>';
+function drawCategories() {
+  $("crumb").hidden = true;
+  const cats = categoryList();
+  const totalWords = Object.keys(KEYWORDS).length;
+  const totalImgs = Object.values(KEYWORDS).reduce((s, v) => s + v.length, 0);
+  $("count").textContent = `${cats.length} 個類別　${totalWords} 個關鍵字　${totalImgs} 張圖`;
+  if (!cats.length) {
+    $("list").innerHTML = '<p class="empty">還沒有任何關鍵字。</p>';
     return;
   }
+  $("list").innerHTML = `<div class="cats">${cats.map((cat) => `
+    <button class="cat${cat.words.length ? "" : " empty"}" data-cat="${escapeHTML(cat.name)}">
+      <b>${escapeHTML(cat.name)}</b>
+      <span>${cat.words.length} 個關鍵字　${cat.images} 張圖</span>
+    </button>`).join("")}</div>`;
+}
 
+function drawKeywords(catName) {
+  const words = (categoryList().find((c) => c.name === catName)?.words || [])
+    .sort((a, b) => KEYWORDS[b].length - KEYWORDS[a].length);
+  $("crumb").hidden = false;
+  $("crumb").innerHTML = `<a id="back">← 所有類別</a>　／　${escapeHTML(catName)}`;
+  const totalImgs = words.reduce((s, w) => s + KEYWORDS[w].length, 0);
+  $("count").textContent = `${words.length} 個關鍵字　${totalImgs} 張圖`;
+
+  if (!words.length) {
+    $("list").innerHTML = '<p class="empty">這一類還沒有任何圖。</p>';
+    return;
+  }
   $("list").innerHTML = words.map((word) => {
     const imgs = KEYWORDS[word];
     return `
@@ -81,13 +130,25 @@ function draw() {
   }).join("");
 }
 
+function draw() {
+  if (CURRENT === null) drawCategories();
+  else drawKeywords(CURRENT);
+}
+
 async function load() {
   const data = await api("GET", "/api/backgrounds");
   KEYWORDS = data.keywords || {};
+  CATEGORIES = data.categories || {};
   draw();
 }
 
 $("list").addEventListener("click", async (event) => {
+  const cat = event.target.closest("button[data-cat]");
+  if (cat) {
+    CURRENT = cat.dataset.cat;
+    draw();
+    return;
+  }
   const button = event.target.closest("button[data-key]");
   if (!button) return;
   button.disabled = true;
@@ -95,10 +156,18 @@ $("list").addEventListener("click", async (event) => {
     const data = await api("POST", "/api/backgrounds/reject",
       {keyword: button.dataset.word, id: button.dataset.key});
     KEYWORDS = data.keywords || {};
+    CATEGORIES = data.categories || {};
     draw();
   } catch (error) {
     told("出錯了", error.message);
     button.disabled = false;
+  }
+});
+
+$("crumb").addEventListener("click", (event) => {
+  if (event.target.id === "back") {
+    CURRENT = null;
+    draw();
   }
 });
 

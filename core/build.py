@@ -76,6 +76,48 @@ def caption_layer(rows: list[str]) -> Image.Image:
     return layer
 
 
+# `caption_layer()`'s box always ends at `CAPTION_BOTTOM + 10` no matter how
+# many rows the caption itself has -- it grows upward from a fixed bottom
+# edge, not downward from a fixed top one. So this is the one y that is
+# always clear underneath it, on every line, not just the one-row ones.
+GIST_TOP = CAPTION_BOTTOM + rules_module.look("frame.gist_gap", 40)
+GIST_SIZE = rules_module.look("frame.gist_size", 32)
+
+
+def gist_layer(text: str) -> Image.Image:
+    """A fact's 40-character "so what", under the caption, for a photograph
+    or a clip -- the same field `cards._note()` draws on a card, here for the
+    two shot kinds that are not a card and so never went through it.
+
+    Only ever additive: this is a second, separate layer composited on top of
+    `caption_layer()`'s, not a rewrite of it -- the line the writer actually
+    chose to say stays exactly as it was, on its own fixed line, and this
+    reads as a footnote under it rather than a replacement for it.
+
+    Placed below the caption rather than above the picture: the credit line
+    (`shorts._credit_filter()`) already owns the strip right above the
+    picture, and stacking a second line there would either collide with it or
+    push the picture down a different amount on every shot that carries a
+    gist and every one that does not.
+    """
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    if not text:
+        return layer
+    draw = ImageDraw.Draw(layer)
+    size, rows = cards_module.wrap_at(text, GIST_SIZE, W - 160,
+                                      bold=False, most_rows=2)
+    font = ImageFont.truetype(FONT, size)
+    step = size + 14
+    widest = max((draw.textlength(row, font=font) for row in rows), default=0)
+    box = [(W - widest) / 2 - 28, GIST_TOP - 20,
+           (W + widest) / 2 + 28, GIST_TOP + len(rows) * step - step + size + 22]
+    draw.rounded_rectangle(box, 14, fill=(6, 10, 14, 140))
+    for index, row in enumerate(rows):
+        draw.text((W / 2, GIST_TOP + index * step), row, font=font,
+                  fill=(255, 214, 140, 235), anchor="ma")
+    return layer
+
+
 SOURCE_SIZE = rules_module.look("frame.source_caption_size", 30)
 SOURCE_MOST_ROWS = rules_module.look("frame.source_caption_rows", 3)
 SOURCE_TOP = rules_module.look("frame.source_caption_top", 1050)
@@ -390,6 +432,13 @@ def build(name: str, target: Path | None = None,
             if said:
                 plate_img = Image.alpha_composite(
                     plate_img, source_caption_layer(said))
+        # 這句話引的事實有 40 字說明的時候，一律疊在這裡、字幕下面——
+        # 不分卡片、照片、影片。原本卡片是另外由 cards._note() 畫在畫面
+        # 上方，跟照片／影片的位置不一樣，看的人眼睛要一直找新位置；
+        # 現在三種鏡頭共用同一張 `plate` 疊圖，位置永遠一樣。
+        if line.get("gist"):
+            plate_img = Image.alpha_composite(
+                plate_img, gist_layer(str(line["gist"])))
         plate_img.save(plate)
         piece = work / f"{index:02d}.{_recipe(line, how)}.mp4"
         if not piece.is_file():

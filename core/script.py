@@ -33,9 +33,32 @@ SAFE_NAME = re.compile(r"[\w一-鿿][\w一-鿿 -]{0,63}")
 from core import rules as rules_module
 
 PER_SECOND = rules_module.at("pace.spoken_per_second", 4.5)
-READ_PER_SECOND = rules_module.at("pace.read_per_second", 4.6)
 LEAST_SECONDS = rules_module.at("pace.least_seconds", 1.9)
+# The shared fallback only -- read once, same as the constants above. Not
+# what a length gate should actually check a script against: see limit_of().
 LIMIT = rules_module.at("length.limit_seconds", 90.0)
+
+
+def limit_of(script: dict[str, Any]) -> float:
+    """How long this particular script is allowed to run.
+
+    Its own `limit_seconds` first (set by `writer.write()` when somebody
+    asked for a length other than the shared default), then its format's own
+    override, then the shared default in `assets/rules.json`.
+
+    Not `LIMIT` alone: that name is a module-level constant, read once when
+    this file was first imported, so every script measured by a running
+    process was held to whatever `length.limit_seconds` said at that instant.
+    A 70-second script opened on a server that had last read 90 showed
+    超長 (or the reverse, silently not), and there was no fix on record
+    short of restarting the process. A script now carries the length it was
+    actually written for, so re-measuring it later cannot disagree with the
+    day it was written.
+    """
+    own = script.get("limit_seconds")
+    if isinstance(own, (int, float)) and own > 0:
+        return float(own)
+    return float(rules_module.of(script, "length.limit_seconds", LIMIT))
 
 
 def spoken_length(text: str) -> int:
@@ -268,8 +291,9 @@ def runs_over(measured: dict[str, Any]) -> bool:
 
 # The three that are a number plus a verdict rather than a list of faults.
 SUMS = [
-    ("over",         f"超過 {LIMIT:.0f} 秒",   "frame",
-     "成片長度。上限在 rules.json 的 length.limit_seconds"),
+    ("over",         "超過片長上限",   "frame",
+     "成片長度。上限先看這份文案自己的 limit_seconds，"
+     "沒有就看片型，再沒有才是 rules.json 的 length.limit_seconds"),
     ("even",         "實拍比例與分布", "frame",
      f"借來的畫面 ≤{REAL_MOST:.0%}，而且三段都要有。"
      f"一整團擠在一起看起來像別人的片"),
@@ -310,8 +334,10 @@ def measure(script: dict[str, Any]) -> dict[str, Any]:
     moving = sum(item["seconds"] for item in lifted if is_clip(item))
     most = rules_module.of(script, "borrowed.most", REAL_MOST)
     least = rules_module.of(script, "borrowed.clip_least", CLIP_LEAST)
+    limit = limit_of(script)
     out = {"lines": laid, "seconds": round(clock, 2), "characters": said,
-            "over": round(max(0.0, clock - LIMIT), 2), "unsourced": unsourced,
+            "over": round(max(0.0, clock - limit), 2), "limit": limit,
+            "unsourced": unsourced,
             "opinion": opinion,
             "borrowed": round(borrowed, 2),
             "borrowed_share": round(borrowed / clock * 100) if clock else 0,

@@ -83,19 +83,49 @@ def _flatten(source: dict[str, Any], prefix: str = "") -> dict[str, Any]:
     return out
 
 
-def _names(house_of: str | None = None) -> dict[str, Any]:
+def _names(house_of: str | None = None, seconds: float | None = None) -> dict[str, Any]:
     """一份 prompt 裡的 `{名字}` 可以用哪些，以及它們今天的值。
 
     `fill()` 和 `unfilled()` 都問這裡。本來各自組一份 —— 內容一樣，所以看起來
     沒問題，直到有人加了一個算出來的名字：`fill()` 認得，`unfilled()` 不認得，
     於是「這份 prompt 有錯」而它其實填得好好的。同一個事實兩份，第三次。
+
+    `seconds` 是這一次要寫的秒數，蓋過 rules.json／片型檔案裡的
+    `length.limit_seconds`——寫文案的人這次想要 70 秒，不代表以後每一份都要
+    改成 70 秒。不傳就照舊讀共用的那個數字，一份不指定秒數的 prompt 應該
+    長得跟以前一模一樣。
     """
     known = _flatten(rules())
     if house_of:
         known.update(_flatten(house(house_of)))
+    if seconds is not None:
+        known["length.limit_seconds"] = float(seconds)
     known.update({f"theme.{key}": value for key, value in _flatten(theme()).items()})
     known.update(_derived(known))
     return known
+
+
+def read_pace() -> float:
+    """How fast a viewer reads the screen right now, in characters a second.
+
+    Two numbers, not one: a line that also carries a fact's 40-character
+    gist (assets/rules.json's facts.gist_enabled) has more to take in than
+    the caption alone, and a viewer's eye moves faster over the pair than the
+    slower, savour-one-sentence pace `read_per_second` was tuned for on its
+    own -- so gist mode gets its own, faster figure, `read_per_second_gist`.
+
+    One function, three callers: the prompt text a model reads
+    (`{pace.read_per_second}`, filled from `_derived()`'s override of that
+    same name), the line-count range derived from it, and the seconds
+    `writer.fasten()` actually gives each line. All three read live, through
+    `at()`, rather than a module-level constant frozen at import -- the
+    project has been bitten by that once already (`core/script.py`'s
+    `LIMIT`), and gist_enabled is exactly the kind of thing this session has
+    been flipping at runtime.
+    """
+    if at("facts.gist_enabled", True):
+        return at("pace.read_per_second_gist", at("pace.read_per_second", 4.5))
+    return at("pace.read_per_second", 4.5)
 
 
 def _derived(known: dict[str, Any]) -> dict[str, Any]:
@@ -128,15 +158,29 @@ def _derived(known: dict[str, Any]) -> dict[str, Any]:
     #          多句才裝得滿剩下的時間
     #   上限   句子都停在地板（pace.least_seconds）—— 最多能塞這麼多句，
     #          不代表要塞到這麼多，只是塞不下更多了
+    #
+    # 下限這條後來多了一個加數：事實的 40 字說明（facts.gist_chars）算進
+    # 秒數之後，一句最短要讀的字數不再只是字幕本身的 per_row —— 只算
+    # per_row 會低估每句實際要停多久，於是把下限估得比真的塞得下的還高，
+    # 模型照著這個下限寫，壓出來的片子會比 limit_seconds 長一大截。
+    # caption.gist_reserve_chars 就是那個補進來的字數，facts.gist_enabled
+    # 關掉時當作 0——沒有 gist 這回事，就不用多留位置。
     per_row = known.get("caption.per_row")
-    read = known.get("pace.read_per_second")
+    gist_reserve = known.get("caption.gist_reserve_chars") or 0
+    if not known.get("facts.gist_enabled", True):
+        gist_reserve = 0
+    # read_pace() 自己決定 4.5 還是 6.5——見它的說明。這裡順手蓋掉
+    # `pace.read_per_second`，讓 prompt 裡 `{pace.read_per_second}` 印出來
+    # 的也是這個生效中的數字，不用另外開一個佔位符給模型看。
+    read = out["pace.read_per_second"] = read_pace()
     least_seconds = known.get("pace.least_seconds")
     ending = known.get("ending.seconds")
     if (isinstance(limit, (int, float)) and isinstance(per_row, (int, float))
             and isinstance(read, (int, float)) and isinstance(least_seconds, (int, float))
             and isinstance(ending, (int, float)) and read > 0 and least_seconds > 0):
         room = limit - ending
-        lower = -(-room // (per_row / read))          # 無條件進位：裝不滿就是句數不夠
+        chars = per_row + gist_reserve
+        lower = -(-room // (chars / read))             # 無條件進位：裝不滿就是句數不夠
         upper = room // least_seconds                  # 無條件捨去：超過就是塞不下
         out["length.lines_silent"] = [int(lower), int(upper)]
     return out
@@ -145,7 +189,7 @@ def _derived(known: dict[str, Any]) -> dict[str, Any]:
 NAMED = re.compile(r"\{([^{}\s:]+)(?::([a-z]+))?\}")
 
 
-def fill(text: str, house_of: str | None = None) -> str:
+def fill(text: str, house_of: str | None = None, seconds: float | None = None) -> str:
     """Put the current numbers into a prompt.
 
     A prompt says `每句 {caption.per_row} 個中文字以內`, and this puts today's
@@ -155,8 +199,14 @@ def fill(text: str, house_of: str | None = None) -> str:
     `house_of` names a format, whose values win over the shared ones -- the
     story prompt asks for `{structure.least_per_role.疑點}`, which only exists
     in that format.
+
+    `seconds` overrides `length.limit_seconds` for this one prompt -- see
+    `_names()`. The sentence-count range (`{length.lines_silent}`) is derived
+    from it, so asking for 90 seconds here also asks for more lines, not just
+    a bigger number in one sentence while the rest of the prompt still talks
+    about 60.
     """
-    known = _names(house_of)
+    known = _names(house_of, seconds)
     for name, value in known.items():
         for how, shown in _shapes(value).items():
             text = text.replace("{" + name + (f":{how}" if how else "") + "}",

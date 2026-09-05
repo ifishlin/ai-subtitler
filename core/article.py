@@ -19,7 +19,9 @@
 
 ## 抓不到是常態，不是例外
 
-付費牆、擋機器人、整頁都是 JavaScript。Bloomberg 幾乎確定抓不到。所以這一支
+付費牆、整頁都是 JavaScript——這兩種真的沒辦法。但「擋機器人」不一定是
+真的擋不到：AP News 這種掛 Cloudflare 的站台，擋的是**用什麼工具連線**，
+不是網址本身。細節見 `browser_fetch()`。所以這一支
 **回報失敗的方式跟回報成功一樣重要**：說出是哪一家、為什麼，而不是安靜地少
 幾篇。「找到 0 筆」和「沒有去找」在畫面上一模一樣，而後者才是錯。
 """
@@ -69,9 +71,27 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 CONSENT = "SOCS=CAESEwgDEgk0ODE3Nzk3MjQaAmVuIAEaBgiA_LyaBg"
 
 
-def _curl(url: str, data: str | None = None) -> str:
-    """用 curl 而不是 urllib：這台機器的 Python 沒有系統根憑證，
-    urllib 對 news.google.com 一律 CERTIFICATE_VERIFY_FAILED。"""
+def browser_fetch(url: str, data: str | None = None) -> str:
+    """用系統的 `curl` 抓一個網址，不用 Python 內建的 HTTP 函式庫。
+
+    ## 為什麼不能用 urllib 或 trafilatura 自帶的下載器
+
+    這台機器的 Python 沒有系統根憑證，urllib 對 news.google.com 一律
+    `CERTIFICATE_VERIFY_FAILED` —— 這個原因換一台機器可能就不成立。
+
+    但還有一個原因換到哪台機器都成立：**Cloudflare 這類防護看的是連線
+    工具本身，不是你宣稱的 User-Agent。** AP News 的正文頁用
+    `trafilatura.fetch_url()`（底層是 urllib3）抓一律是 `None`——連幫它
+    把 UA 換成瀏覽器字串也一樣，因為 urllib3 的 TLS 握手（加密套件順序、
+    擴充欄位那些）長得不像真的瀏覽器，跟表頭裡寫什麼無關。同一個網址用
+    這支 `curl` 就直接拿得到整頁（AP 那篇實測正文抓下來是 4207 字）——
+    因為 libcurl 的握手長得像瀏覽器。
+
+    所以這是專案裡**唯一**用來抓「外部網頁本身」的函式：`real_url()` 用它
+    換 Google News 的真網址，`fetch()` 用它抓文章正文。之後任何地方要抓
+    別人的網頁，該叫這支，不要再自己開一個 urllib 連線——那條路对這種站台
+    一律失敗，而失敗長得像「這個網站真的抓不到」，不像「工具選錯了」。
+    """
     import subprocess
     cmd = ["curl", "-sL", "-A", UA, "-H", f"Cookie: {CONSENT}",
            "--max-time", "25"]
@@ -110,7 +130,7 @@ def real_url(url: str) -> tuple[str, str]:
     import re as re_module
     import urllib.parse as parse_module
 
-    page = _curl(url)
+    page = browser_fetch(url)
     parts = {key: re_module.search(rf'data-n-a-{key}="([^"]+)"', page)
              for key in ("id", "ts", "sg")}
     if not all(parts.values()):
@@ -123,7 +143,7 @@ def real_url(url: str) -> tuple[str, str]:
         parts["id"].group(1), int(parts["ts"].group(1)), parts["sg"].group(1)])
     body = "f.req=" + parse_module.quote(
         json_module.dumps([[["Fbv4je", inner, None, "generic"]]]))
-    back = _curl("https://news.google.com/_/DotsSplashUi/data/batchexecute", body)
+    back = browser_fetch("https://news.google.com/_/DotsSplashUi/data/batchexecute", body)
     found = re_module.search(
         r'"(https?://(?!news\.google)[^"\\]{16,300})"',
         back.replace("\\\\", "\\").replace('\\"', '"'))
@@ -135,19 +155,19 @@ def fetch(url: str) -> tuple[str, str]:
 
     兩個回傳值只會有一個有東西。用回傳值而不是丟例外，因為抓不到是常態 ——
     二十三篇裡有八篇抓不到是正常的一天，而那不該讓整輪停下來。
+
+    抓頁面用 `browser_fetch()`，不用 trafilatura 自己的下載器——原因見
+    那支函式的說明：擋的是連線工具本身，不是塞什麼表頭能解的。
     """
     try:
         import trafilatura
     except ImportError:
         return "", "沒裝 trafilatura"
-    try:
-        page = trafilatura.fetch_url(url)
-    except Exception as error:                                    # noqa: BLE001
-        return "", f"連不上（{type(error).__name__}）"
+    page = browser_fetch(url)
     if not page:
-        # trafilatura 對 403、404、付費牆的轉址都回 None，分不出來。與其猜，
-        # 就說實話：拿不到頁面。
-        return "", "拿不到頁面（擋機器人或付費牆）"
+        # 分不出是 403、404、還是連不上 —— curl 失敗時 stdout 就是空字串，
+        # 沒有例外可以看種類。與其猜，就說實話：拿不到頁面。
+        return "", "拿不到頁面（擋機器人或連不上）"
     try:
         words = trafilatura.extract(page, include_comments=False,
                                     include_tables=False) or ""

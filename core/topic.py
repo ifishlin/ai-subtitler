@@ -189,12 +189,14 @@ def facts_of(pile: dict[str, Any]) -> list[dict[str, Any]]:
     for one in pile.get("facts") or []:
         if isinstance(one, dict):
             out.append({"say": str(one.get("say") or ""),
-                        "from": str(one.get("from") or "")})
+                        "from": str(one.get("from") or ""),
+                        "gist": str(one.get("gist") or "")})
             continue
         said = str(one)
         found = tail.search(said)
         out.append({"say": said[:found.start()].strip() if found else said.strip(),
-                    "from": found.group(1).strip() if found else ""})
+                    "from": found.group(1).strip() if found else "",
+                    "gist": ""})
     return [{**one, "kind": fact_kind(one["from"])}
             for one in out if one["say"]]
 

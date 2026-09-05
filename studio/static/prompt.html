@@ -59,6 +59,7 @@
   <p class="under">模型收到的就是一份文字。這是<b>真的那一份</b>。</p>
 
   <div class="pickrow"><select id="pick"></select>
+    <select id="house" title="寫成哪一種——決定送哪一份 prompt"></select>
     <button id="grab">下載整份 request</button>
     <span class="note" id="size"></span></div>
 
@@ -73,10 +74,7 @@
   <h2>模型要交回來的</h2>
   <div class="sec">
     <div class="top"><span class="name">一份 JSON，每句一列</span></div>
-    <pre>{"say":  "台詞"
- "role": "起｜承｜轉｜合"
- "from": "出處　或　觀點"
- "pic":  "P18"　或　"clip": "C3"</pre>
+    <pre id="shape"></pre>
     <p class="lead">畫面用<b>編號</b>指定，不寫檔名。</p>
   </div>
 
@@ -137,10 +135,23 @@ function section(one, share) {
 
 async function load() {
   const wanted = pickedName();
-  const back = await fetch("/api/prompt-parts"
-    + (wanted ? "?name=" + encodeURIComponent(wanted) : ""));
+  // 片型（house）決定送哪一份 prompt（argue 送 script.md，story 送
+  // 另一份）。**不能**借用 pickedName()——那支不管傳什麼 `what` 進去，
+  // 都是先看網址上的 `?name=` 那個參數，是給題目用的，混進來只會在網址
+  // 剛好帶著 `?name=` 的時候把題目名稱錯當成片型。這裡直接讀寫
+  // localStorage，key 沿用同一個 `now.` 命名習慣，但不共用那支函式。
+  const house = (() => {
+    try { return localStorage.getItem("now.house") || "argue"; }
+    catch (e) { return "argue"; }
+  })();
+  const [back, formatsBack] = await Promise.all([
+    fetch("/api/prompt-parts?house=" + encodeURIComponent(house)
+      + (wanted ? "&name=" + encodeURIComponent(wanted) : "")),
+    fetch("/api/formats"),
+  ]);
   if (!back.ok) throw new Error((await back.text()).slice(0, 200));
   const d = await back.json();
+  const formats = (await formatsBack.json().catch(() => ({}))).formats || [];
 
   $("pick").innerHTML = (d.topics || []).map((one) =>
     `<option value="${esc(one)}"${one === d.topic ? " selected" : ""}>${
@@ -151,18 +162,38 @@ async function load() {
     location.href = location.pathname;
   };
 
+  $("house").innerHTML = (formats.length ? formats : [{key: "argue", name: "新聞報導"}])
+    .map((one) => `<option value="${esc(one.key)}"${
+      one.key === house ? " selected" : ""}>${esc(one.name || one.key)}</option>`).join("");
+  $("house").onchange = () => {
+    pickName($("house").value, "house");
+    location.href = location.pathname;
+  };
+
+  // 角色名稱是這個片型自己的（argue 五種、story 四種），寫死「起承轉合」
+  // 會過期——這裡跟表單一樣，直接讀 /api/formats 現在真正的值，不猜。
+  const roles = (formats.find((one) => one.key === house)
+    || {}).structure?.roles || [];
+  $("shape").textContent =
+`{"say":  "台詞",
+ "role": "${roles.join("｜") || "……"}",
+ "from": "出處　或　觀點",
+ "pic":  "P18"　或　"clip": "C3"}`;
+
   const what = d.what || [];
   const total = d.chars || 1;
   $("size").textContent = `整份 ${d.chars} 字`;
 
   /* 下載的是 /api/prompt-raw 的原文，不是這一頁切好的分節 —— 分節是我整理過
-     的版本，而要拿去比對的必須是真的送出去那一串。 */
+     的版本，而要拿去比對的必須是真的送出去那一串。用畫面上當下選的 house，
+     不是 d.house——後者曾經固定回 argue，現在雖然會跟著請求走，但直接用
+     選單當下的值更直接，不用等伺服器回傳確認自己剛剛選了什麼。 */
   $("grab").onclick = async () => {
     $("grab").disabled = true;
     try {
       const got = await (await fetch("/api/prompt-raw?name="
         + encodeURIComponent(d.topic) + "&house="
-        + encodeURIComponent(d.house || "argue"))).json();
+        + encodeURIComponent(house))).json();
       save(`${d.topic}-request.txt`, got.text, "text/plain;charset=utf-8");
     } catch (error) {
       $("size").textContent = "下載不了：" + error.message;
@@ -225,6 +256,11 @@ async function showAnswer(name) {
       <span class="cnt">${d.lines} 句${raw
         ? `　·　${raw.length.toLocaleString()} 字元` : ""}</span>
     </div>
+    ${d.stale ? '<div class="callout"><b>素材已經動過</b><p>'
+      + "上面那份「請求」是現在的素材現算的；下面這份原文是文案存的那一刻"
+      + "收到的——素材在那之後被改過（新增/刪掉照片、重切過段落），"
+      + "所以原文裡的 P18／C3 這些編號，不保證還對得上上面現在看到的那一份。"
+      + "不影響已經壓好的成片，只影響拿這一頁對照原文的時候。</p></div>" : ""}
     <p class="lead">${raw
       ? `${esc(answered.model || "")}${esc(took)}　${esc(when)}`
       : "<b>這一份沒有留下原文。</b>它是在「留原文」這件事做出來之前寫的 —— "

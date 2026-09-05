@@ -1,0 +1,23 @@
+{
+  "Animals｜動物": ["dog", "cat", "bird", "wildlife", "farm animals", "horse", "cattle", "sheep", "fish", "insects", "animal close up", "pets at home"],
+  "Buildings and Architecture｜建築與建築設計": ["house exterior", "apartment building", "office building", "government building", "skyscraper", "city buildings", "industrial building", "school building", "hospital building", "old architecture", "modern architecture", "interior room"],
+  "Business｜商業、金融與辦公": ["cash", "coins", "credit card", "receipts", "calculator", "bank building", "stock market screen", "business meeting", "office workers", "handshake", "contract signing", "desk paperwork", "shopping cart", "supermarket", "gas station"],
+  "Drinks｜飲品": ["coffee", "tea", "water glass", "bottled water", "soft drink", "juice", "beer", "wine", "cocktail", "coffee shop", "drinks on table", "takeaway coffee"],
+  "The Environment｜環境、氣候與生態": ["wildfire", "flood", "drought", "pollution", "storm clouds", "melting ice", "recycling", "solar panels", "wind turbines", "smoke over city", "dry land", "heavy rain"],
+  "States of Mind｜情緒與心理狀態": ["smiling person", "stressed person", "thinking person", "confused person", "sad person", "angry person", "lonely person", "worried person", "surprised person", "meditation", "celebration", "tired person"],
+  "Food｜食物": ["supermarket aisle", "shopping cart", "groceries", "fresh vegetables", "fruit market", "cooking", "kitchen food preparation", "restaurant meal", "fast food", "meal table", "food close up", "empty plate"],
+  "Graphic Resources｜圖像、符號與設計素材": ["abstract background", "paper texture", "grid background", "geometric pattern", "arrows", "warning symbol", "question mark", "check mark", "cross mark", "light gradient", "infographic shapes", "blank map"],
+  "Hobbies and Leisure｜興趣與休閒": ["reading book", "watching television", "gaming", "playing guitar", "painting", "gardening", "fishing", "hiking", "board game", "photography", "cycling leisure", "home hobby"],
+  "Industry｜工業、製造與能源": ["factory", "production line", "warehouse", "shipping containers", "industrial machinery", "construction site", "oil refinery", "power plant", "steel mill", "factory workers", "heavy machinery", "logistics warehouse"],
+  "Landscape｜自然與城市景觀": ["city skyline", "mountains", "lake aerial", "ocean coastline", "forest", "desert", "countryside", "river aerial", "snow landscape", "sunset landscape", "stormy waves", "rocky shoreline"],
+  "Lifestyle｜日常生活": ["family living room", "person using phone", "working from home", "people shopping", "commuter", "family dinner", "child playing", "people walking street", "sleeping", "home kitchen", "person on sofa", "morning routine"],
+  "People｜人物": ["crowd", "young adult", "elderly person", "child", "family", "office worker", "student", "worker portrait", "people talking", "people waiting queue", "person walking", "group discussion"],
+  "Plants and Flowers｜植物與花卉": ["flowers close up", "green leaves", "tree", "house plants", "garden flowers", "crop field", "forest plants", "dry plants", "grass field", "blooming flowers", "agricultural crops", "indoor plants"],
+  "Culture and Religion｜文化與宗教": ["religious building", "church interior", "mosque exterior", "temple exterior", "praying person", "religious ceremony", "traditional festival", "cultural celebration", "traditional clothing", "historic monument", "cemetery", "candles ceremony"],
+  "Science｜科學、醫療與研究": ["laboratory", "microscope", "scientist working", "test tubes", "medical research", "hospital corridor", "doctor consultation", "medicine pills", "DNA illustration", "scientific equipment", "telescope", "research computer"],
+  "Social Issues｜社會議題": ["protest crowd", "poverty", "homeless person", "police street", "border fence", "refugees", "election voting", "ballot box", "government protest", "empty classroom", "cost of living", "public demonstration"],
+  "Sports｜運動": ["football", "basketball", "running", "gym workout", "swimming", "cycling", "tennis", "skiing", "stadium crowd", "yoga", "soccer field", "athlete training"],
+  "Technology｜科技與數位生活": ["smartphone screen", "laptop computer", "desktop computer", "server room", "data center", "computer code", "robot", "semiconductor chip", "digital map", "social media phone", "virtual reality", "cybersecurity screen"],
+  "Transport｜交通與物流": ["car driving", "truck highway", "traffic jam", "train station", "passenger train", "airport terminal", "airplane", "cargo ship", "shipping port", "bus city", "highway aerial", "delivery truck"],
+  "Travel｜旅遊": ["airport luggage", "hotel room", "hotel lobby", "tourist taking photo", "beach vacation", "old town street", "mountain hiking", "city tourism", "train travel", "road trip", "passport luggage", "travel backpack"]
+}

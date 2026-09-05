@@ -18,6 +18,12 @@ work/.*.speech.json
 
 # 素材：去背圖是從 images/ 產的，影片是下載的，都可以重做
 assets/cutouts/
+# 背景圖庫：從 assets/background_categories.json 的關鍵字現搜的，隨時可以重搜。
+# backgrounds.json（哪張圖配哪個關鍵字）要進版控，那是判斷；圖本身不用。
+assets/backgrounds/*.jpg
+# 抓下來的頻道字幕／逐字稿語料庫（研究用，不是產線的一部分）。
+# 別人頻道的完整逐字稿，重跑 tools/ 底下對應腳本就能重抓，不留在版控裡。
+corpus/
 # 抓回來的照片和新聞影片，隨時可以重抓
 # （gitignore 沒有行尾註解：# 只有在行首才是註解，寫在後面會變成路徑的一部分）
 assets/photos/

@@ -1,0 +1,323 @@
+{
+  "view": "行政命令能改的只有政府自己的文件，其他人根本沒跟著改口",
+  "tone": "詼諧",
+  "cover": {
+    "kind": "cover",
+    "pic": "assets/photos/川普要把安大略湖改名/31805295.jpg",
+    "tagline": "湖，改名了？"
+  },
+  "lines": [
+    {
+      "say": "這支影片已經被看了三千萬次",
+      "role": "吸引",
+      "show": "影片：記者問起瘋傳的影片",
+      "clip": "C17",
+      "seen": true,
+      "from": "[S11] PBS NewsHour 第 198 秒",
+      "tone": "cool",
+      "seconds": 8.89,
+      "gist": "改名的哏在網路上已經先紅一輪"
+    },
+    {
+      "say": "他把安大略湖劃掉,寫上美利堅湖",
+      "role": "吸引",
+      "show": "自製：一句話",
+      "card": {
+        "kind": "word",
+        "title": "把安大略湖劃掉,寫上美利堅湖",
+        "bg": "assets/photos/川普要把安大略湖改名/6814526.jpg"
+      },
+      "seen": true,
+      "from": "[S11] PBS NewsHour 第 113 秒",
+      "tone": "cool",
+      "gist": "改名當場簽署生效，不是預告",
+      "seconds": 4.15
+    },
+    {
+      "say": "三十天,地圖就要換名字",
+      "role": "建立",
+      "show": "自製：三十天倒數",
+      "card": {
+        "kind": "number",
+        "value": "30",
+        "title": "30天內",
+        "under": "移除舊名字",
+        "bg": "assets/photos/川普要把安大略湖改名/618158.jpg"
+      },
+      "seen": true,
+      "from": "The Guardian〈Trump the renamer-in-chi〉",
+      "tone": "cool",
+      "gist": "他說立刻生效，命令本文寫的是30天",
+      "seconds": 4.15
+    },
+    {
+      "say": "命令要求聯邦機關全部跟進",
+      "role": "建立",
+      "show": "簽署文件的畫面",
+      "pic": "assets/photos/川普要把安大略湖改名/8730998.jpg",
+      "seen": true,
+      "from": "[S8] PBS NewsHour 第 20 秒",
+      "tone": "cool",
+      "gist": "只約束美國政府自己，管不到別人",
+      "seconds": 4.15
+    },
+    {
+      "say": "這不是他第一次改地名",
+      "role": "建立",
+      "show": "自製：一句話",
+      "card": {
+        "kind": "word",
+        "title": "麥金利山,也是他改回來的",
+        "bg": "assets/photos/川普要把安大略湖改名/10075823.jpg"
+      },
+      "seen": true,
+      "from": "PBS NewsHour〈Lake Ontario to 'Lake Am〉",
+      "tone": "cool",
+      "gist": "地名要改，走正常程序通常慢得多",
+      "seconds": 3.85
+    },
+    {
+      "say": "五十州,沒有一州跟著搜尋新名字",
+      "role": "打破",
+      "show": "自製：0",
+      "card": {
+        "kind": "number",
+        "value": "0",
+        "title": "0州",
+        "under": "改叫美利堅湖",
+        "bg": "assets/photos/川普要把安大略湖改名/19784153.jpg"
+      },
+      "seen": true,
+      "from": "[S12] CNN 第 70 秒",
+      "tone": "cool",
+      "gist": "官方名字換了，民間搜尋習慣完全沒跟著換",
+      "seconds": 5.08
+    },
+    {
+      "say": "地質調查局當天下午就改好文件",
+      "role": "解釋",
+      "show": "自製：一句話",
+      "card": {
+        "kind": "word",
+        "title": "下午4點半,文件就改好了",
+        "bg": "assets/photos/川普要把安大略湖改名/13398906.jpg"
+      },
+      "seen": true,
+      "from": "Fox News〈House Dem Debbie Dingell〉",
+      "tone": "light",
+      "gist": "改名的公文，簽署當天下午就已經生效",
+      "seconds": 4.77
+    },
+    {
+      "say": "連蘋果地圖都被要求跟進",
+      "role": "解釋",
+      "show": "邊境告示牌",
+      "pic": "assets/photos/川普要把安大略湖改名/27697309.jpg",
+      "seen": true,
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "light",
+      "gist": "改名這件事，管到了蘋果公司頭上",
+      "seconds": 4.0
+    },
+    {
+      "say": "上次不聽話的媒體,被趕出白宮",
+      "role": "解釋",
+      "show": "自製：一句話",
+      "card": {
+        "kind": "word",
+        "title": "上次不聽話,被趕出白宮",
+        "bg": "assets/photos/川普要把安大略湖改名/1685778.jpg"
+      },
+      "seen": true,
+      "from": "CNN〈Trump signs executive or〉",
+      "tone": "light",
+      "gist": "上次不跟著改名的媒體，被告贏了官司",
+      "seconds": 4.62
+    },
+    {
+      "say": "同一座湖,四種答案",
+      "role": "解釋",
+      "show": "自製：同一座湖,四種答案",
+      "card": {
+        "kind": "chain",
+        "title": "同一座湖,四種答案",
+        "points": [
+          "Google:看你在哪國",
+          "美國文件:美利堅湖",
+          "全世界:安大略湖",
+          "加拿大地圖:安大略湖"
+        ],
+        "under": "沒有跨出聯邦文件",
+        "bg": "assets/photos/川普要把安大略湖改名/32272512.jpg"
+      },
+      "seen": true,
+      "from": "觀點",
+      "tone": "light",
+      "seconds": 1.9
+    },
+    {
+      "say": "連自家電力公司網站都跟著跳名字",
+      "role": "解釋",
+      "show": "湖岸暴風浪的畫面",
+      "pic": "assets/photos/川普要把安大略湖改名/38645978.jpg",
+      "seen": true,
+      "from": "BBC News〈Trump pushes Apple to ch〉",
+      "tone": "light",
+      "gist": "連加拿大自家的電力公司都被地圖誤導",
+      "seconds": 4.92
+    },
+    {
+      "say": "卡尼直接嗆聲,現在和永遠都叫安大略湖",
+      "role": "解釋",
+      "show": "影片：卡尼原話",
+      "clip": "C21",
+      "seen": true,
+      "from": "[S8] PBS NewsHour 第 40 秒",
+      "tone": "cool",
+      "seconds": 9.97,
+      "gist": "加拿大官方第一時間公開拒絕跟進"
+    },
+    {
+      "say": "安大略省長立了一面看板反擊",
+      "role": "解釋",
+      "show": "自製：福特立牌",
+      "card": {
+        "kind": "word",
+        "title": "安大略湖,現在和永遠",
+        "bg": "assets/photos/川普要把安大略湖改名/39246449.jpg"
+      },
+      "seen": true,
+      "from": "PBS NewsHour〈Lake Ontario now called 〉",
+      "tone": "cool",
+      "gist": "加拿大的回應，直接立牌立在湖邊",
+      "seconds": 4.31
+    },
+    {
+      "say": "這名字比兩個國家都還要老",
+      "role": "解釋",
+      "show": "影片：評論提到名字的年紀",
+      "clip": "C12",
+      "seen": true,
+      "from": "[S12] CNN 第 315 秒",
+      "tone": "light",
+      "seconds": 5.07,
+      "gist": "這名字比兩個國家本身都還要老"
+    },
+    {
+      "say": "上一次改名,一年後還是沒人跟著喊",
+      "role": "解釋",
+      "show": "自製：1年",
+      "card": {
+        "kind": "clock",
+        "value": "1年",
+        "part": 1.0,
+        "title": "上次改名滿一年",
+        "under": "五十州仍搜尋舊名字比較多",
+        "bg": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+        "note": "Saffron Blaze／CC BY-SA 3.0"
+      },
+      "seen": true,
+      "from": "[S12] CNN 第 155 秒",
+      "tone": "light",
+      "gist": "上一次改名，一整年後民意還是沒有跟上",
+      "seconds": 5.08
+    },
+    {
+      "say": "美國人對這做法的信心是負的",
+      "role": "解釋",
+      "show": "自製：-15",
+      "card": {
+        "kind": "number",
+        "value": "-15",
+        "title": "淨負15",
+        "under": "對川普處理美加關係的信任",
+        "bg": "assets/photos/川普要把安大略湖改名/37260512.jpg"
+      },
+      "seen": true,
+      "from": "[S12] CNN 第 114 秒",
+      "tone": "light",
+      "gist": "民調挺加拿大，不挺川普對加拿大的做法",
+      "seconds": 4.77
+    },
+    {
+      "say": "學者說,條約管的湖,一紙命令管不到",
+      "role": "解釋",
+      "show": "邊界水域的老地圖",
+      "pic": "assets/photos/川普要把安大略湖改名/ISS-36_Lake_Ontario_(horizontal).jpg.jpg",
+      "seen": true,
+      "from": "CNN〈Can Trump actually chang〉",
+      "tone": "light",
+      "gist": "這座湖是條約共管的，改名管不到條約",
+      "seconds": 4.92
+    },
+    {
+      "say": "原住民酋長要求撤回命令",
+      "role": "解釋",
+      "show": "湖泊原住民地區的照片",
+      "pic": "assets/photos/川普要把安大略湖改名/5663229.jpg",
+      "seen": true,
+      "from": "Fox News〈Seneca Nation leader cal〉",
+      "tone": "light",
+      "gist": "原住民領袖直接要求川普撤銷命令",
+      "seconds": 4.0
+    },
+    {
+      "say": "說到底,改名只改了聯邦文件",
+      "role": "回報",
+      "show": "自製：一句話",
+      "card": {
+        "kind": "word",
+        "title": "改名只改了聯邦文件",
+        "bg_search": "blank map corner",
+        "bg": "assets/backgrounds/pexels-32873051.jpg"
+      },
+      "seen": true,
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 1.9
+    },
+    {
+      "say": "你真正要看的不是那份文件",
+      "role": "回報",
+      "show": "五大湖空拍",
+      "pic": "assets/photos/川普要把安大略湖改名/Great_Lakes,_No_Clouds_(4968915002)_Brighter.jpg.jpg",
+      "seen": true,
+      "from": "觀點",
+      "tone": "warm",
+      "seconds": 1.9
+    },
+    {
+      "say": "地圖跟你，都還沒改口",
+      "role": "回報",
+      "show": "自製：結尾頁",
+      "card": {
+        "kind": "outro",
+        "tone": "warm",
+        "points": [
+          "行政命令改了官方名字",
+          "五十州搜尋量沒有變",
+          "Google只在美國版切換",
+          "地圖跟嘴巴,還是安大略湖"
+        ],
+        "title": "改了文件，沒改嘴巴\n地圖跟你，都還沒改口",
+        "under": "川普把安大略湖改名為美利堅湖",
+        "bg": "assets/photos/川普要把安大略湖改名/3Falls_Niagara.jpg.jpg",
+        "note": "Saffron Blaze／CC BY-SA 3.0　Saffron Blaze／CC BY-SA 3.0"
+      },
+      "seen": true,
+      "from": "觀點",
+      "seconds": 1.9
+    }
+  ],
+  "topic": "川普要把安大略湖改名",
+  "format": "argue",
+  "narration": false,
+  "for": "手機上那張地圖被改掉的人",
+  "answered": {
+    "when": 1788479144,
+    "took": 0,
+    "model": "手寫（Claude，非模型呼叫）",
+    "raw": ""
+  },
+  "limit_seconds": 95.0
+}

@@ -818,6 +818,7 @@ async function showScript(name) {
     <div class="head">
       <h2>${escapeHTML(name)}</h2>
       <button class="tiny" id="btnBackTopic">← 回素材</button>
+      <button class="tiny" id="btnRawJson">看 JSON</button>
     </div>
     <div class="about">
       <label class="wide">觀點
@@ -856,7 +857,8 @@ async function showScript(name) {
       <div class="grid">
         <div class="band">這支片</div>
         <div>長度<b class="${sums.over ? "no" : ""}">${clock(sums.seconds)}</b>
-          <i>上限 ${STATE.limit || 90} 秒${sums.over ? `，超出 ${sums.over}s` : ""}</i></div>
+          <i>上限 ${Math.round(sums.limit || STATE.limit || 90)} 秒${
+            sums.over ? `，超出 ${sums.over}s` : ""}</i></div>
         <div>句數<b>${sums.lines.length}</b><i>${sums.characters} 字</i></div>
         <div>觀點<b>${sums.opinion}</b><i>句，其餘要有出處</i></div>
         <div>自製<b class="${share <= 100 - floor ? "ok" : "no"}">${share}%</b>
@@ -949,10 +951,10 @@ async function showScript(name) {
               controls src="/media/passage/${encodeURIComponent(made.topic || "")}/${
               encodeURIComponent(line.clip_file.split("/").pop())}"></video>
               <button class="expand" data-expand title="放大看">放大</button>`
-             : line.pic ? `<img class="pic" src="/media/pic/${
+             : line.pic ? `<img class="pic" src="/media/pic-thumb/${
               line.pic.split("/").map(encodeURIComponent).join("/")}"
               alt="" loading="lazy">`
-             : line.card_file ? `<img class="pic drawn" src="/media/card/${
+             : line.card_file ? `<img class="pic drawn" src="/media/card-thumb/${
               encodeURIComponent(name)}/${
               encodeURIComponent(line.card_file.split("/").pop())}"
               alt="" loading="lazy">`
@@ -1005,6 +1007,21 @@ async function showScript(name) {
     dropPending();
     leaveTo(STATE.topic
       ? "/topics?name=" + encodeURIComponent(STATE.topic) : "/topics");
+  };
+  // 看 JSON：借用素材頁那個燈箱（shared.js 的 #big），不重造第二個彈窗。
+  // `measured`／`cover_file` 是算出來、畫出來的，不是存在檔案裡的那份，
+  // 所以先拿掉，剩下的才是文案本身真正存的內容。
+  $("btnRawJson").onclick = () => {
+    const {measured: _measured, cover_file: _cover_file, ...raw} = made;
+    shotBox();
+    $("bigWho").textContent = name;
+    $("bigWhat").textContent = "存在 scripts/ 裡的原始 JSON";
+    $("bigStage").innerHTML =
+      `<pre style="text-align:left;white-space:pre-wrap;font:12px var(--mono);
+       max-height:74vh;overflow:auto;margin:0">${
+        escapeHTML(JSON.stringify(raw, null, 1))}</pre>`;
+    $("bigNote").innerHTML = "";
+    $("big").hidden = false;
   };
   // The film, if there is one.
   api("GET", `/api/script/film?name=${encodeURIComponent(name)}`)

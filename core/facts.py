@@ -50,6 +50,10 @@ MOST_PER_VIDEO = rules_module.at("facts.most_per_video", 6)
 # 報導可以多一點：一篇文章比一支新聞影片講得完整，而且報導的價值在立場，
 # 一家的說法常常要兩三條才說得清楚。
 MOST_PER_REPORT = rules_module.at("facts.most_per_report", 5)
+# 每條事實附的白話說明上限，以及要不要問這一句——見 assets/rules.json 的
+# gist_why。關掉的話，這裡就不問，也不會有東西可以讓 fasten() 去掛。
+GIST_CHARS = rules_module.at("facts.gist_chars", 40)
+GIST_ENABLED = rules_module.at("facts.gist_enabled", True)
 
 
 def captions_of(video: dict[str, Any]) -> Path | None:
@@ -147,20 +151,30 @@ def source_line(said: str, outlet: str) -> str:
     return f"{outlet} {when}".strip() if outlet else (when or said)
 
 
-def ask_one(topic: str, video: dict[str, Any], say=None) -> list[dict[str, str]]:
-    """問一支影片說了哪幾件事。
+def video_prompt(topic: str, video: dict[str, Any]) -> str | None:
+    """The exact text `ask_one()` would send, without spending a model call.
 
-    一支一支問而不是全部一起，因為出處要精確：模型看著一家媒體的字幕時，
-    寫出來的 `from` 只可能是那一家。全部混在一起問，它會把 CNN 說的話
-    掛在 Reuters 名下 —— 而那種錯沒有任何門攔得住，成品上就是一行假的出處。
+    Split out so a preview button on the topic page can show what's about
+    to be asked before anyone asks it -- there was no way to see this short
+    of reading the source, which is the same gap `/prompt` already closed
+    for the script-writing side. One function decides the shape of the
+    question either way, so the preview cannot show something different
+    from what actually gets sent.
+
+    Returns `None` when there is nothing to ask about (no captions, or too
+    short to be more than a title) -- the caller decides what that means.
     """
-    from core import writer as writer_module
     words = said_in(video)
     if len(words) < 200:            # 沒有字幕，或短到不成句
-        return []
+        return None
     outlet = video.get("outlet", "")
     language = rules_module.at("language.name", "繁體中文（台灣用語）")
-    asking = (
+    gist_line = (
+        f"- `gist`：這件事對觀眾來說「所以呢」是什麼，白話講一句，"
+        f"最多 {GIST_CHARS} 字。不是重複 `say`，是說它為什麼值得放進片子裡\n"
+    ) if GIST_ENABLED else ""
+    gist_field = ', "gist": "…"' if GIST_ENABLED else ""
+    return (
         f"題目：{topic}\n"
         f"這是 {outlet} 的一支影片，底下是它的字幕。"
         f"[123s] 是那句話出現的秒數。\n\n"
@@ -177,8 +191,31 @@ def ask_one(topic: str, video: dict[str, Any], say=None) -> list[dict[str, str]]
         # 第一版寫「一律寫「{outlet} 第 N 秒」」，模型照抄了秒數卻漏掉媒體名，
         # 八條的出處變成「12s」—— 指不回任何人。範例給滿，不要只給規則。
         f'- `from` 照這個樣子寫：「{outlet} 第 87 秒」。'
-        f"媒體名一定要在，只寫秒數指不回任何人\n\n"
-        '只輸出 JSON：{"facts": [{"say": "…", "from": "…"}]}')
+        f"媒體名一定要在，只寫秒數指不回任何人\n"
+        f"{gist_line}\n"
+        '只輸出 JSON：{"facts": [{"say": "…", "from": "…"' + gist_field + '}]}')
+
+
+def ask_one(topic: str, video: dict[str, Any], say=None,
+            label: str | None = None) -> list[dict[str, str]]:
+    """問一支影片說了哪幾件事。
+
+    一支一支問而不是全部一起，因為出處要精確：模型看著一家媒體的字幕時，
+    寫出來的 `from` 只可能是那一家。全部混在一起問，它會把 CNN 說的話
+    掛在 Reuters 名下 —— 而那種錯沒有任何門攔得住，成品上就是一行假的出處。
+
+    `label` 是這一支影片存進事實時要用的出處字串，跟問模型時說的 `outlet`
+    是兩件事：模型只需要知道自己在讀哪一台的字幕，不需要知道這個題目底下
+    這一台是不是還收了別支——那是 `gather()` 手上的資訊，模型看不到。
+    `label` 留白就照舊用 `outlet`，只有一個媒體收了不只一支影片，
+    `gather()` 才會傳一個能區分開來的字串進來（見那邊的說明）。
+    """
+    from core import writer as writer_module
+    asking = video_prompt(topic, video)
+    if asking is None:
+        return []
+    outlet = video.get("outlet", "")
+    shown = label or outlet
     if say:
         say(0, 1, f"讀 {outlet} 的字幕")
     said, _ = writer_module.ask(asking, None)
@@ -190,8 +227,16 @@ def ask_one(topic: str, video: dict[str, Any], say=None) -> list[dict[str, str]]
         words_said = str(one.get("say") or "").strip()
         if not words_said:
             continue
-        out.append({"say": in_traditional(words_said),
-                    "from": source_line(str(one.get("from") or ""), outlet)})
+        # 出處這一半從頭到尾是程式決定的，不是模型寫的——source_line() 只
+        # 從模型的答案裡抽數字，媒體名（或這裡的 shown）是呼叫端給的，模型
+        # 寫什麼都會被蓋掉。所以能不能分清楚是哪一支，取決於這裡傳的是
+        # `outlet` 還是 `shown`，跟模型答得準不準無關。
+        fact = {"say": in_traditional(words_said),
+                "from": source_line(str(one.get("from") or ""), shown)}
+        if GIST_ENABLED:
+            fact["gist"] = in_traditional(str(one.get("gist") or "")
+                                          .strip())[:GIST_CHARS]
+        out.append(fact)
     return out
 
 
@@ -220,6 +265,44 @@ def without_self_attribution(said: str, outlet: str, where: str) -> str:
     return said
 
 
+def report_prompt(topic: str, report: dict[str, Any]) -> tuple[str | None, str]:
+    """The exact text `ask_report()` would send, without spending a model
+    call. See `video_prompt()` -- same reason, same split.
+
+    Returns (text, why) -- `text` is `None` when the article's body could
+    not be fetched, and `why` says what happened (paywall, bot wall, ...).
+    """
+    from core import article as article_module
+
+    words, why, _ = article_module.text_of(topic, report)
+    if not words:
+        return None, why
+
+    outlet = report.get("outlet", "")
+    language = rules_module.at("language.name", "繁體中文（台灣用語）")
+    gist_line = (
+        f"- `gist`：這件事對觀眾來說「所以呢」是什麼，白話講一句，"
+        f"最多 {GIST_CHARS} 字。不是重複 `say`，是說它為什麼值得放進片子裡\n"
+    ) if GIST_ENABLED else ""
+    gist_field = ', "gist": "…"' if GIST_ENABLED else ""
+    text = (
+        f"題目：{topic}\n"
+        f"這是 {outlet} 的一篇報導，標題是〈{report.get('title', '')}〉。\n\n"
+        f"{words}\n\n"
+        f"**這篇報導講了哪幾件跟題目有關的事？**\n\n"
+        f"一條一句話，最多 {MOST_PER_REPORT} 條。要求：\n"
+        f"- **一律用{language}**。原文是英文就翻譯，不要照抄，一個簡體字都不行\n"
+        "- 只寫這篇文章裡真的寫過的。**不要補你知道的事**，也不要推論\n"
+        "- 有數字就把數字寫進去\n"
+        "- 這一家的**立場和說法**比事件本身有用："
+        "如果它跟別人算法不同、或它在反駁什麼，那一條要寫出來\n"
+        "- 跟題目無關的段落跳過，寧可少寫\n"
+        f'- `from` 一律寫「{outlet}〈{str(report.get("title") or "")[:24]}〉」\n'
+        f"{gist_line}\n"
+        '只輸出 JSON：{"facts": [{"say": "…", "from": "…"' + gist_field + '}]}')
+    return text, ""
+
+
 def ask_report(topic: str, report: dict[str, Any],
                say=None) -> tuple[list[dict[str, str]], str]:
     """問一篇報導說了哪幾件事。回傳（事實, 抓不到的原因）。
@@ -232,31 +315,15 @@ def ask_report(topic: str, report: dict[str, Any],
     而影片只有五支 —— `script.md` 要的「找出他們彼此矛盾的地方」只有在這裡
     才有材料。事實全部來自五支影片的時候，同一件事會重複四次，不會矛盾。
     """
-    from core import article as article_module
     from core import writer as writer_module
 
-    words, why, _ = article_module.text_of(topic, report)
-    if not words:
+    asking, why = report_prompt(topic, report)
+    if asking is None:
         return [], why
 
     outlet = report.get("outlet", "")
     title = str(report.get("title") or "")[:24]
     where = f"{outlet}〈{title}〉" if title else outlet
-    language = rules_module.at("language.name", "繁體中文（台灣用語）")
-    asking = (
-        f"題目：{topic}\n"
-        f"這是 {outlet} 的一篇報導，標題是〈{report.get('title', '')}〉。\n\n"
-        f"{words}\n\n"
-        f"**這篇報導講了哪幾件跟題目有關的事？**\n\n"
-        f"一條一句話，最多 {MOST_PER_REPORT} 條。要求：\n"
-        f"- **一律用{language}**。原文是英文就翻譯，不要照抄，一個簡體字都不行\n"
-        "- 只寫這篇文章裡真的寫過的。**不要補你知道的事**，也不要推論\n"
-        "- 有數字就把數字寫進去\n"
-        "- 這一家的**立場和說法**比事件本身有用："
-        "如果它跟別人算法不同、或它在反駁什麼，那一條要寫出來\n"
-        "- 跟題目無關的段落跳過，寧可少寫\n"
-        f'- `from` 一律寫「{where}」\n\n'
-        '只輸出 JSON：{"facts": [{"say": "…", "from": "…"}]}')
     if say:
         say(0, 1, f"讀 {outlet} 的報導")
     said, _ = writer_module.ask(asking, None)
@@ -271,8 +338,12 @@ def ask_report(topic: str, report: dict[str, Any],
             continue
         # 出處一律用程式組的那一份，不用模型回的。它會把標題抄錯、抄長、或
         # 只寫媒體名 —— 而這一欄要指得回一篇真的文章。
-        out.append({"say": without_self_attribution(
-            in_traditional(words_said), outlet, where), "from": where})
+        fact = {"say": without_self_attribution(
+            in_traditional(words_said), outlet, where), "from": where}
+        if GIST_ENABLED:
+            fact["gist"] = in_traditional(str(one.get("gist") or "")
+                                          .strip())[:GIST_CHARS]
+        out.append(fact)
     return out, ""
 
 
@@ -308,6 +379,66 @@ def unread(pile: dict[str, Any]) -> list[str]:
     return out
 
 
+def source_codes(items: list[tuple[str, str]], letter: str = "S") -> dict[str, str]:
+    """A globally unique code for every distinct url in `items` -- a primary
+    key, one per video (or report), never shared and never repeated. `S1`
+    names one specific video, full stop; it does not need the outlet name
+    standing next to it to mean anything.
+
+    An earlier version numbered within each outlet instead, so "PBS(S1)" and
+    "CNN(S1)" were two different videos sharing one label -- the exact
+    ambiguity this function exists to remove, reintroduced one level up.
+    A code that needs a second piece of information before it identifies
+    one thing is not a primary key.
+
+    Three callers need this, not one: `gather()` here, for a fact's `from`;
+    `brief.prompt()`, for a news-frame's "PBS NewsHour 第 6 秒" line, same
+    ambiguity, same reason (a frame's `outlet` field does not say which of
+    that outlet's videos it was cut from, even though the frame record
+    itself already knows -- it just wasn't being read); and the topic page's
+    own video/report list, which wants a code on every row to point at. One
+    function for all three, so the fix does not drift into slightly
+    different answers to the same question.
+
+    Whether a *citation sentence* shows the code at all is a separate
+    question from whether the code exists -- see `collides()`: a solitary
+    video for its outlet keeps reading as plain "PBS NewsHour 第 87 秒",
+    because a code that never disambiguates anything there is just clutter --
+    even though that video still has a real, unique `S#` if anything else
+    needs to point at it.
+
+    `letter` picks the prefix: `S`（影片來源）for videos, `R`（報導）for
+    reports. `P`（照片）、`C`（片段）、`F`（事實）都被佔走了，`V` 也是
+    （情境影片的池子），不然「V3」在這個題目裡會有兩種意思。
+
+    The code is a function of the url itself, sorted, not of position in
+    whatever list happens to be passed in -- position drifts if the topic is
+    re-collected or edited; the url of an already-downloaded item does not.
+    So the same item gets the same code every time this is called with the
+    same set of items, and nothing needs to be stored anywhere to remember
+    which code meant which item: re-run this function with the current list
+    and it reconstructs the same mapping. Call it again (or write a one-line
+    script that does) whenever a code like "S7" needs to be traced back to
+    an actual title and URL.
+    """
+    urls = sorted({url for _, url in items})
+    return {url: f"{letter}{index}" for index, url in enumerate(urls, start=1)}
+
+
+def collides(items: list[tuple[str, str]]) -> set[str]:
+    """Which outlets, among `items`, have more than one distinct url.
+
+    For deciding whether a citation sentence is worth showing a code in --
+    see `source_codes()`. The code itself is always unique; this just says
+    where showing it earns its keep.
+    """
+    from collections import defaultdict
+    by_outlet: dict[str, set[str]] = defaultdict(set)
+    for outlet, url in items:
+        by_outlet[outlet].add(url)
+    return {outlet for outlet, urls in by_outlet.items() if len(urls) > 1}
+
+
 def gather(name: str, say=None) -> dict[str, Any]:
     """讀完影片的字幕和報導的正文，把事實加進去。
 
@@ -334,19 +465,31 @@ def gather(name: str, say=None) -> dict[str, Any]:
     steps = len(videos) + len(reports)
     step = 0
 
+    # 媒體名會重複（PBS 那題收了兩支），而 source_line() 存的出處只有
+    # 「{outlet} 第 X 秒」——兩支各自的「第 0 秒」存進事實清單之後就分不開
+    # 了，指不回是哪一支。每支影片都有自己唯一的代碼（source_codes()），
+    # 但只有撞名的媒體才在句子裡標出來，只收一支的維持現在乾淨的
+    # 「PBS NewsHour 第 87 秒」，不用每支都變複雜（collides()）。
+    video_pairs = [(v.get("outlet", ""), str(v.get("url") or "")) for v in videos]
+    codes = source_codes(video_pairs)
+    doubled = collides(video_pairs)
+
     for video in videos:
         step += 1
+        outlet = video.get("outlet", "")
         if say:
-            say(step, steps, f"讀 {video.get('outlet', '')} 的字幕")
+            say(step, steps, f"讀 {outlet} 的字幕")
+        code = codes.get(str(video.get("url") or ""))
+        label = f"[{code}] {outlet}" if outlet in doubled else None
         try:
-            got = ask_one(name, video, None)
+            got = ask_one(name, video, None, label)
         except Exception as error:                                # noqa: BLE001
             # 問不到模型跟「這支沒說什麼」是兩件事。前者要出聲，後者不必。
             raise RuntimeError(f"問不到模型：{error}") from error
         asked += 1
         read_from.add(str(video.get("url") or ""))
         if not got:
-            empty.append(video.get("outlet", ""))
+            empty.append(outlet)
         for one in got:
             if one["say"] not in have:
                 have.add(one["say"])

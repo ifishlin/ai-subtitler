@@ -71,6 +71,11 @@ def sheet(name: str) -> dict[str, Any]:
             "outlet": item.get("outlet", ""),
             "credit": item.get("credit", ""),
             "at": item.get("at"), "said": item.get("said", ""),
+            # 畫格是從哪個網址截的——只有畫格會設，用來分辨同一家媒體收了
+            # 不只一支影片的時候，「PBS NewsHour 第 6 秒」到底是哪一支。
+            # 漏掉這個欄位的話，`picture_line()` 的 source_codes() 永遠算不出
+            # 撞名，因為它手上根本沒有網址可以比對——這個 bug 就是這樣藏著的。
+            "page": item.get("page", ""),
         })
     # Doubtful first: a caption that says nothing the search asked for is
     # either the wrong picture or a picture nobody described, and both want
@@ -155,11 +160,11 @@ def as_text(name: str) -> str:
         out.append(f"挑這題的理由：{found['note']}")
         out.append("")
 
-    out.append("## 事實（每一條都要指得回出處）")
-    for fact in found["facts"]:
+    out.append("## 事實（陳述事實的句子，`from` 填這裡的編號，例如 F3）")
+    for index, fact in enumerate(found["facts"], start=1):
         text = fact.get("say") if isinstance(fact, dict) else str(fact)
         whom = fact.get("from", "") if isinstance(fact, dict) else ""
-        out.append(f"- {text}　／{whom}")
+        out.append(f"[F{index}] {text}　／{whom}")
     out.append("")
 
     from core import topic as topic_module
@@ -227,6 +232,16 @@ def as_text(name: str) -> str:
     # 對不起來。所以下面分兩輪印，但共用同一份 enumerate。
     numbered = list(enumerate(found["pictures"], start=1))
 
+    # 畫格的出處也會撞名，跟事實同一個病：「PBS NewsHour 第 6 秒」如果這個
+    # 題目收了兩支 PBS 的影片，不知道是哪一支——而畫格本身早就存著是從哪個
+    # 網址截的（`page`），只是印出來的時候沒有用上。跟 `core/facts.py` 的
+    # `gather()` 共用同一支 `source_codes()`，不要為了同一件事各寫一套。
+    from core import facts as facts_module
+    frame_pairs = [(one.get("outlet", ""), str(one.get("page") or ""))
+                   for one in found["pictures"] if one.get("at") is not None]
+    frame_codes = facts_module.source_codes(frame_pairs)
+    frame_doubled = facts_module.collides(frame_pairs)
+
     def picture_line(index: int, one: dict[str, Any]) -> None:
         # 說明也整句給。本來 100，我今天為了省 prompt 改成 70 —— 只算了
         # 省多少字，沒算三十五張裡有二十四張會被截。上限是為了擋住偶爾出現的
@@ -240,7 +255,10 @@ def as_text(name: str) -> str:
             said += "）"
         out.append(f"[P{index}] {said}")
         if one.get("at") is not None:
-            out.append(f"      {one['outlet']} 第 {one['at']:.0f} 秒"
+            code = frame_codes.get(str(one.get("page") or ""))
+            shown = (f"[{code}] {one['outlet']}"
+                     if one.get("outlet") in frame_doubled else one['outlet'])
+            out.append(f"      {shown} 第 {one['at']:.0f} 秒"
                        f"：{one['said'][:CAPTION_CHARS]}")
 
     out.append("## 照片　—— 這是來源自己對每張圖的說明。挑的時候照這句判斷")
@@ -345,11 +363,17 @@ def to_collect(name: str) -> str:
     return rules_module.fill(body) + "\n".join(said)
 
 
-def prompt(name: str, house: str = "argue") -> str:
+def prompt(name: str, house: str = "argue", seconds: float | None = None) -> str:
     """A prompt for one house style, with today's numbers and the material.
 
     Which prompt to send is the format's own business -- an argument gets
     script.md, a story gets story.md -- so naming the format is enough.
+
+    `seconds` asks for a length other than the shared default for this one
+    call -- see `rules.fill()`. Left alone, a script written today and one
+    written next month ask for the same length; nothing here remembers which
+    scripts wanted which, that is `writer.write()`'s job once the answer
+    comes back.
     """
     spec = rules_module.house(house)
     which = str(spec.get("prompt") or "script.md").removesuffix(".md")
@@ -367,5 +391,5 @@ def prompt(name: str, house: str = "argue") -> str:
         if missing:
             raise RuntimeError(f"{part} 要的名字在 rules／theme／{house} 裡沒有："
                                f"{missing}")
-        out.append(rules_module.fill(body, house))
+        out.append(rules_module.fill(body, house, seconds))
     return "\n\n---\n\n".join(out) + "\n\n---\n\n" + as_text(name)

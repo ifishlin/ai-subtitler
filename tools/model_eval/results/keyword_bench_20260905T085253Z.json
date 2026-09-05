@@ -1,0 +1,1564 @@
+{
+  "generated_at": "20260905T085253Z",
+  "system_prompt": "你在幫一段新聞內容挑一張背景照片，素材庫裡沒有現成的圖，需要你自己想一個英文搜尋詞去圖庫（Pexels）現找。\n\n規則：\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"，那不是一張照片會長的樣子）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。",
+  "note": "system_prompt 逐字沿用 assets/prompts/visual.md 的 bg_search 規則（專案裡唯一真的請模型想搜尋詞的地方），只是輸入換成一整篇新聞正文；沒有評斷任何模型輸出的好壞，只記錄原始輸出、花費時間、機械性失敗。",
+  "articles": [
+    {
+      "language": "en",
+      "query": "",
+      "title": "UN votes to adopt new map that makes our world look very different",
+      "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+      "chars": 4375,
+      "cached_at": "assets/articles/modeleval-en/x-1581395f67.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+      "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+      "chars": 8001,
+      "cached_at": "assets/articles/modeleval-en/x-1a52d4665a.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+      "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+      "chars": 3036,
+      "cached_at": "assets/articles/modeleval-en/x-3f96296667.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "Former world champion Ruiz Jr loses comeback fight",
+      "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+      "chars": 1507,
+      "cached_at": "assets/articles/modeleval-en/x-5902adc772.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+      "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+      "chars": 8001,
+      "cached_at": "assets/articles/modeleval-en/x-599637c4db.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "FA to canvass England players in World Cup review",
+      "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+      "chars": 2223,
+      "cached_at": "assets/articles/modeleval-en/x-834abfbb1a.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+      "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+      "chars": 731,
+      "cached_at": "assets/articles/modeleval-en/x-92177695f0.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+      "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+      "chars": 3073,
+      "cached_at": "assets/articles/modeleval-en/x-929ccc4f25.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+      "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+      "chars": 518,
+      "cached_at": "assets/articles/modeleval-en/x-c4a565cb04.txt"
+    },
+    {
+      "language": "en",
+      "query": "",
+      "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+      "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+      "chars": 8001,
+      "cached_at": "assets/articles/modeleval-en/x-c9e59daceb.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+      "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+      "chars": 8001,
+      "cached_at": "assets/articles/modeleval-zh/x-169c740f52.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+      "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+      "chars": 3854,
+      "cached_at": "assets/articles/modeleval-zh/x-7dfbc50e64.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+      "url": "https://news.tvbs.com.tw/world/4016790",
+      "chars": 748,
+      "cached_at": "assets/articles/modeleval-zh/x-a86867ab28.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+      "url": "https://www.peopo.org/news/856836",
+      "chars": 1715,
+      "cached_at": "assets/articles/modeleval-zh/x-c4ba2e422d.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+      "url": "https://udn.com/news/story/7251/9736388",
+      "chars": 855,
+      "cached_at": "assets/articles/modeleval-zh/x-dc385d6a73.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+      "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+      "chars": 1029,
+      "cached_at": "assets/articles/modeleval-zh/x-e0bad1b3d7.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+      "url": "https://udn.com/news/story/6656/9734890",
+      "chars": 820,
+      "cached_at": "assets/articles/modeleval-zh/x-e88faa35aa.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+      "url": "https://finance.ettoday.net/news/3231672",
+      "chars": 1133,
+      "cached_at": "assets/articles/modeleval-zh/x-f20ba2707c.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+      "url": "https://www.taichung.gov.tw/3362511/post",
+      "chars": 1245,
+      "cached_at": "assets/articles/modeleval-zh/x-f8a37e888d.txt"
+    },
+    {
+      "language": "zh",
+      "query": "",
+      "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+      "url": "https://www.sportsv.net/articles/128314",
+      "chars": 461,
+      "cached_at": "assets/articles/modeleval-zh/x-f91c5a012a.txt"
+    }
+  ],
+  "models": {
+    "gpt-oss:120b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 25.26
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "The user gave a news article about UN adopting a new world map that reflects true relative sizes, correcting Mercator distortion, focusing on Africa's size. The task: pick a background photo for the news content. Must provide an English search phrase (3-6 words) that can be used on Pexels to find a suitable image. Must be concrete, describing a scene, objects, atmosphere, not abstract concepts. Should be 3-6 words. Should not mention abstract concepts like \"map distortion\". Should be a scene that fits the article. Possibly a photo of a globe, world map, or a classroom with a globe, or a world map on a wall, or a person looking at a globe, or a map projection illustration. But must be concrete: e.g., \"vintage world map on table\", \"globe with continents highlighted\", \"hand holding globe\", \"earth globe on desk\". Must be 3-6 words.\n\nWe need to think of",
+          "seconds": 63.27,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "We need to output a single English search phrase (3-6 words) describing a concrete visual scene that would suit the news article. The article is about US foreign policy, Trump, alliances, world order, geopolitics, tension, maps, flags, diplomatic meetings, maybe a globe, a chessboard with world map pieces, a broken alliance symbol, etc. Must be concrete: e.g., \"world map chess pieces\". That's 4 words. That could be a photo of a chessboard with globe pieces. Or \"diplomatic handshake over map\". That's 4 words. Or \"political globe with flags\". That's 4 words. Or \"empty conference table with flags\". That's 5 words. Choose something likely present on Pexels. Pexels has many images of \"chess board world map\", \"global map on table\", \"diplomacy handshake\". Let's think: \"handshake over world map\". That's 4 words. That",
+          "seconds": 22.06,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "The user gave a news article about Norway's sovereign wealth fund adjusting bond allocations. The task: choose a background photo for the news content. Need to provide an English search phrase (3-6 words) that describes a concrete scene, not abstract concept. Must be suitable for Pexels. Should reflect the article's theme: maybe \"stock market trading floor\", \"financial district skyline\", \"bond certificates on desk\", \"global financial charts\", \"investment portfolio documents\", \"Norwegian fjord with oil rig\", \"city skyline with financial graphs overlay\"? Must be concrete.\n\nWe need a phrase 3-6 words. Should be something like \"financial district skyline\", \"stock market screen\", \"investment portfolio paperwork\", \"global financial charts\", \"bond certificates on table\". Must be something that can be found on Pexels. Pexels has many images of \"stock market\", \"financial charts\", \"city skyline at night\", \"office desk with documents\". The article is",
+          "seconds": 22.34,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "empty boxing ring",
+          "seconds": 18.42
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "The user gave a news article about hotfixes for World of Warcraft. The developer instruction: we need to pick a background photo for this news content. Must output a single English search phrase (3 to 6 words) describing a concrete scene, not abstract concept. Should be something that could be found on Pexels. Must be 3-6 words. No punctuation, no extra text.\n\nWe need to think of a suitable image that matches the article: It's about video game updates, hotfixes, patches, maybe a computer screen with code, or a fantasy setting, or a gaming keyboard, or a monitor with a game UI, or a fantasy landscape. The article is about WoW hotfixes, includes classes like druid, shaman, etc. Could use \"fantasy game interface\" but that's abstract. Better: \"gaming keyboard with monitor\" (4 words). Or \"computer monitor displaying code\". That's 5 words: \"computer monitor displaying",
+          "seconds": 20.99,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "The user gave a news article about FA reviewing England World Cup campaign. The developer instruction: we must output a single English search phrase (3-6 words) describing a concrete visual scene for a background photo. Should not be abstract. Should be something that could be found on Pexels. Must be 3-6 words. No punctuation, no extra text.\n\nWe need to think of a suitable background image for this news article. The article is about football review, FA, players, meeting, stadium, maybe a conference room, a football pitch, a tactical board, a stadium at night, a football stadium empty, a coach with clipboard, a whiteboard with tactics, a group of players discussing. The phrase should be something like \"football stadium empty stands\" (4 words). Or \"coach reviewing tactics board\". But need to be concrete: \"coach with clipboard on pitch\". That's 5 words. Or \"football team meeting conference room\". That's 5 words.",
+          "seconds": 20.32,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "indoor women's basketball",
+          "seconds": 17.07
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "The user gave a news article about Caitlin Clark, USA women's basketball team, etc. The developer instruction: we need to output a single English search phrase (3 to 6 words) that describes a concrete visual scene that could be used as a background photo for this news article. Must be specific to a scene, not abstract concept. Should be something like \"women's basketball game indoor\" or \"basketball court audience\" etc. Must be 3-6 words. No punctuation, no extra text.\n\nWe need to think: The article is about a women's basketball world cup, a game, a player entering the court, etc. A suitable background could be \"indoor basketball court\" (3 words). Or \"women's basketball game\" (3 words). Or \"basketball arena crowd\". That's 3 words? \"basketball arena crowd\" is 3 words. Or \"basketball court lights\". That's 3 words.\n\nWe need to ensure it's a phrase",
+          "seconds": 20.97,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "aircraft",
+          "seconds": 17.51
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "The user gave a news article about a referee sleeping in locker room, rain, thunder, stadium, altitude, etc. The task: produce a single English search phrase (3-6 words) describing a concrete visual scene that could be used as a background photo for this news article. Must be specific, not abstract. Should be something like \"rainy night stadium interior\" or \"stormy football stadium exterior\" etc. Must be 3-6 words. No punctuation or extra text. So output just the phrase.\n\nWe need to think: The article mentions Estadio Azteca, rain, thunder, fans, drums, locker room, referee sleeping. A background photo could be \"rain-soaked football stadium\" (3 words). But maybe \"stormy night football stadium\" (4). Or \"rainy night stadium lights\". That's 4 words. Or \"wet stadium under lights\". That's 4. Or \"empty locker room rain\". That's 4. But",
+          "seconds": 20.89,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "The user wants a single English search phrase (3-6 words) describing a concrete image suitable as a background photo for the news article about SEMICON Taiwan 2026 Silicon Photonics International Forum. Must be a scene, objects, atmosphere, not abstract concept. Should be something that can be found on Pexels.\n\nThe article is about semiconductor, silicon photonics, advanced packaging, testing, manufacturing, high-speed optical interconnects, data center, etc. A suitable background could be a photo of a high-tech semiconductor fab, a close-up of a silicon wafer, a photonics chip, a data center with fiber optic cables, a lab with optical equipment, a close-up of a fiber optic cable glowing, a futuristic cleanroom, a circuit board with light.\n\nWe need 3-6 words. Something like \"cleanroom semiconductor wafer\" (3 words). Or \"fiber optic cables data center\". That's 4 words. Or \"silicon photonics chip close",
+          "seconds": 36.75,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "The user gave a long news article about rising oil prices due to US-Iran conflict, diesel price spikes, etc. The task: pick a background photo for the news content, need to generate an English search phrase (3-6 words) that can be used on Pexels to find a suitable image. Must be specific to a scene, not abstract concept. Should reflect the article: maybe an oil refinery, oil barrels, a diesel pump, a tanker ship, a gas station pump, a chart with rising line, a war scene? But must be a photo, not abstract. Should be something like \"oil refinery night lights\" or \"diesel fuel pump\" or \"oil barrel stack\". The article is about oil price surge, US diesel price record, war in Middle East. A suitable background could be a photo of an oil barrel with price tag, or a photo of a gas station pump with price display. Or a photo of a tanker ship at sea.",
+          "seconds": 40.18,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "The user asks: \"這篇報導的內容：...\". The developer instruction: we need to pick a background photo for the news content, need to generate an English search phrase (3-6 words) describing a concrete scene, not abstract concept. Must be a phrase that can be used to search Pexels for a photo. Only output one phrase, no punctuation or extra text.\n\nThe news is about gold price rebound, inflation, Trump, Middle East tensions, oil, dollar, Fed, etc. We need a background image that fits the article. Likely a photo of gold bars, gold coins, or a close-up of gold, maybe a financial market chart, or a city skyline with financial vibe. Must be concrete: e.g., \"gold bars on table\", \"gold coins on wood\", \"stock market screen\", \"oil rig at sunset\", \"Middle East desert oil\". The article is about gold price rebound, so a background of gold bars would",
+          "seconds": 22.09,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "The user gave a news article about International Day of Charity, volunteerism, community involvement, education, HIV awareness, etc. The system wants us to pick a background photo for the news content. We need to generate an English search phrase (3-6 words) that describes a concrete scene that could be used as a background image. Must be specific enough to find a photo on Pexels. No extra text.\n\nWe need to think of a suitable image that matches the article: maybe a group of volunteers, a classroom setting, a community meeting, a hand holding a heart, a diverse group of people discussing, a lecture in a classroom, a community outreach event, a poster about HIV awareness, etc.\n\nThe phrase must be 3-6 words. Should be something like \"diverse volunteers in classroom\", \"community health workshop\", \"people discussing in classroom\", \"volunteers handing out flyers\", \"students listening to lecture\", \"group of volunteers outdoors\", \"hands holding",
+          "seconds": 26.83,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "The user gave a news article about a Taiwanese metal company (聯友金屬) dealing with tungsten recycling, high-tech, military supply chain, de‑Chinaization, new plant, etc. The task: choose a background photo, need to generate an English search phrase (3-6 words) describing a concrete scene that could be found on Pexels. Must not be abstract, must be a visual scene. Should reflect the article's content: maybe \"industrial metal recycling plant\", \"tungsten ore processing\", \"factory interior machinery\", \"metal smelting furnace\", \"industrial warehouse with metal rods\", \"high-tech manufacturing facility\". Must be 3-6 words. No punctuation or extra text. So output just the phrase.\n\nPick something like \"industrial metal recycling plant\". That's 4 words. That seems concrete. Or \"factory interior with machinery\". That's 4 words. Or \"tungsten processing facility\". That's 3 words? Actually \"tung",
+          "seconds": 21.09,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "oil refinery at sunset",
+          "seconds": 23.96
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "The user gave a news article about a political controversy involving a mayor's son being selected for an international exchange program, accusations of conflict of interest, etc. The developer instruction: we need to pick a background photo for the news content. Must generate an English search phrase (3-6 words) describing a concrete scene, not abstract concept. Should be something that could be found on Pexels. Should be relevant to the article's visual context: maybe a city hall, a government building, a meeting, a protest, a student, a school, a document, a form, a handshake, a family portrait, a city skyline, a school campus, a classroom, a student with a backpack, a protest sign, a newspaper, a political debate.\n\nWe need to output only a single English search phrase (3-6 words). No punctuation or extra text.\n\nWe need to think of a phrase that would match a photo that could serve as background for this news article. Something",
+          "seconds": 22.91,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "The user gave a news article about Evergreen Marine participating in Asia Fruit Logistica, focusing on cold chain, smart containers, IoT, fresh produce, etc. The task: choose a background photo, need to provide an English search phrase (3-6 words) for Pexels that describes a concrete scene, not abstract concepts. Must be only the phrase, no punctuation or extra text.\n\nWe need to think of a suitable image that matches the article: maybe a cargo ship container with fresh fruit, or a refrigerated container, or a shipping container with IoT sensors, or a port with containers and fruit crates, or a close-up of fresh produce in a cold storage, or a container ship at sea with containers.\n\nThe phrase must be 3-6 words. Should be something like \"refrigerated shipping container at port\". That's 5 words. Or \"cargo ship with containers\". That's 4 words. Or \"fresh fruit in cold storage\". That's 5 words",
+          "seconds": 25.41,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "The user gave a news article about a dance carnival in Taichung, with traffic control. The developer instruction: we need to pick a background photo for the news content. Must output a single English search phrase (3-6 words) describing a concrete scene that can be found on Pexels. No other text. Should be relevant to the article: maybe \"city street festival\" or \"urban street performance\". Must be 3-6 words. Should be concrete: e.g., \"crowded city street festival\". That's 4 words. Or \"night street dance crowd\". That's 4. Or \"urban street parade\". That's 3. Or \"city street with banners\". That's 4. The article is about dance carnival, street performances, traffic control, buses. A background photo could be \"city street with traffic cones\". That's 5 words. But maybe better to show a festive street with dancers: \"street dance festival crowd\". That's 4 words.",
+          "seconds": 25.31,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "computer screen security alert",
+          "seconds": 16.88
+        }
+      ]
+    },
+    "gpt-oss:20b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 17.05
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "The user provided a news article about the UN adopting a new world map that corrects Mercator distortions, focusing on Africa's representation. The user wants a background photo for this article. The instructions: \"You are helping choose a background photo from Pexels. The search term must be an English phrase describing the image, not abstract. Must be 3-6 words. Only output the search term, no other text.\"\n\nWe need to think of a suitable image that would fit the article. The article is about world map, Africa, representation, cartography. So a photo of a world map, maybe a globe, or a map projection. The search term should be something like \"world map projection\" or \"world map globe\" or \"world map Africa\" or \"world map distortion\" or \"world map illustration\". But we need to think of something that exists on Pexels. Pexels has many images. We need to find a phrase that is",
+          "seconds": 25.36,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "The user provided a news article about Trump's foreign policy. The developer instructions: choose a background photo for the article. Need to produce a single English search phrase (3-6 words) that describes a scene that could be found on Pexels. Must be specific to actual photos. No abstract concepts. Only output the phrase, no punctuation or explanation.\n\nWe need to think of a suitable background image that fits the article. The article is about shifting alliances, world order, Trump's foreign policy. A suitable image could be a world map, or a diplomatic meeting, or a flag, or a globe, or a handshake between two leaders, or a war zone. But we need a phrase that would likely match a photo on Pexels. For example: \"world map on desk\", \"handshake between leaders\", \"globe on table\", \"political leaders meeting\", \"flags of countries\", \"international summit\", \"political debate\", \"US flag and world map\".",
+          "seconds": 15.78,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "The user wants a background photo for the news article. We need to produce a single English search phrase (3-6 words) that describes a scene that could be found on Pexels. The article is about Norway's sovereign wealth fund adjusting bond allocations, diversifying, risk, etc. So a suitable background could be something like \"stock market trading floor\", \"financial data charts\", \"global financial graph\", \"investment portfolio analysis\", \"bond market graph\", \"financial meeting\", \"investment strategy\", \"global economy\", \"financial risk\", \"diversification\", \"bond trading\", \"financial office\", \"investment portfolio\", \"financial data\", \"financial charts\".\n\nWe need to pick a phrase that is likely to exist on Pexels. Pexels has many images of \"stock market\", \"financial charts\", \"investment portfolio\", \"business meeting\", \"financial data\", \"financial analysis\", \"financial office\", \"financial graph\", \"financial news\", \"financial world\",",
+          "seconds": 15.96,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "The user wants a background photo for the news article. The article is about Andy Ruiz Jr, a former world champion boxer, losing a fight to Damian Knyba in New Jersey. The user wants an English search phrase for Pexels. The phrase must be 3-6 words, describing a scene, objects, or atmosphere. No abstract concepts. Must be something that can be found in Pexels. So we need to think of a photo that would fit the article. Possibly a boxing ring, a stadium, a crowd, a boxing gym, a boxing match, a boxing ring in a city, a boxing ring with lights, a boxing ring with a crowd, a boxing ring in a gym, a boxing ring in a gym with a boxer. The article is about a fight in Newark, New Jersey, at the Prudential Center. So maybe \"boxing ring at arena\" or \"boxing match crowd\" or \"boxing ring with lights\" or \"boxing gym",
+          "seconds": 14.45,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "The user gave a long article about hotfixes for World of Warcraft. They want a background photo for the article. The instructions: we need to output a single English search phrase (3-6 words) that describes a scene that could be found on Pexels. It should be specific to a scene, objects, atmosphere, not abstract. The article is about hotfixes, patches, game updates. We need a background photo that fits the theme of a patch notes article. Maybe something like \"computer screen with code\" or \"gaming keyboard and mouse\" or \"developer working on computer\" or \"game patch update notification\" or \"digital code on screen\" or \"close up of computer monitor with game interface\". The phrase must be 3-6 words. Let's choose \"computer screen with code\". That's 4 words. That seems appropriate. Or \"developer working on computer\" (4 words). Or \"gaming keyboard and mouse\" (4 words). The article",
+          "seconds": 15.05,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "We need to choose a background photo for this news article. The article is about FA reviewing England's World Cup campaign, involving players, coaches, etc. We need to think of a suitable image that would represent this. The search term must be in English, describing a scene, objects, or atmosphere. No abstract concepts. 3-6 words. No punctuation or explanation.\n\nPossible search terms: \"football team discussion\", \"football players in locker room\", \"football coach talking to players\", \"football team huddle\", \"football team in stadium\", \"football players in stadium\", \"football team in locker room\", \"football team in training\", \"football team in stadium after game\", \"football team in stadium crowd\".\n\nWe need to pick one that is likely to exist in Pexels. \"football team huddle\" is common. \"football players in locker room\" also common. \"football coach talking to players\" maybe less common but still possible. \"football team in",
+          "seconds": 14.53,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "We need to pick a background photo for this news article. The article is about USA Women's National Team beating China 94-61 in 2026 FIBA World Cup opener. So we need a photo that fits that context. The instructions: only output a single English search phrase (3-6 words). It must describe a scene, objects, atmosphere. No abstract. So maybe \"women's basketball team celebrating victory\" or \"USA women's basketball team high five\" or \"basketball court with cheering crowd\" etc. Must be something that exists on Pexels. Let's think of a phrase that is likely to return a photo. Pexels has many photos of sports. \"women basketball team celebrating\" is likely. \"basketball team high five\" also. \"women's basketball team victory\" maybe. The phrase must be 3-6 words. Let's choose \"women's basketball team celebrating victory\". That's 5 words. That should be fine. Ensure no punctuation",
+          "seconds": 12.61,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "The user wants a background photo for the news article. The article is about Caitlin Clark making her senior international debut with Team USA at the FIBA Women’s Basketball World Cup. The article is about basketball, specifically women's basketball, USA team, international competition, a player debut, etc. The user wants a search term for Pexels. The search term must be in English, describing a scene, objects, or atmosphere. Must be 3-6 words. No other text. So we need to think of a phrase that would likely yield a photo in Pexels that matches the context. For example: \"women's basketball team practice\" or \"basketball court with crowd\" or \"USA basketball team on court\" or \"basketball hoop with ball\" or \"basketball game action shot\". The article is about a senior international debut, so maybe \"international basketball game\" or \"women's basketball world cup\" but that might be too specific. We need something",
+          "seconds": 14.95,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "The user wants a background photo for the news article. The article is about USS Lincoln docking in Thailand, looking rusty. We need to produce an English search phrase for Pexels that would find a relevant photo. The phrase must be 3-6 words, describing a scene, objects, or atmosphere. No abstract concepts. So something like \"rusty aircraft carrier dock\" or \"US Navy ship in harbor\" or \"warship at sea\" or \"ship in harbor Thailand\" or \"US aircraft carrier at port\". But we need to be specific enough to find a photo. Pexels has many photos of ships, but we need to pick a phrase that likely exists. \"US aircraft carrier at sea\" might be too specific. \"Aircraft carrier at sea\" might be fine. \"Rusty ship at harbor\" might be okay. \"Warship at sea\" is generic. \"Ship in harbor Thailand\" might be too specific. The article is about a US",
+          "seconds": 12.72,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "We need to pick a background photo for this news article. The article is about a referee, Alireza Faghani, in Mexico City, at Estadio Azteca, preparing for a World Cup match, dealing with altitude, rain, thunder, fans, etc. The photo should capture something relevant to the article: maybe a stadium interior, a locker room, a referee in a locker room, a rainy stadium, a stadium with fans, or a referee's perspective. The instructions: only output a single English search phrase (3-6 words). It must be a concrete scene that can be found on Pexels. No abstract or conceptual terms. So something like \"referee locker room\" or \"stadium locker room interior\" or \"rainy football stadium\" or \"stadium fans cheering\" or \"referee in stadium\". We need to think of a phrase that will likely return a photo on Pexels. Pexels has many photos of",
+          "seconds": 14.89,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "The user provided a long article about SEMICON Taiwan 2026 Silicon Photonics Global Summit. They want a background photo for the article. The instructions: choose an English search phrase for Pexels. Must be 3-6 words, describing a scene, objects, or atmosphere. No abstract concepts. Only output the phrase, no punctuation or explanation.\n\nWe need to think of a suitable background photo that matches the article's content. The article is about silicon photonics, semiconductor manufacturing, high-speed optical interconnects, manufacturing, testing, packaging, etc. The background photo could be a photo of a semiconductor fab, a chip, a photonics lab, a high-tech manufacturing environment, a close-up of a silicon wafer, or a photo of a high-tech assembly line.\n\nWe need to produce a phrase that would find a photo on Pexels. For example: \"semiconductor fabrication plant interior\" or \"silicon wafer close up\" or \"high tech manufacturing",
+          "seconds": 25.37,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "We need to choose a background photo for the news article. The article is about US-Iran conflict, rising oil prices, diesel price record, etc. We need to think of a photo that reflects the content: maybe a tanker ship, oil rigs, a fuel pump, a gas station, a map of Middle East, a war scene? But we need to pick a phrase that can be searched on Pexels. The phrase must be 3-6 words, describing a scene, objects, or atmosphere. No abstract concept. So we need a phrase like \"oil tanker on sea\" or \"fuel pump at gas station\" or \"oil rig in Gulf\" or \"oil barrel stack\" or \"oil price chart\" or \"diesel pump\" or \"oil price graph\" or \"oil price chart\" etc. But the article is about rising oil prices due to conflict. So maybe \"oil tanker on sea\" or \"oil rig in Gulf\" or \"oil",
+          "seconds": 27.64,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "The user wants a background photo search term for the article. The article is about Trump, gold price, inflation, etc. We need to pick a phrase that describes a scene that could be photographed. The phrase must be 3-6 words, in English, describing a scene, objects, or atmosphere, not abstract. For example \"gold bullion pile\" or \"gold bar stack\" or \"stock market ticker board\" or \"financial news headline\" or \"gold price chart\" or \"gold price graph\" or \"gold price rise\" or \"gold price chart\" etc. The article is about gold price rising due to Trump. So maybe \"gold bar stack\" or \"gold bullion pile\" or \"gold price chart\" or \"gold price graph\" or \"gold price ticker\" or \"gold price rise\" or \"gold price surge\" or \"gold price increase\" or \"gold price chart\" or \"gold price graph\" or \"gold price rise\" or \"",
+          "seconds": 15.84,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "The user wants a single English search phrase (3-6 words) to find a background photo for the article. The article is about International Day of Charity, volunteerism, HIV education, community involvement, etc. We need to think of a photo that would fit the article. The article is about broadening the concept of charity beyond just \"doing good\" to include education, public awareness, dialogue, solidarity, etc. It mentions volunteerism, community, schools, HIV education, etc. The photo should capture the essence of volunteerism, community, education, or health awareness. The search phrase should be specific: e.g., \"volunteer classroom discussion\", \"community health workshop\", \"students learning about HIV\", \"volunteer group in classroom\", \"people sharing health information\", \"community health education session\", \"volunteer teaching in classroom\", \"community volunteer event\", \"people in classroom discussing health\", \"volunteer group in school\", \"people in classroom with teacher\", \"",
+          "seconds": 18.79,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "We need to pick a background photo for this news article. The article is about a Taiwanese company, Lianyou Metal (聯友金屬), which deals with tungsten recycling, high-value materials, and is benefiting from global high-tech and defense supply chain decoupling. The article mentions tungsten, cobalt, recycling, high-tech, defense, etc. We need to think of a photo that would represent this content. The photo should be something that can be found on Pexels. We need to produce a single English search phrase (3-6 words) that describes a scene or objects, not abstract concepts. So we need to think of a phrase like \"industrial metal recycling plant\" or \"tungsten ore processing\" or \"cobalt mining\" or \"metal smelting furnace\" or \"high-tech factory\" or \"metal recycling facility\" or \"industrial waste processing\" or \"metal smelting furnace\" or \"tungsten production\" or \"metal recycling",
+          "seconds": 15.15,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "The user provided a news article about rising oil prices due to US-Iran conflict. The instruction: \"你在幫一段新聞內容挑一張背景照片，素材庫裡沒有現成的圖，需要你自己想一個英文搜尋詞去圖庫（Pexels）現找。規則：- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"，那不是一張照片會長的樣子）。- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\"",
+          "seconds": 16.97,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "The user wants a background photo for the news article. The article is about a controversy involving the mayor's son being accepted into an international exchange program, and questions about conflict of interest forms. We need to think of a photo that would represent the context: maybe a photo of a school, a student, a government building, a mayor, a student exchange program, a form, a city hall, a protest, or a city hall meeting. The user wants a search phrase in English, 3-6 words, describing the scene. The phrase should be something that would likely yield a photo on Pexels. We need to think of a phrase that is specific enough to find a photo but not too abstract. For example: \"city hall meeting\" or \"government building interior\" or \"student exchange program\" or \"school classroom with students\" or \"politician signing form\" or \"public office conflict of interest\" but that might be too abstract. We need to think",
+          "seconds": 16.29,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "The user wants an English search phrase for a background photo for the news article. The article is about Evergreen Marine participating in Asia Fruit Logistica, showcasing smart cold chain solutions, IoT-enabled refrigerated containers, controlled atmosphere, etc. The photo should represent the content: maybe a refrigerated container, a shipping container, a fruit shipment, a logistics hub, a container yard, a shipping terminal, a fruit display, etc. The search phrase must be 3-6 words, describing a scene or objects, not abstract. Must be in English. No other text.\n\nWe need to pick a phrase that likely exists in Pexels. For example: \"refrigerated shipping container\" or \"smart refrigerated container\" or \"controlled atmosphere container\" or \"fruit shipment container\" or \"container yard with refrigerated containers\" or \"port container yard\" or \"shipping container at port\". The article mentions Asia Fruit Logistica, but we can't mention that. We can mention \"fruit shipment container",
+          "seconds": 18.0,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "We need to choose a background photo for this news article. The article is about the 2026 Taiwan International Dance Carnival in Taichung, with traffic control, bus rerouting, etc. We need to think of a suitable background photo that captures the essence of the event: a street dance festival, city streets, traffic control, crowds, etc. The photo should be something that can be found on Pexels. We need to provide a single English search phrase (3-6 words) that describes a scene that exists in Pexels. No punctuation, no explanation. Just the phrase.\n\nWe need to think of a phrase that is specific enough to find a photo. For example: \"city street dance festival\" might be too generic. \"crowded street dance performance\" maybe. \"urban street dance crowd\" maybe. \"traffic control signs on city street\" maybe. But we want a background photo that would fit the article. The article is about a dance carnival",
+          "seconds": 18.02,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "The user gave a text: \"This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data. You can email the site owner to let them know you were blocked. Please include what you were doing when this page came up and the Cloudflare Ray ID found at the bottom of this page.\"\n\nWe need to choose a background photo for a news article. The article is about a website using a security service (Cloudflare) and blocking a user. So the photo should reflect website security, maybe a computer screen with a lock, or a firewall, or a server rack, or a person typing on a laptop with a shield icon, or a digital lock, or a network diagram. The search term must be in English, describing the scene. 3-6 words. No punctuation. No explanation. Just",
+          "seconds": 12.62,
+          "note": "content 是空的，這是 thinking 欄位的內容"
+        }
+      ]
+    },
+    "qwen3:32b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 29.36
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "equal earth map projection",
+          "seconds": 46.52
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "aerial view of world map with geopolitical borders",
+          "seconds": 23.5
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "financial markets analysis",
+          "seconds": 23.97
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "boxing ring lights",
+          "seconds": 14.05
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "game patch notes",
+          "seconds": 24.36
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "football team review meeting",
+          "seconds": 16.98
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "basketball game crowd",
+          "seconds": 8.8
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "basketball court action shot",
+          "seconds": 25.64
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "military ship docked at harbor",
+          "seconds": 6.58
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "rainy soccer stadium night",
+          "seconds": 24.45
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "chip manufacturing equipment in a high-tech cleanroom",
+          "seconds": 83.75
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "oil refinery at night",
+          "seconds": 88.3
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "middle east skyline at sunset",
+          "seconds": 21.49
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "classroom discussion on hiv",
+          "seconds": 39.02
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "industrial metal factory machinery",
+          "seconds": 17.71
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "oil rig at sunset",
+          "seconds": 27.34
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "young man filling out application form",
+          "seconds": 24.07
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "\"shipping containers with temperature sensors\"",
+          "seconds": 31.54
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "street dance performance",
+          "seconds": 33.82
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "cybersecurity protection measures",
+          "seconds": 5.26
+        }
+      ]
+    },
+    "qwen3:30b-a3b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 14.13
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇新闻内容选择一张背景照片。素材库中没有现成的图，所以我必须自己想一个英文搜索词去图库（Pexels）找。规则是：\n\n- 只能用英文，描述画面本身，不能讲报道的意思或抽象概念。例如，不能写 \"renaming controversy\"，而要写像 \"aerial coastline sunset\" 这样的具体画面。\n\n- 搜索词要具体到图库里能搜到实际照片：一个场景、几个物件、一种氛围。不能是抽象名词。\n\n- 只输出一个英文搜索词，3到6个字的短语。不要输出其他文字、标点或解释。\n\n现在，分析新闻内容：报道是关于联合国通过决议，用更准确的等面积投影地图（Equal Earth projection）替换墨卡托投影（Mercator projection），以纠正地图上非洲等大陆被缩小的错误。关键点是地图",
+          "seconds": 31.68
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任務：為這篇新聞內容挑一張背景照片。素材庫裡沒有現成的圖，所以我必須自己想一個英文搜尋詞去圖庫（Pexels）找。\n\n規則：\n- 只能用英文，描述畫面本身，不要講報導的意思或抽象概念。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於特朗普的外交政策，提到一些具體行動如 \"Bomb Oman\"、\"Abandon South Korea\"、\"Pull out of NATO\"、\"Seize Greenland\" 等，但這些是報導的內容，不是照片會有的畫面。我不能用抽象概念如 \"renaming controversy\"",
+          "seconds": 11.95
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任务：为一篇关于挪威主权财富基金调整投资组合的新闻内容选择一张背景照片。素材库中没有现成的图，所以我必须想一个英文搜索词去Pexels图库找。\n\n规则是：\n- 只能用英文，描述画面本身，不能讲报道的意思或抽象概念。\n- 搜索词要具体：一个场景、几个物件、一种氛围，不能是抽象名词。\n- 只输出一个英文搜索词，3到6个字的短语。\n- 不要输出其他文字、标点或解释。\n\n现在，分析新闻内容：\n- 主题是挪威主权财富基金（Norges Bank Investment Management）减少美国国债持有，增加其他投资。\n- 关键点：涉及政府债券、投资组合、市场动荡、美国国债等。\n- 但规则说不能讲报道的意思，所以不能用\"bond portfolio\"或\"Treasury\"这样的词，因为那不是照片会",
+          "seconds": 12.32
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任務：為這篇新聞內容挑一張背景照片。素材庫裡沒有現成的圖，所以我必須自己想一個英文搜尋詞去圖庫（Pexels）找。\n\n規則：\n- 只能用英文，描述畫面本身，不要講報導的意思或抽象概念。\n- 搜尋詞要具體：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要其他文字、標點或解釋。\n\n新聞內容重點：\n- Andy Ruiz Jr 是前世界冠軍拳擊手。\n- 他剛在新澤西州的普魯登ential中心（Prudential Center）輸給波蘭的 Damian Knyba。\n- 描述了比賽場景：拳擊賽、紐澤西州的場地、拳擊手在擂台",
+          "seconds": 10.45
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任務：幫一段新聞內容挑一張背景照片，但素材庫裡沒有現成的圖，所以我必須自己想一個英文搜尋詞去圖庫（Pexels）找。規則很明確：\n\n- 只能用英文，描述畫面本身，不要講報導的意思或抽象概念。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n現在，看看這篇報導的內容。報導是關於《魔獸世界》（World of Warcraft）的熱修（hotfixes），包括各種遊戲更新、修正錯誤等。內容涉及遊戲中的元素，如角色、地點、物品等，但都是虛擬的遊戲內容。\n\n關鍵點是",
+          "seconds": 12.39
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇新闻内容选择一张背景照片。素材库中没有现成的图，所以我必须想一个英文搜索词去Pexels图库找。规则是：\n\n- 只能用英文，描述画面本身，不能讲报道的意思或抽象概念。例如，不能写\"renaming controversy\"，而要写像\"aerial coastline sunset\"这样的具体画面。\n\n- 搜索词要具体到图库里能搜到实际照片：一个场景、几个物件、一种氛围，不能是抽象名词。\n\n- 只输出一个英文搜索词，3到6个字的短语，不要其他文字、标点或解释。\n\n现在，分析新闻内容：\n\n- 新闻是关于英格兰足球队在世界杯后的审查。\n\n- 提到地点：St George's Park（英格兰足球训练基地）、Kansas City（堪萨斯城，球队的基地）。\n\n- 事件：球员被询问意见、战术讨论、",
+          "seconds": 10.89
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任務：為新聞內容挑選一張背景照片，但素材庫裡沒有現成的圖，所以我必須想一個英文搜尋詞去圖庫（Pexels）找。規則是：\n\n- 只能用英文，描述畫面本身，不要講報導的意思或抽象概念。\n- 搜尋詞要具體：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞，3到6個字的片語。\n- 不要輸出其他文字、標點或解釋。\n\n新聞內容是關於「USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener」。這是一篇籃球比賽的新聞，美國女籃擊敗中國隊，比分94-61，是2026年FIBA世界盃的開",
+          "seconds": 9.47
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇关于Caitlin Clark在FIBA女子篮球世界杯的新闻内容选择一张背景照片。素材库中没有现成的图，所以我必须想一个英文搜索词去Pexels图库找。\n\n规则是：\n- 只能用英文描述画面本身，不能讲报道的意思或抽象概念。\n- 搜索词要具体：一个场景、几个物件、一种氛围，不能是抽象名词。\n- 只输出一个英文搜索词，3到6个字的短语。\n- 不要输出其他文字、标点或解释。\n\n现在，分析新闻内容：\n- 主题是Caitlin Clark在FIBA女子篮球世界杯的首秀。\n- 她是WNBA球员，刚打破记录。\n- 新闻提到她上场、助攻、得分等。\n- 关键元素：篮球比赛、女子篮球、世界杯、团队、球场。\n\n我需要避免抽象概念：\n-",
+          "seconds": 12.47
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任務：為這篇新聞挑選一張背景照片。素材庫裡沒有現成的圖，所以我必須想一個英文搜尋詞去圖庫（Pexels）找。\n\n規則：\n- 只能用英文，描述畫面本身，不要講報導的意思或抽象概念。\n- 搜尋詞要具體：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞，3到6個字的片語。\n- 不要輸出其他文字、標點或解釋。\n\n新聞內容重點：\n- USS Lincoln（美國航空母艦）在泰國停靠。\n- 被批評看起來生鏽（rusty）。\n- 航母在海上部署了約九個月，支持美以戰爭對伊朗。\n- 軍事專家說，部署時間不尋常，但磨損是正常的",
+          "seconds": 8.95
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇新闻内容选择一张背景照片。素材库没有现成的图，所以我必须想一个英文搜索词去图库（Pexels）找。规则是：\n\n- 只能用英文，描述画面本身，不能讲报道的意思或抽象概念。\n\n- 搜索词要具体，是场景、物件、氛围，不能是抽象名词。\n\n- 只输出一个英文搜索词，3到6个字的短语。\n\n- 不要输出其他文字、标点或解释。\n\n现在，分析新闻内容：\n\n- 地点：墨西哥城，Estadio Azteca（阿兹特克体育场），海拔2240米。\n\n- 时间：2026年世界杯，墨西哥对英格兰的16强赛。\n\n- 关键元素：雨天、风暴、球迷、体育场、裁判（Alireza Faghani）。\n\n- 氛围：雨中、球迷欢呼、体育场",
+          "seconds": 12.29
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解用户的需求：为一篇关于SEMICON Taiwan 2026矽光子国际论坛的新闻内容挑选一张背景照片。素材库中没有现成图片，所以我必须自己想一个英文搜索词去Pexels图库找。\n\n关键规则：\n- 只能用英文描述画面本身，不能讲报道内容或抽象概念（比如不能写\"renaming controversy\"）。\n- 搜索词要具体：一个场景、几个物件、一种氛围，不能是抽象名词。\n- 只输出一个英文搜索词，3-6个词的短语，不能有其他文字、标点或解释。\n\n现在，分析新闻内容：\n- 主题是矽光子技术论坛，涉及光子芯片、封装、测试等。\n- 关键点：没有讨论CPO是否该做，而是聚焦在\"怎么量产\"；提到测试、良率；台湾是主战场。\n- 但规则说",
+          "seconds": 24.06
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解任务：为一篇关于美伊冲突导致油价上涨的新闻内容选择一张背景照片。素材库中没有现成的图，所以我必须想一个英文搜索词去Pexels图库找。\n\n规则很明确：\n- 只能用英文描述画面本身，不能讲报道的意思或抽象概念。\n- 搜索词要具体：一个场景、几个物件、一种氛围，不能是抽象名词。\n- 只输出一个英文搜索词，3到6个字的短语。\n- 不能有其他文字、标点或解释。\n\n现在，分析新闻内容：\n- 主题是美伊冲突、油价上涨、柴油价格创纪录。\n- 关键元素：中东紧张局势、原油期货、柴油价格、加油站、石油设施、可能的冲突场景。\n\n但规则强调：不能讲报道的意思。所以不能用\"oil crisis\"或\"Middle East conflict\"，因为这些是抽象概念，不是画面。\n\n我",
+          "seconds": 25.26
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇新闻内容挑选一张背景照片。素材库没有现成的图，所以我必须想一个英文搜索词去图库（Pexels）找。规则是：\n\n- 只能用英文，描述画面本身，不要讲报道的意思或抽象概念。\n\n- 搜索词要具体：一个场景、几个物件、一种氛围，不要抽象名词。\n\n- 只输出一个英文搜索词，3到6个字的短语。\n\n- 不要输出其他文字、标点或解释。\n\n现在，分析新闻内容：\n\n- 主题：川普一句话化解通胀危机，国际金价反弹。\n\n- 关键点：川普排除中东长期军事行动，缓解市场对高通胀和加息的担忧；金价上涨；地缘政治紧张（美伊冲突）；美元走弱；联储会升息预期降温。\n\n- 但规则说：不要讲报道的意思或抽象概念。所以不能用像\"",
+          "seconds": 12.01
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇新闻内容挑选一张背景照片，但素材库没有现成的图，所以我必须想一个英文搜索词去Pexels图库找。规则是：\n\n- 只能用英文，描述画面本身，不能讲报道的意思或抽象概念。\n\n- 搜索词要具体，是场景、物件、氛围，不能是抽象名词。\n\n- 只输出一个英文搜索词，3到6个字的短语。\n\n- 不要输出其他文字、标点或解释。\n\n现在，分析新闻内容。新闻主题是关于国际慈善日，强调公益不仅仅是穿志愿者背心，而是日常生活中的小行动，比如在教室讨论HIV、制止歧视玩笑等。关键点是：具体场景如教室、社区活动、小行动。\n\n我需要避免抽象概念，比如不能写 \"volunteer work\" 或 \"charity\"，因为那不是画面。必须描述实际可见的场景。\n\n可能的场景",
+          "seconds": 15.25
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解用户的需求：为一篇关于联友金属（7610）的新闻报道挑选背景照片。素材库没有现成图片，所以我必须想一个英文搜索词去Pexels找图。规则很明确：只能用描述画面本身的英文词，不能提报道内容或抽象概念；要具体到能搜到实际照片；只输出一个3-6个词的短语。\n\n现在看报道内容：核心是联友金属的业务，涉及钨、钴等金属的回收处理、高值化生产，还有\"去中化\"供应链趋势。但规则禁止用抽象词如\"去中化\"，必须聚焦画面。\n\n我得避开所有报道关键词：不能写\"tungsten\"（太专业）、\"supply chain\"（太抽象）、\"recycling\"（可能太泛）。要找能直接对应照片的日常场景。\n\n脑力激荡可能的视觉元素：\n- 工厂",
+          "seconds": 11.11
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，用戶要求我為一段新聞內容挑選一張背景照片。新聞內容是關於國際油價上漲，特別是因為美伊衝突導致的。素材庫裡沒有現成的圖，所以我需要自己想一個英文搜尋詞去圖庫（Pexels）找。\n\n規則：\n- 只能用英文，描述畫面本身，不要講報導的意思或抽象概念。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍。\n- 不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語）。\n- 不要輸出其他文字、標點或解釋。\n\n新聞內容重點：\n- 國際油價上漲\n- 美伊軍事衝突\n- 布蘭特原油期貨、WTI原油\n-",
+          "seconds": 12.93
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇新闻内容选择一张背景照片，但素材库没有现成图，所以我必须想一个英文搜索词去Pexels图库找。规则是：\n\n- 只能用英文，描述画面本身，不能讲报道的意思或抽象概念。\n\n- 搜索词要具体：一个场景、几个物件、一种氛围，不能是抽象名词。\n\n- 只输出一个英文搜索词，3到6个字的短语。\n\n- 不要输出其他文字、标点或解释。\n\n现在，分析新闻内容：报道是关于蒋万安的儿子蒋得立被录取为国际交换生，引发争议，涉及利益冲突回避表的问题。核心是：市长儿子的录取、议员质疑、程序正义。\n\n但规则说：不要讲报道的意思或抽象概念。所以不能用像\"political controversy\"或\"interest conflict\"这样的词。必须描述实际画面。\n\n我需要想一个具体的、能从图",
+          "seconds": 12.31
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇新闻内容选择一张背景照片。新闻是关于长荣海运参加2026亚洲国际果蔬展，展示冷链创新成果，如智慧监控、气调保鲜、低碳运输等。\n\n规则是：\n- 只能用英文描述画面本身，不能讲报道的意思或抽象概念。\n- 搜索词要具体，是图库中能搜到的实际照片：一个场景、几个物件、一种氛围。\n- 不能是抽象名词，比如不能写 \"renaming controversy\"。\n- 只输出一个英文搜索词，3到6个字的短语。\n- 不要输出其他文字、标点或解释。\n\n新闻内容的关键元素：\n- 场景：在香港举办的亚洲国际果蔬展（Asia Fruit Logistica）。\n- 展示内容：智慧冷链、冷凍貨櫃、物联网设备、气调保鲜等。\n- 但不能用抽象概念，比如不能写",
+          "seconds": 13.56
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，我需要理解任务：为这篇关于台中2026国际踩舞嘉年华的新闻内容选择一张背景照片。素材库没有现成图片，所以我必须想一个英文搜索词去Pexels图库找。\n\n规则很明确：\n- 只能用英文描述画面本身，不能讲报道的意思或抽象概念。\n- 搜索词要具体：一个场景、几个物件、一种氛围，不能是抽象名词。\n- 只输出一个英文搜索词，3到6个字的短语。\n- 不能有其他文字、标点或解释。\n\n现在，分析新闻内容：\n- 活动是“国际踩舞嘉年华”，涉及舞蹈、踩街（parade）、文化交流。\n- 地点在台中，包括潭子、后里、北屯、北区。\n- 有舞蹈表演、国际舞团、街道舞台。\n- 交通管制提到街道，但照片不能是交通管制的场景",
+          "seconds": 14.27
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，用戶提供了一段新聞內容，但內容是關於網站安全服務的錯誤消息：\"This website is using a security service to protect itself from online attacks...\" 這不是一篇真實的新聞報導，而是一個錯誤頁面。\n\n我的任務是幫這段內容挑一張背景照片。但規則是：只能用英文搜尋詞，描述畫面本身，不能講報導的意思或抽象概念。搜尋詞要具體，能從圖庫（Pexels）找到實際照片。\n\n關鍵點：\n- 不能寫抽象概念，如 \"renaming controversy\"（但這裡沒有這種東西）。\n- 搜尋詞要具體：一個場景、幾個物件、一種氛圍。\n- 只輸出一個英文搜尋詞，3到6個字的片語。\n- 不要輸出其他文字、標點或解釋。\n\n現在，分析新聞內容：內容是錯誤消息，顯示網站被安全服務保護",
+          "seconds": 8.92
+        }
+      ]
+    },
+    "qwen3:8b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 7.25
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "correct map projection",
+          "seconds": 11.54
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "aerial world map with shifting borders",
+          "seconds": 5.62
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "aerial coastal sunrise",
+          "seconds": 7.86
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "aerial boxing match",
+          "seconds": 3.6
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "aerial dungeon scene",
+          "seconds": 5.88
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "football team review meeting",
+          "seconds": 4.18
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "women's basketball game",
+          "seconds": 2.29
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "aerial basketball court sunrise",
+          "seconds": 6.14
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "aerial aircraft carrier docked",
+          "seconds": 1.81
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "aerial view of estadio azteca during a football match",
+          "seconds": 6.45
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial semiconductor factory",
+          "seconds": 19.46
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial oil refinery sunset",
+          "seconds": 21.3
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial gold market",
+          "seconds": 5.32
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "a classroom opening its door",
+          "seconds": 9.24
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial view of metal processing plant",
+          "seconds": 4.48
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial oil refinery sunset",
+          "seconds": 6.62
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial cityscape sunrise",
+          "seconds": 5.81
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "cold chain logistics",
+          "seconds": 7.33
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial view of street parade",
+          "seconds": 8.27
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial view of a city skyline at night",
+          "seconds": 1.83
+        }
+      ]
+    },
+    "qwen3:4b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 13.35
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片。素材庫沒有現成的圖，所以我必須想一個英文搜尋詞去Pexels圖庫找。搜尋詞要具體，只描述畫面本身，不能寫報導的意思或抽象概念。\n\n規則重點：\n- 只能用英文。\n- 講畫面本身（例如 \"aerial coastline sunset\"）。\n- 不要寫報導的意思或抽象概念（例如不要寫 \"renaming controversy\"）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍。\n- 不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語）。\n- 不要輸出其他文字、標點或解釋。\n\n新聞內容是關於聯合國大會通過新世界地圖的決議",
+          "seconds": 17.51
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片。素材庫沒有現成的圖，所以我必須想一個英文搜尋詞去Pexels圖庫找。搜尋詞要具體，只描述畫面本身，不能寫報導的意思或抽象概念。\n\n規則重點：\n- 只能用英文。\n- 講畫面本身（例如 \"aerial coastline sunset\"）。\n- 不要寫報導的意思或抽象概念（例如不要寫 \"renaming controversy\"）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語）。\n- 不要輸出其他文字、標點或解釋。\n\n新聞內容是關於特朗普的外交政策：他把盟友變成敵人，敵人變成盟友，",
+          "seconds": 11.95
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "首先，任務是幫這篇新聞內容挑一張背景照片。素材庫沒有現成圖，所以我需要自己想一個英文搜尋詞去Pexels圖庫找。搜尋詞必須是具體的、描述畫面本身的，不能是這篇報導的意思或抽象概念。\n\n規則重點：\n- 只能用英文。\n- 講畫面本身，例如 \"aerial coastline sunset\"（不是報導內容）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍。\n- 不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語）。\n- 不要輸出其他文字、標點或解釋。\n\n新聞內容是關於挪威的主權財富基金（Norway's sovereign wealth fund）提出減少政府債券分配，特別是美國國債，",
+          "seconds": 12.34
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "首先，問題是：幫一段新聞內容挑一張背景照片。素材庫沒有現成圖，需要自己想一個英文搜尋詞去Pexels找。規則很明確：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"）。\n\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於Andy Ruiz Jr在拳擊比賽後的聲明。重點是：他輸了比賽，但誓言繼續比賽。場景在New Jersey的Prudential Center in Newark。比賽是重擊拳擊。\n\n我需要想",
+          "seconds": 10.79
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片，素材庫裡沒有現成的圖，所以我要自己想一個英文搜尋詞去Pexels圖庫找。規則很明確：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"）。\n\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於World of Warcraft遊戲的熱修補（hotfixes）的列表，日期是2026年9月4日和9月3日。內容涉及遊戲中的類別",
+          "seconds": 12.48
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片。素材庫沒有現成的圖，所以我必須想一個英文搜尋詞去Pexels圖庫找。搜尋詞要具體，只描述畫面本身，不能寫報導的意思或抽象概念。\n\n規則：\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"）\n- 不要寫報導的意思或抽象概念（例如不要寫 \"renaming controversy\"）\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋\n\n新聞內容是關於英足總（FA）對英格蘭世界盃賽事的回顧調查。重點在於：\n- 英足總",
+          "seconds": 11.29
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "Okay, the user wants me to pick a background photo for this news article about the USA Women's National Team beating China 94-61 in the 2026 FIBA World Cup opener. They need a specific English search term for Pexels that's 3-6 words, describing the actual scene without abstract concepts.\n\nFirst, I need to focus on what the photo should show. The article mentions a basketball game - USA vs China in the 2026 FIBA World Cup. But the user said no abstract terms like \"renaming controversy\" so I can't use anything related to the controversy or the event itself. \n\nHmm... the key is to find a visual that represents the game without mentioning the teams or the event. What's commonly seen in sports photos? Players, court, action. But I have to be specific. \n\nLet me think of possible phrases. \"Women's basketball game\" is too vague? Pexels might have that",
+          "seconds": 10.01
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "Okay, the user wants me to create a specific English search term for a Pexels image based on a news article about Caitlin Clark. Let me analyze this carefully.\n\nFirst, I need to understand what the news is about. The article describes Caitlin Clark making her senior international debut with Team USA at the FIBA Women's Basketball World Cup against China. She wasn't in the starting lineup initially but came in during the first quarter. There's mention of her WNBA stats and performance.\n\nThe key rule is: I must only describe the actual visual scene in the photo, not the news content or abstract concepts. No phrases like \"renaming controversy\" - that's not a visual thing. The search term should be concrete: a scene, objects, or atmosphere that exists in Pexels.\n\nHmm... the article focuses on basketball action. Specifically: Clark playing against China, Team USA's game. But I can't mention teams or players since that's not visual. Need something universally phot",
+          "seconds": 12.51
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "Okay, the user wants me to create an English search term for a background photo for this news story about the USS Lincoln in Thailand. Let me think about what the story is about.\n\nThe news says the USS Lincoln aircraft carrier docked in Thailand and people criticized its rusty condition. It's been at sea for nine months supporting US-Israel war with Iran. Military experts say the wear and tear isn't unusual for that deployment length.\n\nHmm, the key here is to pick a photo that shows the actual scene without mentioning the controversy or abstract concepts. The rule says only describe the visual scene, not the news context. So I need to avoid words like \"rusty\", \"controversy\", \"deployment\", etc.\n\nWhat would actually be in a photo of this situation? The USS Lincoln is a US aircraft carrier. It's in Thailand. The photo would show the ship docked there, probably with some visible rust or weathering since it's been at sea for nine months. But I shouldn",
+          "seconds": 9.51
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "首先，問題是：幫一段新聞內容挑一張背景照片。素材庫沒有現成的圖，需要我自己想一個英文搜尋詞去圖庫（Pexels）現找。\n\n規則：\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"，那不是一張照片會長的樣子）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於墨西哥城的足球比賽，具體是2026年世界盃墨西哥對英格蘭的比賽。關鍵點：\n- 6pm on",
+          "seconds": 12.31
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：幫一段新聞內容挑一張背景照片。素材庫沒有現成圖，需要自己想一個英文搜尋詞去Pexels找。搜尋詞要符合規則：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於SEMICON Taiwan 2026 矽光子國際論壇的。重點在於：矽光子、CPO（Coherent Photonic Optics）、可插拔、量測與",
+          "seconds": 22.08
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片。素材庫沒有現成圖，所以我必須想一個英文搜尋詞去Pexels圖庫找。搜尋詞要符合規則：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於美伊戰火、油價上漲、柴油價格破紀錄等。關鍵點是：美國與伊朗爆發軍事衝突，中東緊張局勢升溫，帶",
+          "seconds": 23.28
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：幫一段新聞內容挑一張背景照片。素材庫沒有現成圖，需要自己想一個英文搜尋詞去Pexels找。規則是：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"）。\n\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於川普化解通膨危機、國際金價反彈等。關鍵點是：美國總統川普排除在中東進行長期軍事行動，緩解市場對高通膨與升息的疑慮，帶動",
+          "seconds": 12.15
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是幫一段新聞內容挑一張背景照片。素材庫沒有現成圖，我需要自己想一個英文搜尋詞去Pexels找照片。規則很明確：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"）。\n\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於2026國際慈善日，台灣百萬志工，討論做公益的多樣性，特別強調在愛滋防治、性健康教育、社區參與等場景中，普通人如何參與，比如",
+          "seconds": 14.85
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片。素材庫裡沒有現成的圖，所以我必須想一個英文搜尋詞去Pexels圖庫找。規則是：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"）。\n\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於聯友金屬（7610）的股票報導，重點在於：\n\n- 受惠全球高科技與軍工供應鏈「去中化」趨勢\n\n- 高",
+          "seconds": 11.43
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：幫一段新聞內容挑一張背景照片。素材庫裡沒有現成的圖，需要我自己想一個英文搜尋詞去圖庫（Pexels）現找。\n\n規則：\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"，那不是一張照片會長的樣子）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜: 3 到 6 個字的片語，不要輸出其他文字、標點或解釋。\n\n新聞內容是關於國際油價上揚，因為美國與伊朗軍事衝突升溫。關鍵點是油價收高、軍事衝突、柴油價格創",
+          "seconds": 12.98
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：幫一段新聞內容挑一張背景照片。素材庫沒有現成的圖，需要我自己想一個英文搜尋詞去圖庫（Pexels）現找。\n\n規則：\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"，那不是一張照片會長的樣子）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於台北市長蔣萬安的兒子蔣得立錄取國際交換生引起爭議，涉及利益衝突迴避的問題。重點",
+          "seconds": 12.36
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片。素材庫沒有現成圖，所以我必須想一個英文搜尋詞去Pexels圖庫找。搜尋詞要具體，只描述畫面本身，不能寫報導的意思或抽象概念。\n\n關鍵規則：\n- 只能用英文。\n- 要講畫面本身（例如 \"aerial coastline sunset\"）。\n- 不要寫報導的意思或抽象概念（例如不要寫 \"renaming controversy\"）。\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍。\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語）。\n- 不要輸出其他文字、標點或解釋。\n\n新聞內容是關於長榮海運參加香港的「2026亞洲國際果蔬展」，",
+          "seconds": 13.52
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "首先，問題是：我需要為這篇新聞內容挑一張背景照片。素材庫裡沒有現成的圖，所以我必須自己想一個英文搜尋詞去Pexels圖庫找。規則很明確：\n\n- 只能用英文，講畫面本身（例如 \"aerial coastline sunset\"），不要講這篇報導的意思或抽象概念（不要寫 \"renaming controversy\"，那不是一張照片會長的樣子）。\n\n- 搜尋詞要具體到圖庫裡搜得到實際存在的照片：一個場景、幾個物件、一種氛圍，不要抽象名詞。\n\n- 只輸出一個英文搜尋詞（3 到 6 個字的片語），不要輸出其他文字、標點或解釋。\n\n新聞內容是關於2026台中國際踩舞嘉年華的交通管制和活動細節。重點是活動在台中市舉辦，",
+          "seconds": 14.11
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "Okay, the user wants me to create a specific English search term for Pexels to find a background photo for this news article. Let me read the news content carefully.\n\nThe news says: \"This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution...\" It's about a security block from Cloudflare. The user mentioned that the photo library doesn't have existing images, so I need to think of a search term that's concrete and matches what the news describes.\n\nThe rules are strict: only English, describe the actual scene or objects in the photo, not the news meaning or abstract concepts. Must be 3-6 words, no punctuation. Avoid terms like \"renaming controversy\" which isn't a visual thing.\n\nHmm, the news is about a security block triggered by an action. But the photo shouldn't be about the news content itself. I need to think of a visual that's neutral and fits the context. Since it",
+          "seconds": 9.54
+        }
+      ]
+    },
+    "qwen2.5:7b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 6.31
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "african continent resized",
+          "seconds": 10.6
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "Trump diplomacy strategy",
+          "seconds": 4.74
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "government bond portfolio adjustment",
+          "seconds": 5.2
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "boxing ring defeat",
+          "seconds": 3.1
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "World of Warcraft hotfixes",
+          "seconds": 5.46
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "football pitch sunset",
+          "seconds": 3.75
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "basketball court arena",
+          "seconds": 2.42
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "Caitlin Clark on court",
+          "seconds": 5.6
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "rusty aircraft carrier",
+          "seconds": 1.45
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "referee pregame routine",
+          "seconds": 5.27
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "data center interconnect",
+          "seconds": 17.41
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "oil price rise",
+          "seconds": 18.49
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "oil price volatility",
+          "seconds": 4.58
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial coastline sunset",
+          "seconds": 8.35
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "industrial expansion factory",
+          "seconds": 3.8
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "oil price rally",
+          "seconds": 5.84
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "public official controversy",
+          "seconds": 5.01
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "aerial harbour exposition",
+          "seconds": 6.66
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "street festival parade",
+          "seconds": 7.27
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "cloudflare warning screen",
+          "seconds": 1.27
+        }
+      ]
+    },
+    "qwen2.5:1.5b": {
+      "stats": {
+        "attempted": 20,
+        "succeeded": 20,
+        "failed": 0,
+        "avg_latency_seconds": 1.96
+      },
+      "entries": [
+        {
+          "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+          "title": "UN votes to adopt new map that makes our world look very different",
+          "language": "en",
+          "ok": true,
+          "text": "\"United Nations General Assembly vote on new world map\"",
+          "seconds": 3.33
+        },
+        {
+          "url": "https://www.usatoday.com/story/news/world/2026/09/05/trump-foreign-policy-changing-world-order/91580900007/",
+          "title": "Allies into foes. Foes into allies. What's behind Trump's world order assault?",
+          "language": "en",
+          "ok": true,
+          "text": "\"Trump's Global Policy Shift: Allies into Foes, Foes into Allies\"",
+          "seconds": 1.74
+        },
+        {
+          "url": "https://www.cnbc.com/2026/09/04/worlds-biggest-sovereign-wealth-fund-plans-to-cut-treasury-holdings.html",
+          "title": "World's biggest sovereign wealth fund plans to cut U.S. Treasury holdings",
+          "language": "en",
+          "ok": true,
+          "text": "\"Norway's Sovereign Wealth Fund Proposes Reducing U.S. Treasury Holdings\"",
+          "seconds": 1.74
+        },
+        {
+          "url": "https://sports.yahoo.com/articles/former-world-champion-ruiz-jr-064322621.html",
+          "title": "Former world champion Ruiz Jr loses comeback fight",
+          "language": "en",
+          "ok": true,
+          "text": "\"Andy Ruiz Jr boxing match loss\"",
+          "seconds": 1.04
+        },
+        {
+          "url": "https://news.blizzard.com/en-us/article/24296142/hotfixes-september-4-2026",
+          "title": "Hotfixes: September 4, 2026 — World of Warcraft",
+          "language": "en",
+          "ok": true,
+          "text": "\"World of Warcraft: Midnight hotfixes for September 4, 2026\"",
+          "seconds": 1.78
+        },
+        {
+          "url": "https://www.bbc.com/sport/football/articles/clyr1ly8z4xo",
+          "title": "FA to canvass England players in World Cup review",
+          "language": "en",
+          "ok": true,
+          "text": "\"Thomas Tuchel World Cup review\"",
+          "seconds": 1.19
+        },
+        {
+          "url": "https://www.usab.com/news/2026/09/usa-chn-2026wwc-game-1",
+          "title": "USA Women’s National Team Knock Off China 94-61 in 2026 FIBA World Cup Opener",
+          "language": "en",
+          "ok": true,
+          "text": "\"USA Women’s National Team basketball game\"",
+          "seconds": 0.81
+        },
+        {
+          "url": "https://www.foxnews.com/outkick-sports/caitlin-clark-not-team-usa-starting-5-fiba-womens-basketball-world-cup-opener-vs-china",
+          "title": "Caitlin Clark not in Team USA's starting 5 for FIBA Women's Basketball World Cup opener vs China",
+          "language": "en",
+          "ok": true,
+          "text": "\"Kara Lawson's Starting Five\"",
+          "seconds": 1.61
+        },
+        {
+          "url": "https://www.bbc.com/news/videos/c4gr9y1ny3xo",
+          "title": "Why did USS Lincoln turn up in Thailand looking so rusty?",
+          "language": "en",
+          "ok": true,
+          "text": "\"US aircraft carrier USS Lincoln in Thailand\"",
+          "seconds": 0.66
+        },
+        {
+          "url": "https://www.theguardian.com/football/2026/sep/05/world-cup-alireza-faghani-england-mexico-azteca",
+          "title": "‘The noise was unbelievable’: the referee’s view of Mexico v England at the World Cup",
+          "language": "en",
+          "ok": true,
+          "text": "\"Mexico v England World Cup 2026 Azteca Stadium\"",
+          "seconds": 1.72
+        },
+        {
+          "url": "https://www.simpletechtrend.com/post/semicon-taiwan-2026-siph-summit-full-readout",
+          "title": "SEMICON Taiwan 2026 矽光子國際論壇 14 場全解讀 | 架構之爭結束，製造之爭開打",
+          "language": "zh",
+          "ok": true,
+          "text": "\"Semicon Taiwan 2026 Silicon Photonics Summit: CPO vs. CPONew\"",
+          "seconds": 4.69
+        },
+        {
+          "url": "https://tw.stock.yahoo.com/news/%E7%BE%8E%E4%BC%8A%E6%88%B0%E7%81%AB%E7%87%92%E6%97%BA%E6%B2%B9%E5%B8%82-%E5%9C%8B%E9%9A%9B%E6%B2%B9%E5%83%B9%E5%91%A8%E6%BC%B2%E8%BF%9110-%E7%BE%8E%E5%9C%8B%E6%9F%B4%E6%B2%B9%E9%A3%86%E6%AF%8F%E5%8A%A0%E4%BE%965-85%E7%BE%8E%E5%85%83%E7%A0%B4%E7%B4%80%E9%8C%84-055800433.html",
+          "title": "美伊戰火燒旺油市！國際油價周漲近10% 美國柴油飆每加侖5.85美元破紀錄",
+          "language": "zh",
+          "ok": true,
+          "text": "布蘭特原油上漲0.8%，收每桶92.68美元；美國西德州中級原油（WTI）上漲0.20%，收每桶91.48美元。",
+          "seconds": 5.52
+        },
+        {
+          "url": "https://news.tvbs.com.tw/world/4016790",
+          "title": "川普一句話化解通膨危機！國際金價反彈 現貨破4428美元",
+          "language": "zh",
+          "ok": true,
+          "text": "\"Donald Trump's Middle East statement stabilizes gold prices\"",
+          "seconds": 1.47
+        },
+        {
+          "url": "https://www.peopo.org/news/856836",
+          "title": "2026國際慈善日｜台灣百萬志工之外：我們是不是把「做公益」想得太窄了？",
+          "language": "zh",
+          "ok": true,
+          "text": "a classroom willing to talk about HIV and sexual health, and the community event that needs a place, a team, and local partners.",
+          "seconds": 2.66
+        },
+        {
+          "url": "https://udn.com/news/story/7251/9736388",
+          "title": "受惠國際戰略資源爭奪戰 法人看好這檔千金股評價具上修空間",
+          "language": "zh",
+          "ok": true,
+          "text": "\"Global Technology and Military Supply Chain 'Decommissioning' Trend\"",
+          "seconds": 1.32
+        },
+        {
+          "url": "https://ec.ltn.com.tw/article/breakingnews/5563836",
+          "title": "國際油價本週大暴漲！美國柴油「破歷史天價」",
+          "language": "zh",
+          "ok": true,
+          "text": "\"US-Iran Military Tensions, Oil Prices\"",
+          "seconds": 1.76
+        },
+        {
+          "url": "https://udn.com/news/story/6656/9734890",
+          "title": "蔣得立錄取國際交換生！洪婉臻質疑有無填迴避檢核表 蔣萬安：該揭露都揭露",
+          "language": "zh",
+          "ok": true,
+          "text": "\"Taipei Mayor's Son's International Exchange Student Program Controversy\"",
+          "seconds": 1.64
+        },
+        {
+          "url": "https://finance.ettoday.net/news/3231672",
+          "title": "長榮海運參展亞洲國際果蔬展　秀智慧低碳冷鏈串聯全球生鮮市場",
+          "language": "zh",
+          "ok": true,
+          "text": "\"long-term cold chain logistics\"",
+          "seconds": 1.84
+        },
+        {
+          "url": "https://www.taichung.gov.tw/3362511/post",
+          "title": "2026台中國際踩舞嘉年華9/12登場 潭子、后里、北屯及北區交通管制一次看",
+          "language": "zh",
+          "ok": true,
+          "text": "\"Taipei International Dance Festival in Taichung\"",
+          "seconds": 2.04
+        },
+        {
+          "url": "https://www.sportsv.net/articles/128314",
+          "title": "國際保育新趨勢目光聚焦臺灣！國家公園署「福爾摩沙永續保育國際論壇」10月盛大登場國內外產官學齊聚臺灣共繪山海治理、自然保育與永續觀光新藍圖- 戶外",
+          "language": "zh",
+          "ok": true,
+          "text": "\"cloudflare security block triggered by action\"",
+          "seconds": 0.64
+        }
+      ]
+    }
+  }
+}

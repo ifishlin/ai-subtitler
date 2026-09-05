@@ -107,7 +107,7 @@ const $ = (id) => document.getElementById(id);
 let FILES = [];
 let WHICH = "";
 
-function here() { return FILES.find((one) => one.name === WHICH) || {}; }
+function chosen() { return FILES.find((one) => one.name === WHICH) || {}; }
 
 /* 照使用時機分組。這幾份不是同一次呼叫 —— 一份 request 只用得到其中
    一到兩份，而排成一排會讓人以為它們是一份東西的六個章節。 */
@@ -134,7 +134,7 @@ function drawTabs() {
    一個一個換而不是整段丟給 replace：要標色就要知道**哪一段是填進去的**，
    而換完之後那件事就看不出來了。 */
 function drawView() {
-  const one = here();
+  const one = chosen();
   const filled = one.filled || {};
   let out = "";
   let rest = one.text || "";
@@ -161,7 +161,7 @@ function drawView() {
 }
 
 function drawAll() {
-  const one = here();
+  const one = chosen();
   $("text").value = one.text || "";
   $("size").innerHTML = `${(one.text || "").length} 字　片型 ${esc(one.house || "")}`
     + (one.changed ? "　·　改過（跟出廠版本不同）" : "　·　跟出廠版本相同")
@@ -183,13 +183,13 @@ $("tabs").addEventListener("click", (event) => {
 /* 邊打邊看。填好的那一邊要立刻跟上，否則「填進去之後還通順嗎」
    還是要靠想像。 */
 $("text").addEventListener("input", () => {
-  here().text = $("text").value;
+  chosen().text = $("text").value;
   $("size").textContent = `${$("text").value.length} 字　還沒存`;
   drawView();
 });
 
 $("save").onclick = async () => {
-  const one = here();
+  const one = chosen();
   $("save").disabled = true;
   try {
     const back = await fetch("/api/prompt-file", {
@@ -209,7 +209,7 @@ $("save").onclick = async () => {
 };
 
 $("reset").onclick = async () => {
-  const one = here();
+  const one = chosen();
   try {
     const back = await fetch("/api/prompt-file/reset", {
       method: "POST", headers: {"Content-Type": "application/json"},

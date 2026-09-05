@@ -58,6 +58,12 @@ def resolve(keyword: str) -> dict[str, Any]:
 
     已經有存的，直接從最多五張裡隨機挑一張，不打 Pexels。沒有的話現搜
     現抓，一次補到五張（或 Pexels 給得出的最多張），再從裡面挑一張。
+
+    這一支不管「泛用集」（`ensure()` 先鋪好的那 254 個固定關鍵字）跟
+    LLM 臨時自己想的新關鍵字有什麼差別——兩種都存進同一個 `keywords`
+    字典，同一套五張上限、同一套殺掉重補的規則。分類（`category`）只
+    是額外貼的標籤，找不到現成類別的臨時關鍵字就沒有這個欄位，不影響
+    這裡的行為。
     """
     keyword = keyword.strip()
     if not keyword:
@@ -74,6 +80,64 @@ def resolve(keyword: str) -> dict[str, Any]:
         raise ValueError(f"關鍵字「{keyword}」在圖庫裡找不到合用的照片")
     chosen = random.choice(bucket["kept"])
     return pool["images"][chosen]
+
+
+def ensure(keyword: str, category: str | None = None,
+          tag_set: str = "general") -> int:
+    """把這個關鍵字補到 `MAX_PER_KEYWORD` 張，不選、不回傳圖片——給批次建
+    圖庫的腳本用（`tools/build_backgrounds.py`），跟 `resolve()`（給
+    `bg_search` 現查現選一張）分開，因為呼叫端要的東西不一樣：批次建圖庫
+    要的是「補滿」這個動作本身，選哪一張跟這裡無關，也不該把選圖的隨機性
+    混進建圖庫的過程裡。
+
+    可以重複呼叫、可以中斷重跑：已經滿五張的關鍵字直接跳過，不會重新打
+    Pexels。`category` 是這個關鍵字屬於 21 大類的哪一類（給階層式瀏覽用），
+    `tag_set` 是這個關鍵字屬於哪個「集」——現在只有 `"general"`（泛用集），
+    將來從泛用集挑出來組「specific set」的時候，往同一個關鍵字的 `sets`
+    清單裡加一個新名字就好，圖片不用重抓、`category` 也不用重寫。
+
+    回傳目前這個關鍵字存了幾張，方便呼叫端印進度。
+    """
+    keyword = keyword.strip()
+    if not keyword:
+        raise ValueError("關鍵字不能是空的")
+    pool = _load()
+    bucket = pool.setdefault("keywords", {}).setdefault(
+        keyword, {"kept": [], "rejected": []})
+    if category and not bucket.get("category"):
+        bucket["category"] = category
+    if tag_set not in (bucket.get("sets") or []):
+        bucket.setdefault("sets", []).append(tag_set)
+    if len(bucket["kept"]) < MAX_PER_KEYWORD:
+        _fill(pool, keyword, bucket)
+    _save(pool)
+    return len(bucket["kept"])
+
+
+def tag_specific_set(name: str, keywords: list[str]) -> list[str]:
+    """從泛用集裡挑一批關鍵字，貼上一個新的集合名字——不重抓圖片，純粹
+    是在既有的 `sets` 清單上加一個標籤。
+
+    現在還沒有呼叫端在用：這是「E. 題材式載入」（依題目只送相關的幾類
+    關鍵字，不是每次把 254 個全塞進 prompt）預留的架子。真的要做的時候，
+    這裡才是入口——先想清楚一個題目怎麼對應到該送哪個 specific set，
+    再呼叫這支函式把選定的關鍵字標記起來，`core/brief.py` 那邊改成讀
+    `sets` 篩選，而不是像現在的 `top_keywords()` 一樣不分青紅皂白全部送。
+
+    回傳實際標記到的關鍵字（跳過泛用集裡根本不存在的）。
+    """
+    pool = _load()
+    tagged = []
+    for keyword in keywords:
+        bucket = pool.get("keywords", {}).get(keyword)
+        if not bucket:
+            continue
+        if name not in (bucket.get("sets") or []):
+            bucket.setdefault("sets", []).append(name)
+        tagged.append(keyword)
+    if tagged:
+        _save(pool)
+    return tagged
 
 
 def _fill(pool: dict[str, Any], keyword: str, bucket: dict[str, Any]) -> None:
@@ -150,4 +214,21 @@ def all_keywords() -> dict[str, Any]:
     images = pool.get("images", {})
     return {keyword: [{**images[key], "key": key} for key in bucket.get("kept") or []
                        if key in images]
+            for keyword, bucket in pool.get("keywords", {}).items()}
+
+
+UNCATEGORIZED = "未分類　—— 這個關鍵字不在 21 大類的固定清單裡"
+
+
+def categories_of() -> dict[str, str]:
+    """每個關鍵字屬於哪一類，給階層式瀏覽畫面用：先選類別，再看底下的
+    關鍵字。
+
+    只有 `tools/build_backgrounds.py` 鋪過的那批（見
+    `assets/background_categories.json`）才有 `category`——LLM 臨時自己
+    想的關鍵字（`bg_search` 現查現抓那種）沒有這個欄位，一律歸進
+    `UNCATEGORIZED`，不是漏掉，是它們本來就不屬於這 21 類的任何一類。
+    """
+    pool = _load()
+    return {keyword: bucket.get("category") or UNCATEGORIZED
             for keyword, bucket in pool.get("keywords", {}).items()}

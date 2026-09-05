@@ -35,6 +35,12 @@ from core import settings as settings_module
 
 BLOCK = re.compile(r"```(?:json)?\s*(.*?)```", re.S)
 CARD_BG_REF = re.compile(r"P\d+")
+FACT_REF = re.compile(r"F\d+")
+# `show` 的自動來源要截多長——跟 `core/brief.py` 送進 prompt 的逐字稿／
+# 照片說明用同一個數字，不是另外訂一個：那邊已經是「模型看得到的版本」，
+# `show` 只是替它另存一份給人看，沒有理由比模型看到的還長。
+CAPTION_CHARS = rules_module.at("brief.caption_chars", 200)
+PASSAGE_CHARS = rules_module.at("brief.passage_chars", 200)
 
 
 def ask(prompt: str, say=None) -> tuple[str, float]:
@@ -103,8 +109,13 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
     that exists and belongs to another film.
     """
     picks = brief_module.pick(topic)
+    material = brief_module.sheet(topic)
     cuts = {f"C{index}": one for index, one
-            in enumerate(brief_module.sheet(topic)["passages"], start=1)}
+            in enumerate(material["passages"], start=1)}
+    pictures = material["pictures"]
+    stock = material["stock"]
+    from core import topic as topic_module
+    facts = topic_module.facts_of(topic_module.load(topic))
     lines = []
     for index, line in enumerate(draft.get("lines") or [], start=1):
         line = dict(line)
@@ -124,6 +135,14 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
             if key not in picks:
                 raise ValueError(f"第 {index} 句的圖片編號 {key} 不在素材裡")
             line["pic"] = picks[key]
+            # `show` 不再讓模型重寫一次「這張圖是什麼」——素材清單裡的
+            # `caption` 本來就回答過這個問題，寫的人挑 P18 那一刻就已經看過
+            # 這句話了，寫文案的時候不用再翻譯一次給自己看。這裡直接從
+            # 同一份材料現查，跟材料清單永遠是同一個答案，不會像自由文字
+            # 那樣寫錯、寫成另一張圖的樣子（`27697309.jpg` 明明是行人號誌，
+            # 手寫的 show 曾經寫成「邊境告示牌」——這種事後不再可能發生）。
+            caption = str(pictures[int(key[1:]) - 1].get("caption") or "")
+            line["show"] = caption[:CAPTION_CHARS] if caption else line.get("show", "")
         if line.get("clip") is not None:
             cut = line["clip"]
             if not (isinstance(cut, str) and cut.startswith("C")):
@@ -137,6 +156,10 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
             # `script.clip_of()` 在每次要用到的時候現查 assets/passages/。
             line["clip"] = cut
             line.setdefault("seconds", round(cuts[cut]["seconds"], 2))
+            # 跟 `pic` 同一個道理：這段真的說了什麼，`cuts[cut]["said"]`
+            # 早就有逐字稿，不用模型另外描述一次畫面。
+            said = str(cuts[cut].get("said") or "")
+            line["show"] = said[:PASSAGE_CHARS] if said else line.get("show", "")
         if line.get("stock") is not None:
             key = line["stock"]
             if not (isinstance(key, str) and key.startswith("V")):
@@ -150,6 +173,36 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
             # 池子裡的每一支都在 /broll 上被人看過才留下來的，所以這裡直接
             # 算數 —— 不標的話 `unchecked` 會擋，而那個「請再看一次」是假的。
             line.setdefault("seen", True)
+            # 情境影片沒有逐字稿、沒有 caption，但庫存本身就有搜尋詞跟分類
+            # （`library.json` 的 `group`／`term`），一樣不用模型重新描述。
+            offered = stock[int(key[1:]) - 1]
+            group, term = offered.get("group", ""), offered.get("term", "")
+            line["show"] = (f"情境：{group}　{term}" if group or term
+                            else line.get("show", ""))
+        # `from` 是自由文字的時候，寫錯一個出處（一家真的存在、但這則事實
+        # 沒提過的媒體）跟寫對的看起來一模一樣——沒有東西可以對。改成跟
+        # `pic`／`clip` 同一種做法：只認事實清單上的編號，查得到才留著，
+        # 查不到當場炸掉，而不是留一句聽起來很像真的的引用一路到成品。
+        cite = line.get("from")
+        if cite and cite != "觀點":
+            if not (isinstance(cite, str) and FACT_REF.fullmatch(cite)):
+                raise ValueError(f"第 {index} 句的 from 要寫事實編號"
+                                  f"（F3 這種）或「觀點」，寫的是 {cite!r}")
+            at = int(cite[1:])
+            if not 1 <= at <= len(facts):
+                raise ValueError(f"第 {index} 句的事實編號 {cite} 不在清單裡")
+            fact = facts[at - 1]
+            line["from"] = fact["from"]
+            # 這句話是引一則事實，而不是「觀點」的時候，把整理事實時一併問出
+            # 來的 40 字說明也帶上這一句——見 assets/rules.json 的
+            # facts.gist_chars。存在 `line["gist"]`，不分卡片、照片、影片：
+            # `build.py` 疊字幕的時候一律從這裡讀，三種鏡頭畫在同一個位置
+            # （見 `build.gist_layer()`）。不動 `title`／`under`：那些是
+            # 寫文案的人決定卡片上要放什麼字，這裡只加新欄位，不改寫、
+            # 不蓋掉任何一個已經寫好的欄位。
+            gist = str(fact.get("gist") or "").strip()
+            if gist and rules_module.at("facts.gist_enabled", True):
+                line["gist"] = gist
         card = line.get("card")
         if isinstance(card, dict) and (card.get("bg") is not None
                                         or card.get("bg_search") is not None):
@@ -161,11 +214,22 @@ def fasten(topic: str, draft: dict[str, Any]) -> dict[str, Any]:
             # 該問的問題，寫死在這裡問了也白問。
         # Seconds come from the reading pace unless the line pinned its own,
         # so a model that omits them is not thereby writing a nine-second card.
+        # The gist counts too now: it is another line of text on the same
+        # screen, and a card timed only for `say` gave the reader two
+        # sentences and the time for one. `clip` and `pic-from-clip` lines
+        # never reach here -- they already have `seconds` set from the real
+        # footage's own length, above -- so this only ever stretches a shot
+        # this project is free to hold longer: a card, a still, or stock.
         if "seconds" not in line:
+            words = (script_module.spoken_length(line.get("say", "")) +
+                     script_module.spoken_length(line.get("gist", "")))
+            # rules_module.read_pace() 現查，不是凍結在 import 那一刻的模組
+            # 常數——facts.gist_enabled 這種開關會在同一個process裡被切換
+            # （這個 session 今晚就切了好幾次），常數只會記得程式啟動那一刻
+            # 的答案。
             line["seconds"] = round(max(
                 script_module.LEAST_SECONDS,
-                script_module.spoken_length(line.get("say", "")) /
-                script_module.READ_PER_SECOND), 2)
+                words / rules_module.read_pace()), 2)
         lines.append(line)
     draft["lines"] = lines
     if draft.get("cover") is not None:
@@ -373,11 +437,22 @@ def _which_model() -> str:
 
 
 def write(topic: str, house: str = "argue", name: str | None = None,
-          say=None) -> dict[str, Any]:
-    """Ask for a script, keep it, and report what the gates say about it."""
+          say=None, seconds: float | None = None) -> dict[str, Any]:
+    """Ask for a script, keep it, and report what the gates say about it.
+
+    `seconds`, if given, asks for a length other than the shared default
+    (`assets/rules.json`'s `length.limit_seconds`) for this one script, and
+    is saved onto it as `limit_seconds` -- so `measure()` holds this script to
+    the length it was actually written for, not to whatever the shared
+    default happens to be by the time somebody opens it. Without that, the
+    shared default is a module-level constant read once when the process
+    started (`core/script.py`'s `LIMIT`), so a 70-second script opened after
+    somebody tried writing a 90-second one showed 超長 on a still-running
+    server -- and the only fix on record was restarting it.
+    """
     from core import topic as topic_module
     pile = topic_module.load(topic)
-    prompt = brief_module.prompt(topic, house)
+    prompt = brief_module.prompt(topic, house, seconds)
     said, took = ask(prompt, say)
     if say:
         say(1, 3, f"回來了（{took:.0f}s，{len(said)} 字元），解析中")
@@ -396,6 +471,8 @@ def write(topic: str, house: str = "argue", name: str | None = None,
                 "model": _which_model(), "raw": said}
     draft = fasten(topic, draft)
     draft.update(topic=topic, format=house, narration=False)
+    if seconds is not None:
+        draft["limit_seconds"] = float(seconds)
     draft["answered"] = answered
     draft.setdefault("for", topic_module.audience(pile))
 

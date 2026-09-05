@@ -388,13 +388,22 @@ def _fade(colour: str, part: float, ground: tuple[int, int, int]) -> tuple[int, 
 def _note(draw: ImageDraw.ImageDraw, spec: dict[str, Any], t: float) -> None:
     """Where the number came from, small, at the top of the frame. On the card
     rather than only in the description: a figure with no source on screen is
-    the thing viewers screenshot and argue about."""
-    if spec.get("note"):
-        tone = tone_of(spec)
-        _mid(draw, NOTE_TOP, spec["note"], 30,
-             "#" + "".join(f"{v:02x}" for v in
-                           _fade(tone["dim"], ease(t * 1.4) * 0.75, tone["bottom"])),
-             bold=False)
+    the thing viewers screenshot and argue about.
+
+    A fact's `gist` (see writer.fasten()) is not drawn here -- it used to be,
+    stacked under the note, but that put it at a different spot on screen
+    than the same field on a photograph or a clip (`build.gist_layer()`,
+    under the caption), so the eye had to hunt for it depending on what kind
+    of shot was on screen. One position for all three kinds: `build.py`
+    composites it onto every shot's caption plate, cards included, so this
+    function only ever draws the source line.
+    """
+    if not spec.get("note"):
+        return
+    tone = tone_of(spec)
+    colour = "#" + "".join(f"{v:02x}" for v in
+                           _fade(tone["dim"], ease(t * 1.4) * 0.75, tone["bottom"]))
+    _mid(draw, NOTE_TOP, spec["note"], 30, colour, bold=False)
 
 
 def _heading(draw: ImageDraw.ImageDraw, spec: dict[str, Any], t: float,
@@ -2715,21 +2724,54 @@ def render(script_name: str, spec: dict[str, Any]) -> str:
     return str(target.relative_to(ROOT))
 
 
+THUMB_WIDTH = 300
+
+
+def render_thumb(script_name: str, spec: dict[str, Any]) -> str:
+    """The same still, scaled down for a list that shows twenty of them at
+    once.
+
+    The full card is 1080x1920 because that is the frame the video uses --
+    right for the one shot a person asked to see enlarged, wasteful for a row
+    in a table. A 90-second script's twenty-odd cards came to 32MB of
+    full-size PNG, downloaded and decoded just to draw a few hundred pixels of
+    each. Scaled once here and cached under the same hash-based name as the
+    original, so the thumbnail costs nothing after the first time either.
+    """
+    full = render(script_name, spec)
+    here = CARD_DIR / script_name / "thumbs"
+    here.mkdir(parents=True, exist_ok=True)
+    target = here / Path(full).name
+    if not target.is_file():
+        with Image.open(ROOT / full) as image:
+            ratio = THUMB_WIDTH / image.width
+            image.resize((THUMB_WIDTH, round(image.height * ratio)),
+                         Image.LANCZOS).save(target)
+    return str(target.relative_to(ROOT))
+
+
 def sweep(script_name: str, keep: set[str]) -> int:
     """Drop cards this script no longer refers to.
 
     Here rather than in `render`, which sees one card and cannot know what the
     rest of the script still points at. Every edit to a card, and every change
     to this module, leaves the previous drawing behind unreachable.
+
+    Sweeps the thumbnail folder on the same pass, with the same `keep` set --
+    a thumbnail is named after the same hash as the card it was scaled from,
+    so one check answers for both.
     """
     here = CARD_DIR / script_name
     if not here.is_dir():
         return 0
     gone = 0
-    for old in here.glob("*.png"):
-        if old.name not in keep:
-            old.unlink(missing_ok=True)
-            gone += 1
+    for folder in (here, here / "thumbs"):
+        if not folder.is_dir():
+            continue
+        for old in folder.glob("*.png"):
+            if old.name not in keep:
+                old.unlink(missing_ok=True)
+                gone += 1
     return gone
 
 

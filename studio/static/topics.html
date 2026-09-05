@@ -8,13 +8,14 @@
   body{background:var(--bg);color:var(--ink);
     font:14px/1.6 -apple-system,"PingFang TC","Noto Sans TC",sans-serif;
     display:flex;flex-direction:column;height:100vh}
-  button{font:inherit;font-size:13px;color:var(--ink);background:var(--panel2);
-    border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer}
-  button:hover:not(:disabled){border-color:var(--accent)}
+  button,.btn{font:inherit;font-size:13px;color:var(--ink);background:var(--panel2);
+    border:1px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer;
+    text-decoration:none;display:inline-block}
+  button:hover:not(:disabled),.btn:hover{border-color:var(--accent)}
   button:disabled{opacity:.45;cursor:default}
   button.primary{background:var(--accent);color:#0b1017;border-color:transparent;
     font-weight:600}
-  button.tiny{padding:3px 9px;font-size:12px}
+  button.tiny,.btn.tiny{padding:3px 9px;font-size:12px}
   input{background:var(--bg);border:1px solid var(--line);border-radius:7px;
     color:var(--ink);padding:6px 10px;font-size:13px}
   a{color:var(--accent)}
@@ -281,6 +282,10 @@
   .src{background:var(--panel);border:1px solid var(--line);border-radius:9px;
     padding:11px 14px;margin-bottom:7px;font-size:13px}
   .src .who{font:11px var(--mono);color:var(--faint);margin-top:3px}
+  /* 指認用的代碼——跟 core/brief.py／core/facts.py 算的是同一份，畫面上
+     只是把它印出來，不是網頁自己另外編號。兩處都用（清單的一行、
+     照片格子的圖說），所以不綁在 `.src` 底下。 */
+  .code{font:12px var(--mono);color:var(--accent)}
   /* 這一條是哪一種素材讀出來的。只在畫面上 —— prompt 裡靠出處自己的形狀
      （「第 104 秒」對「〈標題〉」），不多送兩個字乘以四十二條。 */
   .src .kind{display:inline-block;font-style:normal;margin-right:7px;
@@ -290,6 +295,15 @@
   .src .kind.rep{color:var(--ok);border-color:#2c5a45}
   .src .kind.hmm{color:var(--warn);border-color:#5c4a2a}
   .src .fact{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.7}
+  /* 事實的 40 字說明——整理事實時一起問出來的（見 assets/rules.json 的
+     facts.gist_chars），不是這裡另外算的。預設藏著，一條一條按開，
+     不然清單本來就長，全部攤開反而找不到重點。 */
+  .src .gist-btn{margin-left:7px;padding:0 7px;font-size:10px;line-height:16px;
+    border-radius:9px}
+  .src .gist{display:block;font-size:12px;color:var(--warn);margin-top:4px}
+  .src .gist[hidden]{display:none}
+  .src .miss{font-size:12px;color:var(--faint);margin-top:4px}
+  .src .miss.bad{color:var(--warn)}
   .lean{font-size:10px;padding:1px 7px;border-radius:99px;margin-left:6px;
     border:1px solid var(--line);color:var(--dim)}
   .lean.left{color:#7fb4ff;border-color:#2d4a70}
@@ -526,7 +540,8 @@ function sourceRows(items, kind) {
      那些一模一樣。 */
   return items.map((item) => `
     <div class="src">
-      ${item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
+      ${item.code ? `<span class="code">[${escapeHTML(item.code)}]</span> ` : ""}${
+        item.url ? `<a href="${escapeHTML(item.url)}" target="_blank">${
         escapeHTML(item.title || item.url)}</a>` : escapeHTML(item.title || "")}
       ${leanTag(item.lean || "")}
       <div class="who">${escapeHTML(item.outlet || "")}${
@@ -536,6 +551,11 @@ function sourceRows(items, kind) {
         item.note ? `　${escapeHTML(item.note)}` : ""}</div>
       ${(item.facts || []).length
         ? `<div class="fact">${item.facts.map(escapeHTML).join("　·　")}</div>` : ""}
+      ${item.article_ok === false
+        ? (item.paywall
+           ? `<div class="miss">付費牆，正文抓不到——預期中，不用管</div>`
+           : `<div class="miss bad">抓不到正文，不是付費牆——見「新聞來源」文件的機器人牆那節</div>`)
+        : ""}
     </div>`).join("");
 }
 
@@ -776,7 +796,8 @@ async function openTopic(name) {
           <img src="/media/photo/${encodeURIComponent(name)}/${
             encodeURIComponent((one.file || "").split("/").pop())}"
             alt="" loading="lazy">
-          <figcaption class="asked">${escapeHTML(
+          <figcaption class="asked">${one.code
+            ? `<span class="code">[${escapeHTML(one.code)}]</span> ` : ""}${escapeHTML(
             one.at != null ? `${Math.round(one.at)}s　${one.outlet || ""}`
                            : one.term || "")}</figcaption>
           <figcaption class="got">${escapeHTML(one.caption || "（沒有說明）")}</figcaption>
@@ -822,7 +843,14 @@ async function openTopic(name) {
               <div class="who"><i class="kind ${
                 fact.kind === "報導" ? "rep" : fact.kind === "影片" ? "vid" : "hmm"
               }">${escapeHTML(fact.kind || "不明")}</i>${
-                escapeHTML(fact.from || "")}</div></div>`).join("")
+                escapeHTML(fact.from || "")}${
+                fact.gist
+                  ? `<button class="tiny gist-btn"
+                       onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden"
+                       >40字</button><span class="gist" hidden>${
+                       escapeHTML(fact.gist)}</span>`
+                  : ""
+              }</div></div>`).join("")
         : '<div class="empty">還沒有整理</div>'}
     </section>
 
@@ -847,9 +875,13 @@ async function openTopic(name) {
       <button id="btnWrite" class="${pile.ready ? "primary" : "tiny"}"
         ${pile.ready ? "" : "disabled"}>產生文案</button>
       <!-- 按下去之前先看得到會送什麼。它不受 ready 影響 —— 素材不齊的時候
-           最需要看的就是那一份缺什麼。 -->
-      <button id="btnShow" class="tiny" title="看送去給模型的那一整串文字"
-        >show</button>
+           最需要看的就是那一份缺什麼。
+           真的是 <a target="_blank">，不是 window.open()：後者曾經被瀏覽器
+           當成一般連結處理，在同一個分頁開、把素材頁蓋掉，「上一頁」也回不
+           去——具名彈窗這條路對不同瀏覽器/視窗管理員不夠可靠。<a> 保證是
+           獨立分頁，不會動到目前這一頁。 -->
+      <a id="btnShow" class="btn tiny" target="_blank" rel="noopener"
+        title="看送去給模型的那一整串文字">show</a>
       ${pile.ready ? "" : '<button id="btnAnyway" class="tiny">不齊也要寫</button>'}
       <div id="whyHouse" class="why"></div>
       <div id="termsNote" class="hint"></div>
@@ -1096,22 +1128,23 @@ async function openTopic(name) {
       watchJob(() => openTopic(name));
     } catch (error) { told('出錯了', error.message); }
   };
-  /* 獨立視窗，不是覆蓋層。一萬五千字要跟素材對照著看 —— 蓋在上面的時候
-     一關掉就什麼都沒了，而那正是你要比對的東西。
-     具名視窗，所以再按一次是同一扇窗被換掉，不是開第二扇。 */
-  if ($("btnShow")) $("btnShow").onclick = () => {
+  /* 獨立分頁，不是覆蓋層。三萬字要跟素材對照著看 —— 蓋在上面的話一關掉就
+     什麼都沒了，而那正是你要比對的東西。
+     用 <a target="_blank"> 而不是 window.open()：具名彈窗那條路曾經被
+     瀏覽器直接當成一般連結處理，在原分頁打開、把素材頁蓋掉、上一頁也回
+     不去——不同瀏覽器對 window.open() 的彈窗規則不夠一致。<a> 分頁保證
+     不會動到目前這一頁。 */
+  const updateShowLink = () => {
+    if (!$("btnShow")) return;
     const house = $("writeAs") ? $("writeAs").value : "argue";
-    const where = "/raw?name=" + encodeURIComponent(name)
+    $("btnShow").href = "/raw?name=" + encodeURIComponent(name)
       + "&house=" + encodeURIComponent(house);
-    const window_ = window.open(where, "rawPrompt", "width=1080,height=920");
-    /* 擋掉彈出視窗的時候 window.open 回 null，而按鈕就這樣什麼都不做 ——
-       沒有錯誤、沒有畫面、看起來像壞了。說出來，並且留一條路走過去。 */
-    if (!window_) {
-      $("note").className = "warn";
-      $("note").innerHTML = '瀏覽器擋掉了彈出視窗。'
-        + '<a href="' + where + '" target="_blank">在新分頁打開</a>';
-    }
   };
+  updateShowLink();
+  // 換片型會換送出去的內容，連結要跟著換——跟 sayWhy 分開掛，不共用同一個
+  // onchange：writeAs.onchange 已經被 sayWhy 佔走，這裡用 addEventListener
+  // 補一個，兩個各自跑各自的，不用互相知道對方存在。
+  if (writeAs) writeAs.addEventListener("change", updateShowLink);
   if ($("btnWrite")) $("btnWrite").onclick = () => write(false);
   if ($("btnAnyway")) $("btnAnyway").onclick = () => write(true);
 }

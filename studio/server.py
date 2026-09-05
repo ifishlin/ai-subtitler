@@ -396,6 +396,8 @@ def prompt_answer(name: str, house: str = "argue") -> dict[str, Any]:
     變成路徑、秒數已經填好。那是對的，但那不是模型寫的。
     """
     from core import script as script_module
+    from core import topic as topic_module
+    from core import passages as passages_module
 
     made = [one for one in script_module.listing() if one["topic"] == name]
     if not made:
@@ -403,9 +405,23 @@ def prompt_answer(name: str, house: str = "argue") -> dict[str, Any]:
     latest = sorted(made, key=lambda one: one.get("modified") or 0)[-1]["name"]
     got = script_module.load(latest)
     answered = got.get("answered") or None
+
+    # 上面那份「請求」是現查的（`brief.prompt()` 當下重算），下面這份原文
+    # 是文案存的那一刻收到的——如果素材在那之後被動過（新增／刪掉照片、
+    # 重切過段落），P18／C3 這些編號在兩邊可能已經對不上同一張圖、同一段。
+    # 存下來的成片不受影響（`fasten()` 早就把編號換成路徑），受影響的只有
+    # 這一頁拿現在的清單去解釋一份舊原文的動作。查得到才能說，查不到就不提。
+    material_when = 0.0
+    for path in (topic_module.path_for(name), passages_module.path_for(name)):
+        if path.is_file():
+            material_when = max(material_when, path.stat().st_mtime)
+    stale = bool(answered and answered.get("when")
+                 and material_when > answered["when"])
+
     return {"topic": name, "script": latest,
             "lines": len(got.get("lines") or []),
             "answered": answered,
+            "stale": stale,
             # 沒有原文的時候給存下來的那一份，並且說清楚它是哪一種。
             # 「沒有原文」和「沒有文案」在畫面上要分得開。
             "kept": json.dumps(
@@ -524,6 +540,8 @@ DOCS = {
     "USING": "怎麼用",
     "PROGRESS": "進度",
     "COLLECTING": "怎麼收集",
+    "PIPELINE": "模型回答怎麼變成文案",
+    "SOURCES": "新聞來源",
 }
 
 
@@ -1127,8 +1145,41 @@ def get_topic(name: str) -> dict[str, Any]:
     from core import script as script_module
     from core import facts as facts_module
     from core import rules as rules_module
+    from core import article as article_module
     enough, why = topic_module.ready(pile)
+    # 影片、報導的代碼是給人看、給人指認用的——每一支、每一篇都有自己唯一
+    # 的代碼（source_codes() 現在保證這件事，不用再靠媒體名才分得清）。
+    # 撞名時 prompt 裡的出處句子要不要秀出代碼是另一個問題，見
+    # core/brief.py 的 `picture_line()` 和 core/facts.py 的 `gather()`，
+    # 那邊各自只在撞名時才標，跟這裡「每一項都要能被指認」的用途不同。
+    video_codes = facts_module.source_codes(
+        [(v.get("outlet", ""), str(v.get("url") or ""))
+         for v in pile["sources"]["videos"]], letter="S")
+    report_codes = facts_module.source_codes(
+        [(r.get("outlet", ""), str(r.get("url") or ""))
+         for r in pile["sources"]["reports"]], letter="R")
+    # 照片（含新聞畫格）的代碼是 P#，跟寫文案時用的是同一份——`brief.pick()`
+    # 早就算過這個對照，這裡只是反過來查，不要另外算一次會分岔的編號。
+    from core import brief as brief_module
+    picture_codes = {file: code for code, file in brief_module.pick(name).items()
+                     if code.startswith("P")}
     return {**pile, "counts": topic_module.counts(pile),
+            "sources": {**pile["sources"],
+                "images": [
+                    {**item, "code": picture_codes.get(item.get("file", ""))}
+                    for item in pile["sources"]["images"]],
+                "videos": [
+                    {**v, "code": video_codes.get(str(v.get("url") or ""))}
+                    for v in pile["sources"]["videos"]],
+                "reports": [
+                    {**r, "code": report_codes.get(str(r.get("url") or "")),
+                     # 正文抓到了沒有，看磁碟上有沒有檔案，不現場重抓——
+                     # 每次開這一頁都連一次別人的網站，既慢又不禮貌。
+                     # 沒有檔案分兩種：`paywall` 是真的，抓不到是預期中的事；
+                     # 不是的話，那就是「本來該抓得到，但現在抓不到」，
+                     # 值得被看見，不該靜靜地跟付費牆長得一樣。
+                     "article_ok": article_module.cached(name, r).is_file()}
+                    for r in pile["sources"]["reports"]]},
             # 事實走 facts_of() 而不是檔案裡那一份：形狀在讀的時候才規定
             # （兩種寫法都收），而 `kind`（影片／報導／不明）也是在那裡算的。
             # 直接送 pile["facts"] 的話畫面上每一條都會標成「不明」。
@@ -2078,6 +2129,49 @@ def script_picture(picture: str) -> FileResponse:
     raise HTTPException(404, "找不到這張圖")
 
 
+PIC_THUMB_WIDTH = 300
+
+
+def _pic_thumb(picture: str) -> Path:
+    """The scaled-down twin of a collected photo, cached next to the
+    original -- same idea as `cards.render_thumb`, for the other half of what
+    a script's table loads.
+
+    Cards turned out not to be the whole story: a script's own photographs
+    are collected at whatever resolution the source gave them, and a Commons
+    satellite image came to 17MB by itself -- one photo, not the twenty cards
+    that got fixed first. A table cell showing it at a couple hundred pixels
+    wide has no use for the other 16.9MB.
+    """
+    from PIL import Image
+    original = ROOT / picture
+    target = original.parent / "thumbs" / (original.stem + ".jpg")
+    if not target.is_file() or target.stat().st_mtime < original.stat().st_mtime:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with Image.open(original) as image:
+            ratio = PIC_THUMB_WIDTH / image.width
+            image.convert("RGB").resize(
+                (PIC_THUMB_WIDTH, round(image.height * ratio)), Image.LANCZOS
+            ).save(target, "JPEG", quality=82)
+    return target
+
+
+@app.get("/media/pic-thumb/{picture:path}")
+def script_picture_thumb(picture: str) -> FileResponse:
+    """The scaled-down twin of `/media/pic/...` -- see `_pic_thumb()`.
+
+    Footage has no equivalent here: the script page already shows a passage
+    as a `<video preload="none">`, which does not fetch anything until
+    somebody presses play, so it never had this problem to begin with.
+    """
+    from core import topic as topic_module
+    for name in topic_module.names():
+        pile = topic_module.load(name)
+        if picture in {item.get("file") for item in pile["sources"]["images"]}:
+            return FileResponse(_pic_thumb(picture), media_type="image/jpeg")
+    raise HTTPException(404, "找不到這張圖")
+
+
 @app.get("/media/card/{script}/{card}")
 def script_card(script: str, card: str) -> FileResponse:
     """One drawn shot. Named after a hash of its own specification, so the
@@ -2086,6 +2180,17 @@ def script_card(script: str, card: str) -> FileResponse:
     target = cards_module.CARD_DIR / script / card
     if not target.is_file() or target.suffix != ".png":
         raise HTTPException(404, "找不到這張卡")
+    return FileResponse(target, media_type="image/png")
+
+
+@app.get("/media/card-thumb/{script}/{card}")
+def script_card_thumb(script: str, card: str) -> FileResponse:
+    """The scaled-down twin of the above, for a table showing twenty of
+    them at once -- see `cards.render_thumb`."""
+    from core import cards as cards_module
+    target = cards_module.CARD_DIR / script / "thumbs" / card
+    if not target.is_file() or target.suffix != ".png":
+        raise HTTPException(404, "找不到這張卡的縮圖")
     return FileResponse(target, media_type="image/png")
 
 
@@ -2098,7 +2203,11 @@ def backgrounds_page() -> str:
 @app.get("/api/backgrounds")
 def list_backgrounds() -> dict[str, Any]:
     from core import backgrounds as backgrounds_module
-    return {"keywords": backgrounds_module.all_keywords()}
+    # 分類是額外疊上去的一層，不是換一份資料：同一個關鍵字，`keywords`
+    # 裡有圖，`categories` 裡有它屬於哪一類，前端自己 join 起來畫階層式
+    # 瀏覽（先選類別，再看關鍵字），不用另外開兩支 API 兜資料。
+    return {"keywords": backgrounds_module.all_keywords(),
+            "categories": backgrounds_module.categories_of()}
 
 
 @app.post("/api/backgrounds/reject")
@@ -2110,7 +2219,8 @@ def reject_background(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     if not keyword or not image_id:
         raise HTTPException(400, "缺 keyword 或 id")
     backgrounds_module.reject(keyword, image_id)
-    return {"keywords": backgrounds_module.all_keywords()}
+    return {"keywords": backgrounds_module.all_keywords(),
+            "categories": backgrounds_module.categories_of()}
 
 
 @app.get("/media/background/{picture:path}")
@@ -2172,12 +2282,36 @@ def make_script(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
 
     from core import writer as writer_module
     into = str(payload.get("as") or "").strip() or None
+    # 任選：這次想寫幾秒，蓋過 rules.json 的 length.limit_seconds。留白就跟
+    # 以前一樣照共用的那個數字——這裡不是新規定「以後都要指定」，是多開一條
+    # 路給想測不同長度的時候用（見 core/writer.write() 的說明）。
+    seconds = payload.get("seconds")
+    seconds = float(seconds) if isinstance(seconds, (int, float)) and seconds else None
 
     def work(say) -> None:
-        made = writer_module.write(name, house, into, say)
+        made = writer_module.write(name, house, into, say, seconds)
         say(3, 3, f"{made['name']}　{made['lines']} 句　{made['seconds']}s　"
                   + ("全部通過" if not made["faults"]
                      else "不合格：" + "、".join(made["faults"])))
+        # 存檔跟畫卡片本來是兩件事：這裡存完就回，卡片留給第一個打開它的人
+        # 現畫——一份 20-30 張卡的新文案，那個人要等 30-45 秒。反正這支函式
+        # 已經在背景執行緒裡跑（`_job_run`），存檔後順手把卡片畫完，不用等
+        # 下一次重啟伺服器的 `_warm_card_cache()` 才補上。`_draw_cards()`
+        # 只把畫好的檔案放到 assets/cards/ 底下，不用回存文案本身——
+        # `/api/script` 每次都重算 `measured`，畫過的卡只是讓那次重算變快。
+        from core import script as script_module
+        say(3, 3, "存好了，畫卡片中…")
+        measured = script_module.measure(script_module.load(made["name"]))
+        _draw_cards(made["name"], measured)
+        # 卡片不是唯一貴的東西——這份文案指到的照片，原始檔可能是收集時
+        # 存下來的解析度（Commons 有一張衛星圖單張 17MB），縮圖一樣先在
+        # 這裡補，理由跟卡片一樣：不要讓第一個打開它的人付這筆帳。
+        for line in measured["lines"]:
+            if line.get("pic"):
+                try:
+                    _pic_thumb(line["pic"])
+                except Exception:                                 # noqa: BLE001
+                    pass
 
     _job_run(f"寫文案：{name}（{house}）", name, work)
     return {"started": name, "format": house}
@@ -2298,6 +2432,7 @@ def _draw_cards(name: str, measured: dict[str, Any]) -> None:
         if line.get("card"):
             try:
                 line["card_file"] = cards_module.render(name, line["card"])
+                line["card_thumb"] = cards_module.render_thumb(name, line["card"])
                 drawn.add(Path(line["card_file"]).name)
             except Exception as error:                            # noqa: BLE001
                 line["card_error"] = str(error)
@@ -2318,6 +2453,11 @@ def _warm_card_cache() -> None:
     bill here, once, in the background, right after the server starts,
     means the first click a person makes is never the first render.
 
+    Cards were not the only bill. A script's photographs are collected at
+    whatever resolution the source gave them -- a Commons satellite image
+    ran 17MB by itself -- so this warms `_pic_thumb()` for every photo a
+    script names too, same reasoning as the cards.
+
     Runs in a thread so it cannot delay accepting connections; each script
     is wrapped so one broken script (a bad card spec, a missing topic)
     does not stop the rest from warming.
@@ -2333,6 +2473,9 @@ def _warm_card_cache() -> None:
             measured = script_module.measure(found)
             _draw_cards(name, measured)
             _draw_cover(name, found.get("cover"))
+            for line in measured["lines"]:
+                if line.get("pic"):
+                    _pic_thumb(line["pic"])
         except Exception as error:                                # noqa: BLE001
             print(f"  {name} 暖不了：{error}")
     print("暖卡片快取：完成")
@@ -2974,6 +3117,7 @@ def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
     keeps a failed re-collection from destroying the pictures it was replacing.
     """
     from core import script as script_module
+    from core import rules as rules_module
     name = str(payload.get("name") or "")
     changes = payload.get("changes") or []
     try:
@@ -3000,10 +3144,14 @@ def edit_lines(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:
             # word／outro 卡的標題本來就該跟這句話一樣，不用手動改兩個地方。
             script_module.sync_card_title(lines[index], say)
             if not lines[index].get("clip"):
+                # 跟 writer.fasten() 同一條公式：這句話下面如果還帶著事實
+                # 的 gist，讀那句話也要花時間——這裡改台詞漏算 gist 的話，
+                # 手動改一個字跟一開始 fasten() 存的秒數就會不一致。
+                words = (script_module.spoken_length(say) +
+                         script_module.spoken_length(lines[index].get("gist", "")))
                 lines[index]["seconds"] = round(
                     max(script_module.LEAST_SECONDS,
-                        script_module.spoken_length(say) /
-                        script_module.READ_PER_SECOND), 2)
+                        words / rules_module.read_pace()), 2)
 
     broken = script_module.out_of_order(
         [line.get("role", "") for line in lines],
